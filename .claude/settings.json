@@ -1,0 +1,6 @@
+{
+  "enabledPlugins": {
+    "python-uv-guardrail@agentic-rails": true,
+    "readme-name-guardrail@agentic-rails": true
+  }
+}
