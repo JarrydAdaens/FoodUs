@@ -4,16 +4,48 @@ description: Design specification template defining project architecture, princi
 metadata:
   version: "3.0"
   agentic_rails_source_version: "3.0"
-  owner: "Your Name"
-  repo: "your-repo"
+  owner: "Jarryd Adaens"
+  repo: "FoodYou (fork of maksimowiczm/FoodYou)"
 ---
-# Project Name - Design Specification
+# Food You (Fork) - Design Specification
 
 ## Purpose of This File
 
-This repository is an intentionally empty starter for future projects. Replace the placeholders in this file when you fork or copy the template into a real codebase.
+This repository is a fork of **Food You**, a free, open-source, privacy-focused food diary and
+nutrition tracker (Kotlin Multiplatform + Compose Multiplatform, Android-first). This file is the
+maintained design specification for the fork.
 
-This file is the Design tier: the maintained design specification covering the whole deliverable and how it breaks into its largest pieces. It should synthesize relevant Dictation into stable project direction. The **Milestones Index** lives as a subsection of this file (see below); the actual Milestone documents are separate files under `milestones/`.
+The remaining sections below are still the Agentic Rails starter template. They will be populated as
+we learn how the project is structured and settle on the concrete set of changes we want to make. Do
+not treat the placeholder sections as authoritative yet.
+
+This file is the Design tier: the maintained design specification covering the whole deliverable and
+how it breaks into its largest pieces. It should synthesize relevant Dictation into stable project
+direction. The **Milestones Index** lives as a subsection of this file (see below); the actual
+Milestone documents are separate files under `milestones/`.
+
+## Why This Fork Exists
+
+**Motivation (owner's words, 2026-07-24).** Paid food trackers frustrate and disrespect the
+customer. Apps like MyFitnessPal and LoseIt constantly nag for more money: after you have already
+paid for a year of access or a feature, they hard-sell lifetime licenses, coaching upsells, and other
+add-ons. That treatment leaves the customer feeling exhausted and disrespected rather than valued and
+served.
+
+This fork exists to be the opposite: a food tracker that respects the user. Food You is already free,
+open-source, privacy-first (no account required, all data stored locally), and ad-free, which makes
+it the right base to build on. The concrete set of changes the owner has in mind will be captured in
+Dictation and promoted into milestones and stories once the project's structure is understood.
+
+**Guiding stance for this fork:**
+
+- Respect the user. No nagging, no dark patterns, no upsell pressure.
+- Preserve the privacy-first, local-first, no-account model.
+- Keep it free and open-source.
+
+**First working session (2026-07-24).** Stand up the local Android toolchain, build the app, and
+deploy it to a running Android emulator so we have a live baseline to iterate on. The real feature
+work follows once the app is running and the codebase is understood.
 
 ## Context Hierarchy
 
