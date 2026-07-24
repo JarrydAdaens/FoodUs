@@ -4,8 +4,8 @@ description: Wiki hub for context-oriented reference material and cheat sheets.
 metadata:
   version: "2.0"
   agentic_rails_source_version: "2.0"
-  owner: "Your Name"
-  repo: "your-repo"
+  owner: "Jarryd Adaens"
+  repo: "FoodYou (fork of maksimowiczm/FoodYou)"
 ---
 
 # Project Wiki

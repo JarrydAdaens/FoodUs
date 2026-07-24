@@ -1,44 +1,37 @@
 ---
 name: backlog-1
-description: Starter front backlog file (story inventory / Milestone -1). Replace placeholder stories with the real story pool once Design and Milestones exist.
+description: Front backlog file (story inventory / Milestone -1) for ACME Food App. Currently empty - all known stories are scheduled directly in milestones 1 and 2.
 metadata:
   version: "3.0"
   agentic_rails_source_version: "3.0"
-  owner: "Your Name"
-  repo: "your-repo"
+  owner: "Jarryd Adaens"
+  repo: "FoodYou (fork of maksimowiczm/FoodYou)"
 ---
 # Backlog 1
 
 > Story inventory / Milestone -1. The front (highest-priority) backlog file. Maximum **30 stories**; overflow spawns `backlog-2.md`.
 >
-> This is starter scaffolding. Replace placeholder stories with the real pool, or copy [BACKLOG_TEMPLATE.md](BACKLOG_TEMPLATE.md) for additional backlog files.
+> Story shape reference: [BACKLOG_TEMPLATE.md](BACKLOG_TEMPLATE.md)
 
 ---
 
 ## Story Index
 
+*Empty.* The 2026-07-24 initial project seed mapped every known story directly into
+[milestone-1](../milestones/milestone-1.md) (Initialization, Stories 1-11) and
+[milestone-2](../milestones/milestone-2.md) (Customisation, Stories 1-12), so nothing is currently
+staged here.
+
 | # | Story | Type | Priority | Complexity | Effort | Risk | Milestone | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [Story name](#story-1) | Feature | High | — | — | — | *unscheduled* | Backlog |
 
 ---
 
-<a id="story-1"></a>
+## Expected Inflows
 
-### Story: *Name*
-
-**Type:** Feature | Bug | Refactor
-
-**Summary:** One or two short paragraphs describing the discrete unit of work.
-
-**Why / value:** Why this is worth doing and how urgent it is.
-
-**Rough scope:** What it touches.
-
-**Scores (filled at planning):**
-
-- Complexity: —
-- Effort: —
-- Risk: —
-
-**Reclassification check:** If scoring reveals this is epic-sized, promote it to a [Milestone](../milestones/).
+- **Adopted upstream bugs** from Milestone 2's upstream issue triage story — one story per adopted
+  bug.
+- **Friction findings** from Milestone 1's daily-use story (logging flows, navigation, search and
+  barcode behavior).
+- **Milestone 3 candidates** — ideas that surface before that milestone is dictated stage here
+  first.

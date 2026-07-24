@@ -1,18 +1,20 @@
 ---
 name: design
-description: Design specification for the Food You fork - a privacy-first KMP/Compose food diary - covering architecture, principles, constraints, the context tier system, and the embedded milestones index.
+description: Design specification for ACME Food App - a personal, privacy-first fork of the Food You KMP/Compose food diary - covering architecture, principles, constraints, the context tier system, and the embedded milestones index.
 metadata:
   version: "3.0"
   agentic_rails_source_version: "3.0"
   owner: "Jarryd Adaens"
   repo: "FoodYou (fork of maksimowiczm/FoodYou)"
 ---
-# Food You (Fork) - Design Specification
+# ACME Food App - Design Specification
 
 ## Purpose of This File
 
-This repository is a fork of **Food You**, a free, open-source, privacy-focused food diary and
-nutrition tracker (Kotlin Multiplatform + Compose Multiplatform, Android-first). This file is the
+This repository is **ACME Food App**: Jarryd Adaens's personal fork of **Food You**, a free,
+open-source, privacy-focused food diary and nutrition tracker (Kotlin Multiplatform + Compose
+Multiplatform, Android-first). The repository keeps the upstream name `FoodYou`; the app's
+user-visible rename to ACME Food App lands with Milestone 2's identity story. This file is the
 maintained design specification for the fork.
 
 This file is the Design tier: the maintained design specification covering the whole deliverable and
@@ -25,23 +27,40 @@ Milestone documents are separate files under `milestones/`.
 **Motivation (owner's words, 2026-07-24).** Paid food trackers frustrate and disrespect the
 customer. Apps like MyFitnessPal and LoseIt constantly nag for more money: after you have already
 paid for a year of access or a feature, they hard-sell lifetime licenses, coaching upsells, and other
-add-ons. That treatment leaves the customer feeling exhausted and disrespected rather than valued and
-served.
+add-ons — and both take too many taps to log food. That treatment leaves the customer feeling
+exhausted and disrespected rather than valued and served.
 
-This fork exists to be the opposite: a food tracker that respects the user. Food You is already free,
-open-source, privacy-first (no account required, all data stored locally), and ad-free, which makes
-it the right base to build on. The concrete set of changes the owner has in mind will be captured in
-Dictation and promoted into milestones and stories once the project's structure is understood.
+ACME Food App exists to be the opposite: a food tracker that respects the user. Food You is already
+free, open-source, privacy-first (no account required, all data stored locally), and ad-free, which
+makes it the right base to build on. The upstream maintainer does not accept external changes, so
+this fork produces a custom version of the application tailored to the owner's needs:
+
+- **Replace MyFitnessPal and Lose It** as the household's nutrition trackers.
+- **Own the data.** Years of paid diary data lives in those providers; this project recovers it into
+  a master JSON format the owner controls, from which app-specific imports are generated.
+- **Reduce logging friction over time** — AI-assisted logging (photo scanning, placeholder entries,
+  smarter search) and quality-of-life changes layered on the solid local-first base.
+- **Serve two users:** the owner's phone and his wife's phone. Every deployment and update decision
+  must hold for both devices without data loss.
+
+**Fork philosophy (constitutional — applies to all work):**
+
+- All work happens on the fork's own branch; never assume upstream will take patches.
+- Changes are complementary and additive, only very rarely structural.
+- Changes must be easy to reapply when upstream pushes updates — minimize merge conflicts by
+  design. LLM-driven implementation means perfection isn't required, but mergeability must always
+  be kept in mind; unavoidable structural touches stay small and well-isolated.
 
 **Guiding stance for this fork:**
 
 - Respect the user. No nagging, no dark patterns, no upsell pressure.
 - Preserve the privacy-first, local-first, no-account model.
-- Keep it free and open-source.
+- Keep it free and open-source (GPL-3.0 compliant).
 
 **First working session (2026-07-24, complete).** Local Android toolchain stood up; app built and
 deployed to an Android 16 emulator and to a physical Galaxy S22 Ultra. The live baseline exists;
-concrete feature scope will be captured via Dictation and promoted into milestones.
+the roadmap below (Milestones Index) captures the concrete scope synthesized from the initial
+project seed dictation.
 
 ## Context Hierarchy
 
@@ -70,7 +89,9 @@ The backlog (`backlog/`) is not a numbered tier. It is a staging pool — inform
 
 | Milestone | Document | Status | Why it matters | What it unlocks |
 | --- | --- | --- | --- | --- |
-| Milestone 1: *Name* | [milestones/milestone-1.md](milestones/milestone-1.md) | Not Started | *Why this milestone matters* | *What completing it unlocks* |
+| Milestone 1: Initialization | [milestones/milestone-1.md](milestones/milestone-1.md) | In Progress | Gets the fork built, deployed, populated with the owner's recovered historical data, and in daily use, with a repeatable two-device update mechanism | A live, data-complete daily driver that Milestone 2 can safely customize |
+| Milestone 2: Customisation | [milestones/milestone-2.md](milestones/milestone-2.md) | Not Started | Makes the app the owner's own: ACME identity, AI-assisted logging, ergonomics fixes, adopted upstream bug fixes | An app that is faster to log with than MyFitnessPal/Lose It ever were, unmistakably this fork |
+| Milestone 3: TBD | [milestones/milestone-3.md](milestones/milestone-3.md) | Not Defined | Awaiting future dictation | — |
 
 Keep this index in sync as milestones are added, completed, reordered, or reclassified. When a backlog story scores as epic-sized, promote it into this index as a new milestone.
 
@@ -85,7 +106,8 @@ build but Android is primary. Current upstream version: 3.4.9 (GPL-3.0).
 
 **Creator.** The upstream project is created and maintained by Mateusz Maksimowicz
 ([maksimowiczm](https://github.com/maksimowiczm) on GitHub). This repository is Jarryd Adaens's fork
-of it.
+of it — ACME Food App — which will carry its own identity, versioning (starting at 1.0, layered on
+top of the upstream version), and upstream attribution once Milestone 2's identity story lands.
 
 **Who it is for.** People who want to log what they eat and track calories, macros, and
 micronutrients without accounts, ads, subscriptions, or upsells.
@@ -108,10 +130,30 @@ approachable despite living mostly in one Gradle module.
   principle — see "Why This Fork Exists".)
 - **Privacy-first, local-first.** No account, no telemetry; all diary data lives in a local Room
   (SQLite) database. Remote food databases are opt-in and read-only.
-- **Minimal scope.** Food logging done well. Adjacent trackers (exercise, water, social) are
-  intentionally out of scope.
+- **Minimal scope.** Food logging done well. Adjacent trackers (exercise, water, social,
+  shopping lists) are intentionally out of scope — upstream enhancement requests that make the
+  app fuzzy are not adopted.
+- **Mergeable by design.** Fork changes are additive overlays that reapply cleanly over upstream
+  updates (see "Fork philosophy").
+- **Two-device reality.** Everything must work on both household phones, and updates must never
+  lose local data.
 - **Common code first.** Logic and UI live in `commonMain`; platform-specific code is a thin
   `expect`/`actual` and infrastructure layer.
+
+### Domain Model (shared vocabulary)
+
+These concepts underpin the Milestone 1 data-recovery work and the Milestone 2 UI work:
+
+| Concept | Definition |
+| --- | --- |
+| **Custom food** | A food built from scratch by specifying its fundamentals — macros, minerals, fats, proteins, etc. — and given a name. |
+| **Recipe** | A collection of distinct ingredient foods making up one final food item. When used, it stays **collapsed** into a single diary entry (e.g. "birthday cake"). |
+| **Meal** | Also built from components, but when inserted into the diary it **expands**: each sub-item is added as its own entry (e.g. "chicken sandwich" inserts bread + mayonnaise + 100 g chicken + 50 g cheese). |
+| **Diary entry** | A reference to a food that was eaten — not the definition of the food. Links to a food and gives it a portion size. |
+| **Placeholder entry** | (Planned, Milestone 2.) A zero-calorie diary entry holding only a name and description — a marker that something was eaten, resolved into real data later. |
+
+Recipes and meals overlap conceptually; the difference is collapse-vs-expand behavior at insertion
+time.
 
 ---
 
@@ -138,9 +180,13 @@ Kotlin targets: `androidTarget` (JVM 21), `iosArm64`, `iosSimulatorArm64`.
 
 **External services and dependencies:**
 
-- Open Food Facts — opt-in remote food product database (community open data)
+- Open Food Facts — opt-in remote food product database (community open data; the owner intends to
+  hold an account and contribute data back)
 - USDA FoodData Central — opt-in remote food composition database (user-supplied API key)
 - Swiss Food Composition Database — opt-in imported food composition data
+- AI model endpoint (planned, Milestone 2) — likely OpenRouter, called with the owner's own API key
+  baked into private builds, for photo-based food identification and search-query generation. See
+  "Security and Privacy" for the boundary this creates.
 - No other backends. No analytics, crash reporting, or account services.
 
 ### Repository Structure
@@ -179,6 +225,15 @@ FoodYou/
 2. Import: CSV parsed and merged into the local Room database.
 3. No cloud sync exists; a device's database is the single copy.
 
+### Historical Data Recovery (Milestone 1)
+
+The owner's years of MyFitnessPal and Lose It data are recovered into a **master JSON format** —
+an app-independent canonical store the owner controls, covering custom foods, recipes, meals, and
+diary entries per the domain model. The format is deliberately mutable while both datasets are
+ingested (LLM-assisted, fast-and-messy copy-paste extraction; no third-party exporters). An export
+script then generates Food You-format CSV from the master JSON for import into the app. The master
+JSON remains the canonical source; app-specific formats are generated exports.
+
 ---
 
 ## Configuration
@@ -200,10 +255,17 @@ FoodYou/
 
 ### Secrets and Credentials
 
-None in the repository. The only credential in the system is the optional USDA FoodData Central API
-key, which the user enters in-app and which is stored on-device. Release signing is the app
-distributor's concern (upstream signs F-Droid/GitHub releases; this fork uses debug signing
-locally).
+None in the repository. Credentials in the system:
+
+- The optional USDA FoodData Central API key, which the user enters in-app and which is stored
+  on-device.
+- (Planned, Milestone 2.) The owner's AI endpoint key (likely OpenRouter), baked into private
+  builds only. It must never be committed, appear in context files, or flow into anything that
+  could reach the public repo or upstream. The injection mechanism is an open question for the
+  AI-scanning story.
+
+Release signing is the app distributor's concern (upstream signs F-Droid/GitHub releases; this
+fork uses debug signing locally until the Milestone 1 update-mechanism story decides distribution).
 
 ---
 
@@ -240,7 +302,14 @@ Activity/entry points, permissions, camera/barcode integration, platform SQLite 
   cloud sync, no telemetry, no ads.
 - Remote food databases are opt-in, disclosed at onboarding with their own terms, and used
   read-only over HTTPS.
-- The only secret is the user's optional USDA API key, stored on-device.
+- Secrets are limited to the user's optional USDA API key (on-device) and, once Milestone 2 lands,
+  the owner's baked-in AI endpoint key (private builds only — see Configuration).
+- **Planned AI boundary (Milestone 2).** The AI logging features send data off-device by design:
+  downscaled food photos and short meal descriptions go to a model endpoint under the owner's own
+  API key, with an embedded Australian (Victoria/Melbourne) locale prompt. This is a deliberate,
+  owner-chosen exception to the local-only stance, acceptable because the builds are private, the
+  key is the owner's, and both users are informed household members. No other data leaves the
+  device, and nothing is sent without an explicit user action (Ask AI / AI search).
 - These properties are constitutional for this fork: changes that add tracking, accounts, or
   nagging violate its founding purpose.
 

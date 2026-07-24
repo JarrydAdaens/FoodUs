@@ -4,8 +4,8 @@ description: Dictation guidance for raw dictation, rough project seeds, and recu
 metadata:
   version: "3.0"
   agentic_rails_source_version: "3.0"
-  owner: "Your Name"
-  repo: "your-repo"
+  owner: "Jarryd Adaens"
+  repo: "FoodYou (fork of maksimowiczm/FoodYou)"
 ---
 # Dictation
 

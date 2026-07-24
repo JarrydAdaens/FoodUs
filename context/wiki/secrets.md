@@ -4,8 +4,8 @@ description: Placeholder guidance for documenting secret and sensitive configura
 metadata:
   version: "0.2"
   agentic_rails_source_version: "0.2"
-  owner: "Your Name"
-  repo: "your-repo"
+  owner: "Jarryd Adaens"
+  repo: "FoodYou (fork of maksimowiczm/FoodYou)"
 ---
 
 # Secrets and Sensitive Configuration

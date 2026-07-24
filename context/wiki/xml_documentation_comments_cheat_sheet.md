@@ -4,8 +4,8 @@ description: Cheat sheet for C# XML documentation comment syntax, tags, and writ
 metadata:
   version: "1.1"
   agentic_rails_source_version: "1.1"
-  owner: "Your Name"
-  repo: "your-repo"
+  owner: "Jarryd Adaens"
+  repo: "FoodYou (fork of maksimowiczm/FoodYou)"
 ---
 
 # XML Documentation Comments Cheat Sheet

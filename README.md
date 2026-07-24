@@ -1,3 +1,14 @@
+> **This is ACME Food App** — Jarryd Adaens's personal fork of
+> [Food You](https://github.com/maksimowiczm/FoodYou) (GPL-3.0). It tailors the app for private
+> household use: recovered historical data, AI-assisted logging, and quality-of-life changes, all
+> as additive overlays that stay mergeable with upstream. Project direction lives in
+> [context/design.md](context/design.md) (with its Milestones Index),
+> [context/milestones/](context/milestones/), and [context/backlog/](context/backlog/); agent
+> workflow rules live in [AGENTS.md](AGENTS.md) and [AGENTIC_RAILS_README.MD](AGENTIC_RAILS_README.MD).
+> The upstream README follows below, unchanged.
+
+---
+
 [![F-Droid](https://img.shields.io/f-droid/v/com.maksimowiczm.foodyou?color=b4eb12&label=F-Droid&logo=fdroid&logoColor=1f78d2)](https://f-droid.org/en/packages/com.maksimowiczm.foodyou)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/maksimowiczm/FoodYou?color=black&label=Stable&logo=github)](https://github.com/maksimowiczm/FoodYou/releases/latest/)
 [![GitHub all releases](https://img.shields.io/github/downloads/maksimowiczm/FoodYou/total?label=Downloads&logo=github)](https://github.com/maksimowiczm/FoodYou/releases/)

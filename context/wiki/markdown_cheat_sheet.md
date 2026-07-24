@@ -4,8 +4,8 @@ description: Cheat sheet for core Markdown syntax, common extensions, and major 
 metadata:
   version: "1.1"
   agentic_rails_source_version: "1.1"
-  owner: "Your Name"
-  repo: "your-repo"
+  owner: "Jarryd Adaens"
+  repo: "FoodYou (fork of maksimowiczm/FoodYou)"
 ---
 
 # Markdown Cheat Sheet
