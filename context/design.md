@@ -1,6 +1,6 @@
 ---
 name: design
-description: Design specification template defining project architecture, principles, constraints, the context tier system, and the embedded milestones index.
+description: Design specification for the Food You fork - a privacy-first KMP/Compose food diary - covering architecture, principles, constraints, the context tier system, and the embedded milestones index.
 metadata:
   version: "3.0"
   agentic_rails_source_version: "3.0"
@@ -14,10 +14,6 @@ metadata:
 This repository is a fork of **Food You**, a free, open-source, privacy-focused food diary and
 nutrition tracker (Kotlin Multiplatform + Compose Multiplatform, Android-first). This file is the
 maintained design specification for the fork.
-
-The remaining sections below are still the Agentic Rails starter template. They will be populated as
-we learn how the project is structured and settle on the concrete set of changes we want to make. Do
-not treat the placeholder sections as authoritative yet.
 
 This file is the Design tier: the maintained design specification covering the whole deliverable and
 how it breaks into its largest pieces. It should synthesize relevant Dictation into stable project
@@ -43,9 +39,9 @@ Dictation and promoted into milestones and stories once the project's structure 
 - Preserve the privacy-first, local-first, no-account model.
 - Keep it free and open-source.
 
-**First working session (2026-07-24).** Stand up the local Android toolchain, build the app, and
-deploy it to a running Android emulator so we have a live baseline to iterate on. The real feature
-work follows once the app is running and the codebase is understood.
+**First working session (2026-07-24, complete).** Local Android toolchain stood up; app built and
+deployed to an Android 16 emulator and to a physical Galaxy S22 Ultra. The live baseline exists;
+concrete feature scope will be captured via Dictation and promoted into milestones.
 
 ## Context Hierarchy
 
@@ -82,19 +78,40 @@ Keep this index in sync as milestones are added, completed, reordered, or reclas
 
 ## Executive Summary
 
-Describe the project this repository will become:
+**What it is.** Food You is a free, open-source, privacy-focused food diary and calorie/nutrition
+tracker built with Kotlin Multiplatform and Compose Multiplatform. Android is the shipping platform
+(Google Play alternative-free: distributed via F-Droid and GitHub releases); iOS targets exist in the
+build but Android is primary. Current upstream version: 3.4.9 (GPL-3.0).
 
-- what it is
-- who it is for
-- what problem it solves
-- why this architecture is appropriate
+**Creator.** The upstream project is created and maintained by Mateusz Maksimowicz
+([maksimowiczm](https://github.com/maksimowiczm) on GitHub). This repository is Jarryd Adaens's fork
+of it.
+
+**Who it is for.** People who want to log what they eat and track calories, macros, and
+micronutrients without accounts, ads, subscriptions, or upsells.
+
+**What it does (owner's field assessment, 2026-07-24).** Fast, minimal calorie tracking with no
+bullshit. No social features, no login, no sharing beyond CSV import/export. Easy to use; it
+deliberately does not do exercise tracking, water tracking, or other adjacent concerns. It has
+camera barcode scanning, optional open-data remote food databases (Open Food Facts, USDA FoodData
+Central, Swiss Food Composition Database), recipe creation, personalized nutrition goals, and a
+modular Material You home screen. All data stays on-device.
+
+**Why this architecture is appropriate.** A single Kotlin Multiplatform codebase with Compose
+Multiplatform UI keeps nearly all logic and UI in `commonMain`, with thin platform layers for
+Android/iOS. Vertical feature slices with domain/infrastructure separation keep the app modular and
+approachable despite living mostly in one Gradle module.
 
 ### Core Principles
 
-- **Principle 1:** Replace with a guiding architectural principle.
-- **Principle 2:** Replace with a second principle.
-- **Principle 3:** Replace with a third principle.
-- **Principle 4:** Add more only when they are truly decision-driving.
+- **Respect the user.** No nagging, no dark patterns, no upsells, no ads. (Fork's founding
+  principle — see "Why This Fork Exists".)
+- **Privacy-first, local-first.** No account, no telemetry; all diary data lives in a local Room
+  (SQLite) database. Remote food databases are opt-in and read-only.
+- **Minimal scope.** Food logging done well. Adjacent trackers (exercise, water, social) are
+  intentionally out of scope.
+- **Common code first.** Logic and UI live in `commonMain`; platform-specific code is a thin
+  `expect`/`actual` and infrastructure layer.
 
 ---
 
@@ -102,32 +119,46 @@ Describe the project this repository will become:
 
 ### How the Pieces Fit Together
 
-Describe the major components of the system, how they interact, and what boundaries matter.
+Three Gradle modules:
+
+- `:app` — the application. Almost everything lives here, organized as vertical feature slices
+  under `com.maksimowiczm.foodyou`: `food` (food catalog, search, remote database integrations),
+  `fooddiary` (meal logging), `goals` (nutrition targets), `importexport` (CSV), `settings`,
+  `changelog`, `poll` (in-app feedback polls), `sponsorship`, `theme`, `common` (shared
+  utilities), and `app` (DI wiring, navigation, root UI, platform infrastructure).
+- `:shared:barcodescanner` — camera barcode scanning (ZXing-based on Android).
+- `:shared:resources` — shared localized string/image resources (Compose Multiplatform resources).
+
+Each feature slice separates `domain` (entities, events, repository interfaces, use cases) from
+`infrastructure` (Room persistence, Ktor network clients, remote-source adapters), with Koin
+modules (`<Feature>Module.kt`) composing them. UI is Compose Multiplatform Material 3 with
+Navigation Compose; state flows through ViewModels provided by Koin.
+
+Kotlin targets: `androidTarget` (JVM 21), `iosArm64`, `iosSimulatorArm64`.
 
 **External services and dependencies:**
 
-- `Service or dependency` - purpose
-- `Service or dependency` - purpose
+- Open Food Facts — opt-in remote food product database (community open data)
+- USDA FoodData Central — opt-in remote food composition database (user-supplied API key)
+- Swiss Food Composition Database — opt-in imported food composition data
+- No other backends. No analytics, crash reporting, or account services.
 
 ### Repository Structure
 
-Update this tree as the project takes shape.
-
 ```text
-project-root/
-|-- context/
-|   |-- dictations-tier-0/
-|   |-- design.md
-|   |-- milestones/
-|   |-- backlog/
-|   |-- implementation-plans/
-|   |-- laws.md
-|   |-- agenticworkflow.md
-|   |-- agent-thinking.md
-|   `-- wiki/
-|-- source/
-|-- tests/
-|-- scripts/
+FoodYou/
+|-- app/                        # main KMP application module
+|   `-- src/{commonMain,commonTest,androidMain,androidInstrumentedTest}/
+|-- shared/
+|   |-- barcodescanner/         # camera barcode scanning module
+|   `-- resources/              # shared localized resources module
+|-- gradle/libs.versions.toml   # version catalog (single source of dependency truth)
+|-- context/                    # agentic rails context tiers (this framework)
+|-- harness/                    # verifiers, gates, sensors for agent workflows
+|-- dev/                        # upstream dev scripts/assets
+|-- docs/                       # upstream docs
+|-- metadata/                   # F-Droid/fastlane store metadata and screenshots
+|-- flake.nix / justfile        # upstream nix + just developer tooling
 `-- README.md
 ```
 
@@ -135,89 +166,112 @@ project-root/
 
 ## Processing Pipelines
 
-> Delete this section if the project has no defined pipelines. Add it back when the system's data flows are known.
+### Food Logging (core journey)
 
-Describe the main data flows or user journeys only after the project has enough shape to justify them.
+1. User picks a meal/day in the diary and searches for a food (local catalog first; opt-in remote
+   sources via Ktor if enabled) or scans a barcode with the camera.
+2. Selected food + portion is written to the local Room database as a diary entry.
+3. Home screen cards and goal screens recompute calories/macros/micros reactively (Flow → Compose).
 
-### Pipeline 1
+### Data Portability
 
-1. Step 1
-2. Step 2
-3. Step 3
-
-### Pipeline 2
-
-1. Step 1
-2. Step 2
-3. Step 3
+1. Export: diary/food data serialized to CSV and shared via the platform share/storage APIs.
+2. Import: CSV parsed and merged into the local Room database.
+3. No cloud sync exists; a device's database is the single copy.
 
 ---
 
 ## Configuration
 
-Document configuration only once the real stack is known.
-
 ### Primary Configuration
 
-Describe the main project configuration surface.
+- `gradle/libs.versions.toml` — version catalog: app version (3.4.9 / versionCode 123), SDK levels
+  (min 28, compile/target 36), and every dependency version. Change dependencies here, not in
+  build files.
+- `app/build.gradle.kts` — KMP targets, build types (`release` minified, `devRelease`,
+  `miniDevRelease`, `preview` with `.preview` app-id suffix), Room schema dir, BuildConfig.
+- `gradle.properties` — JVM memory, configuration cache, build cache.
 
-### Secondary or App-Level Configuration
+### Machine-Level Configuration
 
-Describe any machine-level or environment-level settings.
+- `local.properties` — `sdk.dir` pointing at the local Android SDK (untracked).
+- JDK 21 required. Local toolchain paths for this machine are recorded in agent memory, not in the
+  repo.
 
 ### Secrets and Credentials
 
-Document the real secret-management approach here and in the wiki once chosen.
+None in the repository. The only credential in the system is the optional USDA FoodData Central API
+key, which the user enters in-app and which is stored on-device. Release signing is the app
+distributor's concern (upstream signs F-Droid/GitHub releases; this fork uses debug signing
+locally).
 
 ---
 
 ## Application Layers
 
-List only the layers the project actually uses.
+Within each feature slice (and the app as a whole):
 
-### Layer 1
+### UI (Compose Multiplatform)
 
-Purpose and architecture summary.
+Material 3 (Expressive) screens, ViewModels, and navigation in `commonMain`. Theming via
+MaterialKolor dynamic color; reorderable home cards; shimmer loading states.
 
-### Layer 2
+### Domain
 
-Purpose and architecture summary.
+Pure Kotlin entities, events, repository interfaces, and use cases per feature slice. No Android or
+framework types.
+
+### Infrastructure
+
+Room database (+ Paging), DataStore preferences, Ktor HTTP clients (OkHttp engine on Android,
+Darwin on iOS), and adapters for Open Food Facts / USDA. Koin modules bind infrastructure to domain
+interfaces.
+
+### Platform (`androidMain` / `iosMain`)
+
+Activity/entry points, permissions, camera/barcode integration, platform SQLite driver
+(requery sqlite-android), share/file APIs.
 
 ---
 
 ## Security and Privacy
 
-- Define how data is stored and protected.
-- Define the expected secret-management strategy.
-- Define any privacy or compliance constraints.
+- All user data is stored locally in Room (SQLite) and DataStore on the device. No account, no
+  cloud sync, no telemetry, no ads.
+- Remote food databases are opt-in, disclosed at onboarding with their own terms, and used
+  read-only over HTTPS.
+- The only secret is the user's optional USDA API key, stored on-device.
+- These properties are constitutional for this fork: changes that add tracking, accounts, or
+  nagging violate its founding purpose.
 
 ---
 
 ## Observability
 
-### Logging
-
-Describe logging approach.
-
-### Debugging
-
-Describe debugging tools or diagnostic outputs.
-
-### Health Checks
-
-Describe any health checks or operational diagnostics.
+No analytics or crash reporting by design. Debugging is standard Android tooling: logcat, Compose
+UI tooling in debug builds, and adb against a device/emulator. There are no server-side components
+to health-check.
 
 ---
 
 ## Testing Policy
 
-Define what kinds of tests are expected and when they are required.
+Follows the repository's unit-testing limits rule: tests serve the change, not coverage numbers.
+
+- `commonTest` — kotlin-test with Room testing + bundled SQLite for platform-neutral logic
+  (nutrition math, parsing, mapping, use cases).
+- `androidInstrumentedTest` — AndroidX test runner/JUnit for behavior needing a real Android
+  runtime.
+- Bug fixes should carry a reproducing test when practical; UI/visual behavior is validated
+  manually on emulator or device.
 
 ---
 
 ## Performance
 
-If performance is not yet a concern, say so explicitly and revisit it later.
+The app is fast in daily use on real hardware (owner-validated on a Galaxy S22 Ultra); performance
+is not currently a concern. Release builds are R8-minified. Revisit only if profiling shows a
+regression.
 
 ---
 

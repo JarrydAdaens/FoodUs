@@ -46,4 +46,5 @@ Wielding context thoughtfully has a direct effect on the quality of outcomes. Cl
 
 ## Other Pages
 
+- [sbom.md](sbom.md) - software bill of materials: modules, toolchain, dependencies, and external data services
 - [secrets.md](secrets.md) - placeholder guidance for documenting secret-management decisions
