@@ -2,11 +2,13 @@ package com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase.
 
 import android.content.Context
 import com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase.AustralianFoodCompositionDatabaseConfig
+import com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase.domain.AfcdRemoteSignature
 import com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase.domain.AfcdWorkbookFiles
 import com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase.domain.AustralianFoodCompositionDatabaseRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.request.get
+import io.ktor.client.request.head
 import io.ktor.client.statement.readRawBytes
 import io.ktor.http.HttpHeaders
 import java.io.File
@@ -45,6 +47,19 @@ internal class AndroidAustralianFoodCompositionDatabaseRepository(private val co
             response.readRawBytes() to response.headers[HttpHeaders.LastModified]
         }
     }
+
+    override suspend fun fetchRemoteSignature(): AfcdRemoteSignature =
+        withContext(Dispatchers.IO) {
+            val client = HttpClient { install(HttpTimeout) { requestTimeoutMillis = 30_000 } }
+            client.use {
+                val response = it.head(AustralianFoodCompositionDatabaseConfig.NUTRIENT_WORKBOOK_URL)
+                AfcdRemoteSignature(
+                    lastModified = response.headers[HttpHeaders.LastModified],
+                    entityTag = response.headers[HttpHeaders.ETag],
+                    contentLength = response.headers[HttpHeaders.ContentLength],
+                )
+            }
+        }
 
     private fun readWorkbook(
         file: File,

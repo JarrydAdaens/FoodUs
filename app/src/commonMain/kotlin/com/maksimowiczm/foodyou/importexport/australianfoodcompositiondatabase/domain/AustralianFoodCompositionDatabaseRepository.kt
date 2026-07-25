@@ -7,4 +7,10 @@ package com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase.
  */
 interface AustralianFoodCompositionDatabaseRepository {
     suspend fun downloadWorkbook(): AfcdWorkbookFiles
+
+    /**
+     * Fetches the workbook's remote version signals via an HTTP `HEAD` request, without downloading
+     * the file. Used by the update check to compare against the installed dataset.
+     */
+    suspend fun fetchRemoteSignature(): AfcdRemoteSignature
 }

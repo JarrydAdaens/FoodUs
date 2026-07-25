@@ -332,6 +332,10 @@
     <string name="description_australian_food_composition_database">The Australian Food Composition Database is downloaded and stored on your device so Australian foods can be searched offline. Enable it to include its foods in search; disable it to exclude them without deleting the downloaded data.</string>
     <string name="action_enable_provider_search">Include in search</string>
     <string name="action_update_dataset">Check for updates</string>
+    <string name="action_download_and_replace">Download and replace</string>
+    <string name="neutral_checking_for_updates">Checking for updates…</string>
+    <string name="neutral_dataset_up_to_date">Up to date</string>
+    <string name="neutral_dataset_update_available">A newer dataset is available.</string>
     <string name="headline_import_state">Import state</string>
     <string name="headline_last_import">Last import</string>
     <string name="headline_last_successful_check">Last successful check</string>

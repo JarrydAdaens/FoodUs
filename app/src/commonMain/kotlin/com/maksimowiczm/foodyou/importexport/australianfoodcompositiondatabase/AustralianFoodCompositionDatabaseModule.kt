@@ -1,5 +1,7 @@
 package com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase
 
+import com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase.domain.CheckAustralianFoodCompositionDatabaseUpdateUseCase
+import com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase.domain.CheckAustralianFoodCompositionDatabaseUpdateUseCaseImpl
 import com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase.domain.ImportAustralianFoodCompositionDatabaseUseCase
 import com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase.domain.ImportAustralianFoodCompositionDatabaseUseCaseImpl
 import org.koin.core.module.Module
@@ -15,4 +17,7 @@ val importExportAustralianFoodCompositionDatabaseModule = module {
 
     factoryOf(::ImportAustralianFoodCompositionDatabaseUseCaseImpl)
         .bind<ImportAustralianFoodCompositionDatabaseUseCase>()
+
+    factoryOf(::CheckAustralianFoodCompositionDatabaseUpdateUseCaseImpl)
+        .bind<CheckAustralianFoodCompositionDatabaseUpdateUseCase>()
 }

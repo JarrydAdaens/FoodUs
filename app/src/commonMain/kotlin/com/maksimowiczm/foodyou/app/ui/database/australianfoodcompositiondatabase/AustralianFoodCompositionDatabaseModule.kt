@@ -8,6 +8,7 @@ internal fun Module.australianFoodCompositionDatabaseModule() {
     viewModel {
         AustralianFoodCompositionDatabaseViewModel(
             importUseCase = get(),
+            checkUpdateUseCase = get(),
             preferencesRepository = userPreferencesRepository(),
             metadataRepository = get(),
         )

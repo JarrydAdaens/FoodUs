@@ -3,7 +3,7 @@
 ## Metadata
 
 - Task Type: `FEATURE`
-- Status: `Draft`
+- Status: `Done`
 - Owner: Jarryd Adaens
 - Last Updated: 25 July 2026
 
@@ -124,3 +124,67 @@ From 2026-07-25 provider recon (`file:line` where load-bearing) — Story 14 for
 
 - Planning input: 2026-07-25 provider recon (no metadata table; transactional `withTransaction`; import-state view-model patterns; settings screens; no background download) with `file:line`; spec Phase 4, §7.3.
 - Unverified: per-provider version-metadata endpoints and the exact staging mechanism — set by Stories 14/15 before this executes.
+
+## Execution Log
+
+- Status: `Done` (implemented and validated on the `foodyou` emulator, 2026-07-25).
+- Built on Story 15's foundation rather than duplicating it: the `ProviderMetadata` store, the
+  atomic download→validate→parse→single-`withTransaction` replace pipeline, and the AFCD provider
+  screen already existed. Story 15's `import()` **is** the full refresh, so this story consumes it as
+  the "download and replace" action and adds the update-check half plus the UI to drive both.
+- Version comparison (provider-generic, `importexport/providermetadata/domain/`): new
+  `DatasetVersion` (explicitVersion / publicationDate / revisionId / checksum / modifiedTime) and a
+  pure `compareDatasetVersion(local, remote)` implementing the strongest-identifier cascade
+  (explicit version → publication date → revision id → checksum+mtime → checksum), returning
+  `DatasetComparison.{UpToDate, UpdateAvailable, Indeterminate}`. 5 focused unit tests in
+  `DatasetComparisonTest` cover each tier, fall-through when a stronger signal is missing on one
+  side, and the no-shared-identifier (Indeterminate) case.
+- Update-check use case (AFCD-specific): `CheckAustralianFoodCompositionDatabaseUpdateUseCase` does a
+  single Ktor `HEAD` on the workbook URL (no download, no dataset mutation), maps `Last-Modified` /
+  `ETag` / `Content-Length` into a remote `DatasetVersion`, and compares against the stored metadata.
+  A completed request records `lastSuccessfulCheck` and clears `lastError` (whether or not an update
+  was found); a network failure records `lastError`, leaves `lastSuccessfulCheck` untouched, and
+  keeps the installed dataset. `Indeterminate` errs toward offering an update (never a false
+  "up to date"). Repository gained `fetchRemoteSignature()` (Android `HEAD`; iOS unsupported stub);
+  new `AfcdRemoteSignature` domain type. DI: `factoryOf(::...Impl).bind<...>()` in the provider
+  module; the view-model module injects it.
+- UI (`app/ui/database/australianfoodcompositiondatabase/`): the previously mislabeled single
+  button (which ran a full import under the "Check for updates" label) is now a genuine
+  non-destructive **Check for updates** action. New `Phase.{Checking, UpToDate, UpdateAvailable}`
+  states and a `busy` helper; `UpdateOutcome` shows "Up to date" / "A newer dataset is available." /
+  "Checking for updates…"; `ActionButtons` shows a plain **Import** before first install, **Check
+  for updates** once installed, and the explicit **Download and replace** action only after a check
+  reports a newer dataset (no silent auto-replace). New strings:
+  `action_download_and_replace`, `neutral_checking_for_updates`, `neutral_dataset_up_to_date`,
+  `neutral_dataset_update_available`.
+
+## Completion Review
+
+- Deviations: (1) The full-refresh pipeline (download→validate→parse→transactional replace→persist)
+  was already delivered by Story 15; Story 17 reuses `import()` verbatim as the download-and-replace
+  action rather than re-implementing it. (2) **Cancellation**: the refresh is a single transactional
+  bulk insert with no resumable/background infrastructure (spike §4.4), so a mid-flight cancel of the
+  transaction is not offered; safety is instead guaranteed by ordering (network/parse happen before
+  any DB mutation; the transaction is all-or-nothing; the last-good dataset survives any failure).
+  Controls are disabled during the operation. This matches the story's "cancellable where the
+  infrastructure supports it" wording. (3) The update-check maps AFCD's static `RELEASE_LABEL` as the
+  local explicit version but leaves the remote explicit version unset (FSANZ does not expose the
+  release number over HTTP), so the decisive runtime tier is the `Last-Modified` publication date —
+  exactly the spike's §9.1 recommendation.
+- Validation: unit tests `:app:testDebugUnitTest --tests
+  com.maksimowiczm.foodyou.importexport.providermetadata.DatasetComparisonTest` — 5 tests, all
+  passing. `:app:assembleDebug` — BUILD SUCCESSFUL. Emulator E2E on `foodyou` (live FSANZ endpoint):
+  provider screen shows name / include-in-search / `Installed (Release 3)` / last import / last
+  successful check + Check-for-updates button. Check against the live endpoint → **Up to date**
+  (stored publication date matches remote `Last-Modified`); DB confirmed `lastSuccessfulCheck`
+  advanced and `lastError` cleared. Failure path (Wi-Fi + data disabled) → error surfaced in red
+  ("Unable to resolve host…"), `Installed (Release 3)` kept, and DB confirmed `lastSuccessfulCheck`
+  **unchanged** while `lastError` was set — a failed check is not recorded as successful. Aged the
+  stored publication date and re-checked → **A newer dataset is available.** with the explicit
+  **Download and replace** button; tapped it → progress shown, controls disabled, old dataset stayed
+  `Installed (Release 3)` until the new one validated. After the refresh: AFCD row count still 1,588
+  but ids moved from 1–1588 to 1589–3176 (rows genuinely deleted + re-inserted, only AFCD affected),
+  metadata re-persisted with the real Dec-2025 publication date and fresh import/check timestamps,
+  the 4 `ManualDiaryEntry` diary rows (`PieTest` / `PreMigration Snack`) preserved, and FTS search
+  in sync (`ProductFts MATCH 'vegemite'` → 1, `'beef*'` → 78). iOS not built (no macOS host);
+  `expect`/`actual` unsupported stub provided.

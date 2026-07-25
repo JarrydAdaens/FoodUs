@@ -12,6 +12,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LargeFlexibleTopAppBar
 import androidx.compose.material3.LinearWavyProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -40,6 +41,7 @@ fun AustralianFoodCompositionDatabaseScreen(onBack: () -> Unit, modifier: Modifi
         uiState = uiState,
         onBack = onBack,
         onEnabledChange = viewModel::setEnabled,
+        onCheckForUpdates = viewModel::checkForUpdates,
         onImport = viewModel::import,
         modifier = modifier,
     )
@@ -50,13 +52,12 @@ private fun AustralianFoodCompositionDatabaseScreen(
     uiState: AustralianFoodCompositionDatabaseUiState,
     onBack: () -> Unit,
     onEnabledChange: (Boolean) -> Unit,
+    onCheckForUpdates: () -> Unit,
     onImport: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
-    val importing =
-        uiState.phase is AustralianFoodCompositionDatabaseUiState.Phase.Downloading ||
-            uiState.phase is AustralianFoodCompositionDatabaseUiState.Phase.Importing
+    val busy = uiState.busy
 
     Scaffold(
         modifier = modifier,
@@ -65,7 +66,7 @@ private fun AustralianFoodCompositionDatabaseScreen(
                 title = {
                     Text(stringResource(Res.string.headline_australian_food_composition_database))
                 },
-                navigationIcon = { ArrowBackIconButton(onClick = onBack, enabled = !importing) },
+                navigationIcon = { ArrowBackIconButton(onClick = onBack, enabled = !busy) },
                 scrollBehavior = scrollBehavior,
             )
         },
@@ -93,7 +94,7 @@ private fun AustralianFoodCompositionDatabaseScreen(
                     LabelledSwitch(
                         label = stringResource(Res.string.action_enable_provider_search),
                         checked = uiState.enabled,
-                        enabled = !importing,
+                        enabled = !busy,
                         onCheckedChange = onEnabledChange,
                     )
                 }
@@ -104,23 +105,18 @@ private fun AustralianFoodCompositionDatabaseScreen(
             item { StateSection(uiState) }
 
             item {
-                Button(
-                    onClick = onImport,
-                    enabled = !importing,
-                    shapes = ButtonDefaults.shapes(),
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    val label =
-                        if (uiState.metadata?.installed == true) {
-                            stringResource(Res.string.action_update_dataset)
-                        } else {
-                            stringResource(Res.string.action_import)
-                        }
-                    Text(label)
-                }
+                UpdateOutcome(uiState.phase)
             }
 
-            if (importing) {
+            item {
+                ActionButtons(
+                    uiState = uiState,
+                    onCheckForUpdates = onCheckForUpdates,
+                    onImport = onImport,
+                )
+            }
+
+            if (busy) {
                 item {
                     val fraction =
                         (uiState.phase as? AustralianFoodCompositionDatabaseUiState.Phase.Importing)
@@ -183,6 +179,87 @@ private fun StateSection(uiState: AustralianFoodCompositionDatabaseUiState) {
                 value = error,
                 valueColor = MaterialTheme.colorScheme.error,
             )
+        }
+    }
+}
+
+/** Shows the result of the most recent update check, when one is relevant. Errors are surfaced by
+ * [StateSection]'s last-error row, so they are not repeated here. */
+@Composable
+private fun UpdateOutcome(phase: AustralianFoodCompositionDatabaseUiState.Phase) {
+    val (text, color) =
+        when (phase) {
+            AustralianFoodCompositionDatabaseUiState.Phase.Checking ->
+                stringResource(Res.string.neutral_checking_for_updates) to
+                    MaterialTheme.colorScheme.onSurfaceVariant
+
+            AustralianFoodCompositionDatabaseUiState.Phase.UpToDate ->
+                stringResource(Res.string.neutral_dataset_up_to_date) to
+                    MaterialTheme.colorScheme.primary
+
+            AustralianFoodCompositionDatabaseUiState.Phase.UpdateAvailable ->
+                stringResource(Res.string.neutral_dataset_update_available) to
+                    MaterialTheme.colorScheme.primary
+
+            else -> return
+        }
+
+    Text(text = text, style = MaterialTheme.typography.bodyMedium, color = color)
+}
+
+/** The check / download-and-replace controls. Before anything is installed only the import action is
+ * shown; once installed the primary action is a non-destructive update check, and the explicit
+ * download-and-replace action appears only after a check reports a newer dataset. */
+@Composable
+private fun ActionButtons(
+    uiState: AustralianFoodCompositionDatabaseUiState,
+    onCheckForUpdates: () -> Unit,
+    onImport: () -> Unit,
+) {
+    val busy = uiState.busy
+
+    if (uiState.metadata?.installed != true) {
+        Button(
+            onClick = onImport,
+            enabled = !busy,
+            shapes = ButtonDefaults.shapes(),
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Text(stringResource(Res.string.action_import))
+        }
+        return
+    }
+
+    val updateAvailable =
+        uiState.phase is AustralianFoodCompositionDatabaseUiState.Phase.UpdateAvailable
+
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        if (updateAvailable) {
+            Button(
+                onClick = onImport,
+                enabled = !busy,
+                shapes = ButtonDefaults.shapes(),
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(stringResource(Res.string.action_download_and_replace))
+            }
+            OutlinedButton(
+                onClick = onCheckForUpdates,
+                enabled = !busy,
+                shapes = ButtonDefaults.shapes(),
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(stringResource(Res.string.action_update_dataset))
+            }
+        } else {
+            Button(
+                onClick = onCheckForUpdates,
+                enabled = !busy,
+                shapes = ButtonDefaults.shapes(),
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(stringResource(Res.string.action_update_dataset))
+            }
         }
     }
 }

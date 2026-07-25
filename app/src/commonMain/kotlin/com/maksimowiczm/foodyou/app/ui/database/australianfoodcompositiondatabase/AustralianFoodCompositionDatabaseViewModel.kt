@@ -6,6 +6,8 @@ import com.maksimowiczm.foodyou.common.domain.food.FoodSource
 import com.maksimowiczm.foodyou.common.domain.userpreferences.UserPreferencesRepository
 import com.maksimowiczm.foodyou.food.search.domain.FoodSearchPreferences
 import com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase.domain.AfcdImportProgress
+import com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase.domain.AfcdUpdateCheckOutcome
+import com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase.domain.CheckAustralianFoodCompositionDatabaseUpdateUseCase
 import com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase.domain.ImportAustralianFoodCompositionDatabaseUseCase
 import com.maksimowiczm.foodyou.importexport.providermetadata.domain.ProviderMetadataRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,6 +22,7 @@ import kotlinx.coroutines.sync.withLock
 
 internal class AustralianFoodCompositionDatabaseViewModel(
     private val importUseCase: ImportAustralianFoodCompositionDatabaseUseCase,
+    private val checkUpdateUseCase: CheckAustralianFoodCompositionDatabaseUpdateUseCase,
     private val preferencesRepository: UserPreferencesRepository<FoodSearchPreferences>,
     metadataRepository: ProviderMetadataRepository,
 ) : ViewModel() {
@@ -55,6 +58,26 @@ internal class AustralianFoodCompositionDatabaseViewModel(
                     australianFoodCompositionDatabase =
                         australianFoodCompositionDatabase.copy(enabled = enabled)
                 )
+            }
+        }
+    }
+
+    fun checkForUpdates() {
+        if (mutex.isLocked) return
+        viewModelScope.launch {
+            mutex.withLock {
+                phase.value = AustralianFoodCompositionDatabaseUiState.Phase.Checking
+                phase.value =
+                    when (val outcome = checkUpdateUseCase.check()) {
+                        AfcdUpdateCheckOutcome.UpToDate ->
+                            AustralianFoodCompositionDatabaseUiState.Phase.UpToDate
+
+                        AfcdUpdateCheckOutcome.UpdateAvailable ->
+                            AustralianFoodCompositionDatabaseUiState.Phase.UpdateAvailable
+
+                        is AfcdUpdateCheckOutcome.Failure ->
+                            AustralianFoodCompositionDatabaseUiState.Phase.Error(outcome.message)
+                    }
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase
 
+import com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase.domain.AfcdRemoteSignature
 import com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase.domain.AfcdWorkbookFiles
 import com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase.domain.AustralianFoodCompositionDatabaseRepository
 import org.koin.core.module.Module
@@ -19,5 +20,10 @@ private object UnsupportedAustralianFoodCompositionDatabaseRepository :
     override suspend fun downloadWorkbook(): AfcdWorkbookFiles =
         throw UnsupportedOperationException(
             "Australian Food Composition Database import is not available on this platform"
+        )
+
+    override suspend fun fetchRemoteSignature(): AfcdRemoteSignature =
+        throw UnsupportedOperationException(
+            "Australian Food Composition Database update check is not available on this platform"
         )
 }
