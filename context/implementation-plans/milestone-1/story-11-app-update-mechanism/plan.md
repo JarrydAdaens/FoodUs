@@ -13,12 +13,12 @@
 - Story: [Story 11: App update mechanism](../../../milestones/milestone-1.md#story-11)
 - Backlog source: none — story mapped directly from the 2026-07-24 initial project seed
 - Related Plans:
-  [Story 13: Own project infrastructure](../own-project-infrastructure/plan.md) — Story 13
-  provides the CI build artifact and the fork's GitHub release channel; **this story (Story 11)
-  owns the signing and distribution decision** and consumes Story 13's artifacts. Note: that plan
-  currently uses stale numbering (it calls the update mechanism "Story 10" and itself "Story 12");
-  a parallel revision is correcting it — the milestone document's numbering (11 and 13) is
-  authoritative.
+  - [Story 15: Establish fork CI/CD pipeline](../story-15-cicd-pipeline/plan.md) — Story 15
+    provides the CI build artifact and the fork's GitHub release channel; **this story (Story 11)
+    owns the signing and distribution decision** and consumes Story 15's artifacts (the workflow
+    scope moved there from Story 13 on 2026-07-25).
+  - [Story 13: Own project infrastructure](../own-project-infrastructure/plan.md) — now scoped to
+    issue templates, `metadata/`, and README badge verification.
 - External Tooling: `commit-log` skill for commits; `rails-grade-cer` if formal grading is wanted
 
 ## CER
@@ -64,8 +64,8 @@ survives cycle on a real device.
 
 ### Out Of Scope
 
-- The CI build workflow and GitHub release channel themselves — Story 13
-  ([plan](../own-project-infrastructure/plan.md)) owns creating them; this story only decides what
+- The CI build workflow and GitHub release channel themselves — Story 15
+  ([plan](../story-15-cicd-pipeline/plan.md)) owns creating them; this story only decides what
   key signs the artifact they produce and how phones consume it.
 - Public store release (F-Droid, open Google Play production track).
 - App identity changes (applicationId rename, ACME branding) — Milestone 2. This story's
@@ -123,7 +123,7 @@ update the database is migrated, not recreated.
 - `gradle/libs.versions.toml` — `version-name = "3.4.9"`, `android-versionCode = "123"`. The
   versionCode line is the one upstream file this story's procedure repeatedly edits.
 - `.github/workflows/release-apk.yml` — upstream's sign-after-build reference implementation
-  (secrets `KEYSTORE` base64, `KEY_ALIAS`, `KEYSTORE_PASSWORD`); Story 13 adapts it for the fork
+  (secrets `KEYSTORE` base64, `KEY_ALIAS`, `KEYSTORE_PASSWORD`); Story 15 reworks it for the fork
   using the keystore this story creates.
 - `context/wiki/` — destination for the update-procedure page.
 - Existing behaviors to preserve: local debug build/deploy flow for development; upstream files
@@ -135,7 +135,7 @@ update the database is migrated, not recreated.
 
 | Option | How it works | Pros | Cons |
 | --- | --- | --- | --- |
-| **A. GitHub Releases + Obtainium** (recommended) | Story 13's release workflow publishes the signed APK to the fork's GitHub Releases; both phones run [Obtainium](https://github.com/ImranR98/Obtainium) pointed at `JarrydAdaens/FoodYou`, which notifies and installs updates | Near-store UX for two phones; no cloud account, no fees, no review; builds on Story 13's channel; wife's phone updates without the owner's laptop | Requires installing one extra app per phone; releases on a public repo are publicly downloadable (fine for unmodified Milestone 1 builds; **not** acceptable once Milestone 2 bakes the AI key in — see risks) |
+| **A. GitHub Releases + Obtainium** (recommended) | Story 15's release workflow publishes the signed APK to the fork's GitHub Releases; both phones run [Obtainium](https://github.com/ImranR98/Obtainium) pointed at `JarrydAdaens/FoodYou`, which notifies and installs updates | Near-store UX for two phones; no cloud account, no fees, no review; builds on Story 15's channel; wife's phone updates without the owner's laptop | Requires installing one extra app per phone; releases on a public repo are publicly downloadable (fine for unmodified Milestone 1 builds; **not** acceptable once Milestone 2 bakes the AI key in — see risks) |
 | **B. Manual sideload** (fallback / always available) | Signed APK reaches the phone by browser download from the GitHub Release, `adb install -r`, or file share; user taps to install | Zero new apps; works offline; the baseline every other option degrades to | Manual per phone per update; wife's phone updates depend on someone doing it |
 | **C. Private Google Play (internal testing track)** | $25 developer account; upload AABs to an internal track limited to the two household accounts | Real store update UX; Play handles delivery | Heaviest: account cost and identity verification, AAB + Play App Signing (key custody moves to Google), review/processing latency per build, Play policy surface for a GPL fork, and new-personal-account testing requirements add friction. Overkill for two phones |
 
@@ -156,7 +156,7 @@ migrates — its first install is release-signed.
 
 - Q: [STORY 11] Does the owner accept Option A (GitHub Releases + Obtainium on both phones), or
   prefer manual sideload only (B), or does he specifically want the private Play route (C)?
-  Impact: Determines whether Obtainium setup is part of the install steps and whether Story 13's
+  Impact: Determines whether Obtainium setup is part of the install steps and whether Story 15's
   release channel is the actual delivery path or just an archive.
   Assumption: Option A, with B as fallback.
   Status: OPEN
@@ -222,13 +222,14 @@ migrates — its first install is release-signed.
      and passwords from environment/prompt only. Link the page from `context/wiki/home.md`.
    - Dependencies: steps 1–2.
 
-4. Coordinate the CI signing hand-off with Story 13.
-   - Why: Story 13's release workflow should sign with **this** keystore so CI-built and
+4. Coordinate the CI signing hand-off with Story 15.
+   - Why: Story 15's release workflow should sign with **this** keystore so CI-built and
      locally-built APKs are interchangeable on the phones.
    - Edits: none here beyond a note in both plans; the owner adds `KEYSTORE` (base64),
-     `KEY_ALIAS`, `KEYSTORE_PASSWORD` as fork repository secrets; Story 13's workflow consumes
-     them exactly as upstream's `release-apk.yml` does.
-   - Dependencies: step 2; Story 13's workflow work proceeds independently.
+     `KEY_ALIAS`, `KEYSTORE_PASSWORD` as fork repository secrets; Story 15's workflow consumes
+     them exactly as upstream's `release-apk.yml` does (plus `KEY_PASSWORD` if the key password
+     differs — Story 15's open question, answered by how this story generates the keystore).
+   - Dependencies: step 2; Story 15's workflow work proceeds independently.
 
 5. Bump versionCode and produce the first release-signed APK locally.
    - Why: First real artifact; proves the local pipeline end-to-end without waiting on CI.
@@ -267,7 +268,7 @@ migrates — its first install is release-signed.
 
 - `gradlew assembleRelease` succeeds locally and outputs `app-release-unsigned.apk`.
 - `apksigner verify --print-certs signed.apk` shows the fork keystore's certificate (and, once
-  Story 13's CI signs, the CI artifact shows the **same** certificate digest).
+  Story 15's CI signs, the CI artifact shows the **same** certificate digest).
 - `git status` confirms no keystore, `.jks`, or password material is tracked after the work.
 
 ### Manual Checks
@@ -330,8 +331,8 @@ Not needed — CER is under threshold; single-pass story with owner-executed dev
   `app/build.gradle.kts` (applicationId, build types, unsigned `release`),
   `gradle/libs.versions.toml` (`android-versionCode = "123"`, `version-name = "3.4.9"`,
   minSdk 28), `.github/workflows/release-apk.yml` (upstream's zipalign/apksigner sign-after-build
-  pattern and secret names), `context/implementation-plans/milestone-1/own-project-infrastructure/plan.md`
-  (Story 13 boundary: CI artifact + release channel there; signing/distribution decision here).
+  pattern and secret names), `context/implementation-plans/milestone-1/story-15-cicd-pipeline/plan.md`
+  (Story 15 boundary: CI artifact + release channel there; signing/distribution decision here).
 - Unverified claims: the wife's phone's Android version and sideload consent (question open);
   Obtainium behavior on both devices is unverified until the owner installs it; Play internal-
   testing friction for new personal accounts was assessed from general knowledge, not re-verified

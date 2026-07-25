@@ -38,7 +38,7 @@ used daily long enough for the owner to judge the baseline understood.
 
 ## Status
 
-In Progress — 4/14 stories complete.
+In Progress — 4/15 stories complete.
 
 ---
 
@@ -60,6 +60,7 @@ In Progress — 4/14 stories complete.
 | 12 | [Use the app for a while](#story-12) | Research | — | — | — | [plan](../implementation-plans/milestone-1/story-12-use-the-app/plan.md) | Not Started |
 | 13 | [Own project infrastructure](#story-13) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/own-project-infrastructure/plan.md) | Not Started |
 | 14 | [Remove the static documentation site](#story-14) | Tooling | — | — | — | — | Not Started |
+| 15 | [Establish fork CI/CD pipeline](#story-15) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/story-15-cicd-pipeline/plan.md) | Not Started |
 
 ---
 
@@ -318,19 +319,15 @@ keeping.
 **Summary:** Make the fork's project infrastructure its own instead of upstream's. The README has
 already been repointed at `JarrydAdaens/FoodYou` with **placeholder** Build and Release badges;
 this story makes those placeholders real and sweeps the remaining upstream-pointing surfaces:
-GitHub Actions workflows (a working fork build pipeline; upstream's Release APK workflow expects
-upstream signing), a fork release channel, issue templates, and store `metadata/` where it
-misrepresents the fork. *(The upstream documentation site — `docs/` and its deploy workflow — is
-not re-owned here; it is deleted outright in [Story 14](#story-14).)*
+issue templates and store `metadata/` where it misrepresents the fork. *(The GitHub Actions
+workflows and release channel are built by [Story 15](#story-15); the upstream documentation site
+— `docs/` and its deploy workflow — is deleted outright in [Story 14](#story-14).)*
 
-**Why / value:** Right now the repo's automation and badges either point at upstream or dangle.
-Independent infrastructure makes build results and releases reflect this app, and feeds Story 11's
-update mechanism a real distribution artifact.
+**Why / value:** Right now the repo's badges, issue templates, and store metadata either point at
+upstream or dangle. Owning them makes the repository present itself as this fork.
 
-**Rough scope:** `.github/workflows/` (excluding the docs deploy workflow, owned by Story 14),
-`.github/ISSUE_TEMPLATE/`, README badge verification, `metadata/` review. Coordinate with Story 11
-(update mechanism) on signing and release channel; keep everything mergeable with upstream per the
-fork philosophy.
+**Rough scope:** `.github/ISSUE_TEMPLATE/`, README badge verification (badges consume Story 15's
+workflows), `metadata/` review. Keep everything mergeable with upstream per the fork philosophy.
 
 **Status:** Not Started — plan at
 [../implementation-plans/milestone-1/own-project-infrastructure/plan.md](../implementation-plans/milestone-1/own-project-infrastructure/plan.md).
@@ -371,6 +368,36 @@ is owned separately by **Milestone 2 Story 3**.
 
 ---
 
+<a id="story-15"></a>
+
+### Story 15: Establish fork CI/CD pipeline
+
+**Type:** Tooling
+
+**Summary:** Replace the crude CI/CD inherited from upstream with the fork's own pipeline, per the
+owner's 2026-07-25 CI/CD plan
+([dictation](../dictations-tier-0/2026-07-25_cicd_plan_github-actions.md)): a `jarryd/*` branch
+model (`main` stays a pristine upstream mirror with no CI; `jarryd/main` is the releasable trunk),
+a new `ci.yml` compile-and-test workflow — the safety net upstream never had — a reworked
+`release-apk.yml` (tag-triggered real GitHub Releases, hardened signing, JDK corrected to the
+project's 21), and a branch-filtered `validate-meals.yml`. Repo-side prerequisites (enable Actions
+on the fork, default branch → `jarryd/main`, signing secrets) are owner-executed tasks the story
+enumerates.
+
+**Why / value:** Nothing currently verifies that the app compiles or its tests pass; release APKs
+vanish as 7-day artifacts; workflows fire on the wrong branches. A real pipeline feeds Story 11's
+update mechanism a durable signed artifact and gives Story 13's badges something true to report.
+
+**Rough scope:** `.github/workflows/` only — `ci.yml` (new), `release-apk.yml` (rework),
+`validate-meals.yml` (retarget). No app source or Gradle changes. Boundaries: Story 11 owns the
+keystore and distribution decision (this story consumes its secrets); Story 14 deletes `docs.yml`;
+Story 13 consumes the resulting badges.
+
+**Status:** Not Started — plan at
+[../implementation-plans/milestone-1/story-15-cicd-pipeline/plan.md](../implementation-plans/milestone-1/story-15-cicd-pipeline/plan.md).
+
+---
+
 ## Interdependency Order
 
 1. Story 1 (build/deploy) — done; unblocks everything.
@@ -381,10 +408,13 @@ is owned separately by **Milestone 2 Story 3**.
 4. Story 11 (update mechanism) is independent but must land before customized builds ship to both
    phones.
 5. Story 12 (daily use) runs in parallel once data is imported.
-6. Story 13 (own project infrastructure) is independent, but its release-channel piece should
-   coordinate with Story 11's signing/distribution decision.
+6. Story 13 (own project infrastructure) waits on Story 15 for real workflows before its badge
+   verification can complete; issue-template and `metadata/` work is independent.
 7. Story 14 (remove the docs site) is independent and can happen anytime; it removes the docs
    surface that Story 13 therefore no longer re-owns.
+8. Story 15 (CI/CD pipeline) can build `ci.yml` and retarget `validate-meals.yml` anytime; its
+   release-workflow rework consumes Story 11's keystore/signing decision, and its prerequisites
+   (Actions enablement, default branch, secrets) are owner-executed.
 
 ---
 
