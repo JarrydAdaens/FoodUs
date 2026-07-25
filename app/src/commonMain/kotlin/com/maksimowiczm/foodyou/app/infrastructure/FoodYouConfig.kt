@@ -12,7 +12,10 @@ internal class FoodYouConfig : AppConfig, NetworkConfig {
     override val translationUri: String = "https://crowdin.com/project/food-you"
     override val sourceCodeUri: String = "https://github.com/maksimowiczm/FoodYou"
     override val issueTrackerUri: String = "https://github.com/maksimowiczm/FoodYou/issues"
-    override val privacyPolicyUri: String = "https://foodyou.maksimowiczm.com/privacy-policy"
+    // Fork's own privacy policy. Placeholder until the owner supplies the URL of the
+    // privacy policy already published for his apps (Milestone 2, Story 3).
+    override val privacyPolicyUri: String =
+        "https://github.com/JarrydAdaens/FoodYou/blob/main/PRIVACY.md"
     override val openFoodFactsTermsOfUseUri: String = "https://world.openfoodfacts.org/terms-of-use"
     override val openFoodFactsPrivacyPolicyUri: String = "https://world.openfoodfacts.org/privacy"
     override val foodDataCentralPrivacyPolicyUri: String = "https://www.usda.gov/privacy-policy"
