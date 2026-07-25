@@ -3,7 +3,7 @@
 ## Metadata
 
 - Task Type: `FEATURE`
-- Status: `Draft`
+- Status: `Blocked` — external licence blocker (no permitted FoodSwitch data access)
 - Owner: Jarryd Adaens
 - Last Updated: 25 July 2026
 
@@ -61,15 +61,15 @@ If — and only if — Story 14 confirms a usable and permitted FoodSwitch data-
 - Q: Does FoodSwitch expose a usable, permitted bulk download or API for personal use?
   Impact: Binary gate for this entire story.
   Assumption: Likely restricted; treat "blocked" as the probable outcome until Story 14 proves otherwise. Do not begin implementation before the verdict.
-  Status: OPEN — owned by Story 14.
+  Status: ANSWERED (2026-07-25, Story 14) — **No.** No public API, no public bulk download; the data is commercially licensed to sponsors and the Global Terms of Use forbid reproducing/storing/deriving it. This closes the gate to BLOCKED. Evidence: provider-quickadd-architecture.md §9.2 / §13 item 1.
 - Q: If accessible, what identifies a dataset version (explicit version, publication date, record update date)?
   Impact: Story 17's version comparison for this provider.
   Assumption: Use the strongest identifier the source exposes; fall back to checksum.
-  Status: OPEN.
+  Status: MOOT — no permitted dataset to version. Revisit only if the licence blocker clears.
 - Q: Add the `barcode` index as part of this story?
   Impact: Search/dedup performance on a barcode-heavy dataset.
   Assumption: Yes if implemented — this is the provider that makes the index worthwhile.
-  Status: OPEN.
+  Status: MOOT — deferred with the story; the `(barcode)` index recommendation stays recorded in the wiki (§5) for whichever provider first justifies it.
 
 ## Execution Steps
 
@@ -115,4 +115,21 @@ If — and only if — Story 14 confirms a usable and permitted FoodSwitch data-
 ## Evidence / References
 
 - Planning input: 2026-07-25 provider recon (barcode storage, `insertUniqueProduct` dedup, enum fan-out) with `file:line`; spec Phase 3, §8.3.
-- Unverified: FoodSwitch access feasibility — the central unknown, owned by Story 14.
+- Verified: FoodSwitch access feasibility — resolved BLOCKED by Story 14. Evidence of record: [provider-quickadd-architecture.md §9.2](../../../wiki/provider-quickadd-architecture.md) (and §13 item 1, §12 blocker row). All licence clauses and URLs cited there were fetched 2026-07-25.
+
+## Execution Log
+
+- 2026-07-25 — Executed **Step 0 only** (record the feasibility verdict). All implementation steps (1-5) are hard-gated on a "feasible" verdict and were correctly **not** executed. No app code was written.
+- 2026-07-25 — Gate verdict consumed from Story 14 (spike commit `5ab699ed`, doc `context/wiki/provider-quickadd-architecture.md`): FoodSwitch is **BLOCKED**. The blocker is a licensing/data-access one, not a technical one:
+  - No public API and no public bulk download exist. The George Institute licenses the data commercially to individual sponsors, not to individual developers (wiki §9.2).
+  - The FoodSwitch Global Terms of Use forbid reproducing/storing/deriving the data: **7.1** (personal, non-commercial use only), **7.2(a-b,e-f)** (no reverse engineering, no derivative work, no competing/substitute product), **9.2/9.3** (no copy/reproduce/store/derivative without prior written permission), **9.10** (unauthorized use prohibited), **9.12** (no reproduction without written permission) — cited in wiki §9.2.
+  - Bulk-extracting via the app's private endpoints would breach 7.2/9.2/9.3/9.10.
+- 2026-07-25 — Non-goal reaffirmed: **no** scraped or alternative supermarket data was substituted (spec §3 / this plan's Non-Goals). The correct deliverable for the blocked path is a documented external blocker, which this is.
+- 2026-07-25 — Updated plan Status → `Blocked`; answered the three OPEN questions with the blocked-path outcome (Q1 ANSWERED "No"; Q2/Q3 MOOT pending unblock). The milestone story file is owned by the Boss's in-flight change and was intentionally left untouched.
+
+## Completion Review
+
+- **Outcome:** Story 16 is recorded as a **documented external blocker**, which is the specified deliverable when FoodSwitch access is unavailable. Estimates vs. actuals: the CER (Complexity 4 / Effort 3 / Risk 5) assumed access *might* exist; the realized path was the low-effort blocked branch (Step 0 only), so actual effort was documentation-only and the Risk-5 external dependency materialized exactly as flagged.
+- **Evidence record (DRY):** the concrete blocker, licence clauses, and fetched URLs live once in `context/wiki/provider-quickadd-architecture.md` §9.2 (verdict), §12 (blocker/mitigation row), and §13 item 1 (resolved decision). This plan references that record rather than duplicating it.
+- **Unblock condition:** the repository owner obtains a **written data-licence agreement** with The George Institute (contact `foodswitch@georgeinstitute.org.au`). If that clears, reopen this story, re-answer Q2 (version identifier) and Q3 (`barcode` index), and execute Steps 1-5 on Story 15's shared pipeline with zero pipeline duplication (wiki §11).
+- **Honesty note:** no runtime or build validation applies — this is a documentation-only change on the blocked path. No app code was added; `git status` should show only this plan.md.
