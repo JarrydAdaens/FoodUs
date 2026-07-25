@@ -17,6 +17,7 @@ import com.maksimowiczm.foodyou.app.ui.database.swissfoodcompositiondatabase.Swi
 import com.maksimowiczm.foodyou.app.ui.food.diary.add.AddEntryScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.aiscan.AiScanScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.fasttext.FastTextScreen
+import com.maksimowiczm.foodyou.app.ui.food.diary.placeholder.PlaceholderMetaScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.CreateQuickAddScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.UpdateQuickAddScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.search.DiaryFoodSearchScreen
@@ -73,8 +74,13 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 onGoalsCardClick = { epochDate ->
                     navController.navigateSingleTop(Goals(epochDate))
                 },
-                onEditDiaryEntryClick = { foodEntryId, manualEntryId ->
+                onEditDiaryEntryClick = { foodEntryId, manualEntryId, isPlaceholder ->
                     when {
+                        manualEntryId != null && isPlaceholder ->
+                            navController.navigateSingleTop(
+                                FoodDiaryPlaceholderMeta(manualEntryId = manualEntryId)
+                            )
+
                         manualEntryId != null ->
                             navController.navigateSingleTop(
                                 UpdateQuickAdd(quickAddId = manualEntryId)
@@ -234,6 +240,32 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 onSave = { navController.popBackStackInclusive<FoodDiaryFastText>() },
             )
         }
+        forwardBackwardComposable<FoodDiaryPlaceholderMeta> {
+            val (manualEntryId) = it.toRoute<FoodDiaryPlaceholderMeta>()
+
+            PlaceholderMetaScreen(
+                manualEntryId = manualEntryId,
+                onBack = { navController.popBackStackInclusive<FoodDiaryPlaceholderMeta>() },
+                onSearch = { epochDay, mealId ->
+                    navController.navigate(FoodDiarySearch(date = epochDay, mealId = mealId))
+                },
+                onQuickAdd = { epochDay, mealId, name ->
+                    navController.navigate(
+                        FoodDiaryCreateQuickAdd(
+                            epochDay = epochDay,
+                            mealId = mealId,
+                            prefillName = name,
+                        )
+                    )
+                },
+                onAiQuery = { epochDay, mealId, query ->
+                    navController.navigate(
+                        FoodDiarySearch(date = epochDay, mealId = mealId, initialQuery = query)
+                    )
+                },
+                onRemoved = { navController.popBackStackInclusive<FoodDiaryPlaceholderMeta>() },
+            )
+        }
         forwardBackwardComposable<UpdateQuickAdd> {
             val (quickAddId) = it.toRoute<UpdateQuickAdd>()
 
@@ -244,9 +276,12 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
             )
         }
         forwardBackwardComposable<FoodDiarySearch> {
-            val (date, mealId) = it.toRoute<FoodDiarySearch>()
+            val route = it.toRoute<FoodDiarySearch>()
+            val date = route.date
+            val mealId = route.mealId
 
             DiaryFoodSearchScreen(
+                initialQuery = route.initialQuery,
                 onBack = { navController.popBackStackInclusive<FoodDiarySearch>() },
                 onCreateRecipe = {
                     navController.navigateSingleTop(FoodDiaryCreateRecipe(date, mealId))
@@ -487,9 +522,17 @@ private data class FoodDiaryCreateQuickAdd(
 
 @Serializable private data class FoodDiaryFastText(val epochDay: Long, val mealId: Long)
 
+@Serializable private data class FoodDiaryPlaceholderMeta(val manualEntryId: Long)
+
 @Serializable private data class UpdateQuickAdd(val quickAddId: Long)
 
-@Serializable private data class FoodDiarySearch(val date: Long, val mealId: Long)
+@Serializable
+private data class FoodDiarySearch(
+    val date: Long,
+    val mealId: Long,
+    // Optional pre-executed query, used by the placeholder AI route (Milestone 2, Story 9).
+    val initialQuery: String? = null,
+)
 
 @Serializable private data class FoodDiaryCreateProduct(val date: Long, val mealId: Long)
 

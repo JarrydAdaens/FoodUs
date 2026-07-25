@@ -53,4 +53,6 @@ internal data class ManualMealEntryModel(
     override val proteins: Double?,
     override val carbohydrates: Double?,
     override val fats: Double?,
+    // Fast-text placeholders (Milestone 2, Story 8) route to the meta screen instead of the editor.
+    val isPlaceholder: Boolean,
 ) : MealEntryModel

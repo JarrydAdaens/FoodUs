@@ -16,6 +16,13 @@
     <string name="label_description">Description</string>
     <string name="neutral_optional">Optional</string>
 
+    <!-- Placeholder resolution meta screen (Milestone 2, Story 9). -->
+    <string name="headline_resolve_placeholder">Resolve placeholder</string>
+    <string name="description_resolve_placeholder">Log what you actually ate using one of the options below, then remove this reminder.</string>
+    <string name="action_ai_search">AI search</string>
+    <string name="action_remove_placeholder">Remove placeholder</string>
+    <string name="neutral_generating_query">Generating search query…</string>
+
     <!-- AI scanning screen (Milestone 2, Story 6). -->
     <string name="action_take_photo">Take a photo</string>
     <string name="action_pick_from_gallery">Pick from gallery</string>

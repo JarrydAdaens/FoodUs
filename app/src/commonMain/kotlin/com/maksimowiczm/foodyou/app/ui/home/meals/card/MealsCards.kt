@@ -15,7 +15,7 @@ internal fun MealsCards(
     onQuickAdd: (epochDay: Long, mealId: Long) -> Unit,
     onAiScan: (epochDay: Long, mealId: Long) -> Unit,
     onFastText: (epochDay: Long, mealId: Long) -> Unit,
-    onEditEntry: (foodEntryId: Long?, manualEntryId: Long?) -> Unit,
+    onEditEntry: (foodEntryId: Long?, manualEntryId: Long?, isPlaceholder: Boolean) -> Unit,
     onLongClick: (mealId: Long) -> Unit,
     contentPadding: PaddingValues,
     modifier: Modifier = Modifier,
@@ -37,7 +37,11 @@ internal fun MealsCards(
                 onEditEntry = { model ->
                     val foodEntry = model as? FoodMealEntryModel
                     val manualEntry = model as? ManualMealEntryModel
-                    onEditEntry(foodEntry?.id?.value, manualEntry?.id?.value)
+                    onEditEntry(
+                        foodEntry?.id?.value,
+                        manualEntry?.id?.value,
+                        manualEntry?.isPlaceholder == true,
+                    )
                 },
                 onDeleteEntry = viewModel::onDeleteEntry,
                 onLongClick = onLongClick,
@@ -56,7 +60,11 @@ internal fun MealsCards(
                 onEditEntry = { model ->
                     val foodEntry = model as? FoodMealEntryModel
                     val manualEntry = model as? ManualMealEntryModel
-                    onEditEntry(foodEntry?.id?.value, manualEntry?.id?.value)
+                    onEditEntry(
+                        foodEntry?.id?.value,
+                        manualEntry?.id?.value,
+                        manualEntry?.isPlaceholder == true,
+                    )
                 },
                 onDeleteEntry = viewModel::onDeleteEntry,
                 onLongClick = onLongClick,

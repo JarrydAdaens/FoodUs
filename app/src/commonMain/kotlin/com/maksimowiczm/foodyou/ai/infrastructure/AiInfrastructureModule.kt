@@ -1,6 +1,7 @@
 package com.maksimowiczm.foodyou.ai.infrastructure
 
 import com.maksimowiczm.foodyou.ai.domain.AiFoodScanner
+import com.maksimowiczm.foodyou.ai.domain.AiSearchQueryGenerator
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -41,4 +42,13 @@ fun Module.aiInfrastructureModule() {
         )
     }
         .bind<AiFoodScanner>()
+
+    // Story 9's text-only query generation reuses the same endpoint client and config seam.
+    factory {
+        OpenRouterAiSearchQueryGenerator(
+            client = get(named(AiFoodScanner::class.qualifiedName!!)),
+            appConfig = get(),
+        )
+    }
+        .bind<AiSearchQueryGenerator>()
 }

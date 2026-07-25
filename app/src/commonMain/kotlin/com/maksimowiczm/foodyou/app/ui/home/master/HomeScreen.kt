@@ -40,7 +40,7 @@ fun HomeScreen(
     onMealCardFastTextClick: (epochDay: Long, mealId: Long) -> Unit,
     onGoalsCardLongClick: () -> Unit,
     onGoalsCardClick: (epochDay: Long) -> Unit,
-    onEditDiaryEntryClick: (foodEntryId: Long?, manualEntryId: Long?) -> Unit,
+    onEditDiaryEntryClick: (foodEntryId: Long?, manualEntryId: Long?, isPlaceholder: Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: HomeViewModel = koinViewModel()

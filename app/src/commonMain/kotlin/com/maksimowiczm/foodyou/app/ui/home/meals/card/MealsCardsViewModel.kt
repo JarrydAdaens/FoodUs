@@ -106,5 +106,6 @@ private fun DiaryEntry.toMealEntryModel(): MealEntryModel =
                 proteins = nutritionFacts.proteins.value,
                 carbohydrates = nutritionFacts.carbohydrates.value,
                 fats = nutritionFacts.fats.value,
+                isPlaceholder = isPlaceholder,
             )
     }
