@@ -7,6 +7,10 @@
     <!-- About screen: link crediting the upstream Food You creator. -->
     <string name="action_original_creator_on_github" translatable="false">Original creator on GitHub</string>
 
+    <!-- Per-meal add buttons (fork): AI scan and fast-text placeholder entry points. -->
+    <string name="headline_ai_scanning">AI scanning</string>
+    <string name="headline_fast_text">Fast text</string>
+
     <string name="en_dash" translatable="false">–</string>
     <string name="em_dash" translatable="false">—</string>
     <string name="not_available_short">N/A</string>

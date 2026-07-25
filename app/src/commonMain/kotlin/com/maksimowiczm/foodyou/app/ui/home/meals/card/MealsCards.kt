@@ -13,6 +13,8 @@ internal fun MealsCards(
     homeState: HomeState,
     onAdd: (epochDay: Long, mealId: Long) -> Unit,
     onQuickAdd: (epochDay: Long, mealId: Long) -> Unit,
+    onAiScan: (epochDay: Long, mealId: Long) -> Unit,
+    onFastText: (epochDay: Long, mealId: Long) -> Unit,
     onEditEntry: (foodEntryId: Long?, manualEntryId: Long?) -> Unit,
     onLongClick: (mealId: Long) -> Unit,
     contentPadding: PaddingValues,
@@ -30,6 +32,8 @@ internal fun MealsCards(
                 meals = diaryMeals,
                 onAdd = { mealId -> onAdd(homeState.selectedDate.toEpochDays(), mealId) },
                 onQuickAdd = { mealId -> onQuickAdd(homeState.selectedDate.toEpochDays(), mealId) },
+                onAiScan = { mealId -> onAiScan(homeState.selectedDate.toEpochDays(), mealId) },
+                onFastText = { mealId -> onFastText(homeState.selectedDate.toEpochDays(), mealId) },
                 onEditEntry = { model ->
                     val foodEntry = model as? FoodMealEntryModel
                     val manualEntry = model as? ManualMealEntryModel
@@ -47,6 +51,8 @@ internal fun MealsCards(
                 meals = diaryMeals,
                 onAdd = { mealId -> onAdd(homeState.selectedDate.toEpochDays(), mealId) },
                 onQuickAdd = { mealId -> onQuickAdd(homeState.selectedDate.toEpochDays(), mealId) },
+                onAiScan = { mealId -> onAiScan(homeState.selectedDate.toEpochDays(), mealId) },
+                onFastText = { mealId -> onFastText(homeState.selectedDate.toEpochDays(), mealId) },
                 onEditEntry = { model ->
                     val foodEntry = model as? FoodMealEntryModel
                     val manualEntry = model as? ManualMealEntryModel

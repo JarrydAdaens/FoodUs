@@ -15,6 +15,8 @@ import com.maksimowiczm.foodyou.app.ui.database.importcsvproducts.ImportCsvProdu
 import com.maksimowiczm.foodyou.app.ui.database.master.DatabaseSettingsScreen
 import com.maksimowiczm.foodyou.app.ui.database.swissfoodcompositiondatabase.SwissFoodCompositionDatabaseScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.add.AddEntryScreen
+import com.maksimowiczm.foodyou.app.ui.food.diary.aiscan.AiScanScreen
+import com.maksimowiczm.foodyou.app.ui.food.diary.fasttext.FastTextScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.CreateQuickAddScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.UpdateQuickAddScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.search.DiaryFoodSearchScreen
@@ -60,6 +62,12 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 },
                 onMealCardQuickAddClick = { epochDay, mealId ->
                     navController.navigateSingleTop(FoodDiaryCreateQuickAdd(epochDay, mealId))
+                },
+                onMealCardAiScanClick = { epochDay, mealId ->
+                    navController.navigateSingleTop(FoodDiaryAiScan(epochDay, mealId))
+                },
+                onMealCardFastTextClick = { epochDay, mealId ->
+                    navController.navigateSingleTop(FoodDiaryFastText(epochDay, mealId))
                 },
                 onGoalsCardLongClick = { navController.navigateSingleTop(GoalsPersonalization) },
                 onGoalsCardClick = { epochDate ->
@@ -177,6 +185,24 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 onSave = { navController.popBackStackInclusive<FoodDiaryCreateQuickAdd>() },
                 date = LocalDate.fromEpochDays(epochDay),
                 mealId = mealId,
+            )
+        }
+        forwardBackwardComposable<FoodDiaryAiScan> {
+            val (epochDay, mealId) = it.toRoute<FoodDiaryAiScan>()
+
+            AiScanScreen(
+                date = LocalDate.fromEpochDays(epochDay),
+                mealId = mealId,
+                onBack = { navController.popBackStackInclusive<FoodDiaryAiScan>() },
+            )
+        }
+        forwardBackwardComposable<FoodDiaryFastText> {
+            val (epochDay, mealId) = it.toRoute<FoodDiaryFastText>()
+
+            FastTextScreen(
+                date = LocalDate.fromEpochDays(epochDay),
+                mealId = mealId,
+                onBack = { navController.popBackStackInclusive<FoodDiaryFastText>() },
             )
         }
         forwardBackwardComposable<UpdateQuickAdd> {
@@ -417,6 +443,10 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
 @Serializable private object ExportCsvProducts
 
 @Serializable private data class FoodDiaryCreateQuickAdd(val epochDay: Long, val mealId: Long)
+
+@Serializable private data class FoodDiaryAiScan(val epochDay: Long, val mealId: Long)
+
+@Serializable private data class FoodDiaryFastText(val epochDay: Long, val mealId: Long)
 
 @Serializable private data class UpdateQuickAdd(val quickAddId: Long)
 
