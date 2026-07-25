@@ -34,11 +34,12 @@ adding the fork's own identity and AI integrations.
 The app carries the ACME Food App identity (with upstream attribution and layered versioning), the
 four-button per-meal logging surface (search, quick add, AI scan, fast placeholder) works end to
 end including placeholder resolution, the settings ergonomics options (graphs, week layout) ship,
-and adopted upstream bugs are fixed.
+reusable meal templates let a day's entries be saved and re-applied on other days, and adopted
+upstream bugs are fixed.
 
 ## Status
 
-Not Started — 0/12 stories complete. Blocked on Milestone 1 reaching daily use.
+Not Started — 0/13 stories complete. Blocked on Milestone 1 reaching daily use.
 
 ---
 
@@ -58,6 +59,7 @@ Not Started — 0/12 stories complete. Blocked on Milestone 1 reaching daily use
 | 10 | [Graph style setting (bar / pie)](#story-10) | Feature | — | — | — | — | Not Started |
 | 11 | [Week layout setting (fixed / scrolling)](#story-11) | Feature | — | — | — | — | Not Started |
 | 12 | [Upstream issue triage & bug adoption](#story-12) | Research | — | — | — | — | Not Started |
+| 13 | [Reusable meal templates](#story-13) | Feature | — | — | — | — | Not Started |
 
 ---
 
@@ -334,6 +336,42 @@ there, then pulled into a milestone).
 
 ---
 
+<a id="story-13"></a>
+
+### Story 13: Reusable meal templates
+
+**Type:** Feature
+
+**Summary:** Add the ability to save a day's logged meal as a reusable, named template and re-apply
+it to another day with its individual items intact — the "save this meal, stamp it onto another
+day" convenience MyFitnessPal and Lose It both have and Food You lacks.
+
+*Confirmed gap (2026-07-25 code investigation):* Food You has no such feature. In its model a `Meal`
+is only a **time-window category** (Breakfast, Lunch…) and a `DiaryMeal` is that category's entries
+for **one specific day** — day-bound, not reusable. The closest existing capability is a `Recipe`
+(a reusable food you build from ingredients), but it is semantically a single composed food:
+adding it collapses to **one** diary entry and it must be deliberately constructed with servings and
+ingredient weights, so it does not capture "what I actually ate at breakfast today" as a re-stampable
+set of separate entries.
+
+*Desired behavior:* from a day's meal, save its entries as a named template; later, apply that
+template to any day/meal so each original item is recreated as its own diary entry (foods, recipes,
+quick-adds preserved). Removes the item-by-item re-entry the owner does for recurring meals.
+
+**Why / value:** Recurring meals (the same breakfast most mornings) are re-entered item by item
+today; a template turns that into one action — a direct hit on Milestone 2's core logging-friction
+goal.
+
+**Rough scope:** New reusable "meal template" concept + persistence in the `fooddiary` slice; a
+save-as-template action on a day's meal; an apply-template flow that fans a template back out into
+individual `DiaryEntry` rows for the chosen day/meal. Additive overlay per the fork philosophy —
+keep the merge-conflict surface small. Open question for planning: whether templates are a new
+first-class entity or built on the existing recipe/`DiaryMeal` machinery.
+
+**Status:** Not Started
+
+---
+
 ## Interdependency Order
 
 1. Story 5 (four-button rework) hosts Stories 6 and 8; build the button surface first or alongside.
@@ -343,6 +381,7 @@ there, then pulled into a milestone).
 4. Identity/About stories (1-4) are independent of the logging stories and of each other, though
    3 and 4 touch the same About screen as 1 — sequence them to avoid churn.
 5. Stories 10-12 are independent.
+6. Story 13 (meal templates) is independent of all other stories.
 
 ---
 
