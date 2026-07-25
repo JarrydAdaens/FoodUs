@@ -38,7 +38,7 @@ used daily long enough for the owner to judge the baseline understood.
 
 ## Status
 
-In Progress — 4/13 stories complete.
+In Progress — 4/14 stories complete.
 
 ---
 
@@ -55,10 +55,11 @@ In Progress — 4/13 stories complete.
 | 7 | [Extract Lose It data](#story-7) | Feature | — | — | — | — | Complete |
 | 8 | [Extract AnyList meal data](#story-8) | Feature | — | — | — | — | In Progress |
 | 9 | [Determine Food You's CSV import schema](#story-9) | Research | — | — | — | — | Complete |
-| 10 | [Build the export script (master JSON → Food You CSV)](#story-10) | Feature | — | — | — | — | Not Started |
-| 11 | [App update mechanism](#story-11) | Tooling | — | — | — | — | Not Started |
-| 12 | [Use the app for a while](#story-12) | Research | — | — | — | — | Not Started |
-| 13 | [Own project infrastructure](#story-13) | Tooling | — | — | — | — | Not Started |
+| 10 | [Build the export script (master JSON → Food You CSV)](#story-10) | Feature | — | — | — | [plan](../implementation-plans/milestone-1/story-10-export-script/plan.md) | Not Started |
+| 11 | [App update mechanism](#story-11) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/story-11-app-update-mechanism/plan.md) | Not Started |
+| 12 | [Use the app for a while](#story-12) | Research | — | — | — | [plan](../implementation-plans/milestone-1/story-12-use-the-app/plan.md) | Not Started |
+| 13 | [Own project infrastructure](#story-13) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/own-project-infrastructure/plan.md) | Not Started |
+| 14 | [Remove the static documentation site](#story-14) | Tooling | — | — | — | — | Not Started |
 
 ---
 
@@ -261,7 +262,8 @@ custom version of Food You.
 
 **Rough scope:** Standalone script outside the app codebase; depends on Stories 5-9.
 
-**Status:** Not Started
+**Status:** Not Started — plan at
+[../implementation-plans/milestone-1/story-10-export-script/plan.md](../implementation-plans/milestone-1/story-10-export-script/plan.md).
 
 ---
 
@@ -282,7 +284,8 @@ requirement.
 acceptable if that's the cleanest mechanism; otherwise any workable direct-deploy mechanism.
 Constraints: updates must not lose local data; must support both the owner's and his wife's phones.
 
-**Status:** Not Started
+**Status:** Not Started — plan at
+[../implementation-plans/milestone-1/story-11-app-update-mechanism/plan.md](../implementation-plans/milestone-1/story-11-app-update-mechanism/plan.md).
 
 ---
 
@@ -301,7 +304,8 @@ keeping.
 
 **Rough scope:** No code. Observations feed Dictation and the backlog.
 
-**Status:** Not Started
+**Status:** Not Started — plan at
+[../implementation-plans/milestone-1/story-12-use-the-app/plan.md](../implementation-plans/milestone-1/story-12-use-the-app/plan.md).
 
 ---
 
@@ -315,20 +319,55 @@ keeping.
 already been repointed at `JarrydAdaens/FoodYou` with **placeholder** Build and Release badges;
 this story makes those placeholders real and sweeps the remaining upstream-pointing surfaces:
 GitHub Actions workflows (a working fork build pipeline; upstream's Release APK workflow expects
-upstream signing), a fork release channel, the docs site config (`docs/zensical.toml` still
-declares upstream's site/repo URLs) and docs pages, issue templates, and store `metadata/` where
-it misrepresents the fork.
+upstream signing), a fork release channel, issue templates, and store `metadata/` where it
+misrepresents the fork. *(The upstream documentation site — `docs/` and its deploy workflow — is
+not re-owned here; it is deleted outright in [Story 14](#story-14).)*
 
-**Why / value:** Right now the repo's automation, docs site, and badges either point at upstream
-or dangle. Independent infrastructure makes build results, releases, and documentation reflect
-this app, and feeds Story 11's update mechanism a real distribution artifact.
+**Why / value:** Right now the repo's automation and badges either point at upstream or dangle.
+Independent infrastructure makes build results and releases reflect this app, and feeds Story 11's
+update mechanism a real distribution artifact.
 
-**Rough scope:** `.github/workflows/`, `docs/`, `.github/ISSUE_TEMPLATE/`, README badge
-verification, `metadata/` review. Coordinate with Story 11 (update mechanism) on signing and
-release channel; keep everything mergeable with upstream per the fork philosophy.
+**Rough scope:** `.github/workflows/` (excluding the docs deploy workflow, owned by Story 14),
+`.github/ISSUE_TEMPLATE/`, README badge verification, `metadata/` review. Coordinate with Story 11
+(update mechanism) on signing and release channel; keep everything mergeable with upstream per the
+fork philosophy.
 
 **Status:** Not Started — plan at
 [../implementation-plans/milestone-1/own-project-infrastructure/plan.md](../implementation-plans/milestone-1/own-project-infrastructure/plan.md).
+
+---
+
+<a id="story-14"></a>
+
+### Story 14: Remove the static documentation site
+
+**Type:** Tooling
+
+**Summary:** Delete the inherited upstream Zensical static documentation site outright. It is
+entirely upstream-branded (author, `foodyou.maksimowiczm.com` domain, copyright, repo, Discord,
+Crowdin, "code contributions not accepted" notice) and has no audience for a private household fork.
+Rather than re-own it (see [Story 13](#story-13)), remove it. Full reconnaissance — file map, build,
+deploy, and coupling — is in
+[wiki/foodyou-docs-site-zensical.md](../wiki/foodyou-docs-site-zensical.md).
+
+**Why / value:** The site is dead weight: it auto-deploys upstream-branded pages to GitHub Pages on
+every push to `main` (`.github/workflows/docs.yml`) with nothing to serve and no one to read it.
+Deleting it is cleaner than maintaining or rebranding pages the fork will never use.
+
+**Rough scope:** Delete-set is self-contained and has **no app-build coupling** (no Gradle
+reference):
+
+- `docs/` — the whole tree (`zensical.toml`, content `docs/`, `overrides/`, `.gitignore`, and the
+  non-published `development/` decision-log + release notes; decide whether to keep those dev notes
+  elsewhere first).
+- `.github/workflows/docs.yml` — the Pages build/deploy workflow.
+
+One related item — **not a blocker for deletion:** the in-app privacy link
+(`FoodYouConfig.kt` → `foodyou.maksimowiczm.com/privacy-policy`) targets *upstream's live domain*,
+so deleting the fork's `docs/` copy does not break it. Swapping that link to the owner's own policy
+is owned separately by **Milestone 2 Story 3**.
+
+**Status:** Not Started
 
 ---
 
@@ -344,6 +383,8 @@ release channel; keep everything mergeable with upstream per the fork philosophy
 5. Story 12 (daily use) runs in parallel once data is imported.
 6. Story 13 (own project infrastructure) is independent, but its release-channel piece should
    coordinate with Story 11's signing/distribution decision.
+7. Story 14 (remove the docs site) is independent and can happen anytime; it removes the docs
+   surface that Story 13 therefore no longer re-owns.
 
 ---
 
