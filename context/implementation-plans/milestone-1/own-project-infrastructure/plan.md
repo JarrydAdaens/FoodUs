@@ -10,9 +10,12 @@
 ## Linked Context
 
 - Milestone: [context/milestones/milestone-1.md](../../../milestones/milestone-1.md)
-- Story: [Story 12: Own project infrastructure](../../../milestones/milestone-1.md#story-12)
+- Story: [Story 13: Own project infrastructure](../../../milestones/milestone-1.md#story-13)
 - Backlog source: none — story created directly from the 2026-07-25 README/infrastructure repointing session
-- Related Plans: none yet; coordinates with [Story 10: App update mechanism](../../../milestones/milestone-1.md#story-10) (no plan exists for it yet)
+- Related Plans: [Story 11: App update mechanism plan](../story-11-app-update-mechanism/plan.md)
+  ([story](../../../milestones/milestone-1.md#story-11)). Agreed boundary: Story 11 owns the
+  signing/distribution decision; Story 13 provides the CI artifact and release channel that
+  Story 11 consumes.
 - External Tooling: `commit-log` skill for commits; `rails-grade-cer` if formal grading is wanted before dispatch
 
 ## CER
@@ -52,8 +55,9 @@ presents itself as `maksimowiczm/FoodYou`.
 
 - App identity rename (ACME Food App in-app name, icons, application id) — Milestone 2 identity
   story.
-- The actual device update/distribution mechanism — Story 10 owns signing and delivery to phones;
-  this story only provides the CI artifact and release channel it can consume.
+- The actual device update/distribution mechanism — Story 11 owns the signing/distribution
+  decision and delivery to phones; this story only provides the CI artifact and release channel
+  it can consume.
 - Play Store publication.
 - Any production code changes.
 
@@ -88,11 +92,11 @@ presents itself as `maksimowiczm/FoodYou`.
 
 ## Questions / Unknowns
 
-- Q: Should the fork's CI build sign with a real release keystore, or is a debug/dev-release APK
-  enough for the badge and Story 10's needs?
-  Impact: Determines whether repository secrets and keystore generation are in this story or
-  deferred to Story 10.
-  Assumption: Debug-signed CI artifact is enough here; real signing lands with Story 10.
+- Q: Is a debug/dev-release APK from CI enough for the badge and for the artifact Story 11
+  consumes, or does the release channel need Story 11's chosen signing from day one?
+  Impact: Story 11 owns the signing/distribution decision; this only determines whether Story 13
+  ships its CI artifact before or after that decision lands.
+  Assumption: Debug-signed CI artifact is enough here; real signing follows Story 11's decision.
   Status: OPEN
 - Q: Does the owner want the docs site actually deployed to `jarrydadaens.github.io`, or parked
   (workflow disabled, config repointed but unpublished)?
@@ -183,7 +187,7 @@ presents itself as `maksimowiczm/FoodYou`.
 
 - Risk: CI signing secrets mishandled (committed keystore or leaked key).
   Mitigation: No secrets in the repo, ever (laws.md §2); if real signing is chosen, keystore lives
-  only in GitHub repository secrets and Story 10's records; default assumption avoids it entirely.
+  only in GitHub repository secrets and Story 11's records; default assumption avoids it entirely.
 - Risk: Remote-side steps can't be verified by the agent (push is forbidden).
   Mitigation: Split validation into local (agent) and remote (owner) checks as above; plan status
   stays In Progress until the owner confirms badge rendering.
