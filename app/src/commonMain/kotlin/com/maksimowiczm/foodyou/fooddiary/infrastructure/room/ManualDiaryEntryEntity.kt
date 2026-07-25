@@ -39,4 +39,9 @@ data class ManualDiaryEntryEntity(
     // Quick Add entries are unaffected.
     val description: String? = null,
     val isPlaceholder: Boolean = false,
+    // Expanded Quick Add quantity context (Milestone 2, Story 18). Both are additive, nullable and
+    // purely descriptive: the embedded nutrient columns above remain the entry's absolute total and
+    // are never scaled by these values. Null on entries created before Story 18.
+    val servingCount: Double? = null,
+    val weightGrams: Double? = null,
 )

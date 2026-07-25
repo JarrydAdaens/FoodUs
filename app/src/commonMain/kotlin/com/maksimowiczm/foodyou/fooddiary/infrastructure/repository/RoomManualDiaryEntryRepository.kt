@@ -35,6 +35,8 @@ internal class RoomManualDiaryEntryRepository(private val dao: ManualDiaryEntryD
         createdAt: LocalDateTime,
         description: String?,
         isPlaceholder: Boolean,
+        servingCount: Double?,
+        weightGrams: Double?,
     ): ManualDiaryEntryId {
         val entry =
             ManualDiaryEntry(
@@ -47,6 +49,8 @@ internal class RoomManualDiaryEntryRepository(private val dao: ManualDiaryEntryD
                 updatedAt = createdAt,
                 description = description,
                 isPlaceholder = isPlaceholder,
+                servingCount = servingCount,
+                weightGrams = weightGrams,
             )
         val id = dao.insert(entry.toEntity())
         return ManualDiaryEntryId(id)
@@ -73,6 +77,8 @@ private fun ManualDiaryEntryEntity.toModel(): ManualDiaryEntry =
                 .toLocalDateTime(TimeZone.currentSystemDefault()),
         description = description,
         isPlaceholder = isPlaceholder,
+        servingCount = servingCount,
+        weightGrams = weightGrams,
     )
 
 private fun ManualDiaryEntry.toEntity(): ManualDiaryEntryEntity {
@@ -90,5 +96,7 @@ private fun ManualDiaryEntry.toEntity(): ManualDiaryEntryEntity {
         updatedEpochSeconds = updatedAt.toInstant(TimeZone.currentSystemDefault()).epochSeconds,
         description = description,
         isPlaceholder = isPlaceholder,
+        servingCount = servingCount,
+        weightGrams = weightGrams,
     )
 }

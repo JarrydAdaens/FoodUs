@@ -58,6 +58,10 @@ fun CreateQuickAddScreen(
                 proteins = proteins,
                 carbohydrates = carbohydrates,
                 fats = fats,
+                description = formState.description.value,
+                fibre = formState.fibre.value,
+                servingCount = formState.servingCount.value,
+                weightGrams = formState.weightGrams.value,
             )
         },
         modifier = modifier,

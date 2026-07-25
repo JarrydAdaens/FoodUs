@@ -36,6 +36,10 @@ internal class UpdateQuickAddViewModel(
         proteins: Double,
         carbohydrates: Double,
         fats: Double,
+        description: String?,
+        fibre: Double?,
+        servingCount: Double?,
+        weightGrams: Double?,
     ) {
         val entry = entry.value
 
@@ -53,7 +57,11 @@ internal class UpdateQuickAddViewModel(
                             proteins = proteins.toNutrientValue(),
                             carbohydrates = carbohydrates.toNutrientValue(),
                             fats = fats.toNutrientValue(),
+                            dietaryFiber = fibre.toNutrientValue(),
                         ),
+                    description = description,
+                    servingCount = servingCount,
+                    weightGrams = weightGrams,
                     updatedAt = dateProvider.now(),
                 )
 

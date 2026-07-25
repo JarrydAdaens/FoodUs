@@ -6,7 +6,10 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import com.maksimowiczm.foodyou.app.ui.common.form.FormField
 import com.maksimowiczm.foodyou.app.ui.common.form.nonBlankStringValidator
+import com.maksimowiczm.foodyou.app.ui.common.form.nonNegativeDoubleValidator
 import com.maksimowiczm.foodyou.app.ui.common.form.nullableDoubleParser
+import com.maksimowiczm.foodyou.app.ui.common.form.nullableStringParser
+import com.maksimowiczm.foodyou.app.ui.common.form.positiveDoubleValidator
 import com.maksimowiczm.foodyou.app.ui.common.form.rememberFormField
 import com.maksimowiczm.foodyou.app.ui.common.form.stringParser
 import com.maksimowiczm.foodyou.app.ui.common.utility.LocalEnergyFormatter
@@ -20,7 +23,8 @@ import org.jetbrains.compose.resources.stringResource
 internal enum class QuickAddFormFieldError {
     Required,
     InvalidNumber,
-    NegativeNumber;
+    NegativeNumber,
+    NotPositiveNumber;
 
     @Composable
     fun stringResource(): String =
@@ -28,9 +32,18 @@ internal enum class QuickAddFormFieldError {
             Required -> stringResource(Res.string.neutral_required)
             InvalidNumber -> stringResource(Res.string.error_invalid_number)
             NegativeNumber -> stringResource(Res.string.error_invalid_number)
+            NotPositiveNumber -> stringResource(Res.string.error_value_must_be_positive)
         }
 }
 
+/**
+ * Seeds the shared Quick Add form used by both create and edit-historical flows.
+ *
+ * @param servingCount Optional serving count (Story 18). Defaults to 1 so a new entry starts at one
+ *   serving; historical entries pass their stored value (or 1 when it predates Story 18).
+ * @param weightGrams Optional total weight in grams (Story 18); null when not supplied.
+ * @param fibre Optional dietary fibre in grams (Story 18); persisted via `NutritionFacts`.
+ */
 @Composable
 internal fun rememberQuickAddFormState(
     name: String = "",
@@ -38,6 +51,10 @@ internal fun rememberQuickAddFormState(
     carbohydrates: Double? = null,
     fats: Double? = null,
     energy: Double? = null,
+    description: String? = null,
+    fibre: Double? = null,
+    servingCount: Double? = 1.0,
+    weightGrams: Double? = null,
 ): QuickAddFormState {
     val energyFormatter = LocalEnergyFormatter.current
     val energyInUserUnit = energy?.let(energyFormatter::fromKcal)
@@ -48,6 +65,13 @@ internal fun rememberQuickAddFormState(
             parser = stringParser(),
             validator = nonBlankStringValidator(onEmpty = { QuickAddFormFieldError.Required }),
             textFieldState = rememberTextFieldState(name),
+        )
+
+    val descriptionForm =
+        rememberFormField(
+            initialValue = description,
+            parser = nullableStringParser<QuickAddFormFieldError>(),
+            textFieldState = rememberTextFieldState(description ?: ""),
         )
 
     val proteinsForm =
@@ -78,6 +102,37 @@ internal fun rememberQuickAddFormState(
                 if (it != null && it < 0) QuickAddFormFieldError.NegativeNumber else null
             },
             textFieldState = rememberTextFieldState(fats?.formatClipZeros() ?: ""),
+        )
+
+    val fibreForm =
+        rememberFormField(
+            initialValue = fibre,
+            parser = nullableDoubleParser(onNotANumber = { QuickAddFormFieldError.InvalidNumber }),
+            validator =
+                nonNegativeDoubleValidator(onNegative = { QuickAddFormFieldError.NegativeNumber }),
+            textFieldState = rememberTextFieldState(fibre?.formatClipZeros() ?: ""),
+        )
+
+    val servingCountForm =
+        rememberFormField(
+            initialValue = servingCount,
+            parser = nullableDoubleParser(onNotANumber = { QuickAddFormFieldError.InvalidNumber }),
+            validator =
+                positiveDoubleValidator(
+                    onNotPositive = { QuickAddFormFieldError.NotPositiveNumber }
+                ),
+            textFieldState = rememberTextFieldState(servingCount?.formatClipZeros() ?: ""),
+        )
+
+    val weightGramsForm =
+        rememberFormField(
+            initialValue = weightGrams,
+            parser = nullableDoubleParser(onNotANumber = { QuickAddFormFieldError.InvalidNumber }),
+            validator =
+                positiveDoubleValidator(
+                    onNotPositive = { QuickAddFormFieldError.NotPositiveNumber }
+                ),
+            textFieldState = rememberTextFieldState(weightGrams?.formatClipZeros() ?: ""),
         )
 
     val energyForm =
@@ -139,20 +194,32 @@ internal fun rememberQuickAddFormState(
         remember(
             nameForm,
             name,
+            descriptionForm,
+            description,
             proteinsForm,
             proteins,
             carbohydratesForm,
             carbohydrates,
             fatsForm,
             fats,
+            fibreForm,
+            fibre,
+            servingCountForm,
+            servingCount,
+            weightGramsForm,
+            weightGrams,
             energyForm,
             energyInUserUnit,
         ) {
             derivedStateOf {
                 nameForm.value != name ||
+                    descriptionForm.value != description ||
                     proteinsForm.value != proteins ||
                     carbohydratesForm.value != carbohydrates ||
                     fatsForm.value != fats ||
+                    fibreForm.value != fibre ||
+                    servingCountForm.value != servingCount ||
+                    weightGramsForm.value != weightGrams ||
                     if (energyInUserUnit == null) {
                         energyForm.value != null && energyForm.value != 0.0
                     } else {
@@ -163,18 +230,26 @@ internal fun rememberQuickAddFormState(
 
     return remember(
         nameForm,
+        descriptionForm,
         proteinsForm,
         carbohydratesForm,
         fatsForm,
+        fibreForm,
+        servingCountForm,
+        weightGramsForm,
         energyForm,
         autoCalculateEnergyState,
         isModifiedState,
     ) {
         QuickAddFormState(
             name = nameForm,
+            description = descriptionForm,
             proteins = proteinsForm,
             carbohydrates = carbohydratesForm,
             fats = fatsForm,
+            fibre = fibreForm,
+            servingCount = servingCountForm,
+            weightGrams = weightGramsForm,
             energy = energyForm,
             autoCalculateEnergyState = autoCalculateEnergyState,
             isModified = isModifiedState,
@@ -185,9 +260,13 @@ internal fun rememberQuickAddFormState(
 @Stable
 internal class QuickAddFormState(
     val name: FormField<String, QuickAddFormFieldError>,
+    val description: FormField<String?, QuickAddFormFieldError>,
     val proteins: FormField<Double?, QuickAddFormFieldError>,
     val carbohydrates: FormField<Double?, QuickAddFormFieldError>,
     val fats: FormField<Double?, QuickAddFormFieldError>,
+    val fibre: FormField<Double?, QuickAddFormFieldError>,
+    val servingCount: FormField<Double?, QuickAddFormFieldError>,
+    val weightGrams: FormField<Double?, QuickAddFormFieldError>,
     val energy: FormField<Double?, QuickAddFormFieldError>,
     autoCalculateEnergyState: MutableState<Boolean>,
     isModified: State<Boolean>,
@@ -201,6 +280,9 @@ internal class QuickAddFormState(
             proteins.error == null &&
             carbohydrates.error == null &&
             fats.error == null &&
+            fibre.error == null &&
+            servingCount.error == null &&
+            weightGrams.error == null &&
             energy.error == null
     }
 }

@@ -40,6 +40,11 @@ fun UpdateQuickAddScreen(
             proteins = entry.nutritionFacts.proteins.value,
             carbohydrates = entry.nutritionFacts.carbohydrates.value,
             fats = entry.nutritionFacts.fats.value,
+            description = entry.description,
+            fibre = entry.nutritionFacts.dietaryFiber.value,
+            // Entries created before Story 18 have no serving count; treat that as one serving.
+            servingCount = entry.servingCount ?: 1.0,
+            weightGrams = entry.weightGrams,
         )
 
     QuickAddScreen(
@@ -57,6 +62,10 @@ fun UpdateQuickAddScreen(
                 proteins = proteins,
                 carbohydrates = carbohydrates,
                 fats = fats,
+                description = formState.description.value,
+                fibre = formState.fibre.value,
+                servingCount = formState.servingCount.value,
+                weightGrams = formState.weightGrams.value,
             )
         },
         modifier = modifier,

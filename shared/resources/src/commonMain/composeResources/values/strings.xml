@@ -16,6 +16,9 @@
     <string name="label_description">Description</string>
     <string name="neutral_optional">Optional</string>
 
+    <!-- Quick Add expansion fields (Milestone 2, Story 18). -->
+    <string name="label_number_of_servings">Number of servings</string>
+
     <!-- Reusable meal templates (Milestone 2, Story 13). -->
     <string name="action_meal_template_menu">Meal template options</string>
     <string name="action_save_as_template">Save as template</string>

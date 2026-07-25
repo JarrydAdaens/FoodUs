@@ -165,6 +165,8 @@ private class FakeManualDiaryEntryRepository : ManualDiaryEntryRepository {
         createdAt: LocalDateTime,
         description: String?,
         isPlaceholder: Boolean,
+        servingCount: Double?,
+        weightGrams: Double?,
     ): ManualDiaryEntryId {
         val id = ManualDiaryEntryId((entries.size + 1).toLong())
         entries +=
@@ -178,6 +180,8 @@ private class FakeManualDiaryEntryRepository : ManualDiaryEntryRepository {
                 updatedAt = createdAt,
                 description = description,
                 isPlaceholder = isPlaceholder,
+                servingCount = servingCount,
+                weightGrams = weightGrams,
             )
         return id
     }

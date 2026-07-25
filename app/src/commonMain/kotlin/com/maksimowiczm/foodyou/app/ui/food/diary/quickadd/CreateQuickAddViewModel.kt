@@ -27,6 +27,10 @@ internal class CreateQuickAddViewModel(
         proteins: Double,
         carbohydrates: Double,
         fats: Double,
+        description: String?,
+        fibre: Double?,
+        servingCount: Double?,
+        weightGrams: Double?,
     ) {
         viewModelScope.launch {
             manualDiaryEntryRepository.insert(
@@ -39,8 +43,12 @@ internal class CreateQuickAddViewModel(
                         proteins = proteins.toNutrientValue(),
                         carbohydrates = carbohydrates.toNutrientValue(),
                         fats = fats.toNutrientValue(),
+                        dietaryFiber = fibre.toNutrientValue(),
                     ),
                 createdAt = dateProvider.now(),
+                description = description,
+                servingCount = servingCount,
+                weightGrams = weightGrams,
             )
 
             eventChannel.send(QuickAddUiEvent.Saved)
