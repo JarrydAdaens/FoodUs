@@ -1,0 +1,117 @@
+{
+  "formatVersion": "0.3.0",
+  "meta": {
+    "description": "Owner's app-independent master food data. Living/mutable format co-developed while extracting data (Milestone 1, Stories 5-8). Shape may change to fit new data.",
+    "owner": "Jarryd Adaens",
+    "lastSource": "loseit",
+    "idCounters": {
+      "food": 2,
+      "recipe": 5,
+      "meal": 0,
+      "diary": 0
+    }
+  },
+  "foods": [
+    {
+      "id": "food-0001",
+      "name": "Value - Large Pepperoni (Thin & Crispy)",
+      "brand": "Dominoes",
+      "icon": "Pizza",
+      "serving": { "amount": 8, "unit": "slices" },
+      "nutrients": {
+        "energyKcal": 936,
+        "fat": 36,
+        "saturatedFat": 16,
+        "cholesterol": 96,
+        "sodium": 2240,
+        "carbs": 112,
+        "fiber": 8,
+        "sugars": 12,
+        "protein": 44
+      },
+      "source": "loseit",
+      "notes": ""
+    },
+    {
+      "id": "food-0002",
+      "name": "Banana Flavour Bread",
+      "brand": "Happy Rich",
+      "icon": "Banana",
+      "serving": { "amount": 1, "unit": "serving" },
+      "nutrients": {
+        "energyKcal": 101.3,
+        "fat": 2.2,
+        "sodium": 74,
+        "carbs": 17,
+        "sugars": 5.9,
+        "protein": 3.2
+      },
+      "source": "loseit",
+      "notes": ""
+    }
+  ],
+  "recipes": [
+    {
+      "id": "recipe-0001",
+      "name": "Breakfast Toasty",
+      "totalCalories": 400,
+      "ingredients": [
+        { "name": "Cheese, Tasty, Block", "portion": { "amount": 15, "unit": "Grams" }, "energyKcal": 61 },
+        { "name": "Bread, White", "portion": { "amount": 2, "unit": "Slices" }, "energyKcal": 133 },
+        { "name": "Butter, Salted", "portion": { "amount": 1, "unit": "Tablespoon" }, "energyKcal": 103 },
+        { "name": "Egg, Large", "portion": { "amount": 1, "unit": "Each" }, "energyKcal": 72 },
+        { "name": "Sauce, BBQ", "portion": { "amount": 1, "unit": "Tablespoon" }, "energyKcal": 31 }
+      ],
+      "source": "loseit"
+    },
+    {
+      "id": "recipe-0002",
+      "name": "Common Snackage",
+      "totalCalories": 569,
+      "ingredients": [
+        { "name": "McCafe Cappuccino Large", "portion": { "amount": 2, "unit": "Servings" }, "energyKcal": 360 },
+        { "name": "Milk, Whole, 3.25%", "portion": { "amount": 1, "unit": "Cup" }, "energyKcal": 149 },
+        { "name": "Honey", "portion": { "amount": 1, "unit": "Tablespoon" }, "energyKcal": 60 }
+      ],
+      "source": "loseit"
+    },
+    {
+      "id": "recipe-0003",
+      "name": "Quick Collagen Soup",
+      "totalCalories": 107,
+      "ingredients": [
+        { "name": "Spring Vegetable Soup", "portion": { "amount": 1, "unit": "Serving" }, "energyKcal": 58 },
+        { "name": "Collagen Peptides", "portion": { "amount": 10, "unit": "Grams" }, "energyKcal": 35 },
+        { "name": "Superb Stock Chicken Stock Pot", "portion": { "amount": 250, "unit": "Milliliters" }, "energyKcal": 14 }
+      ],
+      "source": "loseit"
+    },
+    {
+      "id": "recipe-0004",
+      "name": "Taco Night",
+      "totalCalories": 742,
+      "ingredients": [
+        { "name": "Simply Heat Slow Cooked Pulle...", "truncatedName": true, "portion": { "amount": 200, "unit": "Grams" }, "energyKcal": 309 },
+        { "name": "Hard Taco Shells", "portion": { "amount": 2, "unit": "Pieces" }, "energyKcal": 100 },
+        { "name": "Shredded Cheese", "portion": { "amount": 50, "unit": "Grams" }, "energyKcal": 176 },
+        { "name": "Sour Cream, Regular", "portion": { "amount": 4, "unit": "Tablespoons" }, "energyKcal": 120 },
+        { "name": "Tortilla", "portion": { "amount": 1, "unit": "Serving" }, "energyKcal": 35 },
+        { "name": "Chopped lettuce", "portion": { "amount": 0.25, "unit": "Cup" }, "energyKcal": 2 }
+      ],
+      "source": "loseit"
+    },
+    {
+      "id": "recipe-0005",
+      "name": "Work Noodles",
+      "totalCalories": 444,
+      "ingredients": [
+        { "name": "Migoreng Instant Cup Noodles", "portion": { "amount": 1, "unit": "Serving" }, "energyKcal": 294 },
+        { "name": "Spring Onion, Bulb and Stalk,...", "truncatedName": true, "portion": { "amount": 1, "unit": "Each" }, "energyKcal": 7 },
+        { "name": "Eggs, Whole, Boiled", "portion": { "amount": 2, "unit": "Each" }, "energyKcal": 143 }
+      ],
+      "source": "loseit"
+    }
+  ],
+  "meals": [],
+  "diary": []
+}
