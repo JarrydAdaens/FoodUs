@@ -1,14 +1,15 @@
 {
-  "formatVersion": "0.6.0",
+  "formatVersion": "0.8.0",
   "meta": {
     "description": "Owner's app-independent master food data. Living/mutable format co-developed while extracting data (Milestone 1, Stories 5-8). Shape may change to fit new data.",
     "owner": "Jarryd Adaens",
     "lastSource": "myfitnesspal",
     "idCounters": {
       "food": 6,
-      "recipe": 15,
+      "recipe": 23,
       "meal": 49,
-      "diary": 0
+      "diary": 0,
+      "grocery": 31
     }
   },
   "foods": [
@@ -392,6 +393,151 @@
       },
       "perServingMicronutrientPercentDV": { "vitaminA": 116, "vitaminC": 15, "calcium": 26, "iron": 5 },
       "source": "myfitnesspal"
+    },
+    {
+      "id": "recipe-0016",
+      "name": "Creamy Carrot Soup",
+      "ingredients": [
+        { "name": "Oil", "quantity": "≈21 g" },
+        { "name": "Onion, sliced", "quantity": "≈150 g" },
+        { "name": "Celery stick, sliced", "quantity": "≈40 g" },
+        { "name": "Garlic, crushed", "quantity": "≈6 g" },
+        { "name": "Carrots, thinly sliced", "quantity": "1,000 g" },
+        { "name": "Hot vegetable or chicken stock", "quantity": "≈1,500 g" },
+        { "name": "Thyme", "quantity": "½ small bunch — weight not specified" },
+        { "name": "Double cream, optional", "quantity": "≈23 g" },
+        { "name": "Extra double cream to serve, optional", "quantity": "Quantity not specified" }
+      ],
+      "nutrition": { "basis": "per serving", "energyKcal": 417, "fat": 15, "saturatedFat": 5, "carbs": 53, "sugars": 19, "fiber": 10, "protein": 11, "salt": 1.73 },
+      "source": "anylist"
+    },
+    {
+      "id": "recipe-0017",
+      "name": "Creamy Cheesy Vegetable Bake",
+      "ingredients": [
+        { "name": "Frozen broccoli and cauliflower florets", "quantity": "750 g" },
+        { "name": "Chicken or vegetable stock", "quantity": "≈240 g" },
+        { "name": "Garlic and herb light cream cheese", "quantity": "≈30 g" },
+        { "name": "Cornstarch, arrowroot or tapioca powder", "quantity": "≈8 g" },
+        { "name": "Garlic, crushed", "quantity": "≈3 g" },
+        { "name": "Fresh Italian parsley, chopped", "quantity": "Quantity not specified" },
+        { "name": "Cheddar", "quantity": "90 g" },
+        { "name": "Salt", "quantity": "Quantity not specified" },
+        { "name": "Black pepper", "quantity": "Quantity not specified" }
+      ],
+      "nutrition": { "basis": "per serving", "servingSize": "1 serving", "energyKcal": 214, "fat": 11.3, "saturatedFat": 7.4, "cholesterol": 38, "sodium": 429, "carbs": 15.9, "fiber": 5.9, "sugars": 4.1, "protein": 11.5 },
+      "source": "anylist"
+    },
+    {
+      "id": "recipe-0018",
+      "name": "Cottage Cheese Alfredo",
+      "ingredients": [
+        { "name": "Kosher salt", "quantity": "Not specified" },
+        { "name": "Dry fettuccine", "quantity": "227 g" },
+        { "name": "Extra-virgin olive oil", "quantity": "≈14 g" },
+        { "name": "Low-fat cottage cheese", "quantity": "≈283 g" },
+        { "name": "2% milk", "quantity": "≈244 g" },
+        { "name": "Parmesan, shredded", "quantity": "28 g" },
+        { "name": "Garlic, finely chopped", "quantity": "≈6 g" },
+        { "name": "Unsalted butter, softened", "quantity": "43 g" },
+        { "name": "All-purpose flour", "quantity": "≈8 g" },
+        { "name": "Baby spinach", "quantity": "85 g" },
+        { "name": "Crushed red pepper flakes", "quantity": "Not specified" }
+      ],
+      "nutrition": { "basis": "not shown" },
+      "source": "anylist"
+    },
+    {
+      "id": "recipe-0019",
+      "name": "Cheesy Skillet Corn",
+      "ingredients": [
+        { "name": "Butter", "quantity": "30 g" },
+        { "name": "Corn kernels, fresh or frozen", "quantity": "600 g" },
+        { "name": "Cream cheese, softened", "quantity": "113 g" },
+        { "name": "Cheddar cheese, shredded", "quantity": "60 g" },
+        { "name": "Garlic powder", "quantity": "≈2 g" },
+        { "name": "Salt", "quantity": "Not specified" },
+        { "name": "Black pepper", "quantity": "Not specified" },
+        { "name": "Fresh chives, chopped, optional", "quantity": "≈6 g" }
+      ],
+      "nutrition": { "basis": "not shown" },
+      "source": "anylist"
+    },
+    {
+      "id": "recipe-0020",
+      "name": "Cauliflower & Spinach Dhal",
+      "ingredients": [
+        { "name": "Olive oil", "quantity": "≈14 g" },
+        { "name": "Brown onion, finely chopped", "quantity": "≈150 g" },
+        { "name": "Minced garlic", "quantity": "≈10 g" },
+        { "name": "Crushed ginger", "quantity": "≈10 g" },
+        { "name": "Garam masala", "quantity": "≈4 g" },
+        { "name": "Ground turmeric", "quantity": "≈2 g" },
+        { "name": "Chilli flakes, optional", "quantity": "≈1 g" },
+        { "name": "Cauliflower, cut into small florets", "quantity": "1 head; weight not specified" },
+        { "name": "Red lentils, rinsed and drained", "quantity": "300 g" },
+        { "name": "Chopped tomatoes", "quantity": "420 g" },
+        { "name": "Coconut milk", "quantity": "≈400 g" },
+        { "name": "Vegetable stock", "quantity": "≈250 g" },
+        { "name": "Silverbeet, trimmed and chopped", "quantity": "⅓ bunch; weight not specified" },
+        { "name": "Coriander leaves", "quantity": "¼ bunch; weight not specified" },
+        { "name": "Dry-roasted almonds, chopped", "quantity": "40 g" }
+      ],
+      "nutrition": { "basis": "unspecified", "energyKj": 2304, "energyKcal": 550, "protein": 25, "fat": 26, "saturatedFat": 13, "carbs": 49, "sugars": 14, "fiber": 5, "sodium": 350 },
+      "source": "anylist"
+    },
+    {
+      "id": "recipe-0021",
+      "name": "Creamy Carrot Salad",
+      "servings": 4,
+      "ingredients": [
+        { "name": "Whole-milk plain Greek-style yoghurt", "quantity": "≈61 g" },
+        { "name": "Mayonnaise", "quantity": "≈56 g" },
+        { "name": "Cider vinegar", "quantity": "≈20 g" },
+        { "name": "Honey", "quantity": "≈14 g" },
+        { "name": "Ground turmeric", "quantity": "≈3 g" },
+        { "name": "Ground cumin", "quantity": "≈1 g" },
+        { "name": "Ground pepper", "quantity": "≈0.6 g" },
+        { "name": "Salt", "quantity": "≈1.5 g" },
+        { "name": "Shredded carrots", "quantity": "≈440 g" },
+        { "name": "Golden raisins", "quantity": "≈75 g" },
+        { "name": "Scallions, thinly sliced", "quantity": "≈25 g" }
+      ],
+      "nutrition": { "basis": "per serving", "energyKcal": 195, "fat": 11, "saturatedFat": 2, "unsaturatedFat": 9, "transFat": 0, "cholesterol": 8, "sodium": 249, "carbs": 23, "fiber": 2, "sugars": 17, "protein": 3 },
+      "source": "anylist"
+    },
+    {
+      "id": "recipe-0022",
+      "name": "Garlic Butter Rice",
+      "ingredients": [
+        { "name": "Long-grain white rice", "quantity": "300 g" },
+        { "name": "Garlic, crushed", "quantity": "≈12 g" },
+        { "name": "Salt-reduced French onion soup mix", "quantity": "35 g" },
+        { "name": "Salt-reduced beef stock", "quantity": "≈750 g" },
+        { "name": "Butter", "quantity": "80 g" },
+        { "name": "Continental parsley, chopped", "quantity": "≈10 g" }
+      ],
+      "nutrition": { "basis": "not shown" },
+      "source": "anylist"
+    },
+    {
+      "id": "recipe-0023",
+      "name": "Soft No-Knead Dinner Rolls",
+      "servings": 12,
+      "ingredients": [
+        { "name": "Dry yeast", "quantity": "≈9 g" },
+        { "name": "Caster sugar", "quantity": "≈50 g" },
+        { "name": "Warm water", "quantity": "≈125 g" },
+        { "name": "Bread flour", "quantity": "≈600 g" },
+        { "name": "Extra bread flour for dusting", "quantity": "Quantity not specified" },
+        { "name": "Salt", "quantity": "≈8 g" },
+        { "name": "Milk", "quantity": "≈250 g" },
+        { "name": "Unsalted butter, melted and cooled", "quantity": "50 g" },
+        { "name": "Eggs, without shells", "quantity": "≈100 g" },
+        { "name": "Butter, melted", "quantity": "≈14 g" }
+      ],
+      "nutrition": { "basis": "per serving", "servingSize": "99.6 g", "energyKcal": 255 },
+      "source": "anylist"
     }
   ],
   "meals": [
@@ -1007,5 +1153,280 @@
       "source": "myfitnesspal"
     }
   ],
-  "diary": []
+  "diary": [],
+  "groceryProducts": [
+    {
+      "id": "grocery-0001", "listItem": "Halloumi", "category": "Dairy & Eggs",
+      "product": { "brand": "Woolworths", "name": "Haloumi Cheese", "retailer": "Woolworths", "sizeText": "180g" },
+      "barcode": "9300633735500", "barcodeSource": "https://world.openfoodfacts.org/product/9300633735500",
+      "nutrition": { "basis": "per 100 g", "energyKcal": 284.4, "energyKj": 1191.9, "protein": 18.3, "carbs": 1.1, "sugars": 1.1, "fat": 23.3, "saturatedFat": 16, "sodium": 1130, "salt": 2.825 },
+      "nutritionSource": "https://world.openfoodfacts.org/product/9300633735500", "confidence": "high",
+      "grocery": { "status": "checked", "quantity": null, "price": "$21.00 each", "notes": null },
+      "researchNotes": "Block/slab haloumi. Nutri-Score E.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0002", "listItem": "Milk", "category": "Dairy & Eggs",
+      "product": { "brand": "Coles", "name": "Full Cream Milk", "retailer": "Coles", "sizeText": "3L" },
+      "barcode": "9300601186945", "barcodeSource": "https://world.openfoodfacts.org/product/9300601186945",
+      "nutrition": { "basis": "per 100 mL", "energyKcal": 62, "energyKj": 262, "protein": 3.4, "carbs": 4.4, "sugars": 4.4, "fat": 3.4, "saturatedFat": 2.32, "sodium": 44 },
+      "nutritionSource": "https://world.openfoodfacts.org/product/9300601186945", "confidence": "high",
+      "grocery": { "status": "checked", "quantity": null, "price": null, "notes": null },
+      "researchNotes": "Representative generic full-cream milk (Coles home brand, 3L).", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0003", "listItem": "Bocconcini", "category": "Dairy & Eggs",
+      "product": { "brand": "Woolworths", "name": "Cherry Bocconcini", "retailer": "Woolworths", "sizeText": "220g" },
+      "barcode": "9339687041671", "barcodeSource": "https://world.openfoodfacts.org/product/9339687041671",
+      "nutrition": { "basis": "per 100 g", "energyKcal": 259, "energyKj": 1083, "protein": 18.7, "carbs": 1.4, "sugars": 1, "fat": 20, "saturatedFat": 13.9, "sodium": 145, "salt": 0.3625 },
+      "nutritionSource": "https://world.openfoodfacts.org/product/9339687041671", "confidence": "high",
+      "grocery": { "status": "unchecked", "quantity": "2", "price": "$6.00 each", "notes": "Cherry" },
+      "researchNotes": "Cherry bocconcini. Coles equivalent barcode 9300601431700 if a Coles pick is preferred.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0004", "listItem": "Double cream", "category": "Dairy & Eggs",
+      "product": { "brand": "Woolworths", "name": "Thickened Cream", "retailer": "Woolworths", "sizeText": "300mL" },
+      "barcode": "9300633487201", "barcodeSource": "https://world.openfoodfacts.org/product/9300633487201",
+      "nutrition": { "basis": "per 100 mL", "energyKcal": 329.8, "energyKj": 1379, "protein": 2.3, "carbs": 2.6, "sugars": 2.6, "fat": 35.6, "saturatedFat": 24.5, "sodium": 39 },
+      "nutritionSource": "https://world.openfoodfacts.org/product/9300633487201", "confidence": "medium",
+      "grocery": { "status": "checked", "quantity": "1", "price": "$4.80 each", "notes": "Recipe amount: 1½ tbsp; optional; extra to serve" },
+      "researchNotes": "AU retailers sell 'thickened cream' rather than true 'double cream'; used as the closest match.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0005", "listItem": "Protein drink", "category": "Dairy & Eggs",
+      "product": { "brand": "Sanitarium", "name": "UP&GO Protein Energize Vanilla", "retailer": "Coles/Woolworths", "sizeText": "250mL" },
+      "barcode": "9300652802559", "barcodeSource": "https://world.openfoodfacts.org/product/9300652802559",
+      "nutrition": { "basis": "per 100 mL", "energyKcal": 85.2, "energyKj": 355.84, "protein": 7, "carbs": 9.6, "sugars": 6.2, "fat": 1.8, "saturatedFat": 0.28, "sodium": 90, "fiber": 0.88 },
+      "nutritionSource": "https://world.openfoodfacts.org/product/9300652802559", "confidence": "high",
+      "grocery": { "status": "checked", "quantity": "3", "price": "$4.70 each", "notes": null },
+      "researchNotes": "Sold at both Coles and Woolworths.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0006", "listItem": "Yoghurt pouches", "category": "Dairy & Eggs",
+      "product": { "brand": "Yoplait", "name": "Petit Miam Kids Yoghurt Pouch Banana", "retailer": "Woolworths", "sizeText": "70g" },
+      "barcode": "9310199027575", "barcodeSource": "https://world.openfoodfacts.org/product/9310199027575",
+      "nutrition": { "basis": "per 100 g", "energyKcal": 70, "energyKj": 296, "protein": 3.3, "carbs": 9.1, "sugars": 7.3, "fat": 2.3, "saturatedFat": 1.5, "sodium": 43, "fiber": 0.1 },
+      "nutritionSource": "https://world.openfoodfacts.org/product/9310199027575", "confidence": "medium",
+      "grocery": { "status": "checked", "quantity": "5", "price": "$1.05 each", "notes": null },
+      "researchNotes": "Petit Miam is a common kids squeeze-pouch line; single 70g pouch, often sold in multipacks.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0007", "listItem": "Block butter", "category": "Dairy & Eggs",
+      "product": { "brand": "Western Star", "name": "Unsalted Butter", "retailer": "Coles/Woolworths", "sizeText": "500g" },
+      "barcode": "9310052263102", "barcodeSource": "https://world.openfoodfacts.org/product/9310052263102",
+      "nutrition": { "basis": "per 100 g", "energyKcal": 738.5, "energyKj": 3090, "protein": 0, "carbs": 0, "sugars": 0, "fat": 82.9, "saturatedFat": 54.7, "sodium": 18, "salt": 0.045 },
+      "nutritionSource": "https://world.openfoodfacts.org/product/9310052263102", "confidence": "medium",
+      "grocery": { "status": "checked", "quantity": "1", "price": "$9.50 each", "notes": "Unsalted" },
+      "researchNotes": "kcal derived from kJ. 250g unsalted record (9310052120856) lists energy only.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0008", "listItem": "Long-life milk", "category": "Dairy & Eggs",
+      "product": { "brand": "Devondale", "name": "Full Cream Long Life Milk (UHT)", "retailer": "Coles/Woolworths", "sizeText": "1L" },
+      "barcode": "9300639603018", "barcodeSource": "https://world.openfoodfacts.org/product/9300639603018",
+      "nutrition": { "basis": "per 100 mL", "energyKcal": 63.2, "energyKj": 264, "protein": 3.32, "carbs": 4.8, "sugars": 4.8, "fat": 3.4, "saturatedFat": 2.32, "sodium": 45.2 },
+      "nutritionSource": "https://world.openfoodfacts.org/product/9300639603018", "confidence": "high",
+      "grocery": { "status": "checked", "quantity": null, "price": null, "notes": null },
+      "researchNotes": "Genuine UHT/long-life 1L brick carton.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0009", "listItem": "Sour cream", "category": "Dairy & Eggs",
+      "product": { "brand": "Dairy Farmers", "name": "Sour Cream (full fat)", "retailer": "Coles/Woolworths", "sizeText": null },
+      "barcode": "9300658405853", "barcodeSource": "https://world.openfoodfacts.org/product/9300658405853",
+      "nutrition": { "basis": "per 100 g", "energyKcal": 345.5, "energyKj": 1445.5, "protein": 2, "carbs": 2.5, "sugars": 2.5, "fat": 37, "saturatedFat": 24 },
+      "nutritionSource": "https://world.openfoodfacts.org/product/9300658405853", "confidence": "medium",
+      "grocery": { "status": "checked", "quantity": null, "price": null, "notes": null },
+      "researchNotes": "kcal derived from kJ. OFF record omitted sodium and tub size.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0010", "listItem": "Cheese brick", "category": "Dairy & Eggs",
+      "product": { "brand": "Bega", "name": "Farmer's Tasty Cheese Block (Family Value Pack)", "retailer": "Coles/Woolworths", "sizeText": "1kg" },
+      "barcode": null, "barcodeSource": null,
+      "nutrition": { "basis": "per 100 g", "energyKcal": 411.1, "energyKj": 1720, "protein": 24.2, "fat": 35.3, "saturatedFat": 21.3, "sodium": 720 },
+      "nutritionSource": "https://store.bayoffiresiga.com.au/lines/bega-tasty-cheese-block-1kg", "confidence": "medium",
+      "grocery": { "status": "unchecked", "quantity": "1 kg", "price": "$11.20 each", "notes": null },
+      "researchNotes": "kcal derived from kJ. No confirmed barcode found on OFF for the 1kg variant, so barcode is null. Carbs/sugars labelled '<1g' so omitted. Nutrition from IGA retailer pages.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0011", "listItem": "Eggs", "category": "Dairy & Eggs",
+      "product": { "brand": "Australian Fresh (representative)", "name": "Extra Large Free Range Eggs, 12 pack", "retailer": "Coles/Woolworths", "sizeText": "12 eggs" },
+      "barcode": "9300633637057", "barcodeSource": "https://world.openfoodfacts.org/product/9300633637057",
+      "nutrition": { "basis": "per 100 g", "energyKcal": 164.4, "energyKj": 688, "protein": 14.1, "carbs": 1.6, "sugars": 1.1, "fat": 11.4, "saturatedFat": 3.8, "sodium": 160 },
+      "nutritionSource": "https://world.openfoodfacts.org/product/9300633637057", "confidence": "low",
+      "grocery": { "status": "unchecked", "quantity": null, "price": null, "notes": null },
+      "researchNotes": "Representative pick for a generic free-range dozen carton. kcal derived from kJ.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0012", "listItem": "Bread", "category": "Bakery",
+      "product": { "brand": "Woolworths", "name": "Soft Wholemeal Sandwich Loaf", "retailer": "Woolworths", "sizeText": "650g" },
+      "barcode": "9300633636876", "barcodeSource": "https://world.openfoodfacts.org/product/9300633636876",
+      "nutrition": { "basis": "per 100 g", "energyKcal": 237, "energyKj": 992, "protein": 9.15, "carbs": 40.68, "sugars": 2.71, "fat": 2.71, "saturatedFat": 1.69, "sodium": 380, "fiber": 5.59, "salt": 0.95 },
+      "nutritionSource": "https://world.openfoodfacts.org/product/9300633636876", "confidence": "high",
+      "grocery": { "status": "checked", "quantity": null, "price": null, "notes": null },
+      "researchNotes": "Own-brand wholemeal loaf. White equivalent 9339687336432 had incomplete OFF nutrition.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0013", "listItem": "Biscuits", "category": "Bakery",
+      "product": { "brand": "Arnott's", "name": "Scotch Finger", "retailer": "Coles/Woolworths", "sizeText": "250g" },
+      "barcode": "9310072001777", "barcodeSource": "https://world.openfoodfacts.org/product/9310072001777",
+      "nutrition": { "basis": "per 100 g", "energyKcal": 487, "energyKj": 2146, "protein": 5.88, "carbs": 70.59, "sugars": 17.06, "fat": 22.35, "saturatedFat": 10, "sodium": 520, "fiber": 2.35, "salt": 1.29 },
+      "nutritionSource": "https://world.openfoodfacts.org/product/9310072001777", "confidence": "high",
+      "grocery": { "status": "checked", "quantity": null, "price": "$3.50 each", "notes": null },
+      "researchNotes": "Iconic Australian sweet biscuit sold at both Coles and Woolworths.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0014", "listItem": "Sausage mince", "category": "Meat",
+      "product": { "brand": "Woolworths", "name": "Beef Sausage Mince", "retailer": "Woolworths", "sizeText": "500g" },
+      "barcode": "9339687268863", "barcodeSource": "https://world.openfoodfacts.org/product/9339687268863",
+      "nutrition": { "basis": "per 100 g", "energyKcal": 252, "energyKj": 1054, "protein": 16.1, "carbs": 4.4, "sugars": 1, "fat": 16.1, "saturatedFat": 7.9 },
+      "nutritionSource": "https://world.openfoodfacts.org/product/9339687268863", "confidence": "medium",
+      "grocery": { "status": "checked", "quantity": "500 g", "price": null, "notes": null },
+      "researchNotes": "Woolworths plain beef sausage mince (500g pack). OFF omits sodium, fiber and salt.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0015", "listItem": "Frozen corn", "category": "Produce & Vegetables",
+      "product": { "brand": "Coles", "name": "Snap Frozen Corn Kernels", "retailer": "Coles", "sizeText": "1kg" },
+      "barcode": "9300601260560", "barcodeSource": "https://world.openfoodfacts.org/product/9300601260560",
+      "nutrition": { "basis": "per 100 g", "energyKcal": 93, "energyKj": 391, "protein": 3.1, "carbs": 16.8, "sugars": 3.1, "fat": 1.3, "saturatedFat": 1.3, "sodium": 16, "fiber": 2.5, "salt": 0.04 },
+      "nutritionSource": "https://world.openfoodfacts.org/product/9300601260560", "confidence": "medium",
+      "grocery": { "status": "checked", "quantity": null, "price": "$6.90 each", "notes": "Moved from Dairy" },
+      "researchNotes": "OFF lists saturated fat equal to total fat (1.3g), likely a data-entry artifact; reported as-is.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0016", "listItem": "Cauliflower", "category": "Produce & Vegetables",
+      "product": { "brand": null, "name": "Cauliflower, raw (loose head)", "retailer": "Coles/Woolworths", "sizeText": "1 head, loose" },
+      "barcode": null, "barcodeSource": null,
+      "nutrition": { "basis": "per 100 g", "energyKcal": 25, "energyKj": 104, "protein": 1.92, "carbs": 4.97, "sugars": 1.91, "fat": 0.28, "saturatedFat": 0.13, "sodium": 30, "fiber": 2, "salt": 0.075 },
+      "nutritionSource": "USDA FoodData Central, Cauliflower raw (FDC 169986)", "confidence": "low",
+      "grocery": { "status": "checked", "quantity": "1 head", "price": null, "notes": null },
+      "researchNotes": "Loose fresh produce — no consumer barcode. Generic raw-vegetable nutrition from USDA reference.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0017", "listItem": "Celery", "category": "Produce & Vegetables",
+      "product": { "brand": null, "name": "Celery, raw (loose)", "retailer": "Coles/Woolworths", "sizeText": "loose" },
+      "barcode": null, "barcodeSource": null,
+      "nutrition": { "basis": "per 100 g", "energyKcal": 16, "energyKj": 67, "protein": 0.69, "carbs": 2.97, "sugars": 1.34, "fat": 0.17, "saturatedFat": 0.04, "sodium": 80, "fiber": 1.6, "salt": 0.2 },
+      "nutritionSource": "USDA FoodData Central, Celery raw (FDC 169988)", "confidence": "low",
+      "grocery": { "status": "checked", "quantity": "1 stick", "price": null, "notes": null },
+      "researchNotes": "Loose fresh produce — no consumer barcode. Generic raw-vegetable nutrition from USDA reference.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0018", "listItem": "Carrots", "category": "Produce & Vegetables",
+      "product": { "brand": null, "name": "Carrots, raw (loose)", "retailer": "Coles/Woolworths", "sizeText": "loose, ~1kg" },
+      "barcode": null, "barcodeSource": null,
+      "nutrition": { "basis": "per 100 g", "energyKcal": 41, "energyKj": 173, "protein": 0.93, "carbs": 9.58, "sugars": 4.74, "fat": 0.24, "saturatedFat": 0.037, "sodium": 69, "fiber": 2.8, "salt": 0.175 },
+      "nutritionSource": "USDA FoodData Central, Carrots raw (FDC 170393)", "confidence": "low",
+      "grocery": { "status": "checked", "quantity": "1 kg", "price": null, "notes": null },
+      "researchNotes": "Loose fresh produce — no consumer barcode. Generic raw-vegetable nutrition from USDA reference.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0019", "listItem": "Potatoes", "category": "Produce & Vegetables",
+      "product": { "brand": null, "name": "Potato, raw with skin (brushed, loose)", "retailer": "Coles/Woolworths", "sizeText": "loose, per kg" },
+      "barcode": null, "barcodeSource": null,
+      "nutrition": { "basis": "per 100 g", "energyKcal": 77, "energyKj": 322, "protein": 2.05, "carbs": 17.47, "sugars": 0.82, "fat": 0.09, "saturatedFat": 0.026, "sodium": 6, "fiber": 2.1, "salt": 0.015 },
+      "nutritionSource": "USDA FoodData Central, Potatoes raw flesh and skin (FDC 170026)", "confidence": "low",
+      "grocery": { "status": "checked", "quantity": null, "price": "$8.90 each", "notes": null },
+      "researchNotes": "Loose fresh produce — no consumer barcode. Generic raw-vegetable nutrition (with skin) from USDA reference.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0020", "listItem": "Pancake mix", "category": "Breakfast & Cereal",
+      "product": { "brand": "White Wings", "name": "Original Pancake Shake", "retailer": "Coles/Woolworths", "sizeText": "350g" },
+      "barcode": "9310047211330", "barcodeSource": "https://world.openfoodfacts.org/product/9310047211330",
+      "nutrition": null, "nutritionSource": null, "confidence": "medium",
+      "grocery": { "status": "checked", "quantity": "2", "price": "$1.35 each", "notes": null },
+      "researchNotes": "Barcode matches Coles 5596972 / Woolworths 96730. OFF per-100g panel is unreliable (mislabeled 'as prepared'), so nutrition left null. As-prepared per serve ~177 kcal / 3.9g protein / 37.7g carbs, but serve-size grams unavailable for a per-100g conversion.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0021", "listItem": "Nesquik", "category": "Breakfast & Cereal",
+      "product": { "brand": "Nestlé (Nesquik)", "name": "Nesquik Chocolate Flavoured Powder", "retailer": "Coles/Woolworths", "sizeText": "500g" },
+      "barcode": "9300605120693", "barcodeSource": "https://world.openfoodfacts.org/product/9300605120693",
+      "nutrition": { "basis": "per 100 g", "energyKcal": 391, "protein": 4.5, "carbs": 90, "sugars": 80, "fat": 3.6 },
+      "nutritionSource": "https://world.openfoodfacts.org/product/9300605120693", "confidence": "medium",
+      "grocery": { "status": "checked", "quantity": null, "price": "$4.00 each", "notes": "Moved from Other" },
+      "researchNotes": "Chose 500g entry (internally consistent). Avoided 250g entry (9300605120686) with corrupt OFF energy. kJ/sodium/saturatedFat/fiber not on source.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0022", "listItem": "Cordial", "category": "Beverages",
+      "product": { "brand": "Cottee's", "name": "Apple & Raspberry Zero Sugar Cordial (concentrate)", "retailer": "Coles/Woolworths", "sizeText": "1L" },
+      "barcode": "9300614001259", "barcodeSource": "https://world.openfoodfacts.org/product/9300614001259",
+      "nutrition": { "basis": "per 100 mL", "energyKcal": 3, "energyKj": 15, "protein": 0, "carbs": 0, "sugars": 0, "fat": 0, "sodium": 38, "salt": 0.095 },
+      "nutritionSource": "https://world.openfoodfacts.org/product/9300614001259", "confidence": "low",
+      "grocery": { "status": "unchecked", "quantity": null, "price": null, "notes": null },
+      "researchNotes": "Representative pick. NOTE this is a ZERO-SUGAR variant — a standard sugared cordial would show much higher energy/sugars. Basis is per 100 mL undiluted concentrate.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0023", "listItem": "Blue V", "category": "Beverages",
+      "product": { "brand": "V (V Energy)", "name": "V Blue Guarana Energy Drink", "retailer": "Coles/Woolworths", "sizeText": "500mL" },
+      "barcode": "9415767624207", "barcodeSource": "https://world.openfoodfacts.org/product/9415767624207",
+      "nutrition": { "basis": "per 100 mL", "energyKcal": 58, "energyKj": 244, "protein": 0, "carbs": 13.9, "sugars": 13.8, "fat": 0, "saturatedFat": 0, "sodium": 50 },
+      "nutritionSource": "https://www.calorieking.com/au/en/foods/f/calories-in-energy-drinks-v-blue-guarana-energy-drink/1WYHkngFRw-etrfbcmZ4GA", "confidence": "medium",
+      "grocery": { "status": "checked", "quantity": "1", "price": "$10.20 each", "notes": null },
+      "researchNotes": "Barcode is the correct product; its OFF nutrition panel had data-entry errors, so nutrition is taken from CalorieKing AU (per-100mL) and cross-verified. Sugars matches OFF's 13.8g.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0024", "listItem": "Snacks", "category": "Snacks",
+      "product": null, "barcode": null, "barcodeSource": null, "nutrition": null, "nutritionSource": null, "confidence": "low",
+      "grocery": { "status": "checked", "quantity": null, "price": null, "notes": "Unspecified" },
+      "researchNotes": "Too vague to match a specific product. Needs the user to specify a snack type/brand before a barcode and nutrition can be sourced.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0025", "listItem": "Doritos", "category": "Snacks",
+      "product": { "brand": "Doritos", "name": "Cheese Supreme Corn Chips", "retailer": "Coles/Woolworths", "sizeText": "170g" },
+      "barcode": "9310015241925", "barcodeSource": "https://world.openfoodfacts.org/product/9310015241925",
+      "nutrition": { "basis": "per 100 g", "energyKcal": 520, "energyKj": 2179, "protein": 7.78, "carbs": 59.26, "sugars": 2.22, "fat": 27.04, "saturatedFat": 2.96, "sodium": 610, "fiber": 4.81, "salt": 1.52 },
+      "nutritionSource": "https://world.openfoodfacts.org/product/9310015241925", "confidence": "high",
+      "grocery": { "status": "checked", "quantity": null, "price": null, "notes": "Moved from Other" },
+      "researchNotes": "Cheese Supreme is the most common/representative Australian Doritos flavour; full panel present and consistent.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0026", "listItem": "Red lentils", "category": "Grains, Pasta & Sides",
+      "product": { "brand": "McKenzie's", "name": "Australian Red Split Lentils", "retailer": "Coles/Woolworths", "sizeText": "375g" },
+      "barcode": "9310061121905", "barcodeSource": "https://world.openfoodfacts.org/product/9310061121905",
+      "nutrition": { "basis": "per 100 g", "energyKcal": 322, "energyKj": 1520.8, "protein": 25.2, "carbs": 50, "sugars": 1.4, "fat": 2.4, "saturatedFat": 1, "sodium": 4, "fiber": 19.2, "salt": 0.01 },
+      "nutritionSource": "https://world.openfoodfacts.org/product/9310061121905", "confidence": "high",
+      "grocery": { "status": "checked", "quantity": null, "price": "$4.80 each", "notes": null },
+      "researchNotes": "Single-ingredient red split lentils. Chose McKenzie's over the Coles-brand OFF entry (9310645470320) whose macros did not reconcile with its energy.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0027", "listItem": "Tortillas", "category": "Grains, Pasta & Sides",
+      "product": { "brand": "Mission", "name": "Wraps Original Super Soft", "retailer": "Coles/Woolworths", "sizeText": "567g (large round wraps)" },
+      "barcode": "9317224400495", "barcodeSource": "https://world.openfoodfacts.org/product/9317224400495",
+      "nutrition": { "basis": "per 100 g", "energyKcal": 295.1, "energyKj": 1234.79, "protein": 8.17, "carbs": 45.49, "sugars": 2.96, "fat": 8.17, "saturatedFat": 2.96, "sodium": 830, "fiber": 2.54, "salt": 2.07 },
+      "nutritionSource": "https://world.openfoodfacts.org/product/9317224400495", "confidence": "medium",
+      "grocery": { "status": "checked", "quantity": "2", "price": "$5.50 each", "notes": "Large" },
+      "researchNotes": "Large-format round wrap. kcal derived from kJ; OFF's 487 kcal rejected as inconsistent with kJ/macros (~295 kcal).", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0028", "listItem": "Pasta", "category": "Grains, Pasta & Sides",
+      "product": { "brand": "San Remo", "name": "Penne No. 18", "retailer": "Coles/Woolworths", "sizeText": "500g" },
+      "barcode": "9310155202336", "barcodeSource": "https://world.openfoodfacts.org/product/9310155202336",
+      "nutrition": { "basis": "per 100 g", "energyKcal": 354, "energyKj": 1534.5, "protein": 12.5, "carbs": 72, "sugars": 2.2, "fat": 2, "saturatedFat": 0.4, "sodium": 30, "fiber": 3, "salt": 0.075 },
+      "nutritionSource": "https://world.openfoodfacts.org/product/9310155202336", "confidence": "high",
+      "grocery": { "status": "checked", "quantity": null, "price": "$2.95 each", "notes": null },
+      "researchNotes": "Representative 500g dried pasta; 100% durum wheat semolina.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0029", "listItem": "Coles coconut milk", "category": "Soups & Canned Goods",
+      "product": { "brand": "Coles", "name": "Coconut Milk", "retailer": "Coles", "sizeText": "400 mL can" },
+      "barcode": "9310645326962", "barcodeSource": "https://world.openfoodfacts.org/product/9310645326962",
+      "nutrition": { "basis": "per 100 mL", "energyKcal": 56, "energyKj": 233, "protein": 1, "carbs": 1.8, "sugars": 1, "fat": 5.4, "saturatedFat": 4.2, "sodium": 30, "fiber": 0, "salt": 0.075 },
+      "nutritionSource": "https://world.openfoodfacts.org/product/9310645326962", "confidence": "high",
+      "grocery": { "status": "checked", "quantity": "400 ml can", "price": null, "notes": null },
+      "researchNotes": "Coles-brand coconut milk 400 mL can as specified.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0030", "listItem": "Jelly", "category": "Cooking & Baking",
+      "product": { "brand": "Aeroplane", "name": "Raspberry Flavoured Jelly Crystals", "retailer": "Coles/Woolworths", "sizeText": "85g" },
+      "barcode": "9300619501105", "barcodeSource": "https://world.openfoodfacts.org/product/9300619501105",
+      "nutrition": { "basis": "per 100 g", "energyKcal": 62, "energyKj": 262, "protein": 1.1, "carbs": 14.3, "sugars": 14.3, "fat": 1, "saturatedFat": 1, "sodium": 34, "fiber": 0.2, "salt": 0.085 },
+      "nutritionSource": "https://world.openfoodfacts.org/product/9300619501105", "confidence": "high",
+      "grocery": { "status": "checked", "quantity": null, "price": null, "notes": null },
+      "researchNotes": "Aeroplane raspberry jelly crystals. NOTE OFF values appear to be on a prepared/made-up basis (low for dry crystals); reported as shown.", "source": "shopping-list"
+    },
+    {
+      "id": "grocery-0031", "listItem": "Onion powder", "category": "Cooking & Baking",
+      "product": { "brand": "Masterfoods", "name": "Onion Powder Jar", "retailer": "Coles", "sizeText": "138g jar" },
+      "barcode": null, "barcodeSource": null, "nutrition": null, "nutritionSource": null, "confidence": "low",
+      "grocery": { "status": "checked", "quantity": null, "price": "$6.50 each", "notes": null },
+      "researchNotes": "Representative pick (Masterfoods, Coles product code 1038530). No OFF barcode located; Coles/Masterfoods pages exposed no nutrition panel or GTIN; third-party figures conflicted, so barcode and nutrition left null.", "source": "shopping-list"
+    }
+  ]
 }

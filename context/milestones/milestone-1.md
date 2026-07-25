@@ -53,7 +53,7 @@ In Progress — 3/13 stories complete.
 | 5 | [Define the master data format](#story-5) | Feature | — | — | — | — | Not Started |
 | 6 | [Extract MyFitnessPal data](#story-6) | Feature | — | — | — | — | Complete |
 | 7 | [Extract Lose It data](#story-7) | Feature | — | — | — | — | Complete |
-| 8 | [Extract AnyList meal data](#story-8) | Feature | — | — | — | — | Not Started |
+| 8 | [Extract AnyList meal data](#story-8) | Feature | — | — | — | — | In Progress |
 | 9 | [Determine Food You's CSV import schema](#story-9) | Research | — | — | — | — | Not Started |
 | 10 | [Build the export script (master JSON → Food You CSV)](#story-10) | Feature | — | — | — | — | Not Started |
 | 11 | [App update mechanism](#story-11) | Tooling | — | — | — | — | Not Started |
@@ -217,7 +217,9 @@ it makes the master data reflect real, current eating habits — not just histor
 master format may be extended to accommodate AnyList's meal/recipe structure — still mutable at
 this stage.
 
-**Status:** Not Started
+**Status:** In Progress — 2026-07-25. 8 AnyList recipes extracted into
+`jarryd/working-data/master-data.json`. Remaining: AnyList meal-plan (meal) data, and
+recipe-vs-meal reclassification (see [backlog-1 Story 3](../backlog/backlog-1.md#story-3)).
 
 ---
 
