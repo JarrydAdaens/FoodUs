@@ -51,7 +51,7 @@ import foodyou.app.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun AboutScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
+fun AboutScreen(onBack: () -> Unit, onSponsor: () -> Unit, modifier: Modifier = Modifier) {
     val appConfig = LocalAppConfig.current
     val uriHandler = LocalUriHandler.current
 
@@ -128,6 +128,11 @@ fun AboutScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                 onChangelog = { showChangelog = true },
                 onIdea = { uriHandler.openUri(appConfig.issueTrackerUri) },
                 onEmail = { uriHandler.openUri(appConfig.contactEmailUri) },
+            )
+            Spacer(Modifier.height(24.dp))
+            SponsorButton(
+                onClick = onSponsor,
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
             Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))
         }

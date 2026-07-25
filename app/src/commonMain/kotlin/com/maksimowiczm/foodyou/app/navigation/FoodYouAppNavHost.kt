@@ -85,7 +85,6 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
         forwardBackwardComposable<Settings> {
             SettingsScreen(
                 onBack = { navController.popBackStackInclusive<Settings>() },
-                onSponsor = { navController.navigateSingleTop(Sponsor) },
                 onAbout = { navController.navigateSingleTop(About) },
                 onMeals = { navController.navigateSingleTop(MealSetup) },
                 onLanguage = { navController.navigateSingleTop(Language) },
@@ -98,7 +97,10 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
             LanguageScreen(onBack = { navController.popBackStackInclusive<Language>() })
         }
         forwardBackwardComposable<About> {
-            AboutScreen(onBack = { navController.popBackStackInclusive<About>() })
+            AboutScreen(
+                onBack = { navController.popBackStackInclusive<About>() },
+                onSponsor = { navController.navigateSingleTop(Sponsor) },
+            )
         }
         forwardBackwardComposable<Sponsor> {
             SponsorScreen(onBack = { navController.popBackStackInclusive<Sponsor>() })
