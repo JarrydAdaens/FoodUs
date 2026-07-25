@@ -20,6 +20,24 @@ policy. The spec also carries the validation one-liner to run after every mutati
 
 Do not restate format rules here; the spec is the single definition.
 
+## Export to Food You CSV (Story 10)
+
+Generate the app-import CSV from the repository root:
+
+```sh
+python jarryd/scripts/export_foodyou_csv.py
+```
+
+Output lands in `exports/foodyou-products-<yyyy-mm-dd>.csv` (untracked — derived
+output, regenerable at will). The script validates `formatVersion` (targets 1.x),
+maps foods, recipes (one collapsed row each), meal items (deduped, no meal-total
+rows), and grocery products (with barcodes) onto Food You's 51-column products
+CSV, and runs self-checks (column count, Name presence, PII scan, numeric
+round-trip) on every run. Rows whose gram weight is unknown use the
+"1 serving = 100 g" convention and are flagged in their `Note`; per-100 mL
+grocery items are written as-is with `Is Liquid = 1`. Validate the data file
+against the schema before exporting (one-liner in the format spec).
+
 ## Staging history
 
 This folder began as a deliberately fast-and-messy staging area: messy copy-pastes from the

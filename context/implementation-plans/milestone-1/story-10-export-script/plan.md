@@ -3,8 +3,8 @@
 ## Metadata
 
 - Task Type: `STORY`
-- Status: `Draft`
-- Owner: Jarryd Adaens (execution agent TBD)
+- Status: `Complete`
+- Owner: Jarryd Adaens (executed by implementation agent, 2026-07-25)
 - Last Updated: 25 July 2026
 
 ## Linked Context
@@ -157,32 +157,32 @@ Normalization policy, per row:
 - Q: **[STORY 10] Is the "1 serving = 100 g" convention acceptable for foods/recipes/meal items with no gram weight?**
   Impact: Determines whether most recipe and meal rows carry usable numbers or are left nutrition-blank. The convention gives correct per-serving energy when logging 100 g, but the gram figure is fictional (misleads if the user logs by real weight).
   Assumption: Yes — correct-when-logged-as-a-serving beats blank, and affected rows are flagged in `Note`.
-  Status: OPEN
-  Answer: —
+  Status: ANSWERED
+  Answer: Proceeded on the recorded assumption, 2026-07-25 (owner unavailable mid-run). Convention applied; every affected row carries `serving=100g convention` (plus the true source serving/portion text) in its Note.
 
 - Q: **[STORY 10] Meals: items-only (no meal-total row), with the grouping preserved only in the Note and in master JSON — acceptable?**
   Impact: This is the crux of "expand on insertion" vs a products-only import. An additional meal-total row would let one-tap logging of a whole meal but violates expand semantics and double-represents the data.
   Assumption: Items-only. Rebuilding meal groupings in-app (via Food You's own recipe/meal features) is manual follow-up outside this story.
-  Status: OPEN
-  Answer: —
+  Status: ANSWERED
+  Answer: Proceeded on the recorded assumption, 2026-07-25 (owner unavailable mid-run). Items-only; every item row's Note lists its owning meal(s) (`From meal(s): …`); no meal-total rows exist in the output.
 
 - Q: **[STORY 10] Emit name-only rows for entries with no usable nutrition, or skip them?**
   Impact: Name-only rows put every known item in the catalog (searchable, annotatable later) but pollute it with zero-value entries the app treats as 0-kcal-lookalikes (blank = unknown, so honest — but visually empty).
   Assumption: Emit them, with `Note` explaining the gap; the import is products-only and re-runnable, so pruning later is easy.
-  Status: OPEN
-  Answer: —
+  Status: ANSWERED
+  Answer: Proceeded on the recorded assumption, 2026-07-25 (owner unavailable mid-run). Six name-only rows emitted (3 `not shown` recipes, 3 grocery items with `nutrition: null`), each with a Note explaining the gap.
 
 - Q: **[STORY 10] Per-100 mL grocery items: write values as per-100 g with `Is Liquid = 1` (density ≈ 1), or leave nutrition blank?**
   Impact: 7 of 31 grocery products. Density ≈ 1 is near-exact for milk/water-based liquids, wrong for oils.
   Assumption: Write as-is with `Is Liquid = 1` and a Note; flag any obviously non-aqueous item during execution.
-  Status: OPEN
-  Answer: —
+  Status: ANSWERED
+  Answer: Proceeded on the recorded assumption, 2026-07-25 (owner unavailable mid-run). All 7 per-100 mL items written as-is with `Is Liquid = 1` and a `density ~1 assumed` Note. Execution review: all 7 are aqueous (milk/drink style products) — none oil-based, so the density assumption holds.
 
 - Q: **[STORY 10] Should the generated CSV be committed to the repo, or stay untracked output?**
   Impact: Reproducibility vs churn. master-data.json is already committed, so no new privacy exposure either way (PII already redacted).
   Assumption: Commit the script; leave `jarryd/working-data/exports/` untracked (add to `.gitignore` under `jarryd/`) since the CSV is derived output regenerable at will.
-  Status: OPEN
-  Answer: —
+  Status: ANSWERED
+  Answer: Proceeded on the recorded assumption, 2026-07-25 (owner unavailable mid-run). Script committed at `jarryd/scripts/export_foodyou_csv.py`; `jarryd/working-data/exports/` added to the root `.gitignore`.
 
 ## Execution Steps
 
@@ -349,8 +349,80 @@ is cheaper than writing a second format and migrating.
 
 ## Execution Log
 
-Not yet started — filled in during execution.
+All entries 2026-07-25, single execution session.
+
+1. **Context load & data verification.** Re-read laws, design, milestone Story 10, this plan,
+   the master format spec (v1.0.0) and the CSV schema wiki doc. Validated
+   `master-data.json` against `master-data.schema.json` (jsonschema, draft 2020-12): valid.
+   Live counts confirmed: 6 foods, 23 recipes (basis: 14 per serving / 5 total /
+   3 not shown / 1 unspecified), 49 meals (219 item occurrences, 147 distinct names),
+   0 diary, 31 groceryProducts (21 per 100 g / 7 per 100 mL / 3 null nutrition).
+2. **Open questions.** Owner unavailable mid-run; proceeded on every recorded assumption
+   (Q2-Q6 marked ANSWERED above, "proceeded on assumption, 2026-07-25").
+3. **Script built** at `jarryd/scripts/export_foodyou_csv.py` (Python 3, stdlib only):
+   `formatVersion` 1.x guard, shared nutrient mapper (mg→g for sodium/cholesterol/potassium,
+   kJ→kcal fallback only when kcal absent, %DV and `unsaturatedFat` dropped with Note flags),
+   per-100 g scaling where a gram basis is known (food serving in g; recipe `servingSize`
+   like `"99.6 g"`; meal-item portions matching an unambiguous pure-gram shape like `40 g` /
+   `100/1 gram`), serving=100 g convention otherwise, hand-rolled RFC-4180 writer (strings
+   quoted with `"`→`""`, numbers bare, blanks empty), and fail-loud self-checks.
+4. **Dedup decision during execution.** Meal-item dedup keys on (normalized name,
+   per-100 g values) so identical items at different gram weights merge after scaling
+   (47 occurrences merged) while same-named items with different nutrition stay separate
+   (24 variant rows kept, per this plan's "when in doubt, keep both"). The final
+   (Name, Brand) dedupe was scoped to **cross-group** collisions only, so it removes
+   recipe/meal-item overlaps (3 skipped: Chilli Con Carne ×2, Easy Curry) without
+   swallowing the intentional variants.
+5. **Export run.** Output `jarryd/working-data/exports/foodyou-products-2026-07-25.csv`:
+   229 rows (6 foods + 23 recipes + 169 meal items + 31 grocery products). Self-checks
+   passed: 51-column parse-back on every row, Name present, PII scan clean, numeric
+   round-trip. Spot-checked one row per basis case against master JSON by hand — all
+   conversions correct (e.g. 1610 kcal/500 g → 322 kcal/100 g; 255 kcal/99.6 g serving →
+   256.02 kcal/100 g; sodium 1130 mg → 1.13 g; kJ ignored where kcal present).
+   12 `Take Out:` meal names pass through verbatim into Notes.
+6. **Repo hygiene.** `jarryd/working-data/exports/` added to the root `.gitignore` (Q6);
+   usage section appended to `jarryd/working-data/working-data-readme.md`.
+7. **Emulator round-trip (Pixel 6 AVD, API 36, app debug build).** `:app:assembleDebug`
+   succeeded (JDK 21); APK installed; CSV pushed to `/sdcard/Download/`; app launched.
+   Drove the real import UI via adb taps: Settings → Data backup & export → Import CSV
+   food products → picked the file → the mapper auto-matched all columns from our
+   canonical headers → import reported **"Imported 229 food products"** with no errors.
+8. **Database verification (adb run-as, SQLite pulled to host).** `Product` table holds
+   **205 rows = exactly the distinct (name, brand) set** of the 229 CSV rows — the app's
+   `insertUniqueProduct` dedupes on name+brand, so the 24 same-name nutrient variants were
+   skipped by the app (accepted; first variant wins, master JSON retains all variants).
+   Re-imported the same file: success screen again says 229, but the table still holds
+   205 — **re-import is a no-op** (the count on the success screen is rows processed, not
+   rows inserted). Spot checks in the DB: Haloumi Cheese carries barcode 9300633735500 and
+   its Source URL; 24 products have barcodes; 7 products `isLiquid = 1`; AFG Black
+   Mulberries = 322 kcal / serving weight 500 g; 10 product Notes carry `Take Out:` meal
+   references.
 
 ## Completion Review
 
-Not yet started — filled in after execution.
+**Status: Complete.**
+
+Acceptance criteria:
+
+- CSV imports into Food You v3.4.9 without errors — **verified on emulator** (import UI
+  driven end-to-end; "Imported 229 food products").
+- All three data groups + grocery catalog represented; barcodes carried — **verified in the
+  app's SQLite database** (205 unique products; 24 barcodes; foods/recipes/meal items/
+  grocery all present).
+- No unescaped embedded quote — no source name contains `"`; the writer escapes `""` and
+  the parse-back self-check proves every row is 51 columns.
+- PII: no occurrence of the redacted workplace name in the script, CSV, or changed docs
+  (case-insensitive scan); `Take Out:` names pass through verbatim.
+- Zero changes under `app/` or `shared/` — the script lives in `jarryd/scripts/`.
+- Re-import is a no-op — **verified against the database**, not just the success screen.
+
+Known limitations (accepted, all flagged in row Notes and preserved in master JSON):
+serving=100 g convention rows carry fictional gram weights; meal grouping and recipe
+ingredient structure survive only in Notes; %DV micronutrients and one combined
+`unsaturatedFat` figure are not exported; the app collapses same-name/brand nutrient
+variants to the first row. Real-phone import remains the owner's follow-up (emulator-first
+per this plan's risk mitigation).
+
+Test gap: no automated app-side CSV test exists or was added (Story 9 finding; accepted
+per the unit-testing rule) — validation lives in the script's self-checks plus the
+emulator round-trip above.

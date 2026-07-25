@@ -38,7 +38,7 @@ used daily long enough for the owner to judge the baseline understood.
 
 ## Status
 
-In Progress — 8/15 stories complete.
+In Progress — 9/15 stories complete.
 
 ---
 
@@ -55,7 +55,7 @@ In Progress — 8/15 stories complete.
 | 7 | Complete | [Extract Lose It data](#story-7) | Feature | — | — | — | — |
 | 8 | Complete | [Extract AnyList meal data](#story-8) | Feature | — | — | — | — |
 | 9 | Complete | [Determine Food You's CSV import schema](#story-9) | Research | — | — | — | — |
-| 10 | Not Started | [Build the export script (master JSON → Food You CSV)](#story-10) | Feature | — | — | — | [plan](../implementation-plans/milestone-1/story-10-export-script/plan.md) |
+| 10 | Complete | [Build the export script (master JSON → Food You CSV)](#story-10) | Feature | — | — | — | [plan](../implementation-plans/milestone-1/story-10-export-script/plan.md) |
 | 11 | Not Started | [App update mechanism](#story-11) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/story-11-app-update-mechanism/plan.md) |
 | 12 | Complete | [Use the app for a while](#story-12) | Research | — | — | — | [plan](../implementation-plans/milestone-1/story-12-use-the-app/plan.md) |
 | 13 | Not Started | [Own project infrastructure](#story-13) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/own-project-infrastructure/plan.md) |
@@ -269,8 +269,14 @@ custom version of Food You.
 
 **Rough scope:** Standalone script outside the app codebase; depends on Stories 5-9.
 
-**Status:** Not Started — plan at
-[../implementation-plans/milestone-1/story-10-export-script/plan.md](../implementation-plans/milestone-1/story-10-export-script/plan.md).
+**Status:** Complete — 2026-07-25. Exporter at `jarryd/scripts/export_foodyou_csv.py`
+(Python 3, stdlib only) maps master data v1.0.0 onto the 51-column products CSV: foods and
+grocery products (with barcodes) map directly, recipes emit one collapsed row each, and
+meals emit their deduped items only (expand semantics; no meal-total rows). Round-trip
+verified on the emulator: the app imported all 229 rows without error, re-import was a
+no-op, and barcodes/values were confirmed in the app database. Rows without a known gram
+weight use a flagged "1 serving = 100 g" convention. Execution details in the
+[plan](../implementation-plans/milestone-1/story-10-export-script/plan.md).
 
 ---
 

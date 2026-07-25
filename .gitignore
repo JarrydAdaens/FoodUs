@@ -29,3 +29,6 @@ captures
 !*.xcodeproj/project.xcworkspace/
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
+
+# Owner working data: generated exports are derived output, regenerable at will
+jarryd/working-data/exports/
