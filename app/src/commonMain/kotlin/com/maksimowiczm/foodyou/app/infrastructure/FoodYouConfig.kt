@@ -6,6 +6,7 @@ import com.maksimowiczm.foodyou.common.config.NetworkConfig
 
 internal class FoodYouConfig : AppConfig, NetworkConfig {
     override val versionName: String = BuildConfig.VERSION_NAME
+    override val forkVersionName: String = BuildConfig.FORK_VERSION_NAME
     override val contactEmailUri: String =
         "mailto:maksimowicz.dev@gmail.com?subject=Food You Feedback&body=Food You Version: $versionName\n"
     override val translationUri: String = "https://crowdin.com/project/food-you"

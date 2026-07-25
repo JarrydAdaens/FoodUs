@@ -103,8 +103,17 @@ fun AboutScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                     buildString {
                         append(stringResource(Res.string.headline_version))
                         append(" ")
-                        append(appConfig.versionName)
+                        append(appConfig.forkVersionName)
                     },
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Text(
+                text =
+                    stringResource(
+                        Res.string.description_derived_from_food_you,
+                        appConfig.versionName,
+                    ),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

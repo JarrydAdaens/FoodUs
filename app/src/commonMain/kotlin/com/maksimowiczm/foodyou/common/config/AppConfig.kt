@@ -2,8 +2,11 @@ package com.maksimowiczm.foodyou.common.config
 
 interface AppConfig {
 
-    /** Current version name of the application (e.g. "1.0.0"). */
+    /** Upstream Food You version name this fork derives from (e.g. "3.4.9"). */
     val versionName: String
+
+    /** ACME Food App fork version name, layered on top of [versionName] (e.g. "1.0.0"). */
+    val forkVersionName: String
 
     /** Mailto URI for contacting the developer (including subject and body). */
     val contactEmailUri: String

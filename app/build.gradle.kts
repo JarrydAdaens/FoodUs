@@ -21,6 +21,10 @@ buildConfig {
 
     val versionName = libs.versions.version.name.get()
     buildConfigField("String", "VERSION_NAME", "\"$versionName\"")
+
+    // Fork version, layered on top of the upstream Food You version above.
+    val forkVersionName = libs.versions.fork.version.name.get()
+    buildConfigField("String", "FORK_VERSION_NAME", "\"$forkVersionName\"")
 }
 
 kotlin {
@@ -125,7 +129,10 @@ android {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.maksimowiczm.foodyou"
+        // ACME Food App fork identity. Namespace stays com.maksimowiczm.foodyou so the fork's
+        // source packages, generated resources, and BuildConfig keep upstream's structure for
+        // clean merges; only the shipped application ID diverges.
+        applicationId = "com.acme.foodapp"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = libs.versions.android.versionCode.get().toInt()

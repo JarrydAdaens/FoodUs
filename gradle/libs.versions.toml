@@ -1,5 +1,9 @@
 [versions]
 version-name = "3.4.9"
+# ACME Food App fork version, layered on top of the upstream version-name above.
+# Scheme: major.minor.reserved — the third component is reserved (likely a deploy counter)
+# and is pinned to 0 until that policy is decided.
+fork-version-name = "1.0.0"
 android-versionCode = "123"
 android-compileSdk = "36"
 android-minSdk = "28"

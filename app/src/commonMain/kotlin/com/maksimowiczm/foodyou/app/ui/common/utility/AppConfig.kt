@@ -8,6 +8,7 @@ import com.maksimowiczm.foodyou.common.config.AppConfig
 private val defaultAppConfig =
     object : AppConfig {
         override val versionName: String = "Default version"
+        override val forkVersionName: String = "Default fork version"
         override val contactEmailUri: String = "contactEmailUri"
         override val translationUri: String = "translationUri"
         override val sourceCodeUri: String = "sourceCodeUri"
