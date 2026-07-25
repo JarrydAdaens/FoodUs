@@ -46,6 +46,7 @@ Wielding context thoughtfully has a direct effect on the quality of outcomes. Cl
 
 ## Knowledge Docs
 
+- [master-data-format.md](master-data-format.md) - canonical specification of the master data format v1.0.0 (spec of record for `jarryd/working-data/master-data.json` and its JSON Schema); the app-independent store from which app-specific exports are generated (Milestone 1 Story 5)
 - [foodyou-products-csv-schema.md](foodyou-products-csv-schema.md) - Food You's product CSV import/export schema (51 columns, units, formatting, import rules) and the repo's meal-validation CI; reference for Milestone 1 Story 9 and input to Story 10
 - [foodyou-docs-site-zensical.md](foodyou-docs-site-zensical.md) - scouting doc for the inherited upstream Zensical documentation site under `docs/`: config, content, GitHub Pages deploy workflow, why it's dead weight for the fork, and the removal footprint (incl. the one in-app privacy-link coupling)
 

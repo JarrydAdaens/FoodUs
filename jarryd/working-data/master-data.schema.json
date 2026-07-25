@@ -1,0 +1,294 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/JarrydAdaens/FoodYou/jarryd/working-data/master-data.schema.json",
+  "title": "Master Data Format",
+  "description": "Machine-checkable contract for master-data.json v1.x. Spec of record: context/wiki/master-data-format.md",
+  "type": "object",
+  "required": ["formatVersion", "meta", "foods", "recipes", "meals", "diary", "groceryProducts"],
+  "additionalProperties": false,
+  "properties": {
+    "formatVersion": { "type": "string", "pattern": "^1\\.[0-9]+\\.[0-9]+$" },
+    "meta": {
+      "type": "object",
+      "required": ["description", "owner", "lastSource", "idCounters"],
+      "additionalProperties": false,
+      "properties": {
+        "description": { "type": "string" },
+        "owner": { "type": "string" },
+        "lastSource": { "type": "string" },
+        "idCounters": {
+          "type": "object",
+          "required": ["food", "recipe", "meal", "diary", "grocery"],
+          "additionalProperties": false,
+          "properties": {
+            "food": { "type": "integer", "minimum": 0 },
+            "recipe": { "type": "integer", "minimum": 0 },
+            "meal": { "type": "integer", "minimum": 0 },
+            "diary": { "type": "integer", "minimum": 0 },
+            "grocery": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "foods": { "type": "array", "items": { "$ref": "#/$defs/food" } },
+    "recipes": { "type": "array", "items": { "$ref": "#/$defs/recipe" } },
+    "meals": { "type": "array", "items": { "$ref": "#/$defs/meal" } },
+    "diary": { "type": "array", "items": { "$ref": "#/$defs/diaryEntry" } },
+    "groceryProducts": { "type": "array", "items": { "$ref": "#/$defs/groceryProduct" } }
+  },
+  "$defs": {
+    "appSource": { "enum": ["loseit", "myfitnesspal", "anylist"] },
+    "foodRef": { "type": "string", "pattern": "^(food|grocery)-[0-9]{4}$" },
+    "parsedPortion": {
+      "type": "object",
+      "required": ["amount", "unit"],
+      "additionalProperties": false,
+      "properties": {
+        "amount": { "type": "number" },
+        "unit": { "type": "string" }
+      }
+    },
+    "nutrientKeys": {
+      "description": "Composable key vocabulary. Units implied by key: energyKcal kcal; energyKj kJ; cholesterol/sodium/potassium mg; all others grams.",
+      "type": "object",
+      "properties": {
+        "energyKcal": { "type": "number" },
+        "energyKj": { "type": "number" },
+        "fat": { "type": "number" },
+        "saturatedFat": { "type": "number" },
+        "polyunsaturatedFat": { "type": "number" },
+        "monounsaturatedFat": { "type": "number" },
+        "unsaturatedFat": { "type": "number" },
+        "transFat": { "type": "number" },
+        "cholesterol": { "type": "number" },
+        "sodium": { "type": "number" },
+        "potassium": { "type": "number" },
+        "salt": { "type": "number" },
+        "carbs": { "type": "number" },
+        "fiber": { "type": "number" },
+        "sugars": { "type": "number" },
+        "protein": { "type": "number" }
+      }
+    },
+    "nutrients": {
+      "description": "Standalone nutrient panel: nutrient keys only, nothing else.",
+      "$ref": "#/$defs/nutrientKeys",
+      "unevaluatedProperties": false
+    },
+    "micronutrientPercentDV": {
+      "description": "Micronutrients reported as percent of daily value, kept separate from masses.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "vitaminA": { "type": "number" },
+        "vitaminC": { "type": "number" },
+        "calcium": { "type": "number" },
+        "iron": { "type": "number" }
+      }
+    },
+    "recipeNutrition": {
+      "description": "Canonical recipe nutrition envelope: self-describing basis plus nutrient keys.",
+      "type": "object",
+      "required": ["basis"],
+      "unevaluatedProperties": false,
+      "properties": {
+        "basis": { "enum": ["per serving", "total", "unspecified", "not shown"] },
+        "servingSize": { "type": "string" }
+      },
+      "$ref": "#/$defs/nutrientKeys"
+    },
+    "food": {
+      "type": "object",
+      "required": ["id", "name", "brand", "serving", "nutrients", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^food-[0-9]{4}$" },
+        "name": { "type": "string" },
+        "brand": { "type": ["string", "null"] },
+        "icon": { "type": ["string", "null"] },
+        "serving": { "$ref": "#/$defs/parsedPortion" },
+        "nutrients": { "$ref": "#/$defs/nutrients" },
+        "micronutrientPercentDV": { "$ref": "#/$defs/micronutrientPercentDV" },
+        "source": { "$ref": "#/$defs/appSource" },
+        "notes": { "type": "string" }
+      }
+    },
+    "recipe": {
+      "description": "Canonical envelope (id, name, source, ingredients, nutrition) + faithful source detail per source.",
+      "oneOf": [
+        { "$ref": "#/$defs/loseitRecipe" },
+        { "$ref": "#/$defs/myfitnesspalRecipe" },
+        { "$ref": "#/$defs/anylistRecipe" }
+      ]
+    },
+    "loseitRecipe": {
+      "type": "object",
+      "required": ["id", "name", "ingredients", "nutrition", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/recipeId" },
+        "name": { "type": "string" },
+        "ingredients": { "type": "array", "items": { "$ref": "#/$defs/loseitIngredient" } },
+        "nutrition": { "$ref": "#/$defs/recipeNutrition" },
+        "servings": { "type": "integer" },
+        "source": { "const": "loseit" }
+      }
+    },
+    "myfitnesspalRecipe": {
+      "type": "object",
+      "required": ["id", "name", "ingredients", "nutrition", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/recipeId" },
+        "name": { "type": "string" },
+        "ingredients": { "type": "array", "items": { "$ref": "#/$defs/myfitnesspalIngredient" } },
+        "nutrition": { "$ref": "#/$defs/recipeNutrition" },
+        "servings": { "type": "integer" },
+        "caloriesPerServing": { "type": "number" },
+        "perServingMicronutrientPercentDV": { "$ref": "#/$defs/micronutrientPercentDV" },
+        "source": { "const": "myfitnesspal" }
+      }
+    },
+    "anylistRecipe": {
+      "type": "object",
+      "required": ["id", "name", "ingredients", "nutrition", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/recipeId" },
+        "name": { "type": "string" },
+        "ingredients": { "type": "array", "items": { "$ref": "#/$defs/anylistIngredient" } },
+        "nutrition": { "$ref": "#/$defs/recipeNutrition" },
+        "servings": { "type": "integer" },
+        "source": { "const": "anylist" }
+      }
+    },
+    "recipeId": { "type": "string", "pattern": "^recipe-[0-9]{4}$" },
+    "loseitIngredient": {
+      "type": "object",
+      "required": ["name", "portion", "energyKcal"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "portion": { "$ref": "#/$defs/parsedPortion" },
+        "energyKcal": { "type": "number" },
+        "truncatedName": { "type": "boolean" },
+        "foodId": { "$ref": "#/$defs/foodRef" }
+      }
+    },
+    "myfitnesspalIngredient": {
+      "type": "object",
+      "required": ["name", "portion", "raw"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "portion": { "$ref": "#/$defs/parsedPortion" },
+        "raw": { "type": "string" },
+        "truncatedName": { "type": "boolean" },
+        "foodId": { "$ref": "#/$defs/foodRef" }
+      }
+    },
+    "anylistIngredient": {
+      "type": "object",
+      "required": ["name", "quantity"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "quantity": { "type": "string" },
+        "foodId": { "$ref": "#/$defs/foodRef" }
+      }
+    },
+    "meal": {
+      "type": "object",
+      "required": ["id", "name", "items", "total", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^meal-[0-9]{4}$" },
+        "name": { "type": "string" },
+        "items": { "type": "array", "items": { "$ref": "#/$defs/mealItem" } },
+        "total": { "$ref": "#/$defs/nutrients" },
+        "source": { "$ref": "#/$defs/appSource" }
+      }
+    },
+    "mealItem": {
+      "type": "object",
+      "required": ["name", "portion", "nutrients"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "portion": { "type": "string", "description": "Verbatim source portion string; never parsed." },
+        "nutrients": { "$ref": "#/$defs/nutrients" },
+        "foodId": { "$ref": "#/$defs/foodRef" }
+      }
+    },
+    "diaryEntry": {
+      "type": "object",
+      "required": ["id", "date", "meal", "foodId", "portion", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^diary-[0-9]{4}$" },
+        "date": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
+        "meal": { "type": "string" },
+        "foodId": { "type": "string", "pattern": "^(food|recipe|meal)-[0-9]{4}$" },
+        "portion": { "$ref": "#/$defs/parsedPortion" },
+        "source": { "$ref": "#/$defs/appSource" }
+      }
+    },
+    "groceryProduct": {
+      "type": "object",
+      "required": ["id", "listItem", "category", "product", "barcode", "barcodeSource", "nutrition", "nutritionSource", "confidence", "grocery", "researchNotes", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^grocery-[0-9]{4}$" },
+        "listItem": { "type": "string" },
+        "category": { "type": "string" },
+        "product": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "required": ["brand", "name", "retailer"],
+              "additionalProperties": false,
+              "properties": {
+                "brand": { "type": ["string", "null"] },
+                "name": { "type": "string" },
+                "retailer": { "type": "string" },
+                "sizeText": { "type": ["string", "null"] }
+              }
+            }
+          ]
+        },
+        "barcode": { "type": ["string", "null"] },
+        "barcodeSource": { "type": ["string", "null"] },
+        "nutrition": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "required": ["basis"],
+              "unevaluatedProperties": false,
+              "properties": {
+                "basis": { "enum": ["per 100 g", "per 100 mL"] }
+              },
+              "$ref": "#/$defs/nutrientKeys"
+            }
+          ]
+        },
+        "nutritionSource": { "type": ["string", "null"] },
+        "confidence": { "enum": ["high", "medium", "low"] },
+        "grocery": {
+          "type": "object",
+          "required": ["status", "quantity", "price", "notes"],
+          "additionalProperties": false,
+          "properties": {
+            "status": { "enum": ["checked", "unchecked"] },
+            "quantity": { "type": ["string", "null"] },
+            "price": { "type": ["string", "null"] },
+            "notes": { "type": ["string", "null"] }
+          }
+        },
+        "researchNotes": { "type": "string" },
+        "source": { "const": "shopping-list" }
+      }
+    }
+  }
+}

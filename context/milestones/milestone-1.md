@@ -38,7 +38,7 @@ used daily long enough for the owner to judge the baseline understood.
 
 ## Status
 
-In Progress — 7/15 stories complete.
+In Progress — 8/15 stories complete.
 
 ---
 
@@ -50,7 +50,7 @@ In Progress — 7/15 stories complete.
 | 2 | Complete | [Fill in project context & goals](#story-2) | Docs | — | — | — | — |
 | 3 | Not Started | [Obtain USDA FoodData Central API key](#story-3) | Tooling | — | — | — | — |
 | 4 | Not Started | [Obtain Open Food Facts login](#story-4) | Tooling | — | — | — | — |
-| 5 | Not Started | [Define the master data format](#story-5) | Feature | — | — | — | [plan](../implementation-plans/milestone-1/story-5-master-data-format/plan.md) |
+| 5 | Complete | [Define the master data format](#story-5) | Feature | — | — | — | [plan](../implementation-plans/milestone-1/story-5-master-data-format/plan.md) |
 | 6 | Complete | [Extract MyFitnessPal data](#story-6) | Feature | — | — | — | — |
 | 7 | Complete | [Extract Lose It data](#story-7) | Feature | — | — | — | — |
 | 8 | Complete | [Extract AnyList meal data](#story-8) | Feature | — | — | — | — |
@@ -157,7 +157,10 @@ any future app change.
 is defined alongside the MyFitnessPal export (Story 6) and extended/changed as needed for the
 Lose It data (Story 7) and the AnyList meal data (Story 8).
 
-**Status:** Not Started — plan at
+**Status:** Complete — 2026-07-25. Canonical master data format v1.0.0 specified in
+[../wiki/master-data-format.md](../wiki/master-data-format.md) with JSON Schema
+`jarryd/working-data/master-data.schema.json`; `master-data.json` migrated 0.8.0 → 1.0.0
+with mechanically verified zero data loss. Plan at
 [../implementation-plans/milestone-1/story-5-master-data-format/plan.md](../implementation-plans/milestone-1/story-5-master-data-format/plan.md).
 
 ---

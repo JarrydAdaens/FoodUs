@@ -151,8 +151,8 @@ Normalization policy, per row:
 - Q: **[STORY 10] Does the export target the working v0.8.0 format directly, or must Story 5's canonical master format land first?**
   Impact: The milestone lists Story 5 as a dependency, but Story 5 is Not Started while the working format holds all the real data. Waiting blocks the milestone's import goal; not waiting means the script may need rework when Story 5 normalizes the format.
   Assumption: Target v0.8.0 directly (the readme says the staging file "feeds … the Food You CSV export"); the script checks `formatVersion` and fails loudly on anything but `0.8.x`, making later rework explicit rather than silent.
-  Status: OPEN
-  Answer: —
+  Status: ANSWERED
+  Answer: Story 5 landed first (2026-07-25): the exporter targets canonical **v1.0.0**, specified in `context/wiki/master-data-format.md` with schema `jarryd/working-data/master-data.schema.json`. The script's `formatVersion` guard accepts `1.x` and fails loudly on anything else. Note the shape change from v0.8.0: every recipe now has a `nutrition` envelope with a required `basis` (`"per serving"` / `"total"` / `"unspecified"` / `"not shown"`); `totalCalories` (Lose It) and `perServingNutrients` (MyFitnessPal) no longer exist as separate fields.
 
 - Q: **[STORY 10] Is the "1 serving = 100 g" convention acceptable for foods/recipes/meal items with no gram weight?**
   Impact: Determines whether most recipe and meal rows carry usable numbers or are left nutrition-blank. The convention gives correct per-serving energy when logging 100 g, but the gram figure is fictional (misleads if the user logs by real weight).
@@ -224,7 +224,8 @@ Normalization policy, per row:
    - Why: The import path has no CI; the script must be its own gate. Also enforces the PII law.
    - Edits: Post-generation assertions on the produced file: (a) every row parses back to exactly
      51 columns under RFC-4180 rules; (b) every row has a non-blank Name; (c) no occurrence of
-     `BigAnt` / `Big Ant` (case-insensitive) anywhere in the output; (d) every numeric field
+     the former workplace name (case-insensitive; see agent memory "Food data PII redaction")
+     anywhere in the output; (d) every numeric field
      round-trips `float()`; (e) row-count report per group printed to stdout.
    - Dependencies: step 4.
 
@@ -282,8 +283,8 @@ Normalization policy, per row:
 - All three story data groups are represented per the mapping table; grocery products carry
   their barcodes.
 - No output field contains an unescaped embedded quote (the app's export bug is not reproduced).
-- No `BigAnt`/`Big Ant` text appears anywhere in the output; "Take Out:" names pass through
-  verbatim.
+- No occurrence of the former workplace name (per agent memory "Food data PII redaction")
+  appears anywhere in the output; "Take Out:" names pass through verbatim.
 - Zero changes under `app/` or `shared/`.
 - Re-importing the same file is a no-op (dedup verified).
 
