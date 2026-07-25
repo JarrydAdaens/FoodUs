@@ -38,7 +38,7 @@ used daily long enough for the owner to judge the baseline understood.
 
 ## Status
 
-In Progress — 4/15 stories complete.
+In Progress — 6/15 stories complete.
 
 ---
 
@@ -47,7 +47,7 @@ In Progress — 4/15 stories complete.
 | # | Story | Type | Complexity | Effort | Risk | Plan | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | [Build & deploy Food You](#story-1) | Tooling | — | — | — | — | Complete |
-| 2 | [Fill in project context & goals](#story-2) | Docs | — | — | — | — | In Progress |
+| 2 | [Fill in project context & goals](#story-2) | Docs | — | — | — | — | Complete |
 | 3 | [Obtain USDA FoodData Central API key](#story-3) | Tooling | — | — | — | — | Not Started |
 | 4 | [Obtain Open Food Facts login](#story-4) | Tooling | — | — | — | — | Not Started |
 | 5 | [Define the master data format](#story-5) | Feature | — | — | — | — | Not Started |
@@ -57,7 +57,7 @@ In Progress — 4/15 stories complete.
 | 9 | [Determine Food You's CSV import schema](#story-9) | Research | — | — | — | — | Complete |
 | 10 | [Build the export script (master JSON → Food You CSV)](#story-10) | Feature | — | — | — | [plan](../implementation-plans/milestone-1/story-10-export-script/plan.md) | Not Started |
 | 11 | [App update mechanism](#story-11) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/story-11-app-update-mechanism/plan.md) | Not Started |
-| 12 | [Use the app for a while](#story-12) | Research | — | — | — | [plan](../implementation-plans/milestone-1/story-12-use-the-app/plan.md) | Not Started |
+| 12 | [Use the app for a while](#story-12) | Research | — | — | — | [plan](../implementation-plans/milestone-1/story-12-use-the-app/plan.md) | Complete |
 | 13 | [Own project infrastructure](#story-13) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/own-project-infrastructure/plan.md) | Not Started |
 | 14 | [Remove the static documentation site](#story-14) | Tooling | — | — | — | — | Not Started |
 | 15 | [Establish fork CI/CD pipeline](#story-15) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/story-15-cicd-pipeline/plan.md) | Not Started |
@@ -99,8 +99,9 @@ instead of from memory.
 
 **Rough scope:** `context/` tiers — dictation seed, design, milestones, backlog.
 
-**Status:** In Progress — context tiers initialized from the 2026-07-24 seed. Remains open until
-the owner judges the direction fully captured (Milestone 3 is still TBD by design).
+**Status:** Complete — 2026-07-25. The full project direction — context tiers, goals, milestones,
+and stories — is laid out and the owner judges it captured. Milestone 3 remains TBD by design;
+future direction changes flow through new dictation per the normal context lifecycle.
 
 ---
 
@@ -305,7 +306,8 @@ keeping.
 
 **Rough scope:** No code. Observations feed Dictation and the backlog.
 
-**Status:** Not Started — plan at
+**Status:** Complete — 2026-07-25. Owner judged it done: the app has been in enjoyable daily use,
+and the experience is already feeding customisation stories directly into Milestone 2. Plan at
 [../implementation-plans/milestone-1/story-12-use-the-app/plan.md](../implementation-plans/milestone-1/story-12-use-the-app/plan.md).
 
 ---
