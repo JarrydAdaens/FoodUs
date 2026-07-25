@@ -13,6 +13,7 @@
 
     <!-- AI scanning screen (Milestone 2, Story 6). -->
     <string name="action_take_photo">Take a photo</string>
+    <string name="action_pick_from_gallery">Pick from gallery</string>
     <string name="action_ask_ai">Ask AI</string>
     <string name="action_align">Align</string>
     <string name="action_create_custom_food">Create custom food</string>

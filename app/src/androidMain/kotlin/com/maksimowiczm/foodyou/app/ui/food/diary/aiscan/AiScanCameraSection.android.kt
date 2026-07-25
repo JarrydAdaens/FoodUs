@@ -1,22 +1,29 @@
 package com.maksimowiczm.foodyou.app.ui.food.diary.aiscan
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PhotoCamera
+import androidx.compose.material.icons.filled.PhotoLibrary
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -34,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import foodyou.app.generated.resources.*
@@ -67,6 +75,13 @@ actual fun AiScanCameraSection(
             if (granted) takePicture.launch(null)
         }
 
+    // Story 7: the modern photo picker needs no storage permission. The picked image is decoded and
+    // fed through the same downscale + preview path as a freshly captured photo.
+    val pickFromGallery =
+        rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            uri?.decodeDownscaledJpeg(context)?.let(onPhotoCaptured)
+        }
+
     fun launchCapture() {
         if (hasPermission) {
             takePicture.launch(null)
@@ -75,30 +90,73 @@ actual fun AiScanCameraSection(
         }
     }
 
+    fun launchGallery() {
+        pickFromGallery.launch(
+            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+        )
+    }
+
     if (jpeg == null) {
-        CaptureButton(onClick = ::launchCapture, modifier = modifier)
+        CaptureSection(
+            onCapture = ::launchCapture,
+            onPickFromGallery = ::launchGallery,
+            modifier = modifier,
+        )
     } else {
         PhotoPreview(jpeg = jpeg, onDiscardRetry = onDiscardRetry, modifier = modifier)
     }
 }
 
 @Composable
-private fun CaptureButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
-    Card(onClick = onClick, modifier = modifier.fillMaxWidth().height(220.dp)) {
+private fun CaptureSection(
+    onCapture: () -> Unit,
+    onPickFromGallery: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier.fillMaxWidth().height(220.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        Card(onClick = onCapture, modifier = Modifier.weight(1f).fillMaxHeight()) {
+            Column(
+                modifier = Modifier.fillMaxWidth().fillMaxHeight().padding(24.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Icon(
+                    imageVector = Icons.Default.PhotoCamera,
+                    contentDescription = null,
+                    modifier = Modifier.height(48.dp),
+                )
+                Spacer(Modifier.height(12.dp))
+                Text(
+                    text = stringResource(Res.string.action_take_photo),
+                    style = MaterialTheme.typography.titleMedium,
+                )
+            }
+        }
+        GalleryButton(onClick = onPickFromGallery)
+    }
+}
+
+@Composable
+private fun GalleryButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    OutlinedCard(onClick = onClick, modifier = modifier.width(96.dp).fillMaxHeight()) {
         Column(
-            modifier = Modifier.fillMaxWidth().padding(24.dp),
+            modifier = Modifier.fillMaxWidth().fillMaxHeight().padding(12.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Icon(
-                imageVector = Icons.Default.PhotoCamera,
-                contentDescription = null,
-                modifier = Modifier.height(48.dp),
+                imageVector = Icons.Default.PhotoLibrary,
+                contentDescription = stringResource(Res.string.action_pick_from_gallery),
+                modifier = Modifier.height(32.dp),
             )
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(8.dp))
             Text(
-                text = stringResource(Res.string.action_take_photo),
-                style = MaterialTheme.typography.titleMedium,
+                text = stringResource(Res.string.action_pick_from_gallery),
+                style = MaterialTheme.typography.labelSmall,
+                textAlign = TextAlign.Center,
             )
         }
     }
@@ -159,6 +217,13 @@ private fun PhotoPreview(
             title = { Text(stringResource(Res.string.question_discard_photo)) },
         )
     }
+}
+
+/** Decodes a gallery [Uri] into the same downscaled JPEG a captured photo produces, or null. */
+private fun Uri.decodeDownscaledJpeg(context: Context): ByteArray? {
+    val bitmap =
+        context.contentResolver.openInputStream(this)?.use { BitmapFactory.decodeStream(it) }
+    return bitmap?.toDownscaledJpeg()
 }
 
 /** Downscales so the longest edge is at most [MAX_EDGE] px, then JPEG-encodes at [JPEG_QUALITY]. */
