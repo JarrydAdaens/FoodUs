@@ -38,7 +38,7 @@ used daily long enough for the owner to judge the baseline understood.
 
 ## Status
 
-In Progress — 1/11 stories complete.
+In Progress — 1/13 stories complete.
 
 ---
 
@@ -53,10 +53,12 @@ In Progress — 1/11 stories complete.
 | 5 | [Define the master data format](#story-5) | Feature | — | — | — | — | Not Started |
 | 6 | [Extract MyFitnessPal data](#story-6) | Feature | — | — | — | — | Not Started |
 | 7 | [Extract Lose It data](#story-7) | Feature | — | — | — | — | Not Started |
-| 8 | [Determine Food You's CSV import schema](#story-8) | Research | — | — | — | — | Not Started |
-| 9 | [Build the export script (master JSON → Food You CSV)](#story-9) | Feature | — | — | — | — | Not Started |
-| 10 | [App update mechanism](#story-10) | Tooling | — | — | — | — | Not Started |
-| 11 | [Use the app for a while](#story-11) | Research | — | — | — | — | Not Started |
+| 8 | [Extract AnyList meal data](#story-8) | Feature | — | — | — | — | Not Started |
+| 9 | [Determine Food You's CSV import schema](#story-9) | Research | — | — | — | — | Not Started |
+| 10 | [Build the export script (master JSON → Food You CSV)](#story-10) | Feature | — | — | — | — | Not Started |
+| 11 | [App update mechanism](#story-11) | Tooling | — | — | — | — | Not Started |
+| 12 | [Use the app for a while](#story-12) | Research | — | — | — | — | Not Started |
+| 13 | [Own project infrastructure](#story-13) | Tooling | — | — | — | — | Not Started |
 
 ---
 
@@ -150,7 +152,7 @@ any future app change.
 
 **Rough scope:** Format specification (and likely a schema document). Deliberately **mutable**: it
 is defined alongside the MyFitnessPal export (Story 6) and extended/changed as needed for the
-Lose It data (Story 7).
+Lose It data (Story 7) and the AnyList meal data (Story 8).
 
 **Status:** Not Started
 
@@ -195,14 +197,37 @@ datasets — that's fine, it is still mutable at this stage.
 
 <a id="story-8"></a>
 
-### Story 8: Determine Food You's CSV import schema
+### Story 8: Extract AnyList meal data
+
+**Type:** Feature
+
+**Summary:** Recover the household's meal-planning data from AnyList — the app the owner and his
+wife use daily to plan what they eat. Same deliberately fast-and-messy approach as the MyFitnessPal
+and Lose It extractions: no third-party exporters; the owner does a pass handing AnyList's contents
+to an LLM, which brute-forces it into the master JSON format. AnyList is primarily meals and
+recipes, so this feeds the recipe/meal domain groups rather than diary entries.
+
+**Why / value:** A large share of what the household actually eats is defined in AnyList; capturing
+it makes the master data reflect real, current eating habits — not just historical calorie logs.
+
+**Rough scope:** Manual paste sessions + LLM transformation into master JSON, per Stories 5-7. The
+master format may be extended to accommodate AnyList's meal/recipe structure — still mutable at
+this stage.
+
+**Status:** Not Started
+
+---
+
+<a id="story-9"></a>
+
+### Story 9: Determine Food You's CSV import schema
 
 **Type:** Research
 
 **Summary:** Food You imports data via CSV in a particular format. Find out exactly what that
 format is.
 
-**Why / value:** The export script (Story 9) cannot be written without the exact target schema.
+**Why / value:** The export script (Story 10) cannot be written without the exact target schema.
 
 **Rough scope:** Starting point: an export produced from Food You itself, already located in the
 repository. Confirm against the import/export code in the `importexport` feature slice.
@@ -211,9 +236,9 @@ repository. Confirm against the import/export code in the `importexport` feature
 
 ---
 
-<a id="story-9"></a>
+<a id="story-10"></a>
 
-### Story 9: Build the export script (master JSON → Food You CSV)
+### Story 10: Build the export script (master JSON → Food You CSV)
 
 **Type:** Feature
 
@@ -224,15 +249,15 @@ macro/mineral fundamentals), recipes (stay collapsed), and meals (expand on inse
 **Why / value:** After import, all of the owner's data lives in a platform he owns, in his own
 custom version of Food You.
 
-**Rough scope:** Standalone script outside the app codebase; depends on Stories 5-8.
+**Rough scope:** Standalone script outside the app codebase; depends on Stories 5-9.
 
 **Status:** Not Started
 
 ---
 
-<a id="story-10"></a>
+<a id="story-11"></a>
 
-### Story 10: App update mechanism
+### Story 11: App update mechanism
 
 **Type:** Tooling
 
@@ -251,9 +276,9 @@ Constraints: updates must not lose local data; must support both the owner's and
 
 ---
 
-<a id="story-11"></a>
+<a id="story-12"></a>
 
-### Story 11: Use the app for a while
+### Story 12: Use the app for a while
 
 **Type:** Research
 
@@ -270,23 +295,52 @@ keeping.
 
 ---
 
+<a id="story-13"></a>
+
+### Story 13: Own project infrastructure
+
+**Type:** Tooling
+
+**Summary:** Make the fork's project infrastructure its own instead of upstream's. The README has
+already been repointed at `JarrydAdaens/FoodYou` with **placeholder** Build and Release badges;
+this story makes those placeholders real and sweeps the remaining upstream-pointing surfaces:
+GitHub Actions workflows (a working fork build pipeline; upstream's Release APK workflow expects
+upstream signing), a fork release channel, the docs site config (`docs/zensical.toml` still
+declares upstream's site/repo URLs) and docs pages, issue templates, and store `metadata/` where
+it misrepresents the fork.
+
+**Why / value:** Right now the repo's automation, docs site, and badges either point at upstream
+or dangle. Independent infrastructure makes build results, releases, and documentation reflect
+this app, and feeds Story 11's update mechanism a real distribution artifact.
+
+**Rough scope:** `.github/workflows/`, `docs/`, `.github/ISSUE_TEMPLATE/`, README badge
+verification, `metadata/` review. Coordinate with Story 11 (update mechanism) on signing and
+release channel; keep everything mergeable with upstream per the fork philosophy.
+
+**Status:** Not Started — plan at
+[../implementation-plans/milestone-1/own-project-infrastructure/plan.md](../implementation-plans/milestone-1/own-project-infrastructure/plan.md).
+
+---
+
 ## Interdependency Order
 
 1. Story 1 (build/deploy) — done; unblocks everything.
 2. Stories 2-4 are independent and can happen anytime.
 3. Data pipeline chain: Story 5 (master format) is co-developed with Story 6 (MyFitnessPal), then
-   Story 7 (Lose It) may mutate the format; Story 8 (CSV schema) is independent research; Story 9
-   (export script) needs 5-8.
-4. Story 10 (update mechanism) is independent but must land before customized builds ship to both
+   Story 7 (Lose It) and Story 8 (AnyList meal data) may mutate the format; Story 9 (CSV schema) is
+   independent research; Story 10 (export script) needs 5-9.
+4. Story 11 (update mechanism) is independent but must land before customized builds ship to both
    phones.
-5. Story 11 (daily use) runs in parallel once data is imported.
+5. Story 12 (daily use) runs in parallel once data is imported.
+6. Story 13 (own project infrastructure) is independent, but its release-channel piece should
+   coordinate with Story 11's signing/distribution decision.
 
 ---
 
 ## Backlog Sources
 
 - All stories were mapped directly from the 2026-07-24 initial project seed; none staged in the
-  backlog. Friction findings from Story 11 may spawn new backlog stories.
+  backlog. Friction findings from Story 12 may spawn new backlog stories.
 
 ---
 

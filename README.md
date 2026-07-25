@@ -1,39 +1,36 @@
-> **This is ACME Food App** — Jarryd Adaens's personal fork of
-> [Food You](https://github.com/maksimowiczm/FoodYou) (GPL-3.0). It tailors the app for private
-> household use: recovered historical data, AI-assisted logging, and quality-of-life changes, all
-> as additive overlays that stay mergeable with upstream. Project direction lives in
-> [context/design.md](context/design.md) (with its Milestones Index),
+# ACME Food App
+
+> **ACME Food App** is Jarryd Adaens's personal fork of
+> [Food You](https://github.com/maksimowiczm/FoodYou) (GPL-3.0) by Mateusz Maksimowicz. It tailors
+> the app for private household use: recovered historical data, AI-assisted logging, and
+> quality-of-life changes, all as additive overlays that stay mergeable with upstream. Project
+> direction lives in [context/design.md](context/design.md) (with its Milestones Index),
 > [context/milestones/](context/milestones/), and [context/backlog/](context/backlog/); agent
 > workflow rules live in [AGENTS.md](AGENTS.md) and [AGENTIC_RAILS_README.MD](AGENTIC_RAILS_README.MD).
-> The upstream README follows below, unchanged.
 
----
+[![Build](https://img.shields.io/github/actions/workflow/status/JarrydAdaens/FoodYou/build.yml?label=Build&logo=github)](https://github.com/JarrydAdaens/FoodYou/actions)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/JarrydAdaens/FoodYou?color=black&label=Release&logo=github)](https://github.com/JarrydAdaens/FoodYou/releases/latest/)
+[![GitHub Repo stars](https://img.shields.io/github/stars/JarrydAdaens/FoodYou?style=flat&logo=github&color=%23f8e444)](https://github.com/JarrydAdaens/FoodYou/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/JarrydAdaens/FoodYou?style=flat&logo=github)](https://github.com/JarrydAdaens/FoodYou/forks)
 
-[![F-Droid](https://img.shields.io/f-droid/v/com.maksimowiczm.foodyou?color=b4eb12&label=F-Droid&logo=fdroid&logoColor=1f78d2)](https://f-droid.org/en/packages/com.maksimowiczm.foodyou)
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/maksimowiczm/FoodYou?color=black&label=Stable&logo=github)](https://github.com/maksimowiczm/FoodYou/releases/latest/)
-[![GitHub all releases](https://img.shields.io/github/downloads/maksimowiczm/FoodYou/total?label=Downloads&logo=github)](https://github.com/maksimowiczm/FoodYou/releases/)
-[![GitHub Repo stars](https://img.shields.io/github/stars/maksimowiczm/FoodYou?style=flat&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIC05NjAgOTYwIDk2MCIgd2lkdGg9IjI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxwYXRoIGQ9Im0zNTQtMjQ3IDEyNi03NiAxMjYgNzctMzMtMTQ0IDExMS05Ni0xNDYtMTMtNTgtMTM2LTU4IDEzNS0xNDYgMTMgMTExIDk3LTMzIDE0M1pNMjMzLTgwbDY1LTI4MUw4MC01NTBsMjg4LTI1IDExMi0yNjUgMTEyIDI2NSAyODggMjUtMjE4IDE4OSA2NSAyODEtMjQ3LTE0OUwyMzMtODBabTI0Ny0zNTBaIiBzdHlsZT0iZmlsbDogcmdiKDI0NSwgMjI3LCA2Nik7Ii8%2BCjwvc3ZnPg%3D%3D&color=%23f8e444)](https://github.com/maksimowiczm/FoodYou/stargazers)
+> The Build and Release badges are placeholders: this fork does not yet have its own build
+> pipeline or release channel. Standing those up is tracked as a Milestone 1 story
+> ([context/milestones/milestone-1.md](context/milestones/milestone-1.md)).
 
 <div align="center">
     <img src="./metadata/en-US/images/featureGraphic.png" alt="Feature Graphic" />
 </div>
 
-**Food You** is a free, open-source, and privacy-focused food diary and nutrition tracker built
-using [Material Design](https://m3.material.io/) principles.
+ACME Food App is a free, open-source, and privacy-focused food diary and nutrition tracker built
+using [Material Design](https://m3.material.io/) principles, based on
+[Food You](https://github.com/maksimowiczm/FoodYou).
 
 ## Installation
 
-<div align="center">
-
-[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="75">](https://f-droid.org/packages/com.maksimowiczm.foodyou)
-[<img src="https://s1.ax1x.com/2023/01/12/pSu1a36.png" alt="Download from GitHub" height="75">](https://github.com/maksimowiczm/FoodYou/releases)
-
-</div>
-
-SHA-256 hash of signing certificate: `cd74b0aedd8ead8184063a65909d639a8c885cf6465829690a9be83a8904bdea`
-
-The above signature is also valid for the F-Droid, thanks to [reproducible builds](https://f-droid.org/docs/Reproducible_Builds/)
-
+This fork is not distributed through any public store. It is built locally and side-loaded onto
+the two household devices via adb; a repeatable signing/update mechanism is a Milestone 1 story.
+For the original app, see [Food You on F-Droid](https://f-droid.org/packages/com.maksimowiczm.foodyou)
+or [its GitHub releases](https://github.com/maksimowiczm/FoodYou/releases).
 
 ## ✨ Features
 
@@ -58,59 +55,41 @@ The above signature is also valid for the F-Droid, thanks to [reproducible build
   instantly
 - 🎨 **Material You Design** – Adaptive theming and modern UI
 
+Planned fork additions (see [context/design.md](context/design.md)): recovered MyFitnessPal /
+Lose It history via an owner-controlled master data format, AI-assisted logging, and
+lower-friction logging ergonomics.
+
 ## 🤝 Contributing
 
-Want to help make Food You even better? Here are some great ways to contribute:
+This is a personal fork maintained for private household use, and it is not seeking code
+contributions. Issues and ideas for the fork are tracked in
+[this repository's issues](https://github.com/JarrydAdaens/FoodYou/issues) and the project's
+[context tiers](context/design.md).
 
-- 🌍 **Translate the App** – Help improve international accessibility
-  via [Crowdin](https://crowdin.com/project/food-you). Let me know if you'd like to credited
-- 💡 **Request a Feature** – Got an idea? Open
-  a [GitHub issue](https://github.com/maksimowiczm/FoodYou/issues) to suggest a new feature or
-  improvement
-- 🐞 **Report Bugs** – Found a bug? Submit it
-  via [GitHub issue](https://github.com/maksimowiczm/FoodYou/issues) so it can be fixed
-- ⭐ **Star the Repository** – If you like the project, give it a star
-
-**Important Note:** I am currently not accepting any code contributions due to licensing and the
-fact that this app generates some income.
-
-## ❤️ Sponsor
-
-This app is free, open-source, and ad-free. You directly support full-time development of the
-project.
-
-- [Support on Ko-fi](https://ko-fi.com/maksimowiczm)
-- **BTC**: `bc1qml4g4jwt6mqq2tsk9u7udhwysmjfknx68taln2`
-- **ETH**: `0x7C794aF78235504014cC5c987161b80a803ee514`
-- **Monero**:
-  `41eXqs6zg8PFQ8Fec3iyYcVA3rFHc7wgj9hLRuiVh2FtbE2q2TGoCbhSmVX5R76SmYPpSM2VR7qmD4SQ4YMZCEFK6DGGWfB`
-
-## ✉️ Contact
-
-Have questions, feedback, or want to collaborate? Reach out!
-
-- **Email**: [maksimowicz.dev@gmail.com](mailto:maksimowicz.dev@gmail.com?subject=Food%20You)
-- **Discord**: https://discord.gg/MuF6VZjufn
-
-## 🔄 Similar Open-Source Apps
-
-Looking for alternatives or similar tools?
-
-- [OpenNutriTracker](https://github.com/simonoppowa/OpenNutriTracker)
-- [Energize](https://codeberg.org/epinez/Energize)
-- [FitBook](https://github.com/brandonp2412/FitBook)
-- [Waistline](https://github.com/davidhealey/waistline)
+To contribute to the original app — translations, feature requests, or bug reports — please go
+[upstream to Food You](https://github.com/maksimowiczm/FoodYou#-contributing).
 
 ## 💡 Credits
 
-- [ReadYou](https://github.com/Ashinch/ReadYou) — I shamelessly borrowed inspiration from this
-  project 🙃
+- [Food You](https://github.com/maksimowiczm/FoodYou) by Mateusz Maksimowicz — the upstream
+  project this fork is built on. If you find this useful, support the original author on
+  [Ko-fi](https://ko-fi.com/maksimowiczm).
+- [ReadYou](https://github.com/Ashinch/ReadYou) — upstream's acknowledged inspiration 🙃
 - [Icons8](https://icons8.com) — sushi icon 🍣
+
+## ✉️ Contact
+
+- **Fork:** Jarryd Adaens — [jarryd.adaens@outlook.com.au](mailto:jarryd.adaens@outlook.com.au)
+- **Upstream:** [maksimowicz.dev@gmail.com](mailto:maksimowicz.dev@gmail.com?subject=Food%20You) ·
+  [Discord](https://discord.gg/MuF6VZjufn)
 
 ## 📜 License
 
+This fork remains under the GNU General Public License v3.0, as required by the upstream license.
+
 ```
 Copyright (C) 2024-2026 Mateusz Maksimowicz
+Modifications Copyright (C) 2026 Jarryd Adaens
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
