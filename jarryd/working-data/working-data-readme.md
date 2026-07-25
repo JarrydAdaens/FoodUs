@@ -11,7 +11,7 @@ This is deliberately a fast-and-messy staging area, not the final Story 5 spec. 
 here evolves as new data arrives; once it settles it feeds the canonical master format and
 the Food You CSV export (Story 10).
 
-## Format (v0.3.0)
+## Format (v0.6.0)
 
 Top level:
 
@@ -43,9 +43,16 @@ Top level:
   as-is; omit if absent.
 - Only include nutrient keys the source actually provides. A field the source shows as
   `Optional` (blank) is left out rather than guessed as zero.
-- **Nutrient units** are implied by key: `energyKcal` in kcal; `cholesterol` and `sodium` in
-  milligrams; every other nutrient (`fat`, `saturatedFat`, `carbs`, `fiber`, `sugars`,
+- A source value of `--` (blank/no data) is left out. An explicit `0` is a **real reported
+  zero** and is kept — the two are distinct.
+- **Nutrient units** are implied by key: `energyKcal` in kcal; `cholesterol`, `sodium`, and
+  `potassium` in milligrams; every other `nutrients` key (`fat`, `saturatedFat`,
+  `polyunsaturatedFat`, `monounsaturatedFat`, `transFat`, `carbs`, `fiber`, `sugars`,
   `protein`) in grams.
+- `micronutrientPercentDV` (optional) holds micronutrients the source reports as a **percent
+  of daily value** rather than a mass — `vitaminA`, `vitaminC`, `calcium`, `iron`. Values are
+  the percent number (e.g. `0` means "0 %"). Kept separate so percents are never confused
+  with masses.
 
 ### `diary[]` entry
 
@@ -74,14 +81,73 @@ Top level:
 }
 ```
 
-- Ingredients are captured **inline** (name + portion + calories) exactly as the source
-  lists them — they are not yet linked to `foods[]` entries. Portion `unit` keeps the
-  source's wording (`Grams`, `Slices`, `Each`, `Cup`, ...); fractions become decimals
+Recipe entries are **source-shaped** — they carry whichever fields the source app exposes,
+so a Lose It recipe and a MyFitnessPal recipe do not look identical yet. `source` tells them
+apart; normalization is deferred. Common to both: `id`, `name`, `ingredients[]`, `source`.
+
+**Lose It recipes** carry `totalCalories` and per-ingredient `energyKcal`, but no other
+nutrients:
+
+```json
+{ "id": "recipe-0001", "name": "Breakfast Toasty", "totalCalories": 400,
+  "ingredients": [ { "name": "Bread, White", "portion": { "amount": 2, "unit": "Slices" }, "energyKcal": 133 } ],
+  "source": "loseit" }
+```
+
+**MyFitnessPal recipes** carry `servings`, `caloriesPerServing`, a full `perServingNutrients`
+panel (same keys/units as a food's `nutrients`), and `perServingMicronutrientPercentDV` (same
+keys as a food's `micronutrientPercentDV`). Their ingredients have no per-ingredient
+calories:
+
+```json
+{ "id": "recipe-0007", "name": "Coffee, Full", "servings": 1, "caloriesPerServing": 74,
+  "ingredients": [ { "name": "Full Cream Milk", "portion": { "amount": 100, "unit": "ml" }, "raw": "100 ml, Full Cream Milk" } ],
+  "perServingNutrients": { "energyKcal": 74, "fat": 4, "...": "..." },
+  "perServingMicronutrientPercentDV": { "vitaminA": 0, "vitaminC": 0, "calcium": 15, "iron": 0 },
+  "source": "myfitnesspal" }
+```
+
+Ingredient conventions (both sources):
+
+- Captured **inline** — not yet linked to `foods[]`. Portion `unit` keeps the source's exact
+  wording (`Grams`, `Slices`, `container (402 mls ea.)`, ...); fractions become decimals
   (`1/4 Cup` -> `0.25`).
+- `raw` (MyFitnessPal) holds the original ingredient line verbatim. It is the source of truth
+  when the parsed `name`/`portion` is ambiguous — e.g. a prep modifier between measure and
+  food (`"4 tsp, unpacked, Brown sugar"`), which is parsed as name `Brown sugar` with the
+  modifier preserved only in `raw`.
 - `"truncatedName": true` marks an ingredient whose name the source UI cut off (e.g.
   `"Spring Onion, Bulb and Stalk,..."`) so it can be recovered later.
 
-`meals[]` is still empty — its shape gets defined when meal data arrives (Story 8).
+### `meals[]` entry
+
+A meal is a set of already-portioned items that **expands** into individual diary entries when
+inserted (domain model). Captured from MyFitnessPal "My Meals". Each item carries the six
+values that source lists per row — calories + protein/carbs/fat/sugar/fiber (grams) — and the
+meal's own `total` row is preserved verbatim (it is the source's stated total, not recomputed).
+
+```json
+{ "id": "meal-0001", "name": "Greens",
+  "items": [
+    { "name": "Brussel sprouts", "portion": "100/1 g",
+      "nutrients": { "energyKcal": 43, "protein": 3, "carbs": 9, "fat": 0, "sugars": 2, "fiber": 4 } }
+  ],
+  "total": { "energyKcal": 165, "protein": 9, "carbs": 29, "fat": 0, "sugars": 10, "fiber": 12 },
+  "source": "myfitnesspal" }
+```
+
+- Item `portion` is the source string **verbatim** — no parsing, because these are highly
+  irregular (`100/1 gram`, `4/1 oz (112g)`, `5/4 serving(s)`, `1 pat (1 inch sq, 1/2 inch
+  high)`, and even a float artifact `5404319552844595/18014398509481984 larger` ≈ 0.3).
+- Item `name` keeps the source's `Brand - Food` wording as one string; not yet linked to
+  `foods[]`.
+
+**PII redaction rule:** any meal name containing `BigAnt` / `Big Ant` (a former workplace where
+lunch was provided) is renamed with a `Take Out:` prefix, and the original text is stored
+nowhere in this repository. Apply this to every future paste.
+
+`recipes[]` / `meals[]` remain source-shaped and are not yet cross-linked to `foods[]`;
+normalization is deferred to the master-format work (Stories 5/10).
 
 ## Conventions
 

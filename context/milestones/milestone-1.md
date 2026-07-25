@@ -38,7 +38,7 @@ used daily long enough for the owner to judge the baseline understood.
 
 ## Status
 
-In Progress — 1/13 stories complete.
+In Progress — 3/13 stories complete.
 
 ---
 
@@ -51,8 +51,8 @@ In Progress — 1/13 stories complete.
 | 3 | [Obtain USDA FoodData Central API key](#story-3) | Tooling | — | — | — | — | Not Started |
 | 4 | [Obtain Open Food Facts login](#story-4) | Tooling | — | — | — | — | Not Started |
 | 5 | [Define the master data format](#story-5) | Feature | — | — | — | — | Not Started |
-| 6 | [Extract MyFitnessPal data](#story-6) | Feature | — | — | — | — | Not Started |
-| 7 | [Extract Lose It data](#story-7) | Feature | — | — | — | — | Not Started |
+| 6 | [Extract MyFitnessPal data](#story-6) | Feature | — | — | — | — | Complete |
+| 7 | [Extract Lose It data](#story-7) | Feature | — | — | — | — | Complete |
 | 8 | [Extract AnyList meal data](#story-8) | Feature | — | — | — | — | Not Started |
 | 9 | [Determine Food You's CSV import schema](#story-9) | Research | — | — | — | — | Not Started |
 | 10 | [Build the export script (master JSON → Food You CSV)](#story-10) | Feature | — | — | — | — | Not Started |
@@ -173,7 +173,9 @@ prompts and have an LLM brute-force it into the master JSON format.
 **Rough scope:** Manual copy-paste sessions + LLM transformation into master JSON. The master
 format (Story 5) is being defined at the same time.
 
-**Status:** Not Started
+**Status:** Complete — 2026-07-25. MyFitnessPal custom foods, recipes, and personal meals
+(with workplace PII redacted to "Take Out:") extracted into
+`jarryd/working-data/master-data.json`.
 
 ---
 
@@ -191,7 +193,8 @@ brute-force approach: paste into the LLM and store into the master format.
 **Rough scope:** Same as Story 6. The master format may be extended or changed to accommodate both
 datasets — that's fine, it is still mutable at this stage.
 
-**Status:** Not Started
+**Status:** Complete — 2026-07-25. Lose It custom foods and recipes extracted into
+`jarryd/working-data/master-data.json`.
 
 ---
 
