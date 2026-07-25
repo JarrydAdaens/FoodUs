@@ -3,7 +3,7 @@
 ## Metadata
 
 - Task Type: `STORY`
-- Status: `Draft`
+- Status: `In Progress`
 - Owner: Jarryd Adaens
 - Last Updated: 25 July 2026
 
@@ -99,7 +99,10 @@ verified to render real results from Story 15's workflows — removing the place
   Impact: Touching it invites merge conflicts on every upstream release; leaving it means the repo
   still carries upstream store copy.
   Assumption: Leave content untouched; record the decision in the execution log.
-  Status: OPEN
+  Status: ANSWERED
+  Answer: Proceeded on the recorded assumption (owner unavailable, 2026-07-25): `metadata/`
+  content left byte-identical to upstream for mergeability. Decision recorded in the Execution
+  Log below.
 - Q: Is a debug/dev-release APK from CI enough for the badge and for the artifact Story 11
   consumes, or does the release channel need Story 11's chosen signing from day one?
   Impact: Originally determined this story's CI-artifact scope.
@@ -193,3 +196,42 @@ Not needed — CER is under threshold; single-pass story.
   workflow/docs execution steps from this plan's first draft are superseded by those stories.
 - Unverified claims: badge rendering on the remote repo is unverified until the owner pushes;
   `JarrydAdaens/FoodYou` Actions availability is assumed (a Story 15 prerequisite).
+
+## Execution Log
+
+- 2026-07-25 — Issue template sweep (step 2). Inspected `.github/ISSUE_TEMPLATE/bug-report.yaml`
+  and `feature.yaml`: both are fully generic — no upstream links, contact URLs, or routing.
+  `.github/` has no `ISSUE_TEMPLATE/config.yml`, no PR template, and no CODEOWNERS;
+  `FUNDING.yml` was already neutralized (2026-07-25) and carries only intentional attribution
+  comments. Templates kept as-is so the fork can take issues; zero edits needed.
+  Verified: `grep -ri "maksimowiczm" .github/ISSUE_TEMPLATE/ README.md` returns only intentional
+  attribution (upstream project links, credits, license, upstream contact) — no template hits.
+- 2026-07-25 — `metadata/` decision (steps 1 & 3). Owner unavailable; proceeded on the plan's
+  recorded assumption: **leave `metadata/en-US/` content untouched** (byte-identical to upstream)
+  to preserve mergeability on upstream pulls. The store metadata is F-Droid/fastlane material
+  that only matters to upstream's distribution channels; the fork is not store-published, so
+  carrying upstream copy is harmless and conflict-free. Question marked ANSWERED.
+- 2026-07-25 — Badge verification, local half (step 4). Repointed the README Build badge from the
+  nonexistent shields `build.yml` target to the real Story 15 workflow:
+  `https://github.com/JarrydAdaens/FoodYou/actions/workflows/ci.yml/badge.svg?branch=jarryd%2Fmain`,
+  linking to the `ci.yml` runs page filtered to `jarryd/main`. The Release badge's shields
+  target (`v/release/JarrydAdaens/FoodYou` → releases/latest) was already correct and is
+  unchanged. Softened the README placeholder note: badges are now wired to real targets but
+  render live results only after the owner's remote-side steps (below).
+- Owner's remaining checks (remote half — agent cannot push):
+  1. Push `jarryd/main`, enable GitHub Actions on the fork, switch the default branch to
+     `jarryd/main` (Story 15 prerequisites).
+  2. Confirm `ci.yml` runs green and the README Build badge renders the result.
+  3. Publish the first fork release (Story 15's release workflow / Story 11's signing) and
+     confirm the Release badge resolves.
+
+## Completion Review
+
+- Steps 2–4 (the agent-executable scope) are done: templates verified clean, `metadata/`
+  decision recorded, README badges wired to real targets with the placeholder caveat replaced by
+  an accurate pending-remote note.
+- Status stays `In Progress`: acceptance criterion "badges show real fork results" is
+  remote-gated. The story completes when the owner confirms the Build badge reflects a real
+  `ci.yml` run on `jarryd/main` and the Release badge resolves to a fork release.
+- No upstream file content was modified except `README.md` (already fork-owned); mergeability
+  preserved.

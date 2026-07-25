@@ -58,7 +58,7 @@ In Progress — 11/15 stories complete.
 | 10 | Complete | [Build the export script (master JSON → Food You CSV)](#story-10) | Feature | — | — | — | [plan](../implementation-plans/milestone-1/story-10-export-script/plan.md) |
 | 11 | In Progress | [App update mechanism](#story-11) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/story-11-app-update-mechanism/plan.md) |
 | 12 | Complete | [Use the app for a while](#story-12) | Research | — | — | — | [plan](../implementation-plans/milestone-1/story-12-use-the-app/plan.md) |
-| 13 | Not Started | [Own project infrastructure](#story-13) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/own-project-infrastructure/plan.md) |
+| 13 | In Progress | [Own project infrastructure](#story-13) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/own-project-infrastructure/plan.md) |
 | 14 | Complete | [Remove the static documentation site](#story-14) | Tooling | — | — | — | — |
 | 15 | Complete | [Establish fork CI/CD pipeline](#story-15) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/story-15-cicd-pipeline/plan.md) |
 
@@ -349,7 +349,12 @@ upstream or dangle. Owning them makes the repository present itself as this fork
 **Rough scope:** `.github/ISSUE_TEMPLATE/`, README badge verification (badges consume Story 15's
 workflows), `metadata/` review. Keep everything mergeable with upstream per the fork philosophy.
 
-**Status:** Not Started — plan at
+**Status:** In Progress — 2026-07-25. Local half done: issue templates verified clean (no upstream
+routing; kept as-is), `metadata/` deliberately left untouched for upstream mergeability (decision
+recorded in the plan), and README badges wired to Story 15's real targets (`ci.yml` on
+`jarryd/main`; fork releases) with the placeholder note replaced. Remaining is owner-gated: push,
+enable Actions, switch the default branch, confirm CI runs green and badges render, publish the
+first release. Plan at
 [../implementation-plans/milestone-1/own-project-infrastructure/plan.md](../implementation-plans/milestone-1/own-project-infrastructure/plan.md).
 
 ---

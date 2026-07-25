@@ -8,14 +8,16 @@
 > [context/milestones/](context/milestones/), and [context/backlog/](context/backlog/); agent
 > workflow rules live in [AGENTS.md](AGENTS.md) and [AGENTIC_RAILS_README.MD](AGENTIC_RAILS_README.MD).
 
-[![Build](https://img.shields.io/github/actions/workflow/status/JarrydAdaens/FoodYou/build.yml?label=Build&logo=github)](https://github.com/JarrydAdaens/FoodYou/actions)
+[![Build](https://github.com/JarrydAdaens/FoodYou/actions/workflows/ci.yml/badge.svg?branch=jarryd%2Fmain)](https://github.com/JarrydAdaens/FoodYou/actions/workflows/ci.yml?query=branch%3Ajarryd%2Fmain)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/JarrydAdaens/FoodYou?color=black&label=Release&logo=github)](https://github.com/JarrydAdaens/FoodYou/releases/latest/)
 [![GitHub Repo stars](https://img.shields.io/github/stars/JarrydAdaens/FoodYou?style=flat&logo=github&color=%23f8e444)](https://github.com/JarrydAdaens/FoodYou/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/JarrydAdaens/FoodYou?style=flat&logo=github)](https://github.com/JarrydAdaens/FoodYou/forks)
 
-> The Build and Release badges are placeholders: this fork does not yet have its own build
-> pipeline or release channel. Standing those up is tracked as a Milestone 1 story
-> ([context/milestones/milestone-1.md](context/milestones/milestone-1.md)).
+> The Build badge tracks this fork's own CI ([.github/workflows/ci.yml](.github/workflows/ci.yml))
+> on `jarryd/main`, and the Release badge tracks this fork's GitHub releases. They render live
+> results once GitHub Actions is enabled on the fork, the default branch is switched to
+> `jarryd/main`, and a push triggers the first CI run; the Release badge resolves after the first
+> fork release is published.
 
 <div align="center">
     <img src="./metadata/en-US/images/featureGraphic.png" alt="Feature Graphic" />
