@@ -1,6 +1,11 @@
+import java.util.Properties
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
+
+// Escapes a value so it is safe to embed inside a generated Kotlin String literal.
+fun String.buildConfigStringLiteral(): String =
+    "\"" + replace("\\", "\\\\").replace("\"", "\\\"") + "\""
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -25,6 +30,31 @@ buildConfig {
     // Fork version, layered on top of the upstream Food You version above.
     val forkVersionName = libs.versions.fork.version.name.get()
     buildConfigField("String", "FORK_VERSION_NAME", "\"$forkVersionName\"")
+
+    // AI scanning secrets (Milestone 2, Story 6). The endpoint key is a private credential: it is
+    // read from local.properties (untracked) or an environment variable at build time and baked into
+    // private builds only. It must never be committed or logged. An empty key disables the Ask AI
+    // action at runtime ("AI not configured in this build"). Endpoint and model have public defaults
+    // and are overridable through the same seam.
+    val localProperties =
+        Properties().apply {
+            val file = rootProject.file("local.properties")
+            if (file.exists()) file.inputStream().use { load(it) }
+        }
+    fun secret(propertyKey: String, envKey: String, default: String = ""): String =
+        localProperties.getProperty(propertyKey) ?: System.getenv(envKey) ?: default
+
+    val aiApiKey = secret("acme.ai.apiKey", "ACME_AI_API_KEY")
+    val aiEndpoint =
+        secret(
+            "acme.ai.endpoint",
+            "ACME_AI_ENDPOINT",
+            "https://openrouter.ai/api/v1/chat/completions",
+        )
+    val aiModel = secret("acme.ai.model", "ACME_AI_MODEL", "openai/gpt-4o-mini")
+    buildConfigField("String", "AI_API_KEY", aiApiKey.buildConfigStringLiteral())
+    buildConfigField("String", "AI_ENDPOINT", aiEndpoint.buildConfigStringLiteral())
+    buildConfigField("String", "AI_MODEL", aiModel.buildConfigStringLiteral())
 }
 
 kotlin {

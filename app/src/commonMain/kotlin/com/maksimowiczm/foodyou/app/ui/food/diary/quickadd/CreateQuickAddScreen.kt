@@ -15,6 +15,14 @@ fun CreateQuickAddScreen(
     mealId: Long,
     date: LocalDate,
     modifier: Modifier = Modifier,
+    // Optional prefill, used by the AI scanning flow (Milestone 2, Story 6) to seed the form from an
+    // AI food estimate. Energy is in kilocalories. All null by default, so normal Quick Add is
+    // unaffected.
+    prefillName: String? = null,
+    prefillEnergyKcal: Double? = null,
+    prefillProteins: Double? = null,
+    prefillCarbohydrates: Double? = null,
+    prefillFats: Double? = null,
 ) {
     val viewModel: CreateQuickAddViewModel = koinViewModel { parametersOf(date, mealId) }
     val energyFormatter = LocalEnergyFormatter.current
@@ -26,7 +34,14 @@ fun CreateQuickAddScreen(
         }
     }
 
-    val formState = rememberQuickAddFormState()
+    val formState =
+        rememberQuickAddFormState(
+            name = prefillName ?: "",
+            proteins = prefillProteins,
+            carbohydrates = prefillCarbohydrates,
+            fats = prefillFats,
+            energy = prefillEnergyKcal,
+        )
 
     QuickAddScreen(
         onBack = onBack,

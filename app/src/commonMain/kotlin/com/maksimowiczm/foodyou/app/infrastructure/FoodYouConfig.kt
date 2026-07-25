@@ -26,5 +26,11 @@ internal class FoodYouConfig : AppConfig, NetworkConfig {
     override val openFoodFactsPrivacyPolicyUri: String = "https://world.openfoodfacts.org/privacy"
     override val foodDataCentralPrivacyPolicyUri: String = "https://www.usda.gov/privacy-policy"
 
+    // AI scanning configuration, baked in at build time (Milestone 2, Story 6). The key is a private
+    // secret injected from local.properties / an environment variable; it is blank in public builds.
+    override val aiApiKey: String = BuildConfig.AI_API_KEY
+    override val aiEndpoint: String = BuildConfig.AI_ENDPOINT
+    override val aiModel: String = BuildConfig.AI_MODEL
+
     override val userAgent: String = "Food You/$versionName (maksimowicz.dev@gmail.com)"
 }

@@ -30,4 +30,16 @@ interface AppConfig {
 
     /** URI to the FoodData Central Privacy Policy document. */
     val foodDataCentralPrivacyPolicyUri: String
+
+    /**
+     * AI endpoint credential baked into private builds (Milestone 2, Story 6). Blank when no key was
+     * injected at build time, which disables the AI scanning call. Never log this value.
+     */
+    val aiApiKey: String
+
+    /** AI chat-completions endpoint URL (OpenRouter-compatible). */
+    val aiEndpoint: String
+
+    /** Vision-capable model identifier used for AI food scanning (e.g. "openai/gpt-4o-mini"). */
+    val aiModel: String
 }

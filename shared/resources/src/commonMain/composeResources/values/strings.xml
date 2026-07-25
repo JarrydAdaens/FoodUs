@@ -11,6 +11,21 @@
     <string name="headline_ai_scanning">AI scanning</string>
     <string name="headline_fast_text">Fast text</string>
 
+    <!-- AI scanning screen (Milestone 2, Story 6). -->
+    <string name="action_take_photo">Take a photo</string>
+    <string name="action_ask_ai">Ask AI</string>
+    <string name="action_align">Align</string>
+    <string name="action_create_custom_food">Create custom food</string>
+    <string name="headline_ai_result">AI result</string>
+    <string name="headline_align_saved_food">Align with a saved food</string>
+    <string name="neutral_ai_not_configured">AI is not configured in this build</string>
+    <string name="neutral_ai_analysing">Analysing photo…</string>
+    <string name="neutral_tap_photo_to_retake">Tap the photo to retake it</string>
+    <string name="question_discard_photo">Discard photo?</string>
+    <!-- %1$s is a percentage such as "85%". -->
+    <string name="neutral_ai_certainty">Certainty: %1$s</string>
+    <string name="neutral_ai_no_saved_food_matches">No saved foods match. Create a custom food instead.</string>
+
     <string name="en_dash" translatable="false">–</string>
     <string name="em_dash" translatable="false">—</string>
     <string name="not_available_short">N/A</string>

@@ -178,22 +178,50 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
             )
         }
         forwardBackwardComposable<FoodDiaryCreateQuickAdd> {
-            val (epochDay, mealId) = it.toRoute<FoodDiaryCreateQuickAdd>()
+            val route = it.toRoute<FoodDiaryCreateQuickAdd>()
 
             CreateQuickAddScreen(
                 onBack = { navController.popBackStackInclusive<FoodDiaryCreateQuickAdd>() },
                 onSave = { navController.popBackStackInclusive<FoodDiaryCreateQuickAdd>() },
-                date = LocalDate.fromEpochDays(epochDay),
-                mealId = mealId,
+                date = LocalDate.fromEpochDays(route.epochDay),
+                mealId = route.mealId,
+                prefillName = route.prefillName,
+                prefillEnergyKcal = route.prefillEnergyKcal,
+                prefillProteins = route.prefillProteins,
+                prefillCarbohydrates = route.prefillCarbohydrates,
+                prefillFats = route.prefillFats,
             )
         }
         forwardBackwardComposable<FoodDiaryAiScan> {
             val (epochDay, mealId) = it.toRoute<FoodDiaryAiScan>()
 
             AiScanScreen(
-                date = LocalDate.fromEpochDays(epochDay),
-                mealId = mealId,
                 onBack = { navController.popBackStackInclusive<FoodDiaryAiScan>() },
+                onSaveToQuickAdd = { name, calories, protein, fat ->
+                    navController.navigate(
+                        FoodDiaryCreateQuickAdd(
+                            epochDay = epochDay,
+                            mealId = mealId,
+                            prefillName = name,
+                            prefillEnergyKcal = calories,
+                            prefillProteins = protein,
+                            prefillFats = fat,
+                        )
+                    )
+                },
+                onAlignPickFood = { foodId ->
+                    navController.navigate(
+                        FoodDiaryCreateEntry(
+                            date = epochDay,
+                            mealId = mealId,
+                            foodId = foodId,
+                            measurement = null,
+                        )
+                    )
+                },
+                onCreateCustomFood = {
+                    navController.navigateSingleTop(FoodDiaryCreateProduct(epochDay, mealId))
+                },
             )
         }
         forwardBackwardComposable<FoodDiaryFastText> {
@@ -442,7 +470,17 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
 
 @Serializable private object ExportCsvProducts
 
-@Serializable private data class FoodDiaryCreateQuickAdd(val epochDay: Long, val mealId: Long)
+@Serializable
+private data class FoodDiaryCreateQuickAdd(
+    val epochDay: Long,
+    val mealId: Long,
+    // Optional AI-scan prefill (Milestone 2, Story 6). Energy is in kilocalories.
+    val prefillName: String? = null,
+    val prefillEnergyKcal: Double? = null,
+    val prefillProteins: Double? = null,
+    val prefillCarbohydrates: Double? = null,
+    val prefillFats: Double? = null,
+)
 
 @Serializable private data class FoodDiaryAiScan(val epochDay: Long, val mealId: Long)
 
