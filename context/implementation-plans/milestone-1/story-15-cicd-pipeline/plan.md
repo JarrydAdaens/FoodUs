@@ -3,7 +3,7 @@
 ## Metadata
 
 - Task Type: `STORY`
-- Status: `Draft`
+- Status: `Complete`
 - Owner: Jarryd Adaens
 - Last Updated: 25 July 2026
 
@@ -130,27 +130,31 @@ Verified against the repository on 2026-07-25:
   triggers naming a nonexistent branch are harmless but unexercised.
   Assumption: Keep both branches in the triggers as the source plan specifies; the owner creates
   `jarryd/develop` when day-to-day integration warrants it. No workflow change needed then.
-  Status: OPEN
+  Status: ANSWERED — proceeded on assumption, 2026-07-25 (owner unavailable). Both branches are
+  named in all triggers; the `jarryd/develop` entries stay dormant until the branch exists.
 - Q: [STORY 15] Does the keystore's key password equal the keystore password (source plan §4.3
   gotcha — current signing passes only `--ks-pass`)?
   Impact: If they differ, a fourth secret `KEY_PASSWORD` and `--key-pass "pass:${KEY_PASSWORD}"`
   must be added or signing fails.
   Assumption: Same password (single-key store generated that way by Story 11); decide when the
   keystore actually exists — blocked on Story 11's keystore creation.
-  Status: OPEN
+  Status: ANSWERED — proceeded on assumption, 2026-07-25 (owner unavailable). No `KEY_PASSWORD`
+  secret; signing passes only `--ks-pass`. Revisit when Story 11 generates the keystore.
 - Q: [STORY 15] Are publicly downloadable GitHub Releases acceptable as the release channel?
   Impact: The repo is public, so tagged releases and their APKs are world-visible. Fine for
   Milestone 1's unmodified builds; Story 11's plan already flags that Milestone 2's AI-key-bearing
   builds can never ship this way.
   Assumption: Yes for Milestone 1; the private-channel question stays owned by Story 11 / the
   Milestone 2 AI story.
-  Status: OPEN
+  Status: ANSWERED — proceeded on assumption, 2026-07-25 (owner unavailable). Public GitHub
+  Releases are the Milestone 1 channel.
 - Q: [STORY 15] Should manual (non-tag) dispatch of the release workflow also require the tag
   naming convention, or keep producing artifact-only builds?
   Impact: Determines whether ad-hoc builds ever become Releases or stay 30-day artifacts.
   Assumption: Ad-hoc dispatch keeps producing artifacts only; `gh release create` runs only on
   `refs/tags/` (as the source plan's `if:` already encodes).
-  Status: OPEN
+  Status: ANSWERED — proceeded on assumption, 2026-07-25 (owner unavailable). Non-tag dispatch
+  uploads a 30-day `signed-apk` artifact; only `v*` tag refs create a Release.
 
 ## Execution Steps
 
@@ -286,3 +290,56 @@ carried JDK 17 over from upstream's workflow, while the project compiles against
 `app/build.gradle.kts`; corrected in this plan per the source plan's own VERIFY discipline.
 **What would improve this:** Nothing — the source plan explicitly instructed verification, which
 worked as designed.
+
+## Execution Log
+
+- 2026-07-25 — Owner unavailable at execution time; all four OPEN questions resolved by
+  proceeding on their recorded assumptions (each marked ANSWERED above): `jarryd/develop` kept in
+  triggers though the branch does not exist yet; no `KEY_PASSWORD` secret (key password assumed
+  equal to keystore password); public GitHub Releases accepted for Milestone 1; non-tag dispatch
+  stays artifact-only.
+- 2026-07-25 — Step 2: added `.github/workflows/ci.yml` — push/PR on `jarryd/main` +
+  `jarryd/develop` plus `workflow_dispatch`; concurrency group `ci-${{ github.ref }}` with
+  cancel-in-progress; `permissions: contents: read`; ubuntu-latest, 45-minute timeout; JDK 21
+  temurin with gradle cache; android-actions/setup-android@v3; `./gradlew --no-daemon
+  :app:assembleDebug` then `./gradlew --no-daemon :app:testDebugUnitTest`; failure-only upload of
+  `app/build/reports/` (retention 7, if-no-files-found ignore). No static-analysis step.
+- 2026-07-25 — Step 3: reworked `.github/workflows/release-apk.yml` — added `push: tags: ['v*']`
+  trigger and `permissions: contents: write`; JDK 17 → 21; signing hardened (`printf '%s'
+  "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.jks"`, all secret expansions quoted,
+  `--ks` points at `$RUNNER_TEMP/release.jks`, `if: always()` cleanup step removes the keystore);
+  tag refs rename `signed.apk` to `FoodYou-${GITHUB_REF_NAME}.apk` and run `gh release create
+  "$GITHUB_REF_NAME" ... --generate-notes` with `GH_TOKEN: ${{ github.token }}`; the artifact
+  upload now runs only on non-tag refs (retention 30) so the tag-path rename cannot break it.
+  The `build-tools;36.0.0` sdkmanager step and post-build `apksigner` approach are unchanged.
+- 2026-07-25 — Step 4: retargeted `.github/workflows/validate-meals.yml` — added `branches:
+  [jarryd/main, jarryd/develop]` to both `push` and `pull_request`; `paths` lists kept verbatim;
+  job body untouched.
+- 2026-07-25 — Step 5: local validation. `actionlint` is not installed on the workstation;
+  fallback YAML parse (`uv run --with pyyaml`) is clean on all three workflows. Ran the exact CI
+  commands locally with JDK 21 (`C:\Java\jdk-21.0.12+8`): `./gradlew --no-daemon
+  :app:assembleDebug` — BUILD SUCCESSFUL (11s, mostly up-to-date from Story 14's build);
+  `./gradlew --no-daemon :app:testDebugUnitTest` — BUILD SUCCESSFUL (1m 27s), confirming both
+  task names exist and pass. `git status` confirms changes are limited to `.github/workflows/`,
+  this plan, and the milestone file.
+- 2026-07-25 — Step 1 owner prerequisites checklist (remote-side, owner-executed):
+  - [ ] Enable Actions on the fork (Actions tab → confirm).
+  - [ ] Settings → General → default branch → `jarryd/main` (required for the
+        `workflow_dispatch` Run-workflow button).
+  - [ ] After Story 11 creates the keystore: add secrets `KEYSTORE` (base64 one-liner),
+        `KEY_ALIAS`, `KEYSTORE_PASSWORD` (+ `KEY_PASSWORD` only if the key password differs).
+  - [ ] Step 6 remote verification: CI green on `jarryd/main` push and absent on `main`; manual
+        Release APK dispatch yields an installable signed artifact; `v*` tag yields a GitHub
+        Release with `FoodYou-<tag>.apk`; no keystore bytes in logs or artifacts.
+
+## Completion Review
+
+- All in-scope edits landed: `ci.yml` (new), `release-apk.yml` (rework), `validate-meals.yml`
+  (retarget). No file under `app/`, `shared/`, or any Gradle configuration was touched.
+- Acceptance criteria provable locally are met: YAML-valid workflows, both CI Gradle tasks
+  verified green locally, keystore handled only via `$RUNNER_TEMP` with quoted expansions and
+  always-run cleanup, `validate-meals.yml` job body byte-identical.
+- Honesty note: everything remote-side — actual runs, the Release path, badges, dispatch buttons
+  — is unverified until the owner pushes and completes the Execution Log checklist above. Agent
+  never pushes. The story's file-side work is Complete; remote verification is the owner's
+  remaining step.

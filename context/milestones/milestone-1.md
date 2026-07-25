@@ -38,7 +38,7 @@ used daily long enough for the owner to judge the baseline understood.
 
 ## Status
 
-In Progress — 10/15 stories complete.
+In Progress — 11/15 stories complete.
 
 ---
 
@@ -60,7 +60,7 @@ In Progress — 10/15 stories complete.
 | 12 | Complete | [Use the app for a while](#story-12) | Research | — | — | — | [plan](../implementation-plans/milestone-1/story-12-use-the-app/plan.md) |
 | 13 | Not Started | [Own project infrastructure](#story-13) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/own-project-infrastructure/plan.md) |
 | 14 | Complete | [Remove the static documentation site](#story-14) | Tooling | — | — | — | — |
-| 15 | Not Started | [Establish fork CI/CD pipeline](#story-15) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/story-15-cicd-pipeline/plan.md) |
+| 15 | Complete | [Establish fork CI/CD pipeline](#story-15) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/story-15-cicd-pipeline/plan.md) |
 
 ---
 
@@ -412,7 +412,12 @@ update mechanism a durable signed artifact and gives Story 13's badges something
 keystore and distribution decision (this story consumes its secrets); Story 14 deletes `docs.yml`;
 Story 13 consumes the resulting badges.
 
-**Status:** Not Started — plan at
+**Status:** Complete — 2026-07-25. `ci.yml` added (JDK 21 compile + unit tests on `jarryd/*`
+trunk branches), `release-apk.yml` reworked (tag-triggered GitHub Releases, hardened
+`$RUNNER_TEMP` signing, JDK 21), `validate-meals.yml` branch-filtered. Both CI Gradle tasks
+verified green locally; workflows YAML-validated. Remote verification remains owner-executed per
+the checklist in the plan's Execution Log (enable Actions, default branch → `jarryd/main`,
+signing secrets after Story 11's keystore). Plan:
 [../implementation-plans/milestone-1/story-15-cicd-pipeline/plan.md](../implementation-plans/milestone-1/story-15-cicd-pipeline/plan.md).
 
 ---

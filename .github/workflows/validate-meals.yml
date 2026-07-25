@@ -2,11 +2,17 @@ name: Validate Meals
 
 on:
   push:
+    branches:
+      - jarryd/main
+      - jarryd/develop
     paths:
       - 'app/src/commonMain/composeResources/files/meals/meals*'
       - 'dev/test-meals-localization.bash'
       - '.github/workflows/validate-meals.yml'
   pull_request:
+    branches:
+      - jarryd/main
+      - jarryd/develop
     paths:
       - 'app/src/commonMain/composeResources/files/meals/meals*'
       - 'dev/test-meals-localization.bash'
