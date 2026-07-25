@@ -17,6 +17,9 @@ interface AppConfig {
     val sourceCodeUri: String
     val issueTrackerUri: String
 
+    /** URL to the upstream Food You creator's GitHub, credited on the About screen. */
+    val upstreamAuthorUri: String
+
     val privacyPolicyUri: String
 
     /** URI to the Open Food Facts Terms of Use document. */

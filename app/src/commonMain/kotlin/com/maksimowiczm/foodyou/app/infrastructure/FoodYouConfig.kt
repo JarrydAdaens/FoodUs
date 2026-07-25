@@ -7,11 +7,17 @@ import com.maksimowiczm.foodyou.common.config.NetworkConfig
 internal class FoodYouConfig : AppConfig, NetworkConfig {
     override val versionName: String = BuildConfig.VERSION_NAME
     override val forkVersionName: String = BuildConfig.FORK_VERSION_NAME
+    // Feedback about the fork reaches the fork's owner, not the upstream creator
+    // (Milestone 2, Story 4).
     override val contactEmailUri: String =
-        "mailto:maksimowicz.dev@gmail.com?subject=Food You Feedback&body=Food You Version: $versionName\n"
+        "mailto:jarryd.adaens@outlook.com.au?subject=ACME Food App Feedback" +
+            "&body=ACME Food App Version: $forkVersionName (Food You $versionName)\n"
     override val translationUri: String = "https://crowdin.com/project/food-you"
-    override val sourceCodeUri: String = "https://github.com/maksimowiczm/FoodYou"
-    override val issueTrackerUri: String = "https://github.com/maksimowiczm/FoodYou/issues"
+    // Fork's own repository and issue tracker (Milestone 2, Story 4).
+    override val sourceCodeUri: String = "https://github.com/JarrydAdaens/FoodYou"
+    override val issueTrackerUri: String = "https://github.com/JarrydAdaens/FoodYou/issues"
+    // Upstream creator's GitHub, credited on the About screen (Milestone 2, Story 4).
+    override val upstreamAuthorUri: String = "https://github.com/maksimowiczm"
     // Fork's own privacy policy. Placeholder until the owner supplies the URL of the
     // privacy policy already published for his apps (Milestone 2, Story 3).
     override val privacyPolicyUri: String =

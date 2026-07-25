@@ -13,6 +13,7 @@ private val defaultAppConfig =
         override val translationUri: String = "translationUri"
         override val sourceCodeUri: String = "sourceCodeUri"
         override val issueTrackerUri: String = "issueTrackerUri"
+        override val upstreamAuthorUri: String = "upstreamAuthorUri"
         override val privacyPolicyUri: String = "privacyPolicyUri"
         override val openFoodFactsTermsOfUseUri: String = "openFoodFactsTermsOfUseUri"
         override val openFoodFactsPrivacyPolicyUri: String = "openFoodFactsPrivacyPolicyUri"

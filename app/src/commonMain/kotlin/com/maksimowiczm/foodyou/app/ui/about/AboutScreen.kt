@@ -30,6 +30,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -117,6 +118,9 @@ fun AboutScreen(onBack: () -> Unit, onSponsor: () -> Unit, modifier: Modifier = 
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
+            TextButton(onClick = { uriHandler.openUri(appConfig.upstreamAuthorUri) }) {
+                Text(text = stringResource(Res.string.action_original_creator_on_github))
+            }
             Text(
                 text = icons8stringResource(MaterialTheme.typography.bodyMedium),
                 style = MaterialTheme.typography.bodyMedium,

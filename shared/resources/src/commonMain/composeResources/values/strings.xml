@@ -4,6 +4,9 @@
     <!-- Fork attribution: %1$s is the upstream Food You version this fork derives from. -->
     <string name="description_derived_from_food_you" translatable="false">Derived from Food You %1$s</string>
 
+    <!-- About screen: link crediting the upstream Food You creator. -->
+    <string name="action_original_creator_on_github" translatable="false">Original creator on GitHub</string>
+
     <string name="en_dash" translatable="false">–</string>
     <string name="em_dash" translatable="false">—</string>
     <string name="not_available_short">N/A</string>
