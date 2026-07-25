@@ -8,6 +8,7 @@ import com.maksimowiczm.foodyou.settings.domain.entity.EnergyFormat
 import com.maksimowiczm.foodyou.settings.domain.entity.GraphStyle
 import com.maksimowiczm.foodyou.settings.domain.entity.NutrientsOrder
 import com.maksimowiczm.foodyou.settings.domain.entity.Settings
+import com.maksimowiczm.foodyou.settings.domain.entity.WeekLayout
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -54,6 +55,15 @@ internal class AppViewModel(private val settingsRepository: UserPreferencesRepos
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(2_000),
                 initialValue = GraphStyle.DEFAULT,
+            )
+
+    val weekLayout =
+        settings
+            .map { it.weekLayout }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(2_000),
+                initialValue = WeekLayout.DEFAULT,
             )
 
     fun finishOnboarding() {

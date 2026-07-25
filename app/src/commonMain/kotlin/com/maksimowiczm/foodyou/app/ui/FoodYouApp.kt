@@ -9,6 +9,7 @@ import com.maksimowiczm.foodyou.app.ui.changelog.PreviewReleaseDialog
 import com.maksimowiczm.foodyou.app.ui.common.utility.EnergyFormatterProvider
 import com.maksimowiczm.foodyou.app.ui.common.utility.GraphStyleProvider
 import com.maksimowiczm.foodyou.app.ui.common.utility.NutrientsOrderProvider
+import com.maksimowiczm.foodyou.app.ui.common.utility.WeekLayoutProvider
 import com.maksimowiczm.foodyou.app.ui.language.TranslationWarningStartupDialog
 import com.maksimowiczm.foodyou.app.ui.onboarding.Onboarding
 import com.maksimowiczm.foodyou.app.ui.theme.FoodYouTheme
@@ -21,21 +22,24 @@ fun FoodYouApp(onDatabaseBackup: () -> Unit) {
     val onboardingFinished by viewModel.onboardingFinished.collectAsStateWithLifecycle()
     val energyFormatter by viewModel.energyFormatter.collectAsStateWithLifecycle()
     val graphStyle by viewModel.graphStyle.collectAsStateWithLifecycle()
+    val weekLayout by viewModel.weekLayout.collectAsStateWithLifecycle()
 
     NutrientsOrderProvider(nutrientsOrder) {
         EnergyFormatterProvider(energyFormatter) {
             GraphStyleProvider(graphStyle) {
-                FoodYouTheme {
-                    PreviewReleaseDialog()
-                    TranslationWarningStartupDialog()
+                WeekLayoutProvider(weekLayout) {
+                    FoodYouTheme {
+                        PreviewReleaseDialog()
+                        TranslationWarningStartupDialog()
 
-                    if (onboardingFinished) {
-                        Surface {
-                            FoodYouAppNavHost(onDatabaseBackup)
-                            AppUpdateChangelogModalBottomSheet()
+                        if (onboardingFinished) {
+                            Surface {
+                                FoodYouAppNavHost(onDatabaseBackup)
+                                AppUpdateChangelogModalBottomSheet()
+                            }
+                        } else {
+                            Onboarding(onFinish = viewModel::finishOnboarding)
                         }
-                    } else {
-                        Onboarding(onFinish = viewModel::finishOnboarding)
                     }
                 }
             }

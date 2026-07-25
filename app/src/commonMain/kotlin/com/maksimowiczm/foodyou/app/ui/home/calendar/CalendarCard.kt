@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.foundation.verticalScroll
@@ -41,11 +43,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.maksimowiczm.foodyou.app.ui.common.utility.LocalWeekLayout
 import com.maksimowiczm.foodyou.app.ui.home.shared.FoodYouHomeCard
 import com.maksimowiczm.foodyou.app.ui.home.shared.HomeState
 import com.maksimowiczm.foodyou.common.compose.utility.LocalDateFormatter
 import com.maksimowiczm.foodyou.common.domain.date.DateProvider
 import com.maksimowiczm.foodyou.common.extension.now
+import com.maksimowiczm.foodyou.settings.domain.entity.WeekLayout
 import foodyou.app.generated.resources.*
 import kotlin.time.Instant
 import kotlinx.coroutines.flow.collectLatest
@@ -197,6 +201,13 @@ private fun CalendarCardDatePicker(
     colors: CalendarCardColors,
     modifier: Modifier = Modifier,
 ) {
+    // Fork overlay (Story 2.11): the fixed layout pins a Monday-first week strip that swipes in
+    // whole-week increments, as an additive alternative to the original day-by-day scroller.
+    if (LocalWeekLayout.current == WeekLayout.Fixed) {
+        FixedWeekStrip(calendarState = calendarState, colors = colors, modifier = modifier)
+        return
+    }
+
     val hapticFeedback = LocalHapticFeedback.current
 
     // Tick when user scrolls
@@ -225,6 +236,55 @@ private fun CalendarCardDatePicker(
                     hapticFeedback.performHapticFeedback(HapticFeedbackType.Confirm)
                 },
             )
+        }
+    }
+}
+
+// Large virtual page range so weeks can be swiped years in either direction from the anchor week.
+private const val WEEK_PAGER_COUNT = 10_000
+private const val WEEK_PAGER_ANCHOR = WEEK_PAGER_COUNT / 2
+
+/**
+ * Fixed week layout: a Monday-to-Sunday row for the selected week. Horizontal swipes move a whole
+ * week at a time; tapping a day selects it. Reuses [DatePickerRowItem] so the selected/current-day
+ * styling matches the scrolling layout.
+ */
+@Composable
+private fun FixedWeekStrip(
+    calendarState: CalendarState,
+    colors: CalendarCardColors,
+    modifier: Modifier = Modifier,
+) {
+    val hapticFeedback = LocalHapticFeedback.current
+    val anchorMonday = remember(calendarState.referenceDate) { mondayOf(calendarState.referenceDate) }
+
+    val pageForSelected = WEEK_PAGER_ANCHOR + weeksBetween(anchorMonday, mondayOf(calendarState.selectedDate))
+    val pagerState = rememberPagerState(initialPage = pageForSelected) { WEEK_PAGER_COUNT }
+
+    // Follow programmatic date jumps (calendar picker, "go to today") back onto the right week.
+    LaunchedEffect(calendarState.selectedDate) {
+        val target = WEEK_PAGER_ANCHOR + weeksBetween(anchorMonday, mondayOf(calendarState.selectedDate))
+        if (target != pagerState.currentPage) {
+            pagerState.animateScrollToPage(target)
+        }
+    }
+
+    HorizontalPager(state = pagerState, modifier = modifier) { page ->
+        val weekMonday = anchorMonday.plus((page - WEEK_PAGER_ANCHOR).toLong(), DateTimeUnit.WEEK)
+        Row(modifier = Modifier.fillMaxWidth()) {
+            repeat(7) { dayOffset ->
+                val date = weekMonday.plus(dayOffset.toLong(), DateTimeUnit.DAY)
+                DatePickerRowItem(
+                    calendarState = calendarState,
+                    date = date,
+                    colors = colors,
+                    onClick = {
+                        calendarState.onDateSelect(date = date, scroll = false)
+                        hapticFeedback.performHapticFeedback(HapticFeedbackType.Confirm)
+                    },
+                    modifier = Modifier.weight(1f),
+                )
+            }
         }
     }
 }

@@ -444,6 +444,11 @@
     <string name="graph_style_bar">Bar</string>
     <string name="graph_style_pie">Pie</string>
 
+    <string name="headline_week_layout">Week layout</string>
+    <string name="description_week_layout">Choose how the diary date strip navigates days</string>
+    <string name="week_layout_scrolling">Scrolling</string>
+    <string name="week_layout_fixed">Fixed</string>
+
     <plurals name="neutral_exported_x_food_products">
         <item quantity="one">Exported %1$d food product</item>
         <item quantity="other">Exported %1$d food products</item>

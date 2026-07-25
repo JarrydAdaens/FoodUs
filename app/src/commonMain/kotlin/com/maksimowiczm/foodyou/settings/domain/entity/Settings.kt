@@ -13,5 +13,6 @@ data class Settings(
     val onboardingFinished: Boolean,
     val energyFormat: EnergyFormat,
     val graphStyle: GraphStyle,
+    val weekLayout: WeekLayout,
     val appLaunchInfo: AppLaunchInfo,
 ) : UserPreferences

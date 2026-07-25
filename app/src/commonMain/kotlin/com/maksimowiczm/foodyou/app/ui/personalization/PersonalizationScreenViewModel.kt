@@ -6,6 +6,7 @@ import com.maksimowiczm.foodyou.common.domain.userpreferences.UserPreferencesRep
 import com.maksimowiczm.foodyou.settings.domain.entity.EnergyFormat
 import com.maksimowiczm.foodyou.settings.domain.entity.GraphStyle
 import com.maksimowiczm.foodyou.settings.domain.entity.Settings
+import com.maksimowiczm.foodyou.settings.domain.entity.WeekLayout
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -51,5 +52,17 @@ internal class PersonalizationScreenViewModel(
 
     fun setGraphStyle(style: GraphStyle) {
         viewModelScope.launch { settingsRepository.update { copy(graphStyle = style) } }
+    }
+
+    private val _weekLayout = settingsRepository.observe().map { it.weekLayout }
+    val weekLayout =
+        _weekLayout.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(2_000),
+            initialValue = runBlocking { _weekLayout.first() },
+        )
+
+    fun setWeekLayout(layout: WeekLayout) {
+        viewModelScope.launch { settingsRepository.update { copy(weekLayout = layout) } }
     }
 }
