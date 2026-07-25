@@ -17,6 +17,10 @@ import kotlinx.datetime.LocalDateTime
  * @param nutritionFacts The nutrition facts for the food item based on the weight.
  * @param createdAt The timestamp when the entry was created.
  * @param updatedAt The timestamp when the entry was last updated.
+ * @param description Optional free-text context, used by fast-text placeholders (Milestone 2,
+ *   Story 8) to describe what was eaten.
+ * @param isPlaceholder Whether this entry is a zero-nutrition fast-text placeholder awaiting
+ *   resolution. Story 9 uses this flag to route placeholders to their dedicated editor.
  */
 data class ManualDiaryEntry(
     val id: ManualDiaryEntryId,
@@ -26,4 +30,6 @@ data class ManualDiaryEntry(
     override val nutritionFacts: NutritionFacts,
     override val createdAt: LocalDateTime,
     override val updatedAt: LocalDateTime,
+    val description: String? = null,
+    val isPlaceholder: Boolean = false,
 ) : DiaryEntry

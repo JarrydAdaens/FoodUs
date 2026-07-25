@@ -231,6 +231,7 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 date = LocalDate.fromEpochDays(epochDay),
                 mealId = mealId,
                 onBack = { navController.popBackStackInclusive<FoodDiaryFastText>() },
+                onSave = { navController.popBackStackInclusive<FoodDiaryFastText>() },
             )
         }
         forwardBackwardComposable<UpdateQuickAdd> {

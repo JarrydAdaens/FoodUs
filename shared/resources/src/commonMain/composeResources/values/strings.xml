@@ -11,6 +11,11 @@
     <string name="headline_ai_scanning">AI scanning</string>
     <string name="headline_fast_text">Fast text</string>
 
+    <!-- Fast-text placeholder screen (Milestone 2, Story 8). -->
+    <string name="description_fast_text">Quickly note what you ate now and sort out the details later. Saved with no nutrition until you resolve it.</string>
+    <string name="label_description">Description</string>
+    <string name="neutral_optional">Optional</string>
+
     <!-- AI scanning screen (Milestone 2, Story 6). -->
     <string name="action_take_photo">Take a photo</string>
     <string name="action_pick_from_gallery">Pick from gallery</string>

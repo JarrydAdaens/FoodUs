@@ -32,4 +32,11 @@ data class ManualDiaryEntryEntity(
     @Embedded val minerals: Minerals,
     val createdEpochSeconds: Long,
     val updatedEpochSeconds: Long,
+    // Fast-text placeholder support (Milestone 2, Story 8). A placeholder is a zero-nutrition manual
+    // entry that only records what was eaten by name; [description] holds optional context and
+    // [isPlaceholder] marks it so Story 9 can open its dedicated resolution editor instead of the
+    // regular Quick Add editor. Both default to the non-placeholder values so existing manual /
+    // Quick Add entries are unaffected.
+    val description: String? = null,
+    val isPlaceholder: Boolean = false,
 )

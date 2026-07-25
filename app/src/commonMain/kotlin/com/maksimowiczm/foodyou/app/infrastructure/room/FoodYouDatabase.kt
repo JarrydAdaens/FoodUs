@@ -10,6 +10,7 @@ import androidx.room.useWriterConnection
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.FoodSearchFtsCyrillicMigration
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.FoodSearchFtsMigration
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.LegacyMigrations
+import com.maksimowiczm.foodyou.app.infrastructure.room.migration.PlaceholderDiaryEntryMigration
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.deleteUsedFoodEvent
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.fixMeasurementSuggestions
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.foodYou3Migration
@@ -139,7 +140,7 @@ abstract class FoodYouDatabase :
         }
 
     companion object {
-        const val VERSION = 32
+        const val VERSION = 33
 
         private val migrations: List<Migration> =
             listOf(
@@ -157,6 +158,7 @@ abstract class FoodYouDatabase :
                 fixMeasurementSuggestions,
                 FoodSearchFtsMigration,
                 FoodSearchFtsCyrillicMigration,
+                PlaceholderDiaryEntryMigration,
             )
 
         fun Builder<FoodYouDatabase>.buildDatabase(
