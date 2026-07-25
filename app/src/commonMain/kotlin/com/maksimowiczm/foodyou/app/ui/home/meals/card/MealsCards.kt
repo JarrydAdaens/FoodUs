@@ -23,6 +23,7 @@ internal fun MealsCards(
     val viewModel: MealsCardsViewModel = koinViewModel()
     val diaryMeals = viewModel.diaryMeals.collectAsStateWithLifecycle().value
     val layout by viewModel.layout.collectAsStateWithLifecycle()
+    val templates by viewModel.templates.collectAsStateWithLifecycle()
 
     LaunchedEffect(homeState.selectedDate, viewModel) { viewModel.setDate(homeState.selectedDate) }
 
@@ -45,6 +46,10 @@ internal fun MealsCards(
                 },
                 onDeleteEntry = viewModel::onDeleteEntry,
                 onLongClick = onLongClick,
+                templates = templates,
+                onSaveTemplate = viewModel::saveAsTemplate,
+                onApplyTemplate = viewModel::applyTemplate,
+                onDeleteTemplate = viewModel::deleteTemplate,
                 shimmer = homeState.shimmer,
                 contentPadding = contentPadding,
                 modifier = modifier,
@@ -68,6 +73,10 @@ internal fun MealsCards(
                 },
                 onDeleteEntry = viewModel::onDeleteEntry,
                 onLongClick = onLongClick,
+                templates = templates,
+                onSaveTemplate = viewModel::saveAsTemplate,
+                onApplyTemplate = viewModel::applyTemplate,
+                onDeleteTemplate = viewModel::deleteTemplate,
                 shimmer = homeState.shimmer,
                 contentPadding = contentPadding,
                 modifier = modifier,

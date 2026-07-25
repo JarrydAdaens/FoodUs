@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.MealTemplateId
 import com.valentinilk.shimmer.Shimmer
 
 @Composable
@@ -19,6 +20,10 @@ internal fun VerticalMealsCards(
     onEditEntry: (MealEntryModel) -> Unit,
     onDeleteEntry: (MealEntryModel) -> Unit,
     onLongClick: (mealId: Long) -> Unit,
+    templates: List<MealTemplateModel>,
+    onSaveTemplate: (mealId: Long, name: String) -> Unit,
+    onApplyTemplate: (MealTemplateId, mealId: Long) -> Unit,
+    onDeleteTemplate: (MealTemplateId) -> Unit,
     shimmer: Shimmer,
     contentPadding: PaddingValues,
     modifier: Modifier = Modifier,
@@ -40,6 +45,10 @@ internal fun VerticalMealsCards(
                     onEditEntry = onEditEntry,
                     onDeleteEntry = onDeleteEntry,
                     onLongClick = { onLongClick(meal.id) },
+                    templates = templates,
+                    onSaveTemplate = { name -> onSaveTemplate(meal.id, name) },
+                    onApplyTemplate = { id -> onApplyTemplate(id, meal.id) },
+                    onDeleteTemplate = onDeleteTemplate,
                 )
             }
         }

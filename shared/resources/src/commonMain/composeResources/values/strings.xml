@@ -16,6 +16,13 @@
     <string name="label_description">Description</string>
     <string name="neutral_optional">Optional</string>
 
+    <!-- Reusable meal templates (Milestone 2, Story 13). -->
+    <string name="action_meal_template_menu">Meal template options</string>
+    <string name="action_save_as_template">Save as template</string>
+    <string name="action_apply_template">Apply template</string>
+    <string name="label_template_name">Template name</string>
+    <string name="neutral_template_item_count">%1$d items</string>
+
     <!-- Placeholder resolution meta screen (Milestone 2, Story 9). -->
     <string name="headline_resolve_placeholder">Resolve placeholder</string>
     <string name="description_resolve_placeholder">Log what you actually ate using one of the options below, then remove this reminder.</string>

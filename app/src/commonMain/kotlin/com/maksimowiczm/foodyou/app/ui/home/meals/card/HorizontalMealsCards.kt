@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.MealTemplateId
 import com.valentinilk.shimmer.Shimmer
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -29,6 +30,10 @@ internal fun HorizontalMealsCards(
     onEditEntry: (MealEntryModel) -> Unit,
     onDeleteEntry: (MealEntryModel) -> Unit,
     onLongClick: (mealId: Long) -> Unit,
+    templates: List<MealTemplateModel>,
+    onSaveTemplate: (mealId: Long, name: String) -> Unit,
+    onApplyTemplate: (MealTemplateId, mealId: Long) -> Unit,
+    onDeleteTemplate: (MealTemplateId) -> Unit,
     shimmer: Shimmer,
     contentPadding: PaddingValues,
     modifier: Modifier = Modifier,
@@ -72,6 +77,10 @@ internal fun HorizontalMealsCards(
                     onEditEntry = onEditEntry,
                     onDeleteEntry = onDeleteEntry,
                     onLongClick = { onLongClick(meal.id) },
+                    templates = templates,
+                    onSaveTemplate = { name -> onSaveTemplate(meal.id, name) },
+                    onApplyTemplate = { id -> onApplyTemplate(id, meal.id) },
+                    onDeleteTemplate = onDeleteTemplate,
                 )
             } else {
                 MealCardSkeleton(shimmer = shimmer)

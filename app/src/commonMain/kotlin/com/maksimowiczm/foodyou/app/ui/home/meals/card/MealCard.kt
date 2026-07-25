@@ -7,6 +7,7 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,16 +18,22 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.Bolt
+import androidx.compose.material.icons.outlined.BookmarkAdd
+import androidx.compose.material.icons.outlined.ContentCopy
 import androidx.compose.material.icons.outlined.EditNote
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.SmartToy
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
@@ -34,6 +41,7 @@ import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -53,6 +61,7 @@ import com.maksimowiczm.foodyou.app.ui.common.utility.LocalNutrientsOrder
 import com.maksimowiczm.foodyou.app.ui.home.shared.FoodYouHomeCard
 import com.maksimowiczm.foodyou.common.compose.utility.LocalDateFormatter
 import com.maksimowiczm.foodyou.common.compose.utility.formatClipZeros
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.MealTemplateId
 import com.maksimowiczm.foodyou.settings.domain.entity.NutrientsOrder
 import foodyou.app.generated.resources.*
 import kotlinx.coroutines.launch
@@ -68,6 +77,10 @@ internal fun MealCard(
     onEditEntry: (MealEntryModel) -> Unit,
     onDeleteEntry: (MealEntryModel) -> Unit,
     onLongClick: () -> Unit,
+    templates: List<MealTemplateModel>,
+    onSaveTemplate: (name: String) -> Unit,
+    onApplyTemplate: (MealTemplateId) -> Unit,
+    onDeleteTemplate: (MealTemplateId) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val nutrientsPalette = LocalNutrientsPalette.current
@@ -90,18 +103,53 @@ internal fun MealCard(
             }
         }
 
+    var showSaveTemplateDialog by rememberSaveable { mutableStateOf(false) }
+    if (showSaveTemplateDialog) {
+        SaveTemplateDialog(
+            onDismissRequest = { showSaveTemplateDialog = false },
+            onConfirm = { name ->
+                onSaveTemplate(name)
+                showSaveTemplateDialog = false
+            },
+        )
+    }
+
+    var showApplyTemplateSheet by rememberSaveable { mutableStateOf(false) }
+    if (showApplyTemplateSheet) {
+        ApplyTemplateSheet(
+            templates = templates,
+            onApply = { id ->
+                onApplyTemplate(id)
+                showApplyTemplateSheet = false
+            },
+            onDelete = onDeleteTemplate,
+            onDismissRequest = { showApplyTemplateSheet = false },
+        )
+    }
+
     FoodYouHomeCard(modifier = modifier, onClick = onAddFood, onLongClick = onLongClick) {
         Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-            Text(
-                text = meal.name,
-                style = MaterialTheme.typography.headlineMediumEmphasized,
-                color = MaterialTheme.colorScheme.onSurface,
-            )
-            Text(
-                text = timeString,
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = meal.name,
+                        style = MaterialTheme.typography.headlineMediumEmphasized,
+                        color = MaterialTheme.colorScheme.onSurface,
+                    )
+                    Text(
+                        text = timeString,
+                        style = MaterialTheme.typography.labelLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+
+                MealTemplateMenu(
+                    canSave = meal.foods.isNotEmpty(),
+                    canApply = templates.isNotEmpty(),
+                    onSaveClick = { showSaveTemplateDialog = true },
+                    onApplyClick = { showApplyTemplateSheet = true },
+                )
+            }
 
             Spacer(Modifier.height(16.dp))
 
@@ -441,4 +489,129 @@ private fun DeleteDialog(onDismissRequest: () -> Unit, onDeleteEntry: () -> Unit
         title = { Text(stringResource(Res.string.action_delete_entry)) },
         text = { Text(stringResource(Res.string.description_delete_product_entry)) },
     )
+}
+
+/**
+ * Overflow menu hosting the reusable-template actions (Milestone 2, Story 13). Hidden entirely when
+ * there is nothing to do — no entries to save and no templates to apply — so the card never shows a
+ * dead control.
+ */
+@Composable
+private fun MealTemplateMenu(
+    canSave: Boolean,
+    canApply: Boolean,
+    onSaveClick: () -> Unit,
+    onApplyClick: () -> Unit,
+) {
+    if (!canSave && !canApply) return
+
+    var expanded by rememberSaveable { mutableStateOf(false) }
+
+    Box {
+        IconButton(onClick = { expanded = true }) {
+            Icon(
+                imageVector = Icons.Filled.MoreVert,
+                contentDescription = stringResource(Res.string.action_meal_template_menu),
+            )
+        }
+        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            DropdownMenuItem(
+                text = { Text(stringResource(Res.string.action_save_as_template)) },
+                onClick = {
+                    expanded = false
+                    onSaveClick()
+                },
+                enabled = canSave,
+                leadingIcon = {
+                    Icon(imageVector = Icons.Outlined.BookmarkAdd, contentDescription = null)
+                },
+            )
+            DropdownMenuItem(
+                text = { Text(stringResource(Res.string.action_apply_template)) },
+                onClick = {
+                    expanded = false
+                    onApplyClick()
+                },
+                enabled = canApply,
+                leadingIcon = {
+                    Icon(imageVector = Icons.Outlined.ContentCopy, contentDescription = null)
+                },
+            )
+        }
+    }
+}
+
+@Composable
+private fun SaveTemplateDialog(onDismissRequest: () -> Unit, onConfirm: (String) -> Unit) {
+    var name by rememberSaveable { mutableStateOf("") }
+
+    AlertDialog(
+        onDismissRequest = onDismissRequest,
+        confirmButton = {
+            TextButton(onClick = { onConfirm(name) }, enabled = name.isNotBlank()) {
+                Text(stringResource(Res.string.action_save))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismissRequest) {
+                Text(stringResource(Res.string.action_cancel))
+            }
+        },
+        icon = { Icon(imageVector = Icons.Outlined.BookmarkAdd, contentDescription = null) },
+        title = { Text(stringResource(Res.string.action_save_as_template)) },
+        text = {
+            OutlinedTextField(
+                value = name,
+                onValueChange = { name = it },
+                label = { Text(stringResource(Res.string.label_template_name)) },
+                singleLine = true,
+            )
+        },
+    )
+}
+
+@Composable
+private fun ApplyTemplateSheet(
+    templates: List<MealTemplateModel>,
+    onApply: (MealTemplateId) -> Unit,
+    onDelete: (MealTemplateId) -> Unit,
+    onDismissRequest: () -> Unit,
+) {
+    val sheetState = rememberModalBottomSheetState()
+
+    ModalBottomSheet(onDismissRequest = onDismissRequest, sheetState = sheetState) {
+        Column {
+            Text(
+                text = stringResource(Res.string.action_apply_template),
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            )
+
+            templates.forEach { template ->
+                ListItem(
+                    headlineContent = { Text(template.name) },
+                    modifier = Modifier.clickable { onApply(template.id) },
+                    supportingContent = {
+                        Text(
+                            stringResource(
+                                Res.string.neutral_template_item_count,
+                                template.itemCount,
+                            )
+                        )
+                    },
+                    trailingContent = {
+                        IconButton(onClick = { onDelete(template.id) }) {
+                            Icon(
+                                imageVector = Icons.Default.Delete,
+                                contentDescription = stringResource(Res.string.action_delete),
+                            )
+                        }
+                    },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                )
+            }
+
+            Spacer(Modifier.height(8.dp))
+        }
+    }
 }

@@ -8,10 +8,14 @@ import com.maksimowiczm.foodyou.fooddiary.domain.entity.DiaryFoodRecipe
 import com.maksimowiczm.foodyou.fooddiary.domain.entity.DiaryMeal
 import com.maksimowiczm.foodyou.fooddiary.domain.entity.FoodDiaryEntry
 import com.maksimowiczm.foodyou.fooddiary.domain.entity.ManualDiaryEntry
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.MealTemplateId
 import com.maksimowiczm.foodyou.fooddiary.domain.entity.MealsPreferences
 import com.maksimowiczm.foodyou.fooddiary.domain.repository.FoodDiaryEntryRepository
 import com.maksimowiczm.foodyou.fooddiary.domain.repository.ManualDiaryEntryRepository
+import com.maksimowiczm.foodyou.fooddiary.domain.repository.MealTemplateRepository
+import com.maksimowiczm.foodyou.fooddiary.domain.usecase.ApplyMealTemplateUseCase
 import com.maksimowiczm.foodyou.fooddiary.domain.usecase.ObserveDiaryMealsUseCase
+import com.maksimowiczm.foodyou.fooddiary.domain.usecase.SaveMealTemplateUseCase
 import kotlin.math.roundToInt
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -29,6 +33,9 @@ internal class MealsCardsViewModel(
     private val observeDiaryMealsUseCase: ObserveDiaryMealsUseCase,
     private val foodEntryRepository: FoodDiaryEntryRepository,
     private val manualEntryRepository: ManualDiaryEntryRepository,
+    private val saveMealTemplateUseCase: SaveMealTemplateUseCase,
+    private val applyMealTemplateUseCase: ApplyMealTemplateUseCase,
+    private val mealTemplateRepository: MealTemplateRepository,
     mealsPreferencesRepository: UserPreferencesRepository<MealsPreferences>,
 ) : ViewModel() {
     private val dateState = MutableStateFlow<LocalDate?>(null)
@@ -52,8 +59,36 @@ internal class MealsCardsViewModel(
             initialValue = runBlocking { _layout.first() },
         )
 
+    val templates: StateFlow<List<MealTemplateModel>> =
+        mealTemplateRepository
+            .observeAll()
+            .map { list ->
+                list.map { MealTemplateModel(id = it.id, name = it.name, itemCount = it.itemCount) }
+            }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(60_000),
+                initialValue = emptyList(),
+            )
+
     fun setDate(date: LocalDate) {
         viewModelScope.launch { dateState.value = date }
+    }
+
+    /** Saves the given meal's entries for the currently selected day as a named template. */
+    fun saveAsTemplate(mealId: Long, name: String) {
+        val date = dateState.value ?: return
+        viewModelScope.launch { saveMealTemplateUseCase.save(name, mealId, date) }
+    }
+
+    /** Applies a template into the given meal on the currently selected day. */
+    fun applyTemplate(templateId: MealTemplateId, mealId: Long) {
+        val date = dateState.value ?: return
+        viewModelScope.launch { applyMealTemplateUseCase.apply(templateId, mealId, date) }
+    }
+
+    fun deleteTemplate(templateId: MealTemplateId) {
+        viewModelScope.launch { mealTemplateRepository.delete(templateId) }
     }
 
     fun onDeleteEntry(model: MealEntryModel) {
