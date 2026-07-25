@@ -439,6 +439,11 @@
     <string name="headline_energy_unit">Energy unit</string>
     <string name="description_energy_unit">Select preferred energy unit</string>
 
+    <string name="headline_graphs">Graphs</string>
+    <string name="description_graphs">Choose how the goals card shows calories and macros</string>
+    <string name="graph_style_bar">Bar</string>
+    <string name="graph_style_pie">Pie</string>
+
     <plurals name="neutral_exported_x_food_products">
         <item quantity="one">Exported %1$d food product</item>
         <item quantity="other">Exported %1$d food products</item>

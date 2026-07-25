@@ -32,10 +32,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.maksimowiczm.foodyou.app.ui.common.theme.LocalNutrientsPalette
 import com.maksimowiczm.foodyou.app.ui.common.utility.LocalEnergyFormatter
+import com.maksimowiczm.foodyou.app.ui.common.utility.LocalGraphStyle
 import com.maksimowiczm.foodyou.app.ui.common.utility.LocalNutrientsOrder
 import com.maksimowiczm.foodyou.app.ui.home.shared.FoodYouHomeCard
 import com.maksimowiczm.foodyou.app.ui.home.shared.HomeState
 import com.maksimowiczm.foodyou.common.compose.extension.toDp
+import com.maksimowiczm.foodyou.settings.domain.entity.GraphStyle
 import com.maksimowiczm.foodyou.settings.domain.entity.NutrientsOrder
 import com.valentinilk.shimmer.Shimmer
 import com.valentinilk.shimmer.shimmer
@@ -123,6 +125,9 @@ internal fun GoalsCard(
             GoalsCardContent(
                 energy = energy,
                 energyGoal = energyGoal,
+                proteins = proteins,
+                carbohydrates = carbohydrates,
+                fats = fats,
                 proteinsPercentage = proteinsPercentage,
                 carbsPercentage = carbsPercentage,
                 fatsPercentage = fatsPercentage,
@@ -156,6 +161,9 @@ internal fun GoalsCard(
 private fun GoalsCardContent(
     energy: Int,
     energyGoal: Int,
+    proteins: Int,
+    carbohydrates: Int,
+    fats: Int,
     proteinsPercentage: Float,
     carbsPercentage: Float,
     fatsPercentage: Float,
@@ -164,6 +172,7 @@ private fun GoalsCardContent(
     val nutrientsPalette = LocalNutrientsPalette.current
     val nutrientsOrder = LocalNutrientsOrder.current
     val energyFormatter = LocalEnergyFormatter.current
+    val graphStyle = LocalGraphStyle.current
 
     val typography = MaterialTheme.typography
     val colorScheme = MaterialTheme.colorScheme
@@ -225,37 +234,78 @@ private fun GoalsCardContent(
             }
         }
 
-        Row(modifier = Modifier.height(64.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            nutrientsOrder.forEach { field ->
-                when (field) {
-                    NutrientsOrder.Proteins ->
-                        MacroBar(
-                            progress = proteinsPercentage,
-                            containerColor =
-                                nutrientsPalette.proteinsOnSurfaceContainer.copy(alpha = .25f),
-                            barColor = nutrientsPalette.proteinsOnSurfaceContainer,
-                        )
+        when (graphStyle) {
+            GraphStyle.Bar ->
+                Row(
+                    modifier = Modifier.height(64.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    nutrientsOrder.forEach { field ->
+                        when (field) {
+                            NutrientsOrder.Proteins ->
+                                MacroBar(
+                                    progress = proteinsPercentage,
+                                    containerColor =
+                                        nutrientsPalette.proteinsOnSurfaceContainer.copy(
+                                            alpha = .25f
+                                        ),
+                                    barColor = nutrientsPalette.proteinsOnSurfaceContainer,
+                                )
 
-                    NutrientsOrder.Fats ->
-                        MacroBar(
-                            progress = fatsPercentage,
-                            containerColor =
-                                nutrientsPalette.fatsOnSurfaceContainer.copy(alpha = .25f),
-                            barColor = nutrientsPalette.fatsOnSurfaceContainer,
-                        )
+                            NutrientsOrder.Fats ->
+                                MacroBar(
+                                    progress = fatsPercentage,
+                                    containerColor =
+                                        nutrientsPalette.fatsOnSurfaceContainer.copy(alpha = .25f),
+                                    barColor = nutrientsPalette.fatsOnSurfaceContainer,
+                                )
 
-                    NutrientsOrder.Carbohydrates ->
-                        MacroBar(
-                            progress = carbsPercentage,
-                            containerColor =
-                                nutrientsPalette.carbohydratesOnSurfaceContainer.copy(alpha = .25f),
-                            barColor = nutrientsPalette.carbohydratesOnSurfaceContainer,
-                        )
+                            NutrientsOrder.Carbohydrates ->
+                                MacroBar(
+                                    progress = carbsPercentage,
+                                    containerColor =
+                                        nutrientsPalette.carbohydratesOnSurfaceContainer.copy(
+                                            alpha = .25f
+                                        ),
+                                    barColor = nutrientsPalette.carbohydratesOnSurfaceContainer,
+                                )
 
-                    NutrientsOrder.Other,
-                    NutrientsOrder.Vitamins,
-                    NutrientsOrder.Minerals -> Unit
+                            NutrientsOrder.Other,
+                            NutrientsOrder.Vitamins,
+                            NutrientsOrder.Minerals -> Unit
+                        }
+                    }
                 }
+
+            GraphStyle.Pie -> {
+                val slices =
+                    nutrientsOrder.mapNotNull { field ->
+                        when (field) {
+                            NutrientsOrder.Proteins ->
+                                MacroPieSlice(
+                                    value = proteins,
+                                    color = nutrientsPalette.proteinsOnSurfaceContainer,
+                                )
+
+                            NutrientsOrder.Fats ->
+                                MacroPieSlice(
+                                    value = fats,
+                                    color = nutrientsPalette.fatsOnSurfaceContainer,
+                                )
+
+                            NutrientsOrder.Carbohydrates ->
+                                MacroPieSlice(
+                                    value = carbohydrates,
+                                    color = nutrientsPalette.carbohydratesOnSurfaceContainer,
+                                )
+
+                            NutrientsOrder.Other,
+                            NutrientsOrder.Vitamins,
+                            NutrientsOrder.Minerals -> null
+                        }
+                    }
+
+                MacroPieChart(slices = slices)
             }
         }
     }

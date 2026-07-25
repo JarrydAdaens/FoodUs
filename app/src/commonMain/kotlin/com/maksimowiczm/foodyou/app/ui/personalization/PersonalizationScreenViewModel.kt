@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.maksimowiczm.foodyou.common.domain.userpreferences.UserPreferencesRepository
 import com.maksimowiczm.foodyou.settings.domain.entity.EnergyFormat
+import com.maksimowiczm.foodyou.settings.domain.entity.GraphStyle
 import com.maksimowiczm.foodyou.settings.domain.entity.Settings
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.first
@@ -38,5 +39,17 @@ internal class PersonalizationScreenViewModel(
 
     fun setEnergyFormat(format: EnergyFormat) {
         viewModelScope.launch { settingsRepository.update { copy(energyFormat = format) } }
+    }
+
+    private val _graphStyle = settingsRepository.observe().map { it.graphStyle }
+    val graphStyle =
+        _graphStyle.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(2_000),
+            initialValue = runBlocking { _graphStyle.first() },
+        )
+
+    fun setGraphStyle(style: GraphStyle) {
+        viewModelScope.launch { settingsRepository.update { copy(graphStyle = style) } }
     }
 }

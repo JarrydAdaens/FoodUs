@@ -11,6 +11,7 @@ import com.maksimowiczm.foodyou.common.infrastructure.datastore.AbstractDataStor
 import com.maksimowiczm.foodyou.common.infrastructure.datastore.set
 import com.maksimowiczm.foodyou.settings.domain.entity.AppLaunchInfo
 import com.maksimowiczm.foodyou.settings.domain.entity.EnergyFormat
+import com.maksimowiczm.foodyou.settings.domain.entity.GraphStyle
 import com.maksimowiczm.foodyou.settings.domain.entity.HomeCard
 import com.maksimowiczm.foodyou.settings.domain.entity.NutrientsOrder
 import com.maksimowiczm.foodyou.settings.domain.entity.Settings
@@ -29,6 +30,7 @@ internal class DataStoreSettingsRepository(dataStore: DataStore<Preferences>) :
             expandGoalCard = this[SettingsPreferencesKeys.expandGoalCard] ?: true,
             onboardingFinished = this[SettingsPreferencesKeys.onboardingFinished] ?: false,
             energyFormat = this.getEnergyFormat(SettingsPreferencesKeys.energyFormat),
+            graphStyle = this.getGraphStyle(SettingsPreferencesKeys.graphStyle),
             appLaunchInfo = this.getAppLaunchInfo(),
         )
 
@@ -42,6 +44,7 @@ internal class DataStoreSettingsRepository(dataStore: DataStore<Preferences>) :
         this[SettingsPreferencesKeys.expandGoalCard] = updated.expandGoalCard
         this[SettingsPreferencesKeys.onboardingFinished] = updated.onboardingFinished
         setEnergyFormat(SettingsPreferencesKeys.energyFormat, updated.energyFormat)
+        setGraphStyle(SettingsPreferencesKeys.graphStyle, updated.graphStyle)
         setAppLaunchInfo(updated.appLaunchInfo)
     }
 }
@@ -78,6 +81,13 @@ private fun MutablePreferences.setEnergyFormat(key: Preferences.Key<Int>, value:
 private fun Preferences.getEnergyFormat(key: Preferences.Key<Int>): EnergyFormat =
     runCatching { EnergyFormat.entries[this[key] ?: EnergyFormat.DEFAULT.ordinal] }
         .getOrElse { EnergyFormat.DEFAULT }
+
+private fun MutablePreferences.setGraphStyle(key: Preferences.Key<Int>, value: GraphStyle) =
+    setWithNull(key, value.ordinal)
+
+private fun Preferences.getGraphStyle(key: Preferences.Key<Int>): GraphStyle =
+    runCatching { GraphStyle.entries[this[key] ?: GraphStyle.DEFAULT.ordinal] }
+        .getOrElse { GraphStyle.DEFAULT }
 
 private fun Preferences.getAppLaunchInfo(): AppLaunchInfo =
     AppLaunchInfo(
@@ -133,6 +143,7 @@ private object SettingsPreferencesKeys {
     val expandGoalCard = booleanPreferencesKey("settings:expandGoalCard")
     val onboardingFinished = booleanPreferencesKey("settings:onboardingFinished")
     val energyFormat = intPreferencesKey("settings:energyFormat")
+    val graphStyle = intPreferencesKey("settings:graphStyle")
     val firstLaunchEpoch = longPreferencesKey("first_launch_epoch")
     val firstLaunchCurrentVersionName = stringPreferencesKey("first_launch_current_version_name")
     val firstLaunchCurrentVersionEpoch = longPreferencesKey("first_launch_current_version_epoch")
