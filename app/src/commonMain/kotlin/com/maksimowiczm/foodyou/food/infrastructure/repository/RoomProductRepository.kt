@@ -36,6 +36,7 @@ internal class RoomProductRepository(private val productDao: ProductDao) : Produ
         servingWeight: Double?,
         source: FoodSource,
         nutritionFacts: NutritionFacts,
+        sourceRecordId: String?,
     ): FoodId.Product {
         val product =
             Product(
@@ -50,7 +51,7 @@ internal class RoomProductRepository(private val productDao: ProductDao) : Produ
                 source = source,
                 nutritionFacts = nutritionFacts,
             )
-        val entity = product.toEntity()
+        val entity = product.toEntity().copy(sourceRecordId = sourceRecordId)
         val id = productDao.insertProduct(entity)
         return FoodId.Product(id)
     }
@@ -65,6 +66,7 @@ internal class RoomProductRepository(private val productDao: ProductDao) : Produ
         servingWeight: Double?,
         source: FoodSource,
         nutritionFacts: NutritionFacts,
+        sourceRecordId: String?,
     ): FoodId.Product? {
         val product =
             Product(
@@ -79,11 +81,20 @@ internal class RoomProductRepository(private val productDao: ProductDao) : Produ
                 source = source,
                 nutritionFacts = nutritionFacts,
             )
-        return productDao.insertUniqueProduct(product.toEntity())?.let(FoodId::Product)
+        return productDao
+            .insertUniqueProduct(product.toEntity().copy(sourceRecordId = sourceRecordId))
+            ?.let(FoodId::Product)
     }
 
     override suspend fun updateProduct(product: Product) {
         productDao.updateProduct(product.toEntity())
+    }
+
+    override suspend fun deleteProductsBySource(source: FoodSource.Type) {
+        require(source != FoodSource.Type.User) {
+            "Refusing to bulk-delete user products; delete-by-source is only for downloaded providers"
+        }
+        productDao.deleteProductsBySource(source.toEntity())
     }
 }
 

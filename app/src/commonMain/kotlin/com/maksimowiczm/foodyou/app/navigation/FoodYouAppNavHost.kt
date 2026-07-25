@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.maksimowiczm.foodyou.app.ui.about.AboutScreen
 import com.maksimowiczm.foodyou.app.ui.database.exportcsvproducts.ExportCsvProductsScreen
+import com.maksimowiczm.foodyou.app.ui.database.australianfoodcompositiondatabase.AustralianFoodCompositionDatabaseScreen
 import com.maksimowiczm.foodyou.app.ui.database.externaldatabases.ExternalDatabasesScreen
 import com.maksimowiczm.foodyou.app.ui.database.externaldatabases.OpenFoodFactsLoginDialog
 import com.maksimowiczm.foodyou.app.ui.database.externaldatabases.UpdateUsdaApiKeyDialog
@@ -151,11 +152,21 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 onSwissFoodCompositionDatabase = {
                     navController.navigateSingleTop(SwissFoodCompositionDatabase)
                 },
+                onAustralianFoodCompositionDatabase = {
+                    navController.navigateSingleTop(AustralianFoodCompositionDatabase)
+                },
             )
         }
         forwardBackwardComposable<SwissFoodCompositionDatabase> {
             SwissFoodCompositionDatabaseScreen(
                 onBack = { navController.popBackStackInclusive<SwissFoodCompositionDatabase>() }
+            )
+        }
+        forwardBackwardComposable<AustralianFoodCompositionDatabase> {
+            AustralianFoodCompositionDatabaseScreen(
+                onBack = {
+                    navController.popBackStackInclusive<AustralianFoodCompositionDatabase>()
+                }
             )
         }
         forwardBackwardComposable<ImportCsvProducts> {
@@ -497,6 +508,8 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
 @Serializable private object ExternalDatabases
 
 @Serializable private object SwissFoodCompositionDatabase
+
+@Serializable private object AustralianFoodCompositionDatabase
 
 @Serializable private object UsdaApiKey
 

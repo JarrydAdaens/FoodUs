@@ -39,6 +39,8 @@ fun FoodSource.Type.Icon(modifier: Modifier = Modifier) {
             )
 
         FoodSource.Type.SwissFoodCompositionDatabase -> Text("CH", modifier)
+
+        FoodSource.Type.AustralianFoodCompositionDatabase -> Text("AU", modifier)
     }
 }
 
@@ -50,4 +52,6 @@ fun FoodSource.Type.stringResource(): String =
         FoodSource.Type.USDA -> stringResource(Res.string.headline_food_data_central_usda)
         FoodSource.Type.SwissFoodCompositionDatabase ->
             stringResource(Res.string.headline_swiss_food_composition_database)
+        FoodSource.Type.AustralianFoodCompositionDatabase ->
+            stringResource(Res.string.headline_australian_food_composition_database)
     }

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Task Type: `FEATURE`
-- Status: `Draft`
+- Status: `Done`
 - Owner: Jarryd Adaens
 - Last Updated: 25 July 2026
 
@@ -135,3 +135,20 @@ From 2026-07-25 provider recon (`file:line` where load-bearing) — Story 14 wil
 
 - Planning input: 2026-07-25 provider recon (`ImportCsvProductUseCase.kt`, `ProductEntity.kt`, `ProductDao.kt`, `FoodSource.kt`, `FoodSourceType.kt`, `FoodSearchDao.kt`, `DataStoreFoodSearchPreferencesRepository.kt`, `FoodYouDatabase.kt`) with `file:line`; spec Phase 2, §7.3–7.4, §10.1–10.2.
 - Unverified: AFCD source specifics (URL/format/licence/version) and dataset size — resolved by Story 14 before this executes.
+
+## Execution Log
+
+- Status: `Done` (implemented and validated on the `foodyou` emulator, 2026-07-25).
+- Enum fan-out: added `AustralianFoodCompositionDatabase` to `FoodSource.Type`, `FoodSourceType` (+ `toDomain`/`toEntity`), `FoodSourceTypeConverter` (stable Int `4`), the provenance `FoodSource.kt` icon (`"AU"` text badge) + `stringResource`, `FoodFilter.Source` (+ icon/label), `FoodSearchApp`/`FoodSearchAppState` `ListStates`, and the `FoodSearchViewModel` source map.
+- Schema (VERSION 34→35): added nullable `Product.sourceRecordId` and a new `ProviderMetadata` table; migration `AustralianFoodProviderMigration` matches the KSP-generated `35.json` exactly (verified). Room's content-FTS sync triggers already keep `ProductFts` current on bulk delete/insert, so **no manual FTS rebuild is needed** — a deliberate, evidence-based deviation from the spike's §8.5 assumption (triggers confirmed in `34.json`/`35.json`).
+- Replace primitive: `ProductRepository.deleteProductsBySource` (`User`-guarded) + `ProductDao` `DELETE ... WHERE sourceType`; `insertProduct`/`insertUniqueProduct` gained an optional `sourceRecordId`.
+- Provider metadata: `ProviderMetadataEntity`/`Dao`/`Database` + domain `ProviderMetadata` + `RoomProviderMetadataRepository` + `providerMetadataModule`.
+- XLSX pipeline (dependency-free): pure common-code `XlsxSheetReader` (shared strings + streaming rows) and `XlsxWorkbook` (sheet-name → entry-path resolution); AFCD `AfcdUnits` (kJ→kcal, mg→g), `AfcdNutrientMapper` (header-name column resolution + normalization), `AfcdWorkbookParser`. The ZIP/unzip + Ktor download live in `androidMain` (`AndroidAustralianFoodCompositionDatabaseRepository`, `java.util.zip`), behind a common `AustralianFoodCompositionDatabaseRepository` interface with an `expect`/`actual` platform module (iOS binds an unsupported stub — the fork targets Android).
+- Import use case: `ImportAustralianFoodCompositionDatabaseUseCaseImpl` — download→parse/validate (before any DB mutation) → one `withTransaction` (delete-by-source → insert → history) → persist metadata; failures preserve the last-good dataset and record `lastError`.
+- Enablement: `FoodSearchPreferences.AustralianFoodCompositionDatabase(enabled)` + DataStore key `food:use_australian_food_composition_database`; search participation gated in `FoodSearchViewModel` (AFCD omitted from the source map when disabled, so its rows are excluded without deletion). AFCD URL/release/attribution live in `AustralianFoodCompositionDatabaseConfig`, not inline.
+- UI: provider management screen (`app/ui/database/australianfoodcompositiondatabase/*`) with the enable switch, install/last-import/last-check state, import/update button + progress; card in `ExternalDatabasesScreen`; nav route in `FoodYouAppNavHost`.
+
+## Completion Review
+
+- Deviations: (1) No manual FTS rebuild — Room's generated content-sync triggers already maintain `ProductFts` on the bulk replace (verified in exported schema). (2) `sourceRecordId` was added to `ProductEntity` and threaded via the repository insert path rather than through the domain `Product` model, to keep the change surgical; the AFCD Public Food Key is persisted for every row. (3) AFCD "category" (Classification) is not persisted — the shared `Product` schema has no category column and adding one is out of Story 15 scope; no value is fabricated. (4) The download uses the configured Release 3 URL; runtime release detection is deferred to Story 17 as scoped.
+- Validation: unit tests `:app:testDebugUnitTest --tests com.maksimowiczm.foodyou.importexport.*` — 16 tests, all passing (unit conversion, xlsx/shared-string parsing, workbook resolution, AFCD mapping incl. kJ→kcal and mg→g). `:app:assembleDebug` — BUILD SUCCESSFUL; generated `35.json` matches the migration. Emulator E2E on `foodyou`: clean 34→35 over-install migration (existing diary entries `PieTest`/`PreMigration Snack` preserved); enabled + imported 1,588 AFCD foods (metadata `Installed (Release 3)`, import/check dates set); searched "vegemite" → `Spread, yeast, vegemite` (163 kcal, 24.4 g protein) with AU provenance; disabled → AU source vanishes from search and "No food found", DB still holds 1,588 rows; re-enabled → result returns with no re-download. iOS not built (no macOS host); `expect`/`actual` provided.

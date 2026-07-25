@@ -22,6 +22,7 @@ interface ProductRepository {
      * @param servingWeight Weight of a single serving of the product, if available.
      * @param nutritionFacts Nutrition facts of the product per 100g or 100ml, depending on whether
      *   the product is solid or liquid.
+     * @param sourceRecordId The provider's own identifier for this record, if available.
      */
     suspend fun insertProduct(
         name: String,
@@ -33,6 +34,7 @@ interface ProductRepository {
         servingWeight: Double?,
         source: FoodSource,
         nutritionFacts: NutritionFacts,
+        sourceRecordId: String? = null,
     ): FoodId.Product
 
     /**
@@ -51,9 +53,17 @@ interface ProductRepository {
         servingWeight: Double?,
         source: FoodSource,
         nutritionFacts: NutritionFacts,
+        sourceRecordId: String? = null,
     ): FoodId.Product?
 
     suspend fun updateProduct(product: Product)
 
     suspend fun deleteProduct(product: Product)
+
+    /**
+     * Deletes every product belonging to a single provider [source]. Intended for fully replacing a
+     * downloaded provider's dataset. Passing [FoodSource.Type.User] is rejected so custom foods can
+     * never be purged by a provider refresh.
+     */
+    suspend fun deleteProductsBySource(source: FoodSource.Type)
 }

@@ -327,6 +327,20 @@
     <string name="description_swiss_food_composition_database_short">Swiss Food Composition Database includes nutritional information for over 1,100 general food products</string>
     <string name="description2_swiss_food_composition_database">Swiss Food Composition Database includes nutritional information for over 1,100 general food products. It is available in four languages. To import these products into your food diary, please select your preferred languages.</string>
 
+    <string name="headline_australian_food_composition_database" translatable="false">Australian Food Composition Database</string>
+    <string name="description_australian_food_composition_database_short">Nutritional information for around 1,600 Australian foods, published by Food Standards Australia New Zealand.</string>
+    <string name="description_australian_food_composition_database">The Australian Food Composition Database is downloaded and stored on your device so Australian foods can be searched offline. Enable it to include its foods in search; disable it to exclude them without deleting the downloaded data.</string>
+    <string name="action_enable_provider_search">Include in search</string>
+    <string name="action_update_dataset">Check for updates</string>
+    <string name="headline_import_state">Import state</string>
+    <string name="headline_last_import">Last import</string>
+    <string name="headline_last_successful_check">Last successful check</string>
+    <string name="headline_last_error">Last error</string>
+    <!-- %1$s is the installed dataset version, e.g. "Release 3". -->
+    <string name="neutral_installed_version">Installed (%1$s)</string>
+    <string name="neutral_not_installed">Not installed</string>
+    <string name="neutral_never">Never</string>
+
     <string name="headline_external_databases">External databases</string>
     <string name="description_external_databases">Check out supported databases</string>
 

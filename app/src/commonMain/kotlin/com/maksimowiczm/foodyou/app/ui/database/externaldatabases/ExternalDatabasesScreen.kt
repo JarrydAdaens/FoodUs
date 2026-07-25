@@ -43,6 +43,7 @@ import org.koin.compose.viewmodel.koinViewModel
 fun ExternalDatabasesScreen(
     onBack: () -> Unit,
     onSwissFoodCompositionDatabase: () -> Unit,
+    onAustralianFoodCompositionDatabase: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: ExternalDatabasesViewModel = koinViewModel()
@@ -54,6 +55,7 @@ fun ExternalDatabasesScreen(
         onOpenFoodFactsChange = viewModel::toggleOpenFoodFacts,
         onUsdaChange = viewModel::toggleUsda,
         onSwissFoodCompositionDatabase = onSwissFoodCompositionDatabase,
+        onAustralianFoodCompositionDatabase = onAustralianFoodCompositionDatabase,
         modifier = modifier,
     )
 }
@@ -65,6 +67,7 @@ private fun ExternalDatabasesScreen(
     onOpenFoodFactsChange: (Boolean) -> Unit,
     onUsdaChange: (Boolean) -> Unit,
     onSwissFoodCompositionDatabase: () -> Unit,
+    onAustralianFoodCompositionDatabase: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
@@ -114,7 +117,48 @@ private fun ExternalDatabasesScreen(
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
+
+            item {
+                AustralianFoodCompositionDatabase(
+                    onClick = onAustralianFoodCompositionDatabase,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
         }
+    }
+}
+
+@Composable
+private fun AustralianFoodCompositionDatabase(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    DatabaseCard(
+        title = {
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text(
+                    text =
+                        stringResource(Res.string.headline_australian_food_composition_database),
+                    style = MaterialTheme.typography.titleSmall,
+                )
+                Box(modifier = Modifier.size(48.dp), contentAlignment = Alignment.Center) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowRight,
+                        contentDescription = null,
+                    )
+                }
+            }
+        },
+        modifier = modifier,
+        contentPadding = PaddingValues(start = 16.dp, top = 8.dp, end = 8.dp, bottom = 16.dp),
+        onClick = onClick,
+    ) {
+        Text(
+            text = stringResource(Res.string.description_australian_food_composition_database_short),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
     }
 }
 
