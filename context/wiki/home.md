@@ -44,6 +44,10 @@ Wielding context thoughtfully has a direct effect on the quality of outcomes. Cl
 - [xml_documentation_comments_cheat_sheet.md](xml_documentation_comments_cheat_sheet.md) - reference guide for C# XML documentation comments and common tags
 - [yaml_cheat_sheet.md](yaml_cheat_sheet.md) - reference guide for YAML structure, scalars, collections, and common parser caveats
 
+## Knowledge Docs
+
+- [foodyou-products-csv-schema.md](foodyou-products-csv-schema.md) - Food You's product CSV import/export schema (51 columns, units, formatting, import rules) and the repo's meal-validation CI; reference for Milestone 1 Story 9 and input to Story 10
+
 ## Other Pages
 
 - [sbom.md](sbom.md) - software bill of materials: modules, toolchain, dependencies, and external data services

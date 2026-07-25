@@ -38,7 +38,7 @@ used daily long enough for the owner to judge the baseline understood.
 
 ## Status
 
-In Progress — 3/13 stories complete.
+In Progress — 4/13 stories complete.
 
 ---
 
@@ -54,7 +54,7 @@ In Progress — 3/13 stories complete.
 | 6 | [Extract MyFitnessPal data](#story-6) | Feature | — | — | — | — | Complete |
 | 7 | [Extract Lose It data](#story-7) | Feature | — | — | — | — | Complete |
 | 8 | [Extract AnyList meal data](#story-8) | Feature | — | — | — | — | In Progress |
-| 9 | [Determine Food You's CSV import schema](#story-9) | Research | — | — | — | — | Not Started |
+| 9 | [Determine Food You's CSV import schema](#story-9) | Research | — | — | — | — | Complete |
 | 10 | [Build the export script (master JSON → Food You CSV)](#story-10) | Feature | — | — | — | — | Not Started |
 | 11 | [App update mechanism](#story-11) | Tooling | — | — | — | — | Not Started |
 | 12 | [Use the app for a while](#story-12) | Research | — | — | — | — | Not Started |
@@ -237,7 +237,12 @@ format is.
 **Rough scope:** Starting point: an export produced from Food You itself, already located in the
 repository. Confirm against the import/export code in the `importexport` feature slice.
 
-**Status:** Not Started
+**Status:** Complete — 2026-07-25. Schema determined from the `importexport` slice
+(`ProductField` / `CsvHeaders` / import & export use cases) and a real app v3.4.9 export, and
+documented at [wiki/foodyou-products-csv-schema.md](../wiki/foodyou-products-csv-schema.md). Key
+findings: products-only, 51 fixed columns, per-100 g basis, all nutrients in grams except energy
+(kcal), and an unescaped-quote export bug Story 10 must avoid. The repo's only test CI
+(`validate-meals.yml`) validates preset meal time-slots, not CSV.
 
 ---
 
