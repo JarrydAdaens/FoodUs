@@ -38,7 +38,7 @@ used daily long enough for the owner to judge the baseline understood.
 
 ## Status
 
-In Progress — 9/15 stories complete.
+In Progress — 10/15 stories complete.
 
 ---
 
@@ -59,7 +59,7 @@ In Progress — 9/15 stories complete.
 | 11 | Not Started | [App update mechanism](#story-11) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/story-11-app-update-mechanism/plan.md) |
 | 12 | Complete | [Use the app for a while](#story-12) | Research | — | — | — | [plan](../implementation-plans/milestone-1/story-12-use-the-app/plan.md) |
 | 13 | Not Started | [Own project infrastructure](#story-13) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/own-project-infrastructure/plan.md) |
-| 14 | Not Started | [Remove the static documentation site](#story-14) | Tooling | — | — | — | — |
+| 14 | Complete | [Remove the static documentation site](#story-14) | Tooling | — | — | — | — |
 | 15 | Not Started | [Establish fork CI/CD pipeline](#story-15) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/story-15-cicd-pipeline/plan.md) |
 
 ---
@@ -377,7 +377,13 @@ One related item — **not a blocker for deletion:** the in-app privacy link
 so deleting the fork's `docs/` copy does not break it. Swapping that link to the owner's own policy
 is owned separately by **Milestone 2 Story 3**.
 
-**Status:** Not Started
+**Status:** Complete (2026-07-25). Deleted the entire `docs/` tree (16 files) and
+`.github/workflows/docs.yml`. The `docs/development/` decision-log and release notes went with the
+rest: git history confirmed every file there is upstream-authored (nothing fork-authored), so git
+history is their archive. Two couplings the reconnaissance missed were orphaned by the deletion and
+cleaned up: the `serve` recipe in `justfile` (`zensical serve` in `docs/`) and the `zensical`
+package in `flake.nix` buildInputs. No Gradle coupling confirmed — `:app:assembleDebug` builds
+successfully after deletion. `FoodYouConfig.kt` untouched (Milestone 2 Story 3).
 
 ---
 

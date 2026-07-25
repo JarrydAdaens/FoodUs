@@ -38,7 +38,6 @@
         buildInputs = with pkgs; [
           just
           temurin-bin-21
-          zensical
           androidComposition.androidsdk
         ];
 

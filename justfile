@@ -30,7 +30,3 @@ preview:
       --ks-key-alias foodyou \
       --out ./preview-signed.apk \
       app/build/outputs/apk/preview/aligned.apk
-
-[working-directory: 'docs']
-serve:
-    zensical serve
