@@ -50,7 +50,7 @@ without altering the original diary snapshot.
 
 ## Status
 
-Not Started — 0/19 stories complete. Blocked on Milestone 1 reaching daily use.
+Substantially Complete — 18/19 stories complete; Story 16 (FoodSwitch) blocked on an external data licence, documented per its own gate. Delivered 2026-07-25 by the rails-boss-execute run (see `../rails-boss-execute/progress.md`).
 
 ---
 
@@ -58,25 +58,25 @@ Not Started — 0/19 stories complete. Blocked on Milestone 1 reaching daily use
 
 | # | Status | Story | Type | Complexity | Effort | Risk | Plan |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | Not Started | [Identity shift / rename to ACME Food App](#story-1) | Feature | — | — | — | — |
-| 2 | Not Started | [Relocate the Sponsor button](#story-2) | Feature | — | — | — | — |
-| 3 | Not Started | [Replace the privacy policy link](#story-3) | Feature | — | — | — | — |
-| 4 | Not Started | [About screen link swaps](#story-4) | Feature | — | — | — | — |
-| 5 | Not Started | [Per-meal add buttons rework](#story-5) | Feature | — | — | — | — |
-| 6 | Not Started | [AI scanning (robot button)](#story-6) | Feature | — | — | — | — |
-| 7 | Not Started | [Gallery source for AI scanning](#story-7) | Feature | — | — | — | — |
-| 8 | Not Started | [Fast text placeholder (pencil button)](#story-8) | Feature | — | — | — | — |
-| 9 | Not Started | [Placeholder edit flow (meta screen)](#story-9) | Feature | — | — | — | — |
-| 10 | Not Started | [Graph style setting (bar / pie)](#story-10) | Feature | — | — | — | — |
-| 11 | Not Started | [Week layout setting (fixed / scrolling)](#story-11) | Feature | — | — | — | — |
-| 12 | Not Started | [Upstream issue triage & bug adoption](#story-12) | Research | — | — | — | — |
-| 13 | Not Started | [Reusable meal templates](#story-13) | Feature | — | — | — | — |
-| 14 | Not Started | [Provider & Quick Add architecture spike](#story-14) | Research | 5 | 4 | 2 | [plan](../implementation-plans/milestone-2/story-14-provider-quickadd-architecture-spike/plan.md) |
-| 15 | Not Started | [Australian Food Composition Database provider](#story-15) | Feature | 7 | 7 | 6 | [plan](../implementation-plans/milestone-2/story-15-australian-food-composition-database-provider/plan.md) |
-| 16 | Not Started | [FoodSwitch provider (feasibility-gated)](#story-16) | Feature | 4 | 3 | 5 | [plan](../implementation-plans/milestone-2/story-16-foodswitch-provider/plan.md) |
-| 17 | Not Started | [Provider update-check & refresh UI](#story-17) | Feature | 7 | 7 | 6 | [plan](../implementation-plans/milestone-2/story-17-provider-update-check-refresh-ui/plan.md) |
-| 18 | Not Started | [Quick Add expansion — new fields & migration](#story-18) | Feature | 3 | 3 | 3 | [plan](../implementation-plans/milestone-2/story-18-quickadd-expansion-fields/plan.md) |
-| 19 | Not Started | [Quick Add promotion workflow](#story-19) | Feature | 6 | 6 | 5 | [plan](../implementation-plans/milestone-2/story-19-quickadd-promotion-workflow/plan.md) |
+| 1 | Complete | [Identity shift / rename to ACME Food App](#story-1) | Feature | — | — | — | — |
+| 2 | Complete | [Relocate the Sponsor button](#story-2) | Feature | — | — | — | — |
+| 3 | Complete | [Replace the privacy policy link](#story-3) | Feature | — | — | — | — |
+| 4 | Complete | [About screen link swaps](#story-4) | Feature | — | — | — | — |
+| 5 | Complete | [Per-meal add buttons rework](#story-5) | Feature | — | — | — | — |
+| 6 | Complete | [AI scanning (robot button)](#story-6) | Feature | — | — | — | — |
+| 7 | Complete | [Gallery source for AI scanning](#story-7) | Feature | — | — | — | — |
+| 8 | Complete | [Fast text placeholder (pencil button)](#story-8) | Feature | — | — | — | — |
+| 9 | Complete | [Placeholder edit flow (meta screen)](#story-9) | Feature | — | — | — | — |
+| 10 | Complete | [Graph style setting (bar / pie)](#story-10) | Feature | — | — | — | — |
+| 11 | Complete | [Week layout setting (fixed / scrolling)](#story-11) | Feature | — | — | — | — |
+| 12 | Complete | [Upstream issue triage & bug adoption](#story-12) | Research | — | — | — | — |
+| 13 | Complete | [Reusable meal templates](#story-13) | Feature | — | — | — | — |
+| 14 | Complete | [Provider & Quick Add architecture spike](#story-14) | Research | 5 | 4 | 2 | [plan](../implementation-plans/milestone-2/story-14-provider-quickadd-architecture-spike/plan.md) |
+| 15 | Complete | [Australian Food Composition Database provider](#story-15) | Feature | 7 | 7 | 6 | [plan](../implementation-plans/milestone-2/story-15-australian-food-composition-database-provider/plan.md) |
+| 16 | Blocked (documented) | [FoodSwitch provider (feasibility-gated)](#story-16) | Feature | 4 | 3 | 5 | [plan](../implementation-plans/milestone-2/story-16-foodswitch-provider/plan.md) |
+| 17 | Complete | [Provider update-check & refresh UI](#story-17) | Feature | 7 | 7 | 6 | [plan](../implementation-plans/milestone-2/story-17-provider-update-check-refresh-ui/plan.md) |
+| 18 | Complete | [Quick Add expansion — new fields & migration](#story-18) | Feature | 3 | 3 | 3 | [plan](../implementation-plans/milestone-2/story-18-quickadd-expansion-fields/plan.md) |
+| 19 | Complete | [Quick Add promotion workflow](#story-19) | Feature | 6 | 6 | 5 | [plan](../implementation-plans/milestone-2/story-19-quickadd-promotion-workflow/plan.md) |
 
 ---
 
@@ -105,7 +105,7 @@ Not Started — 0/19 stories complete. Blocked on Milestone 1 reaching daily use
 constraint: do this as an easy-to-overlay change on top of the original app to minimize merge
 conflicts with upstream.
 
-**Status:** Not Started
+**Status:** Complete (2026-07-25, commit `dc683e1d`) — applicationId `com.acme.foodapp` (namespace/source packages untouched for mergeability); fork version 1.0.0 layered over untouched upstream 3.4.9; About screen shows "Derived from Food You 3.4.9". Third version component reserved at 0 (deploy-counter decision still open).
 
 ---
 
@@ -123,7 +123,7 @@ belongs.
 
 **Rough scope:** Settings screen, About screen (`settings` / `sponsorship` slices).
 
-**Status:** Not Started
+**Status:** Complete (2026-07-25, commit `0d853d16`) — Sponsor button now lives at the bottom of the About screen; Settings entry and its orphaned wavy divider removed; sponsor navigation preserved and emulator-verified.
 
 ---
 
@@ -141,7 +141,7 @@ not upstream's.
 
 **Rough scope:** Single link swap in settings/About.
 
-**Status:** Not Started
+**Status:** Complete (2026-07-25, commit `5feda67a`) — single `privacyPolicyUri` constant swapped; all consumers (Settings, onboarding, login) resolve through it. **Owner follow-up:** replace the placeholder `https://github.com/JarrydAdaens/FoodYou/blob/main/PRIVACY.md` with the real published privacy-policy URL (not found anywhere in context).
 
 ---
 
@@ -166,7 +166,7 @@ credit.
 
 **Rough scope:** About screen link targets; changelog data entries.
 
-**Status:** Not Started
+**Status:** Complete (2026-07-25, commit `0ace5923`) — email → jarryd.adaens@outlook.com.au, GitHub/lightbulb → fork repo/issues, "Original creator on GitHub" attribution button added under the derived-from credit, What's-new untouched. All targets emulator-verified via intent capture.
 
 ---
 
@@ -190,7 +190,7 @@ two buttons; it ends up with four:
 
 **Rough scope:** Diary meal header UI (`fooddiary` slice); icon assets.
 
-**Status:** Not Started
+**Status:** Complete (2026-07-25, commit `332e4cae`) — four-button family per meal card (Search magnifier, Quick add lightning, AI scan SmartToy, Fast text EditNote) on its own row; robot/pencil navigate to stub screens on routes `FoodDiaryAiScan`/`FoodDiaryFastText` (carrying epochDay + mealId) for Stories 6/8 to fill. Emulator-verified.
 
 ---
 
@@ -227,7 +227,7 @@ and sugar.
 endpoint, JSON parsing, quick-add prefill, custom-food alignment/creation. Secret-injection
 mechanism for the baked key is an open question (must never reach the public repo).
 
-**Status:** Not Started
+**Status:** Complete (2026-07-25, commit `ef7421d8`) — camera capture/preview/discard flow, reusable `ai` slice (`AiFoodScanner` behind OpenRouter Ktor client, shared with Story 9), key injected from gitignored `local.properties`/env via BuildConfig ("AI not configured" state when absent), Tick→Quick Add prefill, Align→local custom-food search/create. Emulator-verified incl. real 401 round-trip with a throwaway key. Known limits: Quick Add persists no fibre/sugar (shown in result card only); create-custom-food opens unprefilled; happy-path result UI not E2E-tested without a real key.
 
 ---
 
@@ -244,7 +244,7 @@ button: pick an existing photo of your food instead of shooting a new one.
 
 **Rough scope:** Gallery picker on the Story 6 screen; same downstream flow.
 
-**Status:** Not Started
+**Status:** Complete (2026-07-25, commit `d4e2e38f`) — "Pick from gallery" button (modern photo picker, no storage permission) beside the capture card; picked photos reuse the identical downscale→preview→Ask AI flow. Emulator-verified. iOS remains the Story 6 Android-only placeholder.
 
 ---
 
@@ -263,7 +263,7 @@ you need something even faster than the AI flow.
 
 **Rough scope:** Minimal entry form; placeholder entry representation in the diary (feeds Story 9).
 
-**Status:** Not Started
+**Status:** Complete (2026-07-25, commit `9fc241fb`) — placeholders are `ManualDiaryEntry` rows with zero nutrition plus new `isPlaceholder` + `description` columns (Room 32→33 additive migration, upgrade-verified with surviving data). Name required / description optional, one-tap save. Story 9 must branch the edit flow on `isPlaceholder`.
 
 ---
 
@@ -291,7 +291,7 @@ populated. It automates part of the workflow so you're only doing the deciding.
 **Rough scope:** New meta screen, placeholder detection on edit, AI query-generation call, search
 handoff with pre-executed query.
 
-**Status:** Not Started
+**Status:** Complete (2026-07-25, commit `8b7d70e7`) — edit on a placeholder opens the Resolve-placeholder meta screen (search / quick add / AI routes; name+description shown as context); AI route reuses the Story 6 `ai` slice for text-only query generation into a pre-executed search (`initialQuery` nav arg, additive). Resolution is an explicit "Remove placeholder" affordance (no silent deletion). Emulator-verified; AI round-trip pending a real key.
 
 ---
 
@@ -310,7 +310,7 @@ breakdown, currently bar graphs — is exchanged for a pie chart presenting the 
 **Rough scope:** One setting; one chart component swap. This is the only place charts are used in
 the app.
 
-**Status:** Not Started
+**Status:** Complete (2026-07-25, commit `ab39e193`) — "Graphs" option in Personalization (default Bar); Pie renders a Compose-Canvas macro-breakdown pie with the same colors/legend, preference persisted in DataStore and survives restart. Angle math unit-tested; emulator-verified both directions.
 
 ---
 
@@ -329,7 +329,7 @@ whole weeks.
 
 **Rough scope:** One setting; day-scroller component alternative in the diary home.
 
-**Status:** Not Started
+**Status:** Complete (2026-07-25, commit `787ff547`) — "Week layout" in Personalization (default Scrolling, untouched); Fixed mode renders a new Monday-first whole-week pager strip with current-day highlight; day taps drive the diary; survives restart. Known nit: in Fixed mode the month/year header tracks the selected date, not the swiped-but-untapped week.
 
 ---
 
@@ -349,7 +349,7 @@ job). Bugs: yes — write down genuine bugs and create a story for each adopted 
 **Rough scope:** Upstream issue review; adopted bugs become new stories in the backlog (staged
 there, then pulled into a milestone).
 
-**Status:** Not Started
+**Status:** Complete (2026-07-25, commit `a831dbb7`) — all 96 open upstream issues triaged; 5 genuine bugs adopted as backlog stories in `../backlog/backlog-1.md` (upstream #437 CSV-import nutrient loss, #420 export FileNotFoundException, #364 values-per recalc, #325 settings back-stack wedge, #312 prefix-only search). Full adopt/reject table appended there; enhancements rejected under minimal-scope.
 
 ---
 
@@ -385,7 +385,7 @@ individual `DiaryEntry` rows for the chosen day/meal. Additive overlay per the f
 keep the merge-conflict surface small. Open question for planning: whether templates are a new
 first-class entity or built on the existing recipe/`DiaryMeal` machinery.
 
-**Status:** Not Started
+**Status:** Complete (2026-07-25, commit `0e699bbb`) — new first-class `MealTemplate`/`MealTemplateItem` tables (Room 33→34, additive). Snapshot semantics: applying recreates each item as its own manual diary entry with the exact stored nutrition (survives later product deletion; tradeoff: re-applied items lose the live-product link). UX: meal-card overflow menu — Save as template / Apply template (bottom sheet with delete). Full save→apply→delete loop emulator-verified; use-case tests pass.
 
 ---
 
@@ -419,7 +419,7 @@ spec this spike is **part of feature delivery, not an optional research task**.
 **Source:** [Milestone 2 feature spec](../dictations-tier-0/2026-07-25_milestone-2_australian-providers-and-quickadd-spec.md)
 (Phase 1).
 
-**Status:** Not Started
+**Status:** Complete (2026-07-25, commit `5ab699ed`) — knowledge doc at `../wiki/provider-quickadd-architecture.md`; all 15 spec §13 decisions resolved (see plan Completion Review). Headlines: diary entries confirmed already-immutable snapshots; reusable pipeline = wrap `ImportCsvProductUseCase` insert core with download→validate→parse→transactional replace + FTS rebuild; Quick Add stores absolute totals, fibre field already exists; **FoodSwitch = blocked** (commercial licence forbids local storage/derivation — owner would need a written data licence); **AFCD = feasible** (FSANZ Release 3 xlsx, no key, CC BY-SA 3.0 AU).
 
 ---
 
@@ -449,7 +449,7 @@ pipeline; Room provenance columns; deterministic unit-conversion tests. **Depend
 **Source:** [Milestone 2 feature spec](../dictations-tier-0/2026-07-25_milestone-2_australian-providers-and-quickadd-spec.md)
 (Phase 2).
 
-**Status:** Not Started
+**Status:** Complete (2026-07-25, commit `1c615992`) — first-class AFCD provider (FoodSource id 4, "AU" provenance badge): dependency-free xlsx reader, download→validate→parse→single-transaction replace pipeline, `ProviderMetadata` table (Room 34→35), enable/disable search filter that retains data. 16/16 unit tests (unit conversion, xlsx, mapping); emulator E2E imported 1,588 foods, "vegemite" searchable, disable/re-enable without re-import, prior data intact. Category column and runtime release detection deferred (latter to Story 17).
 
 ---
 
@@ -477,7 +477,7 @@ verdict. **Depends on Story 14** (feasibility) **and Story 15** (shared pipeline
 **Source:** [Milestone 2 feature spec](../dictations-tier-0/2026-07-25_milestone-2_australian-providers-and-quickadd-spec.md)
 (Phase 3).
 
-**Status:** Not Started
+**Status:** Blocked — documented external licence blocker (2026-07-25, commit `5819da3e`; gate evaluated by Story 14). No public API/bulk download, and FoodSwitch Global Terms of Use forbid storing/deriving the data. Per this story's own instruction the blocker is recorded and work stopped; no scraped substitute. Unblock: owner obtains a written data licence (`foodswitch@georgeinstitute.org.au`), then reuse Story 15's pipeline.
 
 ---
 
@@ -510,7 +510,7 @@ persistence (installed version, dates, checksum, error summary). **Depends on St
 **Source:** [Milestone 2 feature spec](../dictations-tier-0/2026-07-25_milestone-2_australian-providers-and-quickadd-spec.md)
 (Phase 4).
 
-**Status:** Not Started
+**Status:** Complete (2026-07-25, commit `40d1c7b4`) — provider-generic `compareDatasetVersion` cascade (version → publication date → revision id → checksum+mtime → checksum; unit-tested), non-destructive Check for updates (Ktor HEAD vs stored metadata), explicit Download-and-replace only after new-available, failure path keeps local data and never records a successful check. Full-refresh E2E proved AFCD-only delete+re-insert with diary data and FTS intact. Cancellability not offered — single-transaction pipeline has no resumable infra (documented per story's "where supported").
 
 ---
 
@@ -542,7 +542,7 @@ findings).
 **Source:** [Milestone 2 feature spec](../dictations-tier-0/2026-07-25_milestone-2_australian-providers-and-quickadd-spec.md)
 (§5, §7.1–7.2).
 
-**Status:** Not Started
+**Status:** Complete (2026-07-25, commit `e50987fa`) — Description (existing column), Dietary fiber (existing `dietaryFiber`), Servings and Weight (new nullable REAL columns, Room 35→36 additive) in the shared Quick Add form for create/edit incl. historical entries. Servings/weight are metadata only — stored totals never scaled (proven on-device); migration left prior rows byte-identical; invalid inputs rejected, empty optionals fine; placeholder flow undisturbed. Note: app uses American "fiber" labels per house style.
 
 ---
 
@@ -574,7 +574,7 @@ fields) **and Story 14** (recipe model and snapshot model).
 **Source:** [Milestone 2 feature spec](../dictations-tier-0/2026-07-25_milestone-2_australian-providers-and-quickadd-spec.md)
 (§6).
 
-**Status:** Not Started
+**Status:** Complete (2026-07-25, commit `761fc966`) — Promote to Product / Promote to Recipe in the Quick Add overflow menu (create, edit, and historical entries). Product drafts map totals to per-100 g via real weight (1:1 fallback, no invented values); recipes seed via a single placeholder ingredient (real backing product) so ingredient-derived totals reproduce the estimate; cancel deletes the placeholder and creates nothing; original diary snapshots proven unchanged; repeated promotion allowed. All E2E paths emulator-verified; mapping unit-tested.
 
 ---
 
