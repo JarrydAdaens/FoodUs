@@ -3,7 +3,7 @@
 ## Metadata
 
 - Task Type: `FEATURE`
-- Status: `Draft`
+- Status: `Complete`
 - Owner: Jarryd Adaens
 - Last Updated: 25 July 2026
 
@@ -136,3 +136,62 @@ From 2026-07-25 recon (`file:line` where load-bearing):
 
 - Planning input: 2026-07-25 Quick Add / product / recipe recon (`ProductFormState.kt`, `CreateProductViewModel.kt:30-35`, `Recipe.kt:32-38`, `RecipeFormState.kt`, snapshot migration `UnlinkDiaryMigration`) with `file:line`; spec §6, §10.4.
 - Unverified: exact editor navigation contract and whether a save-before-navigate is needed for brand-new entries — confirm during step 2.
+
+## Execution Log
+
+Implemented 25 July 2026.
+
+### Decisions (resolving the open questions)
+
+- **Q1 (product weight):** Resolved as recommended. `QuickAddPromotionSeed.basisWeightGrams` uses the
+  entry's `weightGrams` when `> 0`, else falls back to 100 g. With a real weight the totals are
+  converted to per-100 g (`total / weight * 100`) and `packageWeight` is set to the weight; without a
+  weight the totals are placed into the editor as-entered and `packageWeight` is left null — no value
+  is invented. Verified on the emulator: 200 g PromoPie mapped to 255 kcal / 10 / 15 / 20 per 100 g;
+  weightless PieTest mapped 1:1 with an empty package weight.
+- **Q2 (recipe seeding):** Resolved per the Story 14 spike's **single placeholder-ingredient**
+  approach (task-mandated; the plan's earlier "backing product first" wording is the same mechanism).
+  Promotion creates one real backing custom `Product` carrying the estimate as per-100 g nutrition,
+  then opens the recipe editor seeded with that product as a single ingredient at the basis weight, so
+  the derived-nutrition model is untouched and the recipe's totals reproduce the estimate exactly
+  (verified: PieTest recipe summary = 740 kcal / 40 / 20).
+- **Q3 (prefill mechanism):** No new nav-arg contract churn and no seed param bolted onto the giant
+  `rememberProductFormState`. Instead the seed maps to a domain `Product` and reuses the **existing**
+  `rememberProductFormState(product)` overload via a new additive `prefillProduct` param on
+  `CreateProductScreen`/`CreateProductApp`. The recipe editor gained optional `initial*` params on
+  `CreateRecipeScreen`. Smallest merge surface consistent with "commit only on save".
+
+### Cancellation correctness (spec §6.6 vs. Q2)
+
+The placeholder product must exist before the recipe editor can display/reference it, but "cancel
+creates nothing" forbids leaving it behind. `PromoteToRecipePlaceholderViewModel` owns the
+placeholder lifecycle: it creates the product once (id kept in `SavedStateHandle` for process death),
+and `discardPlaceholderIfUncommitted()` deletes it on cancel via the **application** coroutine scope
+so the delete survives the destination being popped. Recipe save calls `markCommitted()` so the
+committed placeholder is kept. Verified on the emulator: cancelling a recipe promotion left the custom
+food count unchanged (no orphan), while a saved one kept exactly one backing product + the recipe.
+
+### Files changed
+
+- New: `QuickAddPromotionSeed.kt`, `QuickAddPromotionMapping.kt` (pure mapping),
+  `PromoteToRecipePlaceholderViewModel.kt`, `QuickAddPromotionMappingTest.kt`.
+- Edited: `QuickAddScreen.kt` (overflow menu), `CreateQuickAddScreen.kt`, `UpdateQuickAddScreen.kt`
+  (seed + nav callbacks), `FoodDiaryQuickAddModule.kt` (DI), `CreateProductScreen.kt`,
+  `CreateProductApp.kt` (`prefillProduct`), `CreateRecipeScreen.kt` (`initial*` seed),
+  `FoodYouAppNavHost.kt` (routes + wiring), `strings.xml` (two actions).
+
+## Completion Review
+
+- **Automated:** `:app:testDebugUnitTest --tests *QuickAddPromotionMappingTest*` — PASSED (4 tests:
+  with-weight conversion, weightless fallback, absent-nutrient non-invention, recipe reproduction +
+  servings rounding). `:app:assembleDebug` — SUCCESS.
+- **E2E (emulator `foodyou`, package `com.acme.foodapp`):** promote-to-product from a new Quick Add
+  (per-100 g correct, product searchable, diary unchanged, in-progress edits intact); promote-to-
+  product from a historical entry (PieTest diary row still 740 / 40 / 20 / 100 afterwards, new product
+  created); promote-to-recipe (placeholder ingredient visible, summary reproduces the estimate, recipe
+  saved and searchable with the recipe icon); cancel (no recipe created, placeholder cleaned up — no
+  orphan); repeated promotion (PieTest promoted to product then recipe then again, no lock). All
+  passed.
+- **Remaining uncertainty:** New promotion strings were added to the default `values/strings.xml`
+  only; other locales fall back to English until translated. The recipe placeholder is a real,
+  searchable backing product by design (spike/§6.3) — an accepted, documented side effect, not a bug.

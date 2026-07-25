@@ -6,9 +6,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.MoreVert
 import androidx.compose.material.icons.outlined.Save
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -37,6 +41,10 @@ internal fun QuickAddScreen(
     onSave: () -> Unit,
     modifier: Modifier = Modifier,
     state: QuickAddFormState = rememberQuickAddFormState(),
+    // Story 19 promotion actions. Available on create, edit, and historical edit (all reuse this
+    // screen). Enabled only once the fields validate, matching the save action.
+    onPromoteToProduct: () -> Unit = {},
+    onPromoteToRecipe: () -> Unit = {},
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val focusRequester = remember { FocusRequester() }
@@ -78,6 +86,39 @@ internal fun QuickAddScreen(
                 title = { Text(stringResource(Res.string.headline_quick_add)) },
                 navigationIcon = { ArrowBackIconButton(handleBack) },
                 actions = {
+                    var menuExpanded by remember { mutableStateOf(false) }
+                    IconButton(onClick = { menuExpanded = true }) {
+                        Icon(
+                            imageVector = Icons.Outlined.MoreVert,
+                            contentDescription = stringResource(Res.string.action_show_more),
+                        )
+                    }
+                    DropdownMenu(
+                        expanded = menuExpanded,
+                        onDismissRequest = { menuExpanded = false },
+                    ) {
+                        DropdownMenuItem(
+                            text = {
+                                Text(stringResource(Res.string.action_promote_to_product))
+                            },
+                            onClick = {
+                                menuExpanded = false
+                                onPromoteToProduct()
+                            },
+                            enabled = state.isValid,
+                        )
+                        DropdownMenuItem(
+                            text = {
+                                Text(stringResource(Res.string.action_promote_to_recipe))
+                            },
+                            onClick = {
+                                menuExpanded = false
+                                onPromoteToRecipe()
+                            },
+                            enabled = state.isValid,
+                        )
+                    }
+
                     FilledIconButton(
                         onClick = {
                             if (state.isValid) {

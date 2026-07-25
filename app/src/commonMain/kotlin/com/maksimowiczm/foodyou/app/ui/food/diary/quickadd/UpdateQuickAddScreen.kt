@@ -15,6 +15,10 @@ fun UpdateQuickAddScreen(
     onSave: () -> Unit,
     id: Long,
     modifier: Modifier = Modifier,
+    // Story 19 promotion of an existing (including historical) Quick Add entry. Prefills the editor
+    // from the current form values; the source diary snapshot is never mutated (spec §6.4/§6.5).
+    onPromoteToProduct: (QuickAddPromotionSeed) -> Unit = {},
+    onPromoteToRecipe: (QuickAddPromotionSeed) -> Unit = {},
 ) {
     val viewModel: UpdateQuickAddViewModel = koinViewModel { parametersOf(ManualDiaryEntryId(id)) }
     val energyFormatter = LocalEnergyFormatter.current
@@ -70,5 +74,7 @@ fun UpdateQuickAddScreen(
         },
         modifier = modifier,
         state = formState,
+        onPromoteToProduct = { onPromoteToProduct(formState.toPromotionSeed(energyFormatter)) },
+        onPromoteToRecipe = { onPromoteToRecipe(formState.toPromotionSeed(energyFormatter)) },
     )
 }

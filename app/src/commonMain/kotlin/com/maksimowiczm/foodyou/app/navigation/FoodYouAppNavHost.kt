@@ -2,6 +2,7 @@ package com.maksimowiczm.foodyou.app.navigation
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
@@ -20,7 +21,12 @@ import com.maksimowiczm.foodyou.app.ui.food.diary.aiscan.AiScanScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.fasttext.FastTextScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.placeholder.PlaceholderMetaScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.CreateQuickAddScreen
+import com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.PromoteToRecipePlaceholderViewModel
+import com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.QuickAddPromotionSeed
 import com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.UpdateQuickAddScreen
+import com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.recipeIngredientWeightGrams
+import com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.recipeServings
+import com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.toProductPrefill
 import com.maksimowiczm.foodyou.app.ui.food.diary.search.DiaryFoodSearchScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.update.UpdateEntryScreen
 import com.maksimowiczm.foodyou.app.ui.food.product.CreateProductScreen
@@ -48,6 +54,8 @@ import com.maksimowiczm.foodyou.common.domain.measurement.type
 import com.maksimowiczm.foodyou.food.domain.entity.FoodId
 import kotlinx.datetime.LocalDate
 import kotlinx.serialization.Serializable
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
 fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifier) {
@@ -202,6 +210,8 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 onSave = { navController.popBackStackInclusive<FoodDiaryCreateQuickAdd>() },
                 date = LocalDate.fromEpochDays(route.epochDay),
                 mealId = route.mealId,
+                onPromoteToProduct = { navController.navigate(PromoteToProduct(it)) },
+                onPromoteToRecipe = { navController.navigate(PromoteToRecipe(it)) },
                 prefillName = route.prefillName,
                 prefillEnergyKcal = route.prefillEnergyKcal,
                 prefillProteins = route.prefillProteins,
@@ -284,6 +294,8 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 onBack = { navController.popBackStackInclusive<UpdateQuickAdd>() },
                 onSave = { navController.popBackStackInclusive<UpdateQuickAdd>() },
                 id = quickAddId,
+                onPromoteToProduct = { navController.navigate(PromoteToProduct(it)) },
+                onPromoteToRecipe = { navController.navigate(PromoteToRecipe(it)) },
             )
         }
         forwardBackwardComposable<FoodDiarySearch> {
@@ -398,6 +410,61 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                     navController.navigateSingleTop(OpenFoodFactsLogin)
                 },
             )
+        }
+        forwardBackwardComposable<PromoteToProduct> {
+            // Story 19: open the product editor prefilled from a Quick Add estimate. The product is
+            // created only when the editor is saved; cancelling creates nothing (spec §6.2/§6.6).
+            val seed = it.toRoute<PromoteToProduct>().toSeed()
+
+            CreateProductScreen(
+                onBack = { navController.popBackStackInclusive<PromoteToProduct>() },
+                onCreate = { navController.popBackStackInclusive<PromoteToProduct>() },
+                onUpdateUsdaApiKey = { navController.navigateSingleTop(UsdaApiKey) },
+                onUpdateOpenFoodFactsCredentials = {
+                    navController.navigateSingleTop(OpenFoodFactsLogin)
+                },
+                prefillProduct = seed.toProductPrefill(),
+            )
+        }
+        forwardBackwardComposable<PromoteToRecipe> {
+            // Story 19: seed a recipe from a Quick Add estimate via a single placeholder ingredient
+            // (a real backing product created up front). The recipe is created only on save; on
+            // cancel the placeholder is discarded so nothing is left behind (spec §6.3/§6.6).
+            val seed = it.toRoute<PromoteToRecipe>().toSeed()
+            val placeholderViewModel =
+                koinViewModel<PromoteToRecipePlaceholderViewModel> { parametersOf(seed) }
+            val placeholderId by
+                placeholderViewModel.productId.collectAsStateWithLifecycle()
+
+            val id = placeholderId
+            if (id != null) {
+                CreateRecipeScreen(
+                    onBack = {
+                        placeholderViewModel.discardPlaceholderIfUncommitted()
+                        navController.popBackStackInclusive<PromoteToRecipe>()
+                    },
+                    onCreate = {
+                        placeholderViewModel.markCommitted()
+                        navController.popBackStackInclusive<PromoteToRecipe>()
+                    },
+                    onEditFood = { food ->
+                        when (food) {
+                            is FoodId.Product ->
+                                navController.navigateSingleTop(UpdateProduct(food.id))
+                            is FoodId.Recipe -> error("Cannot edit recipe from recipe")
+                        }
+                    },
+                    onUpdateUsdaApiKey = { navController.navigateSingleTop(UsdaApiKey) },
+                    onUpdateOpenFoodFactsCredentials = {
+                        navController.navigateSingleTop(OpenFoodFactsLogin)
+                    },
+                    initialName = seed.name,
+                    initialServings = seed.recipeServings,
+                    initialNote = seed.description,
+                    initialIngredient =
+                        FoodId.Product(id) to Measurement.Gram(seed.recipeIngredientWeightGrams),
+                )
+            }
         }
         forwardBackwardComposable<FoodDiaryCreateEntry> {
             val route = it.toRoute<FoodDiaryCreateEntry>()
@@ -548,6 +615,88 @@ private data class FoodDiarySearch(
 )
 
 @Serializable private data class FoodDiaryCreateProduct(val date: Long, val mealId: Long)
+
+// Story 19 promotion routes. Carry a flat copy of the mapped Quick Add fields (spec §6.2/§6.3); the
+// source diary entry is never referenced or mutated (§6.5).
+@Serializable
+private data class PromoteToProduct(
+    val name: String,
+    val description: String?,
+    val energyKcal: Double?,
+    val proteins: Double?,
+    val carbohydrates: Double?,
+    val fats: Double?,
+    val fibre: Double?,
+    val servingCount: Double?,
+    val weightGrams: Double?,
+) {
+    constructor(
+        seed: QuickAddPromotionSeed
+    ) : this(
+        name = seed.name,
+        description = seed.description,
+        energyKcal = seed.energyKcal,
+        proteins = seed.proteins,
+        carbohydrates = seed.carbohydrates,
+        fats = seed.fats,
+        fibre = seed.fibre,
+        servingCount = seed.servingCount,
+        weightGrams = seed.weightGrams,
+    )
+
+    fun toSeed() =
+        QuickAddPromotionSeed(
+            name = name,
+            description = description,
+            energyKcal = energyKcal,
+            proteins = proteins,
+            carbohydrates = carbohydrates,
+            fats = fats,
+            fibre = fibre,
+            servingCount = servingCount,
+            weightGrams = weightGrams,
+        )
+}
+
+@Serializable
+private data class PromoteToRecipe(
+    val name: String,
+    val description: String?,
+    val energyKcal: Double?,
+    val proteins: Double?,
+    val carbohydrates: Double?,
+    val fats: Double?,
+    val fibre: Double?,
+    val servingCount: Double?,
+    val weightGrams: Double?,
+) {
+    constructor(
+        seed: QuickAddPromotionSeed
+    ) : this(
+        name = seed.name,
+        description = seed.description,
+        energyKcal = seed.energyKcal,
+        proteins = seed.proteins,
+        carbohydrates = seed.carbohydrates,
+        fats = seed.fats,
+        fibre = seed.fibre,
+        servingCount = seed.servingCount,
+        weightGrams = seed.weightGrams,
+    )
+
+    fun toSeed() =
+        QuickAddPromotionSeed(
+            name = name,
+            description = description,
+            energyKcal = energyKcal,
+            proteins = proteins,
+            carbohydrates = carbohydrates,
+            fats = fats,
+            fibre = fibre,
+            servingCount = servingCount,
+            weightGrams = weightGrams,
+        )
+}
 
 @Serializable private data class FoodDiaryCreateRecipe(val date: Long, val mealId: Long)
 

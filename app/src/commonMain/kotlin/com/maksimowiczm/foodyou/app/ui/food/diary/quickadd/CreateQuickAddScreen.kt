@@ -15,6 +15,10 @@ fun CreateQuickAddScreen(
     mealId: Long,
     date: LocalDate,
     modifier: Modifier = Modifier,
+    // Story 19 promotion. Opens the product/recipe editor prefilled from the current form values
+    // without persisting or mutating any diary entry (spec §6.2/§6.3, §6.5).
+    onPromoteToProduct: (QuickAddPromotionSeed) -> Unit = {},
+    onPromoteToRecipe: (QuickAddPromotionSeed) -> Unit = {},
     // Optional prefill, used by the AI scanning flow (Milestone 2, Story 6) to seed the form from an
     // AI food estimate. Energy is in kilocalories. All null by default, so normal Quick Add is
     // unaffected.
@@ -66,5 +70,7 @@ fun CreateQuickAddScreen(
         },
         modifier = modifier,
         state = formState,
+        onPromoteToProduct = { onPromoteToProduct(formState.toPromotionSeed(energyFormatter)) },
+        onPromoteToRecipe = { onPromoteToRecipe(formState.toPromotionSeed(energyFormatter)) },
     )
 }
