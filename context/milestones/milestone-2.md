@@ -45,21 +45,21 @@ Not Started — 0/13 stories complete. Blocked on Milestone 1 reaching daily use
 
 ## Story Index
 
-| # | Story | Type | Complexity | Effort | Risk | Plan | Status |
+| # | Status | Story | Type | Complexity | Effort | Risk | Plan |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [Identity shift / rename to ACME Food App](#story-1) | Feature | — | — | — | — | Not Started |
-| 2 | [Relocate the Sponsor button](#story-2) | Feature | — | — | — | — | Not Started |
-| 3 | [Replace the privacy policy link](#story-3) | Feature | — | — | — | — | Not Started |
-| 4 | [About screen link swaps](#story-4) | Feature | — | — | — | — | Not Started |
-| 5 | [Per-meal add buttons rework](#story-5) | Feature | — | — | — | — | Not Started |
-| 6 | [AI scanning (robot button)](#story-6) | Feature | — | — | — | — | Not Started |
-| 7 | [Gallery source for AI scanning](#story-7) | Feature | — | — | — | — | Not Started |
-| 8 | [Fast text placeholder (pencil button)](#story-8) | Feature | — | — | — | — | Not Started |
-| 9 | [Placeholder edit flow (meta screen)](#story-9) | Feature | — | — | — | — | Not Started |
-| 10 | [Graph style setting (bar / pie)](#story-10) | Feature | — | — | — | — | Not Started |
-| 11 | [Week layout setting (fixed / scrolling)](#story-11) | Feature | — | — | — | — | Not Started |
-| 12 | [Upstream issue triage & bug adoption](#story-12) | Research | — | — | — | — | Not Started |
-| 13 | [Reusable meal templates](#story-13) | Feature | — | — | — | — | Not Started |
+| 1 | Not Started | [Identity shift / rename to ACME Food App](#story-1) | Feature | — | — | — | — |
+| 2 | Not Started | [Relocate the Sponsor button](#story-2) | Feature | — | — | — | — |
+| 3 | Not Started | [Replace the privacy policy link](#story-3) | Feature | — | — | — | — |
+| 4 | Not Started | [About screen link swaps](#story-4) | Feature | — | — | — | — |
+| 5 | Not Started | [Per-meal add buttons rework](#story-5) | Feature | — | — | — | — |
+| 6 | Not Started | [AI scanning (robot button)](#story-6) | Feature | — | — | — | — |
+| 7 | Not Started | [Gallery source for AI scanning](#story-7) | Feature | — | — | — | — |
+| 8 | Not Started | [Fast text placeholder (pencil button)](#story-8) | Feature | — | — | — | — |
+| 9 | Not Started | [Placeholder edit flow (meta screen)](#story-9) | Feature | — | — | — | — |
+| 10 | Not Started | [Graph style setting (bar / pie)](#story-10) | Feature | — | — | — | — |
+| 11 | Not Started | [Week layout setting (fixed / scrolling)](#story-11) | Feature | — | — | — | — |
+| 12 | Not Started | [Upstream issue triage & bug adoption](#story-12) | Research | — | — | — | — |
+| 13 | Not Started | [Reusable meal templates](#story-13) | Feature | — | — | — | — |
 
 ---
 

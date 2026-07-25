@@ -38,29 +38,29 @@ used daily long enough for the owner to judge the baseline understood.
 
 ## Status
 
-In Progress — 6/15 stories complete.
+In Progress — 7/15 stories complete.
 
 ---
 
 ## Story Index
 
-| # | Story | Type | Complexity | Effort | Risk | Plan | Status |
+| # | Status | Story | Type | Complexity | Effort | Risk | Plan |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [Build & deploy Food You](#story-1) | Tooling | — | — | — | — | Complete |
-| 2 | [Fill in project context & goals](#story-2) | Docs | — | — | — | — | Complete |
-| 3 | [Obtain USDA FoodData Central API key](#story-3) | Tooling | — | — | — | — | Not Started |
-| 4 | [Obtain Open Food Facts login](#story-4) | Tooling | — | — | — | — | Not Started |
-| 5 | [Define the master data format](#story-5) | Feature | — | — | — | — | Not Started |
-| 6 | [Extract MyFitnessPal data](#story-6) | Feature | — | — | — | — | Complete |
-| 7 | [Extract Lose It data](#story-7) | Feature | — | — | — | — | Complete |
-| 8 | [Extract AnyList meal data](#story-8) | Feature | — | — | — | — | In Progress |
-| 9 | [Determine Food You's CSV import schema](#story-9) | Research | — | — | — | — | Complete |
-| 10 | [Build the export script (master JSON → Food You CSV)](#story-10) | Feature | — | — | — | [plan](../implementation-plans/milestone-1/story-10-export-script/plan.md) | Not Started |
-| 11 | [App update mechanism](#story-11) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/story-11-app-update-mechanism/plan.md) | Not Started |
-| 12 | [Use the app for a while](#story-12) | Research | — | — | — | [plan](../implementation-plans/milestone-1/story-12-use-the-app/plan.md) | Complete |
-| 13 | [Own project infrastructure](#story-13) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/own-project-infrastructure/plan.md) | Not Started |
-| 14 | [Remove the static documentation site](#story-14) | Tooling | — | — | — | — | Not Started |
-| 15 | [Establish fork CI/CD pipeline](#story-15) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/story-15-cicd-pipeline/plan.md) | Not Started |
+| 1 | Complete | [Build & deploy Food You](#story-1) | Tooling | — | — | — | — |
+| 2 | Complete | [Fill in project context & goals](#story-2) | Docs | — | — | — | — |
+| 3 | Not Started | [Obtain USDA FoodData Central API key](#story-3) | Tooling | — | — | — | — |
+| 4 | Not Started | [Obtain Open Food Facts login](#story-4) | Tooling | — | — | — | — |
+| 5 | Not Started | [Define the master data format](#story-5) | Feature | — | — | — | [plan](../implementation-plans/milestone-1/story-5-master-data-format/plan.md) |
+| 6 | Complete | [Extract MyFitnessPal data](#story-6) | Feature | — | — | — | — |
+| 7 | Complete | [Extract Lose It data](#story-7) | Feature | — | — | — | — |
+| 8 | Complete | [Extract AnyList meal data](#story-8) | Feature | — | — | — | — |
+| 9 | Complete | [Determine Food You's CSV import schema](#story-9) | Research | — | — | — | — |
+| 10 | Not Started | [Build the export script (master JSON → Food You CSV)](#story-10) | Feature | — | — | — | [plan](../implementation-plans/milestone-1/story-10-export-script/plan.md) |
+| 11 | Not Started | [App update mechanism](#story-11) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/story-11-app-update-mechanism/plan.md) |
+| 12 | Complete | [Use the app for a while](#story-12) | Research | — | — | — | [plan](../implementation-plans/milestone-1/story-12-use-the-app/plan.md) |
+| 13 | Not Started | [Own project infrastructure](#story-13) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/own-project-infrastructure/plan.md) |
+| 14 | Not Started | [Remove the static documentation site](#story-14) | Tooling | — | — | — | — |
+| 15 | Not Started | [Establish fork CI/CD pipeline](#story-15) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/story-15-cicd-pipeline/plan.md) |
 
 ---
 
@@ -157,7 +157,8 @@ any future app change.
 is defined alongside the MyFitnessPal export (Story 6) and extended/changed as needed for the
 Lose It data (Story 7) and the AnyList meal data (Story 8).
 
-**Status:** Not Started
+**Status:** Not Started — plan at
+[../implementation-plans/milestone-1/story-5-master-data-format/plan.md](../implementation-plans/milestone-1/story-5-master-data-format/plan.md).
 
 ---
 
@@ -220,9 +221,10 @@ it makes the master data reflect real, current eating habits — not just histor
 master format may be extended to accommodate AnyList's meal/recipe structure — still mutable at
 this stage.
 
-**Status:** In Progress — 2026-07-25. 8 AnyList recipes extracted into
-`jarryd/working-data/master-data.json`. Remaining: AnyList meal-plan (meal) data, and
-recipe-vs-meal reclassification (see [backlog-1 Story 3](../backlog/backlog-1.md#story-3)).
+**Status:** Complete — 2026-07-25. AnyList data extracted into
+`jarryd/working-data/master-data.json` (8 recipes plus the meal-plan pass). Recipe-vs-meal
+reclassification remains tracked separately in
+[backlog-1 Story 3](../backlog/backlog-1.md#story-3).
 
 ---
 

@@ -36,9 +36,9 @@ What must be true for the milestone to be complete.
 
 ## Story Index
 
-| # | Story | Type | Complexity | Effort | Risk | Plan | Status |
+| # | Status | Story | Type | Complexity | Effort | Risk | Plan |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [Story name](#story-1) | Feature/Bug/Refactor | — | — | — | *link when generated* | Not Started |
+| 1 | Not Started | [Story name](#story-1) | Feature/Bug/Refactor | — | — | — | *link when generated* |
 
 ---
 
