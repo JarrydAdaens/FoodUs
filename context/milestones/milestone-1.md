@@ -56,7 +56,7 @@ In Progress — 11/15 stories complete.
 | 8 | Complete | [Extract AnyList meal data](#story-8) | Feature | — | — | — | — |
 | 9 | Complete | [Determine Food You's CSV import schema](#story-9) | Research | — | — | — | — |
 | 10 | Complete | [Build the export script (master JSON → Food You CSV)](#story-10) | Feature | — | — | — | [plan](../implementation-plans/milestone-1/story-10-export-script/plan.md) |
-| 11 | Not Started | [App update mechanism](#story-11) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/story-11-app-update-mechanism/plan.md) |
+| 11 | In Progress | [App update mechanism](#story-11) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/story-11-app-update-mechanism/plan.md) |
 | 12 | Complete | [Use the app for a while](#story-12) | Research | — | — | — | [plan](../implementation-plans/milestone-1/story-12-use-the-app/plan.md) |
 | 13 | Not Started | [Own project infrastructure](#story-13) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/own-project-infrastructure/plan.md) |
 | 14 | Complete | [Remove the static documentation site](#story-14) | Tooling | — | — | — | — |
@@ -297,7 +297,14 @@ requirement.
 acceptable if that's the cleanest mechanism; otherwise any workable direct-deploy mechanism.
 Constraints: updates must not lose local data; must support both the owner's and his wife's phones.
 
-**Status:** Not Started — plan at
+**Status:** In Progress — 2026-07-25. Automatable slice done: update-procedure runbook
+([../wiki/foodyou-update-procedure.md](../wiki/foodyou-update-procedure.md)), signing helper
+(`jarryd/scripts/sign-apk.ps1`), `.gitignore` keystore hardening, and an end-to-end emulator
+validation of the mechanism with a throwaway key (signature-mismatch refusal, one-time
+migration, same-signature in-place update with data preserved). Owner-remaining: keystore
+custody decision + generation, GitHub Actions signing secrets, phone migration/installs,
+Obtainium setup, and real-hardware data-preservation verification — checklist in the plan's
+Execution Log. Plan at
 [../implementation-plans/milestone-1/story-11-app-update-mechanism/plan.md](../implementation-plans/milestone-1/story-11-app-update-mechanism/plan.md).
 
 ---

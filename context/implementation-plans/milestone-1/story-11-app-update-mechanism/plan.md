@@ -3,7 +3,7 @@
 ## Metadata
 
 - Task Type: `STORY`
-- Status: `Draft`
+- Status: `In Progress`
 - Owner: Jarryd Adaens
 - Last Updated: 25 July 2026
 
@@ -159,7 +159,8 @@ migrates — its first install is release-signed.
   Impact: Determines whether Obtainium setup is part of the install steps and whether Story 15's
   release channel is the actual delivery path or just an archive.
   Assumption: Option A, with B as fallback.
-  Status: OPEN
+  Status: ANSWERED — proceeded on the assumption (Option A, manual sideload fallback),
+  2026-07-25; owner unavailable mid-run.
 - Q: [STORY 11] Where should the release keystore and its passwords live (custody), and where is
   its backup? Candidates: the owner's password manager (passwords + base64 keystore attachment)
   plus an offline copy.
@@ -167,26 +168,30 @@ migrates — its first install is release-signed.
   is unrecoverable by design. Custody must be decided before the key signs anything.
   Assumption: Password manager holds passwords and a copy of the keystore file; a second copy
   lives outside the dev machine. Never in the repo or GitHub outside Actions secrets.
-  Status: OPEN
+  Status: OPEN — deliberately left to the owner (2026-07-25); an agent must not decide secret
+  custody, and the production keystore has not been generated. Candidates are listed in the
+  runbook (`context/wiki/foodyou-update-procedure.md` §1).
 - Q: [STORY 11] Which build type ships to the household: `release` (R8-minified) or `devRelease`
   re-signed with the release key?
   Impact: Minified is what upstream ships and is smaller/faster; but any R8 issue in the fork
   would hit the daily drivers. Signing `release` is the straightforward path since the fork is
   currently unmodified.
   Assumption: `release`, signed post-build — identical to upstream's shipping configuration.
-  Status: OPEN
+  Status: ANSWERED — proceeded on the assumption (`release`, signed post-build), 2026-07-25;
+  validated on the emulator with a throwaway key.
 - Q: [STORY 11] versionCode scheme going forward: simple `max(upstream, installed) + 1` bump per
   shipped build, or reserve headroom (e.g. jump to `1230`) so upstream merges never collide?
   Impact: Affects every future release and the merge-conflict story on upstream pulls; also feeds
   Milestone 2's fork-versioning story (fork versionName 1.0 layered on upstream).
   Assumption: Simple bump: before each shipped build, set `android-versionCode` to at least
   `installed + 1`; on upstream merges take `max(upstream, ours) + 1` if shipping.
-  Status: OPEN
+  Status: ANSWERED — proceeded on the assumption (simple bump scheme), 2026-07-25; documented
+  in the runbook §2.
 - Q: [STORY 11] Is the wife's phone's Android version ≥ minSdk 28, and is she comfortable with
   the one-time "install unknown apps" permission grant for Obtainium/browser?
   Impact: A device below minSdk 28 or a hard objection to sideloading would force Option C.
   Assumption: Yes on both — modern household phone.
-  Status: OPEN
+  Status: OPEN — owner to confirm with his wife before her first install (2026-07-25).
 - Q: [STORY 11] Forward constraint only (decision belongs to Milestone 2): once the AI key is
   baked into private builds, public GitHub Releases can no longer carry the shipped APK. Which
   private channel replaces it (private repo + token in Obtainium, direct sideload, other)?
@@ -337,3 +342,56 @@ Not needed — CER is under threshold; single-pass story with owner-executed dev
   Obtainium behavior on both devices is unverified until the owner installs it; Play internal-
   testing friction for new personal accounts was assessed from general knowledge, not re-verified
   against current Play Console policy — acceptable since Option C is not recommended.
+
+## Execution Log
+
+- 2026-07-25 — Automatable slice executed by agent; owner unavailable mid-run, so Q1/Q3/Q4 were
+  proceeded on their assumptions (marked ANSWERED above) while Q2 (keystore custody) and Q5
+  (wife's phone) remain owner decisions.
+- Step 2 (partial): `.gitignore` gained `*.jks` (`*.keystore` was already present). The
+  production keystore itself is **not** generated — owner-executed per the plan.
+- Step 3 (done): runbook written at `context/wiki/foodyou-update-procedure.md` (linked from
+  `context/wiki/home.md`) and signing helper at `jarryd/scripts/sign-apk.ps1` (zipalign +
+  apksigner + verify; keystore path/alias/passwords from environment variables or interactive
+  prompt only; refuses a keystore inside the repo).
+- Steps 5–7 (emulator analogue, throwaway key): the full mechanism was validated on the
+  `foodyou` AVD with a throwaway test keystore generated in the session scratchpad (deleted
+  afterwards; never in the repo):
+  - `:app:assembleRelease` built the unsigned R8-minified APK (BUILD SUCCESSFUL, 4m 34s).
+  - `sign-apk.ps1` aligned, signed, and verified it (throwaway cert digest confirmed).
+  - Installing the release-signed APK **over** the debug-signed install was refused with
+    `INSTALL_FAILED_UPDATE_INCOMPATIBLE: Existing package com.maksimowiczm.foodyou signatures
+    do not match newer version` — the documented signature rule, observed live.
+  - After `adb uninstall` + release install, the app launched; onboarding was completed to
+    create persistent DataStore state; a same-signature `adb install -r` then updated in place:
+    `firstInstallTime` unchanged (13:29:25), `lastUpdateTime` advanced (13:31:15), and the app
+    relaunched straight to the diary home screen with onboarding state intact — data preserved.
+  - The emulator was then restored to the debug-signed build for continuity. The uninstall
+    cycle wiped the emulator's Story 10 imported catalog (205 products); acceptable — the
+    emulator is a test bed and the catalog is regenerable via `jarryd/scripts/export_foodyou_csv.py`.
+  - No `versionCode` bump was performed: version-catalog edits are the owner's per-release
+    action (documented in runbook §2), and both test installs used equal versionCode 123,
+    which Android accepts for same-signature updates.
+- Validation: `git status` and a filesystem sweep confirm no `.jks`/`.keystore` file exists
+  anywhere under the repository; no secret material appears in any changed file.
+
+### Owner checklist (remaining, owner-executed)
+
+1. Decide keystore custody (Q2) and generate the release keystore per runbook §1; record the
+   certificate SHA-256 digest in the runbook.
+2. Add fork repository secrets `KEYSTORE` (base64), `KEY_ALIAS`, `KEYSTORE_PASSWORD` for
+   Story 15's release workflow (runbook §6).
+3. One-time debug→release migration on the S22 Ultra per runbook §5 — **read the data timing
+   warning first**; then first install on the wife's phone (confirm Q5).
+4. Set up Obtainium on both phones (runbook §4).
+5. Run the data-preservation verification on real hardware (runbook §7) and mark this story
+   Complete.
+
+## Completion Review
+
+Not complete — intentionally. Everything automatable is done and verified: the runbook, the
+signing helper, the `.gitignore` hardening, and an end-to-end emulator proof of the exact
+mechanism (signature-mismatch refusal, one-time migration, same-signature in-place update with
+data preserved). What was **not** proven: the real keystore, real phones, Obtainium behavior on
+device, and real-data preservation on hardware — all owner-gated (checklist above). Status stays
+`In Progress` until the owner completes the checklist.
