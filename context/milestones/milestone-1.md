@@ -38,7 +38,7 @@ used daily long enough for the owner to judge the baseline understood.
 
 ## Status
 
-In Progress — 11/15 stories complete.
+In Progress — 13/15 stories complete.
 
 ---
 
@@ -48,8 +48,8 @@ In Progress — 11/15 stories complete.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | Complete | [Build & deploy Food You](#story-1) | Tooling | — | — | — | — |
 | 2 | Complete | [Fill in project context & goals](#story-2) | Docs | — | — | — | — |
-| 3 | Not Started | [Obtain USDA FoodData Central API key](#story-3) | Tooling | — | — | — | — |
-| 4 | Not Started | [Obtain Open Food Facts login](#story-4) | Tooling | — | — | — | — |
+| 3 | Complete | [Obtain USDA FoodData Central API key](#story-3) | Tooling | — | — | — | — |
+| 4 | Complete | [Obtain Open Food Facts login](#story-4) | Tooling | — | — | — | — |
 | 5 | Complete | [Define the master data format](#story-5) | Feature | — | — | — | [plan](../implementation-plans/milestone-1/story-5-master-data-format/plan.md) |
 | 6 | Complete | [Extract MyFitnessPal data](#story-6) | Feature | — | — | — | — |
 | 7 | Complete | [Extract Lose It data](#story-7) | Feature | — | — | — | — |
@@ -118,7 +118,8 @@ is provided. Obtain that key and enter it in-app.
 
 **Rough scope:** External account signup; in-app settings entry. No code.
 
-**Status:** Not Started
+**Status:** Complete — 2026-07-25. USDA FoodData Central API key obtained and stored securely in
+the owner's Bitwarden vault.
 
 ---
 
@@ -135,7 +136,8 @@ contribute data back to the open-source collection — which he wants to do.
 
 **Rough scope:** External account signup. No code.
 
-**Status:** Not Started
+**Status:** Complete — 2026-07-25. Open Food Facts account/credentials created and stored securely
+in the owner's Bitwarden vault.
 
 ---
 
