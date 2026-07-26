@@ -166,7 +166,10 @@ android {
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = libs.versions.android.versionCode.get().toInt()
-        versionName = libs.versions.version.name.get()
+        // The shipped Android versionName is the fork's own <milestone>.<story>.<build> version so
+        // installed-version checks (Obtainium) line up with the fork's v* release tags. The
+        // upstream Food You version stays available as BuildConfig.VERSION_NAME metadata.
+        versionName = libs.versions.fork.version.name.get()
 
         manifestPlaceholders["applicationIcon"] = "@mipmap/ic_launcher"
         manifestPlaceholders["applicationRoundIcon"] = "@mipmap/ic_launcher_round"

@@ -61,15 +61,22 @@ any future candidate keystore be confirmed as the right one):
 & "C:\Users\Jarry\AppData\Local\Android\Sdk\build-tools\36.0.0\apksigner.bat" verify --print-certs <signed.apk>
 ```
 
-> **Release certificate SHA-256:** _to be recorded by the owner after the first real signing._
+> **Release certificate SHA-256:**
+> `47:79:F9:34:82:85:CD:94:56:70:83:E8:AD:3B:7A:D9:A2:F6:04:FC:A1:AB:79:C3:31:BE:E2:08:4B:ED:D5:08`
+> (recorded 2026-07-26 from the v2.19.0 install on the owner's phone via Obtainium.)
 
-## 2. Per Release: Bump versionCode
+## 2. Per Release: Bump versionCode and Fork Version
 
 Edit `gradle/libs.versions.toml`:
 
 ```toml
-android-versionCode = "123"   # bump to at least installed + 1 for every shipped build
+android-versionCode = "124"    # bump to at least installed + 1 for every shipped build
+fork-version-name = "2.19.1"   # <milestone>.<story>.<build> — must match the v* release tag
 ```
+
+`fork-version-name` is the app's shipped Android versionName; the `v*` tag that triggers the
+release workflow must be `v<fork-version-name>` so Obtainium's installed-vs-latest comparison
+works without workarounds.
 
 - Simple scheme (plan Q4): before each shipped build, set it to `installed + 1`.
 - On upstream merges: take `max(upstream, ours) + 1` if shipping. This single line is the one
