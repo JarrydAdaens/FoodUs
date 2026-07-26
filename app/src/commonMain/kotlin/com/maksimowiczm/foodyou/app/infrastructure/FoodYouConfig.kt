@@ -18,10 +18,8 @@ internal class FoodYouConfig : AppConfig, NetworkConfig {
     override val issueTrackerUri: String = "https://github.com/JarrydAdaens/FoodUs/issues"
     // Upstream creator's GitHub, credited on the About screen (Milestone 2, Story 4).
     override val upstreamAuthorUri: String = "https://github.com/maksimowiczm"
-    // Fork's own privacy policy. Placeholder until the owner supplies the URL of the
-    // privacy policy already published for his apps (Milestone 2, Story 3).
-    override val privacyPolicyUri: String =
-        "https://github.com/JarrydAdaens/FoodUs/blob/main/PRIVACY.md"
+    // Fork's own published privacy policy (Milestone 2, Story 3; owner-supplied URL).
+    override val privacyPolicyUri: String = "https://jarrydadaens.github.io/privacy.html"
     override val openFoodFactsTermsOfUseUri: String = "https://world.openfoodfacts.org/terms-of-use"
     override val openFoodFactsPrivacyPolicyUri: String = "https://world.openfoodfacts.org/privacy"
     override val foodDataCentralPrivacyPolicyUri: String = "https://www.usda.gov/privacy-policy"
