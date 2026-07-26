@@ -1,6 +1,6 @@
 ---
 name: milestone-2
-description: Milestone 2 - Customisation. Change how the application works - ACME identity, AI-assisted logging, ergonomics, adopted upstream bug fixes, Australian food-data providers with offline-first local storage, and an expanded Quick Add with promotion to custom products/recipes.
+description: Milestone 2 - Customisation. Change how the application works - FoodUs identity, AI-assisted logging, ergonomics, adopted upstream bug fixes, Australian food-data providers with offline-first local storage, and an expanded Quick Add with promotion to custom products/recipes.
 metadata:
   version: "3.0"
   agentic_rails_source_version: "3.0"
@@ -28,7 +28,7 @@ estimated foods carry more detail and can later graduate into reusable custom pr
 
 - Logging friction is the core complaint against MyFitnessPal and Lose It; the AI and ergonomics
   stories attack it directly.
-- The ACME Food App identity makes the fork unmistakably its own while attributing upstream.
+- The FoodUs identity (superseding the interim ACME Food App name) makes the fork unmistakably its own while attributing upstream.
 - Adopting genuine upstream bugs keeps the base healthy without scope creep.
 - The household eats Australian foods that Open Food Facts and USDA cover poorly; first-class
   Australian datasets stored locally make search genuinely useful — and offline-first.
@@ -37,7 +37,7 @@ estimated foods carry more detail and can later graduate into reusable custom pr
 
 ## Outcome / Definition of Done
 
-The app carries the ACME Food App identity (with upstream attribution and layered versioning), the
+The app carries the FoodUs identity (with upstream attribution and layered versioning), the
 four-button per-meal logging surface (search, quick add, AI scan, fast placeholder) works end to
 end including placeholder resolution, the settings ergonomics options (graphs, week layout) ship,
 reusable meal templates let a day's entries be saved and re-applied on other days, and adopted
@@ -50,7 +50,11 @@ without altering the original diary snapshot.
 
 ## Status
 
-Substantially Complete — 18/19 stories complete; Story 16 (FoodSwitch) blocked on an external data licence, documented per its own gate. Delivered 2026-07-25 by the rails-boss-execute run (see `../rails-boss-execute/progress.md`).
+In Progress — reopened 2026-07-26 by the
+[owner's addendum](../dictations-tier-0/2026-07-26_addendum_ai-settings-branding-foodus.md) after
+daily use. 20/23 stories complete; Story 16 (FoodSwitch) blocked on an external data licence,
+documented per its own gate; Stories 21–23 are the new addendum work. The original 19-story run
+was delivered 2026-07-25 by rails-boss-execute (see `../rails-boss-execute/progress.md`).
 
 ---
 
@@ -77,6 +81,10 @@ Substantially Complete — 18/19 stories complete; Story 16 (FoodSwitch) blocked
 | 17 | Complete | [Provider update-check & refresh UI](#story-17) | Feature | 7 | 7 | 6 | [plan](../implementation-plans/milestone-2/story-17-provider-update-check-refresh-ui/plan.md) |
 | 18 | Complete | [Quick Add expansion — new fields & migration](#story-18) | Feature | 3 | 3 | 3 | [plan](../implementation-plans/milestone-2/story-18-quickadd-expansion-fields/plan.md) |
 | 19 | Complete | [Quick Add promotion workflow](#story-19) | Feature | 6 | 6 | 5 | [plan](../implementation-plans/milestone-2/story-19-quickadd-promotion-workflow/plan.md) |
+| 20 | Complete | [FoodUs identity — rename, versioning, icon](#story-20) | Feature | — | — | — | — |
+| 21 | Not Started | [Three-layer AI prompt architecture](#story-21) | Feature | — | — | — | — |
+| 22 | Not Started | [AI settings screen](#story-22) | Feature | — | — | — | — |
+| 23 | Not Started | [Provider website info links](#story-23) | Feature | — | — | — | — |
 
 ---
 
@@ -141,7 +149,7 @@ not upstream's.
 
 **Rough scope:** Single link swap in settings/About.
 
-**Status:** Complete (2026-07-25, commit `5feda67a`) — single `privacyPolicyUri` constant swapped; all consumers (Settings, onboarding, login) resolve through it. **Owner follow-up:** replace the placeholder `https://github.com/JarrydAdaens/FoodYou/blob/main/PRIVACY.md` with the real published privacy-policy URL (not found anywhere in context).
+**Status:** Complete (2026-07-25, commit `5feda67a`) — single `privacyPolicyUri` constant swapped; all consumers (Settings, onboarding, login) resolve through it. Owner follow-up resolved 2026-07-26: the real published URL `https://jarrydadaens.github.io/privacy.html` (supplied in the addendum, item 3) now replaces the placeholder.
 
 ---
 
@@ -228,6 +236,8 @@ endpoint, JSON parsing, quick-add prefill, custom-food alignment/creation. Secre
 mechanism for the baked key is an open question (must never reach the public repo).
 
 **Status:** Complete (2026-07-25, commit `ef7421d8`) — camera capture/preview/discard flow, reusable `ai` slice (`AiFoodScanner` behind OpenRouter Ktor client, shared with Story 9), key injected from gitignored `local.properties`/env via BuildConfig ("AI not configured" state when absent), Tick→Quick Add prefill, Align→local custom-food search/create. Emulator-verified incl. real 401 round-trip with a throwaway key. Known limits: Quick Add persists no fibre/sugar (shown in result card only); create-custom-food opens unprefilled; happy-path result UI not E2E-tested without a real key.
+
+**Design revision (2026-07-26 addendum):** the single embedded prompt with personal context and the baked-key approach are superseded — [Story 21](#story-21) replaces the prompt with the three-layer architecture (and adds the hint field + Submit button here), and [Story 22](#story-22) replaces the baked key with user-entered key/endpoint/model.
 
 ---
 
@@ -578,6 +588,108 @@ fields) **and Story 14** (recipe model and snapshot model).
 
 ---
 
+<a id="story-20"></a>
+
+### Story 20: FoodUs identity — rename, versioning, icon
+
+**Type:** Feature
+
+**Summary:** The app becomes **FoodUs**, superseding both "Food You" and the interim
+"ACME Food App" identity from [Story 1](#story-1). Rationale: Milestone 3's spine is multi-user
+support — "Us", not "You" (addendum item 5). The addendum floated Milestone 3 placement, but the
+rename was executed immediately because the applicationId is permanent and had to change before
+the first release-signed phone install — the only free moment. Scope: app name, applicationId,
+About/config URLs, user agent, repo rename, versioning scheme, and the owner's hand-made icon.
+
+**Why / value:** The permanent identity, locked in while changing it was still free; the
+`<milestone>.<story>.<build>` versioning makes releases, tags, and Obtainium agree.
+
+**Rough scope:** Identity resources, build config, CI workflows, README/docs, launcher icon
+assets. Source namespace `com.maksimowiczm.foodyou` deliberately untouched for upstream merges.
+
+**Status:** Complete (2026-07-26, commits `7dc9adc7` + `b7423b1e` + icon commit) — name "FoodUs";
+applicationId `io.github.jarrydadaens.foodus`; repo renamed to `FoodUs`; versioning
+`<milestone>.<story>.<build>` (shipped versionName = fork version, upstream 3.4.9 demoted to
+derived-from metadata; release workflow guards tag↔version agreement); v2.19.0 released and
+installed via Obtainium on the owner's phone. Owner's 256×256 icon wired as legacy + round +
+adaptive launcher icons (background sampled from the art; old-brand monochrome layer removed, so
+themed-icon launchers show the colored icon). About-screen credits carrying the owner's name:
+verify on-device; upstream attribution from Stories 1/4 retained.
+
+---
+
+<a id="story-21"></a>
+
+### Story 21: Three-layer AI prompt architecture
+
+**Type:** Feature
+
+**Summary:** Replace Story 6's single embedded prompt ("we're Australians in Victoria, this is my
+food") with three additive layers (addendum item 1): **(1) developer prompt** baked into the app,
+stripped of ALL user data — pure machinery (task framing, JSON output shape); **(2) user system
+prompt** — optional, user-authored in the AI settings screen (Story 22), holding all personal
+context (locale, diet, allergies, camera), applied to every diet-related AI call; **(3) per-scan
+hint** — optional free-text field on the AI scanning screen ("I'm at McDonald's"), applied to
+that call only. Layers are additive. The scanning screen also gains a big **Submit** button —
+image required, hint optional.
+
+**Why / value:** Nothing personal ships in the codebase — the baked prompt becomes merge-safe
+and public-repo-safe; users steer the AI without code changes.
+
+**Rough scope:** `ai` slice prompt assembly, AI scanning screen (hint field + Submit), Story 9's
+query-generation call inherits the same layering. **Depends on Story 22** for the layer-2 field.
+
+**Status:** Not Started.
+
+---
+
+<a id="story-22"></a>
+
+### Story 22: AI settings screen
+
+**Type:** Feature
+
+**Summary:** A settings surface (near the existing key entry) with four fields (addendum item 2):
+**OpenAI-compatible API key** (user-entered); **endpoint** (defaults to OpenRouter, any
+OpenAI-compatible endpoint allowed); **model** (free text) with a **Validate** button; and the
+**user system prompt** (Story 21's layer 2). Validate behavior is decided, not open: one live
+call to the configured endpoint/model/key with a trivial one-token prompt — green tick on
+success, the returned error string on failure. One code path, no provider-specific handling;
+deliberately advanced-user.
+
+**Why / value:** Replaces the baked-key design (the Story 6 secret-injection open question
+dissolves — no AI credential ever exists in the repo, CI, or any build) and makes the AI stack
+fully user-configurable.
+
+**Rough scope:** New settings screen + on-device persistence (DataStore, like the USDA key), the
+`ai` slice reads runtime config instead of BuildConfig (BuildConfig `foodus.ai.*` values remain
+as blank-by-default developer fallbacks), validation call.
+
+**Status:** Not Started.
+
+---
+
+<a id="story-23"></a>
+
+### Story 23: Provider website info links
+
+**Type:** Feature
+
+**Summary:** Every remote/composition food-data provider's import/update screen gets a button
+linking out to that provider's website for more info (addendum item 4). Applies to **all**
+providers — AFCD, Swiss FCD, Open Food Facts, USDA — not just one.
+
+**Why / value:** Users can check what a dataset actually is before importing or trusting it.
+
+**Rough scope:** One outbound-link affordance per provider screen; provider metadata gains a
+website URL. The addendum's open observation (owner described an *Australian* database screen
+not in older docs) is resolved by repo truth: that screen is this fork's own Story 15 AFCD
+provider — docs were not stale and upstream added nothing.
+
+**Status:** Not Started.
+
+---
+
 ## Interdependency Order
 
 1. Story 5 (four-button rework) hosts Stories 6 and 8; build the button surface first or alongside.
@@ -597,6 +709,9 @@ fields) **and Story 14** (recipe model and snapshot model).
    provider (Story 15) to drive it.
 10. Story 18 (Quick Add fields) precedes Story 19 (promotion), which maps those fields; both rely on
     Story 14's diary-snapshot and nutrition-semantics findings.
+11. Addendum stories (2026-07-26): Story 22 (AI settings) precedes Story 21 (three-layer prompts —
+    its layer-2 field lives on the settings screen); Story 20 (identity) is complete and
+    independent; Story 23 (provider links) is independent.
 
 ---
 
@@ -608,6 +723,10 @@ fields) **and Story 14** (recipe model and snapshot model).
   [2026-07-25 Milestone 2 feature spec](../dictations-tier-0/2026-07-25_milestone-2_australian-providers-and-quickadd-spec.md)
   (Australian food-data providers + Quick Add expansion). Supermarket scraping is an explicit
   non-goal of that spec and is not represented by any story.
+- Stories 20-23 were synthesized from the
+  [2026-07-26 addendum](../dictations-tier-0/2026-07-26_addendum_ai-settings-branding-foodus.md)
+  (items 1, 2, 4, 5; item 3 completed Story 3 in place). The addendum's Milestone 3 definition
+  (multi-user) is a separate effort and is not represented here.
 
 ---
 

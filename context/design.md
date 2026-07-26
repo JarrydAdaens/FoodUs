@@ -91,8 +91,8 @@ The backlog (`backlog/`) is not a numbered tier. It is a staging pool — inform
 
 | Milestone | Document | Status | Why it matters | What it unlocks |
 | --- | --- | --- | --- | --- |
-| Milestone 1: Initialization | [milestones/milestone-1.md](milestones/milestone-1.md) | In Progress | Gets the fork built, deployed, populated with the owner's recovered historical data, and in daily use, with a repeatable two-device update mechanism | A live, data-complete daily driver that Milestone 2 can safely customize |
-| Milestone 2: Customisation | [milestones/milestone-2.md](milestones/milestone-2.md) | Not Started | Makes the app the owner's own: FoodUs identity, AI-assisted logging, ergonomics fixes, adopted upstream bug fixes | An app that is faster to log with than MyFitnessPal/Lose It ever were, unmistakably this fork |
+| Milestone 1: Initialization | [milestones/milestone-1.md](milestones/milestone-1.md) | Complete | Gets the fork built, deployed, populated with the owner's recovered historical data, and in daily use, with a repeatable two-device update mechanism | A live, data-complete daily driver that Milestone 2 can safely customize |
+| Milestone 2: Customisation | [milestones/milestone-2.md](milestones/milestone-2.md) | In Progress (reopened 2026-07-26) | Makes the app the owner's own: FoodUs identity, AI-assisted logging, ergonomics fixes, adopted upstream bug fixes | An app that is faster to log with than MyFitnessPal/Lose It ever were, unmistakably this fork |
 | Milestone 3: TBD | [milestones/milestone-3.md](milestones/milestone-3.md) | Not Defined | Awaiting future dictation | — |
 
 Keep this index in sync as milestones are added, completed, reordered, or reclassified. When a backlog story scores as epic-sized, promote it into this index as a new milestone.
@@ -186,9 +186,11 @@ Kotlin targets: `androidTarget` (JVM 21), `iosArm64`, `iosSimulatorArm64`.
   hold an account and contribute data back)
 - USDA FoodData Central — opt-in remote food composition database (user-supplied API key)
 - Swiss Food Composition Database — opt-in imported food composition data
-- AI model endpoint (planned, Milestone 2) — likely OpenRouter, called with the owner's own API key
-  baked into private builds, for photo-based food identification and search-query generation. See
-  "Security and Privacy" for the boundary this creates.
+- AI model endpoint (Milestone 2) — any OpenAI-compatible endpoint (OpenRouter default), called
+  with a **user-entered** API key, endpoint, and model configured in the AI settings screen
+  (2026-07-26 addendum; supersedes the original baked-into-private-builds key design), for
+  photo-based food identification and search-query generation. See "Security and Privacy" for
+  the boundary this creates.
 - No other backends. No analytics, crash reporting, or account services.
 
 ### Repository Structure
@@ -263,10 +265,11 @@ None in the repository. Credentials in the system:
 
 - The optional USDA FoodData Central API key, which the user enters in-app and which is stored
   on-device.
-- (Planned, Milestone 2.) The owner's AI endpoint key (likely OpenRouter), baked into private
-  builds only. It must never be committed, appear in context files, or flow into anything that
-  could reach the public repo or upstream. The injection mechanism is an open question for the
-  AI-scanning story.
+- The AI endpoint key: **user-entered in the AI settings screen and stored on-device**, like the
+  USDA key (2026-07-26 addendum). This supersedes the original baked-into-private-builds design
+  and dissolves its open secret-injection question — no AI credential ever exists in the
+  repository, CI, or any build. The build-time `foodus.ai.*` BuildConfig fallbacks remain for
+  developer convenience only and must stay blank in anything public.
 
 Release signing is the app distributor's concern (upstream signs F-Droid/GitHub releases; this
 fork uses debug signing locally until the Milestone 1 update-mechanism story decides distribution).
@@ -306,14 +309,17 @@ Activity/entry points, permissions, camera/barcode integration, platform SQLite 
   cloud sync, no telemetry, no ads.
 - Remote food databases are opt-in, disclosed at onboarding with their own terms, and used
   read-only over HTTPS.
-- Secrets are limited to the user's optional USDA API key (on-device) and, once Milestone 2 lands,
-  the owner's baked-in AI endpoint key (private builds only — see Configuration).
-- **Planned AI boundary (Milestone 2).** The AI logging features send data off-device by design:
-  downscaled food photos and short meal descriptions go to a model endpoint under the owner's own
-  API key, with an embedded Australian (Victoria/Melbourne) locale prompt. This is a deliberate,
-  owner-chosen exception to the local-only stance, acceptable because the builds are private, the
-  key is the owner's, and both users are informed household members. No other data leaves the
-  device, and nothing is sent without an explicit user action (Ask AI / AI search).
+- Secrets are limited to the user's optional USDA API key and the user-entered AI endpoint key,
+  both stored on-device (see Configuration; the baked-key design was superseded 2026-07-26).
+- **AI boundary (Milestone 2).** The AI logging features send data off-device by design:
+  downscaled food photos and short meal descriptions go to the user-configured model endpoint
+  under the user's own API key. Prompting is three-layered (2026-07-26 addendum): a baked
+  developer prompt containing **no personal data** (task framing and output shape only), an
+  optional user-authored system prompt holding all personal context (stored on-device), and an
+  optional per-scan hint. This is a deliberate, owner-chosen exception to the local-only stance,
+  acceptable because the key is the user's own and both users are informed household members. No
+  other data leaves the device, and nothing is sent without an explicit user action (Ask AI /
+  AI search / Submit).
 - These properties are constitutional for this fork: changes that add tracking, accounts, or
   nagging violate its founding purpose.
 

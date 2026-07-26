@@ -38,7 +38,10 @@ used daily long enough for the owner to judge the baseline understood.
 
 ## Status
 
-In Progress — 13/15 stories complete.
+Complete — 15/15 stories complete (declared by the owner in the
+[2026-07-26 addendum](../dictations-tier-0/2026-07-26_addendum_ai-settings-branding-foodus.md);
+the final owner-gated items — keystore, CI secrets, default branch, first releases, Obtainium —
+were verified live on 2026-07-26).
 
 ---
 
@@ -56,9 +59,9 @@ In Progress — 13/15 stories complete.
 | 8 | Complete | [Extract AnyList meal data](#story-8) | Feature | — | — | — | — |
 | 9 | Complete | [Determine Food You's CSV import schema](#story-9) | Research | — | — | — | — |
 | 10 | Complete | [Build the export script (master JSON → Food You CSV)](#story-10) | Feature | — | — | — | [plan](../implementation-plans/milestone-1/story-10-export-script/plan.md) |
-| 11 | In Progress | [App update mechanism](#story-11) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/story-11-app-update-mechanism/plan.md) |
+| 11 | Complete | [App update mechanism](#story-11) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/story-11-app-update-mechanism/plan.md) |
 | 12 | Complete | [Use the app for a while](#story-12) | Research | — | — | — | [plan](../implementation-plans/milestone-1/story-12-use-the-app/plan.md) |
-| 13 | In Progress | [Own project infrastructure](#story-13) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/own-project-infrastructure/plan.md) |
+| 13 | Complete | [Own project infrastructure](#story-13) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/own-project-infrastructure/plan.md) |
 | 14 | Complete | [Remove the static documentation site](#story-14) | Tooling | — | — | — | — |
 | 15 | Complete | [Establish fork CI/CD pipeline](#story-15) | Tooling | — | — | — | [plan](../implementation-plans/milestone-1/story-15-cicd-pipeline/plan.md) |
 
@@ -299,14 +302,13 @@ requirement.
 acceptable if that's the cleanest mechanism; otherwise any workable direct-deploy mechanism.
 Constraints: updates must not lose local data; must support both the owner's and his wife's phones.
 
-**Status:** In Progress — 2026-07-25. Automatable slice done: update-procedure runbook
-([../wiki/foodyou-update-procedure.md](../wiki/foodyou-update-procedure.md)), signing helper
-(`jarryd/scripts/sign-apk.ps1`), `.gitignore` keystore hardening, and an end-to-end emulator
-validation of the mechanism with a throwaway key (signature-mismatch refusal, one-time
-migration, same-signature in-place update with data preserved). Owner-remaining: keystore
-custody decision + generation, GitHub Actions signing secrets, phone migration/installs,
-Obtainium setup, and real-hardware data-preservation verification — checklist in the plan's
-Execution Log. Plan at
+**Status:** Complete — 2026-07-26. Automatable slice landed 2026-07-25 (runbook, signing helper,
+`.gitignore` hardening, emulator proof of the update mechanism). Owner closed the loop
+2026-07-26: release keystore generated (`foodus.jks`, alias `foodus`; certificate SHA-256
+recorded in the runbook), GitHub Actions secrets set, v2.19.0 released via the tag pipeline and
+installed on the owner's phone through Obtainium. Residual: the wife's phone gets its first
+(release-signed, day-one) install with v2.19.1, and the first real in-place update proof rides
+that same release. Plan at
 [../implementation-plans/milestone-1/story-11-app-update-mechanism/plan.md](../implementation-plans/milestone-1/story-11-app-update-mechanism/plan.md).
 
 ---
@@ -351,12 +353,12 @@ upstream or dangle. Owning them makes the repository present itself as this fork
 **Rough scope:** `.github/ISSUE_TEMPLATE/`, README badge verification (badges consume Story 15's
 workflows), `metadata/` review. Keep everything mergeable with upstream per the fork philosophy.
 
-**Status:** In Progress — 2026-07-25. Local half done: issue templates verified clean (no upstream
-routing; kept as-is), `metadata/` deliberately left untouched for upstream mergeability (decision
-recorded in the plan), and README badges wired to Story 15's real targets (`ci.yml` on
-`jarryd/main`; fork releases) with the placeholder note replaced. Remaining is owner-gated: push,
-enable Actions, switch the default branch, confirm CI runs green and badges render, publish the
-first release. Plan at
+**Status:** Complete — 2026-07-26. Local half landed 2026-07-25 (issue templates verified,
+`metadata/` untouched by decision, README badges wired to real targets). Owner closed the
+remote half 2026-07-26: Actions enabled, default branch switched to `jarryd/main`, CI runs
+green on the trunk branches, and the first release (v2.19.0) published via the tag pipeline —
+badges now render live. (The repo was renamed to `FoodUs` the same day; GitHub redirects the
+old URLs.) Plan at
 [../implementation-plans/milestone-1/own-project-infrastructure/plan.md](../implementation-plans/milestone-1/own-project-infrastructure/plan.md).
 
 ---
