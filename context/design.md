@@ -93,7 +93,7 @@ The backlog (`backlog/`) is not a numbered tier. It is a staging pool — inform
 | --- | --- | --- | --- | --- |
 | Milestone 1: Initialization | [milestones/milestone-1.md](milestones/milestone-1.md) | Complete | Gets the fork built, deployed, populated with the owner's recovered historical data, and in daily use, with a repeatable two-device update mechanism | A live, data-complete daily driver that Milestone 2 can safely customize |
 | Milestone 2: Customisation | [milestones/milestone-2.md](milestones/milestone-2.md) | In Progress (reopened 2026-07-26) | Makes the app the owner's own: FoodUs identity, AI-assisted logging, ergonomics fixes, adopted upstream bug fixes | An app that is faster to log with than MyFitnessPal/Lose It ever were, unmistakably this fork |
-| Milestone 3: TBD | [milestones/milestone-3.md](milestones/milestone-3.md) | Not Defined | Awaiting future dictation | — |
+| Milestone 3: Multiplayer | [milestones/milestone-3.md](milestones/milestone-3.md) | Not Started | Cross-diary logging for the household pair — log a shared meal once and it lands in both diaries — via profiles, friends, two-person trusted groups, and a dumb encrypted relay | A multi-user FoodUs that stays local-first: the island broken in exactly one controlled place |
 
 Keep this index in sync as milestones are added, completed, reordered, or reclassified. When a backlog story scores as epic-sized, promote it into this index as a new milestone.
 
@@ -115,7 +115,10 @@ top of the upstream version), and upstream attribution once Milestone 2's identi
 micronutrients without accounts, ads, subscriptions, or upsells.
 
 **What it does (owner's field assessment, 2026-07-24).** Fast, minimal calorie tracking with no
-bullshit. No social features, no login, no sharing beyond CSV import/export. Easy to use; it
+bullshit. No social features, no login, no sharing beyond CSV import/export. (Milestone 3
+deliberately revises the first of these: FoodUs adds its own household multiplayer — cross-diary
+logging over an encrypted relay — while keeping no-login and local-first intact; see "The
+Multiplayer Exception" under Security and Privacy.) Easy to use; it
 deliberately does not do exercise tracking, water tracking, or other adjacent concerns. It has
 camera barcode scanning, optional open-data remote food databases (Open Food Facts, USDA FoodData
 Central, Swiss Food Composition Database), recipe creation, personalized nutrition goals, and a
@@ -132,9 +135,11 @@ approachable despite living mostly in one Gradle module.
   principle — see "Why This Fork Exists".)
 - **Privacy-first, local-first.** No account, no telemetry; all diary data lives in a local Room
   (SQLite) database. Remote food databases are opt-in and read-only.
-- **Minimal scope.** Food logging done well. Adjacent trackers (exercise, water, social,
-  shopping lists) are intentionally out of scope — upstream enhancement requests that make the
-  app fuzzy are not adopted.
+- **Minimal scope.** Food logging done well. Adjacent trackers (exercise, water, shopping
+  lists) are intentionally out of scope — upstream enhancement requests that make the app fuzzy
+  are not adopted. Social scope is the one deliberate expansion: Milestone 3's own multiplayer
+  (cross-diary logging), designed under this fork's privacy rules rather than adopted from
+  upstream requests.
 - **Mergeable by design.** Fork changes are additive overlays that reapply cleanly over upstream
   updates (see "Fork philosophy").
 - **Two-device reality.** Everything must work on both household phones, and updates must never
@@ -191,6 +196,12 @@ Kotlin targets: `androidTarget` (JVM 21), `iosArm64`, `iosSimulatorArm64`.
   (2026-07-26 addendum; supersedes the original baked-into-private-builds key design), for
   photo-based food identification and search-query generation. See "Security and Privacy" for
   the boundary this creates.
+- FoodUs relay (Milestone 3, planned) — a self-hosted, deliberately dumb store-and-forward
+  message relay ("post office") that ferries sealed, end-to-end-encrypted envelopes between
+  household devices for cross-diary logging. It holds only GUIDs, public keys, friend codes,
+  block relationships, and per-GUID queues of ciphertext (swept after 30 days) — no accounts,
+  no login, no diary data in the clear. See "The Multiplayer Exception" under Security and
+  Privacy.
 - No other backends. No analytics, crash reporting, or account services.
 
 ### Repository Structure
@@ -306,7 +317,10 @@ Activity/entry points, permissions, camera/barcode integration, platform SQLite 
 ## Security and Privacy
 
 - All user data is stored locally in Room (SQLite) and DataStore on the device. No account, no
-  cloud sync, no telemetry, no ads.
+  cloud sync, no telemetry, no ads. (Once Milestone 3 lands, the relay additionally holds
+  profile metadata — GUIDs, usernames, public keys, friend codes, block relationships — and
+  transient sealed ciphertext; never diary data in the clear. See "The Multiplayer Exception"
+  below.)
 - Remote food databases are opt-in, disclosed at onboarding with their own terms, and used
   read-only over HTTPS.
 - Secrets are limited to the user's optional USDA API key and the user-entered AI endpoint key,
@@ -319,7 +333,37 @@ Activity/entry points, permissions, camera/barcode integration, platform SQLite 
   optional per-scan hint. This is a deliberate, owner-chosen exception to the local-only stance,
   acceptable because the key is the user's own and both users are informed household members. No
   other data leaves the device, and nothing is sent without an explicit user action (Ask AI /
-  AI search / Submit).
+  AI search / Submit). (Milestone 3 adds a second explicit-action send path: Save to Group
+  transmits sealed food entries via the relay — see "The Multiplayer Exception" below.)
+- **The Multiplayer Exception (Milestone 3).** The app's "island" stance — fully local, no
+  external services of its own — is broken in exactly one controlled place: a self-hosted,
+  deliberately dumb **store-and-forward relay** that ferries messages between household devices
+  so a trusted pair can log into each other's diaries. The durable decisions
+  (2026-07-27 dictation):
+  - **Relay, not cloud.** Each person's Room database stays the sole source of truth on their
+    device. The server is a transmission vector between databases — a post office parking sealed
+    envelopes addressed to a GUID until the recipient collects them. No accounts, no login, no
+    server-side backup, no web/companion clients. Undelivered messages sweep after 30 days.
+  - **End-to-end encryption.** Every profile generates an asymmetric key pair; senders encrypt
+    each packet with the recipient's public key before it leaves the device. The server stores
+    only ciphertext it cannot read (a breach yields ciphertext, usernames, and GUIDs). Key
+    distribution rides the friend-code lookup: becoming friends *is* the key exchange. Known,
+    accepted weakness: a malicious server could substitute public keys (MITM) — theoretical for
+    a self-hosted household relay; Signal-style safety numbers are a backlog stretch item.
+  - **Private keys in the Android Keystore** — hardware-backed, never in the Room database,
+    DataStore, any file, or any backup. Database backups stay fully portable; the private key
+    deliberately is not.
+  - **Keys live and die with the device.** On device loss, restore the database backup (keeping
+    GUID and social graph), generate a fresh key pair, and re-announce it; friends' devices pick
+    up the new key on next poll. In-flight messages to the old key are unopenable and lost —
+    acceptable by design for throwaway diet packets under the 30-day sweep. The security model
+    is never weakened to protect data already judged disposable.
+  - **Poll on app wake, no push.** No background polling service, no Firebase Cloud Messaging —
+    Google stays out of the privacy story. Latency (you see the shared meal next time you open
+    the app) is acceptable for non-time-critical diet data.
+  - **Open question (Story 3.4):** relay endpoint authentication — "no accounts" still requires
+    proof of GUID ownership (likely request signing with the device key pair, plus replay
+    protection) so a known GUID cannot be drained, re-keyed, or impersonated.
 - These properties are constitutional for this fork: changes that add tracking, accounts, or
   nagging violate its founding purpose.
 
@@ -328,8 +372,9 @@ Activity/entry points, permissions, camera/barcode integration, platform SQLite 
 ## Observability
 
 No analytics or crash reporting by design. Debugging is standard Android tooling: logcat, Compose
-UI tooling in debug builds, and adb against a device/emulator. There are no server-side components
-to health-check.
+UI tooling in debug builds, and adb against a device/emulator. The only server-side component is
+the planned Milestone 3 relay; its operational needs (health checks, sweep verification) are
+decided in that milestone's architecture spike.
 
 ---
 
