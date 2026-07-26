@@ -1,21 +1,23 @@
 ---
 name: design
-description: Design specification for ACME Food App - a personal, privacy-first fork of the Food You KMP/Compose food diary - covering architecture, principles, constraints, the context tier system, and the embedded milestones index.
+description: Design specification for FoodUs - a personal, privacy-first fork of the Food You KMP/Compose food diary - covering architecture, principles, constraints, the context tier system, and the embedded milestones index.
 metadata:
   version: "3.0"
   agentic_rails_source_version: "3.0"
   owner: "Jarryd Adaens"
   repo: "FoodYou (fork of maksimowiczm/FoodYou)"
 ---
-# ACME Food App - Design Specification
+# FoodUs - Design Specification
 
 ## Purpose of This File
 
-This repository is **ACME Food App**: Jarryd Adaens's personal fork of **Food You**, a free,
+This repository is **FoodUs**: Jarryd Adaens's personal fork of **Food You**, a free,
 open-source, privacy-focused food diary and nutrition tracker (Kotlin Multiplatform + Compose
-Multiplatform, Android-first). The repository keeps the upstream name `FoodYou`; the app's
-user-visible rename to ACME Food App lands with Milestone 2's identity story. This file is the
-maintained design specification for the fork.
+Multiplatform, Android-first). The repository and app were renamed from the upstream `FoodYou`
+(interim brand "ACME Food App") to FoodUs on 2026-07-26, with applicationId
+`io.github.jarrydadaens.foodus`; only the source namespace keeps upstream's
+`com.maksimowiczm.foodyou` for clean merges. This file is the maintained design specification
+for the fork.
 
 This file is the Design tier: the maintained design specification covering the whole deliverable and
 how it breaks into its largest pieces. It should synthesize relevant Dictation into stable project
@@ -30,7 +32,7 @@ paid for a year of access or a feature, they hard-sell lifetime licenses, coachi
 add-ons — and both take too many taps to log food. That treatment leaves the customer feeling
 exhausted and disrespected rather than valued and served.
 
-ACME Food App exists to be the opposite: a food tracker that respects the user. Food You is already
+FoodUs exists to be the opposite: a food tracker that respects the user. Food You is already
 free, open-source, privacy-first (no account required, all data stored locally), and ad-free, which
 makes it the right base to build on. The upstream maintainer does not accept external changes, so
 this fork produces a custom version of the application tailored to the owner's needs:
@@ -90,7 +92,7 @@ The backlog (`backlog/`) is not a numbered tier. It is a staging pool — inform
 | Milestone | Document | Status | Why it matters | What it unlocks |
 | --- | --- | --- | --- | --- |
 | Milestone 1: Initialization | [milestones/milestone-1.md](milestones/milestone-1.md) | In Progress | Gets the fork built, deployed, populated with the owner's recovered historical data, and in daily use, with a repeatable two-device update mechanism | A live, data-complete daily driver that Milestone 2 can safely customize |
-| Milestone 2: Customisation | [milestones/milestone-2.md](milestones/milestone-2.md) | Not Started | Makes the app the owner's own: ACME identity, AI-assisted logging, ergonomics fixes, adopted upstream bug fixes | An app that is faster to log with than MyFitnessPal/Lose It ever were, unmistakably this fork |
+| Milestone 2: Customisation | [milestones/milestone-2.md](milestones/milestone-2.md) | Not Started | Makes the app the owner's own: FoodUs identity, AI-assisted logging, ergonomics fixes, adopted upstream bug fixes | An app that is faster to log with than MyFitnessPal/Lose It ever were, unmistakably this fork |
 | Milestone 3: TBD | [milestones/milestone-3.md](milestones/milestone-3.md) | Not Defined | Awaiting future dictation | — |
 
 Keep this index in sync as milestones are added, completed, reordered, or reclassified. When a backlog story scores as epic-sized, promote it into this index as a new milestone.
@@ -106,7 +108,7 @@ build but Android is primary. Current upstream version: 3.4.9 (GPL-3.0).
 
 **Creator.** The upstream project is created and maintained by Mateusz Maksimowicz
 ([maksimowiczm](https://github.com/maksimowiczm) on GitHub). This repository is Jarryd Adaens's fork
-of it — ACME Food App — which will carry its own identity, versioning (starting at 1.0, layered on
+of it — FoodUs — which will carry its own identity, versioning (starting at 1.0, layered on
 top of the upstream version), and upstream attribution once Milestone 2's identity story lands.
 
 **Who it is for.** People who want to log what they eat and track calories, macros, and

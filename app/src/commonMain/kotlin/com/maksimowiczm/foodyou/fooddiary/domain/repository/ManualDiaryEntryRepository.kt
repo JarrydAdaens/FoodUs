@@ -18,6 +18,10 @@ interface ManualDiaryEntryRepository {
         date: LocalDate,
         nutritionFacts: NutritionFacts,
         createdAt: LocalDateTime,
+        description: String? = null,
+        isPlaceholder: Boolean = false,
+        servingCount: Double? = null,
+        weightGrams: Double? = null,
     ): ManualDiaryEntryId
 
     suspend fun update(entry: ManualDiaryEntry)

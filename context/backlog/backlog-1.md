@@ -1,6 +1,6 @@
 ---
 name: backlog-1
-description: Front backlog file (story inventory / Milestone -1) for ACME Food App. Holds data-recovery follow-ups surfaced during Milestone 1 (diary logs, grocery verification, canonical-format normalization, truncated-name recovery).
+description: Front backlog file (story inventory / Milestone -1) for ACME Food App. Holds data-recovery follow-ups surfaced during Milestone 1 (diary logs, grocery verification, canonical-format normalization, truncated-name recovery) and upstream bugs adopted by the Story 2.12 issue triage.
 metadata:
   version: "3.0"
   agentic_rails_source_version: "3.0"
@@ -29,6 +29,14 @@ issues encountered while extracting the owner's food data into `jarryd/working-d
 | 2 | [Verify & correct grocery product matches](#story-2) | Bug | Medium | — | — | — | *unscheduled* | Backlog |
 | 3 | [Normalize working data into canonical format & link ingredients](#story-3) | Refactor | Medium | — | — | — | *unscheduled* | Backlog |
 | 4 | [Recover truncated Lose It recipe ingredient names](#story-4) | Bug | Low | — | — | — | *unscheduled* | Backlog |
+| 5 | [Fix CSV product import dropping column data](#story-5) | Bug | High | — | — | — | *unscheduled* | Backlog |
+| 6 | [Fix database & CSV product export errors](#story-6) | Bug | High | — | — | — | *unscheduled* | Backlog |
+| 7 | [Recalculate nutrition when "values per" changes in the food editor](#story-7) | Bug | Medium | — | — | — | *unscheduled* | Backlog |
+| 8 | [Fix wedged in-app back navigation from Settings](#story-8) | Bug | Medium | — | — | — | *unscheduled* | Backlog |
+| 9 | [Make food search match word substrings, not just prefixes](#story-9) | Bug | Medium | — | — | — | *unscheduled* | Backlog |
+
+Stories 5-9 were adopted on 2026-07-25 by the Milestone 2 Story 12 upstream issue triage
+(see the [Upstream Issue Triage](#upstream-issue-triage-2026-07-25) section below).
 
 ---
 
@@ -139,6 +147,159 @@ and `"Spring Onion, Bulb and Stalk,..."` (recipe-0005, Work Noodles).
 
 ---
 
+<a id="story-5"></a>
+
+### Story: Fix CSV product import dropping column data
+
+**Type:** Bug
+
+**Summary:** Adopted from upstream issue
+[#437](https://github.com/maksimowiczm/FoodYou/issues/437). Importing a manually cleaned CSV of
+products silently loses data: many imported products end up missing values that were present in the
+source file (energy, carbohydrates, and other nutrient columns). The reporter imported a trimmed,
+Ciqual-derived CSV (commas replaced with periods, `<` signs removed, `traces` replaced with `0`,
+`-` replaced with `0`, exported from Google Sheets) and found numerous rows saved without their
+nutrient columns.
+
+**Why / value:** CSV import is a core data-ownership path for this fork — it is how the owner's
+recovered Milestone 1 food data is meant to land in the app. A lossy importer corrupts that data at
+the moment of entry, which undercuts the whole recovery effort.
+
+**Rough scope:** The `importcsvproducts` module
+(`app/src/.../ui/database/importcsvproducts/`, notably `ImportCsvProductsViewModel` and the CSV
+parser it drives). Reproduce with a representative multi-column CSV, locate where columns are
+dropped (delimiter / quoting / empty-cell / header-mapping handling are the likely suspects), and
+add a parsing regression test for the failing shape.
+
+**Scores (filled at planning):**
+
+- Complexity: —
+- Effort: —
+- Risk: —
+
+---
+
+<a id="story-6"></a>
+
+### Story: Fix database & CSV product export errors
+
+**Type:** Bug
+
+**Summary:** Adopted from upstream issue
+[#420](https://github.com/maksimowiczm/FoodYou/issues/420) (reported on 3.4.8, close to this
+fork's 3.4.9 base). Both export paths under Settings -> Database fail with no file written:
+"Export CSV food products" shows a generic error, and "Database backup" throws a
+`RuntimeException` / `java.io.FileNotFoundException` while delivering the storage-picker result to
+`DeveloperActivity`. Export reportedly worked around March and regressed since.
+
+**Why / value:** Export is the other half of the fork's data-ownership guarantee (no lock-in). A
+broken backup and export path means users cannot get their own data out — a direct hit to a
+founding principle.
+
+**Rough scope:** The Android export flow —
+`app/src/androidMain/.../infrastructure/android/DeveloperActivity.kt`,
+`ui/database/exportcsvproducts/ExportProductsViewModel`, and the SAF (Storage Access Framework)
+result handling that writes to the returned `content://` URI. The `FileNotFoundException` on the
+picker's returned document Intent points at a URI-handling or write-permission bug. Reproduce
+on-device.
+
+**Scores (filled at planning):**
+
+- Complexity: —
+- Effort: —
+- Risk: —
+
+---
+
+<a id="story-7"></a>
+
+### Story: Recalculate nutrition when "values per" changes in the food editor
+
+**Type:** Bug
+
+**Summary:** Adopted from upstream issue
+[#364](https://github.com/maksimowiczm/FoodYou/issues/364). The issue is labeled `enhancement`
+upstream but describes a functional defect, so it is adopted as a bug. In the food editor the
+"values per" selector defaults to 100 g; switching it to per-serving does **not** recalculate the
+displayed nutrition numbers. For foods originally entered per-serving this makes editing
+effectively impossible without manually recomputing every nutrient (worst for vitamin- and
+mineral-heavy foods). Fix scope is the recalculation defect only — recompute the shown values to
+match the selected "values per". The reporter's secondary request (store user-entered foods exactly
+as typed to avoid 100 g precision drift) is an enhancement and is out of scope for this bug.
+
+**Why / value:** Editing custom foods is central to the owner's recovered data set; an editor that
+cannot switch measurement bases blocks correcting serving-based entries.
+
+**Rough scope:** The food editor screen and its view model (the nutrient input fields and the
+`values per` / measurement-base state). Keep the fix to recalculating displayed values on toggle.
+
+**Scores (filled at planning):**
+
+- Complexity: —
+- Effort: —
+- Risk: —
+
+---
+
+<a id="story-8"></a>
+
+### Story: Fix wedged in-app back navigation from Settings
+
+**Type:** Bug
+
+**Summary:** Adopted from upstream issue
+[#325](https://github.com/maksimowiczm/FoodYou/issues/325) (Pixel 5, Android 14). After opening
+Settings, the in-app back arrow (top-left) stops responding; once it has been tapped, the Android
+system back button also stops working until the app is restarted. The system back button behaves
+correctly until the in-app arrow is used — the navigation / back-dispatcher state gets wedged.
+
+**Why / value:** A back stack that requires an app restart to recover is a serious daily-use
+navigation defect, and it would hit both household phones equally.
+
+**Rough scope:** Settings navigation and back handling
+(`app/src/commonMain/.../navigation/FoodYouAppNavHost.kt`, `NavControllerExt.kt`, and any
+`BackHandler` around the Settings graph). The report predates the 3.4.9 base, so first confirm it
+still reproduces on `jarryd/develop` before fixing.
+
+**Scores (filled at planning):**
+
+- Complexity: —
+- Effort: —
+- Risk: —
+
+---
+
+<a id="story-9"></a>
+
+### Story: Make food search match word substrings, not just prefixes
+
+**Type:** Bug
+
+**Summary:** Adopted from upstream issue
+[#312](https://github.com/maksimowiczm/FoodYou/issues/312). Search only matches the start of
+words: typing "whey" finds an item containing "whey", but typing "hey" does not, even though it
+appears inside the name. Confirmed applicable in this fork's tree — `FoodSearchDao` runs
+`ProductFts MATCH :query || '*'` (and the same for `RecipeFts`), an FTS **prefix** match, so
+mid-word substrings can never match.
+
+**Why / value:** Search that misses substrings adds friction to the fork's core logging flow (the
+focus of Milestone 2). The owner may not recall the exact leading word of a food, so prefix-only
+matching costs extra taps or a failed lookup.
+
+**Rough scope:** The FTS queries in
+`app/src/commonMain/.../food/search/infrastructure/room/FoodSearchDao.kt` (product and recipe
+searches). Options include a `LIKE` substring fallback, a different tokenizer, or a trigram
+approach — weigh each against FTS performance. Keep scope to the matching behavior; do not redesign
+result ranking.
+
+**Scores (filled at planning):**
+
+- Complexity: —
+- Effort: —
+- Risk: —
+
+---
+
 ## Expected Inflows
 
 - **Adopted upstream bugs** from Milestone 2's upstream issue triage story — one story per adopted
@@ -147,3 +308,45 @@ and `"Spring Onion, Bulb and Stalk,..."` (recipe-0005, Work Noodles).
   barcode behavior).
 - **Milestone 3 candidates** — ideas that surface before that milestone is dictated stage here
   first.
+
+---
+
+<a id="upstream-issue-triage-2026-07-25"></a>
+
+## Upstream Issue Triage (2026-07-25)
+
+Research output of **Milestone 2, Story 12**. All **96 open issues** on upstream
+`maksimowiczm/FoodYou` were reviewed via the GitHub REST API (no pull requests among them). Per the
+fork's **minimal-scope** principle, enhancements that make the app fuzzy (shopping lists, exercise
+and water tracking, body-weight tracking, widgets, graphs, and similar adjacent-tracker requests)
+are **not** adopted. Genuine, applicable **bugs** are adopted as Stories 5-9 above.
+
+**Adopted (5 bugs):**
+
+| # | Title | Class | Decision | Reason |
+| --- | --- | --- | --- | --- |
+| [437](https://github.com/maksimowiczm/FoodYou/issues/437) | Import functionality fails | Bug | Adopt -> Story 5 | CSV import silently drops nutrient columns; import is a core data-ownership path. |
+| [420](https://github.com/maksimowiczm/FoodYou/issues/420) | Errors when trying to export database and CSV food products | Bug | Adopt -> Story 6 | Export/backup throws `FileNotFoundException`; export code (`DeveloperActivity`, export module) present in our tree; base 3.4.8 ~ our 3.4.9. |
+| [364](https://github.com/maksimowiczm/FoodYou/issues/364) | Nutrition numbers fail to follow "values per" setting when editing foods | Bug (mislabeled `enhancement`) | Adopt -> Story 7 | Title/body describe a functional defect: switching "values per" does not recalculate values, blocking edits of serving-based foods. |
+| [325](https://github.com/maksimowiczm/FoodYou/issues/325) | Navigating back from Settings | Bug | Adopt -> Story 8 | In-app back arrow wedges the back stack until app restart; serious navigation defect. Confirm it still repros on 3.4.9. |
+| [312](https://github.com/maksimowiczm/FoodYou/issues/312) | Search doesn't work for parts of words | Bug | Adopt -> Story 9 | Confirmed in our code: `FoodSearchDao` uses `MATCH :query \|\| '*'` (prefix only), so substrings never match; hurts core logging search. |
+
+**Notable rejection (bug-labeled but not adopted):**
+
+| # | Title | Class | Decision | Reason |
+| --- | --- | --- | --- | --- |
+| [239](https://github.com/maksimowiczm/FoodYou/issues/239) | Link meal entries from food database again | By-design / architecture request | Reject | Diary entries deliberately **snapshot** (copy) food data so historical logs stay stable when a food is later edited. The request (live references or versioning so past entries update) is an architectural redesign, not a bug fix, and conflicts with the local-first snapshot model. |
+
+**Rejected in bulk (not adopted):**
+
+- **~88 enhancement-labeled issues** — out of scope under **minimal scope**. Representative
+  examples: shopping list (#309), water tracking (#86), manual exercise tracker (#181), body-weight
+  tracking (#279), Android widgets (#290), graphs/plots (#182, #39), health-connect (#20),
+  multi-user (#67), and many nutrient/UX conveniences. These belong to adjacent-tracker or
+  fuzz-inducing scope and are intentionally left upstream.
+- **3 unlabeled non-bugs** — #413 (availability on the Accrescent app store — distribution
+  request), #329 (monthly/weekly report — enhancement), #254 (new carbohydrates hierarchy —
+  data-model enhancement/discussion). None are defects; not adopted.
+
+Full per-issue data was pulled live from the API on 2026-07-25; issue numbers link back to the
+upstream tracker for anyone re-reviewing a specific rejection.

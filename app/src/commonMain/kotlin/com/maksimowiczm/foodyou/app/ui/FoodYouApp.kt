@@ -7,7 +7,9 @@ import com.maksimowiczm.foodyou.app.navigation.FoodYouAppNavHost
 import com.maksimowiczm.foodyou.app.ui.changelog.AppUpdateChangelogModalBottomSheet
 import com.maksimowiczm.foodyou.app.ui.changelog.PreviewReleaseDialog
 import com.maksimowiczm.foodyou.app.ui.common.utility.EnergyFormatterProvider
+import com.maksimowiczm.foodyou.app.ui.common.utility.GraphStyleProvider
 import com.maksimowiczm.foodyou.app.ui.common.utility.NutrientsOrderProvider
+import com.maksimowiczm.foodyou.app.ui.common.utility.WeekLayoutProvider
 import com.maksimowiczm.foodyou.app.ui.language.TranslationWarningStartupDialog
 import com.maksimowiczm.foodyou.app.ui.onboarding.Onboarding
 import com.maksimowiczm.foodyou.app.ui.theme.FoodYouTheme
@@ -19,20 +21,26 @@ fun FoodYouApp(onDatabaseBackup: () -> Unit) {
     val nutrientsOrder by viewModel.nutrientsOrder.collectAsStateWithLifecycle()
     val onboardingFinished by viewModel.onboardingFinished.collectAsStateWithLifecycle()
     val energyFormatter by viewModel.energyFormatter.collectAsStateWithLifecycle()
+    val graphStyle by viewModel.graphStyle.collectAsStateWithLifecycle()
+    val weekLayout by viewModel.weekLayout.collectAsStateWithLifecycle()
 
     NutrientsOrderProvider(nutrientsOrder) {
         EnergyFormatterProvider(energyFormatter) {
-            FoodYouTheme {
-                PreviewReleaseDialog()
-                TranslationWarningStartupDialog()
+            GraphStyleProvider(graphStyle) {
+                WeekLayoutProvider(weekLayout) {
+                    FoodYouTheme {
+                        PreviewReleaseDialog()
+                        TranslationWarningStartupDialog()
 
-                if (onboardingFinished) {
-                    Surface {
-                        FoodYouAppNavHost(onDatabaseBackup)
-                        AppUpdateChangelogModalBottomSheet()
+                        if (onboardingFinished) {
+                            Surface {
+                                FoodYouAppNavHost(onDatabaseBackup)
+                                AppUpdateChangelogModalBottomSheet()
+                            }
+                        } else {
+                            Onboarding(onFinish = viewModel::finishOnboarding)
+                        }
                     }
-                } else {
-                    Onboarding(onFinish = viewModel::finishOnboarding)
                 }
             }
         }

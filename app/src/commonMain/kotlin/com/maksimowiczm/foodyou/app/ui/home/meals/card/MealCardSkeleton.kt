@@ -1,6 +1,7 @@
 package com.maksimowiczm.foodyou.app.ui.home.meals.card
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -44,41 +45,34 @@ internal fun MealCardSkeleton(shimmer: Shimmer, modifier: Modifier = Modifier) {
 
             Spacer(Modifier.height(8.dp))
 
+            Box(
+                Modifier.shimmer(shimmer)
+                    .size(120.dp, MaterialTheme.typography.labelMedium.toDp() * 2)
+                    .clip(MaterialTheme.shapes.medium)
+                    .background(MaterialTheme.colorScheme.surfaceContainerHighest)
+            )
+
+            Spacer(Modifier.height(16.dp))
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Box(
-                    Modifier.shimmer(shimmer)
-                        .size(120.dp, MaterialTheme.typography.labelMedium.toDp() * 2)
-                        .clip(MaterialTheme.shapes.medium)
-                        .background(MaterialTheme.colorScheme.surfaceContainerHighest)
-                )
-                Spacer(Modifier.weight(1f))
-                FilledIconButton(
-                    onClick = {},
-                    modifier = Modifier.shimmer(shimmer),
-                    colors =
-                        IconButtonDefaults.filledIconButtonColors(
-                            disabledContainerColor =
-                                MaterialTheme.colorScheme.surfaceContainerHighest
-                        ),
-                    shape = MaterialTheme.shapes.medium,
-                    enabled = false,
-                    content = {},
-                )
-                FilledIconButton(
-                    onClick = {},
-                    modifier = Modifier.shimmer(shimmer),
-                    colors =
-                        IconButtonDefaults.filledIconButtonColors(
-                            disabledContainerColor =
-                                MaterialTheme.colorScheme.surfaceContainerHighest
-                        ),
-                    shape = MaterialTheme.shapes.medium,
-                    enabled = false,
-                    content = {},
-                )
+                repeat(4) {
+                    FilledIconButton(
+                        onClick = {},
+                        modifier = Modifier.shimmer(shimmer),
+                        colors =
+                            IconButtonDefaults.filledIconButtonColors(
+                                disabledContainerColor =
+                                    MaterialTheme.colorScheme.surfaceContainerHighest
+                            ),
+                        shape = MaterialTheme.shapes.medium,
+                        enabled = false,
+                        content = {},
+                    )
+                }
             }
         }
     }

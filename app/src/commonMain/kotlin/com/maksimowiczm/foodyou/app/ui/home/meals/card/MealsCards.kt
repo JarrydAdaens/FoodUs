@@ -13,7 +13,9 @@ internal fun MealsCards(
     homeState: HomeState,
     onAdd: (epochDay: Long, mealId: Long) -> Unit,
     onQuickAdd: (epochDay: Long, mealId: Long) -> Unit,
-    onEditEntry: (foodEntryId: Long?, manualEntryId: Long?) -> Unit,
+    onAiScan: (epochDay: Long, mealId: Long) -> Unit,
+    onFastText: (epochDay: Long, mealId: Long) -> Unit,
+    onEditEntry: (foodEntryId: Long?, manualEntryId: Long?, isPlaceholder: Boolean) -> Unit,
     onLongClick: (mealId: Long) -> Unit,
     contentPadding: PaddingValues,
     modifier: Modifier = Modifier,
@@ -21,6 +23,7 @@ internal fun MealsCards(
     val viewModel: MealsCardsViewModel = koinViewModel()
     val diaryMeals = viewModel.diaryMeals.collectAsStateWithLifecycle().value
     val layout by viewModel.layout.collectAsStateWithLifecycle()
+    val templates by viewModel.templates.collectAsStateWithLifecycle()
 
     LaunchedEffect(homeState.selectedDate, viewModel) { viewModel.setDate(homeState.selectedDate) }
 
@@ -30,13 +33,23 @@ internal fun MealsCards(
                 meals = diaryMeals,
                 onAdd = { mealId -> onAdd(homeState.selectedDate.toEpochDays(), mealId) },
                 onQuickAdd = { mealId -> onQuickAdd(homeState.selectedDate.toEpochDays(), mealId) },
+                onAiScan = { mealId -> onAiScan(homeState.selectedDate.toEpochDays(), mealId) },
+                onFastText = { mealId -> onFastText(homeState.selectedDate.toEpochDays(), mealId) },
                 onEditEntry = { model ->
                     val foodEntry = model as? FoodMealEntryModel
                     val manualEntry = model as? ManualMealEntryModel
-                    onEditEntry(foodEntry?.id?.value, manualEntry?.id?.value)
+                    onEditEntry(
+                        foodEntry?.id?.value,
+                        manualEntry?.id?.value,
+                        manualEntry?.isPlaceholder == true,
+                    )
                 },
                 onDeleteEntry = viewModel::onDeleteEntry,
                 onLongClick = onLongClick,
+                templates = templates,
+                onSaveTemplate = viewModel::saveAsTemplate,
+                onApplyTemplate = viewModel::applyTemplate,
+                onDeleteTemplate = viewModel::deleteTemplate,
                 shimmer = homeState.shimmer,
                 contentPadding = contentPadding,
                 modifier = modifier,
@@ -47,13 +60,23 @@ internal fun MealsCards(
                 meals = diaryMeals,
                 onAdd = { mealId -> onAdd(homeState.selectedDate.toEpochDays(), mealId) },
                 onQuickAdd = { mealId -> onQuickAdd(homeState.selectedDate.toEpochDays(), mealId) },
+                onAiScan = { mealId -> onAiScan(homeState.selectedDate.toEpochDays(), mealId) },
+                onFastText = { mealId -> onFastText(homeState.selectedDate.toEpochDays(), mealId) },
                 onEditEntry = { model ->
                     val foodEntry = model as? FoodMealEntryModel
                     val manualEntry = model as? ManualMealEntryModel
-                    onEditEntry(foodEntry?.id?.value, manualEntry?.id?.value)
+                    onEditEntry(
+                        foodEntry?.id?.value,
+                        manualEntry?.id?.value,
+                        manualEntry?.isPlaceholder == true,
+                    )
                 },
                 onDeleteEntry = viewModel::onDeleteEntry,
                 onLongClick = onLongClick,
+                templates = templates,
+                onSaveTemplate = viewModel::saveAsTemplate,
+                onApplyTemplate = viewModel::applyTemplate,
+                onDeleteTemplate = viewModel::deleteTemplate,
                 shimmer = homeState.shimmer,
                 contentPadding = contentPadding,
                 modifier = modifier,

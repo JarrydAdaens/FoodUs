@@ -70,6 +70,7 @@ fun DiaryFoodSearchScreen(
     mealId: Long,
     animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
+    initialQuery: String? = null,
 ) {
     val dateFormatter = LocalDateFormatter.current
 
@@ -126,6 +127,7 @@ fun DiaryFoodSearchScreen(
                 onFoodClick = { model, measurement -> onMeasure(model.id, measurement) },
                 onUpdateUsdaApiKey = onUpdateUsdaApiKey,
                 onUpdateOpenFoodFactsCredentials = onUpdateOpenFoodFactsCredentials,
+                initialQuery = initialQuery,
                 modifier =
                     Modifier.padding(paddingValues)
                         .consumeWindowInsets(paddingValues)

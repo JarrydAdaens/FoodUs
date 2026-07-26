@@ -3,7 +3,7 @@
 ## Metadata
 
 - Task Type: `SPIKE`
-- Status: `Draft`
+- Status: `Complete`
 - Owner: Jarryd Adaens
 - Last Updated: 25 July 2026
 
@@ -142,3 +142,23 @@ Two read-only recon passes on 2026-07-25 already answered most of the *code-side
 
 - Planning inputs: two read-only recon passes (2026-07-25) over `food/`, `food/search/`, `importexport/`, `fooddiary/`, and Room migrations (provider architecture; Quick Add + diary-snapshot model), each citing `file:line`. Spec: `context/dictations-tier-0/2026-07-25_milestone-2_australian-providers-and-quickadd-spec.md`.
 - Unverified claims: AFCD source (FSANZ workbook) and FoodSwitch access terms are not yet confirmed — that verification is Step 2 of this plan.
+
+## Execution Log
+
+- **Deliverable:** [`context/wiki/provider-quickadd-architecture.md`](../../../wiki/provider-quickadd-architecture.md), linked from `context/wiki/home.md`. No production code changed (read-only spike).
+- **Code verification:** re-verified every code-side claim against the tree with exact `file:line` citations before writing (independent read-only pass, 61 tool uses). Confirmed: no provider interface (enum pair `FoodSource.Type` ↔ `FoodSourceType`, 4 members, exhaustive `when`); one shared `Product` table, provenance `sourceType`+`sourceUrl` only, **no** source-record-id column and **no** indices on `ProductEntity`; `ImportCsvProductUseCase` transactional (`withTransaction`) append-only insert engine, dedup on (name,brand,barcode,sourceType); Swiss reads a **bundled** CSV (`Res.readBytes`), **no** download/WorkManager infra anywhere in `app/src`; FTS4 content-backed `ProductFts`; enablement flags exist **only** for OFF+USDA (locals always searchable); DB `VERSION = 34`; diary snapshots via 25→26 `UnlinkDiaryMigration`, 32→33 added `isPlaceholder`/`description`, 33→34 meal templates; Quick Add captures exactly name/proteins/carbs/fats/energy as an **absolute total**; fibre already in `NutritionFacts` and embedded on `ManualDiaryEntryEntity` (no migration); recipes 100% ingredient-derived (no nutrient columns); provenance shown via `app/ui/food/component/FoodSource.kt`.
+- **Corrections captured from verification:** the `FoodSourceTypeConverter` Int→enum direction *does* carry `else -> error(...)` (only the domain↔entity `when`s are `else`-free); barcode search is partial `LIKE '%…%'` in the main path but exact `=` on the recent-food path; `FoodSearchPreferences.Usda` also carries `apiKey`, not just `enabled`. All folded into the note.
+- **External feasibility (evidence, retrieved 2026-07-25):**
+  - **AFCD — FEASIBLE.** FSANZ Release 3 (page updated 23 Dec 2025), Excel `.xlsx`, no registration/key. `HEAD` on the Food Details file returned `200 OK`, `Content-Length: 1137444`, `Last-Modified: Mon, 22 Dec 2025 23:20:49 GMT`. Licence: CC BY-SA 3.0 Australia (attribution + Limitation of Data Statement + identify changes; commercial use allowed; no FSANZ logo). Version identifier: release number → publication date → checksum. Caveat: dataset is `.xlsx` (existing parser is CSV-only) and energy needs kJ→kcal.
+  - **FoodSwitch — BLOCKED.** No public API/bulk download; data "licensed … to individual Sponsors to agreed territories" (commercial). Global Terms of Use 7.1 (personal, non-commercial), 7.2(b/e), 9.2, 9.3, 9.10, 9.12 forbid reproducing/storing/distributing/deriving the data. Building a local FoodSwitch provider is not achievable within the licence; owner would need a written data-licence agreement (`foodswitch@georgeinstitute.org.au`).
+- **Section 13:** all 15 decisions resolved in the note's §13 table, each with evidence or a documented blocker.
+- **Open questions from this plan — answered:** FoodSwitch access = **blocked** (Q1); AFCD = FSANZ Release 3 `.xlsx`, CC BY-SA 3.0 AU, release-number version id (Q2); AU providers should be **toggleable**, which for local sources means adding an enabled-local-sources filter to `FoodSearchDao`, not just a remote-mediator flag (Q3); safe full-refresh = nullable `sourceRecordId` + `User`-guarded delete-by-source inside the import transaction + FTS rebuild (Q4).
+
+## Completion Review
+
+- **Status:** Complete. Spike delivered a durable wiki note; zero production code touched (`git status` limited to `context/wiki/` + this plan).
+- **Estimates vs actuals (CER 5/4/2):** accurate. Complexity/risk as expected — the hazard was an overconfident data-safety claim, mitigated by grounding every design point in `file:line` and leaning on the already-proven snapshot model. Effort landed where the plan predicted: most code facts were pre-scouted, so the marginal work was (a) independent re-verification for citation integrity and (b) the external AFCD/FoodSwitch feasibility, which was the plan's stated real remaining work.
+- **Model / method:** Opus, high reasoning. Delegated code re-verification to a read-only Explore sub-agent (independent evaluator) and ran external research directly (WebSearch/WebFetch + a `HEAD` check on the live AFCD file).
+- **What was unexpected:** the FoodSwitch verdict was even more clearly a blocker than assumed — not merely "restricted API" but an explicit licence prohibition on reproducing the data at all, plus a commercial sponsor-licensing model. AFCD being `.xlsx` (not CSV) is a concrete new-parser cost for Story 15 that the CSV-centric plan framing under-weighted. Neither changed scope; both are recorded as risks.
+- **Downstream:** Story 15 (AFCD) and Story 17 (update UI) unblocked with a concrete pipeline + migration list; Story 16 (FoodSwitch) should be marked blocked pending an owner-obtained data licence; Stories 18-19 have confirmed TOTAL nutrition semantics, no-migration fibre, shared Quick Add component, and the placeholder-ingredient recipe-promotion approach.
+- **Remaining uncertainty:** exact AFCD column layout inside each `.xlsx` workbook (not opened cell-by-cell here) — resolve when building the Story 15 parser; and confirm the current FSANZ release/URL at implementation time rather than hard-coding (release-dated paths).

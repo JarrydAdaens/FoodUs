@@ -50,6 +50,7 @@ Wielding context thoughtfully has a direct effect on the quality of outcomes. Cl
 - [foodyou-products-csv-schema.md](foodyou-products-csv-schema.md) - Food You's product CSV import/export schema (51 columns, units, formatting, import rules) and the repo's meal-validation CI; reference for Milestone 1 Story 9 and input to Story 10
 - [foodyou-update-procedure.md](foodyou-update-procedure.md) - owner runbook for shipping fork updates to both phones: release keystore generation/custody, versionCode bumps, local build+sign (zipalign/apksigner + `jarryd/scripts/sign-apk.ps1`), Obtainium distribution, the one-time debug→release signature migration, and data-preservation verification (Milestone 1 Story 11)
 - [foodyou-docs-site-zensical.md](foodyou-docs-site-zensical.md) - scouting doc for the inherited upstream Zensical documentation site under `docs/`: config, content, GitHub Pages deploy workflow, why it's dead weight for the fork, and the removal footprint (incl. the one in-app privacy-link coupling)
+- [provider-quickadd-architecture.md](provider-quickadd-architecture.md) - Milestone 2 Story 14 spike: how Food You implements providers, bulk imports, local persistence/provenance, search + enablement, the immutable diary-snapshot model, and the Quick Add component; AFCD (feasible) and FoodSwitch (blocked) data-access feasibility; resolved Section 13 decisions. Spec-of-record for Stories 15-19
 
 ## Other Pages
 

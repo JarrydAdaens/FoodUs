@@ -1,4 +1,4 @@
-package com.maksimowiczm.foodyou.app.ui.settings
+package com.maksimowiczm.foodyou.app.ui.about
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,7 +22,7 @@ import foodyou.app.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun SponsorSettingsListItem(onClick: () -> Unit, modifier: Modifier = Modifier) {
+internal fun SponsorButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
     Button(
         onClick = onClick,
         modifier = modifier.height(96.dp),

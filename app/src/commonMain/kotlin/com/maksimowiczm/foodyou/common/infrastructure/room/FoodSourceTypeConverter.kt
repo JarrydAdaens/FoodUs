@@ -12,6 +12,8 @@ internal class FoodSourceTypeConverter {
             FoodSourceType.USDA -> FoodSourceTypeSQLConstants.USDA
             FoodSourceType.SwissFoodCompositionDatabase ->
                 FoodSourceTypeSQLConstants.SWISS_FOOD_COMPOSITION_DATABASE
+            FoodSourceType.AustralianFoodCompositionDatabase ->
+                FoodSourceTypeSQLConstants.AUSTRALIAN_FOOD_COMPOSITION_DATABASE
         }
 
     @TypeConverter
@@ -22,6 +24,8 @@ internal class FoodSourceTypeConverter {
             FoodSourceTypeSQLConstants.USDA -> FoodSourceType.USDA
             FoodSourceTypeSQLConstants.SWISS_FOOD_COMPOSITION_DATABASE ->
                 FoodSourceType.SwissFoodCompositionDatabase
+            FoodSourceTypeSQLConstants.AUSTRALIAN_FOOD_COMPOSITION_DATABASE ->
+                FoodSourceType.AustralianFoodCompositionDatabase
             else -> error("Unknown food source type value: $value")
         }
 }
@@ -31,4 +35,5 @@ internal object FoodSourceTypeSQLConstants {
     const val OPEN_FOOD_FACTS = 1
     const val USDA = 2
     const val SWISS_FOOD_COMPOSITION_DATABASE = 3
+    const val AUSTRALIAN_FOOD_COMPOSITION_DATABASE = 4
 }

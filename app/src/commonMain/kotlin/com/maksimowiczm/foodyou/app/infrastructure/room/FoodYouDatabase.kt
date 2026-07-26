@@ -10,6 +10,10 @@ import androidx.room.useWriterConnection
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.FoodSearchFtsCyrillicMigration
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.FoodSearchFtsMigration
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.LegacyMigrations
+import com.maksimowiczm.foodyou.app.infrastructure.room.migration.AustralianFoodProviderMigration
+import com.maksimowiczm.foodyou.app.infrastructure.room.migration.MealTemplateMigration
+import com.maksimowiczm.foodyou.app.infrastructure.room.migration.PlaceholderDiaryEntryMigration
+import com.maksimowiczm.foodyou.app.infrastructure.room.migration.QuickAddExpansionMigration
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.deleteUsedFoodEvent
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.fixMeasurementSuggestions
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.foodYou3Migration
@@ -34,6 +38,8 @@ import com.maksimowiczm.foodyou.food.search.infrastructure.room.OpenFoodFactsPag
 import com.maksimowiczm.foodyou.food.search.infrastructure.room.RecipeAllIngredientsView
 import com.maksimowiczm.foodyou.food.search.infrastructure.room.SearchEntry
 import com.maksimowiczm.foodyou.food.search.infrastructure.room.USDAPagingKeyEntity
+import com.maksimowiczm.foodyou.importexport.providermetadata.infrastructure.room.ProviderMetadataDatabase
+import com.maksimowiczm.foodyou.importexport.providermetadata.infrastructure.room.ProviderMetadataEntity
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.DiaryProductEntity
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.DiaryRecipeEntity
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.DiaryRecipeIngredientEntity
@@ -41,6 +47,8 @@ import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.FoodDiaryDatabase
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.InitializeMealsCallback
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.ManualDiaryEntryEntity
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.MealEntity
+import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.MealTemplateEntity
+import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.MealTemplateItemEntity
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.MeasurementEntity
 import com.maksimowiczm.foodyou.sponsorship.infrastructure.room.SponsorshipDatabase
 import com.maksimowiczm.foodyou.sponsorship.infrastructure.room.SponsorshipEntity
@@ -63,8 +71,11 @@ import com.maksimowiczm.foodyou.sponsorship.infrastructure.room.SponsorshipEntit
             SponsorshipEntity::class,
             MeasurementSuggestionEntity::class,
             ManualDiaryEntryEntity::class,
+            MealTemplateEntity::class,
+            MealTemplateItemEntity::class,
             ProductFts::class,
             RecipeFts::class,
+            ProviderMetadataEntity::class,
         ],
     views = [RecipeAllIngredientsView::class, LatestMeasurementSuggestion::class],
     version = FoodYouDatabase.VERSION,
@@ -128,7 +139,8 @@ abstract class FoodYouDatabase :
     FoodDatabase,
     FoodSearchDatabase,
     FoodDiaryDatabase,
-    SponsorshipDatabase {
+    SponsorshipDatabase,
+    ProviderMetadataDatabase {
 
     override suspend fun <T> withTransaction(block: suspend DomainTransactionScope<T>.() -> T): T =
         useWriterConnection {
@@ -139,7 +151,7 @@ abstract class FoodYouDatabase :
         }
 
     companion object {
-        const val VERSION = 32
+        const val VERSION = 36
 
         private val migrations: List<Migration> =
             listOf(
@@ -157,6 +169,10 @@ abstract class FoodYouDatabase :
                 fixMeasurementSuggestions,
                 FoodSearchFtsMigration,
                 FoodSearchFtsCyrillicMigration,
+                PlaceholderDiaryEntryMigration,
+                MealTemplateMigration,
+                AustralianFoodProviderMigration,
+                QuickAddExpansionMigration,
             )
 
         fun Builder<FoodYouDatabase>.buildDatabase(

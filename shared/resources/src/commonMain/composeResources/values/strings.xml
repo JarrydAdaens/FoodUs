@@ -1,5 +1,53 @@
 <resources>
-    <string name="app_name" translatable="false">Food You</string>
+    <string name="app_name" translatable="false">FoodUs</string>
+
+    <!-- Fork attribution: %1$s is the upstream Food You version this fork derives from. -->
+    <string name="description_derived_from_food_you" translatable="false">Derived from Food You %1$s</string>
+
+    <!-- About screen: link crediting the upstream Food You creator. -->
+    <string name="action_original_creator_on_github" translatable="false">Original creator on GitHub</string>
+
+    <!-- Per-meal add buttons (fork): AI scan and fast-text placeholder entry points. -->
+    <string name="headline_ai_scanning">AI scanning</string>
+    <string name="headline_fast_text">Fast text</string>
+
+    <!-- Fast-text placeholder screen (Milestone 2, Story 8). -->
+    <string name="description_fast_text">Quickly note what you ate now and sort out the details later. Saved with no nutrition until you resolve it.</string>
+    <string name="label_description">Description</string>
+    <string name="neutral_optional">Optional</string>
+
+    <!-- Quick Add expansion fields (Milestone 2, Story 18). -->
+    <string name="label_number_of_servings">Number of servings</string>
+
+    <!-- Reusable meal templates (Milestone 2, Story 13). -->
+    <string name="action_meal_template_menu">Meal template options</string>
+    <string name="action_save_as_template">Save as template</string>
+    <string name="action_apply_template">Apply template</string>
+    <string name="label_template_name">Template name</string>
+    <string name="neutral_template_item_count">%1$d items</string>
+
+    <!-- Placeholder resolution meta screen (Milestone 2, Story 9). -->
+    <string name="headline_resolve_placeholder">Resolve placeholder</string>
+    <string name="description_resolve_placeholder">Log what you actually ate using one of the options below, then remove this reminder.</string>
+    <string name="action_ai_search">AI search</string>
+    <string name="action_remove_placeholder">Remove placeholder</string>
+    <string name="neutral_generating_query">Generating search query…</string>
+
+    <!-- AI scanning screen (Milestone 2, Story 6). -->
+    <string name="action_take_photo">Take a photo</string>
+    <string name="action_pick_from_gallery">Pick from gallery</string>
+    <string name="action_ask_ai">Ask AI</string>
+    <string name="action_align">Align</string>
+    <string name="action_create_custom_food">Create custom food</string>
+    <string name="headline_ai_result">AI result</string>
+    <string name="headline_align_saved_food">Align with a saved food</string>
+    <string name="neutral_ai_not_configured">AI is not configured in this build</string>
+    <string name="neutral_ai_analysing">Analysing photo…</string>
+    <string name="neutral_tap_photo_to_retake">Tap the photo to retake it</string>
+    <string name="question_discard_photo">Discard photo?</string>
+    <!-- %1$s is a percentage such as "85%". -->
+    <string name="neutral_ai_certainty">Certainty: %1$s</string>
+    <string name="neutral_ai_no_saved_food_matches">No saved foods match. Create a custom food instead.</string>
 
     <string name="en_dash" translatable="false">–</string>
     <string name="em_dash" translatable="false">—</string>
@@ -282,6 +330,24 @@
     <string name="description_swiss_food_composition_database_short">Swiss Food Composition Database includes nutritional information for over 1,100 general food products</string>
     <string name="description2_swiss_food_composition_database">Swiss Food Composition Database includes nutritional information for over 1,100 general food products. It is available in four languages. To import these products into your food diary, please select your preferred languages.</string>
 
+    <string name="headline_australian_food_composition_database" translatable="false">Australian Food Composition Database</string>
+    <string name="description_australian_food_composition_database_short">Nutritional information for around 1,600 Australian foods, published by Food Standards Australia New Zealand.</string>
+    <string name="description_australian_food_composition_database">The Australian Food Composition Database is downloaded and stored on your device so Australian foods can be searched offline. Enable it to include its foods in search; disable it to exclude them without deleting the downloaded data.</string>
+    <string name="action_enable_provider_search">Include in search</string>
+    <string name="action_update_dataset">Check for updates</string>
+    <string name="action_download_and_replace">Download and replace</string>
+    <string name="neutral_checking_for_updates">Checking for updates…</string>
+    <string name="neutral_dataset_up_to_date">Up to date</string>
+    <string name="neutral_dataset_update_available">A newer dataset is available.</string>
+    <string name="headline_import_state">Import state</string>
+    <string name="headline_last_import">Last import</string>
+    <string name="headline_last_successful_check">Last successful check</string>
+    <string name="headline_last_error">Last error</string>
+    <!-- %1$s is the installed dataset version, e.g. "Release 3". -->
+    <string name="neutral_installed_version">Installed (%1$s)</string>
+    <string name="neutral_not_installed">Not installed</string>
+    <string name="neutral_never">Never</string>
+
     <string name="headline_external_databases">External databases</string>
     <string name="description_external_databases">Check out supported databases</string>
 
@@ -401,6 +467,16 @@
     <string name="headline_energy_unit">Energy unit</string>
     <string name="description_energy_unit">Select preferred energy unit</string>
 
+    <string name="headline_graphs">Graphs</string>
+    <string name="description_graphs">Choose how the goals card shows calories and macros</string>
+    <string name="graph_style_bar">Bar</string>
+    <string name="graph_style_pie">Pie</string>
+
+    <string name="headline_week_layout">Week layout</string>
+    <string name="description_week_layout">Choose how the diary date strip navigates days</string>
+    <string name="week_layout_scrolling">Scrolling</string>
+    <string name="week_layout_fixed">Fixed</string>
+
     <plurals name="neutral_exported_x_food_products">
         <item quantity="one">Exported %1$d food product</item>
         <item quantity="other">Exported %1$d food products</item>
@@ -411,6 +487,8 @@
 
     <string name="headline_quick_add">Quick add</string>
     <string name="description_quick_add">Quick Add lets you log without searching for specific foods. It's a fast way to record meals when you already know the calorie count or want a simple estimate.</string>
+    <string name="action_promote_to_product">Promote to product</string>
+    <string name="action_promote_to_recipe">Promote to recipe</string>
 
     <string name="action_open_poll">Open poll</string>
 

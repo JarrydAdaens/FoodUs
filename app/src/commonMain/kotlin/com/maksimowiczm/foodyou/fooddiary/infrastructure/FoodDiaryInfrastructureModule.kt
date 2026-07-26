@@ -4,12 +4,14 @@ import com.maksimowiczm.foodyou.common.infrastructure.koin.userPreferencesReposi
 import com.maksimowiczm.foodyou.fooddiary.domain.repository.FoodDiaryEntryRepository
 import com.maksimowiczm.foodyou.fooddiary.domain.repository.ManualDiaryEntryRepository
 import com.maksimowiczm.foodyou.fooddiary.domain.repository.MealRepository
+import com.maksimowiczm.foodyou.fooddiary.domain.repository.MealTemplateRepository
 import com.maksimowiczm.foodyou.fooddiary.domain.service.LocalizedMealsProvider
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.compose.ComposeLocalizedMealsProvider
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.repository.DataStoreMealsPreferencesRepository
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.repository.RoomFoodDiaryEntryRepository
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.repository.RoomManualDiaryEntryRepository
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.repository.RoomMealRepository
+import com.maksimowiczm.foodyou.fooddiary.infrastructure.repository.RoomMealTemplateRepository
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.FoodDiaryDatabase
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.InitializeMealsCallback
 import org.koin.core.module.Module
@@ -24,12 +26,14 @@ internal fun Module.foodDiaryInfrastructureModule() {
     factoryOf(::RoomFoodDiaryEntryRepository).bind<FoodDiaryEntryRepository>()
     factoryOf(::RoomManualDiaryEntryRepository).bind<ManualDiaryEntryRepository>()
     factoryOf(::RoomMealRepository).bind<MealRepository>()
+    factoryOf(::RoomMealTemplateRepository).bind<MealTemplateRepository>()
 
     factoryOf(::InitializeMealsCallback)
 
     factory { database.mealDao }
     factory { database.manualDiaryEntryDao }
     factory { database.measurementDao }
+    factory { database.mealTemplateDao }
 }
 
 private val Scope.database: FoodDiaryDatabase

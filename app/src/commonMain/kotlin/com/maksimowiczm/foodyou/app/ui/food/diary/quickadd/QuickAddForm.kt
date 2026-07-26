@@ -42,6 +42,25 @@ internal fun QuickAddForm(state: QuickAddFormState, modifier: Modifier = Modifie
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
         )
 
+        OutlinedTextField(
+            state = state.description.textFieldState,
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text(stringResource(Res.string.label_description)) },
+            supportingText = { Text(stringResource(Res.string.neutral_optional)) },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        )
+
+        state.servingCount.TextField(
+            label = stringResource(Res.string.label_number_of_servings),
+            modifier = Modifier.fillMaxWidth(),
+            suffix = null,
+        )
+
+        state.weightGrams.TextField(
+            label = stringResource(Res.string.weight),
+            modifier = Modifier.fillMaxWidth(),
+        )
+
         LocalNutrientsOrder.current.forEach {
             when (it) {
                 NutrientsOrder.Proteins ->
@@ -62,6 +81,11 @@ internal fun QuickAddForm(state: QuickAddFormState, modifier: Modifier = Modifie
                 else -> Unit
             }
         }
+
+        state.fibre.TextField(
+            label = stringResource(Res.string.nutriment_fiber),
+            modifier = Modifier.fillMaxWidth(),
+        )
 
         OutlinedTextField(
             state = state.energy.textFieldState,
@@ -146,13 +170,14 @@ internal fun QuickAddForm(state: QuickAddFormState, modifier: Modifier = Modifie
 private fun FormField<Double?, QuickAddFormFieldError>.TextField(
     label: String,
     modifier: Modifier = Modifier,
+    suffix: String? = stringResource(Res.string.unit_gram_short),
 ) {
     OutlinedTextField(
         state = textFieldState,
         modifier = modifier,
         keyboardOptions =
             KeyboardOptions(keyboardType = KeyboardType.Decimal, imeAction = ImeAction.Next),
-        suffix = { Text(stringResource(Res.string.unit_gram_short)) },
+        suffix = suffix?.let { { Text(it) } },
         supportingText = {
             val error = error
             if (error != null) {

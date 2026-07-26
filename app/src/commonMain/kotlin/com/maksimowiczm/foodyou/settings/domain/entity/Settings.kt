@@ -12,5 +12,7 @@ data class Settings(
     val expandGoalCard: Boolean,
     val onboardingFinished: Boolean,
     val energyFormat: EnergyFormat,
+    val graphStyle: GraphStyle,
+    val weekLayout: WeekLayout,
     val appLaunchInfo: AppLaunchInfo,
 ) : UserPreferences

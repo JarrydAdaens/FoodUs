@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.MealTemplateId
 import com.valentinilk.shimmer.Shimmer
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -24,9 +25,15 @@ internal fun HorizontalMealsCards(
     meals: List<MealModel>?,
     onAdd: (mealId: Long) -> Unit,
     onQuickAdd: (mealId: Long) -> Unit,
+    onAiScan: (mealId: Long) -> Unit,
+    onFastText: (mealId: Long) -> Unit,
     onEditEntry: (MealEntryModel) -> Unit,
     onDeleteEntry: (MealEntryModel) -> Unit,
     onLongClick: (mealId: Long) -> Unit,
+    templates: List<MealTemplateModel>,
+    onSaveTemplate: (mealId: Long, name: String) -> Unit,
+    onApplyTemplate: (MealTemplateId, mealId: Long) -> Unit,
+    onDeleteTemplate: (MealTemplateId) -> Unit,
     shimmer: Shimmer,
     contentPadding: PaddingValues,
     modifier: Modifier = Modifier,
@@ -65,9 +72,15 @@ internal fun HorizontalMealsCards(
                     meal = meal,
                     onAddFood = { onAdd(meal.id) },
                     onQuickAdd = { onQuickAdd(meal.id) },
+                    onAiScan = { onAiScan(meal.id) },
+                    onFastText = { onFastText(meal.id) },
                     onEditEntry = onEditEntry,
                     onDeleteEntry = onDeleteEntry,
                     onLongClick = { onLongClick(meal.id) },
+                    templates = templates,
+                    onSaveTemplate = { name -> onSaveTemplate(meal.id, name) },
+                    onApplyTemplate = { id -> onApplyTemplate(id, meal.id) },
+                    onDeleteTemplate = onDeleteTemplate,
                 )
             } else {
                 MealCardSkeleton(shimmer = shimmer)

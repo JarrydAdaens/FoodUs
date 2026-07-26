@@ -7,6 +7,7 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,16 +16,24 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.Bolt
+import androidx.compose.material.icons.outlined.BookmarkAdd
+import androidx.compose.material.icons.outlined.ContentCopy
+import androidx.compose.material.icons.outlined.EditNote
+import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.outlined.SmartToy
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
@@ -32,6 +41,7 @@ import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -51,6 +61,7 @@ import com.maksimowiczm.foodyou.app.ui.common.utility.LocalNutrientsOrder
 import com.maksimowiczm.foodyou.app.ui.home.shared.FoodYouHomeCard
 import com.maksimowiczm.foodyou.common.compose.utility.LocalDateFormatter
 import com.maksimowiczm.foodyou.common.compose.utility.formatClipZeros
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.MealTemplateId
 import com.maksimowiczm.foodyou.settings.domain.entity.NutrientsOrder
 import foodyou.app.generated.resources.*
 import kotlinx.coroutines.launch
@@ -61,9 +72,15 @@ internal fun MealCard(
     meal: MealModel,
     onAddFood: () -> Unit,
     onQuickAdd: () -> Unit,
+    onAiScan: () -> Unit,
+    onFastText: () -> Unit,
     onEditEntry: (MealEntryModel) -> Unit,
     onDeleteEntry: (MealEntryModel) -> Unit,
     onLongClick: () -> Unit,
+    templates: List<MealTemplateModel>,
+    onSaveTemplate: (name: String) -> Unit,
+    onApplyTemplate: (MealTemplateId) -> Unit,
+    onDeleteTemplate: (MealTemplateId) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val nutrientsPalette = LocalNutrientsPalette.current
@@ -86,18 +103,53 @@ internal fun MealCard(
             }
         }
 
+    var showSaveTemplateDialog by rememberSaveable { mutableStateOf(false) }
+    if (showSaveTemplateDialog) {
+        SaveTemplateDialog(
+            onDismissRequest = { showSaveTemplateDialog = false },
+            onConfirm = { name ->
+                onSaveTemplate(name)
+                showSaveTemplateDialog = false
+            },
+        )
+    }
+
+    var showApplyTemplateSheet by rememberSaveable { mutableStateOf(false) }
+    if (showApplyTemplateSheet) {
+        ApplyTemplateSheet(
+            templates = templates,
+            onApply = { id ->
+                onApplyTemplate(id)
+                showApplyTemplateSheet = false
+            },
+            onDelete = onDeleteTemplate,
+            onDismissRequest = { showApplyTemplateSheet = false },
+        )
+    }
+
     FoodYouHomeCard(modifier = modifier, onClick = onAddFood, onLongClick = onLongClick) {
         Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-            Text(
-                text = meal.name,
-                style = MaterialTheme.typography.headlineMediumEmphasized,
-                color = MaterialTheme.colorScheme.onSurface,
-            )
-            Text(
-                text = timeString,
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = meal.name,
+                        style = MaterialTheme.typography.headlineMediumEmphasized,
+                        color = MaterialTheme.colorScheme.onSurface,
+                    )
+                    Text(
+                        text = timeString,
+                        style = MaterialTheme.typography.labelLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+
+                MealTemplateMenu(
+                    canSave = meal.foods.isNotEmpty(),
+                    canApply = templates.isNotEmpty(),
+                    onSaveClick = { showSaveTemplateDialog = true },
+                    onApplyClick = { showApplyTemplateSheet = true },
+                )
+            }
 
             Spacer(Modifier.height(16.dp))
 
@@ -126,55 +178,70 @@ internal fun MealCard(
             }
 
             Row(
-                modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                ) {
-                    ValueColumn(
-                        label = energyFormatter.suffix(),
-                        value = energyFormatter.formatEnergy(meal.energy, withSuffix = false),
-                        suffix = null,
-                        color = MaterialTheme.colorScheme.onSurface,
-                    )
+                ValueColumn(
+                    label = energyFormatter.suffix(),
+                    value = energyFormatter.formatEnergy(meal.energy, withSuffix = false),
+                    suffix = null,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
 
-                    nutrientsOrder.forEach { field ->
-                        when (field) {
-                            NutrientsOrder.Proteins ->
-                                ValueColumn(
-                                    label = stringResource(Res.string.nutriment_proteins_short),
-                                    value = meal.proteins.formatClipZeros("%.1f"),
-                                    suffix = stringResource(Res.string.unit_gram_short),
-                                    color = nutrientsPalette.proteinsOnSurfaceContainer,
-                                )
+                nutrientsOrder.forEach { field ->
+                    when (field) {
+                        NutrientsOrder.Proteins ->
+                            ValueColumn(
+                                label = stringResource(Res.string.nutriment_proteins_short),
+                                value = meal.proteins.formatClipZeros("%.1f"),
+                                suffix = stringResource(Res.string.unit_gram_short),
+                                color = nutrientsPalette.proteinsOnSurfaceContainer,
+                            )
 
-                            NutrientsOrder.Carbohydrates ->
-                                ValueColumn(
-                                    label =
-                                        stringResource(Res.string.nutriment_carbohydrates_short),
-                                    value = meal.carbohydrates.formatClipZeros("%.1f"),
-                                    suffix = stringResource(Res.string.unit_gram_short),
-                                    color = nutrientsPalette.carbohydratesOnSurfaceContainer,
-                                )
+                        NutrientsOrder.Carbohydrates ->
+                            ValueColumn(
+                                label = stringResource(Res.string.nutriment_carbohydrates_short),
+                                value = meal.carbohydrates.formatClipZeros("%.1f"),
+                                suffix = stringResource(Res.string.unit_gram_short),
+                                color = nutrientsPalette.carbohydratesOnSurfaceContainer,
+                            )
 
-                            NutrientsOrder.Fats ->
-                                ValueColumn(
-                                    label = stringResource(Res.string.nutriment_fats_short),
-                                    value = meal.fats.formatClipZeros("%.1f"),
-                                    suffix = stringResource(Res.string.unit_gram_short),
-                                    color = nutrientsPalette.fatsOnSurfaceContainer,
-                                )
+                        NutrientsOrder.Fats ->
+                            ValueColumn(
+                                label = stringResource(Res.string.nutriment_fats_short),
+                                value = meal.fats.formatClipZeros("%.1f"),
+                                suffix = stringResource(Res.string.unit_gram_short),
+                                color = nutrientsPalette.fatsOnSurfaceContainer,
+                            )
 
-                            NutrientsOrder.Other,
-                            NutrientsOrder.Vitamins,
-                            NutrientsOrder.Minerals -> Unit
-                        }
+                        NutrientsOrder.Other,
+                        NutrientsOrder.Vitamins,
+                        NutrientsOrder.Minerals -> Unit
                     }
                 }
+            }
 
-                Spacer(Modifier.weight(1f))
+            Spacer(Modifier.height(16.dp))
+
+            // Four self-describing add paths for this meal: search, quick add, AI scan, fast text.
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                FilledIconButton(
+                    onClick = onAddFood,
+                    shapes =
+                        IconButtonDefaults.shapes(
+                            MaterialTheme.shapes.medium,
+                            MaterialTheme.shapes.extraSmall,
+                        ),
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Search,
+                        contentDescription = stringResource(Res.string.action_search),
+                    )
+                }
                 FilledTonalIconButton(
                     onClick = onQuickAdd,
                     shapes =
@@ -185,8 +252,8 @@ internal fun MealCard(
                 ) {
                     Icon(imageVector = Icons.Outlined.Bolt, contentDescription = null)
                 }
-                FilledIconButton(
-                    onClick = onAddFood,
+                FilledTonalIconButton(
+                    onClick = onAiScan,
                     shapes =
                         IconButtonDefaults.shapes(
                             MaterialTheme.shapes.medium,
@@ -194,8 +261,21 @@ internal fun MealCard(
                         ),
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = stringResource(Res.string.action_add),
+                        imageVector = Icons.Outlined.SmartToy,
+                        contentDescription = stringResource(Res.string.headline_ai_scanning),
+                    )
+                }
+                FilledTonalIconButton(
+                    onClick = onFastText,
+                    shapes =
+                        IconButtonDefaults.shapes(
+                            MaterialTheme.shapes.medium,
+                            MaterialTheme.shapes.extraSmall,
+                        ),
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.EditNote,
+                        contentDescription = stringResource(Res.string.headline_fast_text),
                     )
                 }
             }
@@ -409,4 +489,129 @@ private fun DeleteDialog(onDismissRequest: () -> Unit, onDeleteEntry: () -> Unit
         title = { Text(stringResource(Res.string.action_delete_entry)) },
         text = { Text(stringResource(Res.string.description_delete_product_entry)) },
     )
+}
+
+/**
+ * Overflow menu hosting the reusable-template actions (Milestone 2, Story 13). Hidden entirely when
+ * there is nothing to do — no entries to save and no templates to apply — so the card never shows a
+ * dead control.
+ */
+@Composable
+private fun MealTemplateMenu(
+    canSave: Boolean,
+    canApply: Boolean,
+    onSaveClick: () -> Unit,
+    onApplyClick: () -> Unit,
+) {
+    if (!canSave && !canApply) return
+
+    var expanded by rememberSaveable { mutableStateOf(false) }
+
+    Box {
+        IconButton(onClick = { expanded = true }) {
+            Icon(
+                imageVector = Icons.Filled.MoreVert,
+                contentDescription = stringResource(Res.string.action_meal_template_menu),
+            )
+        }
+        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            DropdownMenuItem(
+                text = { Text(stringResource(Res.string.action_save_as_template)) },
+                onClick = {
+                    expanded = false
+                    onSaveClick()
+                },
+                enabled = canSave,
+                leadingIcon = {
+                    Icon(imageVector = Icons.Outlined.BookmarkAdd, contentDescription = null)
+                },
+            )
+            DropdownMenuItem(
+                text = { Text(stringResource(Res.string.action_apply_template)) },
+                onClick = {
+                    expanded = false
+                    onApplyClick()
+                },
+                enabled = canApply,
+                leadingIcon = {
+                    Icon(imageVector = Icons.Outlined.ContentCopy, contentDescription = null)
+                },
+            )
+        }
+    }
+}
+
+@Composable
+private fun SaveTemplateDialog(onDismissRequest: () -> Unit, onConfirm: (String) -> Unit) {
+    var name by rememberSaveable { mutableStateOf("") }
+
+    AlertDialog(
+        onDismissRequest = onDismissRequest,
+        confirmButton = {
+            TextButton(onClick = { onConfirm(name) }, enabled = name.isNotBlank()) {
+                Text(stringResource(Res.string.action_save))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismissRequest) {
+                Text(stringResource(Res.string.action_cancel))
+            }
+        },
+        icon = { Icon(imageVector = Icons.Outlined.BookmarkAdd, contentDescription = null) },
+        title = { Text(stringResource(Res.string.action_save_as_template)) },
+        text = {
+            OutlinedTextField(
+                value = name,
+                onValueChange = { name = it },
+                label = { Text(stringResource(Res.string.label_template_name)) },
+                singleLine = true,
+            )
+        },
+    )
+}
+
+@Composable
+private fun ApplyTemplateSheet(
+    templates: List<MealTemplateModel>,
+    onApply: (MealTemplateId) -> Unit,
+    onDelete: (MealTemplateId) -> Unit,
+    onDismissRequest: () -> Unit,
+) {
+    val sheetState = rememberModalBottomSheetState()
+
+    ModalBottomSheet(onDismissRequest = onDismissRequest, sheetState = sheetState) {
+        Column {
+            Text(
+                text = stringResource(Res.string.action_apply_template),
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            )
+
+            templates.forEach { template ->
+                ListItem(
+                    headlineContent = { Text(template.name) },
+                    modifier = Modifier.clickable { onApply(template.id) },
+                    supportingContent = {
+                        Text(
+                            stringResource(
+                                Res.string.neutral_template_item_count,
+                                template.itemCount,
+                            )
+                        )
+                    },
+                    trailingContent = {
+                        IconButton(onClick = { onDelete(template.id) }) {
+                            Icon(
+                                imageVector = Icons.Default.Delete,
+                                contentDescription = stringResource(Res.string.action_delete),
+                            )
+                        }
+                    },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                )
+            }
+
+            Spacer(Modifier.height(8.dp))
+        }
+    }
 }

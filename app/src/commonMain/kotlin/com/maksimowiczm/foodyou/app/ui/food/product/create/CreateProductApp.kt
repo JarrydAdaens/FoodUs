@@ -17,6 +17,7 @@ import com.maksimowiczm.foodyou.app.ui.food.product.download.DownloadProductView
 import com.maksimowiczm.foodyou.app.ui.food.product.rememberProductFormState
 import com.maksimowiczm.foodyou.common.compose.extension.LaunchedCollectWithLifecycle
 import com.maksimowiczm.foodyou.common.compose.utility.LocalClipboardManager
+import com.maksimowiczm.foodyou.food.domain.entity.Product
 import foodyou.app.generated.resources.*
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
@@ -31,6 +32,7 @@ internal fun CreateProductApp(
     onUpdateOpenFoodFactsCredentials: () -> Unit,
     modifier: Modifier = Modifier,
     url: String? = null,
+    prefillProduct: Product? = null,
 ) =
     key(url) {
         val navController = rememberNavController()
@@ -45,9 +47,10 @@ internal fun CreateProductApp(
                 val product = holder.product.collectAsStateWithLifecycle().value
 
                 val state =
-                    when (product) {
-                        null -> rememberProductFormState()
-                        else -> rememberProductFormState(product)
+                    when {
+                        product != null -> rememberProductFormState(product)
+                        prefillProduct != null -> rememberProductFormState(prefillProduct)
+                        else -> rememberProductFormState()
                     }
 
                 CreateProductScreen(

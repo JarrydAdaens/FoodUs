@@ -35,6 +35,19 @@ abstract class ProductDao {
 
     @Delete abstract suspend fun deleteProduct(product: ProductEntity)
 
+    /**
+     * Deletes every product belonging to a single provider source. Used to fully replace a
+     * provider's dataset on re-import. The caller must never pass [FoodSourceType.User]; user
+     * products are guarded at the repository boundary so custom foods are never purged.
+     */
+    @Query(
+        """
+        DELETE FROM Product
+        WHERE sourceType = :source
+        """
+    )
+    abstract suspend fun deleteProductsBySource(source: FoodSourceType)
+
     @Query(
         """
         SELECT EXISTS (

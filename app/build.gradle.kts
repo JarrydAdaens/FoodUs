@@ -1,6 +1,11 @@
+import java.util.Properties
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
+
+// Escapes a value so it is safe to embed inside a generated Kotlin String literal.
+fun String.buildConfigStringLiteral(): String =
+    "\"" + replace("\\", "\\\\").replace("\"", "\\\"") + "\""
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -21,6 +26,35 @@ buildConfig {
 
     val versionName = libs.versions.version.name.get()
     buildConfigField("String", "VERSION_NAME", "\"$versionName\"")
+
+    // Fork version, layered on top of the upstream Food You version above.
+    val forkVersionName = libs.versions.fork.version.name.get()
+    buildConfigField("String", "FORK_VERSION_NAME", "\"$forkVersionName\"")
+
+    // AI scanning secrets (Milestone 2, Story 6). The endpoint key is a private credential: it is
+    // read from local.properties (untracked) or an environment variable at build time and baked into
+    // private builds only. It must never be committed or logged. An empty key disables the Ask AI
+    // action at runtime ("AI not configured in this build"). Endpoint and model have public defaults
+    // and are overridable through the same seam.
+    val localProperties =
+        Properties().apply {
+            val file = rootProject.file("local.properties")
+            if (file.exists()) file.inputStream().use { load(it) }
+        }
+    fun secret(propertyKey: String, envKey: String, default: String = ""): String =
+        localProperties.getProperty(propertyKey) ?: System.getenv(envKey) ?: default
+
+    val aiApiKey = secret("foodus.ai.apiKey", "FOODUS_AI_API_KEY")
+    val aiEndpoint =
+        secret(
+            "foodus.ai.endpoint",
+            "FOODUS_AI_ENDPOINT",
+            "https://openrouter.ai/api/v1/chat/completions",
+        )
+    val aiModel = secret("foodus.ai.model", "FOODUS_AI_MODEL", "openai/gpt-4o-mini")
+    buildConfigField("String", "AI_API_KEY", aiApiKey.buildConfigStringLiteral())
+    buildConfigField("String", "AI_ENDPOINT", aiEndpoint.buildConfigStringLiteral())
+    buildConfigField("String", "AI_MODEL", aiModel.buildConfigStringLiteral())
 }
 
 kotlin {
@@ -125,7 +159,10 @@ android {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.maksimowiczm.foodyou"
+        // FoodUs fork identity. Namespace stays com.maksimowiczm.foodyou so the fork's
+        // source packages, generated resources, and BuildConfig keep upstream's structure for
+        // clean merges; only the shipped application ID diverges.
+        applicationId = "io.github.jarrydadaens.foodus"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = libs.versions.android.versionCode.get().toInt()

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Task Type: `FEATURE`
-- Status: `Draft`
+- Status: `Complete`
 - Owner: Jarryd Adaens
 - Last Updated: 25 July 2026
 
@@ -134,4 +134,28 @@ Verified by recon on 2026-07-25 (`file:line` where load-bearing):
 ## Evidence / References
 
 - Planning input: 2026-07-25 Quick Add / diary recon (`QuickAddFormState.kt`, `ManualDiaryEntryEntity.kt`, `NutritionFacts.kt`, `FoodYouDatabase.kt`, validator/parser files) with `file:line` citations; spec §5, §7, §10.3.
-- Unverified: exact Gradle test task name — confirm at execution (`./gradlew tasks`).
+- Verified at execution: Gradle test task is `:app:testDebugUnitTest`.
+
+## Execution Log
+
+- 2026-07-25 — Implemented Story 18. **Deviation from plan (justified):** the plan (drafted when the DB was at v32) proposed AutoMigration 32→33 and `VERSION = 33`. Reality: fork migrations 32→33 (placeholders), 33→34 (meal templates), 34→35 (provider metadata) already landed; `VERSION` was 35. The fork also uses manual `Migration` objects (not AutoMigration) for its additive columns. So the migration was implemented as manual `QuickAddExpansionMigration(35, 36)` with `VERSION = 36`, following the established `PlaceholderDiaryEntryMigration` pattern — same additive, backward-compatible intent as planned.
+- Fibre reuses the existing embedded `NutritionFacts.dietaryFiber` column (no schema change), per plan Q2. User-facing label is the app's existing `nutriment_fiber` ("Dietary fiber"): the app consistently uses American "fiber", so per spec §5.2 and the American-English house rule we did **not** introduce "Fibre".
+- `servingCount` persisted as 1 for new entries (form default), null for pre-Story-18 rows, treated as 1 on read (edit form seeds `entry.servingCount ?: 1.0`), per plan Q3.
+- Added `positiveDoubleValidator` to `Validator.kt` (companion to the existing `nonNegativeDoubleValidator`) for the serving/weight >0 rule; fibre uses `nonNegativeDoubleValidator`. New `QuickAddFormFieldError.NotPositiveNumber` → `error_value_must_be_positive`.
+- Form order rendered: Name, Description, Number of servings, Weight, Proteins/Fats/Carbs (user `LocalNutrientsOrder`), Dietary fiber, Energy (auto-calc retained). Matches spec §5.4 with the existing macros-before-energy convention (§5.4 explicitly allows layout adjustment).
+
+## Completion Review
+
+Files changed:
+- Domain: `ManualDiaryEntry.kt` (+`servingCount`, `weightGrams`).
+- Room: `ManualDiaryEntryEntity.kt` (+2 nullable REAL cols); `QuickAddExpansionMigration.kt` (new, 35→36); `FoodYouDatabase.kt` (`VERSION = 36`, register migration); `schemas/.../36.json` (Room-generated).
+- Repository: `ManualDiaryEntryRepository.kt` + `RoomManualDiaryEntryRepository.kt` (`insert` params + entity↔domain mapping).
+- Form: `QuickAddFormState.kt`, `QuickAddForm.kt`, `Validator.kt` (+`positiveDoubleValidator`).
+- View models / screens: `CreateQuickAddViewModel.kt`, `UpdateQuickAddViewModel.kt`, `CreateQuickAddScreen.kt`, `UpdateQuickAddScreen.kt`.
+- Strings: `label_number_of_servings` (reused `label_description`, `neutral_optional`, `weight`, `nutriment_fiber`).
+- Tests: `QuickAddValidationTest.kt` (new); `MealTemplateUseCasesTest.kt` fake `insert` override updated for the new params.
+
+Validation:
+- Unit: `:app:testDebugUnitTest` — `QuickAddValidationTest` (9 cases: decimal parse, blank→null, non-numeric fail, fibre non-negative, serving/weight positive, reject zero/negative) PASS; `MealTemplateUseCasesTest` PASS. Build: `:app:assembleDebug` PASS.
+- Emulator E2E (AVD `foodyou`, `com.acme.foodapp`): migration 35→36 over-install left all 4 pre-existing rows byte-identical (PieTest 740/40/20/100, PreMigration Snack 0s), `user_version` 35→36, new cols NULL. New Quick Add with all four fields saved (`dietaryFiber=3, servingCount=2, weightGrams=150, description` set, energy auto=205) and displays at 205 kcal — **not** scaled by servings (day total 740→945 confirms metadata-only). Historical PieTest edit showed all new fields (servings=1 for migrated null); servings=0 & weight=−5 both showed "Value must be positive" and disabled Save; clearing both to empty re-enabled Save and saved with PieTest totals unchanged and new cols NULL (empty optionals fine). Placeholder pencil→"Resolve placeholder" meta screen still works (Story 9 undisturbed).
+- Remaining uncertainty: AI-scan Quick Add prefill path does not seed the new fields (out of scope; Story 6 already notes fibre is not persisted there). Diary card does not surface servings/weight/description (not required by acceptance criteria; Story 19 consumes them from storage).

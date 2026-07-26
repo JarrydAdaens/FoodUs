@@ -1,6 +1,6 @@
-# ACME Food App
+# FoodUs
 
-> **ACME Food App** is Jarryd Adaens's personal fork of
+> **FoodUs** is Jarryd Adaens's personal fork of
 > [Food You](https://github.com/maksimowiczm/FoodYou) (GPL-3.0) by Mateusz Maksimowicz. It tailors
 > the app for private household use: recovered historical data, AI-assisted logging, and
 > quality-of-life changes, all as additive overlays that stay mergeable with upstream. Project
@@ -8,10 +8,10 @@
 > [context/milestones/](context/milestones/), and [context/backlog/](context/backlog/); agent
 > workflow rules live in [AGENTS.md](AGENTS.md) and [AGENTIC_RAILS_README.MD](AGENTIC_RAILS_README.MD).
 
-[![Build](https://github.com/JarrydAdaens/FoodYou/actions/workflows/ci.yml/badge.svg?branch=jarryd%2Fmain)](https://github.com/JarrydAdaens/FoodYou/actions/workflows/ci.yml?query=branch%3Ajarryd%2Fmain)
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/JarrydAdaens/FoodYou?color=black&label=Release&logo=github)](https://github.com/JarrydAdaens/FoodYou/releases/latest/)
-[![GitHub Repo stars](https://img.shields.io/github/stars/JarrydAdaens/FoodYou?style=flat&logo=github&color=%23f8e444)](https://github.com/JarrydAdaens/FoodYou/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/JarrydAdaens/FoodYou?style=flat&logo=github)](https://github.com/JarrydAdaens/FoodYou/forks)
+[![Build](https://github.com/JarrydAdaens/FoodUs/actions/workflows/ci.yml/badge.svg?branch=jarryd%2Fmain)](https://github.com/JarrydAdaens/FoodUs/actions/workflows/ci.yml?query=branch%3Ajarryd%2Fmain)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/JarrydAdaens/FoodUs?color=black&label=Release&logo=github)](https://github.com/JarrydAdaens/FoodUs/releases/latest/)
+[![GitHub Repo stars](https://img.shields.io/github/stars/JarrydAdaens/FoodUs?style=flat&logo=github&color=%23f8e444)](https://github.com/JarrydAdaens/FoodUs/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/JarrydAdaens/FoodUs?style=flat&logo=github)](https://github.com/JarrydAdaens/FoodUs/forks)
 
 > The Build badge tracks this fork's own CI ([.github/workflows/ci.yml](.github/workflows/ci.yml))
 > on `jarryd/main`, and the Release badge tracks this fork's GitHub releases. They render live
@@ -23,7 +23,7 @@
     <img src="./metadata/en-US/images/featureGraphic.png" alt="Feature Graphic" />
 </div>
 
-ACME Food App is a free, open-source, and privacy-focused food diary and nutrition tracker built
+FoodUs is a free, open-source, and privacy-focused food diary and nutrition tracker built
 using [Material Design](https://m3.material.io/) principles, based on
 [Food You](https://github.com/maksimowiczm/FoodYou).
 
@@ -65,7 +65,7 @@ lower-friction logging ergonomics.
 
 This is a personal fork maintained for private household use, and it is not seeking code
 contributions. Issues and ideas for the fork are tracked in
-[this repository's issues](https://github.com/JarrydAdaens/FoodYou/issues) and the project's
+[this repository's issues](https://github.com/JarrydAdaens/FoodUs/issues) and the project's
 [context tiers](context/design.md).
 
 To contribute to the original app — translations, feature requests, or bug reports — please go

@@ -23,4 +23,10 @@ data class ProductEntity(
     val sourceType: FoodSourceType,
     val sourceUrl: String? = null,
     val isLiquid: Boolean,
+    /**
+     * The provider's own identifier for this record (e.g. the AFCD Public Food Key). Null for
+     * user-created products and providers that do not expose a stable record id. Enables
+     * deterministic, inspectable per-provider dataset replacement.
+     */
+    val sourceRecordId: String? = null,
 )

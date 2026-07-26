@@ -11,9 +11,11 @@ import com.maksimowiczm.foodyou.common.infrastructure.datastore.AbstractDataStor
 import com.maksimowiczm.foodyou.common.infrastructure.datastore.set
 import com.maksimowiczm.foodyou.settings.domain.entity.AppLaunchInfo
 import com.maksimowiczm.foodyou.settings.domain.entity.EnergyFormat
+import com.maksimowiczm.foodyou.settings.domain.entity.GraphStyle
 import com.maksimowiczm.foodyou.settings.domain.entity.HomeCard
 import com.maksimowiczm.foodyou.settings.domain.entity.NutrientsOrder
 import com.maksimowiczm.foodyou.settings.domain.entity.Settings
+import com.maksimowiczm.foodyou.settings.domain.entity.WeekLayout
 import kotlin.time.Instant
 
 internal class DataStoreSettingsRepository(dataStore: DataStore<Preferences>) :
@@ -29,6 +31,8 @@ internal class DataStoreSettingsRepository(dataStore: DataStore<Preferences>) :
             expandGoalCard = this[SettingsPreferencesKeys.expandGoalCard] ?: true,
             onboardingFinished = this[SettingsPreferencesKeys.onboardingFinished] ?: false,
             energyFormat = this.getEnergyFormat(SettingsPreferencesKeys.energyFormat),
+            graphStyle = this.getGraphStyle(SettingsPreferencesKeys.graphStyle),
+            weekLayout = this.getWeekLayout(SettingsPreferencesKeys.weekLayout),
             appLaunchInfo = this.getAppLaunchInfo(),
         )
 
@@ -42,6 +46,8 @@ internal class DataStoreSettingsRepository(dataStore: DataStore<Preferences>) :
         this[SettingsPreferencesKeys.expandGoalCard] = updated.expandGoalCard
         this[SettingsPreferencesKeys.onboardingFinished] = updated.onboardingFinished
         setEnergyFormat(SettingsPreferencesKeys.energyFormat, updated.energyFormat)
+        setGraphStyle(SettingsPreferencesKeys.graphStyle, updated.graphStyle)
+        setWeekLayout(SettingsPreferencesKeys.weekLayout, updated.weekLayout)
         setAppLaunchInfo(updated.appLaunchInfo)
     }
 }
@@ -78,6 +84,20 @@ private fun MutablePreferences.setEnergyFormat(key: Preferences.Key<Int>, value:
 private fun Preferences.getEnergyFormat(key: Preferences.Key<Int>): EnergyFormat =
     runCatching { EnergyFormat.entries[this[key] ?: EnergyFormat.DEFAULT.ordinal] }
         .getOrElse { EnergyFormat.DEFAULT }
+
+private fun MutablePreferences.setGraphStyle(key: Preferences.Key<Int>, value: GraphStyle) =
+    setWithNull(key, value.ordinal)
+
+private fun Preferences.getGraphStyle(key: Preferences.Key<Int>): GraphStyle =
+    runCatching { GraphStyle.entries[this[key] ?: GraphStyle.DEFAULT.ordinal] }
+        .getOrElse { GraphStyle.DEFAULT }
+
+private fun MutablePreferences.setWeekLayout(key: Preferences.Key<Int>, value: WeekLayout) =
+    setWithNull(key, value.ordinal)
+
+private fun Preferences.getWeekLayout(key: Preferences.Key<Int>): WeekLayout =
+    runCatching { WeekLayout.entries[this[key] ?: WeekLayout.DEFAULT.ordinal] }
+        .getOrElse { WeekLayout.DEFAULT }
 
 private fun Preferences.getAppLaunchInfo(): AppLaunchInfo =
     AppLaunchInfo(
@@ -133,6 +153,8 @@ private object SettingsPreferencesKeys {
     val expandGoalCard = booleanPreferencesKey("settings:expandGoalCard")
     val onboardingFinished = booleanPreferencesKey("settings:onboardingFinished")
     val energyFormat = intPreferencesKey("settings:energyFormat")
+    val graphStyle = intPreferencesKey("settings:graphStyle")
+    val weekLayout = intPreferencesKey("settings:weekLayout")
     val firstLaunchEpoch = longPreferencesKey("first_launch_epoch")
     val firstLaunchCurrentVersionName = stringPreferencesKey("first_launch_current_version_name")
     val firstLaunchCurrentVersionEpoch = longPreferencesKey("first_launch_current_version_epoch")

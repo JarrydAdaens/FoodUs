@@ -129,6 +129,30 @@ internal class FoodSearchViewModel(
             )
         }
 
+    private val afcdPages =
+        observeFoodPages(FoodSource.Type.AustralianFoodCompositionDatabase).cachedIn(viewModelScope)
+
+    // Null while the provider is disabled, so its rows are excluded from search without being
+    // deleted; re-enabling brings them straight back.
+    private val afcdState =
+        combine(
+            observeFoodCount(FoodSource.Type.AustralianFoodCompositionDatabase),
+            foodPreferences,
+        ) { count, prefs ->
+            if (prefs.isAustralianFoodCompositionDatabaseEnabled) {
+                FoodSourceUiState(
+                    remoteEnabled = RemoteStatus.LocalOnly,
+                    pages = afcdPages,
+                    count = count,
+                )
+            } else {
+                null
+            }
+        }
+
+    private val swissAndAfcdState =
+        combine(swissState, afcdState) { swiss, afcd -> swiss to afcd }
+
     private fun observeFoodCount(source: FoodSource.Type) =
         searchQuery.flatMapLatest { query ->
             foodSearchRepository.searchFoodCount(
@@ -159,7 +183,7 @@ internal class FoodSearchViewModel(
                 yourFoodState,
                 openFoodFactsState,
                 usdaState,
-                swissState,
+                swissAndAfcdState,
                 filter,
                 searchHistory,
             ) {
@@ -167,18 +191,25 @@ internal class FoodSearchViewModel(
                 yourFoodState,
                 openFoodFactsState,
                 usdaState,
-                swissState,
+                swissAndAfcd,
                 filter,
                 searchHistory ->
+                val (swissState, afcdState) = swissAndAfcd
                 FoodSearchUiState(
                     sources =
-                        mapOf(
-                            FoodFilter.Source.Recent to recentFoodState,
-                            FoodFilter.Source.YourFood to yourFoodState,
-                            FoodFilter.Source.OpenFoodFacts to openFoodFactsState,
-                            FoodFilter.Source.USDA to usdaState,
-                            FoodFilter.Source.SwissFoodCompositionDatabase to swissState,
-                        ),
+                        buildMap {
+                            put(FoodFilter.Source.Recent, recentFoodState)
+                            put(FoodFilter.Source.YourFood, yourFoodState)
+                            put(FoodFilter.Source.OpenFoodFacts, openFoodFactsState)
+                            put(FoodFilter.Source.USDA, usdaState)
+                            put(FoodFilter.Source.SwissFoodCompositionDatabase, swissState)
+                            if (afcdState != null) {
+                                put(
+                                    FoodFilter.Source.AustralianFoodCompositionDatabase,
+                                    afcdState,
+                                )
+                            }
+                        },
                     filter = filter,
                     recentSearches = searchHistory.map { it.query },
                 )

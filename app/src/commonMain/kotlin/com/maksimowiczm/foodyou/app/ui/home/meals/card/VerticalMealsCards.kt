@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.MealTemplateId
 import com.valentinilk.shimmer.Shimmer
 
 @Composable
@@ -14,9 +15,15 @@ internal fun VerticalMealsCards(
     meals: List<MealModel>?,
     onAdd: (mealId: Long) -> Unit,
     onQuickAdd: (mealId: Long) -> Unit,
+    onAiScan: (mealId: Long) -> Unit,
+    onFastText: (mealId: Long) -> Unit,
     onEditEntry: (MealEntryModel) -> Unit,
     onDeleteEntry: (MealEntryModel) -> Unit,
     onLongClick: (mealId: Long) -> Unit,
+    templates: List<MealTemplateModel>,
+    onSaveTemplate: (mealId: Long, name: String) -> Unit,
+    onApplyTemplate: (MealTemplateId, mealId: Long) -> Unit,
+    onDeleteTemplate: (MealTemplateId) -> Unit,
     shimmer: Shimmer,
     contentPadding: PaddingValues,
     modifier: Modifier = Modifier,
@@ -33,9 +40,15 @@ internal fun VerticalMealsCards(
                     meal = meal,
                     onAddFood = { onAdd(meal.id) },
                     onQuickAdd = { onQuickAdd(meal.id) },
+                    onAiScan = { onAiScan(meal.id) },
+                    onFastText = { onFastText(meal.id) },
                     onEditEntry = onEditEntry,
                     onDeleteEntry = onDeleteEntry,
                     onLongClick = { onLongClick(meal.id) },
+                    templates = templates,
+                    onSaveTemplate = { name -> onSaveTemplate(meal.id, name) },
+                    onApplyTemplate = { id -> onApplyTemplate(id, meal.id) },
+                    onDeleteTemplate = onDeleteTemplate,
                 )
             }
         }

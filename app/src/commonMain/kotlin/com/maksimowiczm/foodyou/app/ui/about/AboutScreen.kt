@@ -30,6 +30,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -51,7 +52,7 @@ import foodyou.app.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun AboutScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
+fun AboutScreen(onBack: () -> Unit, onSponsor: () -> Unit, modifier: Modifier = Modifier) {
     val appConfig = LocalAppConfig.current
     val uriHandler = LocalUriHandler.current
 
@@ -103,11 +104,23 @@ fun AboutScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                     buildString {
                         append(stringResource(Res.string.headline_version))
                         append(" ")
-                        append(appConfig.versionName)
+                        append(appConfig.forkVersionName)
                     },
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
+            Text(
+                text =
+                    stringResource(
+                        Res.string.description_derived_from_food_you,
+                        appConfig.versionName,
+                    ),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            TextButton(onClick = { uriHandler.openUri(appConfig.upstreamAuthorUri) }) {
+                Text(text = stringResource(Res.string.action_original_creator_on_github))
+            }
             Text(
                 text = icons8stringResource(MaterialTheme.typography.bodyMedium),
                 style = MaterialTheme.typography.bodyMedium,
@@ -119,6 +132,11 @@ fun AboutScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                 onChangelog = { showChangelog = true },
                 onIdea = { uriHandler.openUri(appConfig.issueTrackerUri) },
                 onEmail = { uriHandler.openUri(appConfig.contactEmailUri) },
+            )
+            Spacer(Modifier.height(24.dp))
+            SponsorButton(
+                onClick = onSponsor,
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
             Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))
         }

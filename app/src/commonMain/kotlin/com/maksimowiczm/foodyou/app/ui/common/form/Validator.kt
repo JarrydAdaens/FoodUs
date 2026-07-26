@@ -70,3 +70,14 @@ fun <E> nonNegativeDoubleValidator(
         else -> null
     }
 }
+
+fun <E> positiveDoubleValidator(
+    onNotPositive: () -> E,
+    onNull: () -> E? = { null },
+): (Double?) -> E? = {
+    when {
+        it == null -> onNull()
+        it <= 0.0 -> onNotPositive()
+        else -> null
+    }
+}

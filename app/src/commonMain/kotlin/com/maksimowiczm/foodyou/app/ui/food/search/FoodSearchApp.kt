@@ -57,6 +57,7 @@ fun FoodSearchApp(
     onUpdateOpenFoodFactsCredentials: () -> Unit,
     modifier: Modifier = Modifier,
     excludedRecipe: FoodId.Recipe? = null,
+    initialQuery: String? = null,
 ) {
     val viewModel: FoodSearchViewModel = koinViewModel { parametersOf(excludedRecipe) }
 
@@ -67,6 +68,7 @@ fun FoodSearchApp(
         onFoodClick = onFoodClick,
         onUpdateUsdaApiKey = onUpdateUsdaApiKey,
         onUpdateOpenFoodFactsCredentials = onUpdateOpenFoodFactsCredentials,
+        initialQuery = initialQuery,
         modifier = modifier,
     )
 }
@@ -80,6 +82,7 @@ private fun FoodSearchApp(
     onUpdateUsdaApiKey: () -> Unit,
     onUpdateOpenFoodFactsCredentials: () -> Unit,
     modifier: Modifier = Modifier,
+    initialQuery: String? = null,
     appState: FoodSearchAppState = rememberFoodSearchAppState(),
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -91,6 +94,14 @@ private fun FoodSearchApp(
                 coroutineScope.launch { appState.searchBarState.animateToCollapsed() }
             }
         }
+
+    // Pre-execute a query handed in by the placeholder AI route (Milestone 2, Story 9) so the user
+    // lands on populated results with the search box already filled.
+    LaunchedEffect(initialQuery) {
+        if (!initialQuery.isNullOrBlank()) {
+            onSearch(initialQuery)
+        }
+    }
 
     val pages = uiState.currentSourceState?.collectAsLazyPagingItems()
     val shimmer = rememberShimmer(ShimmerBounds.View)
@@ -264,4 +275,5 @@ private fun ListStates.state(source: FoodFilter.Source) =
         FoodFilter.Source.OpenFoodFacts -> openFoodFacts
         FoodFilter.Source.USDA -> usda
         FoodFilter.Source.SwissFoodCompositionDatabase -> swiss
+        FoodFilter.Source.AustralianFoodCompositionDatabase -> australian
     }

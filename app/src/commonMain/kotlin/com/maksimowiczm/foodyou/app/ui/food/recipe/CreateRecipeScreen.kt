@@ -10,6 +10,7 @@ import androidx.navigationevent.compose.NavigationEventHandler
 import androidx.navigationevent.compose.rememberNavigationEventState
 import com.maksimowiczm.foodyou.app.ui.common.component.DiscardDialog
 import com.maksimowiczm.foodyou.common.compose.extension.LaunchedCollectWithLifecycle
+import com.maksimowiczm.foodyou.common.domain.measurement.Measurement
 import com.maksimowiczm.foodyou.food.domain.entity.FoodId
 import foodyou.app.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
@@ -23,6 +24,13 @@ fun CreateRecipeScreen(
     onUpdateUsdaApiKey: () -> Unit,
     onUpdateOpenFoodFactsCredentials: () -> Unit,
     modifier: Modifier = Modifier,
+    // Story 19 promotion seed. Defaults reproduce a blank new recipe. When promoting a Quick Add
+    // entry, the caller supplies the mapped name/servings/note and a single placeholder ingredient
+    // (a real backing product) so the derived-nutrition model stays intact (spec §6.3, Story 14).
+    initialName: String = "",
+    initialServings: Int = 1,
+    initialNote: String? = null,
+    initialIngredient: Pair<FoodId, Measurement>? = null,
 ) {
     val viewModel = koinViewModel<CreateRecipeViewModel>()
     val latestOnCreate by rememberUpdatedState(onCreate)
@@ -32,13 +40,21 @@ fun CreateRecipeScreen(
         }
     }
 
+    val initialIngredients =
+        remember(initialIngredient) {
+            listOfNotNull(
+                initialIngredient?.let { (foodId, measurement) ->
+                    MinimalIngredient(foodId = foodId, measurement = measurement)
+                }
+            )
+        }
     val formState =
         rememberRecipeFormState(
-            initialName = "",
-            initialServings = 1,
-            initialNote = null,
+            initialName = initialName,
+            initialServings = initialServings,
+            initialNote = initialNote,
             initialIsLiquid = false,
-            initialIngredients = emptyList(),
+            initialIngredients = initialIngredients,
         )
     val asRecipe =
         remember(formState.ingredients) { viewModel.intoRecipe(formState) }
