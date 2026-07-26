@@ -17,6 +17,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # A tag that disagrees with the shipped versionName would reintroduce the
+      # Obtainium phantom-update bug, so fail fast before spending build minutes.
+      - name: Verify tag matches fork-version-name
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          FORK_VERSION=$(sed -n 's/^fork-version-name = "\(.*\)"/\1/p' gradle/libs.versions.toml)
+          if [ "$GITHUB_REF_NAME" != "v${FORK_VERSION}" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match fork-version-name v${FORK_VERSION}" >&2
+            exit 1
+          fi
+
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:

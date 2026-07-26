@@ -1,10 +1,11 @@
 [versions]
 version-name = "3.4.9"
 # FoodUs fork version, layered on top of the upstream version-name above.
-# Scheme: major.minor.reserved — the third component is reserved (likely a deploy counter)
-# and is pinned to 0 until that policy is decided.
-fork-version-name = "1.0.0"
-android-versionCode = "123"
+# Scheme: <milestone>.<story>.<build> — bump <build> for extra releases within a story.
+# This is the app's real shipped versionName and must match the v* release tag; the
+# upstream version-name above is retained as derived-from metadata only.
+fork-version-name = "2.19.1"
+android-versionCode = "124"
 android-compileSdk = "36"
 android-minSdk = "28"
 android-targetSdk = "36"

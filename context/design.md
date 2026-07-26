@@ -242,7 +242,9 @@ JSON remains the canonical source; app-specific formats are generated exports.
 
 ### Primary Configuration
 
-- `gradle/libs.versions.toml` — version catalog: app version (3.4.9 / versionCode 123), SDK levels
+- `gradle/libs.versions.toml` — version catalog: fork version (`fork-version-name`,
+  `<milestone>.<story>.<build>`, the shipped versionName), upstream version-name kept as
+  derived-from metadata, versionCode, SDK levels
   (min 28, compile/target 36), and every dependency version. Change dependencies here, not in
   build files.
 - `app/build.gradle.kts` — KMP targets, build types (`release` minified, `devRelease`,
