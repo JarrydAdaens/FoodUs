@@ -1,6 +1,17 @@
-# Rails Boss Execute Progress — Milestone 2 (all stories)
+# Rails Boss Execute Progress — Milestone 2
 
-Run: 2026-07-25. Parallelism: 0 (serial). Workers: Opus. See `briefing.md`.
+## Run: 2026-07-27 — addendum Stories 21-23. Parallelism: 0 (serial). Workers: Opus. See `briefing.md`.
+
+Execution order 22 → 21 → 23 (Story 21 hard-depends on Story 22; see briefing).
+
+| Status | Story | Source | Persona | Commit | Notes |
+| --- | --- | --- | --- | --- | --- |
+| TODO | STORY 2.22 | `context/implementation-plans/milestone-2/story-22-ai-settings-screen/plan.md` | none | | queued first — provides Story 21's seams |
+| TODO | STORY 2.21 | `context/implementation-plans/milestone-2/story-21-three-layer-ai-prompts/plan.md` | none | | after 2.22 |
+| TODO | STORY 2.23 | `context/implementation-plans/milestone-2/story-23-provider-website-links/plan.md` | none | | independent, last |
+
+## Run: 2026-07-25 — Stories 1-19. Parallelism: 0 (serial). Workers: Opus.
+
 (Previous Milestone 1 run table is preserved in this file's git history.)
 
 | Status | Story | Source | Persona | Commit | Notes |

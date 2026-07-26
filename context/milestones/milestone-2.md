@@ -82,9 +82,9 @@ was delivered 2026-07-25 by rails-boss-execute (see `../rails-boss-execute/progr
 | 18 | Complete | [Quick Add expansion — new fields & migration](#story-18) | Feature | 3 | 3 | 3 | [plan](../implementation-plans/milestone-2/story-18-quickadd-expansion-fields/plan.md) |
 | 19 | Complete | [Quick Add promotion workflow](#story-19) | Feature | 6 | 6 | 5 | [plan](../implementation-plans/milestone-2/story-19-quickadd-promotion-workflow/plan.md) |
 | 20 | Complete | [FoodUs identity — rename, versioning, icon](#story-20) | Feature | — | — | — | — |
-| 21 | Not Started | [Three-layer AI prompt architecture](#story-21) | Feature | — | — | — | — |
-| 22 | Not Started | [AI settings screen](#story-22) | Feature | — | — | — | — |
-| 23 | Not Started | [Provider website info links](#story-23) | Feature | — | — | — | — |
+| 21 | Not Started | [Three-layer AI prompt architecture](#story-21) | Feature | 4 | 4 | 3 | [plan](../implementation-plans/milestone-2/story-21-three-layer-ai-prompts/plan.md) |
+| 22 | Not Started | [AI settings screen](#story-22) | Feature | 4 | 5 | 4 | [plan](../implementation-plans/milestone-2/story-22-ai-settings-screen/plan.md) |
+| 23 | Not Started | [Provider website info links](#story-23) | Feature | 2 | 2 | 1 | [plan](../implementation-plans/milestone-2/story-23-provider-website-links/plan.md) |
 
 ---
 
