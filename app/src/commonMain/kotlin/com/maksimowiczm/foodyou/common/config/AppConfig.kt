@@ -5,7 +5,7 @@ interface AppConfig {
     /** Upstream Food You version name this fork derives from (e.g. "3.4.9"). */
     val versionName: String
 
-    /** ACME Food App fork version name, layered on top of [versionName] (e.g. "1.0.0"). */
+    /** FoodUs fork version name, layered on top of [versionName] (e.g. "1.0.0"). */
     val forkVersionName: String
 
     /** Mailto URI for contacting the developer (including subject and body). */

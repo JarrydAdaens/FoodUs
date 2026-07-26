@@ -10,18 +10,18 @@ internal class FoodYouConfig : AppConfig, NetworkConfig {
     // Feedback about the fork reaches the fork's owner, not the upstream creator
     // (Milestone 2, Story 4).
     override val contactEmailUri: String =
-        "mailto:jarryd.adaens@outlook.com.au?subject=ACME Food App Feedback" +
-            "&body=ACME Food App Version: $forkVersionName (Food You $versionName)\n"
+        "mailto:jarryd.adaens@outlook.com.au?subject=FoodUs Feedback" +
+            "&body=FoodUs Version: $forkVersionName (Food You $versionName)\n"
     override val translationUri: String = "https://crowdin.com/project/food-you"
     // Fork's own repository and issue tracker (Milestone 2, Story 4).
-    override val sourceCodeUri: String = "https://github.com/JarrydAdaens/FoodYou"
-    override val issueTrackerUri: String = "https://github.com/JarrydAdaens/FoodYou/issues"
+    override val sourceCodeUri: String = "https://github.com/JarrydAdaens/FoodUs"
+    override val issueTrackerUri: String = "https://github.com/JarrydAdaens/FoodUs/issues"
     // Upstream creator's GitHub, credited on the About screen (Milestone 2, Story 4).
     override val upstreamAuthorUri: String = "https://github.com/maksimowiczm"
     // Fork's own privacy policy. Placeholder until the owner supplies the URL of the
     // privacy policy already published for his apps (Milestone 2, Story 3).
     override val privacyPolicyUri: String =
-        "https://github.com/JarrydAdaens/FoodYou/blob/main/PRIVACY.md"
+        "https://github.com/JarrydAdaens/FoodUs/blob/main/PRIVACY.md"
     override val openFoodFactsTermsOfUseUri: String = "https://world.openfoodfacts.org/terms-of-use"
     override val openFoodFactsPrivacyPolicyUri: String = "https://world.openfoodfacts.org/privacy"
     override val foodDataCentralPrivacyPolicyUri: String = "https://www.usda.gov/privacy-policy"
@@ -32,5 +32,7 @@ internal class FoodYouConfig : AppConfig, NetworkConfig {
     override val aiEndpoint: String = BuildConfig.AI_ENDPOINT
     override val aiModel: String = BuildConfig.AI_MODEL
 
-    override val userAgent: String = "Food You/$versionName (maksimowicz.dev@gmail.com)"
+    // Fork identity in outbound API requests so traffic is attributed to the fork's
+    // owner, not the upstream creator.
+    override val userAgent: String = "FoodUs/$forkVersionName (jarryd.adaens@outlook.com.au)"
 }

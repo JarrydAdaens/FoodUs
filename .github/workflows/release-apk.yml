@@ -73,9 +73,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          mv signed.apk "FoodYou-${GITHUB_REF_NAME}.apk"
+          mv signed.apk "FoodUs-${GITHUB_REF_NAME}.apk"
           gh release create "$GITHUB_REF_NAME" \
-            "FoodYou-${GITHUB_REF_NAME}.apk" \
+            "FoodUs-${GITHUB_REF_NAME}.apk" \
             --generate-notes
 
       - name: Upload signed APK

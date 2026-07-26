@@ -1,13 +1,13 @@
 ---
 name: foodyou-update-procedure
-description: Owner runbook for building, signing, and shipping FoodYou fork updates to both household phones without losing local data.
+description: Owner runbook for building, signing, and shipping FoodUs fork updates to both household phones without losing local data.
 metadata:
   version: "1.0"
   owner: "Jarryd Adaens"
-  repo: "FoodYou (fork of maksimowiczm/FoodYou)"
+  repo: "FoodUs (fork of maksimowiczm/FoodYou)"
 ---
 
-# FoodYou Update Procedure
+# FoodUs Update Procedure
 
 [Back to Wiki Home](home.md) | [Story 11 plan](../implementation-plans/milestone-1/story-11-app-update-mechanism/plan.md)
 
@@ -18,7 +18,7 @@ a data-safe update from documentation, not memory.
 **The three rules that make an update preserve data** (violate any one and Android forces an
 uninstall, which deletes the Room database and all preferences):
 
-1. Same `applicationId` — `com.maksimowiczm.foodyou`. Never ship the `preview` build type
+1. Same `applicationId` — `io.github.jarrydadaens.foodus`. Never ship the `preview` build type
    (it appends `.preview` and is a different app).
 2. Same signing certificate — every shipped build must be signed with the fork's release
    keystore. A mismatch is refused with `INSTALL_FAILED_UPDATE_INCOMPATIBLE` (verified on the
@@ -38,8 +38,8 @@ Generate it **outside the repository** (e.g. a secure folder that is not under
 
 ```powershell
 & "C:\Java\jdk-21.0.12+8\bin\keytool.exe" -genkeypair -v `
-    -keystore <SECURE-PATH>\foodyou-fork.jks `
-    -alias foodyou `
+    -keystore <SECURE-PATH>\foodus.jks `
+    -alias foodus `
     -keyalg RSA -keysize 4096 -validity 10000
 ```
 
@@ -91,9 +91,9 @@ Then sign with the helper script (wraps zipalign + apksigner, same pattern as
 `.github/workflows/release-apk.yml`):
 
 ```powershell
-$env:FOODYOU_KEYSTORE = '<SECURE-PATH>\foodyou-fork.jks'
-$env:FOODYOU_KEY_ALIAS = 'foodyou'
-$env:FOODYOU_KEYSTORE_PASSWORD = '<from password manager — never typed into files or history>'
+$env:FOODUS_KEYSTORE = '<SECURE-PATH>\foodus.jks'
+$env:FOODUS_KEY_ALIAS = 'foodus'
+$env:FOODUS_KEYSTORE_PASSWORD = '<from password manager — never typed into files or history>'
 .\jarryd\scripts\sign-apk.ps1
 ```
 
@@ -106,7 +106,7 @@ Manual equivalent (what the script does), using build-tools 36.0.0 at
 
 ```powershell
 zipalign -f -p 4 app-release-unsigned.apk aligned.apk
-apksigner sign --alignment-preserved --ks <SECURE-PATH>\foodyou-fork.jks --ks-key-alias foodyou --out app-release-signed.apk aligned.apk
+apksigner sign --alignment-preserved --ks <SECURE-PATH>\foodus.jks --ks-key-alias foodus --out app-release-signed.apk aligned.apk
 apksigner verify --print-certs app-release-signed.apk
 ```
 
@@ -123,7 +123,7 @@ One-time setup per phone:
 
 1. Install Obtainium (from its GitHub releases or F-Droid).
 2. Grant Obtainium the "install unknown apps" permission when prompted.
-3. Add app → source URL `https://github.com/JarrydAdaens/FoodYou` → confirm it detects the
+3. Add app → source URL `https://github.com/JarrydAdaens/FoodUs` → confirm it detects the
    latest release.
 
 Per release afterwards: Obtainium notifies; tap update; the app updates in place.
@@ -153,7 +153,7 @@ diary data. Before uninstalling:
 3. Accept that anything not exportable (diary entries logged since import) is lost with the
    uninstall — do the migration on a day when that loss is smallest.
 
-Then: uninstall FoodYou → install the release-signed APK (§3/§4) → re-import data. This happens
+Then: uninstall FoodUs → install the release-signed APK (§3/§4) → re-import data. This happens
 **once**; every later update is in-place.
 
 The wife's phone never migrates — its first install is release-signed from day one (Q5 open:
@@ -167,8 +167,8 @@ repository secrets (owner adds them under Settings → Secrets and variables →
 
 | Secret | Value |
 | --- | --- |
-| `KEYSTORE` | base64 of `foodyou-fork.jks` (`[Convert]::ToBase64String([IO.File]::ReadAllBytes('<SECURE-PATH>\foodyou-fork.jks'))`) |
-| `KEY_ALIAS` | `foodyou` |
+| `KEYSTORE` | base64 of `foodus.jks` (`[Convert]::ToBase64String([IO.File]::ReadAllBytes('<SECURE-PATH>\foodus.jks'))`) |
+| `KEY_ALIAS` | `foodus` |
 | `KEYSTORE_PASSWORD` | the keystore password |
 
 CI-built and locally-built APKs are then interchangeable on the phones — confirm with
@@ -182,7 +182,7 @@ Prove an update preserves data before trusting the mechanism with daily use:
 2. Bump `android-versionCode`, build and sign (§2–§3).
 3. Install **over** the existing app (Obtainium update or `adb install -r`) — no uninstall.
 4. Open the app: the marker entry and food must still be there and the version must be the new
-   one (`adb shell dumpsys package com.maksimowiczm.foodyou | Select-String versionCode`, or
+   one (`adb shell dumpsys package io.github.jarrydadaens.foodus | Select-String versionCode`, or
    the in-app About screen).
 
 Emulator evidence (2026-07-25): the full cycle was validated with a throwaway test keystore —

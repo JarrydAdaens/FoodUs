@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">ACME Food App</string>
+    <string name="app_name" translatable="false">FoodUs</string>
 
     <!-- Fork attribution: %1$s is the upstream Food You version this fork derives from. -->
     <string name="description_derived_from_food_you" translatable="false">Derived from Food You %1$s</string>

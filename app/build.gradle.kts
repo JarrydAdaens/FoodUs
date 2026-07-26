@@ -44,14 +44,14 @@ buildConfig {
     fun secret(propertyKey: String, envKey: String, default: String = ""): String =
         localProperties.getProperty(propertyKey) ?: System.getenv(envKey) ?: default
 
-    val aiApiKey = secret("acme.ai.apiKey", "ACME_AI_API_KEY")
+    val aiApiKey = secret("foodus.ai.apiKey", "FOODUS_AI_API_KEY")
     val aiEndpoint =
         secret(
-            "acme.ai.endpoint",
-            "ACME_AI_ENDPOINT",
+            "foodus.ai.endpoint",
+            "FOODUS_AI_ENDPOINT",
             "https://openrouter.ai/api/v1/chat/completions",
         )
-    val aiModel = secret("acme.ai.model", "ACME_AI_MODEL", "openai/gpt-4o-mini")
+    val aiModel = secret("foodus.ai.model", "FOODUS_AI_MODEL", "openai/gpt-4o-mini")
     buildConfigField("String", "AI_API_KEY", aiApiKey.buildConfigStringLiteral())
     buildConfigField("String", "AI_ENDPOINT", aiEndpoint.buildConfigStringLiteral())
     buildConfigField("String", "AI_MODEL", aiModel.buildConfigStringLiteral())
@@ -159,10 +159,10 @@ android {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        // ACME Food App fork identity. Namespace stays com.maksimowiczm.foodyou so the fork's
+        // FoodUs fork identity. Namespace stays com.maksimowiczm.foodyou so the fork's
         // source packages, generated resources, and BuildConfig keep upstream's structure for
         // clean merges; only the shipped application ID diverges.
-        applicationId = "com.acme.foodapp"
+        applicationId = "io.github.jarrydadaens.foodus"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = libs.versions.android.versionCode.get().toInt()
