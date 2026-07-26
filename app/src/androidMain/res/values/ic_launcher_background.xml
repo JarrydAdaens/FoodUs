@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Sampled from the edge of jarryd/assets/app-icon-256x256.png so the
+         adaptive-icon background blends into the inset foreground art. -->
+    <color name="ic_launcher_background">#027272</color>
+</resources>
