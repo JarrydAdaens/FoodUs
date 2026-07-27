@@ -71,6 +71,10 @@ class AiRuntimeConfigTest {
             override val openFoodFactsTermsOfUseUri = ""
             override val openFoodFactsPrivacyPolicyUri = ""
             override val foodDataCentralPrivacyPolicyUri = ""
+            override val openFoodFactsWebsiteUri = ""
+            override val foodDataCentralWebsiteUri = ""
+            override val swissFoodCompositionDatabaseWebsiteUri = ""
+            override val australianFoodCompositionDatabaseWebsiteUri = ""
             override val aiApiKey = apiKey
             override val aiEndpoint = endpoint
             override val aiModel = model
