@@ -52,8 +52,11 @@ without altering the original diary snapshot.
 
 In Progress — reopened 2026-07-26 by the
 [owner's addendum](../dictations-tier-0/2026-07-26_addendum_ai-settings-branding-foodus.md) after
-daily use. 22/23 stories complete; Story 16 (FoodSwitch) blocked on an external data licence,
-documented per its own gate; Stories 21–23 are the new addendum work (21-22 complete 2026-07-27). The original 19-story run
+daily use. 22 of 23 stories complete (all addendum Stories 21–23 landed 2026-07-27); Story 16
+(FoodSwitch) remains blocked on an external data licence, documented per its own gate — no
+unstarted stories remain. Whether that closes the milestone is the owner's call: the Definition
+of Done's "adopted upstream bugs are fixed" clause maps to the Story 12 bug stories still staged
+in `../backlog/backlog-1.md`, which were never pulled into this milestone's story list. The original 19-story run
 was delivered 2026-07-25 by rails-boss-execute (see `../rails-boss-execute/progress.md`).
 
 ---
@@ -84,7 +87,7 @@ was delivered 2026-07-25 by rails-boss-execute (see `../rails-boss-execute/progr
 | 20 | Complete | [FoodUs identity — rename, versioning, icon](#story-20) | Feature | — | — | — | — |
 | 21 | Complete | [Three-layer AI prompt architecture](#story-21) | Feature | 4 | 4 | 3 | [plan](../implementation-plans/milestone-2/story-21-three-layer-ai-prompts/plan.md) |
 | 22 | Complete | [AI settings screen](#story-22) | Feature | 4 | 5 | 4 | [plan](../implementation-plans/milestone-2/story-22-ai-settings-screen/plan.md) |
-| 23 | Not Started | [Provider website info links](#story-23) | Feature | 2 | 2 | 1 | [plan](../implementation-plans/milestone-2/story-23-provider-website-links/plan.md) |
+| 23 | Complete | [Provider website info links](#story-23) | Feature | 2 | 2 | 1 | [plan](../implementation-plans/milestone-2/story-23-provider-website-links/plan.md) |
 
 ---
 
@@ -686,7 +689,7 @@ website URL. The addendum's open observation (owner described an *Australian* da
 not in older docs) is resolved by repo truth: that screen is this fork's own Story 15 AFCD
 provider — docs were not stale and upstream added nothing.
 
-**Status:** Not Started.
+**Status:** Complete (2026-07-27, commit `ebb28703`) — shared `WebsiteChip` (AssistChip + open-in-new) on all four provider surfaces: OFF card → world.openfoodfacts.org, USDA card → fdc.nal.usda.gov, Swiss FCD (language-pick state only) → naehrwertdaten.ch, AFCD screen → the FSANZ page (reuses `SOURCE_URL`). URLs live once in `AppConfig`/`FoodYouConfig` as static config — no schema change (the rough scope's "provider metadata gains a website URL" is satisfied in configuration, not a Room column). All four outbound intents emulator-verified.
 
 ---
 
