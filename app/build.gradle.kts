@@ -170,11 +170,22 @@ android {
 
         manifestPlaceholders["applicationIcon"] = "@mipmap/ic_launcher"
         manifestPlaceholders["applicationRoundIcon"] = "@mipmap/ic_launcher_round"
+        manifestPlaceholders["applicationLabel"] = "@string/app_name"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     packaging { resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" } }
     buildTypes {
+        getByName("debug") {
+            // Local sandbox identity: debug builds install side-by-side with the release-signed
+            // Obtainium app instead of colliding with its package. Distinct id, label, icon, and
+            // versionName suffix keep the two visually and technically separate on one device.
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+            manifestPlaceholders["applicationLabel"] = "FoodUs Dev"
+            manifestPlaceholders["applicationIcon"] = "@mipmap/ic_launcher_preview"
+            manifestPlaceholders["applicationRoundIcon"] = "@mipmap/ic_launcher_round_preview"
+        }
         getByName("release") {
             isMinifyEnabled = true
             proguardFiles(
