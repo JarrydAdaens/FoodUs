@@ -18,6 +18,12 @@ private val defaultAppConfig =
         override val openFoodFactsTermsOfUseUri: String = "openFoodFactsTermsOfUseUri"
         override val openFoodFactsPrivacyPolicyUri: String = "openFoodFactsPrivacyPolicyUri"
         override val foodDataCentralPrivacyPolicyUri: String = "foodDataCentralPrivacyPolicyUri"
+        override val openFoodFactsWebsiteUri: String = "openFoodFactsWebsiteUri"
+        override val foodDataCentralWebsiteUri: String = "foodDataCentralWebsiteUri"
+        override val swissFoodCompositionDatabaseWebsiteUri: String =
+            "swissFoodCompositionDatabaseWebsiteUri"
+        override val australianFoodCompositionDatabaseWebsiteUri: String =
+            "australianFoodCompositionDatabaseWebsiteUri"
         override val aiApiKey: String = ""
         override val aiEndpoint: String = "https://openrouter.ai/api/v1/chat/completions"
         override val aiModel: String = "openai/gpt-4o-mini"

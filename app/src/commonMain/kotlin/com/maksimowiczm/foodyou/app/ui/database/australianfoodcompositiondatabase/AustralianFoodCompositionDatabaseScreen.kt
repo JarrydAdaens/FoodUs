@@ -20,9 +20,12 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton
+import com.maksimowiczm.foodyou.app.ui.common.component.WebsiteChip
+import com.maksimowiczm.foodyou.app.ui.common.utility.LocalAppConfig
 import com.maksimowiczm.foodyou.common.compose.extension.add
 import com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase.AustralianFoodCompositionDatabaseConfig
 import foodyou.app.generated.resources.*
@@ -58,6 +61,8 @@ private fun AustralianFoodCompositionDatabaseScreen(
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     val busy = uiState.busy
+    val uriHandler = LocalUriHandler.current
+    val websiteUri = LocalAppConfig.current.australianFoodCompositionDatabaseWebsiteUri
 
     Scaffold(
         modifier = modifier,
@@ -88,6 +93,8 @@ private fun AustralianFoodCompositionDatabaseScreen(
                     style = MaterialTheme.typography.bodyMedium,
                 )
             }
+
+            item { WebsiteChip(onClick = { uriHandler.openUri(websiteUri) }) }
 
             item {
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {

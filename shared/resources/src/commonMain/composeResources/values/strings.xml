@@ -337,6 +337,7 @@
     <string name="description_australian_food_composition_database_short">Nutritional information for around 1,600 Australian foods, published by Food Standards Australia New Zealand.</string>
     <string name="description_australian_food_composition_database">The Australian Food Composition Database is downloaded and stored on your device so Australian foods can be searched offline. Enable it to include its foods in search; disable it to exclude them without deleting the downloaded data.</string>
     <string name="action_enable_provider_search">Include in search</string>
+    <string name="action_visit_website">Website</string>
     <string name="action_update_dataset">Check for updates</string>
     <string name="action_download_and_replace">Download and replace</string>
     <string name="neutral_checking_for_updates">Checking for updates…</string>

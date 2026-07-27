@@ -35,6 +35,18 @@ interface AppConfig {
     /** URI to the FoodData Central Privacy Policy document. */
     val foodDataCentralPrivacyPolicyUri: String
 
+    /** URI to the Open Food Facts website (Milestone 2, Story 23). */
+    val openFoodFactsWebsiteUri: String
+
+    /** URI to the FoodData Central website (Milestone 2, Story 23). */
+    val foodDataCentralWebsiteUri: String
+
+    /** URI to the Swiss Food Composition Database website (Milestone 2, Story 23). */
+    val swissFoodCompositionDatabaseWebsiteUri: String
+
+    /** URI to the Australian Food Composition Database website (Milestone 2, Story 23). */
+    val australianFoodCompositionDatabaseWebsiteUri: String
+
     /**
      * AI endpoint credential developer fallback (Milestone 2, Stories 6 and 22). Blank by default
      * and superseded by the user-entered key on the AI settings screen; it is never surfaced in the
