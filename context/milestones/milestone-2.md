@@ -52,8 +52,8 @@ without altering the original diary snapshot.
 
 In Progress — reopened 2026-07-26 by the
 [owner's addendum](../dictations-tier-0/2026-07-26_addendum_ai-settings-branding-foodus.md) after
-daily use. 20/23 stories complete; Story 16 (FoodSwitch) blocked on an external data licence,
-documented per its own gate; Stories 21–23 are the new addendum work. The original 19-story run
+daily use. 21/23 stories complete; Story 16 (FoodSwitch) blocked on an external data licence,
+documented per its own gate; Stories 21–23 are the new addendum work (22 complete 2026-07-27). The original 19-story run
 was delivered 2026-07-25 by rails-boss-execute (see `../rails-boss-execute/progress.md`).
 
 ---
@@ -83,7 +83,7 @@ was delivered 2026-07-25 by rails-boss-execute (see `../rails-boss-execute/progr
 | 19 | Complete | [Quick Add promotion workflow](#story-19) | Feature | 6 | 6 | 5 | [plan](../implementation-plans/milestone-2/story-19-quickadd-promotion-workflow/plan.md) |
 | 20 | Complete | [FoodUs identity — rename, versioning, icon](#story-20) | Feature | — | — | — | — |
 | 21 | Not Started | [Three-layer AI prompt architecture](#story-21) | Feature | 4 | 4 | 3 | [plan](../implementation-plans/milestone-2/story-21-three-layer-ai-prompts/plan.md) |
-| 22 | Not Started | [AI settings screen](#story-22) | Feature | 4 | 5 | 4 | [plan](../implementation-plans/milestone-2/story-22-ai-settings-screen/plan.md) |
+| 22 | Complete | [AI settings screen](#story-22) | Feature | 4 | 5 | 4 | [plan](../implementation-plans/milestone-2/story-22-ai-settings-screen/plan.md) |
 | 23 | Not Started | [Provider website info links](#story-23) | Feature | 2 | 2 | 1 | [plan](../implementation-plans/milestone-2/story-23-provider-website-links/plan.md) |
 
 ---
@@ -665,7 +665,7 @@ fully user-configurable.
 `ai` slice reads runtime config instead of BuildConfig (BuildConfig `foodus.ai.*` values remain
 as blank-by-default developer fallbacks), validation call.
 
-**Status:** Not Started.
+**Status:** Complete (2026-07-27, commit `02ec0391`) — AI settings screen (key/endpoint/model/user system prompt) persisted in DataStore with explicit Save (blank→null); runtime precedence user → blank-by-default BuildConfig fallback → domain default, unit-tested; both OpenRouter scanners read runtime config; Validate = one `max_tokens=1` probe with verbatim error surfacing (failure paths emulator-verified; green-tick path awaits a real key). Known follow-up recorded for Story 21: the two ViewModel `aiConfigured` gates still read BuildConfig.
 
 ---
 
