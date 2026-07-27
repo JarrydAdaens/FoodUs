@@ -3,6 +3,7 @@ package com.maksimowiczm.foodyou.ai.infrastructure
 import com.maksimowiczm.foodyou.ai.domain.AiConnectionValidator
 import com.maksimowiczm.foodyou.ai.domain.AiFoodScanner
 import com.maksimowiczm.foodyou.ai.domain.AiSearchQueryGenerator
+import com.maksimowiczm.foodyou.ai.domain.ObserveAiConfigured
 import com.maksimowiczm.foodyou.common.infrastructure.koin.userPreferencesRepository
 import com.maksimowiczm.foodyou.common.infrastructure.koin.userPreferencesRepositoryOf
 import io.ktor.client.HttpClient
@@ -40,6 +41,10 @@ fun Module.aiInfrastructureModule() {
 
     // On-device persistence for the user-entered AI settings (Story 22).
     userPreferencesRepositoryOf(::DataStoreAiSettingsRepository)
+
+    // Reactive "is the AI configured?" signal for UI gates (Story 21), reusing the runtime-config
+    // precedence so a user-entered key enables affordances even with a blank BuildConfig fallback.
+    factory { ObserveAiConfigured(aiSettingsRepository = userPreferencesRepository(), appConfig = get()) }
 
     factory {
         OpenRouterAiFoodScanner(

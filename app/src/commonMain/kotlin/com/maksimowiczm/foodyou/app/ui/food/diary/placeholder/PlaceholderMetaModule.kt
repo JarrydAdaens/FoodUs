@@ -10,7 +10,7 @@ fun Module.foodDiaryPlaceholder() {
             manualDiaryEntryRepository = get(),
             mealRepository = get(),
             aiSearchQueryGenerator = get(),
-            appConfig = get(),
+            observeAiConfigured = get(),
         )
     }
 }

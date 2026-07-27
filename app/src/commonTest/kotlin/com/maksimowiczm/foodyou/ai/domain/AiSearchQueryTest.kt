@@ -2,31 +2,34 @@ package com.maksimowiczm.foodyou.ai.domain
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class AiSearchQueryTest {
 
     @Test
-    fun promptEmbedsLocaleMealAndNote() {
+    fun promptEmbedsMealAndNoteWithoutPersonalData() {
         val prompt =
             AiSearchQueryPrompt.build(
                 mealName = "Dinner",
-                note = "roast dinner at my uncle's house",
+                note = "roast dinner",
             )
 
-        assertTrue(prompt.contains("Australian"), "prompt should state the locale")
-        assertTrue(prompt.contains("Melbourne"), "prompt should state the city")
-        // Meal name is lowercased into the sentence "had for dinner".
-        assertTrue(prompt.contains("had for dinner"), "prompt should embed the meal context")
-        assertTrue(prompt.contains("roast dinner at my uncle's house"), "prompt should embed note")
+        // Meal name is lowercased into the sentence "eaten for dinner".
+        assertTrue(prompt.contains("eaten for dinner"), "prompt should embed the meal context")
+        assertTrue(prompt.contains("roast dinner"), "prompt should embed the note")
+        // Layer 1 is pure machinery: no locale, nationality, or region baked in (Story 21).
+        assertFalse(prompt.contains("Australian", ignoreCase = true), "no nationality in layer 1")
+        assertFalse(prompt.contains("Melbourne", ignoreCase = true), "no city in layer 1")
+        assertFalse(prompt.contains("Victoria", ignoreCase = true), "no region in layer 1")
     }
 
     @Test
     fun promptFallsBackWhenMealNameMissing() {
         val prompt = AiSearchQueryPrompt.build(mealName = null, note = "two sausage rolls")
 
-        assertTrue(prompt.contains("had for a meal"), "blank meal should fall back to 'a meal'")
+        assertTrue(prompt.contains("eaten for a meal"), "blank meal should fall back to 'a meal'")
         assertTrue(prompt.contains("two sausage rolls"))
     }
 

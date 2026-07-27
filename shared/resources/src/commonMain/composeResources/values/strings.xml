@@ -37,11 +37,14 @@
     <string name="action_take_photo">Take a photo</string>
     <string name="action_pick_from_gallery">Pick from gallery</string>
     <string name="action_ask_ai">Ask AI</string>
+    <string name="action_submit">Submit</string>
+    <string name="label_ai_scan_hint">Hint for this scan (optional)</string>
+    <string name="description_ai_scan_hint">One-off context for this photo, such as a brand or portion size. Not saved.</string>
     <string name="action_align">Align</string>
     <string name="action_create_custom_food">Create custom food</string>
     <string name="headline_ai_result">AI result</string>
     <string name="headline_align_saved_food">Align with a saved food</string>
-    <string name="neutral_ai_not_configured">AI is not configured in this build</string>
+    <string name="neutral_ai_not_configured">AI is not configured. Add a key in AI settings.</string>
     <string name="neutral_ai_analysing">Analysing photo…</string>
     <string name="neutral_tap_photo_to_retake">Tap the photo to retake it</string>
     <string name="question_discard_photo">Discard photo?</string>

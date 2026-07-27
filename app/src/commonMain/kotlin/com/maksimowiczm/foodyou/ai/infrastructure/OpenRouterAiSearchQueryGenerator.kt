@@ -25,10 +25,14 @@ import kotlinx.coroutines.flow.first
 
 /**
  * [AiSearchQueryGenerator] backed by the same OpenRouter-compatible chat-completions endpoint as the
- * AI food scanner (Milestone 2, Story 9). This is a text-only sibling call: it reuses the shared
- * [HttpClient], runtime config resolution, and DTOs rather than duplicating the transport. The
- * endpoint, model, and key resolve from the user-entered [AiSettings] first (Story 22). The key is
- * never logged.
+ * AI food scanner (Milestone 2, Story 9; layer-2 system prompt added in Story 21). This is a
+ * text-only sibling call: it reuses the shared [HttpClient], runtime config resolution, and DTOs
+ * rather than duplicating the transport. The endpoint, model, and key resolve from the user-entered
+ * [AiSettings] first (Story 22).
+ *
+ * The request carries the baked, personal-data-free layer-1 [AiSearchQueryPrompt] plus, when set,
+ * the user's optional persisted system prompt (layer 2) as a leading system message. There is no
+ * layer-3 hint here — that surface belongs to the scanning screen only. The key is never logged.
  */
 internal class OpenRouterAiSearchQueryGenerator(
     private val client: HttpClient,
@@ -37,17 +41,18 @@ internal class OpenRouterAiSearchQueryGenerator(
 ) : AiSearchQueryGenerator {
 
     override suspend fun generateQuery(mealName: String?, note: String): AiQueryResult {
-        val config = AiRuntimeConfig.resolve(aiSettingsRepository.observe().first(), appConfig)
+        val settings = aiSettingsRepository.observe().first()
+        val config = AiRuntimeConfig.resolve(settings, appConfig)
         if (!config.isConfigured) return AiQueryResult.NotConfigured
         if (note.isBlank()) return AiQueryResult.Failure("Nothing to search for.")
 
         return try {
             val prompt = AiSearchQueryPrompt.build(mealName, note)
+            val userMessage = ChatMessage(role = "user", content = listOf(TextContent(prompt)))
             val request =
                 ChatCompletionRequest(
                     model = config.model,
-                    messages =
-                        listOf(ChatMessage(role = "user", content = listOf(TextContent(prompt)))),
+                    messages = listOfNotNull(userSystemMessage(settings.userSystemPrompt), userMessage),
                 )
 
             val response =

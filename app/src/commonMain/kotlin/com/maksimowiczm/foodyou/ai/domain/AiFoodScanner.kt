@@ -19,6 +19,10 @@ sealed interface AiScanResult {
  * infrastructure client behind a sibling operation rather than duplicating the transport.
  */
 interface AiFoodScanner {
-    /** @param jpeg a downscaled JPEG-encoded photo of the food. */
-    suspend fun scan(jpeg: ByteArray): AiScanResult
+    /**
+     * @param jpeg a downscaled JPEG-encoded photo of the food.
+     * @param hint optional one-off context for this scan only (layer 3), e.g. "I'm at a
+     *   restaurant"; applied to this call alone and never persisted. Ignored when blank.
+     */
+    suspend fun scan(jpeg: ByteArray, hint: String? = null): AiScanResult
 }
