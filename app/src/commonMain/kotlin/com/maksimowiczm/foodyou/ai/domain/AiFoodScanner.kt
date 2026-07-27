@@ -4,7 +4,7 @@ package com.maksimowiczm.foodyou.ai.domain
 sealed interface AiScanResult {
     data class Success(val estimate: AiFoodEstimate) : AiScanResult
 
-    /** No API key was baked into this build, so no request was made. */
+    /** No API key is configured (user settings and developer fallback are blank); no request was made. */
     data object NotConfigured : AiScanResult
 
     /** The request or its response failed; [message] is safe to show to the user. */

@@ -8,7 +8,13 @@ import kotlinx.serialization.Serializable
  * requests. Only the fields the AI food scanner needs are modelled.
  */
 @Serializable
-internal data class ChatCompletionRequest(val model: String, val messages: List<ChatMessage>)
+internal data class ChatCompletionRequest(
+    val model: String,
+    val messages: List<ChatMessage>,
+    // Serialized only when set (the module's Json uses explicitNulls = false), so existing scan and
+    // query requests are unaffected; the validator sets it to 1 to keep its probe cheap (Story 22).
+    @SerialName("max_tokens") val maxTokens: Int? = null,
+)
 
 @Serializable internal data class ChatMessage(val role: String, val content: List<ContentPart>)
 

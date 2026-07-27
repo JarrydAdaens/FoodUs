@@ -204,8 +204,60 @@ None material at planning time. The codebase's existing patterns covered every s
 
 ## Execution Log
 
-Not started.
+### 2026-07-27 — Single-pass execution (Opus 4.8, general-purpose worker)
+
+All nine execution steps completed in order.
+
+**Files created (9):**
+- `ai/domain/AiSettings.kt` — nullable four-field `UserPreferences` entity.
+- `ai/domain/AiRuntimeConfig.kt` — pure precedence resolver (`resolve(settings, appConfig)`) + `DEFAULT_ENDPOINT`/`DEFAULT_MODEL` + `isConfigured`.
+- `ai/domain/AiConnectionValidator.kt` — interface + co-located `AiValidationResult` sealed type (mirrors the `AiScanResult`-in-`AiFoodScanner.kt` repo convention).
+- `ai/infrastructure/DataStoreAiSettingsRepository.kt` — keys `ai:api_key`, `ai:endpoint`, `ai:model`, `ai:user_system_prompt`; blank→removed.
+- `ai/infrastructure/OpenRouterAiConnectionValidator.kt` — one-token probe, `maxTokens = 1`, surfaces `bodyAsText()`/status/exception verbatim.
+- `app/ui/settings/ai/AiSettingsViewModel.kt`, `AiValidationUiState.kt`, `AiSettingsScreen.kt`, `AiSettingsModule.kt` — screen, hoisted `TextFieldState` fields, Save via `viewModelScope.launch`, Validate against current drafts.
+- `app/ui/settings/AiSettingsListItem.kt` — `Icons.Outlined.SmartToy`, placed after the Database item.
+- `app/src/commonTest/.../AiRuntimeConfigTest.kt` — 3 precedence tests.
+
+**Files edited (additive, upstream-shared kept small):** `ai/infrastructure/model/ChatCompletion.kt` (nullable `maxTokens`), `AiInfrastructureModule.kt` (repo + validator registration, repo passed to both scanners), both OpenRouter scanners (runtime-config resolution + kdoc), `AppConfig.kt` / `FoodYouConfig.kt` / `app/build.gradle.kts` (blank-by-default fallbacks + comment truth-maintenance), `SettingsScreen.kt` (+`onAiSettings` param + item), `FoodYouAppNavHost.kt` (route + wiring), `UiModule.kt` (`aiSettingsModule()`), `strings.xml` (11 fork keys), and the two domain `NotConfigured` kdocs (stale "baked into this build" → "no key configured").
+
+**Open-question assumptions — all exercised exactly as written in the plan:**
+1. Entry point: new top-level `AiSettingsListItem` on the main Settings list (after Database). Verified on-device.
+2. Save semantics: explicit top-bar Save; blank→null; Validate tests current field drafts (blank endpoint/model fall to domain defaults). Verified.
+3. API key field: plain text (like the USDA key). Implemented.
+4. Endpoint/model public defaults moved from BuildConfig into `AiRuntimeConfig` domain constants; all three `foodus.ai.*` now default `""`. Verified via test + build.
+5. Validate probe: `max_tokens = 1` + one-word "Hi"; no retry; error surfaced verbatim. Verified against live OpenRouter (401 body) and an unreachable host (DNS error).
+
+**Inherited gap noticed and LEFT for Story 21 (per plan scope — step 3 scoped only the two scanners):** `AiScanViewModel.aiConfigured` and `PlaceholderMetaViewModel.aiConfigured` still read `appConfig.aiApiKey.isNotBlank()`. In a public build (blank BuildConfig key) these gates keep the Ask-AI / query-generation UI affordances disabled even after the user saves a key, so the runtime-config supersession is not reachable through those buttons until the gates are rewired. Making them reactive requires injecting the `AiSettings` repository into both ViewModels and observing it — that touches Story 21's AI-scanning-screen rebuild and is outside this plan's execution steps. The two scanners themselves are correctly rewired, so the domain behavior (user value wins) is proven by unit test; only the two UI pre-checks remain BuildConfig-bound. Documented here for Story 21 to close.
+
+**Validation performed:** see Completion Review.
 
 ## Completion Review
 
-Not started.
+### Estimates vs. actuals
+
+| Metric | Estimate (CER / plan) | Actual |
+| --- | --- | --- |
+| Complexity | 4 | ~4 — one real snag (name collision, below); precedence seam threaded cleanly. |
+| Effort | 5 | ~5 — 9 new files + 11 edited files, as scoped. |
+| Risk | 4 | ~3 realized — secret handling and upstream edits landed without incident; live-call risk retired by on-device failure-path verification. |
+| Files | ~15 touched | 20 (9 created, 11 edited). |
+
+### Model / reasoning
+
+Opus 4.8, single pass, no phase split (as planned).
+
+### What was verified
+
+- **Unit tests:** `:app:testDebugUnitTest` for `AiRuntimeConfigTest` + regression sweep (`AiFoodEstimateParserTest`, `AiSearchQueryTest`) — BUILD SUCCESSFUL. (Note: the `--tests "*Ai*"` glob in the plan's Validation matches the repo-root file `AGENTIC_RAILS_README.MD` via "rAILs"; ran by fully-qualified class names instead.)
+- **Build:** `:app:assembleDebug` — BUILD SUCCESSFUL.
+- **On-device (emulator `foodyou`, API 36):** Settings → AI settings renders title/description/four fields/Validate/Save. Entered key + model, Saved, `force-stop` + relaunch, reopened → both values restored; endpoint + system prompt correctly blank (unset). Validate failure path with garbage key against the default endpoint → OpenRouter `{"error":{"message":"Missing Authentication header","code":401}}` surfaced verbatim in red. Validate against an unreachable host → `Unable to resolve host ... No address associated with hostname` surfaced verbatim.
+- **Secret safety:** `logcat -d` grep for the entered key / model / `Bearer sk` → 0 matches. Secret scan (`sk-or-v1-`, long `sk-` tokens) over all changed files → clean. No credential material in code, plan, or commit.
+
+### What remains unverified (documented, not faked)
+
+- **Green-tick success path** and **Manual Check 3 success halves** (real scan / query-generation call succeeding via user-entered key) require a real paid API key, which does not exist on this machine. Unverifiable here by design; the failure paths and the resolver unit test cover the surrounding logic.
+- The two `aiConfigured` UI gates (see Execution Log) are BuildConfig-bound; left for Story 21.
+
+### Narrative
+
+Straightforward against the plan. One genuine bug caught by the compiler: inside `repository.update { AiSettings(apiKey = apiKey.trimmedOrNull(), ...) }` the lambda receiver is `AiSettings`, whose own `apiKey` is a `String?`, shadowing the ViewModel's `TextFieldState` — fixed by building the new `AiSettings` outside the `update` lambda. No other surprises; every existing pattern (DataStore repo, named-qualifier client, nav route, settings list item) transferred directly.

@@ -609,4 +609,16 @@
     <string name="description_privacy_policy">See how your data is handled</string>
 
     <string name="error_open_food_facts_timeout">Open Food Facts is taking too long to respond. The service may be temporarily slow or unavailable. Try scanning the product barcode instead.</string>
+
+    <!-- AI settings screen (Milestone 2, Story 22). -->
+    <string name="headline_ai_settings">AI settings</string>
+    <string name="description_ai_settings">Configure the AI provider used for food scanning</string>
+    <string name="description_ai_settings_screen">Enter your own OpenAI-compatible API key, endpoint, and model. Values are stored on this device only. Leave the endpoint or model blank to use the defaults.</string>
+    <string name="headline_ai_endpoint">Endpoint</string>
+    <string name="headline_ai_model">Model</string>
+    <string name="headline_ai_system_prompt">System prompt</string>
+    <string name="description_ai_system_prompt">Optional personal context (locale, diet, allergies) added to every AI request.</string>
+    <string name="action_validate">Validate</string>
+    <string name="ai_validating">Validating…</string>
+    <string name="ai_validation_success">Connection successful</string>
 </resources>
