@@ -2,7 +2,7 @@
 name: design
 description: Design specification for FoodUs - a personal, privacy-first fork of the Food You KMP/Compose food diary - covering architecture, principles, constraints, the context tier system, and the embedded milestones index.
 metadata:
-  version: "3.0"
+  version: "3.1"
   agentic_rails_source_version: "3.0"
   owner: "Jarryd Adaens"
   repo: "FoodYou (fork of maksimowiczm/FoodYou)"
@@ -200,7 +200,10 @@ Kotlin targets: `androidTarget` (JVM 21), `iosArm64`, `iosSimulatorArm64`.
   message relay ("post office") that ferries sealed, end-to-end-encrypted envelopes between
   household devices for cross-diary logging. It holds only GUIDs, public keys, friend codes,
   block relationships, and per-GUID queues of ciphertext (swept after 30 days) — no accounts,
-  no login, no diary data in the clear. See "The Multiplayer Exception" under Security and
+  no login, no diary data in the clear. The relay lives in its own repository,
+  **foodus-relay** (ASP.NET minimal API + SQLite behind Caddy TLS on a self-hosted droplet),
+  which owns the wire contract this app conforms to. The relay endpoint URL is user-entered in
+  settings and never ships in code or repo. See "The Multiplayer Exception" under Security and
   Privacy.
 - No other backends. No analytics, crash reporting, or account services.
 
@@ -281,6 +284,10 @@ None in the repository. Credentials in the system:
   and dissolves its open secret-injection question — no AI credential ever exists in the
   repository, CI, or any build. The build-time `foodus.ai.*` BuildConfig fallbacks remain for
   developer convenience only and must stay blank in anything public.
+- The relay endpoint URL (Milestone 3): **user-entered in settings and stored on-device**, in
+  the same spirit as the AI endpoint configuration. Not a credential, but deliberately private:
+  the owner's relay address is never published in code, repo, docs, or builds (2026-07-27 relay
+  seed dictation). Anyone else running the published app points it at their own relay.
 
 Release signing is the app distributor's concern (upstream signs F-Droid/GitHub releases; this
 fork uses debug signing locally until the Milestone 1 update-mechanism story decides distribution).
@@ -361,9 +368,37 @@ Activity/entry points, permissions, camera/barcode integration, platform SQLite 
   - **Poll on app wake, no push.** No background polling service, no Firebase Cloud Messaging —
     Google stays out of the privacy story. Latency (you see the shared meal next time you open
     the app) is acceptable for non-time-critical diet data.
-  - **Open question (Story 3.4):** relay endpoint authentication — "no accounts" still requires
-    proof of GUID ownership (likely request signing with the device key pair, plus replay
-    protection) so a known GUID cannot be drained, re-keyed, or impersonated.
+  - **Separate repo owns the contract (2026-07-27 relay seed dictation).** The relay is built
+    in its own repository, **foodus-relay** — ASP.NET (C#) minimal API + SQLite behind a Caddy
+    TLS front door on a self-hosted DigitalOcean droplet (Sydney). That repo owns the wire
+    contract as a written specification (envelope shape, endpoints, auth scheme); this app is a
+    client that conforms. App-side envelope data classes are hand-written to match the spec —
+    no submodules, no shared schema machinery. When the contract changes, both sides change in
+    the same sitting.
+  - **User-entered relay URL.** The relay endpoint is configured by the user in a settings
+    surface (same spirit as the AI endpoint settings) and the owner's instance address stays
+    private — never in code, repo, or docs. Strangers running the published app stand up their
+    own relay.
+  - **Versioned, tolerant wire protocol.** Every packet carries an envelope version stamp; the
+    app refuses an unknown version loudly (a Notification Center event, never a silent drop).
+    Deserialisation ignores unknown fields and treats absent fields as "not provided", so the
+    contract can evolve additively without breaking un-updated phones. The relay exposes a
+    version/capability endpoint; the app hides or greys relay-backed features the connected
+    relay doesn't report — a phone that updates before the server deploys waits gracefully.
+  - **HTTPS only, server leads.** The app talks to the relay exclusively over HTTPS via its
+    existing Ktor client stack. Deployment ordering is constitutional: the relay deploys first,
+    the app follows — new server capability sits dormant until the app consumes it.
+  - **Two rooted agents, owner as human relay.** Each repo has its own agent rooted in its own
+    laws and context. Agents read across the repo boundary freely but edit only at home;
+    contract changes are proposed via reports, adjudicated and carried across by the owner, who
+    also enforces deployment sequencing. Cross-repo features are paired stories sharing a
+    common slug, with a one-way versioned dependency note pointing app → server.
+  - **Open question (owned by foodus-relay):** relay endpoint authentication — "no accounts"
+    still requires proof of GUID ownership (likely request signing with the device key pair,
+    plus replay protection) so a known GUID cannot be drained, re-keyed, or impersonated. Once
+    open in app Story 3.4, this now resolves in the foodus-relay repo's first milestone, along
+    with friend-code minting authority, the friend-code charset, and the exact wire contract.
+    Stack and hosting, formerly part of the same open set, were resolved 2026-07-27.
 - These properties are constitutional for this fork: changes that add tracking, accounts, or
   nagging violate its founding purpose.
 
@@ -373,8 +408,8 @@ Activity/entry points, permissions, camera/barcode integration, platform SQLite 
 
 No analytics or crash reporting by design. Debugging is standard Android tooling: logcat, Compose
 UI tooling in debug builds, and adb against a device/emulator. The only server-side component is
-the planned Milestone 3 relay; its operational needs (health checks, sweep verification) are
-decided in that milestone's architecture spike.
+the planned Milestone 3 relay; its operational needs (health checks, sweep verification,
+monitoring) are owned by the foodus-relay repository.
 
 ---
 

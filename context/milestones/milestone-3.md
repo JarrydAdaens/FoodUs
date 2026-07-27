@@ -2,7 +2,7 @@
 name: milestone-3
 description: Milestone 3 - Multiplayer. Profiles, friends, two-person groups, cross-diary logging, and the dumb encrypted relay server that breaks the island in exactly one controlled place.
 metadata:
-  version: "3.0"
+  version: "3.1"
   agentic_rails_source_version: "3.0"
   owner: "Jarryd Adaens"
   repo: "FoodUs (fork of maksimowiczm/FoodYou)"
@@ -13,7 +13,9 @@ metadata:
 >
 > Related: [design.md (Milestones Index)](../design.md#milestones-index), [../backlog/](../backlog/)
 >
-> Source dictation: [2026-07-27 Milestone 3 multiplayer addendum](../dictations-tier-0/2026-07-27_milestone-3_multiplayer-addendum.md)
+> Source dictations: [2026-07-27 Milestone 3 multiplayer addendum](../dictations-tier-0/2026-07-27_milestone-3_multiplayer-addendum.md),
+> [2026-07-27 FoodUs relay tier-0 seed](../dictations-tier-0/2026-07-27_addendum_foodus-relay-tier0-seed.md)
+> (server repo split — relay decisions and app-side conformance obligations)
 
 ---
 
@@ -40,7 +42,9 @@ Two household phones, each with a profile, connected as friends via friend code,
 two-person group. A food entry saved to the group on one phone lands correctly slotted in the
 other's diary via the encrypted relay. Suggest-trust and block flows proven. A simulated device
 loss recovers via re-key without weakening the security model. The server holds nothing readable
-and sweeps undelivered messages at 30 days. (Story 14 is the evidence for all of this.)
+and sweeps undelivered messages at 30 days. Story 14 is the evidence for the app-side
+behaviors; the server-side properties (ciphertext-only storage, the 30-day sweep) are built and
+evidenced in the foodus-relay repository, whose deployment the Story 5 gate confirms.
 
 ## Status
 
@@ -61,6 +65,39 @@ Not Started
 
 ---
 
+## Relay Contract Conformance (2026-07-27 relay seed dictation)
+
+The relay is built in its own repository, **foodus-relay**, which owns the wire contract as a
+written specification document. These obligations bind every story in this milestone that talks
+to the relay; they are stated once here rather than repeated per story.
+
+1. **Conformance, not ownership.** The app implements the wire spec that lives in the
+   foodus-relay repo. Envelope data classes are hand-written to match the spec (no submodules,
+   no shared schema machinery). When the spec changes, both sides change in the same sitting.
+2. **Envelope version stamping.** Every packet the app sends carries the envelope version. On
+   receiving an unknown version, the app refuses loudly — a Notification Center event, never a
+   silent drop.
+3. **Two-way tolerance.** Deserialisation ignores unknown fields and treats absent fields as
+   "not provided" — never a crash. This is what lets the relay evolve additively.
+4. **Capability-aware UI.** Before exposing a relay-backed feature, the app checks the relay's
+   version/capability endpoint and hides or greys features the connected relay doesn't report.
+   A phone that updates before the server deploys waits gracefully.
+5. **HTTPS only**, via the existing Ktor client stack.
+6. **Dependency notes.** Every story consuming a relay capability carries a one-way, versioned
+   dependency note naming its server parent story, using the shared-slug convention (e.g. a
+   `...-friends` story on both sides). The dependency arrow only ever points app → server; the
+   owner releases the block once the server story is deployed. This repo's agent reads the
+   relay repo's contract spec freely but never edits that repo.
+7. **Server leads, app follows.** The relay deploys before the app feature that consumes it —
+   enforced by the owner.
+
+**Open contract question (owned by foodus-relay, flagged here 2026-07-27):** unknown-version
+envelope disposition — when the app refuses an envelope version it doesn't know, is the message
+acknowledged off the mailbox (accepting loss) or left queued (risking a repeated poll error)?
+Must be settled in the wire contract before Story 8 is planned.
+
+---
+
 ## Story Index
 
 | # | Status | Story | Type | Complexity | Effort | Risk | Plan |
@@ -68,8 +105,8 @@ Not Started
 | 1 | Not Started | [Tabbed UI shell](#story-1) | Feature | — | — | — | *link when generated* |
 | 2 | Not Started | [Profile](#story-2) | Feature | — | — | — | *link when generated* |
 | 3 | Not Started | [Crypto identity](#story-3) | Feature | — | — | — | *link when generated* |
-| 4 | Not Started | [Relay server architecture spike](#story-4) | Research | — | — | — | *link when generated* |
-| 5 | Not Started | [Relay server build](#story-5) | Feature | — | — | — | *link when generated* |
+| 4 | Externalized | [Relay architecture decisions](#story-4) | External Dependency | — | — | — | *n/a — resolved in foodus-relay* |
+| 5 | Externalized | [Relay server delivery gate](#story-5) | External Dependency | — | — | — | *n/a — delivered by foodus-relay* |
 | 6 | Not Started | [Friend codes](#story-6) | Feature | — | — | — | *link when generated* |
 | 7 | Not Started | [Friends list](#story-7) | Feature | — | — | — | *link when generated* |
 | 8 | Not Started | [Message envelope & E2E pipeline](#story-8) | Feature | — | — | — | *link when generated* |
@@ -79,6 +116,7 @@ Not Started
 | 12 | Not Started | [Suggestion queue](#story-12) | Feature | — | — | — | *link when generated* |
 | 13 | Not Started | [Notification Center tab](#story-13) | Feature | — | — | — | *link when generated* |
 | 14 | Not Started | [Household proof](#story-14) | Research | — | — | — | *link when generated* |
+| 15 | Not Started | [Configurable relay URL setting](#story-15) | Feature | — | — | — | *link when generated* |
 
 ---
 
@@ -98,7 +136,7 @@ Story 13 finalizes Notifications.
 
 **Why / value:**
 Every other Milestone 3 surface hangs off this shell. It is local-only and parallelizable with
-the server spike.
+the external relay gates (Stories 4-5).
 
 **Rough scope:**
 Root navigation and top-level UI composition. Additive: the existing app moves into the Log tab
@@ -168,6 +206,13 @@ Foundation of the end-to-end encryption model. Without it nothing sealed can be 
 **Rough scope:**
 Key-pair generation, Android Keystore integration, public key on the profile record.
 
+**Dependency note:** the local key work is buildable immediately. The seed dictation also
+obliges this story's identity to be **registered with the relay** — the public key rides the
+register/update-profile endpoint (server parent shared slug `...-profile-registration`), and
+re-key announcements (Story 14's drill) reuse the same seam. That registration call is blocked
+by foodus-relay: profile registration endpoints, contract v1, deployed (Story 5 gate), and
+needs Story 15's relay URL on-device.
+
 **CER:**
 
 - Complexity: —
@@ -182,40 +227,36 @@ Key-pair generation, Android Keystore integration, public key on the profile rec
 
 <a id="story-4"></a>
 
-### Story 4: Relay server architecture spike
+### Story 4: Relay architecture decisions
 
-**Type:** Research
+**Type:** External Dependency
 
 **Summary:**
-Settle the stack, hosting, wire contract, and friend-code minting authority for the relay — the
-"post office": a deliberately dumb store-and-forward server holding only GUIDs, public keys,
-friend codes, block relationships, and per-GUID queues of sealed ciphertext envelopes.
-Minimum API surface: register/update profile, resolve friend code → { GUID, username, public
-key } with block enforcement ("user not found"), regenerate friend code, push sealed message,
-poll/drain mailbox, record blocks. Undelivered messages sweep after **30 days**.
+Formerly the relay server architecture spike (research, this repo). The 2026-07-27 relay
+infrastructure session resolved its stack/hosting question — **ASP.NET (C#) minimal API +
+SQLite behind Caddy TLS on a self-hosted DigitalOcean droplet (Sydney)** — and moved the relay
+into its own repository, **foodus-relay**, with its own agentic-rails structure. The remaining
+open decisions transfer with it and resolve in that repo's first milestone, before the relay's
+first implementation plan:
 
-**Why / value:**
-Everything social depends on the server contract. Its open decisions must be settled before
-Story 5 is planned.
+1. **Relay endpoint authentication** — proof of GUID ownership without accounts (likely device
+   key-pair request signing plus replay protection and a re-key trust rule).
+2. Friend-code minting authority: server-assigned vs client-generated + registered. *(Owner
+   input wanted.)*
+3. Friend-code alphabet: exact charset and case rules (shape fixed: 4-4-4 blocks, dashes,
+   letters+numbers).
+4. The exact wire contract document (endpoints, envelope schema, auth handshake) — the first
+   deliverable of the relay repo's rails.
 
-**Rough scope:**
-Research output: stack/hosting/language recommendation, exact wire contract, and resolutions for
-the decision points below. No app code.
+**Gate for this repo:**
+This story is done for the app when the foodus-relay repo publishes its wire contract spec
+(contract v1) covering the minimum API surface: register/update profile, resolve friend code →
+{ GUID, username, public key } with block enforcement ("user not found"), regenerate friend
+code, push sealed message, poll/drain mailbox, record blocks, 30-day sweep, and the
+version/capability endpoint. The owner carries the spec's availability across; no app code and
+no edits to the relay repo happen under this story.
 
-**Open decisions (resolve in this story; owner input where marked):**
-
-1. **Relay endpoint authentication.** "No accounts" still requires proof of GUID ownership —
-   otherwise anyone who learns a GUID could drain its mailbox, overwrite its profile/public key,
-   forge blocks, re-key it, or replay messages. Likely shape: requests signed with the device's
-   key pair (the crypto identity doubles as the device credential), plus replay protection and a
-   defined trust rule for re-key announcements. Surfaced by adversarial review 2026-07-27; not
-   covered in the dictation and must be settled here.
-2. Friend-code minting authority: server-assigned (uniqueness guaranteed) vs client-generated +
-   registered (collision handling needed). *(Owner input wanted.)*
-3. Friend-code alphabet: exact charset (e.g. exclude 0/O, 1/I ambiguity), case rules. Dictation
-   fixed the shape (4-4-4 blocks, dashes, letters+numbers) but not the charset.
-4. Server stack / hosting / language and exact wire contract. *(Owner asked for advisory input;
-   relay + poll + E2E constraints are fixed, implementation open.)*
+**Source:** [2026-07-27 relay tier-0 seed](../dictations-tier-0/2026-07-27_addendum_foodus-relay-tier0-seed.md)
 
 **CER:**
 
@@ -223,31 +264,33 @@ the decision points below. No app code.
 - Effort: —
 - Risk: —
 
-**Plan:** `../implementation-plans/milestone-3/story-4-relay-architecture-spike/plan.md`
+**Plan:** n/a — decision work happens in foodus-relay; this repo tracks the gate only.
 
-**Status:** Not Started
+**Status:** Externalized — awaiting contract v1 from foodus-relay
 
 ---
 
 <a id="story-5"></a>
 
-### Story 5: Relay server build
+### Story 5: Relay server delivery gate
 
-**Type:** Feature
+**Type:** External Dependency
 
 **Summary:**
-Build the relay per the Story 4 contract: registration, friend-code resolve, mailbox push/poll,
-block enforcement (blocked requesters get "user not found", indistinguishable from nonexistent),
-and the 30-day sweep of undelivered messages. The server never sees plaintext: a breach yields
-ciphertext, usernames, and GUIDs. No accounts, no login, no sessions in the account sense, no
-server-side backup, no web/companion clients.
+Formerly the relay server build (this repo). The relay is now delivered by the **foodus-relay**
+repository (2026-07-27 relay seed dictation): registration, friend-code resolve, mailbox
+push/poll, block enforcement (blocked requesters get "user not found", indistinguishable from
+nonexistent), the 30-day sweep, and the version/capability endpoint — per that repo's wire
+contract, behind Caddy TLS, deployed to the owner's private endpoint. The server never sees
+plaintext; no accounts, no login, no server-side backup, no web/companion clients.
 
-**Why / value:**
-The single controlled break in the island. All cross-device features flow through it.
+**Gate for this repo:**
+This story is done for the app when the owner confirms the relay is **deployed and reachable
+over HTTPS at the private endpoint, serving contract v1**. That confirmation releases the
+dependency notes on Stories 6 onward ("server leads, app follows"). No app-side work happens
+under this story beyond what Story 8 wires up; no edits to the relay repo.
 
-**Rough scope:**
-New server codebase (stack per Story 4) plus its hosting/deployment. No app-side work beyond
-what Story 8 wires up.
+**Source:** [2026-07-27 relay tier-0 seed](../dictations-tier-0/2026-07-27_addendum_foodus-relay-tier0-seed.md)
 
 **CER:**
 
@@ -255,9 +298,9 @@ what Story 8 wires up.
 - Effort: —
 - Risk: —
 
-**Plan:** `../implementation-plans/milestone-3/story-5-relay-server-build/plan.md`
+**Plan:** n/a — build and deployment happen in foodus-relay; this repo tracks the gate only.
 
-**Status:** Not Started
+**Status:** Externalized — awaiting deployed relay (contract v1) from foodus-relay
 
 ---
 
@@ -279,7 +322,11 @@ identifiers, and the revocation lever that keeps stale codes harmless.
 
 **Rough scope:**
 Profile UI (display + regenerate), server calls for code registration/regeneration per the
-Story 4 contract.
+foodus-relay wire contract.
+
+**Dependency note:** blocked by foodus-relay: friend-code endpoints (shared slug
+`...-friend-codes`), contract v1, deployed. Owner releases via the Story 5 gate. Also needs
+Story 15's relay URL setting on-device.
 
 **CER:**
 
@@ -316,6 +363,9 @@ out even inside a malicious circle of friends.
 Friends + blocked-list Room storage, friends-list UI, add-by-code flow, expandable rows with
 delete / delete-and-block, server resolve + block calls.
 
+**Dependency note:** blocked by foodus-relay: friend-code resolve + block endpoints (shared
+slug `...-friends`), contract v1, deployed. Owner releases via the Story 5 gate.
+
 **CER:**
 
 - Complexity: —
@@ -351,7 +401,13 @@ re-announcements) rides on.
 
 **Rough scope:**
 Packet schema, crypto envelope (via Story 3's Keystore identity), send queue, poll-on-wake drain
-UI step, message router.
+UI step, message router. Envelope data classes are hand-written to the foodus-relay wire spec;
+version stamping, refuse-loudly, and two-way tolerance per Relay Contract Conformance.
+
+**Dependency note:** blocked by foodus-relay: mailbox push/poll endpoints and envelope schema
+(shared slug `...-mailbox`), contract v1, deployed. Owner releases via the Story 5 gate. The
+unknown-version envelope disposition question (see Relay Contract Conformance) must be settled
+in the contract before this story is planned.
 
 **CER:**
 
@@ -395,6 +451,9 @@ The trust container that authorizes cross-diary logging. With two members, group
 Group + membership Room storage, Groups-tab cards (create, join, per-group), create form, invite
 lifecycle messages over Story 8's pipeline, group blacklist.
 
+**Dependency note:** consumes the relay only through Story 8's pipeline (contract v1); no new
+server capability of its own.
+
 **Open decisions:**
 
 - Group-block notice wording (resolve before shipping the notice) — the dictated text ("please
@@ -437,6 +496,9 @@ The sending half of the marquee feature: cook tacos together, log once.
 **Rough scope:**
 Food-entry screen UI addition, fan-out send over Story 8's pipeline.
 
+**Dependency note:** consumes the relay only through Story 8's pipeline (contract v1); no new
+server capability of its own.
+
 **Open decision:**
 
 - Do None-trust groups appear in the Save-to-Group checkbox list (hidden vs greyed out)?
@@ -475,6 +537,9 @@ trustworthy.
 **Rough scope:**
 Message router → diary insertion, meal-matching resolver, "entry added" notification emission.
 
+**Dependency note:** consumes the relay only through Story 8's pipeline (contract v1); no new
+server capability of its own.
+
 **Open decisions (confirm assumptions):**
 
 - Date/meal carry-over semantics: the entry lands on the sender's entry date in the recipient's
@@ -510,6 +575,9 @@ The lower-trust tier that still cuts logging effort without granting direct diar
 
 **Rough scope:**
 Suggestion-queue storage, per-item accept/reject review UI, routing from Story 8's pipeline.
+
+**Dependency note:** consumes the relay only through Story 8's pipeline (contract v1); no new
+server capability of its own.
 
 **CER:**
 
@@ -577,6 +645,9 @@ Doubles as the milestone's Definition-of-Done evidence.
 Structured manual validation session on both household phones against the live relay; record
 results as story evidence.
 
+**Dependency note:** blocked by foodus-relay: full contract v1 deployed at the owner's private
+endpoint (Story 5 gate released), with both phones configured via Story 15's relay URL setting.
+
 **CER:**
 
 - Complexity: —
@@ -589,22 +660,67 @@ results as story evidence.
 
 ---
 
+<a id="story-15"></a>
+
+### Story 15: Configurable relay URL setting
+
+**Type:** Feature
+
+**Summary:**
+A settings surface where the relay endpoint is entered by the user — same spirit and likely
+same neighbourhood as the AI endpoint configuration from Milestone 2. Both household phones are
+pointed at the owner's private endpoint by typing it in; the address ships nowhere in code or
+repo, and strangers running the published app can point it at their own relay. Scope beyond a
+bare text field: input validation (HTTPS scheme required, plain HTTP rejected), on-device
+persistence like the AI/USDA settings, a connection check against the relay's
+version/capability endpoint, and graceful behavior when the relay is unset or unreachable —
+relay-backed features hide or grey per the capability-aware UI rule.
+
+**Why / value:**
+The seam that keeps the owner's endpoint private while making every relay-consuming story
+configurable rather than hard-coded (2026-07-27 relay seed dictation, app obligation 1).
+
+**Rough scope:**
+Settings UI + on-device storage, URL validation, capability-endpoint check, unset/unreachable
+handling consumed by later stories' capability gating.
+
+**Dependency note:** the settings surface itself is local-only and buildable immediately; the
+connection check exercises foodus-relay's version/capability endpoint (contract v1, deployed)
+and degrades gracefully until the Story 5 gate is released.
+
+**CER:**
+
+- Complexity: —
+- Effort: —
+- Risk: —
+
+**Plan:** `../implementation-plans/milestone-3/story-15-relay-url-setting/plan.md`
+
+**Status:** Not Started
+
+---
+
 ## Interdependency Order
 
-Local-only foundations first, then the server contract and build (everything social depends on
-it), then the social graph, then messaging plumbing, then the user-facing send/receive features,
-then the cross-cutting surface, and finally live proof. Stories 1-3 are parallelizable with 4.
+Local-only foundations first, then the external relay gates (everything social depends on the
+contract and the deployed relay), then the social graph, then messaging plumbing, then the
+user-facing send/receive features, then the cross-cutting surface, and finally live proof.
+Stories 1-3 and 15 are local-only and parallelizable with the external gates.
 
 1. Story 1 (shell) before 2 (profile card lives in the Groups tab); 2 before 3 (keys are
    generated alongside the profile GUID).
-2. Story 4 (spike) before 5 (build) — Story 4 must settle its open decisions, including relay
-   endpoint authentication, before Story 5 is planned.
-3. Story 5 before 6 and 7 (codes and friends need the live resolve/block API); 6 before 7.
-4. Stories 5 and 7 before 8 (the pipeline needs a mailbox and stored friend keys).
-5. Stories 7 and 8 before 9 (groups are built from friends and invite over the pipeline).
-6. Stories 8 and 9 before 10 and 11; 11 before 12.
-7. Story 13 stubs with 1, finalizes after 9-12 (needs all emitters).
-8. Story 14 last — depends on all.
+2. Story 4 (contract v1 published) before 5 (relay deployed) — both are foodus-relay gates
+   released by the owner ("server leads, app follows"); Story 4's transferred decisions,
+   including relay endpoint authentication, resolve there.
+3. Story 15 (relay URL setting) before any story that calls the relay (6 onward); its
+   capability check completes once the Story 5 gate is released.
+4. Story 5 before 6 and 7 (codes and friends need the live resolve/block API); 6 before 7.
+5. Stories 5 and 7 before 8 (the pipeline needs a mailbox and stored friend keys); Story 8's
+   plan additionally needs Story 4's contract to settle the unknown-version disposition.
+6. Stories 7 and 8 before 9 (groups are built from friends and invite over the pipeline).
+7. Stories 8 and 9 before 10 and 11; 11 before 12.
+8. Story 13 stubs with 1, finalizes after 9-12 (needs all emitters).
+9. Story 14 last — depends on all, including both phones configured via Story 15.
 
 ---
 
@@ -637,12 +753,16 @@ Milestone 3 scope:
 ## Notes
 
 - Keep this Story Index in sync with the [Milestones Index](../design.md#milestones-index) in Design.
-- The open decisions embedded in Stories 4, 9, 10, and 11 are **staged** here; per the source
+- The open decisions embedded in Stories 9, 10, and 11 are **staged** here; per the source
   dictation's integration instructions, each must be carried into the owning story's
   implementation plan as an explicit decision point when that plan is written, and resolved
-  (with the owner where marked) before the story is planned.
+  (with the owner where marked) before the story is planned. Story 4's former open decisions
+  transferred to the foodus-relay repo's first milestone (2026-07-27 relay seed dictation);
+  the unknown-version envelope disposition question under Relay Contract Conformance is also
+  owned there.
 - The durable architecture decisions (relay model, E2E, no accounts, poll-on-wake, key-loss
-  policy, storage map) are promoted into [design.md](../design.md); this document owns the
-  feature scope and story breakdown.
+  policy, storage map, and the 2026-07-27 relay repo split with its contract-ownership and
+  deployment-ordering rules) are promoted into [design.md](../design.md); this document owns
+  the app-side feature scope and story breakdown. Server-side scope lives in foodus-relay.
 - If a story turns out to be milestone-sized, reclassify it into its own milestone rather than
   forcing it into this one.
