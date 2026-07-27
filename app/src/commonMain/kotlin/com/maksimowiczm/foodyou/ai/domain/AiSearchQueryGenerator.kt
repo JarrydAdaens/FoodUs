@@ -5,7 +5,7 @@ sealed interface AiQueryResult {
     /** [query] is a food-search query describing the placeholder meal. */
     data class Success(val query: String) : AiQueryResult
 
-    /** No API key was baked into this build, so no request was made. */
+    /** No API key is configured (user settings and developer fallback are blank); no request was made. */
     data object NotConfigured : AiQueryResult
 
     /** The request or its response failed; [message] is safe to show to the user. */

@@ -41,6 +41,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -49,6 +50,8 @@ import androidx.navigationevent.NavigationEventInfo
 import androidx.navigationevent.compose.NavigationEventHandler
 import androidx.navigationevent.compose.rememberNavigationEventState
 import com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton
+import com.maksimowiczm.foodyou.app.ui.common.component.WebsiteChip
+import com.maksimowiczm.foodyou.app.ui.common.utility.LocalAppConfig
 import com.maksimowiczm.foodyou.common.compose.extension.add
 import com.maksimowiczm.foodyou.importexport.swissfoodcompositiondatabase.domain.SwissFoodCompositionDatabaseRepository.Language
 import foodyou.app.generated.resources.*
@@ -77,6 +80,9 @@ private fun SwissFoodCompositionDatabaseScreen(
     modifier: Modifier = Modifier,
 ) {
     val coroutinesScope = rememberCoroutineScope()
+
+    val uriHandler = LocalUriHandler.current
+    val websiteUri = LocalAppConfig.current.swissFoodCompositionDatabaseWebsiteUri
 
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
@@ -160,6 +166,8 @@ private fun SwissFoodCompositionDatabaseScreen(
                                 style = MaterialTheme.typography.bodyMedium,
                             )
                         }
+
+                        item { WebsiteChip(onClick = { uriHandler.openUri(websiteUri) }) }
 
                         item {
                             LanguagePicker(selected = languages, onLanguages = { languages = it })

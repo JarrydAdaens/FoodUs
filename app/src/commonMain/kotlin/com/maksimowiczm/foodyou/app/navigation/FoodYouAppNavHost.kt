@@ -44,6 +44,7 @@ import com.maksimowiczm.foodyou.app.ui.meal.MealSettingsScreen
 import com.maksimowiczm.foodyou.app.ui.personalization.PersonalizationScreen
 import com.maksimowiczm.foodyou.app.ui.personalization.PersonalizeNutritionFactsScreen
 import com.maksimowiczm.foodyou.app.ui.settings.SettingsScreen
+import com.maksimowiczm.foodyou.app.ui.settings.ai.AiSettingsScreen
 import com.maksimowiczm.foodyou.app.ui.sponsor.SponsorScreen
 import com.maksimowiczm.foodyou.app.ui.theme.ThemeScreen
 import com.maksimowiczm.foodyou.common.domain.measurement.Measurement
@@ -114,7 +115,11 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 onGoals = { navController.navigateSingleTop(GoalsSetup) },
                 onPersonalization = { navController.navigateSingleTop(Personalization) },
                 onDatabase = { navController.navigateSingleTop(DatabaseSettings) },
+                onAiSettings = { navController.navigateSingleTop(AiSettings) },
             )
+        }
+        forwardBackwardComposable<AiSettings> {
+            AiSettingsScreen(onBack = { navController.popBackStackInclusive<AiSettings>() })
         }
         forwardBackwardComposable<Language> {
             LanguageScreen(onBack = { navController.popBackStackInclusive<Language>() })
@@ -569,6 +574,8 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
 @Serializable private data class Goals(val epochDay: Long)
 
 @Serializable private object GoalsSetup
+
+@Serializable private object AiSettings
 
 @Serializable private object DatabaseSettings
 

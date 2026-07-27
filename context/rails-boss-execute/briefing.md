@@ -1,48 +1,53 @@
-# Rails Boss Execute Briefing — Milestone 2 (all stories)
+# Rails Boss Execute Briefing — Milestone 2 addendum run (Stories 21-23)
 
-Date: 2026-07-25
-Run scope: every story in `context/milestones/milestone-2.md` (Stories 1–19), executed sequentially.
-Previous run (Milestone 1) is recorded in git history of this file.
+Date: 2026-07-27
+Run scope: Stories 21, 22, 23 of `context/milestones/milestone-2.md` (the 2026-07-26 addendum work), executed sequentially.
+Previous runs (Milestone 1; Milestone 2 Stories 1-19) are recorded in this file's git history.
 
 ## Source documents read
 
 | Document | Why it matters |
 | --- | --- |
-| `context/milestones/milestone-2.md` | The 19-story queue, dependencies (Interdependency Order), and acceptance notes |
-| `context/laws.md` | Constitutional code/security/architecture constraints |
-| `context/design.md` | Fork philosophy (additive overlays, mergeability), domain model, architecture |
+| `context/milestones/milestone-2.md` | Story text, statuses, and Interdependency Order note 11 (Story 22 precedes Story 21) |
+| `context/laws.md` | Constitutional code/security/architecture constraints (§2 Secrets is central to Stories 21-22) |
+| `context/design.md` | Fork philosophy, "Secrets and Credentials", and "AI boundary" — design authority for the three-layer prompt and user-entered key |
 | `context/agenticworkflow.md` | Plan-artifact conventions (`plan.md` Execution Log / Completion Review) |
-| `context/implementation-plans/milestone-2/story-14…19/plan.md` | Execution plans for Stories 14–19 (read by their workers at dispatch) |
+| `context/implementation-plans/milestone-2/story-22-ai-settings-screen/plan.md` | Story 22 execution plan (CER 4/5/4) |
+| `context/implementation-plans/milestone-2/story-21-three-layer-ai-prompts/plan.md` | Story 21 execution plan (CER 4/4/3); declares Story 22 a hard dependency |
+| `context/implementation-plans/milestone-2/story-23-provider-website-links/plan.md` | Story 23 execution plan (CER 2/2/1); independent |
 
 ## Constraints extracted
 
-- **Sequential execution (Parallelism: 0)** — user-mandated; one worker at a time, numeric story order 1→19 (this order satisfies every dependency in the milestone's Interdependency Order).
-- **Workers run on Opus** — user-mandated; escalate to the Boss only if a worker is truly stuck.
-- **Emulator validation for every story** — user-mandated: build, deploy to AVD `foodyou`, launch, and validate the story's behavior. For research stories (12, 14) with no app code change, validation is the produced document plus an unchanged-build check.
-- **A real commit per story via the `commit-log` skill** — user-mandated. Skill lives at `C:\Users\Jarry\.claude\skills\commit-log\SKILL.md` (template in `references/commit-log-template.md`). **No pushes, ever** (AGENTS.md).
-- **Toolchain** — JDK 21 at `C:\Java\jdk-21.0.12+8`; SDK at `C:\Users\Jarry\AppData\Local\Android\Sdk`; `./gradlew.bat :app:assembleDebug`; APK at `app/build/outputs/apk/debug/app-debug.apk`; AVD `foodyou` (Pixel 6, API 36) launched detached via `Start-Process emulator.exe -avd foodyou`. Background shell jobs get reaped when a turn yields — long builds run foreground (Gradle resumes from cache on timeout).
-- **Secrets** — the AI endpoint key (Stories 6, 7, 9) must never be committed or appear in context files; implement a local injection seam (e.g. `local.properties` / env var read at build time) with graceful no-key behavior. Emulator validation of the actual AI call is limited to the no-key path unless a key is locally present.
-- **PII rule** — no `BigAnt` / `Big Ant` string in any artifact (use "Take Out:" replacement convention for food data).
-- **Fork philosophy** — additive overlays, minimal merge-conflict surface with upstream, on every story.
-- **Owner-unavailable policy** — workers proceed on documented assumptions and record them (plan `## Execution Log` when a plan exists, otherwise the worker report + progress notes). Owner-only externals (e.g. real API keys, store listings) become checklists, not blockers, where local work can still land.
-- No specialist agent persona is mandated by any source document for this run; workers are general-purpose on Opus.
+- **Sequential execution (Parallelism: 0)** — user-mandated; one worker at a time.
+- **Execution order 22 → 21 → 23** — the user listed "21, 22, 23" as scope; both plans and the
+  milestone's Interdependency Order state Story 22 must execute before Story 21 (21 consumes 22's
+  `AiSettings` repository and scanner-injection seams). Story 23 is independent and runs last.
+- **Workers run on Opus** — user-mandated.
+- **Emulator validation for every story** — user-mandated: compile, build, deploy to AVD `foodyou`,
+  launch, and briefly verify the story's behavior before declaring done.
+- **A real commit per story via the `commit-log` skill** — user-mandated. **No pushes, ever** (AGENTS.md).
+- **Path-scoped staging** — workers stage only the files they changed (never `git add -A`), so
+  Boss-owned state files can never leak into a worker commit.
+- **Boss owns status updates** — workers do not touch `milestone-2.md` or `progress.md`; the Boss
+  updates story status and progress after accepting each result, in a separate Boss commit.
+- **Toolchain** — JDK 21 at `C:\Java\jdk-21.0.12+8`; SDK at `C:\Users\Jarry\AppData\Local\Android\Sdk`;
+  `./gradlew.bat :app:assembleDebug`; APK at `app/build/outputs/apk/debug/app-debug.apk`; AVD
+  `foodyou` (Pixel 6, API 36) launched detached via `Start-Process emulator.exe -avd foodyou`;
+  applicationId `io.github.jarrydadaens.foodus`. Background shell jobs get reaped when a turn
+  yields — long builds run foreground (Gradle resumes from cache on timeout).
+- **Secrets (laws §2)** — no AI credential may be committed, logged, or echoed into context files.
+  No real API key is available to this run: live-call checks (Validate green tick, layer-2 steering
+  probes) are documented as unverified; error paths are exercised with garbage keys instead.
+- **Open questions in plans** — no owner is available mid-run; workers proceed on each plan's
+  documented assumptions and record what they did in the plan's `## Execution Log`.
+- **Fork philosophy** — additive overlays, minimal upstream merge-conflict surface, source
+  namespace `com.maksimowiczm.foodyou` untouched.
+- No specialist agent persona is mandated by any source document; workers are general-purpose on Opus.
 
 ## Ordered queue
 
-Stories 1–19 of `context/milestones/milestone-2.md`, in numeric order. Key dependency notes:
-
-| Order | Story | Dependency note |
-| --- | --- | --- |
-| 1–4 | Identity / About stories | 1 first; 3 and 4 touch the same About screen after 1 |
-| 5 | Four-button meal rework | Hosts 6 and 8 |
-| 6, 7 | AI scanning, then gallery source | 7 extends 6 |
-| 8, 9 | Placeholder, then meta screen | 9 resolves 8; shares AI plumbing with 6 |
-| 10, 11 | Graph / week-layout settings | Independent |
-| 12 | Upstream issue triage (Research) | Output: backlog stories, no app code |
-| 13 | Reusable meal templates | Independent |
-| 14 | Provider/Quick Add spike (Research) | Blocks 15–19; resolves spec §13 decisions |
-| 15 | AFCD provider | Needs 14; establishes shared pipeline |
-| 16 | FoodSwitch provider | Gated on 14's feasibility verdict; reuses 15 |
-| 17 | Provider update-check UI | Needs 14 + 15 |
-| 18 | Quick Add fields + migration | Needs 14 |
-| 19 | Quick Add promotion | Needs 14 + 18 |
+| Order | Story | Plan | Dependency note |
+| --- | --- | --- | --- |
+| 1 | STORY 2.22 — AI settings screen | `story-22-ai-settings-screen/plan.md` | None; provides `AiSettings` + runtime-config seams for 21 |
+| 2 | STORY 2.21 — Three-layer AI prompts | `story-21-three-layer-ai-prompts/plan.md` | Hard dependency on 22 |
+| 3 | STORY 2.23 — Provider website links | `story-23-provider-website-links/plan.md` | Independent |

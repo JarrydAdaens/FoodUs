@@ -2,7 +2,10 @@ package com.maksimowiczm.foodyou.ai.infrastructure
 
 import com.maksimowiczm.foodyou.ai.domain.AiFoodEstimateParser
 import com.maksimowiczm.foodyou.ai.domain.AiFoodScanner
+import com.maksimowiczm.foodyou.ai.domain.AiRuntimeConfig
+import com.maksimowiczm.foodyou.ai.domain.AiScanPrompt
 import com.maksimowiczm.foodyou.ai.domain.AiScanResult
+import com.maksimowiczm.foodyou.ai.domain.AiSettings
 import com.maksimowiczm.foodyou.ai.infrastructure.model.ChatCompletionRequest
 import com.maksimowiczm.foodyou.ai.infrastructure.model.ChatCompletionResponse
 import com.maksimowiczm.foodyou.ai.infrastructure.model.ChatMessage
@@ -10,6 +13,7 @@ import com.maksimowiczm.foodyou.ai.infrastructure.model.ImageContent
 import com.maksimowiczm.foodyou.ai.infrastructure.model.ImageUrl
 import com.maksimowiczm.foodyou.ai.infrastructure.model.TextContent
 import com.maksimowiczm.foodyou.common.config.AppConfig
+import com.maksimowiczm.foodyou.common.domain.userpreferences.UserPreferencesRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.bearerAuth
@@ -21,38 +25,53 @@ import io.ktor.http.isSuccess
 import kotlin.coroutines.cancellation.CancellationException
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
+import kotlinx.coroutines.flow.first
 
 /**
  * [AiFoodScanner] backed by an OpenRouter-compatible chat-completions endpoint (Milestone 2,
- * Story 6). The endpoint, model, and private API key come from [AppConfig], which is baked in at
- * build time. The key is never logged.
+ * Story 6; three-layer prompt assembly added in Story 21). The endpoint, model, and API key resolve
+ * at call time from the user-entered [AiSettings] first, falling back to the [AppConfig] developer
+ * values (Story 22).
+ *
+ * Each request is assembled from up to three additive layers: layer 1 is the baked, personal-data-
+ * free [AiScanPrompt]; layer 2 is the user's optional persisted system prompt, sent as a system
+ * message when set; layer 3 is the optional per-scan [hint], carried in the same user message as the
+ * photo and applied to this call only. The key is never logged.
  */
-internal class OpenRouterAiFoodScanner(private val client: HttpClient, private val appConfig: AppConfig) :
-    AiFoodScanner {
+internal class OpenRouterAiFoodScanner(
+    private val client: HttpClient,
+    private val appConfig: AppConfig,
+    private val aiSettingsRepository: UserPreferencesRepository<AiSettings>,
+) : AiFoodScanner {
 
     @OptIn(ExperimentalEncodingApi::class)
-    override suspend fun scan(jpeg: ByteArray): AiScanResult {
-        val apiKey = appConfig.aiApiKey
-        if (apiKey.isBlank()) return AiScanResult.NotConfigured
+    override suspend fun scan(jpeg: ByteArray, hint: String?): AiScanResult {
+        val settings = aiSettingsRepository.observe().first()
+        val config = AiRuntimeConfig.resolve(settings, appConfig)
+        if (!config.isConfigured) return AiScanResult.NotConfigured
 
         return try {
             val dataUrl = "data:image/jpeg;base64," + Base64.encode(jpeg)
+            val cleanedHint = hint?.trim()?.takeIf { it.isNotBlank() }
+            val userMessage =
+                ChatMessage(
+                    role = "user",
+                    content =
+                        buildList {
+                            add(TextContent(AiScanPrompt.PROMPT))
+                            cleanedHint?.let { add(TextContent(it)) }
+                            add(ImageContent(ImageUrl(dataUrl)))
+                        },
+                )
             val request =
                 ChatCompletionRequest(
-                    model = appConfig.aiModel,
-                    messages =
-                        listOf(
-                            ChatMessage(
-                                role = "user",
-                                content =
-                                    listOf(TextContent(PROMPT), ImageContent(ImageUrl(dataUrl))),
-                            )
-                        ),
+                    model = config.model,
+                    messages = listOfNotNull(userSystemMessage(settings.userSystemPrompt), userMessage),
                 )
 
             val response =
-                client.post(appConfig.aiEndpoint) {
-                    bearerAuth(apiKey)
+                client.post(config.endpoint) {
+                    bearerAuth(config.apiKey)
                     contentType(ContentType.Application.Json)
                     setBody(request)
                 }
@@ -72,17 +91,5 @@ internal class OpenRouterAiFoodScanner(private val client: HttpClient, private v
         } catch (e: Exception) {
             AiScanResult.Failure(e.message ?: "AI request failed.")
         }
-    }
-
-    private companion object {
-        // Embedded Australian (Victoria) locale prompt requesting a strict JSON schema.
-        const val PROMPT =
-            "We are Australians living in Victoria, Australia. This photo is my food. Please " +
-                "identify it using Australian food knowledge and typical Australian serving sizes. " +
-                "Respond with ONLY a JSON object (no Markdown, no commentary) with exactly these " +
-                "keys: \"name\" (string), \"certainty\" (number between 0 and 1), \"calories\" " +
-                "(kilocalories, number), \"protein\" (grams, number), \"fat\" (grams, number), " +
-                "\"fibre\" (grams, number), \"sugar\" (grams, number). If unsure, still provide " +
-                "your best estimate."
     }
 }

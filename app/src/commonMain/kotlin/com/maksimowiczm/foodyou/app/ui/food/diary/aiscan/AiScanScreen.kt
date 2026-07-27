@@ -24,6 +24,7 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -60,6 +61,8 @@ fun AiScanScreen(
 ) {
     val viewModel: AiScanViewModel = koinViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val configured by viewModel.aiConfigured.collectAsStateWithLifecycle()
+    val hint by viewModel.hint.collectAsStateWithLifecycle()
 
     var alignQuery by remember { mutableStateOf<String?>(null) }
 
@@ -87,21 +90,26 @@ fun AiScanScreen(
             )
 
             when (val current = state) {
-                is AiScanUiState.NoPhoto -> Unit
-
-                is AiScanUiState.Captured ->
-                    AskAiSection(configured = viewModel.aiConfigured, onAskAi = viewModel::askAi)
+                is AiScanUiState.NoPhoto,
+                is AiScanUiState.Captured,
+                is AiScanUiState.Failed -> {
+                    if (current is AiScanUiState.Failed) {
+                        Text(
+                            text = current.message,
+                            color = MaterialTheme.colorScheme.error,
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    }
+                    SubmitSection(
+                        hint = hint,
+                        onHintChange = viewModel::onHintChange,
+                        configured = configured,
+                        photoCaptured = current.jpeg != null,
+                        onSubmit = viewModel::submit,
+                    )
+                }
 
                 is AiScanUiState.Scanning -> ScanningIndicator()
-
-                is AiScanUiState.Failed -> {
-                    Text(
-                        text = current.message,
-                        color = MaterialTheme.colorScheme.error,
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                    AskAiSection(configured = viewModel.aiConfigured, onAskAi = viewModel::askAi)
-                }
 
                 is AiScanUiState.Result ->
                     AiResultCard(
@@ -137,11 +145,34 @@ fun AiScanScreen(
     }
 }
 
+/**
+ * Optional per-scan hint field (layer 3) plus the primary Submit button. Submit needs a captured
+ * photo and a configured AI (the hint is always optional); the not-configured helper shows when no
+ * usable key resolves.
+ */
 @Composable
-private fun AskAiSection(configured: Boolean, onAskAi: () -> Unit, modifier: Modifier = Modifier) {
-    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        Button(onClick = onAskAi, enabled = configured, modifier = Modifier.fillMaxWidth()) {
-            Text(stringResource(Res.string.action_ask_ai))
+private fun SubmitSection(
+    hint: String,
+    onHintChange: (String) -> Unit,
+    configured: Boolean,
+    photoCaptured: Boolean,
+    onSubmit: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        OutlinedTextField(
+            value = hint,
+            onValueChange = onHintChange,
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text(stringResource(Res.string.label_ai_scan_hint)) },
+            supportingText = { Text(stringResource(Res.string.description_ai_scan_hint)) },
+        )
+        Button(
+            onClick = onSubmit,
+            enabled = photoCaptured && configured,
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Text(stringResource(Res.string.action_submit))
         }
         if (!configured) {
             Text(

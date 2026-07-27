@@ -77,6 +77,7 @@ fun OpenFoodFactsPrivacyCard(
     modifier: Modifier = Modifier,
     termsOfUseUri: String = LocalAppConfig.current.openFoodFactsTermsOfUseUri,
     privacyPolicyUri: String = LocalAppConfig.current.openFoodFactsPrivacyPolicyUri,
+    websiteUri: String = LocalAppConfig.current.openFoodFactsWebsiteUri,
 ) {
     val scope = rememberCoroutineScope()
     val uriHandler = LocalUriHandler.current
@@ -128,6 +129,7 @@ fun OpenFoodFactsPrivacyCard(
             )
             Spacer(Modifier.height(8.dp))
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                WebsiteChip(onClick = { uriHandler.openUri(websiteUri) })
                 TermsOfUseChip(onClick = { uriHandler.openUri(termsOfUseUri) })
                 PrivacyPolicyChip(onClick = { uriHandler.openUri(privacyPolicyUri) })
                 AssistChip(
@@ -169,6 +171,7 @@ fun UsdaPrivacyCard(
     onSelectedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     privacyPolicyUri: String = LocalAppConfig.current.foodDataCentralPrivacyPolicyUri,
+    websiteUri: String = LocalAppConfig.current.foodDataCentralWebsiteUri,
 ) {
     val uriHandler = LocalUriHandler.current
     var showApiKeyDialog by rememberSaveable { mutableStateOf(false) }
@@ -214,6 +217,7 @@ fun UsdaPrivacyCard(
             )
             Spacer(Modifier.height(8.dp))
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                WebsiteChip(onClick = { uriHandler.openUri(websiteUri) })
                 PrivacyPolicyChip(onClick = { uriHandler.openUri(privacyPolicyUri) })
                 AssistChip(
                     onClick = { showApiKeyDialog = true },

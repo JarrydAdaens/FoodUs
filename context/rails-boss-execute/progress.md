@@ -1,6 +1,17 @@
-# Rails Boss Execute Progress — Milestone 2 (all stories)
+# Rails Boss Execute Progress — Milestone 2
 
-Run: 2026-07-25. Parallelism: 0 (serial). Workers: Opus. See `briefing.md`.
+## Run: 2026-07-27 — addendum Stories 21-23. Parallelism: 0 (serial). Workers: Opus. See `briefing.md`.
+
+Execution order 22 → 21 → 23 (Story 21 hard-depends on Story 22; see briefing).
+
+| Status | Story | Source | Persona | Commit | Notes |
+| --- | --- | --- | --- | --- | --- |
+| DONE | STORY 2.22 | `context/implementation-plans/milestone-2/story-22-ai-settings-screen/plan.md` | none | 02ec0391 | AiSettings DataStore + runtime-config precedence (user→BuildConfig→domain default); scanners rewired; Validate one-token probe w/ verbatim errors; persistence + failure paths + no-key-in-logcat emulator-verified; green-tick path needs real key; aiConfigured gates left for 2.21 (recorded in plan log) |
+| DONE | STORY 2.21 | `context/implementation-plans/milestone-2/story-21-three-layer-ai-prompts/plan.md` | none | 4ec602d4 | prompts → pure machinery (AiScanPrompt domain object, grep-proven zero personal tokens); layer-2 system msg on both calls; hint+Submit (in-memory, scan-only); inherited aiConfigured gates fixed via ObserveAiConfigured; emulator-verified incl. reactive gate + 401 path; real steering/success round-trips need real key |
+| DONE | STORY 2.23 | `context/implementation-plans/milestone-2/story-23-provider-website-links/plan.md` | none | ebb28703 | shared WebsiteChip + 4 static URIs in AppConfig/FoodYouConfig (AFCD reuses SOURCE_URL); all four outbound VIEW intents emulator-verified; one extra file over plan (LocalAppConfig anonymous default) forced by the interface change, recorded in plan log |
+
+## Run: 2026-07-25 — Stories 1-19. Parallelism: 0 (serial). Workers: Opus.
+
 (Previous Milestone 1 run table is preserved in this file's git history.)
 
 | Status | Story | Source | Persona | Commit | Notes |

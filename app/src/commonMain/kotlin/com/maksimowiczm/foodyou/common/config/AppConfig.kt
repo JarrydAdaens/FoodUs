@@ -35,15 +35,34 @@ interface AppConfig {
     /** URI to the FoodData Central Privacy Policy document. */
     val foodDataCentralPrivacyPolicyUri: String
 
+    /** URI to the Open Food Facts website (Milestone 2, Story 23). */
+    val openFoodFactsWebsiteUri: String
+
+    /** URI to the FoodData Central website (Milestone 2, Story 23). */
+    val foodDataCentralWebsiteUri: String
+
+    /** URI to the Swiss Food Composition Database website (Milestone 2, Story 23). */
+    val swissFoodCompositionDatabaseWebsiteUri: String
+
+    /** URI to the Australian Food Composition Database website (Milestone 2, Story 23). */
+    val australianFoodCompositionDatabaseWebsiteUri: String
+
     /**
-     * AI endpoint credential baked into private builds (Milestone 2, Story 6). Blank when no key was
-     * injected at build time, which disables the AI scanning call. Never log this value.
+     * AI endpoint credential developer fallback (Milestone 2, Stories 6 and 22). Blank by default
+     * and superseded by the user-entered key on the AI settings screen; it is never surfaced in the
+     * UI. Never log this value.
      */
     val aiApiKey: String
 
-    /** AI chat-completions endpoint URL (OpenRouter-compatible). */
+    /**
+     * AI chat-completions endpoint developer fallback (OpenRouter-compatible). Blank by default;
+     * superseded by the user-entered endpoint, falling back to the AI slice's domain default.
+     */
     val aiEndpoint: String
 
-    /** Vision-capable model identifier used for AI food scanning (e.g. "openai/gpt-4o-mini"). */
+    /**
+     * AI model developer fallback (e.g. "openai/gpt-4o-mini"). Blank by default; superseded by the
+     * user-entered model, falling back to the AI slice's domain default.
+     */
     val aiModel: String
 }

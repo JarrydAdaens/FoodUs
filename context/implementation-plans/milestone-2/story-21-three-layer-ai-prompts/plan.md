@@ -3,7 +3,7 @@
 ## Metadata
 
 - Task Type: `STORY`
-- Status: `Ready`
+- Status: `Complete`
 - Owner: Jarryd Adaens
 - Last Updated: 27 July 2026
 
@@ -187,8 +187,58 @@ None material at planning time. The one wrinkle worth flagging: Story 22's plan 
 
 ## Execution Log
 
-Not started.
+### 2026-07-27 — Single-pass execution (Opus 4.8, general-purpose worker)
+
+Executed steps 1-7 in order against the actual post-Story-22 code (not planning assumptions).
+
+**Files created (5):**
+- `ai/domain/AiScanPrompt.kt` — layer-1 scan prompt as a domain object; task framing ("This photo shows food. Identify the food in the photo.") + the verbatim seven-key JSON contract, zero personal data.
+- `ai/domain/ObserveAiConfigured.kt` — the single "is AI configured?" signal for UI gates; reuses `AiRuntimeConfig.resolve(...).isConfigured` (no duplicated precedence).
+- `ai/infrastructure/UserSystemMessage.kt` — tiny shared helper building the optional layer-2 `system` message (null when blank), used by both scanners.
+- `commonTest .../ai/domain/AiScanPromptTest.kt` — seven JSON keys + JSON-only instruction present; Australian/Victoria/Melbourne absent.
+
+**Files edited (10):**
+- `ai/domain/AiSearchQueryPrompt.kt` — rewritten to "This is what was eaten for $meal: …" + output-shape machinery; removed "I am Australian, living in Melbourne" and "Use Australian food names"; kdoc updated.
+- `ai/domain/AiFoodScanner.kt` — `scan(jpeg, hint: String? = null)` + kdoc for layer 3.
+- `ai/infrastructure/OpenRouterAiFoodScanner.kt` — deleted the embedded `PROMPT` companion; assembles `listOfNotNull(userSystemMessage(settings.userSystemPrompt), userMessage)` where the user message is `[AiScanPrompt, hint?, image]`; kdoc rewritten to describe the three layers.
+- `ai/infrastructure/OpenRouterAiSearchQueryGenerator.kt` — prepends the same optional layer-2 system message; kdoc updated.
+- `ai/infrastructure/AiInfrastructureModule.kt` — registered `ObserveAiConfigured` as a factory.
+- `app/ui/food/diary/aiscan/AiScanViewModel.kt` — `aiConfigured` is now a reactive `StateFlow<Boolean>` from `ObserveAiConfigured`; added in-memory `hint`/`onHintChange`; `askAi()` → `submit()` passing the trimmed hint; not-configured message de-staled.
+- `app/ui/food/diary/aiscan/AiScanScreen.kt` — `AskAiSection` → `SubmitSection` (hint `OutlinedTextField` + full-width **Submit** `Button`, `enabled = photoCaptured && configured`), shown in NoPhoto/Captured/Failed; collects the reactive gate + hint.
+- `app/ui/food/diary/placeholder/PlaceholderMetaViewModel.kt` + `PlaceholderMetaModule.kt` — gate now folded from `ObserveAiConfigured` into the `combine` (fifth flow); de-staled not-configured message.
+- `commonTest .../ai/domain/AiSearchQueryTest.kt` — inverted invariant: meal+note present, personal tokens absent; fallback phrasing updated.
+- `shared/resources/.../values/strings.xml` — added `action_submit`, `label_ai_scan_hint`, `description_ai_scan_hint`; de-staled `neutral_ai_not_configured` ("in this build" → "Add a key in AI settings.").
+
+**Open-question assumptions — all exercised exactly as written:**
+1. No personal prefill. Story 22 already added impersonal guidance on the system-prompt field (`description_ai_system_prompt` = "Optional personal context (locale, diet, allergies)…"), so per instruction I checked first and added nothing to the settings screen.
+2. Submit replaces Ask AI as the single primary action; `action_ask_ai` left in strings.xml (harmless).
+3. Inherited gate fix DONE here (see below).
+
+**Inherited gap from Story 22 — CLOSED:** `AiScanViewModel.aiConfigured` and `PlaceholderMetaViewModel.aiConfigured` previously read `appConfig.aiApiKey.isNotBlank()` (BuildConfig). Both now observe `ObserveAiConfigured`, which resolves the same `AiRuntimeConfig` precedence the scanners use — so a user-entered key with blank BuildConfig enables the affordances. Verified reactively on-device (see Completion Review). No precedence logic duplicated.
 
 ## Completion Review
 
-Not started.
+### Estimates vs. actuals
+
+| Metric | Estimate (CER) | Actual |
+| --- | --- | --- |
+| Complexity | 4 | ~3 — the Story 22 seams (`AiSettings.userSystemPrompt`, per-call settings snapshot, `AiRuntimeConfig`) were exactly as described; message-shape and gate wiring were mechanical. |
+| Effort | 4 | ~4 — 5 created + 10 edited files. |
+| Risk | 3 | ~2 realized — no secret/personal data landed; failure path verified on-device. |
+
+### What was verified
+
+- **Unit tests:** `:app:testDebugUnitTest` for `AiSearchQueryTest`, `AiScanPromptTest`, `AiFoodEstimateParserTest`, `AiRuntimeConfigTest` (by fully-qualified class name — the `--tests "*Ai*"` glob mis-expands against a repo-root file) — BUILD SUCCESSFUL.
+- **Build:** `:app:assembleDebug` — BUILD SUCCESSFUL.
+- **Truth-maintenance grep:** `git grep -inE "australian|victoria|melbourne"` over `commonMain` ai slice + aiscan UI — zero hits. (The only remaining references are the negative assertions in the two prompt tests, which lock the absence invariant.)
+- **On-device (emulator `foodyou`, API 36):**
+  - Scan screen renders the hint field ("Hint for this scan (optional)"), supporting text ("…such as a brand or portion size. Not saved."), and Submit.
+  - No photo → Submit disabled; photo picked (via gallery, `adb push`ed JPEG), hint blank → Submit enabled (image required, hint optional).
+  - **Gate fix proven reactively:** with a user key persisted (BuildConfig blank) the affordance was enabled; after clearing the key in AI settings and saving, the scan screen showed "AI is not configured. Add a key in AI settings." with Submit disabled even with a photo; after re-saving a garbage key, Submit re-enabled. This exercises the runtime-config gate, not BuildConfig.
+  - **Failure path:** submitting with a garbage key against the default endpoint surfaced "AI request failed (401)." via the existing Failed state.
+  - **Secret safety:** `logcat -d` scan for the key / system-prompt / hint text → 0 matches.
+
+### What remains unverified (documented, not faked)
+
+- **Layer-2 steering probe** (a user system prompt visibly changing the scan/query result) and **layer-3 hint influence** on real results require a valid paid API key, which does not exist on this machine. The request-assembly code paths are exercised (the 401 came back from a real POST that included the layer-1 prompt, and the layer-2/3 assembly is covered by the unit-tested prompt shape + `listOfNotNull` composition), but the model's *response* behavior is unverifiable here.
+- Success (2xx) scan/query round-trips — same reason.

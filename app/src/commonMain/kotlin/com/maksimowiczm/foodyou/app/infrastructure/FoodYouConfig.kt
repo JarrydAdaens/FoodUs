@@ -3,6 +3,7 @@ package com.maksimowiczm.foodyou.app.infrastructure
 import com.maksimowiczm.foodyou.app.BuildConfig
 import com.maksimowiczm.foodyou.common.config.AppConfig
 import com.maksimowiczm.foodyou.common.config.NetworkConfig
+import com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase.AustralianFoodCompositionDatabaseConfig
 
 internal class FoodYouConfig : AppConfig, NetworkConfig {
     override val versionName: String = BuildConfig.VERSION_NAME
@@ -24,8 +25,18 @@ internal class FoodYouConfig : AppConfig, NetworkConfig {
     override val openFoodFactsPrivacyPolicyUri: String = "https://world.openfoodfacts.org/privacy"
     override val foodDataCentralPrivacyPolicyUri: String = "https://www.usda.gov/privacy-policy"
 
-    // AI scanning configuration, baked in at build time (Milestone 2, Story 6). The key is a private
-    // secret injected from local.properties / an environment variable; it is blank in public builds.
+    // Provider website links surfaced beside each provider (Milestone 2, Story 23). Each URL is the
+    // provider's authoritative home; the AFCD value reuses the provider's own SOURCE_URL so the
+    // FSANZ landing page lives in exactly one place.
+    override val openFoodFactsWebsiteUri: String = "https://world.openfoodfacts.org"
+    override val foodDataCentralWebsiteUri: String = "https://fdc.nal.usda.gov"
+    override val swissFoodCompositionDatabaseWebsiteUri: String = "https://naehrwertdaten.ch"
+    override val australianFoodCompositionDatabaseWebsiteUri: String =
+        AustralianFoodCompositionDatabaseConfig.SOURCE_URL
+
+    // AI configuration developer fallbacks (Milestone 2, Stories 6 and 22). Blank in public builds
+    // and superseded by the user-entered settings; never surfaced in the UI and never logged. The
+    // key is an optional local-build convenience injected from local.properties / an env variable.
     override val aiApiKey: String = BuildConfig.AI_API_KEY
     override val aiEndpoint: String = BuildConfig.AI_ENDPOINT
     override val aiModel: String = BuildConfig.AI_MODEL

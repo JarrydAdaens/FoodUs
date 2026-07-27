@@ -52,8 +52,12 @@ without altering the original diary snapshot.
 
 In Progress — reopened 2026-07-26 by the
 [owner's addendum](../dictations-tier-0/2026-07-26_addendum_ai-settings-branding-foodus.md) after
-daily use. 20/23 stories complete; Story 16 (FoodSwitch) blocked on an external data licence,
-documented per its own gate; Stories 21–23 are the new addendum work. The original 19-story run
+daily use. 22 of 23 stories complete (all addendum Stories 21–23 landed 2026-07-27); Story 16
+(FoodSwitch) remains blocked on an external data licence, documented per its own gate — no
+unstarted stories remain. The milestone is not yet closable as written: the Definition of Done's
+"adopted upstream bugs are fixed" clause is unmet — the Story 12 bug stories are still staged in
+`../backlog/backlog-1.md` and were never pulled into this milestone's story list. Closing requires
+the owner to either schedule those fixes or revise that DoD clause. The original 19-story run
 was delivered 2026-07-25 by rails-boss-execute (see `../rails-boss-execute/progress.md`).
 
 ---
@@ -82,9 +86,9 @@ was delivered 2026-07-25 by rails-boss-execute (see `../rails-boss-execute/progr
 | 18 | Complete | [Quick Add expansion — new fields & migration](#story-18) | Feature | 3 | 3 | 3 | [plan](../implementation-plans/milestone-2/story-18-quickadd-expansion-fields/plan.md) |
 | 19 | Complete | [Quick Add promotion workflow](#story-19) | Feature | 6 | 6 | 5 | [plan](../implementation-plans/milestone-2/story-19-quickadd-promotion-workflow/plan.md) |
 | 20 | Complete | [FoodUs identity — rename, versioning, icon](#story-20) | Feature | — | — | — | — |
-| 21 | Not Started | [Three-layer AI prompt architecture](#story-21) | Feature | — | — | — | — |
-| 22 | Not Started | [AI settings screen](#story-22) | Feature | — | — | — | — |
-| 23 | Not Started | [Provider website info links](#story-23) | Feature | — | — | — | — |
+| 21 | Complete | [Three-layer AI prompt architecture](#story-21) | Feature | 4 | 4 | 3 | [plan](../implementation-plans/milestone-2/story-21-three-layer-ai-prompts/plan.md) |
+| 22 | Complete | [AI settings screen](#story-22) | Feature | 4 | 5 | 4 | [plan](../implementation-plans/milestone-2/story-22-ai-settings-screen/plan.md) |
+| 23 | Complete | [Provider website info links](#story-23) | Feature | 2 | 2 | 1 | [plan](../implementation-plans/milestone-2/story-23-provider-website-links/plan.md) |
 
 ---
 
@@ -639,7 +643,7 @@ and public-repo-safe; users steer the AI without code changes.
 **Rough scope:** `ai` slice prompt assembly, AI scanning screen (hint field + Submit), Story 9's
 query-generation call inherits the same layering. **Depends on Story 22** for the layer-2 field.
 
-**Status:** Not Started.
+**Status:** Complete (2026-07-27, commit `4ec602d4`) — both baked prompts rewritten to pure machinery (`AiScanPrompt` domain object keeps the verbatim seven-key JSON contract; grep-proven zero personal tokens in the `ai` slice and aiscan UI, locked by inverted unit tests); user system prompt sent as a system message on both the scan and query calls when set; per-scan hint field + Submit button (image required, hint optional, in-memory and scan-call-only; Submit replaces Ask AI). Also closed Story 22's recorded follow-up: both ViewModel `aiConfigured` gates now observe runtime config via `ObserveAiConfigured`. Emulator-verified incl. reactive gating and the 401 failure path; live steering/success round-trips await a real key.
 
 ---
 
@@ -665,7 +669,7 @@ fully user-configurable.
 `ai` slice reads runtime config instead of BuildConfig (BuildConfig `foodus.ai.*` values remain
 as blank-by-default developer fallbacks), validation call.
 
-**Status:** Not Started.
+**Status:** Complete (2026-07-27, commit `02ec0391`) — AI settings screen (key/endpoint/model/user system prompt) persisted in DataStore with explicit Save (blank→null); runtime precedence user → blank-by-default BuildConfig fallback → domain default, unit-tested; both OpenRouter scanners read runtime config; Validate = one `max_tokens=1` probe with verbatim error surfacing (failure paths emulator-verified; green-tick path awaits a real key). Known follow-up recorded for Story 21: the two ViewModel `aiConfigured` gates still read BuildConfig.
 
 ---
 
@@ -686,7 +690,7 @@ website URL. The addendum's open observation (owner described an *Australian* da
 not in older docs) is resolved by repo truth: that screen is this fork's own Story 15 AFCD
 provider — docs were not stale and upstream added nothing.
 
-**Status:** Not Started.
+**Status:** Complete (2026-07-27, commit `ebb28703`) — shared `WebsiteChip` (AssistChip + open-in-new) on all four provider surfaces: OFF card → world.openfoodfacts.org, USDA card → fdc.nal.usda.gov, Swiss FCD (language-pick state only) → naehrwertdaten.ch, AFCD screen → the FSANZ page (reuses `SOURCE_URL`). URLs live once in `AppConfig`/`FoodYouConfig` as static config — no schema change (the rough scope's "provider metadata gains a website URL" is satisfied in configuration, not a Room column). All four outbound intents emulator-verified.
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: backlog-1
-description: Front backlog file (story inventory / Milestone -1) for ACME Food App. Holds data-recovery follow-ups surfaced during Milestone 1 (diary logs, grocery verification, canonical-format normalization, truncated-name recovery) and upstream bugs adopted by the Story 2.12 issue triage.
+description: Front backlog file (story inventory / Milestone -1) for FoodUs. Holds data-recovery follow-ups surfaced during Milestone 1, upstream bugs adopted by the Story 2.12 issue triage, and multiplayer stretch items deferred from Milestone 3.
 metadata:
   version: "3.0"
   agentic_rails_source_version: "3.0"
@@ -34,9 +34,16 @@ issues encountered while extracting the owner's food data into `jarryd/working-d
 | 7 | [Recalculate nutrition when "values per" changes in the food editor](#story-7) | Bug | Medium | — | — | — | *unscheduled* | Backlog |
 | 8 | [Fix wedged in-app back navigation from Settings](#story-8) | Bug | Medium | — | — | — | *unscheduled* | Backlog |
 | 9 | [Make food search match word substrings, not just prefixes](#story-9) | Bug | Medium | — | — | — | *unscheduled* | Backlog |
+| 10 | [N-person groups (beyond the two-member cap)](#story-10) | Feature | Low | — | — | — | *unscheduled* | Backlog |
+| 11 | [Safety-number key verification](#story-11) | Feature | Low | — | — | — | *unscheduled* | Backlog |
+| 12 | [Friend bios in the expanded friend row](#story-12) | Feature | Low | — | — | — | *unscheduled* | Backlog |
+| 13 | [Push transport for the relay](#story-13) | Feature | Low | — | — | — | *unscheduled* | Backlog |
 
 Stories 5-9 were adopted on 2026-07-25 by the Milestone 2 Story 12 upstream issue triage
 (see the [Upstream Issue Triage](#upstream-issue-triage-2026-07-25) section below).
+Stories 10-13 are multiplayer stretch items deliberately deferred from
+[Milestone 3](../milestones/milestone-3.md) during the 2026-07-27 dictation (its Part C);
+none are Milestone 3 scope.
 
 ---
 
@@ -300,14 +307,119 @@ result ranking.
 
 ---
 
+<a id="story-10"></a>
+
+### Story: N-person groups (beyond the two-member cap)
+
+**Type:** Feature
+
+**Summary:** Milestone 3 deliberately caps groups at two members. This story lifts the cap:
+groups of more than two, with invite dynamics, live member-list updates ("group swells from 2 to
+8"), and member add/remove flows. It carries three facets the 2026-07-27 dictation explicitly
+tied to N-person scope: the **all-pairs friendship rule** (every member must already be friends
+with a new addition — known costs: quadratic pair requirements (4 people → 6 pairs, 8 → 28) and
+the server exposing third-party friendship data, a privacy decision that must be made
+consciously); **per-member trust levels** within a group (deferred as "too complicated too soon",
+moot under the cap); and the **group-block notice wording/anonymity** question (the dictated
+notice reveals the blocker's identity to the adder — resolve before N-person groups).
+
+**Why / value:** Generalizes multiplayer beyond the household pair once Milestone 3's two-person
+foundation is proven. Deferred because the two-member cap eliminates an entire class of privacy
+problems; lifting it must confront them deliberately.
+
+**Rough scope:** Group membership model, invite lifecycle, server friendship-lookup API surface,
+trust model, and blocklist messaging — all downstream of Milestone 3's Stories 9 and 5.
+Reclassification check: this bundles group mechanics, a privacy policy decision, trust semantics,
+and notice wording; if CER scoring at planning exposes it as epic-sized, promote it to its own
+milestone and split rather than forcing it through as one story.
+
+**Scores (filled at planning):**
+
+- Complexity: —
+- Effort: —
+- Risk: —
+
+---
+
+<a id="story-11"></a>
+
+### Story: Safety-number key verification
+
+**Type:** Feature
+
+**Summary:** Close the known, accepted MITM hole in Milestone 3's key distribution: the relay
+hands out public keys, so a malicious server could substitute its own. Add Signal/WhatsApp-style
+safety numbers verified out-of-band so two friends can confirm they hold each other's real keys.
+
+**Why / value:** Theoretical risk for a self-hosted household relay (the operator is the owner),
+but the established fix matters if the app is ever handed to friends on someone else's server.
+
+**Rough scope:** Safety-number derivation from key pairs, a compare/verify UI in the friend row,
+and a verified flag on stored friend keys.
+
+**Scores (filled at planning):**
+
+- Complexity: —
+- Effort: —
+- Risk: —
+
+---
+
+<a id="story-12"></a>
+
+### Story: Friend bios in the expanded friend row
+
+**Type:** Feature
+
+**Summary:** The expanded friend row (Milestone 3, Story 7) deliberately ships without bios. If
+bios ever happen, that row is where they live — a small free-text field on the profile,
+propagated like the username.
+
+**Why / value:** Light social polish; explicitly a non-goal for Milestone 3.
+
+**Rough scope:** Profile field, relay profile-update propagation, expanded-row UI.
+
+**Scores (filled at planning):**
+
+- Complexity: —
+- Effort: —
+- Risk: —
+
+---
+
+<a id="story-13"></a>
+
+### Story: Push transport for the relay
+
+**Type:** Feature
+
+**Summary:** Milestone 3's transport is poll-on-wake only. If that latency ever grates, add a
+push transport — FCM or a self-hosted alternative — weighing the privacy cost (FCM puts Google
+back in the story) against immediacy.
+
+**Why / value:** Only worth doing if real household use shows poll-on-wake latency actually
+annoys; diet data is non-time-critical by design.
+
+**Rough scope:** Transport layer beside the poll path, push registration on the relay, and the
+privacy decision about the push provider.
+
+**Scores (filled at planning):**
+
+- Complexity: —
+- Effort: —
+- Risk: —
+
+---
+
 ## Expected Inflows
 
 - **Adopted upstream bugs** from Milestone 2's upstream issue triage story — one story per adopted
   bug.
 - **Friction findings** from Milestone 1's daily-use story (logging flows, navigation, search and
   barcode behavior).
-- **Milestone 3 candidates** — ideas that surface before that milestone is dictated stage here
-  first.
+- **Multiplayer stretch items** — follow-ups surfaced while building
+  [Milestone 3](../milestones/milestone-3.md) join Stories 10-13 here. (The original "Milestone 3
+  candidates" inflow closed on 2026-07-27 when that milestone arrived fully dictated.)
 
 ---
 
@@ -343,7 +455,11 @@ are **not** adopted. Genuine, applicable **bugs** are adopted as Stories 5-9 abo
   examples: shopping list (#309), water tracking (#86), manual exercise tracker (#181), body-weight
   tracking (#279), Android widgets (#290), graphs/plots (#182, #39), health-connect (#20),
   multi-user (#67), and many nutrient/UX conveniences. These belong to adjacent-tracker or
-  fuzz-inducing scope and are intentionally left upstream.
+  fuzz-inducing scope and are intentionally left upstream. *(Superseded note, 2026-07-27: the
+  rejection of upstream multi-user #67 — multiple user accounts sharing one phone — still
+  stands, but the fork now builds its own multiplayer in
+  [Milestone 3](../milestones/milestone-3.md): separate devices and databases connected by an
+  encrypted relay, designed under the fork's privacy rules rather than adopted from upstream.)*
 - **3 unlabeled non-bugs** — #413 (availability on the Accrescent app store — distribution
   request), #329 (monthly/weekly report — enhancement), #254 (new carbohydrates hierarchy —
   data-model enhancement/discussion). None are defects; not adopted.

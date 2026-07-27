@@ -3,7 +3,7 @@
 ## Metadata
 
 - Task Type: `STORY`
-- Status: `Ready`
+- Status: `Complete`
 - Owner: Jarryd Adaens (planned by agent)
 - Last Updated: 27 July 2026
 
@@ -190,8 +190,29 @@ None worth recording — context tier and code were consistent; the only ambigui
 
 ## Execution Log
 
-Not started.
+- 2026-07-27 — Executed Steps 1-7 in order. All three open questions were resolved on their documented assumptions (owner unavailable):
+  - Q1 (AFCD URL): reused `AustralianFoodCompositionDatabaseConfig.SOURCE_URL` — no new unverified URL introduced; `FoodYouConfig.australianFoodCompositionDatabaseWebsiteUri` references the constant directly.
+  - Q2 (config vs DB column): static config in `AppConfig`/`FoodYouConfig`. No Room/schema change.
+  - Q3 (chip vs button): one shared `WebsiteChip` (`AssistChip` + `OpenInNew`) on all four surfaces.
+- Step 1: added four `val`s to `common/config/AppConfig.kt` and implemented them in `app/infrastructure/FoodYouConfig.kt` (added an import for `AustralianFoodCompositionDatabaseConfig`).
+- Step 2: added `<string name="action_visit_website">Website</string>` to `strings.xml` beside the AFCD action strings.
+- Step 3: created `app/ui/common/component/WebsiteChip.kt` mirroring `TermsOfUseChip.kt`.
+- Step 4: prepended `WebsiteChip` to the OFF and USDA `FlowRow`s in `PrivacyCard.kt`, each with a `websiteUri` parameter defaulted from `LocalAppConfig`.
+- Step 5: added a `WebsiteChip` item between the description and language picker in the Swiss screen's `LanguagePick` branch (added `LocalUriHandler` + `LocalAppConfig` reads and two imports).
+- Step 6: added a `WebsiteChip` item under the description on the AFCD screen (added `LocalUriHandler` + `LocalAppConfig` reads and two imports).
+- Unplanned extra file: `app/ui/common/utility/AppConfig.kt` holds an anonymous `AppConfig` used as the `LocalAppConfig` default; the first build failed because it did not implement the four new members. Added placeholder values there. This is a required consequence of the interface change (the plan's "six named files" count missed this default implementation), not scope creep.
+- Step 7: `:app:assembleDebug` green after that fix; deployed to the `foodyou` AVD and verified all four links on-device.
 
 ## Completion Review
 
-Not started.
+- Model: Claude Opus 4.8 (1M). Reasoning: default.
+- Estimates vs actuals:
+  - Files: estimated 6 (1 new + 5 edits); actual 7 (2 new: `WebsiteChip.kt` + the string is in an existing file, so 1 new component; 6 edited: `AppConfig.kt`, `FoodYouConfig.kt`, `strings.xml`, `PrivacyCard.kt`, `SwissFoodCompositionDatabaseScreen.kt`, `AustralianFoodCompositionDatabaseScreen.kt`, plus the unplanned `ui/common/utility/AppConfig.kt` default impl). The one miss was the second `AppConfig` implementation.
+  - CER: Complexity 2 / Effort 2 / Risk 1 all held. No surprises beyond the extra default-impl file, which the compiler caught immediately.
+- What was verified (on `foodyou` AVD, Pixel 6 API 36, via `adb logcat` VIEW-intent capture):
+  - OFF card "Website" chip → `act=android.intent.action.VIEW dat=https://world.openfoodfacts.org` (Chrome opened).
+  - USDA card "Website" chip → `dat=https://fdc.nal.usda.gov`.
+  - Swiss FCD screen (LanguagePick) "Website" chip → `dat=https://naehrwertdaten.ch`; chip renders between description and language picker.
+  - AFCD screen "Website" chip → `dat=https://www.foodstandards.gov.au/...` (the FSANZ SOURCE_URL).
+  - Regression glance: OFF Terms of use / Privacy policy / Sign in chips, USDA Privacy policy / API key chips, both enable checkboxes, and the Swiss language picker + AFCD Import button all still render and behave as before.
+- Remaining uncertainty: Swiss `Importing`/`Finished` states were not exercised (no import run) but the chip is placed only inside the `LanguagePick` branch, so it is structurally absent there. AFCD chip during an active import was not exercised (import downloads a large workbook); the chip is state-independent and opening a website mid-import is side-effect-free.

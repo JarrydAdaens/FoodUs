@@ -31,11 +31,13 @@ buildConfig {
     val forkVersionName = libs.versions.fork.version.name.get()
     buildConfigField("String", "FORK_VERSION_NAME", "\"$forkVersionName\"")
 
-    // AI scanning secrets (Milestone 2, Story 6). The endpoint key is a private credential: it is
-    // read from local.properties (untracked) or an environment variable at build time and baked into
-    // private builds only. It must never be committed or logged. An empty key disables the Ask AI
-    // action at runtime ("AI not configured in this build"). Endpoint and model have public defaults
-    // and are overridable through the same seam.
+    // AI configuration developer fallbacks (Milestone 2, Stories 6 and 22). All three values default
+    // to blank and are superseded at runtime by the user-entered settings on the AI settings screen.
+    // They exist only as an optional developer convenience for local builds: set them in
+    // local.properties (untracked) or an environment variable to pre-fill a device without typing
+    // them in the UI. The key is a credential and must never be committed or logged; it stays blank
+    // in every public build. When no user value and no fallback are set, the AI slice falls back to
+    // its public endpoint/model domain defaults, and a blank effective key disables the AI actions.
     val localProperties =
         Properties().apply {
             val file = rootProject.file("local.properties")
@@ -45,13 +47,8 @@ buildConfig {
         localProperties.getProperty(propertyKey) ?: System.getenv(envKey) ?: default
 
     val aiApiKey = secret("foodus.ai.apiKey", "FOODUS_AI_API_KEY")
-    val aiEndpoint =
-        secret(
-            "foodus.ai.endpoint",
-            "FOODUS_AI_ENDPOINT",
-            "https://openrouter.ai/api/v1/chat/completions",
-        )
-    val aiModel = secret("foodus.ai.model", "FOODUS_AI_MODEL", "openai/gpt-4o-mini")
+    val aiEndpoint = secret("foodus.ai.endpoint", "FOODUS_AI_ENDPOINT")
+    val aiModel = secret("foodus.ai.model", "FOODUS_AI_MODEL")
     buildConfigField("String", "AI_API_KEY", aiApiKey.buildConfigStringLiteral())
     buildConfigField("String", "AI_ENDPOINT", aiEndpoint.buildConfigStringLiteral())
     buildConfigField("String", "AI_MODEL", aiModel.buildConfigStringLiteral())
@@ -173,11 +170,22 @@ android {
 
         manifestPlaceholders["applicationIcon"] = "@mipmap/ic_launcher"
         manifestPlaceholders["applicationRoundIcon"] = "@mipmap/ic_launcher_round"
+        manifestPlaceholders["applicationLabel"] = "@string/app_name"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     packaging { resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" } }
     buildTypes {
+        getByName("debug") {
+            // Local sandbox identity: debug builds install side-by-side with the release-signed
+            // Obtainium app instead of colliding with its package. Distinct id, label, icon, and
+            // versionName suffix keep the two visually and technically separate on one device.
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+            manifestPlaceholders["applicationLabel"] = "FoodUs Dev"
+            manifestPlaceholders["applicationIcon"] = "@mipmap/ic_launcher_preview"
+            manifestPlaceholders["applicationRoundIcon"] = "@mipmap/ic_launcher_round_preview"
+        }
         getByName("release") {
             isMinifyEnabled = true
             proguardFiles(

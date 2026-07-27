@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.maksimowiczm.foodyou.ai.domain.AiQueryResult
 import com.maksimowiczm.foodyou.ai.domain.AiSearchQueryGenerator
-import com.maksimowiczm.foodyou.common.config.AppConfig
+import com.maksimowiczm.foodyou.ai.domain.ObserveAiConfigured
 import com.maksimowiczm.foodyou.fooddiary.domain.entity.ManualDiaryEntryId
 import com.maksimowiczm.foodyou.fooddiary.domain.repository.ManualDiaryEntryRepository
 import com.maksimowiczm.foodyou.fooddiary.domain.repository.MealRepository
@@ -31,10 +31,11 @@ internal class PlaceholderMetaViewModel(
     private val manualDiaryEntryRepository: ManualDiaryEntryRepository,
     mealRepository: MealRepository,
     private val aiSearchQueryGenerator: AiSearchQueryGenerator,
-    appConfig: AppConfig,
+    observeAiConfigured: ObserveAiConfigured,
 ) : ViewModel() {
 
-    private val aiConfigured = appConfig.aiApiKey.isNotBlank()
+    // Reactive AI-configured gate: reflects a user-entered key (Story 21), not just BuildConfig.
+    private val aiConfiguredFlow = observeAiConfigured()
 
     private val eventChannel = Channel<PlaceholderMetaEvent>()
     val events = eventChannel.receiveAsFlow()
@@ -52,7 +53,12 @@ internal class PlaceholderMetaViewModel(
         }
 
     val uiState: StateFlow<PlaceholderMetaUiState> =
-        combine(entryFlow, mealNameFlow, generating, error) { entry, mealName, generating, error ->
+        combine(entryFlow, mealNameFlow, generating, error, aiConfiguredFlow) {
+                entry,
+                mealName,
+                generating,
+                error,
+                aiConfigured ->
                 if (entry == null) {
                     PlaceholderMetaUiState(loaded = false, aiConfigured = aiConfigured)
                 } else {
@@ -72,7 +78,7 @@ internal class PlaceholderMetaViewModel(
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(2_000),
-                initialValue = PlaceholderMetaUiState(aiConfigured = aiConfigured),
+                initialValue = PlaceholderMetaUiState(aiConfigured = false),
             )
 
     /** Asks the model to turn the placeholder note into a food-search query and emits the result. */
@@ -117,6 +123,6 @@ internal class PlaceholderMetaViewModel(
         }
 
     private companion object {
-        const val NOT_CONFIGURED_MESSAGE = "AI is not configured in this build."
+        const val NOT_CONFIGURED_MESSAGE = "AI is not configured. Add a key in AI settings."
     }
 }
