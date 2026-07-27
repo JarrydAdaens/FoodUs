@@ -52,8 +52,8 @@ without altering the original diary snapshot.
 
 In Progress — reopened 2026-07-26 by the
 [owner's addendum](../dictations-tier-0/2026-07-26_addendum_ai-settings-branding-foodus.md) after
-daily use. 21/23 stories complete; Story 16 (FoodSwitch) blocked on an external data licence,
-documented per its own gate; Stories 21–23 are the new addendum work (22 complete 2026-07-27). The original 19-story run
+daily use. 22/23 stories complete; Story 16 (FoodSwitch) blocked on an external data licence,
+documented per its own gate; Stories 21–23 are the new addendum work (21-22 complete 2026-07-27). The original 19-story run
 was delivered 2026-07-25 by rails-boss-execute (see `../rails-boss-execute/progress.md`).
 
 ---
@@ -82,7 +82,7 @@ was delivered 2026-07-25 by rails-boss-execute (see `../rails-boss-execute/progr
 | 18 | Complete | [Quick Add expansion — new fields & migration](#story-18) | Feature | 3 | 3 | 3 | [plan](../implementation-plans/milestone-2/story-18-quickadd-expansion-fields/plan.md) |
 | 19 | Complete | [Quick Add promotion workflow](#story-19) | Feature | 6 | 6 | 5 | [plan](../implementation-plans/milestone-2/story-19-quickadd-promotion-workflow/plan.md) |
 | 20 | Complete | [FoodUs identity — rename, versioning, icon](#story-20) | Feature | — | — | — | — |
-| 21 | Not Started | [Three-layer AI prompt architecture](#story-21) | Feature | 4 | 4 | 3 | [plan](../implementation-plans/milestone-2/story-21-three-layer-ai-prompts/plan.md) |
+| 21 | Complete | [Three-layer AI prompt architecture](#story-21) | Feature | 4 | 4 | 3 | [plan](../implementation-plans/milestone-2/story-21-three-layer-ai-prompts/plan.md) |
 | 22 | Complete | [AI settings screen](#story-22) | Feature | 4 | 5 | 4 | [plan](../implementation-plans/milestone-2/story-22-ai-settings-screen/plan.md) |
 | 23 | Not Started | [Provider website info links](#story-23) | Feature | 2 | 2 | 1 | [plan](../implementation-plans/milestone-2/story-23-provider-website-links/plan.md) |
 
@@ -639,7 +639,7 @@ and public-repo-safe; users steer the AI without code changes.
 **Rough scope:** `ai` slice prompt assembly, AI scanning screen (hint field + Submit), Story 9's
 query-generation call inherits the same layering. **Depends on Story 22** for the layer-2 field.
 
-**Status:** Not Started.
+**Status:** Complete (2026-07-27, commit `4ec602d4`) — both baked prompts rewritten to pure machinery (`AiScanPrompt` domain object keeps the verbatim seven-key JSON contract; grep-proven zero personal tokens in the `ai` slice and aiscan UI, locked by inverted unit tests); user system prompt sent as a system message on both the scan and query calls when set; per-scan hint field + Submit button (image required, hint optional, in-memory and scan-call-only; Submit replaces Ask AI). Also closed Story 22's recorded follow-up: both ViewModel `aiConfigured` gates now observe runtime config via `ObserveAiConfigured`. Emulator-verified incl. reactive gating and the 401 failure path; live steering/success round-trips await a real key.
 
 ---
 

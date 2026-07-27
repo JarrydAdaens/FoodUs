@@ -7,8 +7,8 @@ Execution order 22 → 21 → 23 (Story 21 hard-depends on Story 22; see briefin
 | Status | Story | Source | Persona | Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
 | DONE | STORY 2.22 | `context/implementation-plans/milestone-2/story-22-ai-settings-screen/plan.md` | none | 02ec0391 | AiSettings DataStore + runtime-config precedence (user→BuildConfig→domain default); scanners rewired; Validate one-token probe w/ verbatim errors; persistence + failure paths + no-key-in-logcat emulator-verified; green-tick path needs real key; aiConfigured gates left for 2.21 (recorded in plan log) |
-| DOING | STORY 2.21 | `context/implementation-plans/milestone-2/story-21-three-layer-ai-prompts/plan.md` | none | | dispatched 2026-07-27 |
-| TODO | STORY 2.23 | `context/implementation-plans/milestone-2/story-23-provider-website-links/plan.md` | none | | independent, last |
+| DONE | STORY 2.21 | `context/implementation-plans/milestone-2/story-21-three-layer-ai-prompts/plan.md` | none | 4ec602d4 | prompts → pure machinery (AiScanPrompt domain object, grep-proven zero personal tokens); layer-2 system msg on both calls; hint+Submit (in-memory, scan-only); inherited aiConfigured gates fixed via ObserveAiConfigured; emulator-verified incl. reactive gate + 401 path; real steering/success round-trips need real key |
+| DOING | STORY 2.23 | `context/implementation-plans/milestone-2/story-23-provider-website-links/plan.md` | none | | dispatched 2026-07-27 |
 
 ## Run: 2026-07-25 — Stories 1-19. Parallelism: 0 (serial). Workers: Opus.
 
