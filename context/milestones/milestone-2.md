@@ -54,9 +54,10 @@ In Progress — reopened 2026-07-26 by the
 [owner's addendum](../dictations-tier-0/2026-07-26_addendum_ai-settings-branding-foodus.md) after
 daily use. 22 of 23 stories complete (all addendum Stories 21–23 landed 2026-07-27); Story 16
 (FoodSwitch) remains blocked on an external data licence, documented per its own gate — no
-unstarted stories remain. Whether that closes the milestone is the owner's call: the Definition
-of Done's "adopted upstream bugs are fixed" clause maps to the Story 12 bug stories still staged
-in `../backlog/backlog-1.md`, which were never pulled into this milestone's story list. The original 19-story run
+unstarted stories remain. The milestone is not yet closable as written: the Definition of Done's
+"adopted upstream bugs are fixed" clause is unmet — the Story 12 bug stories are still staged in
+`../backlog/backlog-1.md` and were never pulled into this milestone's story list. Closing requires
+the owner to either schedule those fixes or revise that DoD clause. The original 19-story run
 was delivered 2026-07-25 by rails-boss-execute (see `../rails-boss-execute/progress.md`).
 
 ---

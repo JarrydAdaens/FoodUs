@@ -3,7 +3,7 @@
 ## Metadata
 
 - Task Type: `STORY`
-- Status: `Ready`
+- Status: `Complete`
 - Owner: Jarryd Adaens
 - Last Updated: 27 July 2026
 
