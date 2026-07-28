@@ -45,6 +45,7 @@ import com.maksimowiczm.foodyou.app.ui.personalization.PersonalizationScreen
 import com.maksimowiczm.foodyou.app.ui.personalization.PersonalizeNutritionFactsScreen
 import com.maksimowiczm.foodyou.app.ui.settings.SettingsScreen
 import com.maksimowiczm.foodyou.app.ui.settings.ai.AiSettingsScreen
+import com.maksimowiczm.foodyou.app.ui.settings.relay.RelaySettingsScreen
 import com.maksimowiczm.foodyou.app.ui.sponsor.SponsorScreen
 import com.maksimowiczm.foodyou.app.ui.theme.ThemeScreen
 import com.maksimowiczm.foodyou.common.domain.measurement.Measurement
@@ -116,10 +117,14 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 onPersonalization = { navController.navigateSingleTop(Personalization) },
                 onDatabase = { navController.navigateSingleTop(DatabaseSettings) },
                 onAiSettings = { navController.navigateSingleTop(AiSettings) },
+                onRelaySettings = { navController.navigateSingleTop(RelaySettings) },
             )
         }
         forwardBackwardComposable<AiSettings> {
             AiSettingsScreen(onBack = { navController.popBackStackInclusive<AiSettings>() })
+        }
+        forwardBackwardComposable<RelaySettings> {
+            RelaySettingsScreen(onBack = { navController.popBackStackInclusive<RelaySettings>() })
         }
         forwardBackwardComposable<Language> {
             LanguageScreen(onBack = { navController.popBackStackInclusive<Language>() })
@@ -576,6 +581,8 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
 @Serializable private object GoalsSetup
 
 @Serializable private object AiSettings
+
+@Serializable private object RelaySettings
 
 @Serializable private object DatabaseSettings
 

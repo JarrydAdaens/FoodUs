@@ -637,4 +637,17 @@
     <string name="description_no_profile">Create a profile to use groups. Your username is just a display name and can be changed at any time.</string>
     <string name="action_create_profile">Create profile</string>
     <string name="headline_last_edited">Last edited</string>
+
+    <!-- Relay settings (Milestone 3, Story 15). No real relay address may ever appear here. -->
+    <string name="headline_relay_settings">Relay</string>
+    <string name="description_relay_settings">Point this device at your own FoodUs relay</string>
+    <string name="description_relay_settings_screen">Enter the HTTPS address of the FoodUs relay you want this device to use. It is stored on this device only, and nothing ships with an address filled in. Leave it empty to keep relay features switched off.</string>
+    <string name="headline_relay_url">Relay URL</string>
+    <string name="error_relay_url_not_https">The relay URL must start with https://</string>
+    <string name="error_relay_url_malformed">That is not a valid relay URL</string>
+    <string name="action_check_relay_connection">Check connection</string>
+    <string name="relay_checking">Checking…</string>
+    <string name="relay_check_success">Relay reachable</string>
+    <string name="relay_check_unreachable">Could not reach the relay</string>
+    <string name="relay_check_unknown">Connection checks are not available yet</string>
 </resources>

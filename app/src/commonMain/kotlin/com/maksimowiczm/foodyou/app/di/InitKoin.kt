@@ -13,6 +13,7 @@ import com.maksimowiczm.foodyou.importexport.providermetadata.providerMetadataMo
 import com.maksimowiczm.foodyou.importexport.swissfoodcompositiondatabase.importExportSwissFoodCompositionDatabaseModule
 import com.maksimowiczm.foodyou.poll.pollModule
 import com.maksimowiczm.foodyou.profile.profileModule
+import com.maksimowiczm.foodyou.relay.relayModule
 import com.maksimowiczm.foodyou.settings.settingsModule
 import com.maksimowiczm.foodyou.sponsorship.sponsorshipModule
 import com.maksimowiczm.foodyou.theme.themeModule
@@ -39,6 +40,7 @@ fun initKoin(applicationCoroutineScope: CoroutineScope, config: KoinAppDeclarati
             providerMetadataModule,
             pollModule,
             profileModule,
+            relayModule,
             settingsModule,
             sponsorshipModule,
             themeModule,

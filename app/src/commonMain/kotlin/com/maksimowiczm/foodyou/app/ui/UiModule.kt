@@ -12,6 +12,7 @@ import com.maksimowiczm.foodyou.app.ui.meal.meal
 import com.maksimowiczm.foodyou.app.ui.onboarding.onboarding
 import com.maksimowiczm.foodyou.app.ui.personalization.personalization
 import com.maksimowiczm.foodyou.app.ui.settings.ai.aiSettingsModule
+import com.maksimowiczm.foodyou.app.ui.settings.relay.relaySettingsModule
 import com.maksimowiczm.foodyou.app.ui.sponsor.sponsor
 import com.maksimowiczm.foodyou.app.ui.theme.theme
 import com.maksimowiczm.foodyou.common.infrastructure.koin.userPreferencesRepository
@@ -33,6 +34,7 @@ val uiModule = module {
     onboarding()
     personalization()
     profileUi()
+    relaySettingsModule()
     sponsor()
     theme()
 }

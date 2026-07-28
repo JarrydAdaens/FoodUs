@@ -186,3 +186,84 @@ Not needed — single-pass story well under CER thresholds.
 ## Complaints / Friction
 
 None worth recording — the Story 22 precedent covers this story almost end to end; the only genuine gap is the missing wire contract, which is tracked as the plan's gating question rather than friction.
+
+## Execution Log
+
+**2026-07-28 — deliberate partial execution.** Everything in scope except the live capability probe
+was built and verified. `Status` stays `Draft`: the connection checker cannot be finished while the
+foodus-relay wire contract is unwritten, which is this plan's single gate.
+
+### What shipped
+
+Steps 1, 2, 4, 5, 6, and 7 were executed as written. Step 3 shipped as a seam only (see Deviations).
+
+- `relay/domain/RelaySettings.kt`, `relay/domain/RelayUrlValidator.kt`,
+  `relay/domain/RelayConnectionChecker.kt`, `relay/domain/ObserveRelayConfigured.kt`
+- `relay/infrastructure/DataStoreRelaySettingsRepository.kt` (key `relay:url`),
+  `relay/infrastructure/PendingContractRelayConnectionChecker.kt`,
+  `relay/infrastructure/RelayInfrastructureModule.kt`, `relay/RelayModule.kt`
+- `app/ui/settings/relay/` (screen, view model, `RelayCheckUiState`, Koin module),
+  `app/ui/settings/RelaySettingsListItem.kt`
+- Additive edits: `InitKoin.kt`, `UiModule.kt`, `SettingsScreen.kt`, `FoodYouAppNavHost.kt`,
+  `strings.xml` (11 new fork-owned keys)
+- `commonTest`: `RelayUrlValidatorTest` (6 cases), `ObserveRelayConfiguredTest` (3 cases)
+
+No Room migration was needed; `FoodYouDatabase.VERSION` is untouched at 38.
+
+### Deviations from the plan
+
+1. **No `CAPABILITY_PATH` constant, no Ktor probe, no relay `HttpClient`.** Step 3 planned a
+   `KtorRelayConnectionChecker` with a placeholder endpoint path. That would have written a
+   fictional contract into the app and produced confident-looking 404 failures that mean nothing.
+   Instead the checker is the interface plus `PendingContractRelayConnectionChecker`, which returns
+   `RelayCheckResult.Unknown` and makes no network call. The relay-qualified `HttpClient` was also
+   dropped — with no caller it would be dead speculative wiring. Both arrive with contract v1, as a
+   change behind `RelayConnectionChecker` and its one Koin binding.
+2. **`RelayCheckResult` is `Success` / `Unreachable(message)` / `Unknown`**, not the planned
+   `Success` / `Failure`. `Unknown` is the honest pre-contract state and is distinct from a relay
+   that was contacted and did not answer, which matters to consuming stories' gating logic.
+3. **Scheme is checked before parsing, not via Ktor alone.** Ktor's `URLBuilder` substitutes
+   `localhost` for a missing host and assumes HTTP for scheme-less input, so `https://` parsed as
+   valid and `relay.example.test` would have parsed as a plain-HTTP address. The validator now
+   rejects any input not literally prefixed `https://` and reads the authority off the input
+   directly. This was caught by a failing unit test, not by inspection.
+
+### Decisions recorded against the plan's OPEN questions
+
+Per the Boss ruling, the documented assumptions were adopted and the questions stay `OPEN` for the
+owner. Q1 (endpoint path/schema) remains the gate — nothing was invented. Q2: the `relay` slice was
+created at `com.maksimowiczm.foodyou.relay`. Q3: nothing is persisted beyond the URL;
+`ObserveRelayConfigured` exposes only "URL set". Q4: the list item sits directly after AI settings
+on `SettingsScreen`.
+
+### Validation
+
+- `./gradlew.bat :app:testDebugUnitTest` — passed (full app unit suite, including the 9 new cases).
+- `./gradlew.bat :app:assembleDebug` — passed.
+- Emulator (`foodyou` AVD, fresh install of `io.github.jarrydadaens.foodus.dev`), all Manual Checks
+  from this plan: field ships empty with no placeholder address; `http://` rejected inline with the
+  HTTPS error; `https://` saves and survives force-stop plus relaunch; clearing the field saves as
+  unset and reads back empty after restart; Check connection with an unreachable relay reports
+  "Connection checks are not available yet" with no crash and no retry loop. `adb logcat -b crash`
+  clean.
+- Diff grepped for real hostnames before commit: only `example.test` appears.
+
+### Not verified
+
+`RelayCheckResult.Success` and `Unreachable` are unreachable code paths today — no implementation
+produces them until contract v1. Live relay behavior of any kind is unproven.
+
+## Completion Review
+
+**Partial — as authorized.** The settings surface, persistence, HTTPS validation, configured signal,
+and unset/unreachable handling are complete, tested, and verified on device. The capability probe is
+a seam that honestly reports `Unknown`.
+
+Acceptance criteria met: user-entered HTTPS-validated URL, persisted and restart-durable; HTTP and
+malformed input never persist; check reports without blocking or nagging; no relay address, sample
+hostname, or default endpoint anywhere in the repository. The one criterion deferred is a
+*meaningful* success result from the connection check.
+
+`Status` stays `Draft`. Closing this plan needs exactly one thing: the foodus-relay wire contract's
+version/capability endpoint, at which point `PendingContractRelayConnectionChecker` is replaced by
+the Ktor implementation and Q1 is answered.
