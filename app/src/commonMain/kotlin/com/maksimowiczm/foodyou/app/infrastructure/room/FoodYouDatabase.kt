@@ -13,6 +13,7 @@ import com.maksimowiczm.foodyou.app.infrastructure.room.migration.LegacyMigratio
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.AustralianFoodProviderMigration
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.MealTemplateMigration
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.PlaceholderDiaryEntryMigration
+import com.maksimowiczm.foodyou.app.infrastructure.room.migration.ProfileMigration
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.QuickAddExpansionMigration
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.deleteUsedFoodEvent
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.fixMeasurementSuggestions
@@ -50,6 +51,8 @@ import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.MealEntity
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.MealTemplateEntity
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.MealTemplateItemEntity
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.MeasurementEntity
+import com.maksimowiczm.foodyou.profile.infrastructure.room.ProfileDatabase
+import com.maksimowiczm.foodyou.profile.infrastructure.room.ProfileEntity
 import com.maksimowiczm.foodyou.sponsorship.infrastructure.room.SponsorshipDatabase
 import com.maksimowiczm.foodyou.sponsorship.infrastructure.room.SponsorshipEntity
 
@@ -76,6 +79,7 @@ import com.maksimowiczm.foodyou.sponsorship.infrastructure.room.SponsorshipEntit
             ProductFts::class,
             RecipeFts::class,
             ProviderMetadataEntity::class,
+            ProfileEntity::class,
         ],
     views = [RecipeAllIngredientsView::class, LatestMeasurementSuggestion::class],
     version = FoodYouDatabase.VERSION,
@@ -140,7 +144,8 @@ abstract class FoodYouDatabase :
     FoodSearchDatabase,
     FoodDiaryDatabase,
     SponsorshipDatabase,
-    ProviderMetadataDatabase {
+    ProviderMetadataDatabase,
+    ProfileDatabase {
 
     override suspend fun <T> withTransaction(block: suspend DomainTransactionScope<T>.() -> T): T =
         useWriterConnection {
@@ -151,7 +156,7 @@ abstract class FoodYouDatabase :
         }
 
     companion object {
-        const val VERSION = 36
+        const val VERSION = 37
 
         private val migrations: List<Migration> =
             listOf(
@@ -173,6 +178,7 @@ abstract class FoodYouDatabase :
                 MealTemplateMigration,
                 AustralianFoodProviderMigration,
                 QuickAddExpansionMigration,
+                ProfileMigration,
             )
 
         fun Builder<FoodYouDatabase>.buildDatabase(

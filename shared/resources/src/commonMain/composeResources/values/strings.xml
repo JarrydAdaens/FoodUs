@@ -631,4 +631,10 @@
     <string name="tab_log">Log</string>
     <string name="tab_notifications">Notifications</string>
     <string name="description_tab_coming_soon">Nothing here yet</string>
+
+    <!-- Profile (Milestone 3, Story 2). -->
+    <string name="headline_my_profile">My profile</string>
+    <string name="description_no_profile">Create a profile to use groups. Your username is just a display name and can be changed at any time.</string>
+    <string name="action_create_profile">Create profile</string>
+    <string name="headline_last_edited">Last edited</string>
 </resources>

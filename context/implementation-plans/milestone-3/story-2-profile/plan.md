@@ -3,7 +3,7 @@
 ## Metadata
 
 - Task Type: `STORY`
-- Status: `Ready`
+- Status: `Complete`
 - Owner: Jarryd Adaens
 - Last Updated: 28 July 2026
 
@@ -180,3 +180,146 @@ Not needed — single-pass story well under CER thresholds.
 ## Complaints / Friction
 
 None worth recording — source story and repository conventions were clear.
+
+## Execution Log
+
+Executed 28 July 2026 in a serial rails-boss-execute run, immediately after Story 3.1 (commit
+`8ac990db`).
+
+### Decisions on the plan's OPEN questions
+
+All five were resolved on the plan's own documented assumptions, per Boss ruling.
+
+| Question | Decision |
+| --- | --- |
+| Slice layout | Dedicated `com.maksimowiczm.foodyou.profile` slice. Friends/groups get their own slices in Stories 3.6/3.7/3.9. |
+| Create/edit surface | `ProfileEditDialog` launched from the card. One editable field did not justify a nav route, so `FoodYouAppNavHost.kt` was left untouched. |
+| GUID visibility | Hidden entirely. No UI renders it and there is no copy/reveal affordance. |
+| Username constraints | Trimmed, must be non-blank; no length cap, no uniqueness. The dialog disables **Save** while blank, and both use cases `require` non-blank as a programming-error guard. |
+| Pre-creating `friendCode`/`publicKey` | No. Each story owns its own additive migration (Boss ruling confirmed the assumption). Story 3.3 adds its key columns in a 37 → 38 migration. |
+
+### Deviations from the plan
+
+1. **`RenameProfileUseCase` added.** The plan's Execution Step 1 named only `CreateProfileUseCase`
+   while Scope said "create/rename use cases". Rename carries real logic (trim, validate, stamp
+   `lastEdited`, never touch the id), so it became a peer use case rather than a ViewModel-to-DAO
+   passthrough. This is what makes the GUID-immutability test exercise production code.
+2. **`runBlocking`, not `runTest`.** `kotlinx-coroutines-test` is not on the `commonTest` classpath
+   and `RfcCsvParserTest` establishes `runBlocking` as the repo convention. Adding a dependency for
+   test sugar would have breached the Innovation Boundary law for no behavioral gain.
+3. **`headline_edit_profile` reused, not added.** The key already existed at `strings.xml:585`
+   (upstream goals profile) with the identical "Edit profile" text; the duplicate broke the resource
+   build, and reusing it is the DRY-correct fix. Four new keys were added instead of five.
+4. **`ProfileRepository.get()` added** alongside `observe()`. The single-profile invariant and the
+   rename path both need a one-shot read; a `Flow.first()` in the use cases would have been less
+   obvious.
+
+### Resolved unverified claims
+
+- `app/di/InitKoin.kt` registration line confirmed: `profileModule` appended to the `modules(...)`
+  list between `pollModule` and `settingsModule`.
+- **Backup covers the whole DB file.** `MainActivity.onDatabaseBackup` routes to `DeveloperActivity`,
+  which does `dbFile.copyTo(backupFile, overwrite = true)` on the `open_source_database.db` file
+  (`DeveloperActivity.kt:306-307`) — not a per-table CSV export. The profile rides backup/restore by
+  construction, as assumed.
+
+### Files changed
+
+New (profile slice):
+
+- `app/src/commonMain/kotlin/com/maksimowiczm/foodyou/profile/domain/Profile.kt`
+- `app/src/commonMain/kotlin/com/maksimowiczm/foodyou/profile/domain/ProfileRepository.kt`
+- `app/src/commonMain/kotlin/com/maksimowiczm/foodyou/profile/domain/CreateProfileUseCase.kt`
+- `app/src/commonMain/kotlin/com/maksimowiczm/foodyou/profile/domain/RenameProfileUseCase.kt`
+- `app/src/commonMain/kotlin/com/maksimowiczm/foodyou/profile/infrastructure/RoomProfileRepository.kt`
+- `app/src/commonMain/kotlin/com/maksimowiczm/foodyou/profile/infrastructure/room/ProfileEntity.kt`
+- `app/src/commonMain/kotlin/com/maksimowiczm/foodyou/profile/infrastructure/room/ProfileDao.kt`
+- `app/src/commonMain/kotlin/com/maksimowiczm/foodyou/profile/infrastructure/room/ProfileDatabase.kt`
+- `app/src/commonMain/kotlin/com/maksimowiczm/foodyou/profile/ProfileModule.kt`
+
+New (migration, UI, tests):
+
+- `app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/room/migration/ProfileMigration.kt`
+- `app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/groups/profile/MyProfileCard.kt`
+- `app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/groups/profile/ProfileEditDialog.kt`
+- `app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/groups/profile/ProfileViewModel.kt`
+- `app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/groups/profile/ProfileUiModule.kt`
+- `app/src/commonTest/kotlin/com/maksimowiczm/foodyou/profile/domain/CreateProfileUseCaseTest.kt`
+- `app/src/commonTest/kotlin/com/maksimowiczm/foodyou/profile/domain/RenameProfileUseCaseTest.kt`
+- `app/src/commonTest/kotlin/com/maksimowiczm/foodyou/profile/domain/FakeProfileRepository.kt`
+- `app/src/commonTest/kotlin/com/maksimowiczm/foodyou/profile/domain/FixedDateProvider.kt`
+- `app/schemas/com.maksimowiczm.foodyou.app.infrastructure.room.FoodYouDatabase/37.json`
+
+Modified (all edits additive, single appended lines except `GroupsScreen.kt`):
+
+- `FoodYouDatabase.kt` — entity, supertype, `VERSION = 37`, `ProfileMigration` in the migration list
+- `RoomModule.kt` — `ProfileDatabase::class` in `binds`
+- `app/di/InitKoin.kt` — `profileModule`
+- `app/ui/UiModule.kt` — `profileUi()`
+- `app/ui/groups/GroupsScreen.kt` — replaced the `PlaceholderTabScreen` delegation with a real
+  Scaffold + LazyColumn hosting `MyProfileCard` (`PlaceholderTabScreen` left intact for Notifications)
+- `shared/resources/.../values/strings.xml` — 4 new keys
+
+## Completion Review
+
+### Acceptance criteria
+
+| Criterion | Result |
+| --- | --- |
+| Profile creatable on demand from the Groups tab, editable afterwards | Met — verified on emulator |
+| Username renameable | Met — "Jarryd" → "Jarryd2" via the card's Edit action |
+| GUID never changes and is not displayed | Met — id stable across rename in the DB; no UI surface renders it |
+| Profile survives app restart | Met — force-stop and relaunch kept the filled card |
+| Profile survives database backup/restore | Met by construction — backup copies the whole DB file (see Resolved unverified claims) |
+| Existing diary/food data untouched by the migration | Met — canary row and the four seeded meals survived the 36 → 37 upgrade |
+
+### Validation
+
+- Targeted tests: `./gradlew.bat :app:testDebugUnitTest` — **passed**. `CreateProfileUseCaseTest`
+  4/4 and `RenameProfileUseCaseTest` 2/2 confirmed in the JUnit XML; whole module suite green, no
+  pre-existing failures observed.
+- Build/compile: `./gradlew.bat :app:assembleDebug` — **passed**.
+- Room schema: exported `37.json` committed. Its `Profile` `createSql` matches `ProfileMigration`
+  column-for-column (`id` TEXT NOT NULL PK, `username` TEXT NOT NULL, `createdEpochSeconds` and
+  `lastEditedEpochSeconds` INTEGER NOT NULL). Room's runtime identity-hash validation passed on the
+  real upgrade below, which is the strongest available proof.
+- Manual checks (emulator `foodyou`, package `io.github.jarrydadaens.foodus.dev`):
+  1. **Schema 36 → 37 upgrade with surviving data** — seeded a canary `Product` row into the live
+     schema-36 database, installed the new APK over it, launched. `PRAGMA user_version` went 36 → 37,
+     the canary row and all four `Meal` rows survived, and the new `Profile` table was present and
+     empty. Canary row removed afterwards.
+  2. **Empty state** — Groups tab showed the My Profile card with its create prompt and button.
+  3. **Creation** — created "Jarryd"; card switched to the filled state showing "28 July 2026" for
+     both dates; DB row `d51f850e-…|Jarryd|1785244404|1785244404`.
+  4. **Rename + GUID immutability** — renamed to "Jarryd2"; the id and `createdEpochSeconds` were
+     byte-identical while `lastEditedEpochSeconds` advanced 1785244404 → 1785244430.
+  5. **Restart persistence** — force-stop and relaunch; card still filled.
+- Full suite: not run beyond `:app:testDebugUnitTest` — the change is confined to `:app`, and the
+  Boss's stated bar was that this task keep passing.
+- Remaining uncertainty:
+  - Backup/restore was **not** exercised end-to-end through the Developer Activity UI; it is argued
+    from the whole-file-copy implementation rather than a round trip.
+  - Verified on the emulator only. Not deployed to either household phone.
+  - The card's placement relative to future Friends (3.7) and group (3.9) cards is a single
+    `LazyColumn` item; those stories will append siblings.
+
+### Handover to Story 3.3 (crypto identity)
+
+- **Creation seam:** `CreateProfileUseCase.invoke(username): Profile?` in
+  `profile/domain/CreateProfileUseCase.kt` is the only path that mints a GUID. Attach key-pair
+  generation there, between the `repository.get() != null` guard and `repository.insert(profile)`,
+  so the key pair is always born with the id. It returns `null` when a profile already exists.
+- **Entity:** `ProfileEntity` (table `Profile`, `@PrimaryKey val id: String`) —
+  add nullable key columns to it and to the domain `Profile` model.
+- **Migration:** own a `Migration(37, 38)` object under
+  `app/infrastructure/room/migration/`, `ALTER TABLE Profile ADD COLUMN` style, appended to
+  `FoodYouDatabase.migrations` with `VERSION = 38` and a committed `38.json`. Nullable columns only —
+  the profile created by this story predates the keys.
+- **DAO:** `ProfileDao.updateUsername` is deliberately a narrow `@Query` that touches only
+  `username` and `lastEditedEpochSeconds`. Add a separate narrow update for the public key rather
+  than widening it or introducing a whole-row upsert — that is what keeps the GUID immutable.
+- **DI:** `profileModule` (`profile/ProfileModule.kt`) provides the DAO, `ProfileRepository`, and
+  both use cases via `factoryOf`; constructor-injecting a Keystore service into
+  `CreateProfileUseCase` needs no registration change beyond binding the new dependency.
+- **Private key must never enter this table.** `ProfileEntity` is inside the backed-up database
+  file, so only the public key may be persisted here.
