@@ -102,21 +102,21 @@ Must be settled in the wire contract before Story 8 is planned.
 
 | # | Status | Story | Type | Complexity | Effort | Risk | Plan |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | Not Started | [Tabbed UI shell](#story-1) | Feature | — | — | — | *link when generated* |
-| 2 | Not Started | [Profile](#story-2) | Feature | — | — | — | *link when generated* |
-| 3 | Not Started | [Crypto identity](#story-3) | Feature | — | — | — | *link when generated* |
+| 1 | Not Started | [Tabbed UI shell](#story-1) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-1-tabbed-ui-shell/plan.md) |
+| 2 | Not Started | [Profile](#story-2) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-2-profile/plan.md) |
+| 3 | Not Started | [Crypto identity](#story-3) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-3-crypto-identity/plan.md) |
 | 4 | Externalized | [Relay architecture decisions](#story-4) | External Dependency | — | — | — | *n/a — resolved in foodus-relay* |
 | 5 | Externalized | [Relay server delivery gate](#story-5) | External Dependency | — | — | — | *n/a — delivered by foodus-relay* |
-| 6 | Not Started | [Friend codes](#story-6) | Feature | — | — | — | *link when generated* |
-| 7 | Not Started | [Friends list](#story-7) | Feature | — | — | — | *link when generated* |
+| 6 | Not Started | [Friend codes](#story-6) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-6-friend-codes/plan.md) |
+| 7 | Not Started | [Friends list](#story-7) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-7-friends-list/plan.md) |
 | 8 | Not Started | [Message envelope & E2E pipeline](#story-8) | Feature | — | — | — | *link when generated* |
-| 9 | Not Started | [Groups](#story-9) | Feature | — | — | — | *link when generated* |
-| 10 | Not Started | [Save to Group](#story-10) | Feature | — | — | — | *link when generated* |
-| 11 | Not Started | [Receive into diary](#story-11) | Feature | — | — | — | *link when generated* |
-| 12 | Not Started | [Suggestion queue](#story-12) | Feature | — | — | — | *link when generated* |
-| 13 | Not Started | [Notification Center tab](#story-13) | Feature | — | — | — | *link when generated* |
-| 14 | Not Started | [Household proof](#story-14) | Research | — | — | — | *link when generated* |
-| 15 | Not Started | [Configurable relay URL setting](#story-15) | Feature | — | — | — | *link when generated* |
+| 9 | Not Started | [Groups](#story-9) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-9-groups/plan.md) |
+| 10 | Not Started | [Save to Group](#story-10) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-10-save-to-group/plan.md) |
+| 11 | Not Started | [Receive into diary](#story-11) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-11-receive-into-diary/plan.md) |
+| 12 | Not Started | [Suggestion queue](#story-12) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-12-suggestion-queue/plan.md) |
+| 13 | Not Started | [Notification Center tab](#story-13) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-13-notification-center/plan.md) |
+| 14 | Not Started | [Household proof](#story-14) | Research | — | — | — | [plan](../implementation-plans/milestone-3/story-14-household-proof/plan.md) |
+| 15 | Not Started | [Configurable relay URL setting](#story-15) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-15-relay-url-setting/plan.md) |
 
 ---
 
