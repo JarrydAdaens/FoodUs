@@ -3,7 +3,7 @@
 ## Metadata
 
 - Task Type: `STORY`
-- Status: `Ready`
+- Status: `Complete`
 - Owner: Jarryd Adaens
 - Last Updated: 28 July 2026
 
@@ -160,3 +160,100 @@ Not needed — single-pass story, CER well under thresholds.
 ## Complaints / Friction
 
 None worth recording — story scope was clear and the codebase seams were easy to locate.
+
+## Execution Log
+
+Executed 28 July 2026 (model: Opus). The three OPEN questions were not answered by the owner before
+execution, so the plan's documented assumptions were implemented as written. All three remain
+reversible in a single file.
+
+**Assumptions implemented (all three OPEN questions):**
+
+1. *Bar persistence* — the `NavigationBar` is persistent across every Log-tab screen, including deep
+   ones (Settings, AI settings, food search). The shell never observes the upstream NavHost back
+   stack, so it stays fully decoupled. Verified on device: the bar is present on Settings and AI
+   settings with no layout damage.
+2. *System back on non-Log tabs* — back returns to the Log tab. Implemented with a
+   `NavigationEventHandler` composed only while `selectedTab != ShellTab.Log`, matching the existing
+   codebase's back-handling idiom (this project uses `androidx.navigationevent`, not `BackHandler`).
+   Verified on device.
+3. *Start tab* — Log, held in `rememberSaveable { mutableIntStateOf(ShellTab.Log.ordinal) }`.
+   Verified on cold launch.
+
+**Deviations from the Execution Steps:**
+
+- *Step 2 file layout.* The plan named `GroupsTabStub.kt` and `NotificationsTabStub.kt`. Two
+  near-identical stub files would have duplicated the same scaffold, so the empty-state scaffold was
+  extracted into one shared `PlaceholderTabScreen(title)` and each tab got a thin, correctly-named
+  screen file that delegates to it. Net effect: no duplication, and Stories 2/9 and 13 still get a
+  distinctly named file to grow into rather than a shared stub they would have to disentangle.
+- *Package placement.* `GroupsScreen` and `NotificationsScreen` live in
+  `app/ui/groups/` and `app/ui/notifications/` rather than under `app/ui/shell/`, so the follow-on
+  stories expand a feature package instead of the shell package. The shell package holds only
+  shell-owned concerns (`FoodUsAppShell`, `ShellTab`, `PlaceholderTabScreen`).
+- *Icon choice.* `Icons.Filled.MenuBook` is deprecated in favour of the auto-mirrored variant; the
+  Log tab uses `Icons.AutoMirrored.Filled.MenuBook` so the build stays warning-clean. Groups uses
+  `Icons.Filled.Group`, Notifications `Icons.Filled.Notifications`. All resolved from the already
+  present `material-icons-extended` dependency — the plan's "unverified claim" is now verified, and
+  no new dependency was needed.
+- *A fourth string was added.* `description_tab_coming_soon` ("Nothing here yet") backs the shared
+  placeholder body, alongside the three planned `tab_*` keys.
+
+**Inset handling (the plan's main risk).** Resolved with the canonical nested-scaffold pattern rather
+than a `Column`: the outer `Scaffold` declares `contentWindowInsets = WindowInsets(0)` and its
+`bottomBar`; the tab content is wrapped in a `Box` that applies `padding(bottom = …)` and then
+`consumeWindowInsets(paddingValues)`. Inner screens therefore keep their own status-bar padding but
+see the bottom system-bar inset already consumed, so nothing double-pads. Confirmed visually — no
+double padding on Home, Settings, or AI settings.
+
+**Validation performed.**
+
+- `./gradlew.bat :app:compileDebugKotlinAndroid` — BUILD SUCCESSFUL (one deprecation warning on the
+  first pass, fixed; second pass warning-clean apart from the project's pre-existing
+  `ExpectActualClasses`/`ContextParameters` notice).
+- `./gradlew.bat :app:assembleDebug` — BUILD SUCCESSFUL.
+- `./gradlew.bat :app:testDebugUnitTest` — BUILD SUCCESSFUL, no failures.
+- Manual emulator run (AVD `foodyou`, debug build `io.github.jarrydadaens.foodus.dev`): **all seven
+  manual checks in this plan pass.** Cold launch lands on Log with Groups | Log | Notifications
+  left-to-right; the Log tab is the unchanged app; navigating into Settings then switching
+  Log → Groups → Log preserved the Settings back stack; both stubs render; onboarding runs
+  full-screen with no bar; the IME cleanly overlays the bar on the AI settings text field without
+  breaking layout; system back from Groups returned to Log.
+
+**Nothing left unverified** for this story's scope. iOS was not built or run (the change is
+`commonMain` and uses no platform APIs, but no iOS evidence exists).
+
+## Completion Review
+
+Model: Opus. Single pass, no phase split, no handover.
+
+**Estimates vs actuals.**
+
+| Axis | Planned | Actual | Note |
+| --- | --- | --- | --- |
+| Complexity | 3 | 2 | The two seams the plan flagged both had a standard, well-known solution. |
+| Effort | 3 | 3 | Code was quick; validation dominated the time. |
+| Risk | 3 | 2 | Nothing had to be redesigned; the first layout attempt was the final one. |
+
+**Narrative.** The plan was accurate and the estimate was slightly conservative in the right
+direction. Both risks it singled out — back-stack loss across tab switches and double bottom padding
+under nested scaffolds — turned out to be solved problems: `rememberSaveableStateHolder` restores the
+Log tab's NavHost back stack because `rememberNavController` already saves it, and the
+`consumeWindowInsets` pattern handled the padding on the first attempt. Neither needed a fallback.
+
+The one thing planning could not have known was the *back-handling idiom*. The plan said
+"`BackHandler`", which the codebase does not use at all; it uses `androidx.navigationevent`'s
+`NavigationEventHandler` throughout. Grepping the codebase for the existing pattern before writing
+the shell cost a minute and kept the change consistent with its surroundings.
+
+The only real time sink was self-inflicted during validation: an unrelated upstream Food You build
+(`com.maksimowiczm.foodyou`) was already installed on the emulator, and because this fork's *source*
+namespace is still `com.maksimowiczm.foodyou` while its *applicationId* is
+`io.github.jarrydadaens.foodus`, the obvious `pm list packages | grep foodyou` matched the wrong app.
+Two screenshots were spent concluding the bottom bar "wasn't rendering" before checking
+`applicationId` in `app/build.gradle.kts`. Worth remembering for every later Milestone 3 story that
+validates on device: **the debug package is `io.github.jarrydadaens.foodus.dev`, not anything
+matching "foodyou".**
+
+Upstream merge surface came in exactly as planned: `FoodYouApp.kt` changed by one line plus an import
+swap, and `strings.xml` gained four appended keys. Everything else is new fork-owned files.

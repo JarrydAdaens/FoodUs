@@ -625,4 +625,10 @@
     <string name="action_validate">Validate</string>
     <string name="ai_validating">Validating…</string>
     <string name="ai_validation_success">Connection successful</string>
+
+    <!-- Tabbed shell (Milestone 3, Story 1). -->
+    <string name="tab_groups">Groups</string>
+    <string name="tab_log">Log</string>
+    <string name="tab_notifications">Notifications</string>
+    <string name="description_tab_coming_soon">Nothing here yet</string>
 </resources>
