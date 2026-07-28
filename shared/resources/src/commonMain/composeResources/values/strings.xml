@@ -630,7 +630,6 @@
     <string name="tab_groups">Groups</string>
     <string name="tab_log">Log</string>
     <string name="tab_notifications">Notifications</string>
-    <string name="description_tab_coming_soon">Nothing here yet</string>
 
     <!-- Profile (Milestone 3, Story 2). -->
     <string name="headline_my_profile">My profile</string>
@@ -650,4 +649,17 @@
     <string name="relay_check_success">Relay reachable</string>
     <string name="relay_check_unreachable">Could not reach the relay</string>
     <string name="relay_check_unknown">Connection checks are not available yet</string>
+
+    <!-- Notification Center (Milestone 3, Story 13). One template per NotificationType key; new
+         notification kinds add a template here and nothing else. -->
+    <string name="description_notifications_empty">Nothing to report</string>
+    <string name="description_notification_history_empty">No dismissed notifications</string>
+    <string name="description_notification_unsupported">This notification came from a newer version of FoodUs</string>
+    <string name="action_dismiss_notification">Dismiss</string>
+    <string name="action_dismiss_all_notifications">Dismiss all</string>
+    <string name="action_show_notification_history">Show dismissed</string>
+    <string name="action_hide_notification_history">Hide dismissed</string>
+    <string name="notification_entry_added_to_your_diary">%1$s added %2$s to your diary</string>
+    <string name="notification_entry_failed_to_add">%1$s could not be added to your diary</string>
+    <string name="notification_unknown_message_version_refused">A message using an unsupported format (version %1$s) was refused</string>
 </resources>

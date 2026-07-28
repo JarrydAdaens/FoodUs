@@ -11,6 +11,7 @@ import com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase.i
 import com.maksimowiczm.foodyou.importexport.importExportModule
 import com.maksimowiczm.foodyou.importexport.providermetadata.providerMetadataModule
 import com.maksimowiczm.foodyou.importexport.swissfoodcompositiondatabase.importExportSwissFoodCompositionDatabaseModule
+import com.maksimowiczm.foodyou.notification.notificationModule
 import com.maksimowiczm.foodyou.poll.pollModule
 import com.maksimowiczm.foodyou.profile.profileModule
 import com.maksimowiczm.foodyou.relay.relayModule
@@ -38,6 +39,7 @@ fun initKoin(applicationCoroutineScope: CoroutineScope, config: KoinAppDeclarati
             importExportSwissFoodCompositionDatabaseModule,
             importExportAustralianFoodCompositionDatabaseModule,
             providerMetadataModule,
+            notificationModule,
             pollModule,
             profileModule,
             relayModule,

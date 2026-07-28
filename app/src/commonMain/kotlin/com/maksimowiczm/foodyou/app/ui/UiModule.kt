@@ -9,6 +9,7 @@ import com.maksimowiczm.foodyou.app.ui.groups.profile.profileUi
 import com.maksimowiczm.foodyou.app.ui.home.home
 import com.maksimowiczm.foodyou.app.ui.language.language
 import com.maksimowiczm.foodyou.app.ui.meal.meal
+import com.maksimowiczm.foodyou.app.ui.notifications.notificationsUi
 import com.maksimowiczm.foodyou.app.ui.onboarding.onboarding
 import com.maksimowiczm.foodyou.app.ui.personalization.personalization
 import com.maksimowiczm.foodyou.app.ui.settings.ai.aiSettingsModule
@@ -31,6 +32,7 @@ val uiModule = module {
     home()
     language()
     meal()
+    notificationsUi()
     onboarding()
     personalization()
     profileUi()
