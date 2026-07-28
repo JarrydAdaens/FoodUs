@@ -9,10 +9,15 @@ import kotlinx.coroutines.runBlocking
 class RenameProfileUseCaseTest {
 
     @Test
-    fun `rename changes username and last-edited but never the GUID`() = runBlocking {
+    fun rename_changes_username_and_last_edited_but_never_guid() = runBlocking {
         val repository = FakeProfileRepository()
         val dateProvider = FixedDateProvider(1_000L)
-        val created = assertNotNull(CreateProfileUseCase(repository, dateProvider)("Jarryd"))
+        val created =
+            assertNotNull(
+                CreateProfileUseCase(repository, FakeProfileMessagingCrypto(), dateProvider)(
+                    "Jarryd"
+                )
+            )
 
         dateProvider.epochSeconds = 5_000L
         RenameProfileUseCase(repository, dateProvider)("Renamed")
@@ -25,7 +30,7 @@ class RenameProfileUseCaseTest {
     }
 
     @Test
-    fun `rename does nothing when no profile exists`() = runBlocking {
+    fun rename_does_nothing_when_no_profile_exists() = runBlocking {
         val repository = FakeProfileRepository()
 
         RenameProfileUseCase(repository, FixedDateProvider(1_000L))("Renamed")

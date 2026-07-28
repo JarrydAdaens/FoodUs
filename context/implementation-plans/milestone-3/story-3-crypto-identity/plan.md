@@ -186,3 +186,197 @@ Not needed. Single-pass story; the contract-gated registration half is excluded 
 **What was tried:** Read all upstream crypto interfaces, actuals, consumers, and tests before deciding to add a fork-owned sibling.
 **What would improve this:** A line in the milestone story acknowledging the upstream crypto seam and blessing (or forbidding) reuse.
 **What I think:** A separate fork-owned key with its own alias is the right call — additive, purpose-clean, merge-safe.
+
+### Story 3.2's commonTest names broke the instrumented test gate
+
+**What happened:** `:app:connectedDebugAndroidTest` failed at `dexBuilderDebugAndroidTest`, not in any
+test: D8 rejects `Space characters in SimpleName ... are not allowed prior to DEX version 040`.
+`commonTest` is dexed into the instrumentation APK, and Story 3.2 introduced the repo's only
+backtick test names containing spaces.
+**Why this made the task harder:** It blocked this story's mandatory instrumented Keystore
+validation for a reason unrelated to this story's code.
+**What was tried:** Confirmed the four affected files are the only offenders repo-wide
+(`grep -rl 'fun \`[^\`]* [^\`]*\`' app/src/commonTest/`), then renamed every method in them to the
+underscore style already used by `AndroidIdentityCryptoTest`. Behavior-preserving; no assertions
+changed.
+**What would improve this:** A note in the repo's testing guidance that `commonTest` in this KMP
+module is dexed at min SDK 28, so backtick names with spaces are not available there.
+**What I think:** Worth fixing rather than reporting-and-skipping, because the alternative was
+shipping the milestone's security foundation with zero on-device evidence.
+
+---
+
+## Execution Log
+
+Executed 28 July 2026. **Partial by instruction: the local key seam only.** The relay
+registration half stays out of the tree pending the Story 5 contract gate — no speculative client
+stubs, no wire-contract data classes. Plan Status intentionally remains `Draft`.
+
+### Step 1 — iOS discovery (read-only, before any edit)
+
+`app/src/` has exactly four source sets: `commonMain`, `androidMain`, `iosMain`,
+`androidInstrumentedTest`/`commonTest`. `iosMain` contains **two files total**
+(`AiScanCameraSection.ios.kt`, `AustralianFoodCompositionDatabaseModule.ios.kt`) and **no crypto
+actuals**. The only `actual fun Module.masterCryptoDefinition` in the repo is in
+`CryptoModule.android.kt`; `app/build.gradle.kts:78` does declare `iosArm64()`/`iosSimulatorArm64()`
+and no custom `srcDir` redirection exists.
+
+**Finding: the iOS targets already cannot satisfy the three existing crypto expects.** Adding a
+fourth changes nothing about that posture, so this story adds the expect/actual pair Android-only
+and matches upstream exactly. This resolves the plan's "Breaking iOS targets" risk as *pre-existing
+and unchanged*, not as *mitigated*. It also means the plan's acceptance criterion "iOS targets still
+build" was never true in the first place and is not claimed here.
+
+### Steps 2–4 — the crypto seam
+
+`ProfileMessagingCrypto` (commonMain) and `AndroidProfileMessagingCrypto` (androidMain), wired
+through `profileMessagingCryptoDefinition()` in the existing `CryptoModule.kt` /
+`CryptoModule.android.kt` pair. Upstream's `IdentityCrypto` / `MasterCrypto` and their aliases are
+untouched; the new alias is `FOODUS_PROFILE_MESSAGING_KEY`.
+
+Per the Boss ruling on Q1: provisional RSA-3072 OAEP, `PURPOSE_DECRYPT`,
+`setUserAuthenticationRequired(false)`, min-SDK-28-safe, marked replaceable in the interface kdoc.
+Per Q4: software-backed Keystore is accepted and `isSupported` is surfaced rather than gating
+creation.
+
+One interop detail worth carrying forward: the Android Keystore ignores the MGF1 digest in the
+transformation string and always uses SHA-1, so both sides must pass an explicit
+`OAEPParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA1, …)`. `SHA-1` is therefore authorized
+alongside `SHA-256` in the key spec, for MGF1 only. The companion exposes `TRANSFORMATION` and
+`oaepParameterSpec()` so a sender reproduces it exactly.
+
+### Steps 5 — profile integration and the Q3 ruling
+
+Q3 was ruled in this story's favor: `ProfileMigration` (36→37) shipped without key columns, so this
+story owns `ProfileKeyMigration` (37→38) adding **nullable** `publicKey` and `keyAlgorithm` to
+`Profile`, `VERSION = 38`, exported schema `38.json` committed.
+
+Honoring the 3.2 worker's constraints: generation is attached inside `CreateProfileUseCase.invoke`
+between the `repository.get() != null` guard and `repository.insert(profile)`; the DAO gains a
+narrow `updatePublicKey` query touching only the two key columns plus `lastEditedEpochSeconds`
+(no whole-row upsert, so the GUID stays unrewritable); `profileModule` binds the new use cases with
+`factoryOf` and the crypto dependency is constructor-injected.
+
+Storage format: the public key is stored **Base64-encoded** rather than as a BLOB. `Profile` is a
+`data class` and a `ByteArray` field would give it broken equality — the profile is compared by
+value in several tests and in the reconcile check. Base64 is also the form the relay payload will
+want. `encodeProfilePublicKey()` is the single definition of that format.
+
+### Re-key crash-consistency — the chosen strategy
+
+The critic finding is accepted: one fixed alias cannot hold the old and new key simultaneously, so
+no atomicity is claimed. Implemented instead:
+
+**The key vault is the source of truth; the profile record is a reconcilable copy of its public
+half.** `ReconcileProfileKeyUseCase` reads the vault (minting a pair if the alias is gone), compares
+against the record, and rewrites the record when they disagree. It is idempotent, and it is invoked
+from `ProfileViewModel.init` — the profile card is where the identity surfaces, so recovery runs
+whenever the user looks at it.
+
+`RekeyProfileUseCase` is deliberately thin: `regenerate()` then *delegate the record write to
+reconcile*, so a crash between the two halves is repaired by the same code path that repairs a
+restored backup, not by a second near-duplicate path.
+
+Boundaries considered, and what each leaves behind:
+
+| Process dies… | State left | Repaired by |
+| --- | --- | --- |
+| after `regenerate()`, before the record write | vault has new key, record has old | next reconcile |
+| mid record write | Room transaction; row is old or new, never torn | nothing needed |
+| DB restored onto a device with a different/absent alias | record's key unusable | next reconcile (alias minted on read) |
+| profile created before Story 3 | key columns NULL | next reconcile |
+
+The invariant restored in every case: **a usable private key always matches the stored public key.**
+The window is only ever "the record names a key nobody can send to", never "the record names a key
+whose private half is lost with no way back" — the reverse would be unrecoverable.
+
+### Step 7 — constitutional audit (laws §2)
+
+- `grep -rn "privateKey\|PrivateKey" app/src --include=*.kt` outside the Android actual and its
+  instrumented test: **zero hits.**
+- Every `privateKey` reference inside the actual passes the Keystore handle straight into a JCA
+  primitive (`KeyFactory.getKeySpec`, `Cipher.init`). `.encoded` is never called on it in production
+  code; the only `.encoded` in the new actual is `certificate.publicKey.encoded`.
+- Everything the profile slice persists is `publicKey`/`keyAlgorithm` as `String` — grep over
+  `profile/` returns no other key-related field.
+- No `Log.`/`println`/`Logger`, no `DataStore`, no `File`/`writeText`/`FileOutputStream` in any new
+  file. Nothing logs key material of either half.
+- The instrumented test asserts `entry.privateKey.encoded == null` — the platform itself refuses to
+  export it.
+
+### Validation
+
+- Targeted unit tests: `:app:testDebugUnitTest` — **passed.** Profile slice: CreateProfile 5,
+  Reconcile 4, Rekey 1, Rename 2 — 12 tests, 0 failures.
+- Instrumented: `:app:connectedDebugAndroidTest` filtered to
+  `AndroidProfileMessagingCryptoTest` on AVD `foodyou` — **passed, 4/4** (decrypt round trip;
+  public key stable across instances; `regenerate` yields a different key, orphans old ciphertext,
+  and the new pair immediately works; private key not exportable).
+- Build: `:app:compileDebugKotlinAndroid` and `:app:assembleDebug` — **passed.**
+- Migration 37→38 on device: pre-upgrade DB at `user_version` 37 holding a live profile row
+  (`d51f850e-…`, `Jarryd2`). After installing the new build and launching:
+  `user_version` = 38, the row survived unchanged with the two new columns NULL, Room's schema
+  validation passed (no crash), and the on-device `CREATE TABLE` matches exported `38.json`
+  byte for byte.
+- Mismatch recovery on device: opening the Groups tab on that migrated pre-Story-3 profile
+  reconciled it — same GUID, `keyAlgorithm` = `RSA/ECB/OAEPWithSHA-256AndMGF1Padding`, `publicKey`
+  564 Base64 chars (= 422-byte X.509 SPKI, correct for RSA-3072).
+- Full suite: **not run** — targeted validation covers the changed surface; the instrumented run was
+  filtered to this story's class.
+- Remaining uncertainty: the emulator is software-backed, so `isSupported` was deliberately not
+  asserted and hardware-backed behavior on a Galaxy S22 Ultra is unverified. `connectedAndroidTest`
+  uninstalls the app, which wiped the emulator's database, so the manual backup/restore-to-a-second-
+  device check in the plan's Manual Checks was not performed. RSA-OAEP is provisional pending
+  contract v1 (Q1) and Q2 (whether relay auth needs a companion signing key) is still open.
+
+### Deviations from the plan
+
+1. **Partial execution by instruction** — local seam only; relay registration excluded.
+2. **Risk Mitigation wording superseded** — "old key intact until the new pair exists" is not
+   achievable and is replaced by the reconcile strategy above.
+3. **Q3 resolved the other way** — this story owns the columns and a second migration, not 3.2.
+4. **`ReconcileProfileKeyUseCase` was not in the plan** — it is the concrete form the crash-
+   consistency ruling took, and it is what gives `RekeyProfileUseCase` a crash-safe record write.
+5. **Renamed 12 test methods across four Story 3.2/3.3 commonTest files** (see Complaints) to
+   unblock `connectedDebugAndroidTest`. Out of this story's strict scope; behavior-preserving; done
+   because it was the only way to satisfy the mandatory instrumented gate.
+6. **`RekeyProfileUseCase` has no production caller yet** — it is the seam Story 3.14's drill
+   consumes, registered in DI and covered by a unit test, but nothing in the UI invokes it today.
+
+---
+
+## Completion Review
+
+**Scope delivered: PARTIAL, by instruction.** The local key seam is complete and verified on
+device. The registration half — publishing this public key to the relay via the
+`...-profile-registration` endpoints — is untouched and awaits the Story 5 contract gate plus Story
+15's relay URL. Status stays `Draft`.
+
+Acceptance criteria, honestly scored:
+
+- Profile creation mints GUID + key pair in one flow, public key and algorithm on the record — **met**
+  (unit test + on-device evidence).
+- Private key confined to the Keystore; nothing in Room, DataStore, files, backups, or logs — **met**
+  (step-7 audit + instrumented non-exportability assertion).
+- Decrypt round trip; `regenerate()` invalidates old ciphertext and yields a new public key on the
+  record — **met** (instrumented 4/4 + reconcile unit tests).
+- Upstream crypto consumers and existing tests untouched and passing — **met**.
+- "iOS targets still build" — **not met and not attempted**; step 1 established iOS could never
+  satisfy the pre-existing crypto expects, so this criterion was wrong when written. Recorded rather
+  than quietly dropped.
+
+What the next stories inherit:
+
+- **Story 3.8 (envelope pipeline)** consumes `ProfileMessagingCrypto.decrypt`. It must seal with the
+  exact `TRANSFORMATION` + `oaepParameterSpec()` the companion exposes, and it should treat RSA-OAEP
+  as hybrid-wrapping a per-message AES key rather than encrypting payloads directly — RSA-3072/OAEP
+  SHA-256 carries only 318 plaintext bytes.
+- **Story 3.14 (household proof)** drives `RekeyProfileUseCase`. Re-keying is local only today: it
+  rotates the vault and repairs the record, and announcing the new key to friends does not exist
+  yet.
+- **Story 3.15 (relay URL)** is unaffected by this story, but registration needs both it and the
+  contract before the public key can leave the device.
+- **Owner decision still required before Story 3.8 planning:** Q1 (does contract v1 keep RSA-OAEP?)
+  and Q2 (does relay auth need a companion signing key, given a `PURPOSE_DECRYPT` key cannot sign?).
+  A change to Q1 costs one `regenerate()` and one migration — deliberately cheap, and cheapest
+  before first release.

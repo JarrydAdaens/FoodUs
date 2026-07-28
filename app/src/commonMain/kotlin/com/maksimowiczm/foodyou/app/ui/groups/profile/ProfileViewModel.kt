@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.maksimowiczm.foodyou.profile.domain.CreateProfileUseCase
 import com.maksimowiczm.foodyou.profile.domain.Profile
 import com.maksimowiczm.foodyou.profile.domain.ProfileRepository
+import com.maksimowiczm.foodyou.profile.domain.ReconcileProfileKeyUseCase
 import com.maksimowiczm.foodyou.profile.domain.RenameProfileUseCase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +16,14 @@ internal class ProfileViewModel(
     repository: ProfileRepository,
     private val createProfile: CreateProfileUseCase,
     private val renameProfile: RenameProfileUseCase,
+    reconcileProfileKey: ReconcileProfileKeyUseCase,
 ) : ViewModel() {
+
+    init {
+        // The profile card is where the identity surfaces, so it is the natural place to repair a
+        // record whose public key drifted from the key vault (interrupted re-key, restored backup).
+        viewModelScope.launch { reconcileProfileKey() }
+    }
 
     /** `null` means "no profile yet" — the card renders its empty state. */
     val profile: StateFlow<Profile?> =

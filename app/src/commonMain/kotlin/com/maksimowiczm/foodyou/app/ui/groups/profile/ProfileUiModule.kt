@@ -5,6 +5,11 @@ import org.koin.core.module.dsl.viewModel
 
 internal fun Module.profileUi() {
     viewModel {
-        ProfileViewModel(repository = get(), createProfile = get(), renameProfile = get())
+        ProfileViewModel(
+            repository = get(),
+            createProfile = get(),
+            renameProfile = get(),
+            reconcileProfileKey = get(),
+        )
     }
 }

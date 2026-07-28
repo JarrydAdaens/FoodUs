@@ -10,9 +10,14 @@ import kotlinx.coroutines.runBlocking
 class CreateProfileUseCaseTest {
 
     @Test
-    fun `creates profile with a GUID and matching created and last-edited stamps`() = runBlocking {
+    fun creates_profile_with_guid_and_matching_stamps() = runBlocking {
         val repository = FakeProfileRepository()
-        val createProfile = CreateProfileUseCase(repository, FixedDateProvider(1_000L))
+        val createProfile =
+            CreateProfileUseCase(
+                repository,
+                FakeProfileMessagingCrypto(),
+                FixedDateProvider(1_000L),
+            )
 
         val profile = assertNotNull(createProfile("Jarryd"))
 
@@ -24,26 +29,53 @@ class CreateProfileUseCaseTest {
     }
 
     @Test
-    fun `trims the username`() = runBlocking {
+    fun records_messaging_public_key_alongside_guid() = runBlocking {
         val repository = FakeProfileRepository()
-        val createProfile = CreateProfileUseCase(repository, FixedDateProvider(1_000L))
+        val crypto = FakeProfileMessagingCrypto()
+        val createProfile = CreateProfileUseCase(repository, crypto, FixedDateProvider(1_000L))
+
+        val profile = assertNotNull(createProfile("Jarryd"))
+
+        assertEquals(crypto.publicKey.encodeProfilePublicKey(), profile.publicKey)
+        assertEquals(crypto.algorithm, profile.keyAlgorithm)
+    }
+
+    @Test
+    fun trims_the_username() = runBlocking {
+        val repository = FakeProfileRepository()
+        val createProfile =
+            CreateProfileUseCase(
+                repository,
+                FakeProfileMessagingCrypto(),
+                FixedDateProvider(1_000L),
+            )
 
         assertEquals("Jarryd", assertNotNull(createProfile("  Jarryd  ")).username)
     }
 
     @Test
-    fun `rejects a blank username`() = runBlocking {
+    fun rejects_a_blank_username() = runBlocking {
         val repository = FakeProfileRepository()
-        val createProfile = CreateProfileUseCase(repository, FixedDateProvider(1_000L))
+        val createProfile =
+            CreateProfileUseCase(
+                repository,
+                FakeProfileMessagingCrypto(),
+                FixedDateProvider(1_000L),
+            )
 
         assertFailsWith<IllegalArgumentException> { createProfile("   ") }
         assertNull(repository.get())
     }
 
     @Test
-    fun `a second create leaves the existing profile untouched`() = runBlocking {
+    fun second_create_leaves_existing_profile_untouched() = runBlocking {
         val repository = FakeProfileRepository()
-        val createProfile = CreateProfileUseCase(repository, FixedDateProvider(1_000L))
+        val createProfile =
+            CreateProfileUseCase(
+                repository,
+                FakeProfileMessagingCrypto(),
+                FixedDateProvider(1_000L),
+            )
         val first = assertNotNull(createProfile("Jarryd"))
 
         assertNull(createProfile("Someone else"))

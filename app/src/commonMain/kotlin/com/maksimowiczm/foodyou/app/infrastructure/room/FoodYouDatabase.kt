@@ -13,6 +13,7 @@ import com.maksimowiczm.foodyou.app.infrastructure.room.migration.LegacyMigratio
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.AustralianFoodProviderMigration
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.MealTemplateMigration
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.PlaceholderDiaryEntryMigration
+import com.maksimowiczm.foodyou.app.infrastructure.room.migration.ProfileKeyMigration
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.ProfileMigration
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.QuickAddExpansionMigration
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.deleteUsedFoodEvent
@@ -156,7 +157,7 @@ abstract class FoodYouDatabase :
         }
 
     companion object {
-        const val VERSION = 37
+        const val VERSION = 38
 
         private val migrations: List<Migration> =
             listOf(
@@ -179,6 +180,7 @@ abstract class FoodYouDatabase :
                 AustralianFoodProviderMigration,
                 QuickAddExpansionMigration,
                 ProfileMigration,
+                ProfileKeyMigration,
             )
 
         fun Builder<FoodYouDatabase>.buildDatabase(

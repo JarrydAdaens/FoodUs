@@ -25,4 +25,20 @@ internal class FakeProfileRepository : ProfileRepository {
         state.value =
             current.copy(username = username, lastEditedEpochSeconds = lastEditedEpochSeconds)
     }
+
+    override suspend fun updatePublicKey(
+        id: String,
+        publicKey: String,
+        keyAlgorithm: String,
+        lastEditedEpochSeconds: Long,
+    ) {
+        val current = state.value ?: return
+        if (current.id != id) return
+        state.value =
+            current.copy(
+                publicKey = publicKey,
+                keyAlgorithm = keyAlgorithm,
+                lastEditedEpochSeconds = lastEditedEpochSeconds,
+            )
+    }
 }

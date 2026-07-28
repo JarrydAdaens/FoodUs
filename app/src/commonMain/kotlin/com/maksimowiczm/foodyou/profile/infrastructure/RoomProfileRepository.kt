@@ -27,6 +27,20 @@ internal class RoomProfileRepository(private val dao: ProfileDao) : ProfileRepos
             lastEditedEpochSeconds = lastEditedEpochSeconds,
         )
     }
+
+    override suspend fun updatePublicKey(
+        id: String,
+        publicKey: String,
+        keyAlgorithm: String,
+        lastEditedEpochSeconds: Long,
+    ) {
+        dao.updatePublicKey(
+            id = id,
+            publicKey = publicKey,
+            keyAlgorithm = keyAlgorithm,
+            lastEditedEpochSeconds = lastEditedEpochSeconds,
+        )
+    }
 }
 
 private fun ProfileEntity.toDomain(): Profile =
@@ -35,6 +49,8 @@ private fun ProfileEntity.toDomain(): Profile =
         username = username,
         createdEpochSeconds = createdEpochSeconds,
         lastEditedEpochSeconds = lastEditedEpochSeconds,
+        publicKey = publicKey,
+        keyAlgorithm = keyAlgorithm,
     )
 
 private fun Profile.toEntity(): ProfileEntity =
@@ -43,4 +59,6 @@ private fun Profile.toEntity(): ProfileEntity =
         username = username,
         createdEpochSeconds = createdEpochSeconds,
         lastEditedEpochSeconds = lastEditedEpochSeconds,
+        publicKey = publicKey,
+        keyAlgorithm = keyAlgorithm,
     )

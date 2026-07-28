@@ -22,4 +22,24 @@ interface ProfileDao {
         """
     )
     suspend fun updateUsername(id: String, username: String, lastEditedEpochSeconds: Long)
+
+    /**
+     * Records the public half of the messaging key pair. Narrow on purpose, like [updateUsername]:
+     * no query in this DAO can rewrite `id`, so the GUID stays immutable through a re-key.
+     */
+    @Query(
+        """
+        UPDATE Profile
+        SET publicKey = :publicKey,
+            keyAlgorithm = :keyAlgorithm,
+            lastEditedEpochSeconds = :lastEditedEpochSeconds
+        WHERE id = :id
+        """
+    )
+    suspend fun updatePublicKey(
+        id: String,
+        publicKey: String,
+        keyAlgorithm: String,
+        lastEditedEpochSeconds: Long,
+    )
 }
