@@ -13,19 +13,19 @@ cross-run Boss questions.
 
 | Story | Plan Folder | Questions | Status |
 | --- | --- | --- | --- |
-| STORY 3.1 | `context/implementation-plans/milestone-3/story-1-tabbed-ui-shell/` | [plan.md#questions--unknowns](../../story-1-tabbed-ui-shell/plan.md#questions--unknowns) | OPEN |
-| STORY 3.2 | `context/implementation-plans/milestone-3/story-2-profile/` | [plan.md#questions--unknowns](../../story-2-profile/plan.md#questions--unknowns) | OPEN |
-| STORY 3.3 | `context/implementation-plans/milestone-3/story-3-crypto-identity/` | [plan.md#questions--unknowns](../../story-3-crypto-identity/plan.md#questions--unknowns) | OPEN |
-| STORY 3.6 | `context/implementation-plans/milestone-3/story-6-friend-codes/` | [plan.md#questions--unknowns](../../story-6-friend-codes/plan.md#questions--unknowns) | OPEN |
-| STORY 3.7 | `context/implementation-plans/milestone-3/story-7-friends-list/` | [plan.md#questions--unknowns](../../story-7-friends-list/plan.md#questions--unknowns) | OPEN |
-| STORY 3.8 | `context/implementation-plans/milestone-3/story-8-envelope-e2e-pipeline/` | n/a — planning blocked | BLOCKED |
-| STORY 3.9 | `context/implementation-plans/milestone-3/story-9-groups/` | [plan.md#questions--unknowns](../../story-9-groups/plan.md#questions--unknowns) | OPEN |
-| STORY 3.10 | `context/implementation-plans/milestone-3/story-10-save-to-group/` | [plan.md#questions--unknowns](../../story-10-save-to-group/plan.md#questions--unknowns) | OPEN |
-| STORY 3.11 | `context/implementation-plans/milestone-3/story-11-receive-into-diary/` | [plan.md#questions--unknowns](../../story-11-receive-into-diary/plan.md#questions--unknowns) | OPEN |
-| STORY 3.12 | `context/implementation-plans/milestone-3/story-12-suggestion-queue/` | [plan.md#questions--unknowns](../../story-12-suggestion-queue/plan.md#questions--unknowns) | OPEN |
-| STORY 3.13 | `context/implementation-plans/milestone-3/story-13-notification-center/` | [plan.md#questions--unknowns](../../story-13-notification-center/plan.md#questions--unknowns) | OPEN |
-| STORY 3.14 | `context/implementation-plans/milestone-3/story-14-household-proof/` | [plan.md#questions--unknowns](../../story-14-household-proof/plan.md#questions--unknowns) | OPEN |
-| STORY 3.15 | `context/implementation-plans/milestone-3/story-15-relay-url-setting/` | [plan.md#questions--unknowns](../../story-15-relay-url-setting/plan.md#questions--unknowns) | OPEN |
+| STORY 3.1 | `context/implementation-plans/milestone-3/story-01-tabbed-ui-shell/` | [plan.md#questions--unknowns](../../story-01-tabbed-ui-shell/plan.md#questions--unknowns) | OPEN |
+| STORY 3.2 | `context/implementation-plans/milestone-3/story-02-profile/` | [plan.md#questions--unknowns](../../story-02-profile/plan.md#questions--unknowns) | OPEN |
+| STORY 3.3 | `context/implementation-plans/milestone-3/story-06-crypto-identity/` | [plan.md#questions--unknowns](../../story-06-crypto-identity/plan.md#questions--unknowns) | OPEN |
+| STORY 3.6 | `context/implementation-plans/milestone-3/story-08-friend-codes/` | [plan.md#questions--unknowns](../../story-08-friend-codes/plan.md#questions--unknowns) | OPEN |
+| STORY 3.7 | `context/implementation-plans/milestone-3/story-09-friends-list/` | [plan.md#questions--unknowns](../../story-09-friends-list/plan.md#questions--unknowns) | OPEN |
+| STORY 3.8 | `context/implementation-plans/milestone-3/story-10-envelope-e2e-pipeline/` | n/a — planning blocked | BLOCKED |
+| STORY 3.9 | `context/implementation-plans/milestone-3/story-11-groups/` | [plan.md#questions--unknowns](../../story-11-groups/plan.md#questions--unknowns) | OPEN |
+| STORY 3.10 | `context/implementation-plans/milestone-3/story-12-save-to-group/` | [plan.md#questions--unknowns](../../story-12-save-to-group/plan.md#questions--unknowns) | OPEN |
+| STORY 3.11 | `context/implementation-plans/milestone-3/story-13-receive-into-diary/` | [plan.md#questions--unknowns](../../story-13-receive-into-diary/plan.md#questions--unknowns) | OPEN |
+| STORY 3.12 | `context/implementation-plans/milestone-3/story-14-suggestion-queue/` | [plan.md#questions--unknowns](../../story-14-suggestion-queue/plan.md#questions--unknowns) | OPEN |
+| STORY 3.13 | `context/implementation-plans/milestone-3/story-05-notification-center/` | [plan.md#questions--unknowns](../../story-05-notification-center/plan.md#questions--unknowns) | OPEN |
+| STORY 3.14 | `context/implementation-plans/milestone-3/story-15-household-proof/` | [plan.md#questions--unknowns](../../story-15-household-proof/plan.md#questions--unknowns) | OPEN |
+| STORY 3.15 | `context/implementation-plans/milestone-3/story-07-relay-url-setting/` | [plan.md#questions--unknowns](../../story-07-relay-url-setting/plan.md#questions--unknowns) | OPEN |
 
 ## Boss Questions
 

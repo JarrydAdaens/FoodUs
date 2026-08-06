@@ -2,7 +2,7 @@
 name: milestone-3
 description: Milestone 3 - Multiplayer. Profiles, friends, two-person groups, cross-diary logging, and the dumb encrypted relay server that breaks the island in exactly one controlled place.
 metadata:
-  version: "3.1"
+  version: "3.2"
   agentic_rails_source_version: "3.0"
   owner: "Jarryd Adaens"
   repo: "FoodUs (fork of maksimowiczm/FoodYou)"
@@ -42,13 +42,13 @@ Two household phones, each with a profile, connected as friends via friend code,
 two-person group. A food entry saved to the group on one phone lands correctly slotted in the
 other's diary via the encrypted relay. Suggest-trust and block flows proven. A simulated device
 loss recovers via re-key without weakening the security model. The server holds nothing readable
-and sweeps undelivered messages at 30 days. Story 14 is the evidence for the app-side
+and sweeps undelivered messages at 30 days. Story 15 is the evidence for the app-side
 behaviors; the server-side properties (ciphertext-only storage, the 30-day sweep) are built and
-evidenced in the foodus-relay repository, whose deployment the Story 5 gate confirms.
+evidenced in the foodus-relay repository, whose deployment the Story 4 gate confirms.
 
 ## Status
 
-Not Started
+In Progress (execution started 2026-07-28)
 
 ---
 
@@ -94,7 +94,7 @@ to the relay; they are stated once here rather than repeated per story.
 **Open contract question (owned by foodus-relay, flagged here 2026-07-27):** unknown-version
 envelope disposition — when the app refuses an envelope version it doesn't know, is the message
 acknowledged off the mailbox (accepting loss) or left queued (risking a repeated poll error)?
-Must be settled in the wire contract before Story 8 is planned.
+Must be settled in the wire contract before Story 10 is planned.
 
 ---
 
@@ -102,21 +102,21 @@ Must be settled in the wire contract before Story 8 is planned.
 
 | # | Status | Story | Type | Complexity | Effort | Risk | Plan |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | Not Started | [Tabbed UI shell](#story-1) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-1-tabbed-ui-shell/plan.md) |
-| 2 | Not Started | [Profile](#story-2) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-2-profile/plan.md) |
-| 3 | Not Started | [Crypto identity](#story-3) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-3-crypto-identity/plan.md) |
-| 4 | Externalized | [Relay architecture decisions](#story-4) | External Dependency | — | — | — | *n/a — resolved in foodus-relay* |
-| 5 | Externalized | [Relay server delivery gate](#story-5) | External Dependency | — | — | — | *n/a — delivered by foodus-relay* |
-| 6 | Not Started | [Friend codes](#story-6) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-6-friend-codes/plan.md) |
-| 7 | Not Started | [Friends list](#story-7) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-7-friends-list/plan.md) |
-| 8 | Not Started | [Message envelope & E2E pipeline](#story-8) | Feature | — | — | — | *link when generated* |
-| 9 | Not Started | [Groups](#story-9) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-9-groups/plan.md) |
-| 10 | Not Started | [Save to Group](#story-10) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-10-save-to-group/plan.md) |
-| 11 | Not Started | [Receive into diary](#story-11) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-11-receive-into-diary/plan.md) |
-| 12 | Not Started | [Suggestion queue](#story-12) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-12-suggestion-queue/plan.md) |
-| 13 | Not Started | [Notification Center tab](#story-13) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-13-notification-center/plan.md) |
-| 14 | Not Started | [Household proof](#story-14) | Research | — | — | — | [plan](../implementation-plans/milestone-3/story-14-household-proof/plan.md) |
-| 15 | Not Started | [Configurable relay URL setting](#story-15) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-15-relay-url-setting/plan.md) |
+| 01 | Complete | [Tabbed UI shell](#story-1) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-01-tabbed-ui-shell/plan.md) |
+| 02 | Complete | [Profile](#story-2) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-02-profile/plan.md) |
+| 03 | Externalized | [Relay architecture decisions](#story-3) | External Dependency | — | — | — | *n/a — resolved in foodus-relay* |
+| 04 | Externalized | [Relay server delivery gate](#story-4) | External Dependency | — | — | — | *n/a — delivered by foodus-relay* |
+| 05 | Complete | [Notification Center tab](#story-5) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-05-notification-center/plan.md) |
+| 06 | In Progress | [Crypto identity](#story-6) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-06-crypto-identity/plan.md) |
+| 07 | In Progress | [Configurable relay URL setting](#story-7) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-07-relay-url-setting/plan.md) |
+| 08 | Not Started | [Friend codes](#story-8) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-08-friend-codes/plan.md) |
+| 09 | Not Started | [Friends list](#story-9) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-09-friends-list/plan.md) |
+| 10 | Not Started | [Message envelope & E2E pipeline](#story-10) | Feature | — | — | — | *link when generated* |
+| 11 | Not Started | [Groups](#story-11) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-11-groups/plan.md) |
+| 12 | Not Started | [Save to Group](#story-12) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-12-save-to-group/plan.md) |
+| 13 | Not Started | [Receive into diary](#story-13) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-13-receive-into-diary/plan.md) |
+| 14 | Not Started | [Suggestion queue](#story-14) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-14-suggestion-queue/plan.md) |
+| 15 | Not Started | [Household proof](#story-15) | Research | — | — | — | [plan](../implementation-plans/milestone-3/story-15-household-proof/plan.md) |
 
 ---
 
@@ -132,11 +132,11 @@ Must be settled in the wire contract before Story 8 is planned.
 The single-screen app becomes tabbed with a bottom navigation row in the style of Lose It /
 MyFitnessPal. Tabs left to right: **Groups** (new), **Log** (the entire existing app — day list,
 diary, foods — unchanged), **Notifications** (new, rightmost). The new tabs may land as stubs;
-Story 13 finalizes Notifications.
+Story 5 finalizes Notifications.
 
 **Why / value:**
 Every other Milestone 3 surface hangs off this shell. It is local-only and parallelizable with
-the external relay gates (Stories 4-5).
+the external relay gates (Stories 3-4).
 
 **Rough scope:**
 Root navigation and top-level UI composition. Additive: the existing app moves into the Log tab
@@ -148,9 +148,9 @@ without internal changes.
 - Effort: —
 - Risk: —
 
-**Plan:** `../implementation-plans/milestone-3/story-1-tabbed-ui-shell/plan.md`
+**Plan:** `../implementation-plans/milestone-3/story-01-tabbed-ui-shell/plan.md`
 
-**Status:** Not Started
+**Status:** Complete (2026-07-28, commit 8ac990db)
 
 ---
 
@@ -164,7 +164,7 @@ without internal changes.
 Deliberately minimal profile, created on demand from a My Profile card at the top of the Groups
 tab. Fields: **ID** (randomly generated GUID, hidden from casual view, never changes — the
 primary key for everything social), **Username** (free text, purely cosmetic, collisions allowed,
-renameable — explicitly *not* the unique identifier), **friend code** (Story 6), **created** and
+renameable — explicitly *not* the unique identifier), **friend code** (Story 8), **created** and
 **last-edited** dates. Stored in the Room database so it rides backup/restore.
 
 **Why / value:**
@@ -179,55 +179,15 @@ Room schema addition, Groups-tab My Profile card, profile create/edit UI, backup
 - Effort: —
 - Risk: —
 
-**Plan:** `../implementation-plans/milestone-3/story-2-profile/plan.md`
+**Plan:** `../implementation-plans/milestone-3/story-02-profile/plan.md`
 
-**Status:** Not Started
+**Status:** Complete (2026-07-28, commit 6117d35d)
 
 ---
 
 <a id="story-3"></a>
 
-### Story 3: Crypto identity
-
-**Type:** Feature
-
-**Summary:**
-An asymmetric key pair is generated alongside the GUID at profile creation. The public key is
-stored with the profile; the private key lives in the **Android Keystore** — hardware-backed on
-target devices (Galaxy S22 Ultra class), never entering app memory, never touching the Room
-database, DataStore, any file, or any backup. The app asks the Keystore to decrypt blobs; the
-key never leaves the vault. Consequence: the database backup stays fully portable; the private
-key deliberately is not (keys live and die with the device — see the key-loss policy in
-[design.md](../design.md)).
-
-**Why / value:**
-Foundation of the end-to-end encryption model. Without it nothing sealed can be sent or opened.
-
-**Rough scope:**
-Key-pair generation, Android Keystore integration, public key on the profile record.
-
-**Dependency note:** the local key work is buildable immediately. The seed dictation also
-obliges this story's identity to be **registered with the relay** — the public key rides the
-register/update-profile endpoint (server parent shared slug `...-profile-registration`), and
-re-key announcements (Story 14's drill) reuse the same seam. That registration call is blocked
-by foodus-relay: profile registration endpoints, contract v1, deployed (Story 5 gate), and
-needs Story 15's relay URL on-device.
-
-**CER:**
-
-- Complexity: —
-- Effort: —
-- Risk: —
-
-**Plan:** `../implementation-plans/milestone-3/story-3-crypto-identity/plan.md`
-
-**Status:** Not Started
-
----
-
-<a id="story-4"></a>
-
-### Story 4: Relay architecture decisions
+### Story 3: Relay architecture decisions
 
 **Type:** External Dependency
 
@@ -270,9 +230,9 @@ no edits to the relay repo happen under this story.
 
 ---
 
-<a id="story-5"></a>
+<a id="story-4"></a>
 
-### Story 5: Relay server delivery gate
+### Story 4: Relay server delivery gate
 
 **Type:** External Dependency
 
@@ -287,8 +247,9 @@ plaintext; no accounts, no login, no server-side backup, no web/companion client
 **Gate for this repo:**
 This story is done for the app when the owner confirms the relay is **deployed and reachable
 over HTTPS at the private endpoint, serving contract v1**. That confirmation releases the
-dependency notes on Stories 6 onward ("server leads, app follows"). No app-side work happens
-under this story beyond what Story 8 wires up; no edits to the relay repo.
+dependency notes on the relay-consuming stories (Stories 8 onward — "server leads, app
+follows"). No app-side work happens under this story beyond what Story 10 wires up; no edits to
+the relay repo.
 
 **Source:** [2026-07-27 relay tier-0 seed](../dictations-tier-0/2026-07-27_addendum_foodus-relay-tier0-seed.md)
 
@@ -304,9 +265,123 @@ under this story beyond what Story 8 wires up; no edits to the relay repo.
 
 ---
 
+<a id="story-5"></a>
+
+### Story 5: Notification Center tab
+
+**Type:** Feature
+
+**Summary:**
+The rightmost tab collecting every event the system generates (meal added, meal failed to add,
+friend added you, you joined a group, a group changed its name, ...) — the single place the app
+communicates more to the user. Notifications are stored persistently; dismissed/read ones are
+hidden by default with a control exposing the historical list. Under poll-on-wake there is no
+push transport: "notifications" are materialized locally from messages drained at poll time,
+plus local events.
+
+**Why / value:**
+Without it, cross-device events are invisible; it is deliberately the app's only broadcast
+surface — no nagging.
+
+**Rough scope:**
+Persistent event store, tab UI with dismissed-history toggle, wiring to all emitters. A stub tab
+can land with Story 1; the cross-device emitters (Stories 10-14) wire in as they land.
+
+**CER:**
+
+- Complexity: —
+- Effort: —
+- Risk: —
+
+**Plan:** `../implementation-plans/milestone-3/story-05-notification-center/plan.md`
+
+**Status:** Complete (2026-07-28, commit f6229b0b — cross-device emitters wire in with Stories 10-14)
+
+---
+
 <a id="story-6"></a>
 
-### Story 6: Friend codes
+### Story 6: Crypto identity
+
+**Type:** Feature
+
+**Summary:**
+An asymmetric key pair is generated alongside the GUID at profile creation. The public key is
+stored with the profile; the private key lives in the **Android Keystore** — hardware-backed on
+target devices (Galaxy S22 Ultra class), never entering app memory, never touching the Room
+database, DataStore, any file, or any backup. The app asks the Keystore to decrypt blobs; the
+key never leaves the vault. Consequence: the database backup stays fully portable; the private
+key deliberately is not (keys live and die with the device — see the key-loss policy in
+[design.md](../design.md)).
+
+**Why / value:**
+Foundation of the end-to-end encryption model. Without it nothing sealed can be sent or opened.
+
+**Rough scope:**
+Key-pair generation, Android Keystore integration, public key on the profile record.
+
+**Dependency note:** the local key work is buildable immediately. The seed dictation also
+obliges this story's identity to be **registered with the relay** — the public key rides the
+register/update-profile endpoint (server parent shared slug `...-profile-registration`), and
+re-key announcements (Story 15's drill) reuse the same seam. That registration call is blocked
+by foodus-relay: profile registration endpoints, contract v1, deployed (Story 4 gate), and
+needs Story 7's relay URL on-device.
+
+**CER:**
+
+- Complexity: —
+- Effort: —
+- Risk: —
+
+**Plan:** `../implementation-plans/milestone-3/story-06-crypto-identity/plan.md`
+
+**Status:** In Progress (2026-07-28, commit a933ad33 — local Keystore seam done; relay registration awaits the Story 4 gate)
+
+---
+
+<a id="story-7"></a>
+
+### Story 7: Configurable relay URL setting
+
+**Type:** Feature
+
+**Summary:**
+A settings surface where the relay endpoint is entered by the user — same spirit and likely
+same neighbourhood as the AI endpoint configuration from Milestone 2. Both household phones are
+pointed at the owner's private endpoint by typing it in; the address ships nowhere in code or
+repo, and strangers running the published app can point it at their own relay. Scope beyond a
+bare text field: input validation (HTTPS scheme required, plain HTTP rejected), on-device
+persistence like the AI/USDA settings, a connection check against the relay's
+version/capability endpoint, and graceful behavior when the relay is unset or unreachable —
+relay-backed features hide or grey per the capability-aware UI rule.
+
+**Why / value:**
+The seam that keeps the owner's endpoint private while making every relay-consuming story
+configurable rather than hard-coded (2026-07-27 relay seed dictation, app obligation 1).
+
+**Rough scope:**
+Settings UI + on-device storage, URL validation, capability-endpoint check, unset/unreachable
+handling consumed by later stories' capability gating.
+
+**Dependency note:** the settings surface itself is local-only and buildable immediately; the
+connection check exercises foodus-relay's version/capability endpoint (contract v1, deployed)
+and degrades gracefully until the Story 4 gate is released.
+
+**CER:**
+
+- Complexity: —
+- Effort: —
+- Risk: —
+
+**Plan:** `../implementation-plans/milestone-3/story-07-relay-url-setting/plan.md`
+
+**Status:** In Progress (2026-07-28, commit 18cf3a89 — settings/validation/persistence done; connection check awaits contract v1)
+
+---
+
+<a id="story-8"></a>
+
+### Story 8: Friend codes
 
 **Type:** Feature
 
@@ -325,8 +400,8 @@ Profile UI (display + regenerate), server calls for code registration/regenerati
 foodus-relay wire contract.
 
 **Dependency note:** blocked by foodus-relay: friend-code endpoints (shared slug
-`...-friend-codes`), contract v1, deployed. Owner releases via the Story 5 gate. Also needs
-Story 15's relay URL setting on-device.
+`...-friend-codes`), contract v1, deployed. Owner releases via the Story 4 gate. Also needs
+Story 7's relay URL setting on-device.
 
 **CER:**
 
@@ -334,15 +409,15 @@ Story 15's relay URL setting on-device.
 - Effort: —
 - Risk: —
 
-**Plan:** `../implementation-plans/milestone-3/story-6-friend-codes/plan.md`
+**Plan:** `../implementation-plans/milestone-3/story-08-friend-codes/plan.md`
 
 **Status:** Not Started
 
 ---
 
-<a id="story-7"></a>
+<a id="story-9"></a>
 
-### Story 7: Friends list
+### Story 9: Friends list
 
 **Type:** Feature
 
@@ -364,7 +439,7 @@ Friends + blocked-list Room storage, friends-list UI, add-by-code flow, expandab
 delete / delete-and-block, server resolve + block calls.
 
 **Dependency note:** blocked by foodus-relay: friend-code resolve + block endpoints (shared
-slug `...-friends`), contract v1, deployed. Owner releases via the Story 5 gate.
+slug `...-friends`), contract v1, deployed. Owner releases via the Story 4 gate.
 
 **CER:**
 
@@ -372,15 +447,15 @@ slug `...-friends`), contract v1, deployed. Owner releases via the Story 5 gate.
 - Effort: —
 - Risk: —
 
-**Plan:** `../implementation-plans/milestone-3/story-7-friends-list/plan.md`
+**Plan:** `../implementation-plans/milestone-3/story-09-friends-list/plan.md`
 
 **Status:** Not Started
 
 ---
 
-<a id="story-8"></a>
+<a id="story-10"></a>
 
-### Story 8: Message envelope & E2E pipeline
+### Story 10: Message envelope & E2E pipeline
 
 **Type:** Feature
 
@@ -400,12 +475,12 @@ The shared pipeline every cross-device action (entries, invites, accepts, blocks
 re-announcements) rides on.
 
 **Rough scope:**
-Packet schema, crypto envelope (via Story 3's Keystore identity), send queue, poll-on-wake drain
+Packet schema, crypto envelope (via Story 6's Keystore identity), send queue, poll-on-wake drain
 UI step, message router. Envelope data classes are hand-written to the foodus-relay wire spec;
 version stamping, refuse-loudly, and two-way tolerance per Relay Contract Conformance.
 
 **Dependency note:** blocked by foodus-relay: mailbox push/poll endpoints and envelope schema
-(shared slug `...-mailbox`), contract v1, deployed. Owner releases via the Story 5 gate. The
+(shared slug `...-mailbox`), contract v1, deployed. Owner releases via the Story 4 gate. The
 unknown-version envelope disposition question (see Relay Contract Conformance) must be settled
 in the contract before this story is planned.
 
@@ -415,15 +490,15 @@ in the contract before this story is planned.
 - Effort: —
 - Risk: —
 
-**Plan:** `../implementation-plans/milestone-3/story-8-envelope-e2e-pipeline/plan.md`
+**Plan:** `../implementation-plans/milestone-3/story-10-envelope-e2e-pipeline/plan.md`
 
 **Status:** Not Started
 
 ---
 
-<a id="story-9"></a>
+<a id="story-11"></a>
 
-### Story 9: Groups
+### Story 11: Groups
 
 **Type:** Feature
 
@@ -449,9 +524,9 @@ The trust container that authorizes cross-diary logging. With two members, group
 
 **Rough scope:**
 Group + membership Room storage, Groups-tab cards (create, join, per-group), create form, invite
-lifecycle messages over Story 8's pipeline, group blacklist.
+lifecycle messages over Story 10's pipeline, group blacklist.
 
-**Dependency note:** consumes the relay only through Story 8's pipeline (contract v1); no new
+**Dependency note:** consumes the relay only through Story 10's pipeline (contract v1); no new
 server capability of its own.
 
 **Open decisions:**
@@ -463,7 +538,7 @@ server capability of its own.
   meal plans" (its A6), but its own story list (Part D) defines no story delivering that
   capability — every send/receive story covers diary entries only. Confirm with the owner what
   meal-plan editing means concretely and which story owns it (extend this story, extend
-  Stories 10-11, or add a story) before planning.
+  Stories 12-13, or add a story) before planning.
 
 **CER:**
 
@@ -471,15 +546,15 @@ server capability of its own.
 - Effort: —
 - Risk: —
 
-**Plan:** `../implementation-plans/milestone-3/story-9-groups/plan.md`
+**Plan:** `../implementation-plans/milestone-3/story-11-groups/plan.md`
 
 **Status:** Not Started
 
 ---
 
-<a id="story-10"></a>
+<a id="story-12"></a>
 
-### Story 10: Save to Group
+### Story 12: Save to Group
 
 **Type:** Feature
 
@@ -494,9 +569,9 @@ group follows its trust level.
 The sending half of the marquee feature: cook tacos together, log once.
 
 **Rough scope:**
-Food-entry screen UI addition, fan-out send over Story 8's pipeline.
+Food-entry screen UI addition, fan-out send over Story 10's pipeline.
 
-**Dependency note:** consumes the relay only through Story 8's pipeline (contract v1); no new
+**Dependency note:** consumes the relay only through Story 10's pipeline (contract v1); no new
 server capability of its own.
 
 **Open decision:**
@@ -510,15 +585,15 @@ server capability of its own.
 - Effort: —
 - Risk: —
 
-**Plan:** `../implementation-plans/milestone-3/story-10-save-to-group/plan.md`
+**Plan:** `../implementation-plans/milestone-3/story-12-save-to-group/plan.md`
 
 **Status:** Not Started
 
 ---
 
-<a id="story-11"></a>
+<a id="story-13"></a>
 
-### Story 11: Receive into diary
+### Story 13: Receive into diary
 
 **Type:** Feature
 
@@ -537,7 +612,7 @@ trustworthy.
 **Rough scope:**
 Message router → diary insertion, meal-matching resolver, "entry added" notification emission.
 
-**Dependency note:** consumes the relay only through Story 8's pipeline (contract v1); no new
+**Dependency note:** consumes the relay only through Story 10's pipeline (contract v1); no new
 server capability of its own.
 
 **Open decisions (confirm assumptions):**
@@ -545,7 +620,7 @@ server capability of its own.
 - Date/meal carry-over semantics: the entry lands on the sender's entry date in the recipient's
   diary (assumed yes; flagged during dictation).
 - Whether Suggest-queue accept applies the same three-tier matching at accept time using the
-  original timestamp (assumed yes; shared with Story 12).
+  original timestamp (assumed yes; shared with Story 14).
 
 **CER:**
 
@@ -553,30 +628,30 @@ server capability of its own.
 - Effort: —
 - Risk: —
 
-**Plan:** `../implementation-plans/milestone-3/story-11-receive-into-diary/plan.md`
+**Plan:** `../implementation-plans/milestone-3/story-13-receive-into-diary/plan.md`
 
 **Status:** Not Started
 
 ---
 
-<a id="story-12"></a>
+<a id="story-14"></a>
 
-### Story 12: Suggestion queue
+### Story 14: Suggestion queue
 
 **Type:** Feature
 
 **Summary:**
 Suggest-trust delivery: incoming entries stack in a suggestion queue tied to the group; the
 recipient works through them, accepting or rejecting each one. Accepting adds the entry to the
-diary (via Story 11's matching — see the shared open decision there).
+diary (via Story 13's matching — see the shared open decision there).
 
 **Why / value:**
 The lower-trust tier that still cuts logging effort without granting direct diary write access.
 
 **Rough scope:**
-Suggestion-queue storage, per-item accept/reject review UI, routing from Story 8's pipeline.
+Suggestion-queue storage, per-item accept/reject review UI, routing from Story 10's pipeline.
 
-**Dependency note:** consumes the relay only through Story 8's pipeline (contract v1); no new
+**Dependency note:** consumes the relay only through Story 10's pipeline (contract v1); no new
 server capability of its own.
 
 **CER:**
@@ -585,49 +660,15 @@ server capability of its own.
 - Effort: —
 - Risk: —
 
-**Plan:** `../implementation-plans/milestone-3/story-12-suggestion-queue/plan.md`
+**Plan:** `../implementation-plans/milestone-3/story-14-suggestion-queue/plan.md`
 
 **Status:** Not Started
 
 ---
 
-<a id="story-13"></a>
+<a id="story-15"></a>
 
-### Story 13: Notification Center tab
-
-**Type:** Feature
-
-**Summary:**
-The rightmost tab collecting every event the system generates (meal added, meal failed to add,
-friend added you, you joined a group, a group changed its name, ...) — the single place the app
-communicates more to the user. Notifications are stored persistently; dismissed/read ones are
-hidden by default with a control exposing the historical list. Under poll-on-wake there is no
-push transport: "notifications" are materialized locally from messages drained at poll time,
-plus local events.
-
-**Why / value:**
-Without it, cross-device events are invisible; it is deliberately the app's only broadcast
-surface — no nagging.
-
-**Rough scope:**
-Persistent event store, tab UI with dismissed-history toggle, wiring to all emitters. A stub tab
-can land with Story 1; finalize after Stories 9-12 exist as emitters.
-
-**CER:**
-
-- Complexity: —
-- Effort: —
-- Risk: —
-
-**Plan:** `../implementation-plans/milestone-3/story-13-notification-center/plan.md`
-
-**Status:** Not Started
-
----
-
-<a id="story-14"></a>
-
-### Story 14: Household proof
+### Story 15: Household proof
 
 **Type:** Research
 
@@ -646,7 +687,7 @@ Structured manual validation session on both household phones against the live r
 results as story evidence.
 
 **Dependency note:** blocked by foodus-relay: full contract v1 deployed at the owner's private
-endpoint (Story 5 gate released), with both phones configured via Story 15's relay URL setting.
+endpoint (Story 4 gate released), with both phones configured via Story 7's relay URL setting.
 
 **CER:**
 
@@ -654,47 +695,7 @@ endpoint (Story 5 gate released), with both phones configured via Story 15's rel
 - Effort: —
 - Risk: —
 
-**Plan:** `../implementation-plans/milestone-3/story-14-household-proof/plan.md`
-
-**Status:** Not Started
-
----
-
-<a id="story-15"></a>
-
-### Story 15: Configurable relay URL setting
-
-**Type:** Feature
-
-**Summary:**
-A settings surface where the relay endpoint is entered by the user — same spirit and likely
-same neighbourhood as the AI endpoint configuration from Milestone 2. Both household phones are
-pointed at the owner's private endpoint by typing it in; the address ships nowhere in code or
-repo, and strangers running the published app can point it at their own relay. Scope beyond a
-bare text field: input validation (HTTPS scheme required, plain HTTP rejected), on-device
-persistence like the AI/USDA settings, a connection check against the relay's
-version/capability endpoint, and graceful behavior when the relay is unset or unreachable —
-relay-backed features hide or grey per the capability-aware UI rule.
-
-**Why / value:**
-The seam that keeps the owner's endpoint private while making every relay-consuming story
-configurable rather than hard-coded (2026-07-27 relay seed dictation, app obligation 1).
-
-**Rough scope:**
-Settings UI + on-device storage, URL validation, capability-endpoint check, unset/unreachable
-handling consumed by later stories' capability gating.
-
-**Dependency note:** the settings surface itself is local-only and buildable immediately; the
-connection check exercises foodus-relay's version/capability endpoint (contract v1, deployed)
-and degrades gracefully until the Story 5 gate is released.
-
-**CER:**
-
-- Complexity: —
-- Effort: —
-- Risk: —
-
-**Plan:** `../implementation-plans/milestone-3/story-15-relay-url-setting/plan.md`
+**Plan:** `../implementation-plans/milestone-3/story-15-household-proof/plan.md`
 
 **Status:** Not Started
 
@@ -702,25 +703,28 @@ and degrades gracefully until the Story 5 gate is released.
 
 ## Interdependency Order
 
+Delivered-first ordering: the story numbers now follow delivery order as far as the external
+relay gates allowed, so the executable dependency order is no longer strictly numeric.
 Local-only foundations first, then the external relay gates (everything social depends on the
 contract and the deployed relay), then the social graph, then messaging plumbing, then the
-user-facing send/receive features, then the cross-cutting surface, and finally live proof.
-Stories 1-3 and 15 are local-only and parallelizable with the external gates.
+user-facing send/receive features, and finally live proof. Stories 1, 2, 5, 6, and 7 are
+local-only (5, 6, and 7 to their documented seams) and were parallelizable with the external
+gates.
 
-1. Story 1 (shell) before 2 (profile card lives in the Groups tab); 2 before 3 (keys are
+1. Story 1 (shell) before 2 (profile card lives in the Groups tab); 2 before 6 (keys are
    generated alongside the profile GUID).
-2. Story 4 (contract v1 published) before 5 (relay deployed) — both are foodus-relay gates
-   released by the owner ("server leads, app follows"); Story 4's transferred decisions,
+2. Story 3 (contract v1 published) before 4 (relay deployed) — both are foodus-relay gates
+   released by the owner ("server leads, app follows"); Story 3's transferred decisions,
    including relay endpoint authentication, resolve there.
-3. Story 15 (relay URL setting) before any story that calls the relay (6 onward); its
-   capability check completes once the Story 5 gate is released.
-4. Story 5 before 6 and 7 (codes and friends need the live resolve/block API); 6 before 7.
-5. Stories 5 and 7 before 8 (the pipeline needs a mailbox and stored friend keys); Story 8's
-   plan additionally needs Story 4's contract to settle the unknown-version disposition.
-6. Stories 7 and 8 before 9 (groups are built from friends and invite over the pipeline).
-7. Stories 8 and 9 before 10 and 11; 11 before 12.
-8. Story 13 stubs with 1, finalizes after 9-12 (needs all emitters).
-9. Story 14 last — depends on all, including both phones configured via Story 15.
+3. Story 7 (relay URL setting) before any story that calls the relay (8 onward); its
+   capability check completes once the Story 4 gate is released.
+4. Story 4 before 8 and 9 (codes and friends need the live resolve/block API); 8 before 9.
+5. Stories 4 and 9 before 10 (the pipeline needs a mailbox and stored friend keys); Story 10's
+   plan additionally needs Story 3's contract to settle the unknown-version disposition.
+6. Stories 9 and 10 before 11 (groups are built from friends and invite over the pipeline).
+7. Stories 10 and 11 before 12 and 13; 13 before 14.
+8. Story 5 stubs with 1, finalizes as Stories 10-14 land their emitters.
+9. Story 15 last — depends on all, including both phones configured via Story 7.
 
 ---
 
@@ -753,10 +757,18 @@ Milestone 3 scope:
 ## Notes
 
 - Keep this Story Index in sync with the [Milestones Index](../design.md#milestones-index) in Design.
-- The open decisions embedded in Stories 9, 10, and 11 are **staged** here; per the source
+- **2026-07-29 re-enumeration.** The stories were re-sorted delivered-first and renumbered
+  (fork versioning is story-based, so numbers must track delivery). Mapping old → new:
+  3→6, 4→3, 5→4, 6→8, 7→9, 8→10, 9→11, 10→12, 11→13, 12→14, 13→5, 14→15, 15→7 (1 and 2
+  unchanged). Historical records keep the numbers that were current when they were written —
+  commit messages (e.g. `[STORY 3.3]` = crypto identity, now Story 6; `[STORY 3.13]` =
+  Notification Center, now Story 5), plan Execution Logs, boss run records under
+  `context/rails-boss-execute/`, and `_planning-runs/` files — and must be read through this
+  mapping. Plan folders use zero-padded new numbers (`story-06-crypto-identity`).
+- The open decisions embedded in Stories 11, 12, and 13 are **staged** here; per the source
   dictation's integration instructions, each must be carried into the owning story's
   implementation plan as an explicit decision point when that plan is written, and resolved
-  (with the owner where marked) before the story is planned. Story 4's former open decisions
+  (with the owner where marked) before the story is planned. Story 3's former open decisions
   transferred to the foodus-relay repo's first milestone (2026-07-27 relay seed dictation);
   the unknown-version envelope disposition question under Relay Contract Conformance is also
   owned there.

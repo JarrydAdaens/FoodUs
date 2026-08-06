@@ -15,8 +15,8 @@
 - Design authority: `context/design.md` — "The Multiplayer Exception" (profile metadata is the only social data the relay ever sees; the GUID is the primary key for everything social)
 - Related Plans:
   - Story 3.1 (tabbed UI shell) — **depends on it**: the My Profile card renders at the top of the Groups tab that Story 3.1 creates. This plan adds the card into that tab; it does not re-plan the shell.
-  - Story 3.3 (crypto identity) — **depends on this story**: the key pair is generated alongside the GUID at profile creation. This plan leaves an explicit creation-time integration seam; Story 3.3 owns all key work and the public-key column.
-  - Story 3.6 (friend codes) — **depends on this story**: the friend code is a field of the profile surface. This plan reserves display space on the card only; Story 3.6 owns the column, generation, and regenerate flow.
+  - Story 3.6 (crypto identity) — **depends on this story**: the key pair is generated alongside the GUID at profile creation. This plan leaves an explicit creation-time integration seam; Story 3.6 owns all key work and the public-key column.
+  - Story 3.8 (friend codes) — **depends on this story**: the friend code is a field of the profile surface. This plan reserves display space on the card only; Story 3.8 owns the column, generation, and regenerate flow.
 - External Tooling: none required.
 
 ## CER
@@ -37,17 +37,17 @@ Add a deliberately minimal local profile to FoodUs: a Room-persisted single reco
 - New `profile` feature slice under `com.maksimowiczm.foodyou.profile` following the providermetadata slice shape: `domain` (Profile model, `ProfileRepository` interface, create/rename use cases), `infrastructure` (`ProfileEntity`, `ProfileDao`, `ProfileDatabase` interface, `RoomProfileRepository`), `ProfileModule.kt`.
 - Room integration: `ProfileEntity` registered in `FoodYouDatabase`, version bump 36 → 37, a manual additive `ProfileMigration` mirroring the recent fork-migration convention, `ProfileDatabase` added to the `binds` array in `RoomModule.kt`, exported schema `37.json`.
 - Profile creation: GUID via `kotlin.uuid.Uuid.random()` (stored as its string form), `createdEpochSeconds`/`lastEditedEpochSeconds` stamped at creation; rename updates username and `lastEditedEpochSeconds` only — the GUID is never regenerated or exposed for mutation.
-- Creation-time seam for Story 3.3: profile creation flows through a single domain use case (`CreateProfileUseCase`) so key-pair generation can be attached there later without reshaping callers.
-- My Profile card at the top of the Groups tab (Story 3.1's `GroupsScreen`): empty state prompting creation, filled state showing username and created/last-edited dates, with a reserved friend-code area left to Story 3.6.
+- Creation-time seam for Story 3.6: profile creation flows through a single domain use case (`CreateProfileUseCase`) so key-pair generation can be attached there later without reshaping callers.
+- My Profile card at the top of the Groups tab (Story 3.1's `GroupsScreen`): empty state prompting creation, filled state showing username and created/last-edited dates, with a reserved friend-code area left to Story 3.8.
 - Create/edit UI (dialog or small screen — see Questions) + `ProfileViewModel`, Koin-wired per the `aiSettingsModule()` pattern.
 - New English strings in `shared/resources/src/commonMain/composeResources/values/strings.xml` (additive fork-owned keys).
 - Targeted tests: create-profile use case (GUID/timestamps set), rename (GUID stable, lastEdited bumped), single-profile invariant.
 
 ### Out Of Scope
 
-- Friend codes: column, generation, regeneration (Story 3.6).
-- Key pair, Keystore, public-key storage on the profile record (Story 3.3).
-- Any relay/network calls — the profile is local-only in this story; registration with the relay is Story 3.3's contract-gated seam.
+- Friend codes: column, generation, regeneration (Story 3.8).
+- Key pair, Keystore, public-key storage on the profile record (Story 3.6).
+- Any relay/network calls — the profile is local-only in this story; registration with the relay is Story 3.6's contract-gated seam.
 - Groups tab shell/navigation itself (Story 3.1).
 
 ## Non-Goals
@@ -74,7 +74,7 @@ Paths verified in the working tree on 28 July 2026.
 
 ## Questions / Unknowns
 
-- Q: `[STORY 3.2]` Should social features share one slice or get one slice each — i.e. does this story root `com.maksimowiczm.foodyou.profile`, or a broader `social` slice that Stories 3.6/3.7/3.9 grow into?
+- Q: `[STORY 3.2]` Should social features share one slice or get one slice each — i.e. does this story root `com.maksimowiczm.foodyou.profile`, or a broader `social` slice that Stories 3.8/3.9/3.11 grow into?
   Impact: Package/module layout for the whole milestone; renaming a slice later churns every social story.
   Assumption: A dedicated `profile` slice, matching the repo's vertical-slice-per-concern convention (friends and groups get their own slices in their stories).
   Status: OPEN
@@ -98,7 +98,7 @@ Paths verified in the working tree on 28 July 2026.
   Status: OPEN
   Answer: —
 
-- Q: `[STORY 3.2]` Should this migration pre-create nullable `friendCode`/`publicKey` columns to spare Stories 3.6/3.3 their own schema bumps?
+- Q: `[STORY 3.2]` Should this migration pre-create nullable `friendCode`/`publicKey` columns to spare Stories 3.8/3.6 their own schema bumps?
   Impact: One migration vs three; but pre-creating columns plans other stories' storage for them.
   Assumption: No — each story owns its additive migration, keeping every changed line traceable to its own story (laws §7).
   Status: OPEN
@@ -108,7 +108,7 @@ Paths verified in the working tree on 28 July 2026.
 
 1. Create the `profile` slice domain layer.
    - Why: Domain-first keeps the GUID invariant and creation seam in pure Kotlin, testable without Room.
-   - Edits: New `profile/domain/Profile.kt` (id: String GUID, username, createdEpochSeconds, lastEditedEpochSeconds), `profile/domain/ProfileRepository.kt` (observe/create/rename), `profile/domain/CreateProfileUseCase.kt` — the single entry point that generates the GUID + timestamps and is the documented Story 3.3 hook (key-pair generation attaches here).
+   - Edits: New `profile/domain/Profile.kt` (id: String GUID, username, createdEpochSeconds, lastEditedEpochSeconds), `profile/domain/ProfileRepository.kt` (observe/create/rename), `profile/domain/CreateProfileUseCase.kt` — the single entry point that generates the GUID + timestamps and is the documented Story 3.6 hook (key-pair generation attaches here).
    - Dependencies: none.
 
 2. Add Room infrastructure and the 36 → 37 migration.
@@ -128,7 +128,7 @@ Paths verified in the working tree on 28 July 2026.
 
 5. Build the My Profile card and create/edit UI.
    - Why: The user-facing deliverable — create on demand, edit afterwards.
-   - Edits: New `app/ui/groups/profile/MyProfileCard.kt` (empty state → create; filled state → username, created/last-edited dates, reserved friend-code area with a placeholder comment pointing at Story 3.6), `ProfileEditDialog.kt` (per assumption), `ProfileViewModel.kt`, `Module.profileUiModule()` mirroring `aiSettingsModule()`; slot the card at the top of Story 3.1's Groups tab composable.
+   - Edits: New `app/ui/groups/profile/MyProfileCard.kt` (empty state → create; filled state → username, created/last-edited dates, reserved friend-code area with a placeholder comment pointing at Story 3.8), `ProfileEditDialog.kt` (per assumption), `ProfileViewModel.kt`, `Module.profileUiModule()` mirroring `aiSettingsModule()`; slot the card at the top of Story 3.1's Groups tab composable.
    - Dependencies: Story 3.1's Groups tab exists; steps 1–3.
 
 6. Add strings and run validation.

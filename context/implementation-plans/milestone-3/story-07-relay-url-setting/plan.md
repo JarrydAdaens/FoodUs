@@ -10,13 +10,13 @@
 ## Linked Context
 
 - Milestone: [context/milestones/milestone-3.md](../../../milestones/milestone-3.md)
-- Story: [Story 15: Configurable relay URL setting](../../../milestones/milestone-3.md#story-15) `[STORY 3.15]`
+- Story: [Story 7: Configurable relay URL setting](../../../milestones/milestone-3.md#story-7) `[STORY 3.7]`
 - Dictation source: [2026-07-27 relay tier-0 seed](../../../dictations-tier-0/2026-07-27_addendum_foodus-relay-tier0-seed.md) (app obligation 1: user-entered relay URL, never in code/repo)
 - Design authority: `context/design.md` — "The Multiplayer Exception" (user-entered relay URL, versioned tolerant protocol, capability-aware UI, HTTPS only) and "Secrets and Credentials" (relay URL stored on-device, deliberately private)
 - Constitutional constraint: `context/milestones/milestone-3.md` — Relay Contract Conformance items 4 (capability-aware UI) and 5 (HTTPS only via Ktor)
 - Related Plans:
   - [Story 22 AI settings screen (Milestone 2)](../../milestone-2/story-22-ai-settings-screen/plan.md) — the direct precedent this story mirrors: DataStore-backed settings entity, settings screen with live-probe button, nav route + list-item wiring.
-  - Stories 3, 6, 7, 14 (this milestone) consume the URL and configured-signal this story creates; Story 8's pipeline (plan pending, blocked on contract v1) will reuse the same base-URL seam.
+  - Stories 6, 8, 9, 15 (this milestone) consume the URL and configured-signal this story creates; Story 10's pipeline (plan pending, blocked on contract v1) will reuse the same base-URL seam.
 - External Tooling: none required.
 
 ## CER
@@ -46,9 +46,9 @@ Ship a relay settings surface where the user types the relay endpoint URL: valid
 
 ### Out Of Scope
 
-- Any envelope schema, mailbox, registration, or friend-code calls (Stories 3, 6, 7, 8).
+- Any envelope schema, mailbox, registration, or friend-code calls (Stories 6, 8, 9, 10).
 - Capability *caching* or per-feature capability flags — consuming stories decide how they gate once the contract defines capability names; this story only provides the URL, the configured-signal, and the checker.
-- Notification Center events for relay state (Story 13 owns that surface).
+- Notification Center events for relay state (Story 5 owns that surface).
 - Any server-side work; the foodus-relay repo is read-only reference.
 
 ## Non-Goals
@@ -74,29 +74,29 @@ All paths verified in the working tree on 28 July 2026.
 - **Server-side state (read-only check of `D:\forked-projects\FoodUs-Server`):** wire contract v1 is that repo's Milestone 3 Story 1, **Not Started**. The version/capability endpoint exists as a concept in both repos' milestone docs but has no specified path, method, or response schema yet.
 - **Constraints:** fork philosophy (new files fork-additive; upstream-shared edits — `FoodYouAppNavHost.kt`, `SettingsScreen.kt`, `strings.xml`, `UiModule.kt`, `InitKoin.kt` — stay small and appended); the owner's relay address never enters the repo, including in tests, previews, or comments.
 
-**Dependency note (app → server, per Relay Contract Conformance item 6):** the settings surface is local-only and buildable immediately. The connection check consumes foodus-relay's version/capability endpoint — blocked by foodus-relay: contract v1 (that repo's Milestone 3 Story 1, Not Started as of 2026-07-28), deployed per the Story 5 gate. Server parent story slug to be confirmed when contract v1 lands. Until then the checker ships behind the placeholder seam and an unreachable/404 result is expected and non-fatal.
+**Dependency note (app → server, per Relay Contract Conformance item 6):** the settings surface is local-only and buildable immediately. The connection check consumes foodus-relay's version/capability endpoint — blocked by foodus-relay: contract v1 (that repo's Milestone 3 Story 1, Not Started as of 2026-07-28), deployed per the Story 4 gate. Server parent story slug to be confirmed when contract v1 lands. Until then the checker ships behind the placeholder seam and an unreachable/404 result is expected and non-fatal.
 
 ## Questions / Unknowns
 
-- Q: `[STORY 3.15]` What are the version/capability endpoint's path, method, and response schema?
+- Q: `[STORY 3.7]` What are the version/capability endpoint's path, method, and response schema?
   Impact: The connection checker cannot be finished — only seamed. This is the story's single contract gate and the reason for `Status: Draft`.
   Assumption: The probe is an unauthenticated HTTPS `GET` at a relative path under the user-entered base URL. The path lives in one named constant and the response is parsed tolerantly (unknown fields ignored, absent fields = not provided) into an opaque pass-through; both are updated in the same sitting the contract lands. Until then, a reachable-but-404 relay is reported as Failure with the status line, which is acceptable pre-contract behavior.
   Status: OPEN
   Answer: —
 
-- Q: `[STORY 3.15]` Where does app-side relay client code live — a new `relay` slice now, or a broader `social` slice that Stories 2/3/7/9 might introduce?
+- Q: `[STORY 3.7]` Where does app-side relay client code live — a new `relay` slice now, or a broader `social` slice that Stories 2/3/7/9 might introduce?
   Impact: Package/module naming that every later Milestone 3 story builds on; churn here means renames across the milestone.
   Assumption: A new top-level `relay` slice (`com.maksimowiczm.foodyou.relay`) mirroring the `ai` slice, holding transport-facing code (settings, checker, later the envelope pipeline). Social domain objects (profiles, friends, groups) can live elsewhere without conflict; the relay slice is genuinely its own concern (transport, not social graph).
   Status: OPEN
   Answer: —
 
-- Q: `[STORY 3.15]` What exactly do later stories gate on — "URL set" only, or "URL set + last capability check succeeded + capability X reported"?
+- Q: `[STORY 3.7]` What exactly do later stories gate on — "URL set" only, or "URL set + last capability check succeeded + capability X reported"?
   Impact: Determines whether this story must persist check results/capability payloads, or only expose the URL and a live checker.
-  Assumption: This story persists nothing beyond the URL. It exposes `ObserveRelayConfigured` (URL set) plus the on-demand checker; per-capability gating and any caching policy belong to the consuming stories once the contract names capabilities. This keeps Story 15 minimal and avoids inventing a capability schema.
+  Assumption: This story persists nothing beyond the URL. It exposes `ObserveRelayConfigured` (URL set) plus the on-demand checker; per-capability gating and any caching policy belong to the consuming stories once the contract names capabilities. This keeps Story 7 minimal and avoids inventing a capability schema.
   Status: OPEN
   Answer: —
 
-- Q: `[STORY 3.15]` Entry-point placement: a top-level `RelaySettingsListItem` on `SettingsScreen` next to the AI item?
+- Q: `[STORY 3.7]` Entry-point placement: a top-level `RelaySettingsListItem` on `SettingsScreen` next to the AI item?
   Impact: Which upstream file gains an edit and how discoverable the setting is; the milestone says "same neighbourhood as the AI endpoint configuration".
   Assumption: Yes — a sibling list item directly after the AI settings item, following the identical component pattern.
   Status: OPEN
@@ -181,7 +181,7 @@ Not needed — single-pass story well under CER thresholds.
 
 - Pattern sources verified 2026-07-28: `ai/domain/AiSettings.kt`, `ai/infrastructure/DataStoreAiSettingsRepository.kt`, `ai/infrastructure/AiInfrastructureModule.kt`, `ai/infrastructure/OpenRouterAiConnectionValidator.kt`, `app/ui/settings/ai/*` (screen, viewmodel, ui-state, module), `app/ui/settings/AiSettingsListItem.kt`, `app/ui/settings/SettingsScreen.kt:35,95`, `app/navigation/FoodYouAppNavHost.kt:118-122,578`, `app/ui/UiModule.kt:23`, `ai/AiModule.kt`.
 - Server-side gate verified read-only in `D:\forked-projects\FoodUs-Server\context\milestones\milestone-3.md`: wire contract v1 = Story 1, Not Started.
-- Planning input: milestone-3.md Story 15 + Relay Contract Conformance; design.md "The Multiplayer Exception".
+- Planning input: milestone-3.md Story 7 + Relay Contract Conformance; design.md "The Multiplayer Exception".
 
 ## Complaints / Friction
 

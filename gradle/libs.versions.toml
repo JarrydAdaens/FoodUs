@@ -4,8 +4,8 @@ version-name = "3.4.9"
 # Scheme: <milestone>.<story>.<build> — bump <build> for extra releases within a story.
 # This is the app's real shipped versionName and must match the v* release tag; the
 # upstream version-name above is retained as derived-from metadata only.
-fork-version-name = "2.23.0"
-android-versionCode = "125"
+fork-version-name = "3.5.0"
+android-versionCode = "126"
 android-compileSdk = "36"
 android-minSdk = "28"
 android-targetSdk = "36"

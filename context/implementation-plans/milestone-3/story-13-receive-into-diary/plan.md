@@ -10,13 +10,13 @@
 ## Linked Context
 
 - Milestone: [context/milestones/milestone-3.md](../../../milestones/milestone-3.md)
-- Story: [Story 11: Receive into diary](../../../milestones/milestone-3.md#story-11) `[STORY 3.11]`
+- Story: [Story 13: Receive into diary](../../../milestones/milestone-3.md#story-13) `[STORY 3.13]`
 - Dictation source: [2026-07-27 Milestone 3 multiplayer addendum](../../../dictations-tier-0/2026-07-27_milestone-3_multiplayer-addendum.md)
 - Design authority: `context/design.md` — "The Multiplayer Exception" (relay model, E2E, poll-on-wake)
 - Related Plans:
-  - Story 3.8 (envelope & E2E pipeline) — **upstream dependency, plan currently BLOCKED** on the foodus-relay wire contract v1 (Not Started in that repo). This story consumes decrypted, routed messages from Story 3.8's message router; it never touches the wire itself.
-  - Story 3.12 (suggestion queue) — consumes this story's meal-matching resolver at accept time (shared open decision below).
-  - Story 3.13 (Notification Center) — receives this story's "entry added" / "entry failed" events.
+  - Story 3.10 (envelope & E2E pipeline) — **upstream dependency, plan currently BLOCKED** on the foodus-relay wire contract v1 (Not Started in that repo). This story consumes decrypted, routed messages from Story 3.10's message router; it never touches the wire itself.
+  - Story 3.14 (suggestion queue) — consumes this story's meal-matching resolver at accept time (shared open decision below).
+  - Story 3.5 (Notification Center) — receives this story's "entry added" / "entry failed" events.
 - External Tooling: none required.
 
 ## CER
@@ -24,7 +24,7 @@
 - Complexity: 5
 - Effort: 4
 - Risk: 5
-- Notes: Inline estimate. Complexity sits in the three-tier matching resolver's edge cases (duplicate meal names, overlapping/overnight/all-day windows, deleted meals mid-insert) under a hard never-drop invariant. Effort is moderate: one resolver, one insertion use case, event emission, and tests — no UI of its own. Risk is elevated because this story writes into another person's diary automatically (data-integrity sensitive), its input schema is owned by the blocked Story 3.8 envelope work, and a silent drop or mis-slot directly betrays the trust model the milestone exists to prove.
+- Notes: Inline estimate. Complexity sits in the three-tier matching resolver's edge cases (duplicate meal names, overlapping/overnight/all-day windows, deleted meals mid-insert) under a hard never-drop invariant. Effort is moderate: one resolver, one insertion use case, event emission, and tests — no UI of its own. Risk is elevated because this story writes into another person's diary automatically (data-integrity sensitive), its input schema is owned by the blocked Story 3.10 envelope work, and a silent drop or mis-slot directly betrays the trust model the milestone exists to prove.
 
 ## Objective
 
@@ -41,22 +41,22 @@ When a Full-trust group message carrying a food entry is routed to this device, 
   3. **First-meal fallback** — the meal with the lowest `rank`.
 - Mapping the self-contained payload to the existing diary snapshot model: construct a `DiaryFood` (`DiaryFoodProduct`, and `DiaryFoodRecipe` if the envelope preserves recipe structure) and insert via the existing snapshot persistence path (`FoodDiaryEntryRepository.insert` → `MeasurementEntity` + `DiaryProductEntity`/`DiaryRecipeEntity`). No food-catalog record is created — diary entries are already catalog-independent snapshots.
 - Never-drop hardening: the insertion path must not be able to return a business failure that discards the entry (see Risk Mitigation for the `MealNotFound`/`InvalidMeasurement` handling this forces).
-- Event emission via the existing `EventBus` (`common/domain/event/EventBus.kt`): an "entry added (by <sender> into <meal>)" integration event consumed by Story 3.13's persistent event store; a distinct "entry landed by fallback" flavor is optional (see Questions).
+- Event emission via the existing `EventBus` (`common/domain/event/EventBus.kt`): an "entry added (by <sender> into <meal>)" integration event consumed by Story 3.5's persistent event store; a distinct "entry landed by fallback" flavor is optional (see Questions).
 - Unit tests for the resolver tiers and the never-drop invariant (deterministic domain logic — squarely inside the unit-testing rule's "stable business logic" mandate).
 
 ### Out Of Scope
 
-- Polling, decryption, envelope parsing, version handling, and message routing — Story 3.8 (blocked; interface dependency only).
-- The suggestion-queue UI and storage — Story 3.12 (it calls this story's resolver at accept time).
-- The Notification Center store/UI — Story 3.13 (this story only publishes events).
-- Sending entries (Story 3.10), groups/trust storage (Story 3.9).
-- Any relay/server capability — this story consumes the relay only through Story 3.8's pipeline (contract v1); no new server capability of its own.
+- Polling, decryption, envelope parsing, version handling, and message routing — Story 3.10 (blocked; interface dependency only).
+- The suggestion-queue UI and storage — Story 3.14 (it calls this story's resolver at accept time).
+- The Notification Center store/UI — Story 3.5 (this story only publishes events).
+- Sending entries (Story 3.12), groups/trust storage (Story 3.11).
+- Any relay/server capability — this story consumes the relay only through Story 3.10's pipeline (contract v1); no new server capability of its own.
 
 ## Non-Goals
 
 - No conflict resolution or dedup against entries the recipient logged manually — a shared meal logged by both people appears twice by design (out of dictated scope).
 - No editing/deleting of received entries beyond what any diary entry already supports.
-- No meal-plan editing capability — flagged in Story 3.9's open decisions; not planned here.
+- No meal-plan editing capability — flagged in Story 3.11's open decisions; not planned here.
 
 ## Current Understanding
 
@@ -66,44 +66,44 @@ All paths verified in the working tree on 28 July 2026.
 - **Window semantics precedent:** `fooddiary/domain/usecase/ObserveDiaryMealsUseCase.kt` `shouldShowMeal()` — `from == to` means all-day; `to < from` wraps midnight; otherwise inclusive `from <= t <= to`. The time-match tier reuses these semantics rather than inventing new ones.
 - **Insertion path:** `fooddiary/domain/usecase/CreateFoodDiaryEntryUseCase.kt` validates measurement-vs-food and meal existence, then `FoodDiaryEntryRepository.insert(measurement, mealId, date, food, createdAt)` inside a `TransactionProvider.withTransaction`. Room implementation `RoomFoodDiaryEntryRepository` persists a **snapshot**: `MeasurementEntity` (mealId FK, epochDay, measurement type + quantity) plus `DiaryProductEntity`/`DiaryRecipeEntity`. `FoodDiaryEntry.date` is a `LocalDate` epoch-day; `createdAt`/`updatedAt` are epoch seconds.
 - **Self-contained payload fit:** `DiaryFood` (`fooddiary/domain/entity/DiaryFood.kt`) needs only name, `NutritionFacts` (per 100 g/ml), serving/total weight, `isLiquid`, note — all of which the milestone says the packet carries. `DiaryFoodProduct` additionally carries a `FoodSource`; what source a received entry declares is an open question below.
-- **Events:** `common/domain/event/EventBus.kt` (`publish(IntegrationEvent)`, `subscribe` ext). Precedent event: `fooddiary/domain/event/FoodDiaryEntryCreatedEvent.kt`. Story 3.13 will subscribe/persist; this story defines the received-entry event type(s).
+- **Events:** `common/domain/event/EventBus.kt` (`publish(IntegrationEvent)`, `subscribe` ext). Precedent event: `fooddiary/domain/event/FoodDiaryEntryCreatedEvent.kt`. Story 3.5 will subscribe/persist; this story defines the received-entry event type(s).
 - **Koin wiring precedent:** `fooddiary/domain/FoodDiaryDomainModule.kt` registers use cases; new resolver/use case registers the same way.
-- **Interfaces this story must expose, not consume:** Story 3.8's router will call something like `suspend fun receive(incoming: IncomingDiaryEntry)`. The `IncomingDiaryEntry` domain type is owned here (payload fields per the milestone: complete nutrition, name, entry timestamp, meal name, group/sender identity) and is deliberately **not** the wire envelope — Story 3.8 maps envelope → domain type when it is planned. No wire-contract details (field names, versioning, endpoints) are assumed in this plan.
+- **Interfaces this story must expose, not consume:** Story 3.10's router will call something like `suspend fun receive(incoming: IncomingDiaryEntry)`. The `IncomingDiaryEntry` domain type is owned here (payload fields per the milestone: complete nutrition, name, entry timestamp, meal name, group/sender identity) and is deliberately **not** the wire envelope — Story 3.10 maps envelope → domain type when it is planned. No wire-contract details (field names, versioning, endpoints) are assumed in this plan.
 - **Assumptions and constraints:** fork philosophy (new files additive; no upstream file edits expected beyond Koin module registration); laws.md §2 input validation — the routed payload is external input and must be validated (finite/non-negative nutrition values, non-empty name) before insertion, with validation failure feeding the "sanitize then land" path, never a drop.
 
 ## Questions / Unknowns
 
-- Q: `[STORY 3.11]` Date/meal carry-over semantics: does the received entry land on the **sender's entry date** in the recipient's diary?
+- Q: `[STORY 3.13]` Date/meal carry-over semantics: does the received entry land on the **sender's entry date** in the recipient's diary?
   Impact: Decides the `date` passed to insertion and how the resolver interprets the entry timestamp (calendar date vs time-of-day split).
   Assumption: Yes — the entry lands on the sender's entry date; the timestamp's time-of-day drives the tier-2 time match. `createdAt`/`updatedAt` use local receive time. (Flagged during dictation; staged in the milestone for owner confirmation.)
   Status: OPEN
   Answer: —
 
-- Q: `[STORY 3.11]` Does Suggest-queue accept (Story 3.12) apply the same three-tier matching **at accept time** using the original entry timestamp?
-  Impact: Determines whether the resolver is exposed as a shared service to Story 3.12 or stays private to the Full-trust path; affects where meal resolution happens relative to queue storage.
-  Assumption: Yes — shared resolver, invoked at accept time with the original timestamp (shared decision with Story 3.12; staged in the milestone).
+- Q: `[STORY 3.13]` Does Suggest-queue accept (Story 3.14) apply the same three-tier matching **at accept time** using the original entry timestamp?
+  Impact: Determines whether the resolver is exposed as a shared service to Story 3.14 or stays private to the Full-trust path; affects where meal resolution happens relative to queue storage.
+  Assumption: Yes — shared resolver, invoked at accept time with the original timestamp (shared decision with Story 3.14; staged in the milestone).
   Status: OPEN
   Answer: —
 
-- Q: `[STORY 3.11]` Name-match strictness: exact match, or case-insensitive/trimmed? And if multiple recipient meals share the matching name, which wins?
+- Q: `[STORY 3.13]` Name-match strictness: exact match, or case-insensitive/trimmed? And if multiple recipient meals share the matching name, which wins?
   Impact: Tier-1 correctness for the household's real meal lists (e.g. "breakfast" vs "Breakfast").
   Assumption: Case-insensitive comparison on trimmed names; ties broken by lowest `rank`.
   Status: OPEN
   Answer: —
 
-- Q: `[STORY 3.11]` Time-match edge semantics: do all-day meals (`from == to`) count as covering every timestamp in tier 2, and how are overlapping windows broken?
+- Q: `[STORY 3.13]` Time-match edge semantics: do all-day meals (`from == to`) count as covering every timestamp in tier 2, and how are overlapping windows broken?
   Impact: An all-day meal would otherwise swallow every time-matched entry; overlaps are common (snack windows inside day-long windows).
   Assumption: All-day meals are skipped in tier 2 (they express "no window", mirroring `ignoreAllDayMeals` intent) but remain eligible for tiers 1 and 3; overlapping covering windows are broken by lowest `rank`.
   Status: OPEN
   Answer: —
 
-- Q: `[STORY 3.11]` Does the envelope preserve recipe structure (ingredients → `DiaryFoodRecipe`) or flatten everything to a single product-like payload?
-  Impact: Decides whether the payload mapper targets `DiaryFoodProduct` only or both snapshot shapes; affects Story 3.10's serialization too. Contract-dependent — owned by the foodus-relay wire contract via Story 3.8.
-  Assumption: Plan the mapper against the `DiaryFood` interface with `DiaryFoodProduct` as the guaranteed baseline; recipe fidelity is decided when Story 3.8 is planned against contract v1.
+- Q: `[STORY 3.13]` Does the envelope preserve recipe structure (ingredients → `DiaryFoodRecipe`) or flatten everything to a single product-like payload?
+  Impact: Decides whether the payload mapper targets `DiaryFoodProduct` only or both snapshot shapes; affects Story 3.12's serialization too. Contract-dependent — owned by the foodus-relay wire contract via Story 3.10.
+  Assumption: Plan the mapper against the `DiaryFood` interface with `DiaryFoodProduct` as the guaranteed baseline; recipe fidelity is decided when Story 3.10 is planned against contract v1.
   Status: OPEN
   Answer: —
 
-- Q: `[STORY 3.11]` What `FoodSource` does a received entry's `DiaryFoodProduct` declare?
+- Q: `[STORY 3.13]` What `FoodSource` does a received entry's `DiaryFoodProduct` declare?
   Impact: `DiaryFoodProduct.source` is non-null; the value shows up anywhere source is rendered.
   Assumption: Whatever generic/user value the enum offers today (verify `common/domain/food/FoodSource` members during implementation); introducing a new "shared" source is a nice-to-have deferred unless trivial and additive.
   Status: OPEN
@@ -112,9 +112,9 @@ All paths verified in the working tree on 28 July 2026.
 ## Execution Steps
 
 1. Define the incoming domain type and receiving seam.
-   - Why: Story 3.8 (blocked) needs a stable, wire-agnostic target to route into; this story owns the domain side of that seam.
-   - Edits: new `IncomingDiaryEntry` domain entity (self-contained food payload, entry timestamp, sender meal name, group id, sender GUID) and `ReceiveDiaryEntryUseCase` skeleton in the fooddiary slice (or the new multiplayer slice if Stories 3.9/3.10 establish one — align at implementation time with whichever exists first).
-   - Dependencies: none locally; consumed later by Story 3.8's router and Story 3.12's accept path.
+   - Why: Story 3.10 (blocked) needs a stable, wire-agnostic target to route into; this story owns the domain side of that seam.
+   - Edits: new `IncomingDiaryEntry` domain entity (self-contained food payload, entry timestamp, sender meal name, group id, sender GUID) and `ReceiveDiaryEntryUseCase` skeleton in the fooddiary slice (or the new multiplayer slice if Stories 3.11/3.12 establish one — align at implementation time with whichever exists first).
+   - Dependencies: none locally; consumed later by Story 3.10's router and Story 3.14's accept path.
 
 2. Implement the meal-matching resolver as a pure domain service.
    - Why: The three-tier rule is deterministic logic that must be unit-testable in isolation.
@@ -132,9 +132,9 @@ All paths verified in the working tree on 28 July 2026.
    - Dependencies: Steps 1–3.
 
 5. Emit Notification Center events.
-   - Why: Cross-device actions must be visible (milestone: "entry added" notification; Story 3.13 is the sink).
+   - Why: Cross-device actions must be visible (milestone: "entry added" notification; Story 3.5 is the sink).
    - Edits: new `IntegrationEvent` type(s) — received-entry-added (sender, group, meal, food name, fallback-used flag), received-entry-failed (hard-invalid payload case); `EventBus.publish` calls from Step 4.
-   - Dependencies: Step 4; Story 3.13 consumes later (events are inert until then — acceptable).
+   - Dependencies: Step 4; Story 3.5 consumes later (events are inert until then — acceptable).
 
 6. Unit tests for resolver and use case.
    - Why: Stable business logic + a bug here corrupts another person's diary (unit-testing rules: required category).
@@ -150,9 +150,9 @@ All paths verified in the working tree on 28 July 2026.
 
 ### Manual Checks
 
-1. With Story 3.8 unavailable, drive `ReceiveDiaryEntryUseCase` from a debug hook or test double: verify an entry with a matching meal name lands in that meal; one with only a time match lands by window; one matching nothing lands in the first-ranked meal.
+1. With Story 3.10 unavailable, drive `ReceiveDiaryEntryUseCase` from a debug hook or test double: verify an entry with a matching meal name lands in that meal; one with only a time match lands by window; one matching nothing lands in the first-ranked meal.
 2. Verify the inserted entry renders normally in the diary UI (nutrition, weight, name) and survives app restart.
-3. Verify an event is published for each insertion (log/subscriber probe until Story 3.13 exists).
+3. Verify an event is published for each insertion (log/subscriber probe until Story 3.5 exists).
 
 ### Acceptance Criteria
 
@@ -163,8 +163,8 @@ All paths verified in the working tree on 28 July 2026.
 
 ## Risk Mitigation
 
-- Risk: Story 3.8's envelope (contract v1) ends up carrying less/different data than `IncomingDiaryEntry` assumes.
-  Mitigation: The domain type is minimal (only fields the milestone text guarantees); the mapper concentrates all payload interpretation in one file; contract-dependent fields are flagged in Questions. Revisit this plan when Story 3.8 unblocks — noted as a standing dependency.
+- Risk: Story 3.10's envelope (contract v1) ends up carrying less/different data than `IncomingDiaryEntry` assumes.
+  Mitigation: The domain type is minimal (only fields the milestone text guarantees); the mapper concentrates all payload interpretation in one file; contract-dependent fields are flagged in Questions. Revisit this plan when Story 3.10 unblocks — noted as a standing dependency.
 - Risk: Never-drop invariant violated by reusing existing failure-returning insertion paths.
   Mitigation: Dedicated use case bypassing `CreateFoodDiaryEntryUseCase`'s rejection modes; gram/milliliter measurement normalization; in-transaction resolver retry; unit tests that assert insertion under each failure-shaped input.
 - Risk: Mis-slotting annoys the household and erodes trust in Full-trust groups.
@@ -185,8 +185,8 @@ Not needed — CER within single-pass thresholds.
 
 ### Upstream plan blocked, downstream planned
 
-**What happened:** This story's only input arrives via Story 3.8's router, whose plan is blocked on the unsettled wire contract.
+**What happened:** This story's only input arrives via Story 3.10's router, whose plan is blocked on the unsettled wire contract.
 **Why this made the task harder:** The receiving seam had to be designed against milestone prose rather than a routed message type.
-**What was tried:** Owning the domain-side type (`IncomingDiaryEntry`) here and pushing all envelope mapping into Story 3.8's future plan.
+**What was tried:** Owning the domain-side type (`IncomingDiaryEntry`) here and pushing all envelope mapping into Story 3.10's future plan.
 **What would improve this:** Carrying contract v1 (or just its envelope payload section) across as soon as foodus-relay publishes it, then revisiting the mapper questions.
-**What I think:** The seam-first split is safe — this story's logic is stable regardless of wire shape — but do not start implementation of Step 3's mapper details until Story 3.8 is at least planned.
+**What I think:** The seam-first split is safe — this story's logic is stable regardless of wire shape — but do not start implementation of Step 3's mapper details until Story 3.10 is at least planned.

@@ -93,7 +93,7 @@ The backlog (`backlog/`) is not a numbered tier. It is a staging pool — inform
 | --- | --- | --- | --- | --- |
 | Milestone 1: Initialization | [milestones/milestone-1.md](milestones/milestone-1.md) | Complete | Gets the fork built, deployed, populated with the owner's recovered historical data, and in daily use, with a repeatable two-device update mechanism | A live, data-complete daily driver that Milestone 2 can safely customize |
 | Milestone 2: Customisation | [milestones/milestone-2.md](milestones/milestone-2.md) | In Progress (reopened 2026-07-26) | Makes the app the owner's own: FoodUs identity, AI-assisted logging, ergonomics fixes, adopted upstream bug fixes | An app that is faster to log with than MyFitnessPal/Lose It ever were, unmistakably this fork |
-| Milestone 3: Multiplayer | [milestones/milestone-3.md](milestones/milestone-3.md) | Not Started | Cross-diary logging for the household pair — log a shared meal once and it lands in both diaries — via profiles, friends, two-person trusted groups, and a dumb encrypted relay | A multi-user FoodUs that stays local-first: the island broken in exactly one controlled place |
+| Milestone 3: Multiplayer | [milestones/milestone-3.md](milestones/milestone-3.md) | In Progress (started 2026-07-28) | Cross-diary logging for the household pair — log a shared meal once and it lands in both diaries — via profiles, friends, two-person trusted groups, and a dumb encrypted relay | A multi-user FoodUs that stays local-first: the island broken in exactly one controlled place |
 
 Keep this index in sync as milestones are added, completed, reordered, or reclassified. When a backlog story scores as epic-sized, promote it into this index as a new milestone.
 
@@ -396,7 +396,8 @@ Activity/entry points, permissions, camera/barcode integration, platform SQLite 
   - **Open question (owned by foodus-relay):** relay endpoint authentication — "no accounts"
     still requires proof of GUID ownership (likely request signing with the device key pair,
     plus replay protection) so a known GUID cannot be drained, re-keyed, or impersonated. Once
-    open in app Story 3.4, this now resolves in the foodus-relay repo's first milestone, along
+    open in app Story 3.3 (relay architecture decisions; Story 3.4 before the 2026-07-29
+    re-enumeration), this now resolves in the foodus-relay repo's first milestone, along
     with friend-code minting authority, the friend-code charset, and the exact wire contract.
     Stack and hosting, formerly part of the same open set, were resolved 2026-07-27.
 - These properties are constitutional for this fork: changes that add tracking, accounts, or

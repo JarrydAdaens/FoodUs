@@ -22,4 +22,4 @@ STORY 3.8 (`BLOCKED` → `TODO`) and dispatch a planning worker.
 ## No plan file was created
 
 Per workflow policy, a blocked story must not pretend its plan exists.
-`context/implementation-plans/milestone-3/story-8-envelope-e2e-pipeline/` is intentionally absent.
+`context/implementation-plans/milestone-3/story-10-envelope-e2e-pipeline/` is intentionally absent.

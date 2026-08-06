@@ -10,16 +10,16 @@
 ## Linked Context
 
 - Milestone: [context/milestones/milestone-3.md](../../../milestones/milestone-3.md)
-- Story: [Story 3: Crypto identity](../../../milestones/milestone-3.md#story-3) `[STORY 3.3]`
+- Story: [Story 6: Crypto identity](../../../milestones/milestone-3.md#story-6) `[STORY 3.6]`
 - Design authority: `context/design.md` — "The Multiplayer Exception" (E2E model, private keys in the Android Keystore, keys-live-and-die-with-the-device policy) and "Security and Privacy"
 - Constitutional constraint: `context/laws.md` §2 — Secrets and Data Boundaries. The private key never enters the Room database, DataStore, any file, any backup, or any log; it never leaves the Keystore vault.
 - Relay Contract Conformance: [milestone-3.md §Relay Contract Conformance](../../../milestones/milestone-3.md#relay-contract-conformance-2026-07-27-relay-seed-dictation) — binds the registration seam described below.
 - Related Plans:
-  - Story 3.2 (Profile) — `context/implementation-plans/milestone-3/story-2-profile/plan.md` (planned in the same run): owns the profile Room entity that carries the public key; key generation hooks into its create-profile flow.
-  - Story 3.15 (Relay URL setting) — supplies the user-entered relay endpoint the registration call needs.
-  - Story 3.8 (Envelope & E2E pipeline) — **blocked, unplanned this run** (contract gate); future consumer of this story's decrypt capability.
-  - Story 3.14 (Household proof) — exercises the re-key drill through the seam this story creates.
-- Dependency note (app → server, per conformance rule 6): **blocked by foodus-relay: register/update-profile endpoints (shared slug `...-profile-registration`), contract v1, deployed.** Owner releases via the Story 5 gate. The local key work below is NOT blocked.
+  - Story 3.2 (Profile) — `context/implementation-plans/milestone-3/story-02-profile/plan.md` (planned in the same run): owns the profile Room entity that carries the public key; key generation hooks into its create-profile flow.
+  - Story 3.7 (Relay URL setting) — supplies the user-entered relay endpoint the registration call needs.
+  - Story 3.10 (Envelope & E2E pipeline) — **blocked, unplanned this run** (contract gate); future consumer of this story's decrypt capability.
+  - Story 3.15 (Household proof) — exercises the re-key drill through the seam this story creates.
+- Dependency note (app → server, per conformance rule 6): **blocked by foodus-relay: register/update-profile endpoints (shared slug `...-profile-registration`), contract v1, deployed.** Owner releases via the Story 4 gate. The local key work below is NOT blocked.
 - External Tooling: none required.
 
 ## CER
@@ -41,14 +41,14 @@ At profile creation, generate an asymmetric key pair alongside the profile GUID:
 - Android actual under `androidMain .../common/infrastructure/crypto/` using a **new fork-owned Keystore alias** (e.g. `FOODUS_PROFILE_MESSAGING_KEY`), `PURPOSE_DECRYPT`, provisional key type per Q1 below.
 - Koin expect/actual registration following the `CryptoModule.kt` / `CryptoModule.android.kt` pattern (additive: new `profileMessagingCryptoDefinition()` alongside the existing three definitions).
 - Hook into Story 3.2's profile-creation use case: generate the pair when the GUID is minted; persist public key + algorithm on the profile record (column ownership coordinated with Story 3.2 — see Q4).
-- Re-key seam: `regenerate()` replaces the Keystore entry and the caller updates the profile record. Re-announcement to friends/relay is Story 8/14 scope.
+- Re-key seam: `regenerate()` replaces the Keystore entry and the caller updates the profile record. Re-announcement to friends/relay is Story 10/14 scope.
 - Android instrumented tests mirroring `AndroidIdentityCryptoTest` / `AndroidMasterCryptoTest`: pair generated at creation, public key stable across process restarts, decrypt round-trip (encrypt with public key outside Keystore, decrypt via seam), regenerate yields a different key, private key not extractable.
 
 ### Out Of Scope
 
 - The register/update-profile relay call and any wire-contract data classes — blocked by foodus-relay contract v1 (dependency note above). No speculative client stubs are written for it.
-- Envelope schema, send/poll plumbing, message routing (Story 3.8, itself blocked this run).
-- Key re-announcement messages to friends (Story 3.8 pipeline / Story 3.14 drill).
+- Envelope schema, send/poll plumbing, message routing (Story 3.10, itself blocked this run).
+- Key re-announcement messages to friends (Story 3.10 pipeline / Story 3.15 drill).
 - iOS actuals (see Current Understanding — upstream ships Android-only crypto actuals today; Android-first posture holds).
 
 ## Non-Goals
@@ -74,27 +74,27 @@ All paths verified in the working tree on 28 July 2026.
 
 ## Questions / Unknowns
 
-- Q: `[STORY 3.3]` Which asymmetric scheme does the envelope encryption use? The wire contract (foodus-relay, contract v1, **Not Started** as of 2026-07-28) owns interoperable crypto choices. Android Keystore realistically offers: (a) RSA-3072/4096 with OAEP, `PURPOSE_DECRYPT`, works from API 28, envelope = hybrid RSA-wrapped AES-GCM key; (b) EC key agreement (`PURPOSE_AGREE_KEY`, API 31+) with HKDF → AES-GCM, more modern but above min SDK 28 and needs a runtime capability gate.
+- Q: `[STORY 3.6]` Which asymmetric scheme does the envelope encryption use? The wire contract (foodus-relay, contract v1, **Not Started** as of 2026-07-28) owns interoperable crypto choices. Android Keystore realistically offers: (a) RSA-3072/4096 with OAEP, `PURPOSE_DECRYPT`, works from API 28, envelope = hybrid RSA-wrapped AES-GCM key; (b) EC key agreement (`PURPOSE_AGREE_KEY`, API 31+) with HKDF → AES-GCM, more modern but above min SDK 28 and needs a runtime capability gate.
   Impact: Determines the Keystore key type generated at profile creation and the `algorithm` string stored with the profile and later registered with the relay. Wrong guess forces a re-key.
-  Assumption: Implement with **(a) RSA-OAEP hybrid-ready** as the provisional type (min-SDK-safe, one code path), explicitly marked replaceable: until Story 8 ships there is zero interop surface, so a pre-release re-key is free. The contract decision must be carried across by the owner before Story 8 planning; if the contract picks (b), `regenerate()` plus a migration of the profile's key columns absorbs the change.
+  Assumption: Implement with **(a) RSA-OAEP hybrid-ready** as the provisional type (min-SDK-safe, one code path), explicitly marked replaceable: until Story 10 ships there is zero interop surface, so a pre-release re-key is free. The contract decision must be carried across by the owner before Story 10 planning; if the contract picks (b), `regenerate()` plus a migration of the profile's key columns absorbs the change.
   Status: OPEN
   Answer: —
 
-- Q: `[STORY 3.3]` Does the relay's endpoint authentication (foodus-relay open decision: proof of GUID ownership, "likely device key-pair request signing") reuse this same key pair for signing, or a separate one? A single `PURPOSE_DECRYPT` key cannot also be a clean signing key; Keystore best practice is one purpose per key.
+- Q: `[STORY 3.6]` Does the relay's endpoint authentication (foodus-relay open decision: proof of GUID ownership, "likely device key-pair request signing") reuse this same key pair for signing, or a separate one? A single `PURPOSE_DECRYPT` key cannot also be a clean signing key; Keystore best practice is one purpose per key.
   Impact: If request signing is required, this story's interface may need a companion sign key (or upstream's existing sign-only `IdentityCrypto` pattern gets a fork-owned sibling), and the registration payload may need to carry two public keys.
   Assumption: Out of scope until the contract answers; the interface is kept narrow (decrypt + regenerate) so a signing capability can be added additively without reshaping this story's deliverable.
   Status: OPEN
   Answer: —
 
-- Q: `[STORY 3.3]` Column ownership with Story 3.2: does the profile entity ship with `publicKey`/`keyAlgorithm` columns from day one (Story 3.2's migration), or does this story add them in a second migration?
+- Q: `[STORY 3.6]` Column ownership with Story 3.2: does the profile entity ship with `publicKey`/`keyAlgorithm` columns from day one (Story 3.2's migration), or does this story add them in a second migration?
   Impact: One Room migration vs two; ordering of the two stories' execution.
   Assumption: Story 3.2's entity includes the two columns as nullable from day one (cheapest; one migration), and this story populates them at creation time. To be reconciled between the two plans before execution.
   Status: OPEN
   Answer: —
 
-- Q: `[STORY 3.3]` Policy when `isSupported` is false (no TEE/StrongBox — e.g. emulator or exotic API 28 device): proceed with software-backed Keystore, or refuse to create the multiplayer identity?
-  Impact: Decides an error/warning path at profile creation and what Story 3.14 records as evidence.
-  Assumption: Proceed with software-backed Keystore (the key still never leaves the Keystore API surface) and surface `isSupported` for Story 3.14's evidence; both household target devices are hardware-backed anyway.
+- Q: `[STORY 3.6]` Policy when `isSupported` is false (no TEE/StrongBox — e.g. emulator or exotic API 28 device): proceed with software-backed Keystore, or refuse to create the multiplayer identity?
+  Impact: Decides an error/warning path at profile creation and what Story 3.15 records as evidence.
+  Assumption: Proceed with software-backed Keystore (the key still never leaves the Keystore API surface) and surface `isSupported` for Story 3.15's evidence; both household target devices are hardware-backed anyway.
   Status: OPEN
   Answer: —
 
@@ -106,7 +106,7 @@ All paths verified in the working tree on 28 July 2026.
    - Dependencies: none; do first.
 
 2. Define `ProfileMessagingCrypto` interface in `app/src/commonMain/.../common/crypto/ProfileMessagingCrypto.kt`
-   - Why: The seam every later story consumes (Story 8 decrypt, Story 14 re-key); keeps envelope crypto behind an interface so the Q1 contract decision swaps implementations, not callers.
+   - Why: The seam every later story consumes (Story 10 decrypt, Story 15 re-key); keeps envelope crypto behind an interface so the Q1 contract decision swaps implementations, not callers.
    - Edits: new file — `isSupported: Flow<Boolean>`, `algorithm: String`, `publicKey: ByteArray`, `suspend fun decrypt(sealed: ByteArray): ByteArray`, `suspend fun regenerate(): ByteArray`; kdoc stating the constitutional storage rules and the provisional-scheme caveat.
    - Dependencies: step 1.
 
@@ -122,7 +122,7 @@ All paths verified in the working tree on 28 July 2026.
 
 5. Profile-creation integration (coordinated with Story 3.2)
    - Why: The story's headline behavior — pair generated alongside the GUID; public key + algorithm persisted on the profile record so they ride backup/restore.
-   - Edits: in Story 3.2's create-profile use case (exact file per that plan): after GUID mint, read `profileMessagingCrypto.publicKey`/`algorithm` and store both on the profile entity. Re-key path: a small `RekeyProfileUseCase` (fork-owned, in the profile slice) calling `regenerate()` and updating the record — the seam Story 3.14's drill and the future relay re-announcement reuse.
+   - Edits: in Story 3.2's create-profile use case (exact file per that plan): after GUID mint, read `profileMessagingCrypto.publicKey`/`algorithm` and store both on the profile entity. Re-key path: a small `RekeyProfileUseCase` (fork-owned, in the profile slice) calling `regenerate()` and updating the record — the seam Story 3.15's drill and the future relay re-announcement reuse.
    - Dependencies: Story 3.2's entity + use case exist; Q3 resolved.
 
 6. Instrumented tests `AndroidProfileMessagingCryptoTest.kt`
@@ -157,7 +157,7 @@ All paths verified in the working tree on 28 July 2026.
 ## Risk Mitigation
 
 - Risk: Provisional key type contradicts the eventual wire contract (Q1).
-  Mitigation: Interface-first design; zero interop surface exists before Story 8, so re-keying before first release costs nothing. The plan stays `Draft` and the Q1 answer is required before Story 8 planning — the owner carries it from foodus-relay contract v1.
+  Mitigation: Interface-first design; zero interop surface exists before Story 10, so re-keying before first release costs nothing. The plan stays `Draft` and the Q1 answer is required before Story 10 planning — the owner carries it from foodus-relay contract v1.
 - Risk: Private-key material leaks into portable storage (constitutional violation).
   Mitigation: Only `publicKey`/`algorithm` cross the interface as data; instrumented test asserts non-extractability; step 7 audit; laws §2 named in code kdoc.
 - Risk: Breaking iOS targets by adding an expect without all actuals.

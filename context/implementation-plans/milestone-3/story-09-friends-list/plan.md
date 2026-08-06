@@ -10,20 +10,20 @@
 ## Linked Context
 
 - Milestone: [context/milestones/milestone-3.md](../../../milestones/milestone-3.md)
-- Story: [Story 7: Friends list](../../../milestones/milestone-3.md#story-7) `[STORY 3.7]`
+- Story: [Story 9: Friends list](../../../milestones/milestone-3.md#story-9) `[STORY 3.9]`
 - Design authority: `context/design.md` — "The Multiplayer Exception" (E2E model: becoming friends *is* the key exchange; accepted server-MITM weakness; poll-on-wake, no push)
 - Relay Contract Conformance: `context/milestones/milestone-3.md` — binds every relay call in this plan (version stamping, two-way tolerance, capability-aware UI, HTTPS via Ktor, app→server dependency notes)
 - Related Plans:
-  - Story 3.1 (tabbed UI shell) — the Groups tab this story's Friends card lives on. `../story-1-tabbed-ui-shell/plan.md`
-  - Story 3.2 (profile) — establishes the social storage slice and the local GUID identity. `../story-2-profile/plan.md`
-  - Story 3.6 (friend codes) — the code being entered in add-by-code; display/regenerate is that story's scope. `../story-6-friend-codes/plan.md`
-  - Story 3.15 (relay URL setting) — supplies the endpoint and the capability gating this story's relay calls sit behind. `../story-15-relay-url-setting/plan.md`
-  - Story 3.8 (envelope & E2E pipeline) — **BLOCKED, unplanned this run** (wire contract v1 not started). Referenced only as the future transport for any cross-device friend-removal signalling.
+  - Story 3.1 (tabbed UI shell) — the Groups tab this story's Friends card lives on. `../story-01-tabbed-ui-shell/plan.md`
+  - Story 3.2 (profile) — establishes the social storage slice and the local GUID identity. `../story-02-profile/plan.md`
+  - Story 3.8 (friend codes) — the code being entered in add-by-code; display/regenerate is that story's scope. `../story-08-friend-codes/plan.md`
+  - Story 3.7 (relay URL setting) — supplies the endpoint and the capability gating this story's relay calls sit behind. `../story-07-relay-url-setting/plan.md`
+  - Story 3.10 (envelope & E2E pipeline) — **BLOCKED, unplanned this run** (wire contract v1 not started). Referenced only as the future transport for any cross-device friend-removal signalling.
 - External Tooling: none required.
 
 **Dependency note (app → server, per Relay Contract Conformance):** blocked by foodus-relay:
 friend-code resolve + block endpoints (shared slug `...-friends`), contract v1, deployed. Owner
-releases via the Story 5 gate. This plan stays `Draft` until that release; the relay-facing
+releases via the Story 4 gate. This plan stays `Draft` until that release; the relay-facing
 seams below are contract-dependent and deliberately unspecified.
 
 ## CER
@@ -31,7 +31,7 @@ seams below are contract-dependent and deliberately unspecified.
 - Complexity: 6
 - Effort: 6
 - Risk: 5
-- Notes: Inline estimate. Complexity comes from a new social-graph storage area, two contract-dependent network seams (resolve, block), and UX flows with destructive branches (delete vs delete-and-block). Effort spans Room entities + migration, domain layer, two network seams, and three UI surfaces (Friends card, list screen with expandable rows, add-by-code flow). Risk is dominated by the absent wire contract (any concrete request/response shape written now would be invented — mitigated by seam interfaces + Draft status) and by the unresolved both-ways delete semantics, which may pull in Story 3.8's pipeline.
+- Notes: Inline estimate. Complexity comes from a new social-graph storage area, two contract-dependent network seams (resolve, block), and UX flows with destructive branches (delete vs delete-and-block). Effort spans Room entities + migration, domain layer, two network seams, and three UI surfaces (Friends card, list screen with expandable rows, add-by-code flow). Risk is dominated by the absent wire contract (any concrete request/response shape written now would be invented — mitigated by seam interfaces + Draft status) and by the unresolved both-ways delete semantics, which may pull in Story 3.10's pipeline.
 
 ## Objective
 
@@ -60,16 +60,16 @@ fully once foodus-relay contract v1 is released.
   are-you-sure confirmation.
 - Capability-aware gating: add-by-code (and any relay call) hidden or greyed when the relay is
   unset/unreachable or the connected relay does not report the friends capability (consumes
-  Story 3.15's check).
+  Story 3.7's check).
 - New English base strings in `shared/resources` (fork-owned keys, additive).
 - Koin module wiring following the established slice pattern.
 
 ### Out Of Scope
 
-- Friend-code display and regeneration (Story 3.6).
-- Profile creation/identity (Story 3.2) and key-pair generation (Story 3.3).
-- The message pipeline and any envelope handling (Story 3.8, blocked).
-- Group membership effects of deleting a friend (Story 3.9 owns group lifecycle; see Questions).
+- Friend-code display and regeneration (Story 3.8).
+- Profile creation/identity (Story 3.2) and key-pair generation (Story 3.6).
+- The message pipeline and any envelope handling (Story 3.10, blocked).
+- Group membership effects of deleting a friend (Story 3.11 owns group lifecycle; see Questions).
 - Server-side block enforcement logic (foodus-relay scope).
 
 ## Non-Goals
@@ -96,9 +96,9 @@ Verified in the working tree on 28 July 2026.
   epoch-seconds timestamps).
 - **Network client pattern:** Ktor `HttpClient` injected via Koin with `NetworkConfig`
   (e.g. `sponsorship/infrastructure/github/GithubSponsorsApiClient.kt`); the `ai` slice uses a
-  named-qualifier `HttpClient`. The relay client (owned by Story 3.15/3.8 territory) will follow
+  named-qualifier `HttpClient`. The relay client (owned by Story 3.7/3.10 territory) will follow
   this stack — this story only defines the two seam interfaces and consumes whatever relay
-  client base Story 3.15 establishes.
+  client base Story 3.7 establishes.
 - **Navigation:** `app/navigation/FoodYouAppNavHost.kt` uses `@Serializable` route objects +
   `forwardBackwardComposable<T>` (verified lines 66-520). Whether the friends list is a NavHost
   route or a surface inside the Groups tab's own navigation depends on Story 3.1's shell
@@ -112,19 +112,19 @@ Verified in the working tree on 28 July 2026.
 
 ## Questions / Unknowns
 
-- Q: `[STORY 3.7]` What mechanism makes Delete "break the connection both ways"? With a dumb
-  relay, no push, and Story 3.8's pipeline blocked/unplanned, remote-side removal needs either a
+- Q: `[STORY 3.9]` What mechanism makes Delete "break the connection both ways"? With a dumb
+  relay, no push, and Story 3.10's pipeline blocked/unplanned, remote-side removal needs either a
   contract-level construct or a friend-removed message over the pipeline — neither exists yet.
   Impact: Determines whether Delete is purely local (the ex-friend's sends simply stop being
-  accepted/routable on our side) or requires a send path, which would add a Story 3.8 dependency
+  accepted/routable on our side) or requires a send path, which would add a Story 3.10 dependency
   to this story's Delete flow.
   Assumption: Delete removes the friend locally and drops their key; no outbound signal is sent
-  in this story. The both-ways contract semantics are deferred to contract v1 / Story 3.8.
+  in this story. The both-ways contract semantics are deferred to contract v1 / Story 3.10.
   Status: OPEN
   Answer: —
 
-- Q: `[STORY 3.7]` Where does the social storage slice live and what is it named? Stories 3.2,
-  3.6, 3.7, 3.9 all add social data; parallel planning means the slice name/layout is settled by
+- Q: `[STORY 3.9]` Where does the social storage slice live and what is it named? Stories 3.2,
+  3.8, 3.9, 3.11 all add social data; parallel planning means the slice name/layout is settled by
   Story 3.2's plan.
   Impact: File paths, module names, and DI wiring in this plan's execution steps.
   Assumption: A single fork-owned social slice (working name `social/`) established by
@@ -132,42 +132,42 @@ Verified in the working tree on 28 July 2026.
   Status: OPEN
   Answer: —
 
-- Q: `[STORY 3.7]` What happens when the *record block* relay call fails (offline, relay
+- Q: `[STORY 3.9]` What happens when the *record block* relay call fails (offline, relay
   unreachable) after the user chooses Delete-and-block?
   Impact: Blocking is a safety feature; a silently un-registered server-side block would let the
   blocked person resolve a fresh code later.
   Assumption: The local block applies immediately; the server call is retried on next app wake
   until acknowledged, with a Notification Center event if it remains unregistered. Retry
-  machinery may belong to Story 3.8's send queue — flagged as a seam.
+  machinery may belong to Story 3.10's send queue — flagged as a seam.
   Status: OPEN
   Answer: —
 
-- Q: `[STORY 3.7]` Does deleting (or blocking) a friend do anything to an existing two-person
-  group containing them, beyond Story 3.9's own leave/dead-group rules?
-  Impact: Ordering between this story's delete flow and Story 3.9's group lifecycle; potential
+- Q: `[STORY 3.9]` Does deleting (or blocking) a friend do anything to an existing two-person
+  group containing them, beyond Story 3.11's own leave/dead-group rules?
+  Impact: Ordering between this story's delete flow and Story 3.11's group lifecycle; potential
   confirm-dialog wording ("this will also...").
-  Assumption: Group effects are wholly owned by Story 3.9; this story's confirm dialog warns
+  Assumption: Group effects are wholly owned by Story 3.11; this story's confirm dialog warns
   generically and performs no group mutation.
   Status: OPEN
   Answer: —
 
-- Q: `[STORY 3.7]` Is the resolved public key an opaque contract-defined encoding, and must the
+- Q: `[STORY 3.9]` Is the resolved public key an opaque contract-defined encoding, and must the
   app validate it at add time (e.g. parseable key check) or store it blind?
   Impact: Add-by-code validation surface and error UX.
   Assumption: Stored as the opaque encoded value the contract delivers; a parse check happens
-  only when Story 3.8 first encrypts to it. No format is invented now.
+  only when Story 3.10 first encrypts to it. No format is invented now.
   Status: OPEN
   Answer: —
 
 ## Execution Steps
 
-> Steps 4-6 cannot start until the owner releases the Story 5 gate (contract v1 deployed) and
+> Steps 4-6 cannot start until the owner releases the Story 4 gate (contract v1 deployed) and
 > the seam interfaces in step 3 are filled against the real spec. Steps 1-3 and 7-8 are
 > buildable immediately against fakes.
 
 1. Confirm slice placement and shell integration.
    - Why: Two parallel plans (3.1 shell, 3.2 profile slice) settle this plan's file roots.
-   - Edits: none — read `../story-1-tabbed-ui-shell/plan.md` and `../story-2-profile/plan.md`,
+   - Edits: none — read `../story-01-tabbed-ui-shell/plan.md` and `../story-02-profile/plan.md`,
      then pin the concrete paths in this plan (update Current Understanding).
    - Dependencies: Stories 3.1 and 3.2 plans accepted.
 
@@ -194,17 +194,17 @@ Verified in the working tree on 28 July 2026.
 4. Relay-backed seam implementations (contract-gated).
    - Why: The real resolve/block calls per contract v1.
    - Edits: infrastructure implementations of `FriendCodeResolver`/`BlockRegistrar` hand-written
-     to the published spec, over the Ktor relay client base from Story 3.15, HTTPS-only;
+     to the published spec, over the Ktor relay client base from Story 3.7, HTTPS-only;
      envelope-version and tolerance rules per Relay Contract Conformance.
-   - Dependencies: Story 5 gate released; Story 3.15 landed.
+   - Dependencies: Story 4 gate released; Story 3.7 landed.
 
 5. Add-by-code flow UI.
    - Why: The user-facing key exchange.
    - Edits: plus-button entry on the friends list → code entry (reuse the 4-4-4 formatting
-     conventions from Story 3.6's display), calls `AddFriendByCodeUseCase`; distinct outcomes
+     conventions from Story 3.8's display), calls `AddFriendByCodeUseCase`; distinct outcomes
      for success, "user not found" (covers blocked-or-nonexistent indistinguishably — copy must
      not hint which), and relay-unreachable.
-   - Dependencies: steps 3-4; capability gating from Story 3.15.
+   - Dependencies: steps 3-4; capability gating from Story 3.7.
 
 6. Friends card + list screen with expandable rows.
    - Why: The browse/manage surface.
@@ -258,11 +258,11 @@ Verified in the working tree on 28 July 2026.
 
 - Risk: Wire contract v1 does not exist; any concrete network code written now is invented.
   Mitigation: Steps 3/4 split — domain seams + fakes now, contract-conformant implementations
-  only after the Story 5 gate; plan held at `Draft`.
+  only after the Story 4 gate; plan held at `Draft`.
 - Risk: Both-ways delete semantics undefined (first open question).
   Mitigation: Delete is local-only in this story; the question is escalated to the owner and the
   contract; no protocol invented.
-- Risk: Parallel schema bumps (Stories 3.2/3.7/3.9 all touch `FoodYouDatabase`).
+- Risk: Parallel schema bumps (Stories 3.2/3.9/3.11 all touch `FoodYouDatabase`).
   Mitigation: Version-number coordination rule in step 2; migrations stay additive
   AutoMigrations.
 - Risk: Upstream merge surface.
@@ -274,7 +274,7 @@ Verified in the working tree on 28 July 2026.
 
 ## Phase Split
 
-Not required at this CER. If the both-ways delete answer pulls Story 3.8 machinery into scope,
+Not required at this CER. If the both-ways delete answer pulls Story 3.10 machinery into scope,
 re-grade and consider splitting local-graph (steps 1-3, 6-8) from relay-backed (steps 4-5)
 phases.
 

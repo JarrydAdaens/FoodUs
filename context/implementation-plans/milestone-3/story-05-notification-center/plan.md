@@ -12,11 +12,11 @@ Status rationale: no owner-gated or contract-gated decision blocks planning-leve
 ## Linked Context
 
 - Milestone: [context/milestones/milestone-3.md](../../../milestones/milestone-3.md)
-- Story: [Story 13: Notification Center tab](../../../milestones/milestone-3.md#story-13) `[STORY 3.13]`
+- Story: [Story 5: Notification Center tab](../../../milestones/milestone-3.md#story-5) `[STORY 3.5]`
 - Design authority: `context/design.md` — "The Multiplayer Exception" (poll-on-wake, refuse-loudly rule routes unknown envelope versions here) and Core Principles ("Respect the user" — this tab is deliberately the app's only broadcast surface)
 - Related Plans:
-  - Story 3.1 (tabbed UI shell) — **depends on it**: the Notifications tab slot ships there (possibly as a stub); this story fills it. `context/implementation-plans/milestone-3/story-1-tabbed-ui-shell/`
-  - Stories 3.6–3.12 — emitters. Each publishes events through the contract this story defines; their plans own their emission call sites. Story 3.8 (message pipeline) is BLOCKED on the wire contract this run — the poll-time materialization call site is planned there, not here.
+  - Story 3.1 (tabbed UI shell) — **depends on it**: the Notifications tab slot ships there (possibly as a stub); this story fills it. `context/implementation-plans/milestone-3/story-01-tabbed-ui-shell/`
+  - Stories 3.8–3.14 — emitters. Each publishes events through the contract this story defines; their plans own their emission call sites. Story 3.10 (message pipeline) is BLOCKED on the wire contract this run — the poll-time materialization call site is planned there, not here.
 - External Tooling: none required.
 
 ## CER
@@ -24,11 +24,11 @@ Status rationale: no owner-gated or contract-gated decision blocks planning-leve
 - Complexity: 4
 - Effort: 5
 - Risk: 3
-- Notes: Inline estimate. The repository already contains every pattern needed: a domain `EventBus`/`IntegrationEvent` seam with a `eventHandlerOf` Koin registration helper (`common/infrastructure/koin/EventHandlerOf.kt`), Room entity/DAO conventions (`sponsorship/infrastructure/room/` is a minimal model), and feature-slice + Koin module composition (`fooddiary/FoodDiaryModule.kt`, `app/di/InitKoin.kt`). Complexity sits in designing a notification taxonomy that stays stable while most emitters (Stories 3.6–3.12) do not exist yet. Risk sits on the `FoodYouDatabase` schema change (upstream-shared file; version bump + migration must be additive and correct) and on taxonomy churn if later stories need payload shapes this plan did not anticipate.
+- Notes: Inline estimate. The repository already contains every pattern needed: a domain `EventBus`/`IntegrationEvent` seam with a `eventHandlerOf` Koin registration helper (`common/infrastructure/koin/EventHandlerOf.kt`), Room entity/DAO conventions (`sponsorship/infrastructure/room/` is a minimal model), and feature-slice + Koin module composition (`fooddiary/FoodDiaryModule.kt`, `app/di/InitKoin.kt`). Complexity sits in designing a notification taxonomy that stays stable while most emitters (Stories 3.8–3.14) do not exist yet. Risk sits on the `FoodYouDatabase` schema change (upstream-shared file; version bump + migration must be additive and correct) and on taxonomy churn if later stories need payload shapes this plan did not anticipate.
 
 ## Objective
 
-Ship a persistent, local Notification Center: a Room-backed event store, a stable domain contract that any feature can emit events through, and the rightmost-tab UI that lists undismissed notifications by default with a control exposing the dismissed/read history — so that once Stories 3.6–3.12 land, every cross-device and social event the system generates has exactly one place where the user sees it.
+Ship a persistent, local Notification Center: a Room-backed event store, a stable domain contract that any feature can emit events through, and the rightmost-tab UI that lists undismissed notifications by default with a control exposing the dismissed/read history — so that once Stories 3.8–3.14 land, every cross-device and social event the system generates has exactly one place where the user sees it.
 
 ## Scope
 
@@ -36,24 +36,24 @@ Ship a persistent, local Notification Center: a Room-backed event store, a stabl
 
 - New fork-additive feature slice `notification` under `com.maksimowiczm.foodyou.notification` with `domain` / `infrastructure` separation and a `NotificationModule.kt` Koin module, registered in `InitKoin.kt` (one additive line).
 - Domain model: `AppNotification` (id, type, occurred-at timestamp, read/dismissed flag, and a small typed payload for display), `AppNotificationRepository` interface, and a `RecordNotification` use case.
-- Emission contract: new `IntegrationEvent` subtypes for notification-worthy occurrences, published on the existing `EventBus`; a `NotificationRecordingEventHandler` (an `IntegrationEventHandler` registered via `eventHandlerOf`, created at start) persists them. This is the stable seam Stories 3.6–3.12 call — emitters publish an event; they never touch the store directly.
+- Emission contract: new `IntegrationEvent` subtypes for notification-worthy occurrences, published on the existing `EventBus`; a `NotificationRecordingEventHandler` (an `IntegrationEventHandler` registered via `eventHandlerOf`, created at start) persists them. This is the stable seam Stories 3.8–3.14 call — emitters publish an event; they never touch the store directly.
 - Persistence: `NotificationEntity` + `NotificationDao` (Room, Flow-based observation, mark-read / dismiss / dismiss-all updates), added to `FoodYouDatabase` with a version bump and `AutoMigration`.
 - UI: `NotificationsTabContent` composable + `NotificationsViewModel` under `app/ui/notifications/`, mounted in the Notifications tab slot created by Story 3.1. Default view: undismissed notifications, newest first. A history control (toggle/filter) exposes dismissed/read items. Per-item dismiss and a dismiss-all action.
 - New English strings in the shared resources base `strings.xml` (additive, fork-owned keys), including text for the initial event types this story can already name (e.g. "entry added to your diary", "entry failed to add", "unknown message version refused").
-- Seed emitters that exist today: none are required to land with this story — the tab may render an empty state until Stories 3.6–3.12 emit. The empty state is in scope.
+- Seed emitters that exist today: none are required to land with this story — the tab may render an empty state until Stories 3.8–3.14 emit. The empty state is in scope.
 
 ### Out Of Scope
 
 - The tab shell and bottom navigation (Story 3.1).
-- All actual emission call sites in Stories 3.6–3.12 (friend added you, group invites/renames, entry added/failed, suggestion arrived, unknown envelope version refused at poll time). Each emitter story publishes the events; this story only guarantees they are recorded and displayed.
-- The poll-on-wake drain step and message router (Story 3.8, BLOCKED this run) — including how drained relay messages become events. This plan only fixes the contract they will publish through.
+- All actual emission call sites in Stories 3.8–3.14 (friend added you, group invites/renames, entry added/failed, suggestion arrived, unknown envelope version refused at poll time). Each emitter story publishes the events; this story only guarantees they are recorded and displayed.
+- The poll-on-wake drain step and message router (Story 3.10, BLOCKED this run) — including how drained relay messages become events. This plan only fixes the contract they will publish through.
 - Any wire-contract, envelope, or relay detail — owned by foodus-relay; nothing here talks to the network.
 
 ## Non-Goals
 
 - No OS-level (system tray) notifications, no notification permission requests, no badges — in-app surface only (see Questions; this follows the story text and the no-nagging principle).
 - No push transport of any kind (FCM is explicitly rejected by design; backlog item).
-- No notification "actions" beyond dismiss (accepting a suggestion happens in Story 3.12's queue UI, not from a notification row).
+- No notification "actions" beyond dismiss (accepting a suggestion happens in Story 3.14's queue UI, not from a notification row).
 - No cross-device sync of notification read state.
 
 ## Current Understanding
@@ -70,31 +70,31 @@ All paths verified in the working tree on 28 July 2026.
 
 ## Questions / Unknowns
 
-- Q: `[STORY 3.13]` Are OS-level (Android system) notifications in scope at all, now or later?
+- Q: `[STORY 3.5]` Are OS-level (Android system) notifications in scope at all, now or later?
   Impact: Decides whether the slice needs any platform (`androidMain`) code and a permission story; shapes the domain model (an OS bridge would want per-type channels).
   Assumption: No — in-app tab only. The story text describes a tab, the design doc calls it the app's only broadcast surface, and no-nagging is constitutional. Everything in this plan is `commonMain`.
   Status: OPEN
   Answer: —
 
-- Q: `[STORY 3.13]` What is the retention policy for the persistent notification history — unbounded, count-capped, or age-capped?
+- Q: `[STORY 3.5]` What is the retention policy for the persistent notification history — unbounded, count-capped, or age-capped?
   Impact: Unbounded growth is plausible junk-data accumulation in a household app used daily for years; a cap needs a trim step (DAO delete on insert or periodic).
   Assumption: Age-capped pruning of *dismissed* notifications after 90 days, executed on insert (cheap DAO delete). Undismissed items are never pruned. Cheap to change; flagged for owner taste.
   Status: OPEN
   Answer: —
 
-- Q: `[STORY 3.13]` Exact event taxonomy: the story lists examples ("meal added, meal failed to add, friend added you, you joined a group, a group changed its name, ..."), but most emitters (Stories 3.6–3.12) are unplanned or blocked (3.8), so the full closed list cannot be fixed now.
+- Q: `[STORY 3.5]` Exact event taxonomy: the story lists examples ("meal added, meal failed to add, friend added you, you joined a group, a group changed its name, ..."), but most emitters (Stories 3.8–3.14) are unplanned or blocked (3.10), so the full closed list cannot be fixed now.
   Impact: The `NotificationType` enum and payload shape must be extensible without schema migrations every time an emitter story adds a type.
   Assumption: Store the type as a string column (not an ordinal), with a versionless free-text title/body resolved at *display* time from the typed payload where possible; unknown/legacy types still render their stored text. Emitter stories add enum entries + strings additively.
   Status: OPEN
   Answer: —
 
-- Q: `[STORY 3.13]` Does "meal added" mean only cross-device insertions (Story 3.11's auto-insert) or also purely local diary saves?
+- Q: `[STORY 3.5]` Does "meal added" mean only cross-device insertions (Story 3.13's auto-insert) or also purely local diary saves?
   Impact: Notifying on the user's own local saves would be noise and borders on nagging.
   Assumption: Cross-device and social/system events only; the user's own local actions never generate notifications.
   Status: OPEN
   Answer: —
 
-- Q: `[STORY 3.13]` Should notification rows ride the existing backup/export path?
+- Q: `[STORY 3.5]` Should notification rows ride the existing backup/export path?
   Impact: None structurally — the entity lives in the Room DB so it is backed up with everything else; the question is only whether that is *desired*.
   Assumption: Yes by default (free), acceptable because notifications contain no secrets and the DB stays on-device.
   Status: OPEN
@@ -104,7 +104,7 @@ All paths verified in the working tree on 28 July 2026.
 
 1. Create the `notification` slice domain layer.
    - Why: Stable, framework-free contract before any persistence or UI exists.
-   - Edits: `notification/domain/AppNotification.kt` (id, type, occurredAt, isDismissed, display payload), `notification/domain/AppNotificationRepository.kt` (observe undismissed / observe all / record / markDismissed / dismissAll), `notification/domain/NotificationEvents.kt` — the `IntegrationEvent` subtypes this story can already name (entry-added, entry-add-failed, unknown-message-version-refused as placeholders for Story 3.8/3.11 emitters; friend/group types land with their stories).
+   - Edits: `notification/domain/AppNotification.kt` (id, type, occurredAt, isDismissed, display payload), `notification/domain/AppNotificationRepository.kt` (observe undismissed / observe all / record / markDismissed / dismissAll), `notification/domain/NotificationEvents.kt` — the `IntegrationEvent` subtypes this story can already name (entry-added, entry-add-failed, unknown-message-version-refused as placeholders for Story 3.10/3.13 emitters; friend/group types land with their stories).
    - Dependencies: none.
 
 2. Add Room persistence.
@@ -153,7 +153,7 @@ All paths verified in the working tree on 28 July 2026.
 - Risk: `FoodYouDatabase` version bump / migration breaks existing installs (upstream-shared file, two household phones).
   Mitigation: Purely additive table via `AutoMigration`; schema export diff reviewed; manual upgrade check in Validation; edits to the shared file are append-style to preserve merge surface.
 - Risk: `SharedFlowEventBus` drops events on buffer overflow (documented DROP_LATEST behavior), so a notification could silently never be recorded.
-  Mitigation: Accepted for now — notification-worthy events are low-frequency (human-scale social actions), far below the 50-event buffer. Noted here so Story 3.8's drain step (which could batch many messages at once) revisits it: if a poll drains > buffer-size messages, its plan must record notifications transactionally rather than via the bus, or the bus buffer is raised. Carried as an explicit note for Story 3.8's future plan.
+  Mitigation: Accepted for now — notification-worthy events are low-frequency (human-scale social actions), far below the 50-event buffer. Noted here so Story 3.10's drain step (which could batch many messages at once) revisits it: if a poll drains > buffer-size messages, its plan must record notifications transactionally rather than via the bus, or the bus buffer is raised. Carried as an explicit note for Story 3.10's future plan.
 - Risk: Taxonomy churn — later emitter stories need payload fields this schema lacks.
   Mitigation: Type-as-string plus display-text materialized at record time; new types are additive enum + string entries; schema holds no per-type columns.
 - Risk: Tab-mount seam mismatch with Story 3.1 (planned in parallel).
@@ -166,7 +166,7 @@ Not needed. CER within thresholds; single-pass executable.
 ## Evidence / References
 
 - Pattern sources verified 28 July 2026: `common/domain/event/*`, `common/infrastructure/inmemory/SharedFlowEventBus.kt`, `common/infrastructure/koin/EventHandlerOf.kt`, `sponsorship/infrastructure/room/*`, `fooddiary/infrastructure/room/FoodDiaryDatabase.kt`, `app/infrastructure/room/FoodYouDatabase.kt` (VERSION 36), `app/di/InitKoin.kt`, `app/navigation/FoodYouAppNavHost.kt`.
-- Planning inputs: milestone-3.md Story 13 + Relay Contract Conformance; design.md "The Multiplayer Exception" (poll-on-wake, refuse-loudly), Core Principles.
+- Planning inputs: milestone-3.md Story 5 + Relay Contract Conformance; design.md "The Multiplayer Exception" (poll-on-wake, refuse-loudly), Core Principles.
 - Unverified claims: none — no wire-contract details were assumed (none are needed; this story is fully local).
 
 ## Complaints / Friction

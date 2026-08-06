@@ -1,6 +1,27 @@
-# Rails Boss Execute Progress — Milestone 2
+# Rails Boss Execute Progress — Milestone 3
 
-## Run: 2026-07-27 — addendum Stories 21-23. Parallelism: 0 (serial). Workers: Opus. See `briefing.md`.
+## Run: 2026-07-28 — all planned Milestone 3 stories. Parallelism: 0 (serial). Workers: Opus. See `briefing.md`.
+
+Execution order 1 → 2 → 3 (partial) → 15 (partial) → 13. Stories 3.3/3.15 execute to their
+documented seams and stay `Draft`/In Progress. Blocked rows are gate-blocked, not failures.
+
+| Status | Story | Source | Persona | Commit | Notes |
+| --- | --- | --- | --- | --- | --- |
+| DONE | STORY 3.1 | `context/implementation-plans/milestone-3/story-01-tabbed-ui-shell/plan.md` | none | 8ac990db | Shell + Groups/Notifications stubs; all 7 manual checks emulator-verified; UX assumptions applied (persistent bar, back→Log, Log start tab); no cross-tab nav API yet (3.13 note) |
+| DONE | STORY 3.2 | `context/implementation-plans/milestone-3/story-02-profile/plan.md` | none | 6117d35d | Profile slice + Room 36→37 proven on-device (canary data survived); 6/6 unit tests; create/rename UI emulator-verified; no key columns (per ruling); backup path resolved by code-reading |
+| DONE (partial) | STORY 3.3 | `context/implementation-plans/milestone-3/story-06-crypto-identity/plan.md` | none | a933ad33 | Local seam done, plan stays Draft (relay registration gated). RSA-OAEP provisional; 37→38 + recovery proven on-device; instrumented 4/4; reconcile-based re-key (Keystore = source of truth); fixed 3.2 test names blocking DEX; iOS crypto actuals pre-existing gap |
+| DONE (partial) | STORY 3.15 | `context/implementation-plans/milestone-3/story-07-relay-url-setting/plan.md` | none | 18cf3a89 | Settings UI + HTTPS-only validation + DataStore persistence; checker seam returns Unknown (no invented endpoints); plan stays Draft pending contract v1; emulator-verified persist/reject/unset; validator hardened vs Ktor localhost/HTTP defaults |
+| DONE | STORY 3.13 | `context/implementation-plans/milestone-3/story-05-notification-center/plan.md` | none | f6229b0b | Notification slice + tab UI; AutoMigration rebased 38→39, proven on-device with surviving data; 6 new tests, full unit suite green; UI flows device-verified; zero emitters wired by design (none qualify yet); 3 notification keys ship incl. refuse-loudly; EventBus DROP_LATEST warning recorded for 3.8 |
+| BLOCKED | STORY 3.6 | `context/implementation-plans/milestone-3/story-08-friend-codes/plan.md` | none |  | Story 5 gate unreleased (relay not deployed) |
+| BLOCKED | STORY 3.7 | `context/implementation-plans/milestone-3/story-09-friends-list/plan.md` | none |  | Story 5 gate unreleased (relay not deployed) |
+| BLOCKED | STORY 3.8 | *(no plan)* | none |  | Planning gate unmet — unknown-version envelope disposition unsettled in contract |
+| BLOCKED | STORY 3.9 | `context/implementation-plans/milestone-3/story-11-groups/plan.md` | none |  | Depends on Story 8 pipeline (absent); owner decisions OPEN |
+| BLOCKED | STORY 3.10 | `context/implementation-plans/milestone-3/story-12-save-to-group/plan.md` | none |  | Depends on Story 8 pipeline (absent); owner decisions OPEN |
+| BLOCKED | STORY 3.11 | `context/implementation-plans/milestone-3/story-13-receive-into-diary/plan.md` | none |  | Depends on Story 8 pipeline (absent); owner decisions OPEN |
+| BLOCKED | STORY 3.12 | `context/implementation-plans/milestone-3/story-14-suggestion-queue/plan.md` | none |  | Depends on Stories 8/9/11 (absent) |
+| BLOCKED | STORY 3.14 | `context/implementation-plans/milestone-3/story-15-household-proof/plan.md` | none |  | Manual two-phone proof vs live relay; Story 5 gate unreleased |
+
+## Run: 2026-07-27 — addendum Stories 21-23. Parallelism: 0 (serial). Workers: Opus. See `briefing.md` (git history).
 
 Execution order 22 → 21 → 23 (Story 21 hard-depends on Story 22; see briefing).
 

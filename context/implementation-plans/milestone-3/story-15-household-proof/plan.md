@@ -10,13 +10,13 @@
 ## Linked Context
 
 - Milestone: [context/milestones/milestone-3.md](../../../milestones/milestone-3.md)
-- Story: [Story 14: Household proof](../../../milestones/milestone-3.md#story-14) `[STORY 3.14]`
+- Story: [Story 15: Household proof](../../../milestones/milestone-3.md#story-15) `[STORY 3.15]`
 - Dictation source: [2026-07-27 Milestone 3 multiplayer addendum](../../../dictations-tier-0/2026-07-27_milestone-3_multiplayer-addendum.md); [2026-07-27 relay tier-0 seed](../../../dictations-tier-0/2026-07-27_addendum_foodus-relay-tier0-seed.md)
 - Design authority: `context/design.md` — "The Multiplayer Exception" (relay model, E2E, key-loss policy, poll-on-wake)
 - Related Plans:
-  - Story 15 (relay URL setting) — both phones must be configured through it before any scenario runs.
-  - Stories 1–3, 6–13 — every feature under test; this plan validates their combined behavior and produces the milestone's Definition-of-Done evidence.
-  - Story 8 (envelope & E2E pipeline) — plan currently blocked on contract v1; its refuse-loudly behavior is exercised by Scenario 7 here.
+  - Story 7 (relay URL setting) — both phones must be configured through it before any scenario runs.
+  - Stories 1, 2, 5, 6, 8–14 — every feature under test; this plan validates their combined behavior and produces the milestone's Definition-of-Done evidence.
+  - Story 10 (envelope & E2E pipeline) — plan currently blocked on contract v1; its refuse-loudly behavior is exercised by Scenario 7 here.
 - External Tooling: none required. This is a structured manual validation session; results are recorded in this plan's Execution Log / Evidence sections.
 
 ## CER
@@ -53,8 +53,8 @@ Run a structured, ordered, two-phone manual validation session (owner ↔ wife, 
 
 ## Current Understanding
 
-- The app-side features under test are delivered by Stories 1–3, 6–13; their plans live under `context/implementation-plans/milestone-3/`. Story 8's plan is blocked on contract v1, so envelope specifics (including unknown-version disposition) are not yet fixed — Scenario 7 stays provisional until that settles.
-- Three-tier meal matching (Story 11): name match → time match against the recipient's configured meal windows (the slots checked by the existing `validate-meals` CI) → first-meal fallback; the never-dropped invariant must hold in every tier.
+- The app-side features under test are delivered by Stories 1, 2, 5, 6, 8–14; their plans live under `context/implementation-plans/milestone-3/`. Story 10's plan is blocked on contract v1, so envelope specifics (including unknown-version disposition) are not yet fixed — Scenario 7 stays provisional until that settles.
+- Three-tier meal matching (Story 13): name match → time match against the recipient's configured meal windows (the slots checked by the existing `validate-meals` CI) → first-meal fallback; the never-dropped invariant must hold in every tier.
 - Key-loss policy (design.md): keys live and die with the device; restore backup (GUID + social graph survive), generate fresh key pair, re-announce; friends pick up the new key on next poll; in-flight messages to the old key are lost by design under the 30-day sweep.
 - Poll-on-wake transport: every cross-device assertion below is verified *after a deliberate app relaunch/wake* on the receiving phone — there is no push.
 - Harness expectation (AGENTS.md §0.2): runtime-behavior claims need a matching harness check or a documented reason it could not run. `harness/` currently has no two-device relay module; the documented reason is that this behavior spans two physical phones plus a private live server, which the harness cannot drive. Manual structured validation with recorded evidence is the designated method for this story.
@@ -62,19 +62,19 @@ Run a structured, ordered, two-phone manual validation session (owner ↔ wife, 
 
 ## Questions / Unknowns
 
-- Q: `[STORY 3.14]` Where does the session evidence live — inline in this plan's Execution Log only, or also as captured artifacts (screenshots, logcat extracts) in a folder beside it?
+- Q: `[STORY 3.15]` Where does the session evidence live — inline in this plan's Execution Log only, or also as captured artifacts (screenshots, logcat extracts) in a folder beside it?
   Impact: Decides whether the DoD evidence is prose-only or file-backed; file-backed is stronger for milestone closure.
   Assumption: Prose results inline in this plan; screenshots/photos kept in the owner's own storage and referenced by name, since committing personal diary screenshots to a public repo conflicts with the privacy stance.
   Status: OPEN
   Answer: —
 
-- Q: `[STORY 3.14]` Is the unknown-envelope-version refusal (Scenario 7) testable at session time — is there a debug affordance or server-side way to emit an unknown-version envelope, given contract v1 is not yet written?
-  Impact: If untestable, the DoD's refuse-loudly evidence must be covered by Story 8's own validation instead, and this plan must say so rather than silently skipping.
+- Q: `[STORY 3.15]` Is the unknown-envelope-version refusal (Scenario 7) testable at session time — is there a debug affordance or server-side way to emit an unknown-version envelope, given contract v1 is not yet written?
+  Impact: If untestable, the DoD's refuse-loudly evidence must be covered by Story 10's own validation instead, and this plan must say so rather than silently skipping.
   Assumption: Deferred to a server-assisted test (owner sends a crafted envelope via the relay) if foodus-relay provides one; otherwise marked "not testable in this session" with the gap documented.
   Status: OPEN
   Answer: —
 
-- Q: `[STORY 3.14]` For the re-key drill, which backup path is authoritative — the app's own export/backup mechanism or a device-level backup?
+- Q: `[STORY 3.15]` For the re-key drill, which backup path is authoritative — the app's own export/backup mechanism or a device-level backup?
   Impact: The drill must restore GUID + social graph exactly as a real device loss would; the wrong backup path invalidates the evidence.
   Assumption: The app's own database backup/restore mechanism (the one Story 2 rides), performed on the owner's phone, not the wife's.
   Status: OPEN
@@ -85,11 +85,11 @@ Run a structured, ordered, two-phone manual validation session (owner ↔ wife, 
 1. **Precondition gate (session does not start until all boxes tick)**
    - Why: every scenario depends on the full stack being live; a partial run produces misleading evidence.
    - Edits: none — checklist recorded in Execution Log.
-   - Checklist: foodus-relay contract v1 deployed at the owner's private HTTPS endpoint (Story 5 gate released by owner); Stories 1–3, 6–13 implemented and installed on both phones (same build); both phones configured with the relay URL via Story 15's setting and passing its capability check; fresh backups taken of BOTH phones' databases before starting (the drill is destructive).
+   - Checklist: foodus-relay contract v1 deployed at the owner's private HTTPS endpoint (Story 4 gate released by owner); Stories 1, 2, 5, 6, 8–14 implemented and installed on both phones (same build); both phones configured with the relay URL via Story 7's setting and passing its capability check; fresh backups taken of BOTH phones' databases before starting (the drill is destructive).
 
 2. **Scenario 1 — Friend add via code**
    - Why: proves resolve-by-code and that becoming friends is the key exchange.
-   - Steps: wife's phone displays her friend code; owner enters it in add-by-code. Expected: friend row appears with her current username; stored GUID and public key present (verify via whatever inspection surface Story 7 provides, else via a second interaction that requires the key). Repeat in the opposite direction if the design requires mutual add; record which it is.
+   - Steps: wife's phone displays her friend code; owner enters it in add-by-code. Expected: friend row appears with her current username; stored GUID and public key present (verify via whatever inspection surface Story 9 provides, else via a second interaction that requires the key). Repeat in the opposite direction if the design requires mutual add; record which it is.
    - Evidence: screenshots of both friends lists; note the resolved username.
 
 3. **Scenario 2 — "Adaens" group creation and invite acceptance**
@@ -104,7 +104,7 @@ Run a structured, ordered, two-phone manual validation session (owner ↔ wife, 
 
 5. **Scenario 4 — Suggest flow**
    - Why: proves the lower-trust tier end to end.
-   - Steps: create a second group at Suggest trust (or per Story 9's model if trust is fixed per group, use a new group). Send an entry; expected: it stacks in her per-group suggestion queue, does NOT enter the diary; she Accepts one (lands via the same matching, original timestamp) and Rejects another (never lands, disappears from queue).
+   - Steps: create a second group at Suggest trust (or per Story 11's model if trust is fixed per group, use a new group). Send an entry; expected: it stacks in her per-group suggestion queue, does NOT enter the diary; she Accepts one (lands via the same matching, original timestamp) and Rejects another (never lands, disappears from queue).
    - Evidence: screenshots of the queue, the accepted entry in the diary, and the diary showing no trace of the rejected one.
 
 6. **Scenario 5 — Block flows**
@@ -120,12 +120,12 @@ Run a structured, ordered, two-phone manual validation session (owner ↔ wife, 
 
 8. **Scenario 7 — Refuse-loudly and unreachable-relay behavior (as testable)**
    - Why: DoD app-side obligations from Relay Contract Conformance.
-   - Steps: (a) unknown envelope version — only if a crafted-envelope affordance exists (see Questions); expected: Notification Center event, never a silent drop; (b) unreachable relay — point one phone at an invalid HTTPS host via Story 15's setting (or disable network), wake the app; expected: graceful degradation, relay-backed features hidden/greyed, no crash; restore the real URL afterwards and confirm recovery.
+   - Steps: (a) unknown envelope version — only if a crafted-envelope affordance exists (see Questions); expected: Notification Center event, never a silent drop; (b) unreachable relay — point one phone at an invalid HTTPS host via Story 7's setting (or disable network), wake the app; expected: graceful degradation, relay-backed features hidden/greyed, no crash; restore the real URL afterwards and confirm recovery.
    - Evidence: screenshots of the Notification Center event (if testable) and the degraded UI.
 
 9. **Record and close**
    - Why: the session's value is durable evidence.
-   - Edits: fill `## Execution Log` (per-scenario pass/fail + observations), `## Evidence / References`, and `## Completion Review` in this plan; update Story 14 and milestone Status wording to match results; file any defects found as new stories — do not fix inline.
+   - Edits: fill `## Execution Log` (per-scenario pass/fail + observations), `## Evidence / References`, and `## Completion Review` in this plan; update Story 15 and milestone Status wording to match results; file any defects found as new stories — do not fix inline.
 
 ## Validation
 
@@ -154,7 +154,7 @@ Run a structured, ordered, two-phone manual validation session (owner ↔ wife, 
 - Risk: A scenario fails and the session dissolves into debugging.
   Mitigation: Record-and-continue policy — failures are evidence, fixes are new stories; the session only stops if a failure blocks all downstream scenarios.
 - Risk: Scenario 7(a) proves untestable, leaving a DoD gap.
-  Mitigation: Accepted with documentation — the gap transfers to Story 8's own validation; noted in the Completion Review.
+  Mitigation: Accepted with documentation — the gap transfers to Story 10's own validation; noted in the Completion Review.
 
 ## Phase Split
 

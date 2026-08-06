@@ -15,7 +15,7 @@
 - Design authority: `context/design.md` — fork philosophy (additive overlays, minimal merge surface); Milestone 3 "The Multiplayer Exception" (this story is local-only and relay-independent)
 - Related Plans:
   - Story 2 (Profile) — its My Profile card lives at the top of the Groups tab this story creates.
-  - Story 13 (Notification Center) — finalizes the Notifications tab; this story lands it as a stub.
+  - Story 5 (Notification Center) — finalizes the Notifications tab; this story lands it as a stub.
 - External Tooling: none required.
 
 ## CER
@@ -35,23 +35,23 @@ Turn the single-screen app into a three-tab app with a bottom navigation row —
 
 - A new fork-owned shell composable (proposed `app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/shell/FoodUsAppShell.kt`) owning a Material 3 `NavigationBar` with three `NavigationBarItem`s and a `rememberSaveable` selected-tab state.
 - Log tab renders the existing `FoodYouAppNavHost(onDatabaseBackup)` exactly as `FoodYouApp.kt:37` does today — no changes inside the existing NavHost or any existing screen.
-- Groups tab stub (proposed `app/ui/shell/GroupsTabStub.kt` or `app/ui/groups/GroupsScreen.kt` stub) — empty scaffold with title; Story 2 adds the My Profile card, Story 9 adds group cards.
-- Notifications tab stub (proposed `app/ui/shell/NotificationsTabStub.kt`) — empty scaffold with title; Story 13 finalizes.
+- Groups tab stub (proposed `app/ui/shell/GroupsTabStub.kt` or `app/ui/groups/GroupsScreen.kt` stub) — empty scaffold with title; Story 2 adds the My Profile card, Story 11 adds group cards.
+- Notifications tab stub (proposed `app/ui/shell/NotificationsTabStub.kt`) — empty scaffold with title; Story 5 finalizes.
 - Per-tab UI state preservation via `SaveableStateHolder` (or equivalent) so the Log tab's back stack and scroll positions survive tab switches.
 - One-line integration edit in `app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/FoodYouApp.kt` (line 37): `FoodYouAppNavHost(onDatabaseBackup)` → `FoodUsAppShell(onDatabaseBackup)`. Onboarding branch stays outside the shell.
 - New English tab-label strings (fork-owned additive keys) in `shared/resources/src/commonMain/composeResources/values/strings.xml`.
 
 ### Out Of Scope
 
-- Any Groups-tab content (profile card, friends card, group cards) — Stories 2, 7, 9.
-- Notification Center behavior, storage, or history toggle — Story 13.
+- Any Groups-tab content (profile card, friends card, group cards) — Stories 2, 9, 11.
+- Notification Center behavior, storage, or history toggle — Story 5.
 - Any relay, networking, or Room changes — this story is purely UI composition.
 - Restructuring the existing NavHost routes or moving screens between graphs.
 
 ## Non-Goals
 
 - No per-tab deep linking or multi-back-stack navigation library adoption; tab switching is plain state, not navigation routes.
-- No badge counts on the Notifications tab icon (candidate follow-up once Story 13 defines unread semantics).
+- No badge counts on the Notifications tab icon (candidate follow-up once Story 5 defines unread semantics).
 - No tablet/foldable adaptive layouts (navigation rail); phone-first per the two-device household reality.
 
 ## Current Understanding
