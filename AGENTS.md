@@ -24,7 +24,7 @@ Start with this file and the files involved in the request. Read `context/agenti
 - For milestone or Story work, read the owning `context/milestones/milestone-*.md` and its Story section. Use `context/backlog/` when selecting or recovering unscheduled work. Preserve established Story IDs and status ownership.
 - Continue an existing substantial change from its `context/implementation-plans/<milestone>/<story>/plan.md` and any relevant handover. Record acceptance evidence and the next step there. Create a plan or phases when the work needs durable coordination, recovery, or risk control; existing plans remain authoritative for their stories.
 - Read `context/dictations-tier-0/` only to synthesize new raw intent, revise scope, or recover rationale. Promote accepted decisions into maintained Design, milestone, Story, backlog, or plan context. Treat historical records and `context/agent-thinking.md` as evidence, not current authority.
-- For app releases or version changes, use the product version sources in `gradle/libs.versions.toml`, the release workflow, and `context/wiki/foodyou-update-procedure.md`; keep the shipped fork version and release tag aligned. Do not substitute starter version examples for this app's policy.
+- For app releases or version changes, read `context/versioning-policy.md`, the product version sources in `gradle/libs.versions.toml`, the release workflow, and `context/wiki/foodyou-update-procedure.md`; keep the shipped fork version and release tag aligned. Do not substitute starter version examples for this app's policy.
 
 ## 0.2: Repository Expectations
 

@@ -67,12 +67,10 @@ any future candidate keystore be confirmed as the right one):
 
 ## 2. Per Release: Bump versionCode and Fork Version
 
-Edit `gradle/libs.versions.toml`:
-
-```toml
-android-versionCode = "124"    # bump to at least installed + 1 for every shipped build
-fork-version-name = "2.19.1"   # <milestone>.<story>.<build> — must match the v* release tag
-```
+Follow the [FoodUs Versioning Policy](../versioning-policy.md) and edit the current values in
+`gradle/libs.versions.toml`. Increase `android-versionCode` above every installed or shipped
+code; choose `fork-version-name` from the delivered `<milestone>.<story>.<build>` state. Read the
+catalog for the present values rather than using a historical release example.
 
 `fork-version-name` is the app's shipped Android versionName; the `v*` tag that triggers the
 release workflow must be `v<fork-version-name>` so Obtainium's installed-vs-latest comparison

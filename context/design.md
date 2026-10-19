@@ -262,7 +262,7 @@ JSON remains the canonical source; app-specific formats are generated exports.
   `<milestone>.<story>.<build>`, the shipped versionName), upstream version-name kept as
   derived-from metadata, versionCode, SDK levels
   (min 28, compile/target 36), and every dependency version. Change dependencies here, not in
-  build files.
+  build files. [FoodUs Versioning Policy](versioning-policy.md) owns the release version rules.
 - `app/build.gradle.kts` — KMP targets, build types (`release` minified, `devRelease`,
   `miniDevRelease`, `preview` with `.preview` app-id suffix), Room schema dir, BuildConfig.
 - `gradle.properties` — JVM memory, configuration cache, build cache.

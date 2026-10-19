@@ -46,7 +46,7 @@ The first recovery copy was written under the sandbox's temporary directory but 
 | `context/milestones/MILESTONE_TEMPLATE.md` | `B96D40110EE67D8406B0D06E4B4297074F96525E38F882A4CD319E95C7487265` |
 | `context/backlog/BACKLOG_TEMPLATE.md` | `E6FFCC0C0E826B8FB3B5D21120A577B65D8FDB6885F1E37E33A067DA03913BBA` |
 
-Last-written SHA-256 hashes for the edited files:
+Initial batch SHA-256 hashes for the edited files (before the version-policy correction below):
 
 | Path | SHA-256 |
 | --- | --- |
@@ -67,3 +67,9 @@ The fresh Claude route is `CLAUDE.md` -> `AGENTS.md`: **645 whitespace-delimited
 Routing review: a small correction starts with affected files and applicable laws/checks; a current Story continues from its milestone and plan; relay or security work reaches Design, laws, contract gate, and the matching plan; a release reaches the version catalog and update runbook; a rationale question reaches the relevant Dictation and then the maintained decision. Each route retains the privacy, no-push, evidence, and status-owner constraints without loading unrelated completed history.
 
 No unresolved selected-file conflict. Git metadata for the supplied starter was inaccessible in this sandbox; the source comparison is identified by local content hashes and a read-only Core dry run, not a claimed latest release. These changed on-disk instructions cannot retract the instructions already loaded into this conversation, and fresh-host activation has not been tested. The user subsequently authorized a local commit; no push, deployment, or product-version change is part of this update.
+
+## Follow-up: missing versioning policy
+
+The initial update omitted the starter's standalone versioning-policy route. That source document specifies an optional four-component scheme, while FoodUs's catalog, build, release workflow, and published versions use `<milestone>.<story>.<build>` plus Android `versionCode`. The correction adds `context/versioning-policy.md` for the existing FoodUs contract and routes release work to it from `AGENTS.md`, Design, and the update runbook. The runbook's old literal version sample was replaced with an instruction to read current catalog values. No product version or release identity changed.
+
+The starter policy was inspected from `D:\Code Projects\agentic_rails\agentic_rails_context_starter\context\versioning-policy.md` (SHA-256 `95202E7069F1BF28C20265AE7EE99BA17180C1C7958956E766F076402424CE93`); it was not copied or declared adopted. The exact original `AGENTS.md`, Design, and runbook bytes are recoverable from commit `fffc6ee2`. Local links and heading fragments pass, the documented catalog/build/release-guard relationships match source, and `git diff --check` passes. Mandatory Claude reading is 646 words after adding the route (AGENTS 645, wrapper 1). No app build was run for this documentation correction. A future change to the four-component scheme would require an explicit compatibility decision rather than a context update.
