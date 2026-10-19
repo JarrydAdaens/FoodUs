@@ -1,158 +1,33 @@
 ---
 name: agents
-description: Mandatory repository-specific instructions that tell AI coding agents how to load context, work within scope, and follow project standards.
+description: FoodUs project instructions and task-based context routing.
 metadata:
-  version: "3.1"
-  agentic_rails_source_version: "3.1"
+  version: "4.0"
   owner: "Jarryd Adaens"
-  repo: "FoodYou (fork of maksimowiczm/FoodYou)"
+  repo: "FoodUs (fork of maksimowiczm/FoodYou)"
 ---
-# Agent Instructions
+# FoodUs agent instructions
 
-This file provides mandatory guidance for AI coding agents. Follow these rules in every interaction.
+FoodUs is Jarryd Adaens's privacy-first Kotlin Multiplatform food diary fork. The repository retains upstream source namespaces for mergeability; the shipped Android identity is `io.github.jarrydadaens.foodus`. Project decisions and delivery status belong to this repository. The existing milestone, story, backlog, and plan structure is active; no starter profile or generator baseline has been adopted.
 
----
+## Commands and constraints
 
-## 0: Required Startup Workflow
+- CI builds with JDK 21 using `./gradlew --no-daemon :app:assembleDebug` and runs `./gradlew --no-daemon :app:testDebugUnitTest`. On Windows use `.\gradlew.bat` with the same arguments. Select narrower checks when the change permits; run device or emulator checks when the claim requires them.
+- Keep credentials, diary data, and the owner's private relay address out of source, logs, context, and public builds. No accounts, tracking, ads, or cloud diary. The user enters AI credentials and the relay URL on-device. The relay must receive sealed messages only; `foodus-relay` owns its wire contract and server implementation. See Design for the full privacy and cross-repository boundaries.
+- `context/laws.md` remains the binding constitutional authority for code, security, and architecture. A short route here does not weaken it. Read its relevant sections for implementation, security-sensitive work, architectural choices, or a conflict; follow the established patterns and resolve law conflicts before editing.
+- Never run VCS pull or push. Commit only when the user explicitly requests a commit. For a requested commit log or commit, use the installed `commit-log` skill and default to a copyable log in chat unless a commit was requested.
 
-Before making changes, load context in this order:
+## Context routing
 
-### 0.1: Repository Context Order
+Start with this file and the files involved in the request. Read `context/agenticworkflow.md` when changing the context system, planning, status ownership, or phase continuation. Read the relevant sections of `context/design.md` for architecture, product scope, privacy, relay, or version decisions; its Milestones Index is the roadmap entry point. Routine bounded edits do not require a full Design or workflow read.
 
-1. Review `context/laws.md`. This is the constitutional authority for code quality, security, and architectural constraints. Laws defined there are inviolable and override any conflicting guidance in this file.
-2. Review `context/agenticworkflow.md`. This is the mandatory workflow standard for the context tier system.
-3. Review `context/design.md`, including its embedded Milestones Index. This is always required baseline context.
-4. Review the relevant `context/milestones/*.md` when the task touches roadmap, scope, or milestone planning, then the relevant story section inside that milestone.
-5. Review the relevant `context/implementation-plans/<milestone-slug>/<story-slug>/plan.md` when one exists.
-6. Review `context/backlog/*.md` only when selecting or recovering unscheduled work.
-7. Review `context/dictations-tier-0/` files only when the task involves raw dictation synthesis, context enrichment, scope revision, or rationale recovery.
-8. Review optional temporary artifacts (e.g. `context/agent-thinking.md`) only when explicitly relevant.
-9. If continuing phased work, review the relevant handover document in `context/implementation-plans/` first, as directed by `context/agenticworkflow.md`.
-10. When work involves drafting commit logs or preparing to commit, use the installed `commit-log` skill if available. By default, output the commit log in chat for the user to copy. Only perform an actual commit when the user explicitly asks for one.
+- For milestone or Story work, read the owning `context/milestones/milestone-*.md` and its Story section. Use `context/backlog/` when selecting or recovering unscheduled work. Preserve established Story IDs and status ownership.
+- Continue an existing substantial change from its `context/implementation-plans/<milestone>/<story>/plan.md` and any relevant handover. Record acceptance evidence and the next step there. Create a plan or phases when the work needs durable coordination, recovery, or risk control; existing plans remain authoritative for their stories.
+- Read `context/dictations-tier-0/` only to synthesize new raw intent, revise scope, or recover rationale. Promote accepted decisions into maintained Design, milestone, Story, backlog, or plan context. Treat historical records and `context/agent-thinking.md` as evidence, not current authority.
+- For app releases or version changes, use the product version sources in `gradle/libs.versions.toml`, the release workflow, and `context/wiki/foodyou-update-procedure.md`; keep the shipped fork version and release tag aligned. Do not substitute starter version examples for this app's policy.
 
 ## 0.2: Repository Expectations
 
-- Follow the workflow defined in `context/agenticworkflow.md`.
-- Treat `context/design.md` (with its Milestones Index) as always-required context.
-- Use `context/milestones/` (each milestone directly containing its story list) and `context/backlog/` (the story inventory / Milestone -1) to anchor implementation scope and acceptance criteria.
-- Never use `goal` as a tier name (it is retired) and never use `task` as a tier name. The work unit is a Story.
-- Treat `context/dictations-tier-0/` as raw dictation that must be synthesized into maintained docs before it becomes authoritative.
-- Review `harness/README-HARNESS.md` and any module whose documented trigger matches the task; `harness/` holds the verifiers, gates, guardrail seams, sensors, and actuators for this project.
-- Run matching `harness/` gates and verifiers when task scope triggers them, using an independent evaluator sub-agent when available. A claim about visible or runtime behavior requires the matching harness check to pass, or a documented reason it could not run.
-- Use relevant installed shared rules, skills, workflow-skills, and specialist agents when they are available and task-appropriate.
-- Repository-local instructions override reusable external tooling when they conflict.
-- Do not execute pull or push operations in any VCS.
-- You may stage and commit changes when explicitly requested. Push is never permitted.
-- When drafting a commit log or creating a commit, use the `commit-log` skill, and default to outputting the commit log in chat unless the user explicitly asks you to create the commit.
+Review `harness/README-HARNESS.md` and the module whose documented trigger matches the change. Run matching gates and verifiers, using an independent evaluator sub-agent when available and applicable. A visible or runtime behavior claim needs the matching harness result or a documented reason it could not run. The harness currently lists no installed modules, so choose meaningful tests and direct runtime evidence for the affected behavior.
 
-## 0.3: Optional Project Versioning
-
-This starter is language- and framework-agnostic. When a generated project has first-party assemblies, packages, apps, or deployable artifacts with shared version properties, define the versioning policy in project-specific documentation.
-
-Recommended context-driven version shape:
-
-| Part | Meaning |
-| --- | --- |
-| Major | Significant product release the organization treats as major. |
-| Milestone | Current milestone number from `context/milestones/`, or the highest milestone actively in progress. |
-| Build or Reserved | Build ordinal, CI value, or `0` until automation exists. |
-
-If a project adopts this policy, document the exact files to update and keep every first-party version property aligned when milestone scope changes.
-
----
-
-## 1. Agent Behaviour
-
-### 1.1 Think Before Coding
-
-Do not assume. Do not hide confusion. Surface tradeoffs.
-
-Before implementing:
-
-- State assumptions explicitly. If uncertain, ask.
-- If multiple interpretations exist, present them instead of choosing silently.
-- If a simpler approach exists, say so.
-- Push back when the requested approach conflicts with repository laws, scope, or maintainability.
-- If something is unclear and cannot be resolved from context, stop and ask.
-
-### 1.2 Simplicity First
-
-Minimum code that solves the problem. Nothing speculative.
-
-- No features beyond what was asked.
-- No abstractions for single-use code.
-- No flexibility or configurability that was not requested.
-- Do not expose internal tuning knobs as user-facing controls unless the user explicitly asked for them.
-- No error handling for impossible scenarios.
-- If you write 200 lines and it could be 50, rewrite it.
-
-Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
-
-### 1.3 Surgical Changes
-
-Touch only what you must. Clean up only your own mess.
-
-When editing existing code:
-
-- Do not improve adjacent code, comments, or formatting unless needed for the task.
-- Do not refactor things that are not broken.
-- Match existing style, even if you would do it differently.
-- If you notice unrelated dead code, mention it instead of deleting it.
-
-When your changes create orphans:
-
-- Remove imports, variables, files, and functions that your changes made unused.
-- Do not remove pre-existing dead code unless asked.
-
-The test: every changed line should trace directly to the user's request.
-
-### 1.4 Goal-Driven Execution
-
-Define success criteria. Loop until verified.
-
-Transform tasks into verifiable goals:
-
-- "Add validation" -> "Write tests for invalid inputs, then make them pass"
-- "Fix the bug" -> "Write a test that reproduces it, then make it pass"
-- "Refactor X" -> "Ensure tests pass before and after"
-
-For multi-step tasks, state a brief plan:
-
-```text
-1. [Step] -> verify: [check]
-2. [Step] -> verify: [check]
-3. [Step] -> verify: [check]
-```
-
-For modal, editor, workflow, or stateful features, define both the activation path and the cleanup path up front. If loading or enabling one feature automatically turns on another, clearing or disabling it must explicitly unwind that state.
-
-Strong success criteria let you loop independently. Weak criteria require clarification.
-
-### 1.5 Comments
-
-- Write comments that explain why, not what.
-- A few high-level comments explaining the purpose of classes, modules, or methods can be helpful.
-- Comments explaining tricky or non-obvious code are helpful.
-- Avoid comments that are redundant with the code.
-- Use formal API documentation only when the interface is public-facing or important to consumers.
-
----
-
-## 2. Refactoring Rules
-
-Immediate refactoring is required when:
-
-- A class, module, or file grows beyond a single responsibility.
-- Methods or functions perform multiple actions.
-- Logic is duplicated across the project.
-- Large conditional blocks control behavior that should be owned by clearer components.
-
-Refactoring must prioritize:
-
-- Composition over inheritance.
-- Small, focused components.
-- Clear ownership of responsibilities.
-
-Apply the Rule of Three: refactor after something is duplicated three times, not before.
-
-Before adding significant functionality to a large or monolithic file, consider a structural refactor with no intended behavior changes first. Splitting a file into smaller, composable parts before feature work is often safer than mixing the refactor and the new behavior in one step. Verify the refactor independently before layering new functionality on top.
+Investigate discoverable uncertainty before asking. State consequential assumptions, choose the smallest coherent change, and preserve unrelated edits, project contracts, and historical paths. Refactor when necessary for the requested outcome; do not add speculative features or tuning controls unless requested. Validate external inputs at their boundaries and keep sensitive values out of artifacts. New behavior and bug fixes need meaningful regression checks; document a required check that could not run. Update the owning Story or plan when its status, acceptance, or dependency changes. Report changed files, checks, and material limits. Shared skills supplement repository instructions and do not silently change this project's process.

@@ -18,12 +18,12 @@ A **Story** is one discrete work unit: a bug fix, a feature, or a refactor. The 
 - **30-story cap per file.** Each backlog file holds a maximum of 30 stories; overflow spawns a new backlog file (`backlog-1.md`, `backlog-2.md`, ...).
 - **Priority sorting front-to-back.** Most urgent, important, concrete, and doable stories go in the **front** files; wishful, experimental, least-concrete, least-urgent stories sink to the **back**.
 - **Evergreen and messy by design.** The backlog is not meant to be perfectly organized end to end. It can represent six months to several years of work. Do not try to maintain perfect foresight.
-- **Reclassify mis-sized stories.** A story that, once scored, reveals itself to be epic-sized is actually a **Milestone**. Promote it into a milestone (see [../milestones/](../milestones/)) and the [Milestones Index](../design.md#milestones-index) rather than forcing it through as a story.
+- **Reclassify mis-sized stories.** A Story too large for one coherent work unit may become a **Milestone**. Promote it into [../milestones/](../milestones/) and the [Milestones Index](../design.md#milestones-index) rather than forcing it through as a Story.
 - **Supplement freely.** Add stories as understanding improves.
 
 ## Scoring
 
-Stories are scored on three orthogonal metrics before model assignment: **Complexity** (reasoning demand), **Effort** (volume), and **Risk** (uncapped headline + sub-scores). Scoring is performed by right-rail tooling and recorded when a story is pulled into a milestone or planned. See [agenticworkflow.md](../agenticworkflow.md#scoring-model-complexity-effort-risk).
+Complexity, effort, and risk may be recorded when they help scope or mitigate a Story. Existing scores remain historical estimates; new numeric scoring and model assignment are not required for every Story. See [agenticworkflow.md](../agenticworkflow.md#scoring-model-complexity-effort-risk).
 
 ## Files
 
@@ -34,6 +34,6 @@ Stories are scored on three orthogonal metrics before model assignment: **Comple
 
 1. Build the backlog once from Design + Milestones.
 2. Sort it front-to-back by priority.
-3. Milestone planning searches the backlog by milestone theme, gathers stories, scores them, and pulls them into the relevant [../milestones/](../milestones/) document.
+3. Milestone planning searches the backlog by milestone theme, gathers relevant Stories, and pulls them into the owning [../milestones/](../milestones/) document in dependency order.
 4. A promoted story marks its original backlog entry as moved, scheduled, promoted, or superseded to avoid duplicating active truth.
-5. A story ready to run gets an Implementation Plan under [../implementation-plans/](../implementation-plans/).
+5. A substantial Story gets an Implementation Plan under [../implementation-plans/](../implementation-plans/) when durable acceptance, dependencies, or continuation require one. Existing plans remain authoritative for their Stories.

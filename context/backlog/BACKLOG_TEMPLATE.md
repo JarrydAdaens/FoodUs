@@ -24,7 +24,7 @@ metadata:
 | 1 | [Story name](#story-1) | Feature/Bug/Refactor | High | — | — | — | *unscheduled* | Backlog |
 | 2 | [Story name](#story-2) | Feature/Bug/Refactor | Medium | — | — | — | *unscheduled* | Backlog |
 
-Scores are filled in during milestone planning. An unscored story shows `—`.
+Scores are optional during milestone planning. An unscored Story shows `—`.
 
 ---
 
@@ -40,19 +40,19 @@ Scores are filled in during milestone planning. An unscored story shows `—`.
 
 **Type:** Feature | Bug | Refactor
 
-**Summary:** One or two short paragraphs describing the discrete unit of work. This is the *story summary* the risk judge evaluates — keep it cheap to read.
+**Summary:** One or two short paragraphs describing the discrete unit of work.
 
 **Why / value:** Why this is worth doing and how urgent it is.
 
 **Rough scope:** What it touches. Enough to size it, not a full plan.
 
-**Scores (filled at planning):**
+**Scores (optional when useful for scoping):**
 
 - Complexity: *reasoning demand*
 - Effort: *volume — files, LOC, modules*
-- Risk: *uncapped headline + sub-scores (technical, architectural, dependency, ...)*
+- Risk: *concrete consequences and uncertainty; numeric rating only if useful*
 
-**Reclassification check:** If scoring reveals this is epic-sized, promote it to a [Milestone](../milestones/) and remove it from the backlog.
+**Reclassification check:** If this work is too large for one coherent Story, promote it to a [Milestone](../milestones/) and retain a link or status note here.
 
 ---
 
@@ -68,7 +68,7 @@ Scores are filled in during milestone planning. An unscored story shows `—`.
 
 **Rough scope:** *...*
 
-**Scores (filled at planning):**
+**Scores (optional when useful for scoping):**
 
 - Complexity: —
 - Effort: —

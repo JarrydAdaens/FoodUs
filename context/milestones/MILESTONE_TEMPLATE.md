@@ -38,7 +38,7 @@ What must be true for the milestone to be complete.
 
 | # | Status | Story | Type | Complexity | Effort | Risk | Plan |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | Not Started | [Story name](#story-1) | Feature/Bug/Refactor | — | — | — | *link when generated* |
+| 1 | Not Started | [Story name](#story-1) | Feature/Bug/Refactor | — | — | — | *link when needed* |
 
 ---
 
@@ -59,13 +59,13 @@ Why this matters.
 **Rough scope:**
 What it touches. Enough to size it, not a full plan.
 
-**CER:**
+**CER (optional when useful for scoping):**
 
 - Complexity: —
 - Effort: —
 - Risk: —
 
-**Plan:** `../implementation-plans/<milestone-slug>/<story-slug>/plan.md`
+**Plan:** `../implementation-plans/<milestone-slug>/<story-slug>/plan.md` when substantial work needs durable acceptance or continuation; otherwise `n/a`.
 
 **Status:** Not Started
 

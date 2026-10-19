@@ -24,12 +24,14 @@ The high-level **Milestones Index** (the table of contents pointing at these fil
 ## Files
 
 - [MILESTONE_TEMPLATE.md](MILESTONE_TEMPLATE.md) - copy this for each new milestone.
-- [milestone-1.md](milestone-1.md) - starter example milestone.
+- [milestone-1.md](milestone-1.md) - completed initialization milestone.
+- [milestone-2.md](milestone-2.md) - current customisation milestone.
+- [milestone-3.md](milestone-3.md) - current multiplayer milestone.
 
 ## Rules
 
 - One file per milestone. Keep milestones thematic, not granular.
 - Each milestone directly contains its Story Index; stories do not live in a separate scheduling layer.
 - Keep the Milestones Index in [design.md](../design.md) in sync with the files here.
-- When a backlog story scores as epic-sized, reclassify it upward into a new milestone here and in the Design index.
+- When a backlog story is too large for one coherent Story, reclassify it into a milestone here and in the Design index.
 - The system is progressive: complete a milestone and move on rather than perpetually re-opening old milestones.

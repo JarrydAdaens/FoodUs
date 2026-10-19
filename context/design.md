@@ -74,10 +74,10 @@ This is one of only two files in the framework allowed to state the numbered tie
 | 1 - Design | `design.md` | The whole deliverable, its largest pieces, and the Milestones Index subsection |
 | 2 - Milestone | [milestones/](milestones/) | One coherent macro-feature or delivery outcome; contains the story list needed to deliver it |
 | 3 - Story | Inside milestone docs, optionally staged first in [backlog/](backlog/) | Discrete work units (features, bugs, refactors) |
-| 4 - Implementation Plan | `implementation-plans/<milestone-slug>/<story-slug>/plan.md` | The normalized how-to for one story, with scoring and mitigation |
+| 4 - Implementation Plan | `implementation-plans/<milestone-slug>/<story-slug>/plan.md` | The approach, acceptance, evidence, and continuation for substantial Story work |
 | 5 - Phase *(optional)* | `implementation-plans/<milestone-slug>/<story-slug>/` | A safe slice of an over-large story |
-| Support | [laws.md](laws.md) | Constitutional code quality and security laws — loaded first by all agents |
-| Support | [agenticworkflow.md](agenticworkflow.md) | Workflow for AI agent collaboration |
+| Support | [laws.md](laws.md) | Binding constitutional code quality and security laws; load relevant sections for implementation, security, architecture, or conflicts |
+| Support | [agenticworkflow.md](agenticworkflow.md) | Context ownership and conditional workflow; load for planning, routing, status, or continuation |
 | Support | [agent-thinking.md](agent-thinking.md) | Optional temporary scratchpad for long tasks |
 | Support | [wiki/home.md](wiki/home.md) | Operational reference notes and cheat sheets |
 
@@ -95,7 +95,7 @@ The backlog (`backlog/`) is not a numbered tier. It is a staging pool — inform
 | Milestone 2: Customisation | [milestones/milestone-2.md](milestones/milestone-2.md) | In Progress (reopened 2026-07-26) | Makes the app the owner's own: FoodUs identity, AI-assisted logging, ergonomics fixes, adopted upstream bug fixes | An app that is faster to log with than MyFitnessPal/Lose It ever were, unmistakably this fork |
 | Milestone 3: Multiplayer | [milestones/milestone-3.md](milestones/milestone-3.md) | In Progress (started 2026-07-28) | Cross-diary logging for the household pair — log a shared meal once and it lands in both diaries — via profiles, friends, two-person trusted groups, and a dumb encrypted relay | A multi-user FoodUs that stays local-first: the island broken in exactly one controlled place |
 
-Keep this index in sync as milestones are added, completed, reordered, or reclassified. When a backlog story scores as epic-sized, promote it into this index as a new milestone.
+Keep this index in sync as milestones are added, completed, reordered, or reclassified. When a backlog Story is too large for one coherent work unit, promote it into this index as a new milestone.
 
 ---
 
