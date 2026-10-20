@@ -2,7 +2,7 @@
 name: milestone-3
 description: Milestone 3 - Multiplayer. Profiles, friends, two-person groups, cross-diary logging, and the dumb encrypted relay server that breaks the island in exactly one controlled place.
 metadata:
-  version: "3.2"
+  version: "3.3"
   agentic_rails_source_version: "3.0"
   owner: "Jarryd Adaens"
   repo: "FoodUs (fork of maksimowiczm/FoodYou)"
@@ -48,7 +48,31 @@ evidenced in the foodus-relay repository, whose deployment the Story 4 gate conf
 
 ## Status
 
-In Progress (execution started 2026-07-28)
+In Progress (execution started 2026-07-28; reconciled against local Git history on 2026-10-20).
+**3 Complete, 2 In Progress with local work delivered, 2 Externalized gates, and 8 Not Started
+with blocked dependencies.** The relay integration and two-phone proof remain open.
+
+### History reconciliation — 20 October 2026
+
+Reviewed the available local Git history through `ad4ca612`, the current source, and the
+Story plans. No app implementation commits follow `f6229b0b` (2026-07-29); later commits
+reorganize plans and update context. Read the older commit labels through the renumbering in
+[Notes](#notes), not as current Story IDs.
+
+| Current Story | Commit evidence | Delivered scope and remaining work |
+| --- | --- | --- |
+| 1 — Tabbed UI shell | `8ac990db` (2026-07-28) | Complete. Three-tab shell; its plan records seven emulator checks. |
+| 2 — Profile | `6117d35d` (2026-07-28) | Complete. Local GUID, cosmetic username, Room persistence, and create/rename UI; the plan records unit tests and a data-preserving 36→37 upgrade. |
+| 5 — Notification Center | `f6229b0b` (2026-07-29; labelled Story 3.13 at the time) | Complete for the local event store and tab. The plan records unit tests, persistence/history checks, and the 38→39 upgrade. Cross-device emitters belong to Stories 10–14 and remain absent. |
+| 6 — Crypto identity | `a933ad33` (2026-07-28; labelled Story 3.3) | Partial. Local Keystore generation, public-key persistence, reconciliation, and re-key use cases exist. Relay registration and re-key announcements remain absent; the plan stays Draft. |
+| 7 — Relay URL setting | `18cf3a89` (2026-07-28; labelled Story 3.15) | Partial. Settings, HTTPS validation, persistence, and configured signal exist. `PendingContractRelayConnectionChecker` still returns `Unknown` without a network call; the plan stays Draft. |
+| 3–4 and 8–15 | No gate-release or implementation evidence found in the reviewed app history | The external contract/deployment gates remain unconfirmed here. Stories 8–15 have no implementation evidence; draft plans do not count as delivery. Story 10's plan is intentionally absent until its contract question is settled. |
+
+This reconciliation uses the plans' recorded build, unit, instrumented, and emulator results;
+it did not rerun those checks. It does not verify the current server deployment or release its
+owner-controlled gates. Next, carry the published contract and deployment confirmation into
+Stories 3–4, then finish Stories 6–7 and unblock the dependent work. Household proof still
+requires Story 15's live two-phone session.
 
 ---
 
@@ -109,14 +133,14 @@ Must be settled in the wire contract before Story 10 is planned.
 | 05 | Complete | [Notification Center tab](#story-5) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-05-notification-center/plan.md) |
 | 06 | In Progress | [Crypto identity](#story-6) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-06-crypto-identity/plan.md) |
 | 07 | In Progress | [Configurable relay URL setting](#story-7) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-07-relay-url-setting/plan.md) |
-| 08 | Not Started | [Friend codes](#story-8) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-08-friend-codes/plan.md) |
-| 09 | Not Started | [Friends list](#story-9) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-09-friends-list/plan.md) |
-| 10 | Not Started | [Message envelope & E2E pipeline](#story-10) | Feature | — | — | — | *link when generated* |
-| 11 | Not Started | [Groups](#story-11) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-11-groups/plan.md) |
-| 12 | Not Started | [Save to Group](#story-12) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-12-save-to-group/plan.md) |
-| 13 | Not Started | [Receive into diary](#story-13) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-13-receive-into-diary/plan.md) |
-| 14 | Not Started | [Suggestion queue](#story-14) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-14-suggestion-queue/plan.md) |
-| 15 | Not Started | [Household proof](#story-15) | Research | — | — | — | [plan](../implementation-plans/milestone-3/story-15-household-proof/plan.md) |
+| 08 | Not Started (blocked) | [Friend codes](#story-8) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-08-friend-codes/plan.md) |
+| 09 | Not Started (blocked) | [Friends list](#story-9) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-09-friends-list/plan.md) |
+| 10 | Not Started (blocked) | [Message envelope & E2E pipeline](#story-10) | Feature | — | — | — | *not created — contract planning gate* |
+| 11 | Not Started (blocked) | [Groups](#story-11) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-11-groups/plan.md) |
+| 12 | Not Started (blocked) | [Save to Group](#story-12) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-12-save-to-group/plan.md) |
+| 13 | Not Started (blocked) | [Receive into diary](#story-13) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-13-receive-into-diary/plan.md) |
+| 14 | Not Started (blocked) | [Suggestion queue](#story-14) | Feature | — | — | — | [plan](../implementation-plans/milestone-3/story-14-suggestion-queue/plan.md) |
+| 15 | Not Started (blocked) | [Household proof](#story-15) | Research | — | — | — | [plan](../implementation-plans/milestone-3/story-15-household-proof/plan.md) |
 
 ---
 
@@ -295,7 +319,7 @@ can land with Story 1; the cross-device emitters (Stories 10-14) wire in as they
 
 **Plan:** `../implementation-plans/milestone-3/story-05-notification-center/plan.md`
 
-**Status:** Complete (2026-07-28, commit f6229b0b — cross-device emitters wire in with Stories 10-14)
+**Status:** Complete (commit `f6229b0b`, dated 2026-07-29; execution recorded under the 2026-07-28 run) — local notification store, tab UI, dismissed-history control, and event handler delivered. Cross-device emitters wire in with Stories 10–14; their absence does not close those dependent stories.
 
 ---
 
@@ -335,7 +359,7 @@ needs Story 7's relay URL on-device.
 
 **Plan:** `../implementation-plans/milestone-3/story-06-crypto-identity/plan.md`
 
-**Status:** In Progress (2026-07-28, commit a933ad33 — local Keystore seam done; relay registration awaits the Story 4 gate)
+**Status:** In Progress — local work delivered, relay integration blocked (2026-07-28, commit `a933ad33`). Local Keystore generation, public-key storage, reconciliation, and re-key use cases are implemented and have recorded test/device evidence. Relay registration and re-key announcements remain unimplemented; contract crypto/auth decisions and the Story 4 deployment gate remain open. The owning plan remains Draft.
 
 ---
 
@@ -375,7 +399,7 @@ and degrades gracefully until the Story 4 gate is released.
 
 **Plan:** `../implementation-plans/milestone-3/story-07-relay-url-setting/plan.md`
 
-**Status:** In Progress (2026-07-28, commit 18cf3a89 — settings/validation/persistence done; connection check awaits contract v1)
+**Status:** In Progress — local work delivered, capability probe blocked (2026-07-28, commit `18cf3a89`). Settings, HTTPS validation, persistence, and the configured signal are implemented and have recorded test/device evidence. The current checker always returns `RelayCheckResult.Unknown` and makes no network call. Completion requires the contract-defined capability probe and its validation against the deployed relay; the owning plan remains Draft.
 
 ---
 
@@ -411,7 +435,7 @@ Story 7's relay URL setting on-device.
 
 **Plan:** `../implementation-plans/milestone-3/story-08-friend-codes/plan.md`
 
-**Status:** Not Started
+**Status:** Not Started (blocked) — no implementation recorded. Contract v1's friend-code endpoints and minting/alphabet decisions, the Story 4 deployment gate, and Story 7's capability probe remain prerequisites.
 
 ---
 
@@ -449,7 +473,7 @@ slug `...-friends`), contract v1, deployed. Owner releases via the Story 4 gate.
 
 **Plan:** `../implementation-plans/milestone-3/story-09-friends-list/plan.md`
 
-**Status:** Not Started
+**Status:** Not Started (blocked) — no implementation recorded. The friend-code flow, contract-defined resolve/block calls, and Story 4 deployment gate remain prerequisites; the existing plan is Draft.
 
 ---
 
@@ -490,9 +514,9 @@ in the contract before this story is planned.
 - Effort: —
 - Risk: —
 
-**Plan:** `../implementation-plans/milestone-3/story-10-envelope-e2e-pipeline/plan.md`
+**Plan:** Not created — planning is gated on the contract's unknown-version envelope disposition. The expected future path is `../implementation-plans/milestone-3/story-10-envelope-e2e-pipeline/plan.md`.
 
-**Status:** Not Started
+**Status:** Not Started (blocked) — no implementation or plan recorded. Planning awaits contract v1's unknown-version envelope disposition; execution also needs the deployed mailbox and stored friend keys from Story 9.
 
 ---
 
@@ -548,7 +572,7 @@ server capability of its own.
 
 **Plan:** `../implementation-plans/milestone-3/story-11-groups/plan.md`
 
-**Status:** Not Started
+**Status:** Not Started (blocked) — no group implementation recorded. The current Groups tab contains only the profile card. Stories 9–10 and the open group-block/meal-plan decisions remain prerequisites; the existing plan is Draft.
 
 ---
 
@@ -587,7 +611,7 @@ server capability of its own.
 
 **Plan:** `../implementation-plans/milestone-3/story-12-save-to-group/plan.md`
 
-**Status:** Not Started
+**Status:** Not Started (blocked) — no implementation recorded. Stories 10–11 and the None-trust group visibility decision remain prerequisites; the existing plan is Draft.
 
 ---
 
@@ -630,7 +654,7 @@ server capability of its own.
 
 **Plan:** `../implementation-plans/milestone-3/story-13-receive-into-diary/plan.md`
 
-**Status:** Not Started
+**Status:** Not Started (blocked) — no implementation recorded. Stories 10–11 and the date/meal and Suggest-accept matching decisions remain prerequisites; the existing plan is Draft.
 
 ---
 
@@ -662,7 +686,7 @@ server capability of its own.
 
 **Plan:** `../implementation-plans/milestone-3/story-14-suggestion-queue/plan.md`
 
-**Status:** Not Started
+**Status:** Not Started (blocked) — no implementation recorded. The message pipeline, groups, and receive/matching flow in Stories 10–11 and 13 remain prerequisites; the existing plan is Draft.
 
 ---
 
@@ -697,7 +721,7 @@ endpoint (Story 4 gate released), with both phones configured via Story 7's rela
 
 **Plan:** `../implementation-plans/milestone-3/story-15-household-proof/plan.md`
 
-**Status:** Not Started
+**Status:** Not Started (blocked) — no household proof recorded. The Story 4 deployment gate and preceding app flows must be delivered, with both phones configured, before the live two-phone session; the existing plan is Draft.
 
 ---
 
@@ -757,7 +781,7 @@ Milestone 3 scope:
 ## Notes
 
 - Keep this Story Index in sync with the [Milestones Index](../design.md#milestones-index) in Design.
-- **2026-07-29 re-enumeration.** The stories were re-sorted delivered-first and renumbered
+- **Story re-enumeration (recorded in `5e62849c` and `d0dd1643`, dated 2026-08-07).** The stories were re-sorted delivered-first and renumbered
   (fork versioning is story-based, so numbers must track delivery). Mapping old → new:
   3→6, 4→3, 5→4, 6→8, 7→9, 8→10, 9→11, 10→12, 11→13, 12→14, 13→5, 14→15, 15→7 (1 and 2
   unchanged). Historical records keep the numbers that were current when they were written —

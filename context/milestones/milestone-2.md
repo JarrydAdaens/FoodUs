@@ -2,10 +2,10 @@
 name: milestone-2
 description: Milestone 2 - Customisation. Change how the application works - FoodUs identity, AI-assisted logging, ergonomics, adopted upstream bug fixes, Australian food-data providers with offline-first local storage, and an expanded Quick Add with promotion to custom products/recipes.
 metadata:
-  version: "3.0"
+  version: "3.1"
   agentic_rails_source_version: "3.0"
   owner: "Jarryd Adaens"
-  repo: "FoodYou (fork of maksimowiczm/FoodYou)"
+  repo: "FoodUs (fork of maksimowiczm/FoodYou)"
 ---
 # Milestone 2: Customisation
 
@@ -59,6 +59,26 @@ unstarted stories remain. The milestone is not yet closable as written: the Defi
 `../backlog/backlog-1.md` and were never pulled into this milestone's story list. Closing requires
 the owner to either schedule those fixes or revise that DoD clause. The original 19-story run
 was delivered 2026-07-25 by rails-boss-execute (see `../rails-boss-execute/progress.md`).
+
+### History reconciliation — 20 October 2026
+
+Reviewed the available local Git history through `ad4ca612`, the Story plans, and the current
+source. The count remains **22 Complete, 1 Blocked**. No additional Story completion is supported
+by later commits. The latest app implementation is Milestone 3's `f6229b0b`; the subsequent
+commits update context and plan organization.
+
+| Evidence | Current conclusion |
+| --- | --- |
+| Story implementation commits `dc683e1d` through `761fc966`, with the blocked-path record `5819da3e` | Stories 1–19 retain their recorded results: 18 complete; Story 16 blocked on a written FoodSwitch data licence. Recording the blocker fulfils the fallback deliverable, but does not deliver a provider. |
+| `7dc9adc7`, `b7423b1e`, `4e0ed878` | Story 20's rename, shipped version wiring, and launcher icon are implemented. The icon commit is now identified explicitly below. |
+| `02ec0391`, `4ec602d4`, `ebb28703`; status reconciliation `d843bc1b` | Stories 21–23 are complete. Story 21 also closed Story 22's runtime configuration UI follow-up. Both current ViewModels consume `ObserveAiConfigured`. |
+| `a831dbb7` and [backlog Stories 5–9](../backlog/backlog-1.md#story-5) | Story 12 completed triage and adoption. The five adopted fixes remain unscheduled; no later fix commits were found. The milestone's bug-fix closure condition remains open. |
+
+The plans retain the recorded unit, build, and emulator evidence from implementation. This
+reconciliation did not rerun those checks. Successful AI scan, query, and validation calls still
+have no recorded live success evidence; do not treat the failure-path checks as that proof.
+The next closure step is to schedule the adopted fixes or obtain an owner revision of the
+Definition of Done. Story 16 can resume only after its licence gate is released.
 
 ---
 
@@ -117,7 +137,7 @@ was delivered 2026-07-25 by rails-boss-execute (see `../rails-boss-execute/progr
 constraint: do this as an easy-to-overlay change on top of the original app to minimize merge
 conflicts with upstream.
 
-**Status:** Complete (2026-07-25, commit `dc683e1d`) — applicationId `com.acme.foodapp` (namespace/source packages untouched for mergeability); fork version 1.0.0 layered over untouched upstream 3.4.9; About screen shows "Derived from Food You 3.4.9". Third version component reserved at 0 (deploy-counter decision still open).
+**Status:** Complete (2026-07-25, commit `dc683e1d`) — applicationId `com.acme.foodapp` (namespace/source packages untouched for mergeability); fork version 1.0.0 layered over untouched upstream 3.4.9; About screen shows "Derived from Food You 3.4.9". This is the historical delivery state; [Story 20](#story-20) supersedes the interim identity, and [the versioning policy](../versioning-policy.md) resolves the third component as the build number.
 
 ---
 
@@ -491,7 +511,7 @@ verdict. **Depends on Story 14** (feasibility) **and Story 15** (shared pipeline
 **Source:** [Milestone 2 feature spec](../dictations-tier-0/2026-07-25_milestone-2_australian-providers-and-quickadd-spec.md)
 (Phase 3).
 
-**Status:** Blocked — documented external licence blocker (2026-07-25, commit `5819da3e`; gate evaluated by Story 14). No public API/bulk download, and FoodSwitch Global Terms of Use forbid storing/deriving the data. Per this story's own instruction the blocker is recorded and work stopped; no scraped substitute. Unblock: owner obtains a written data licence (`foodswitch@georgeinstitute.org.au`), then reuse Story 15's pipeline.
+**Status:** Blocked (documented) — external licence blocker (2026-07-25, commit `5819da3e`; gate evaluated by Story 14). No public API/bulk download, and FoodSwitch Global Terms of Use forbid storing/deriving the data. Per this story's own instruction the blocker is recorded and work stopped; no scraped substitute. Unblock: owner obtains a written data licence (`foodswitch@georgeinstitute.org.au`), then reuse Story 15's pipeline.
 
 ---
 
@@ -611,7 +631,7 @@ About/config URLs, user agent, repo rename, versioning scheme, and the owner's h
 **Rough scope:** Identity resources, build config, CI workflows, README/docs, launcher icon
 assets. Source namespace `com.maksimowiczm.foodyou` deliberately untouched for upstream merges.
 
-**Status:** Complete (2026-07-26, commits `7dc9adc7` + `b7423b1e` + icon commit) — name "FoodUs";
+**Status:** Complete (implemented 2026-07-26–27, commits `7dc9adc7` + `b7423b1e` + `4e0ed878`) — name "FoodUs";
 applicationId `io.github.jarrydadaens.foodus`; repo renamed to `FoodUs`; versioning
 `<milestone>.<story>.<build>` (shipped versionName = fork version, upstream 3.4.9 demoted to
 derived-from metadata; release workflow guards tag↔version agreement); v2.19.0 released and
@@ -669,7 +689,7 @@ fully user-configurable.
 `ai` slice reads runtime config instead of BuildConfig (BuildConfig `foodus.ai.*` values remain
 as blank-by-default developer fallbacks), validation call.
 
-**Status:** Complete (2026-07-27, commit `02ec0391`) — AI settings screen (key/endpoint/model/user system prompt) persisted in DataStore with explicit Save (blank→null); runtime precedence user → blank-by-default BuildConfig fallback → domain default, unit-tested; both OpenRouter scanners read runtime config; Validate = one `max_tokens=1` probe with verbatim error surfacing (failure paths emulator-verified; green-tick path awaits a real key). Known follow-up recorded for Story 21: the two ViewModel `aiConfigured` gates still read BuildConfig.
+**Status:** Complete (2026-07-27, commit `02ec0391`) — AI settings screen (key/endpoint/model/user system prompt) persisted in DataStore with explicit Save (blank→null); runtime precedence user → blank-by-default BuildConfig fallback → domain default, unit-tested; both OpenRouter scanners read runtime config; Validate = one `max_tokens=1` probe with verbatim error surfacing (failure paths emulator-verified; green-tick path awaits a real key). The two ViewModel `aiConfigured` gates were subsequently fixed by [Story 21](#story-21), commit `4ec602d4`: both now observe runtime configuration through `ObserveAiConfigured`. The original gap in Story 22's execution record is historical, not an outstanding task.
 
 ---
 
