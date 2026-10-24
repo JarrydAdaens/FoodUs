@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 actual fun AiScanCameraSection(
     jpeg: ByteArray?,
     onPhotoCaptured: (ByteArray) -> Unit,
-    onDiscardRetry: () -> Unit,
     modifier: Modifier,
 ) {
     OutlinedCard(modifier = modifier.fillMaxWidth().height(160.dp)) {

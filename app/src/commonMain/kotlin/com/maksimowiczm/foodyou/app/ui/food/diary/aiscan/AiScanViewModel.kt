@@ -46,10 +46,6 @@ internal class AiScanViewModel(
         _state.value = AiScanUiState.Captured(jpeg)
     }
 
-    fun onDiscard() {
-        _state.value = AiScanUiState.NoPhoto
-    }
-
     @OptIn(ExperimentalUuidApi::class)
     fun submit() {
         val jpeg = _state.value.jpeg ?: return

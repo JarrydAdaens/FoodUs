@@ -1,6 +1,7 @@
 package com.maksimowiczm.foodyou.app.ui.food.diary.aiscan
 
 import android.Manifest
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -10,7 +11,6 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,76 +24,74 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.material.icons.filled.PhotoLibrary
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import foodyou.app.generated.resources.*
 import java.io.ByteArrayOutputStream
+import java.io.IOException
+import kotlinx.coroutines.CancellationException
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 actual fun AiScanCameraSection(
     jpeg: ByteArray?,
     onPhotoCaptured: (ByteArray) -> Unit,
-    onDiscardRetry: () -> Unit,
     modifier: Modifier,
 ) {
     val context = LocalContext.current
 
-    var hasPermission by remember {
-        mutableStateOf(
-            ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) ==
-                PackageManager.PERMISSION_GRANTED
-        )
-    }
-
     val takePicture =
         rememberLauncherForActivityResult(ActivityResultContracts.TakePicturePreview()) { bitmap ->
-            if (bitmap != null) onPhotoCaptured(bitmap.toDownscaledJpeg())
+            // Do not replace a usable photo until acquisition and JPEG encoding succeed.
+            bitmap?.let { photoAcquisitionOrNull { it.toDownscaledJpeg() } }?.let(onPhotoCaptured)
         }
 
     val requestPermission =
         rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-            hasPermission = granted
-            if (granted) takePicture.launch(null)
+            if (granted) photoAcquisitionOrNull { takePicture.launch(null) }
         }
 
     // Story 7: the modern photo picker needs no storage permission. The picked image is decoded and
     // fed through the same downscale + preview path as a freshly captured photo.
     val pickFromGallery =
         rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-            uri?.decodeDownscaledJpeg(context)?.let(onPhotoCaptured)
+            uri?.let { photoAcquisitionOrNull { it.decodeDownscaledJpeg(context) } }
+                ?.let(onPhotoCaptured)
         }
 
     fun launchCapture() {
-        if (hasPermission) {
-            takePicture.launch(null)
-        } else {
-            requestPermission.launch(Manifest.permission.CAMERA)
+        photoAcquisitionOrNull {
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) ==
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                takePicture.launch(null)
+            } else {
+                requestPermission.launch(Manifest.permission.CAMERA)
+            }
         }
     }
 
     fun launchGallery() {
-        pickFromGallery.launch(
-            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-        )
+        photoAcquisitionOrNull {
+            pickFromGallery.launch(
+                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+            )
+        }
     }
 
     if (jpeg == null) {
@@ -103,7 +101,7 @@ actual fun AiScanCameraSection(
             modifier = modifier,
         )
     } else {
-        PhotoPreview(jpeg = jpeg, onDiscardRetry = onDiscardRetry, modifier = modifier)
+        PhotoPreview(jpeg = jpeg, onRetake = ::launchCapture, modifier = modifier)
     }
 }
 
@@ -165,59 +163,51 @@ private fun GalleryButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
 @Composable
 private fun PhotoPreview(
     jpeg: ByteArray,
-    onDiscardRetry: () -> Unit,
+    onRetake: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val imageBitmap =
         remember(jpeg) { BitmapFactory.decodeByteArray(jpeg, 0, jpeg.size)?.asImageBitmap() }
 
-    var showDiscardDialog by remember { mutableStateOf(false) }
+    val retakeLabel = stringResource(Res.string.neutral_tap_photo_to_retake)
 
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         OutlinedCard(
-            onClick = { showDiscardDialog = true },
-            modifier = Modifier.fillMaxWidth(),
+            onClick = onRetake,
+            modifier = Modifier.fillMaxWidth().semantics { contentDescription = retakeLabel },
         ) {
             if (imageBitmap != null) {
                 Image(
                     bitmap = imageBitmap,
                     contentDescription = null,
-                    modifier = Modifier.fillMaxWidth().aspectRatio(1f).clickable {
-                        showDiscardDialog = true
-                    },
+                    modifier = Modifier.fillMaxWidth().aspectRatio(1f),
                     contentScale = ContentScale.Crop,
                 )
             }
         }
         Spacer(Modifier.height(8.dp))
         Text(
-            text = stringResource(Res.string.neutral_tap_photo_to_retake),
+            text = retakeLabel,
             style = MaterialTheme.typography.bodySmall,
         )
     }
-
-    if (showDiscardDialog) {
-        AlertDialog(
-            onDismissRequest = { showDiscardDialog = false },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        showDiscardDialog = false
-                        onDiscardRetry()
-                    }
-                ) {
-                    Text(stringResource(Res.string.action_discard))
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { showDiscardDialog = false }) {
-                    Text(stringResource(Res.string.action_cancel))
-                }
-            },
-            title = { Text(stringResource(Res.string.question_discard_photo)) },
-        )
-    }
 }
+
+/** External acquisition can fail or become unavailable; keep the current photo for retry. */
+private inline fun <T> photoAcquisitionOrNull(acquire: () -> T): T? =
+    try {
+        acquire()
+    } catch (error: Exception) {
+        when (error) {
+            is CancellationException -> throw error
+            is ActivityNotFoundException,
+            is SecurityException,
+            is IOException,
+            is IllegalArgumentException,
+            is IllegalStateException -> null
+            else -> throw error
+        }
+    }
 
 /** Decodes a gallery [Uri] into the same downscaled JPEG a captured photo produces, or null. */
 private fun Uri.decodeDownscaledJpeg(context: Context): ByteArray? {
@@ -242,7 +232,7 @@ private fun Bitmap.toDownscaledJpeg(): ByteArray {
             this
         }
     return ByteArrayOutputStream().use { stream ->
-        scaled.compress(Bitmap.CompressFormat.JPEG, JPEG_QUALITY, stream)
+        check(scaled.compress(Bitmap.CompressFormat.JPEG, JPEG_QUALITY, stream))
         stream.toByteArray()
     }
 }

@@ -74,7 +74,7 @@ column distinguishes required sequencing from independent work.
 | FOODUS-005 | Complete | [Preserve scan data through Quick Add](#foodus-005) | Data integrity bug | Samsung data-preservation acceptance passed; receipt linked below |
 | FOODUS-006 | Complete | [Visible Quick Add conversion actions](#foodus-006) | UX | Physical/compact Samsung layout and promotion acceptance passed |
 | FOODUS-007 | Complete | [Finish scan workflow after successful save](#foodus-007) | Navigation bug | Samsung single/multi completion, Back, failure/retry and direct-route acceptance passed |
-| FOODUS-008 | Not Started | [Retake without discarding the prior photo](#foodus-008) | Workflow bug | No B prerequisite; reuse existing capture mechanism |
+| FOODUS-008 | Complete | [Retake without discarding the prior photo](#foodus-008) | Workflow bug | Physical/compact Samsung controlled acquisition acceptance passed |
 | FOODUS-009 | Not Started | [FoodUs-specific What's New](#foodus-009) | Content bug | Actual release facts unverified; content acceptance blocked pending ledger verification |
 | FOODUS-010 | Not Started | [Mask AI API key by default](#foodus-010) | Privacy UX bug | No B prerequisite; isolated settings correction |
 
@@ -337,7 +337,15 @@ items, direct Quick Add isolation, and runtime proof of dashboard return and Bac
 
 ### FOODUS-008: Launch retake directly and retain the old photo on cancel
 
-**Status:** Not Started
+**Status:** Complete (2026-10-25; completion provisional until receipt reconciles)
+
+**Delivery:** [Plan and evidence](../implementation-plans/milestone-b/foodus-008/plan.md),
+[completion receipt](../_boss-runs/milestone-b-sequential/foodus-008-receipt.json).
+141 unit tests, debug/test APK builds, independent review and four Samsung cases at
+each physical/compact viewport passed. Direct preview retake, permission refresh,
+cancel/denial/errors, success downscale and gallery-origin retention use production
+composable/state with controlled generated acquisition results; system camera UI
+and hardware are simulated, not claimed as physical capture acceptance.
 
 **Reported problem / value:** The preview's retake action discards the image and makes
 the user manually launch the camera again.

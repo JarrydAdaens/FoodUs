@@ -277,3 +277,34 @@ queue/completion/direct/failure cases plus four scan data regressions passed10/1
 unchanged. Canonical Home Back-stack and persisted count checked through production
 helper with private synthetic Home contents/Room. No owner data writes; original
 rotation policy restored. Receipt prepared before terminal metadata; commit next.
+
+## Dispatch FOODUS-008
+
+FOODUS-007 reconciled COMPLETED_COMMITTED at63eab5af; only unrelated attachments
+dirty before dispatch. Worker `/root/foodus_008` owns preview-to-existing-camera
+retake wiring, related expect/actual/callers if required, acquisition error retention,
+regression fixtures and its plan. Tap launches retake directly; preserve prior JPEG
+until successful replacement, including gallery-origin, cancel, denial and errors.
+Reuse existing capture/downscale path; no camera or gallery private content access.
+Coordinator owns builds/device, independent scoped review, milestone, receipt and
+commit. Device fixture uses generated JPEG/Bitmap and controlled ActivityResult
+registry/permission context; never launches real camera/picker or changes owner
+permissions/settings. No later Story, version, release, dependency or schema edits.
+Return uncommitted, no builds/device/commit/pull/push. Model/effort inherit, observed
+unknown. Required independent review for acquisition/permission/state boundaries.
+
+FOODUS-008 final source/fixture frozen. Reviewer `/root/review_foodus_008` owns
+read-only acquisition/permission/error/state/privacy and actual-contract regression
+review across five production files and new Android class. Coordinator owns builds,
+physical/compact Samsung gates and completion metadata. System camera/picker/hardware
+are explicitly simulated; generated results preserve owner privacy. Inherit identity.
+
+FOODUS-008 final acceptance:141 unit tests, debug/test APK builds, independent
+review and whitespace passed. Four actual-composable/state/acquisition cases each
+passed Samsung physical6.884s/compact6.616s; overrides restored. Test-only described
+click-target repair re-reviewed; production unchanged. Hardware/system acquisition
+UI are simulated; no private photos/data or permission changes. Existing host's base
+lifecycle observes secureScreen preference: this qualifies earlier zero-global-read
+shorthand across these DeveloperActivity fixtures, without mutating sealed receipts.
+No diary/AI credential/photo reads or owner writes introduced. Receipt prepared;
+seal/commit next, no release/version change.

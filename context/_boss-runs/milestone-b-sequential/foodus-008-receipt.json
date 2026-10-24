@@ -1,0 +1,207 @@
+{
+  "checked": {
+    "artifact_identity": "4f28c0c624d81b4504b9f48fc220a0ee27e94e0c4044c86795c9b41177d7c4d9",
+    "base": "63eab5af78e4fd7a993a1a204f78c166af962e13",
+    "diff_identity": "603e6c406315ecc0bcdb7563c89b28a5d36c1d665e2dfe458732161afa2fe0df",
+    "files": {
+      "app/build.gradle.kts": {
+        "kind": "file",
+        "sha256": "04857b8d16e79fdc8e6e5ef0e332c6ab39b7e11feda385df098800495d3639d7"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanRetakeTest.kt": {
+        "kind": "file",
+        "sha256": "6166b3e16dfda1c9b5313f168cafa91c741b55bcdccb6d2ba11a61ad14d37892"
+      },
+      "app/src/androidMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanCameraSection.android.kt": {
+        "kind": "file",
+        "sha256": "a8c6a127a313fef2cdbc50057f9e186a88eb1afb9f2c699531a61ef7b2a94423"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanCameraSection.kt": {
+        "kind": "file",
+        "sha256": "a151b2cedb6839f24e0cd847911da444a457eb7d30bcda6404889d889a0a35ee"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanScreen.kt": {
+        "kind": "file",
+        "sha256": "628d643c6cbbcfad0cc0d84b24a72ab90d911b564215a5de19dcaac7fac93af1"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanViewModel.kt": {
+        "kind": "file",
+        "sha256": "a69876fb5dd290f4acb254212dce63e3ebdf7d7da602ffbce30d2c7d2576c148"
+      },
+      "app/src/iosMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanCameraSection.ios.kt": {
+        "kind": "file",
+        "sha256": "d9bcf4c8c10a9d9fbee8423aacb11723fbe7410396abdda1542e9ce0a077f31c"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "fc4fb4d3739d361e22c9c4c006af11c210e5fb7bce9e934ce32ba2ad322bad6a"
+      }
+    },
+    "head": "63eab5af78e4fd7a993a1a204f78c166af962e13"
+  },
+  "commit_authority": "User requested commit-log --commit after Samsung test for each Story",
+  "commit_policy": "single",
+  "decisions": [
+    "Preview directly invokes existing capture; obsolete discard-to-empty callback and VM method removed coherently from expect/actual/caller. iOS unsupported placeholder unchanged.",
+    "Retain previous JPEG and review while pending, canceled, denied or expected platform launch/decode/encode failure. Only successful JPEG encoding invokes photo callback; callback exceptions and unrelated/cancellation/fatal errors propagate.",
+    "Check current permission at each attempt, reuse existing TakePicturePreview/gallery/downscale. Preview has one accessible retake affordance.",
+    "Actual system camera/picker/permission UI and hardware are simulated; device tests verify production dispatch/state with generated results and wrapped permission answers, not physical camera hardware. No private photo/owner diary/settings or package permission changes, no live AI/network/data clearing.",
+    "No version/release/dependency/schema changes.",
+    "Inherited DeveloperActivity base lifecycle observes existing general secureScreen preference; test code adds no owner reads/writes and never accesses diary, AI settings/credentials or private photos. This narrows earlier run shorthand claiming zero global settings reads."
+  ],
+  "delivery": {
+    "artifact_identity": "5bc13e18d129e0c0fc548c9fc6154d87374e23026297df32703c2868a958176b",
+    "base": "63eab5af78e4fd7a993a1a204f78c166af962e13",
+    "committed_files": {
+      "app/build.gradle.kts": {
+        "git_blob": "a596aa518dc6c95940e92243ef30eef40a0cc4d4",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanRetakeTest.kt": {
+        "git_blob": "362ec738b244f0c9c9847cda2f8146cf66663739",
+        "kind": "file"
+      },
+      "app/src/androidMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanCameraSection.android.kt": {
+        "git_blob": "e86bc510c0681381b6dac0580e1d19c179bc41b4",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanCameraSection.kt": {
+        "git_blob": "91664b2fd47e80495e7a912ea5882ea095c2d0be",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanScreen.kt": {
+        "git_blob": "44ac08d863d464d64d05f20b4c3d2ec057ed4f16",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanViewModel.kt": {
+        "git_blob": "e30fe493143f548be57c064bb53a922c9a86d02f",
+        "kind": "file"
+      },
+      "app/src/iosMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanCameraSection.ios.kt": {
+        "git_blob": "554464b278826263eb0be76a117c576e578240f9",
+        "kind": "file"
+      },
+      "context/_boss-runs/milestone-b-sequential/briefing.md": {
+        "git_blob": "cf403317eebc13eecf84ee3cab5f628617915302",
+        "kind": "file"
+      },
+      "context/implementation-plans/milestone-b/foodus-008/plan.md": {
+        "git_blob": "d247cc0c4d547fa35ac2f57424d78b47fac67576",
+        "kind": "file"
+      },
+      "context/milestones/milestone-b.md": {
+        "git_blob": "fcc4496e04f6283dc6c07c599e5b7df1f50ffabe",
+        "kind": "file"
+      },
+      "gradle/libs.versions.toml": {
+        "git_blob": "6dcdb5e97c35db4c4aad9e94864faaa8be7a75a7",
+        "kind": "file"
+      }
+    },
+    "diff_identity": "0377962169c4c2e2b6661013e70540bb0f4bdb7b5d18a8a18628ebd0c75d1c6b",
+    "files": {
+      "app/build.gradle.kts": {
+        "kind": "file",
+        "sha256": "04857b8d16e79fdc8e6e5ef0e332c6ab39b7e11feda385df098800495d3639d7"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanRetakeTest.kt": {
+        "kind": "file",
+        "sha256": "6166b3e16dfda1c9b5313f168cafa91c741b55bcdccb6d2ba11a61ad14d37892"
+      },
+      "app/src/androidMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanCameraSection.android.kt": {
+        "kind": "file",
+        "sha256": "a8c6a127a313fef2cdbc50057f9e186a88eb1afb9f2c699531a61ef7b2a94423"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanCameraSection.kt": {
+        "kind": "file",
+        "sha256": "a151b2cedb6839f24e0cd847911da444a457eb7d30bcda6404889d889a0a35ee"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanScreen.kt": {
+        "kind": "file",
+        "sha256": "628d643c6cbbcfad0cc0d84b24a72ab90d911b564215a5de19dcaac7fac93af1"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanViewModel.kt": {
+        "kind": "file",
+        "sha256": "a69876fb5dd290f4acb254212dce63e3ebdf7d7da602ffbce30d2c7d2576c148"
+      },
+      "app/src/iosMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanCameraSection.ios.kt": {
+        "kind": "file",
+        "sha256": "d9bcf4c8c10a9d9fbee8423aacb11723fbe7410396abdda1542e9ce0a077f31c"
+      },
+      "context/_boss-runs/milestone-b-sequential/briefing.md": {
+        "kind": "file",
+        "sha256": "675526ac8d277acefb298e7c2c59725c906fa9e18e6609296da9749b096e5f18"
+      },
+      "context/implementation-plans/milestone-b/foodus-008/plan.md": {
+        "kind": "file",
+        "sha256": "878751b7f5e3f838ba50d6839ffcc628d5bd964edd58bfd83da01459a846022f"
+      },
+      "context/milestones/milestone-b.md": {
+        "kind": "file",
+        "sha256": "4793ed065de88f3ebbf4c8875559ca4b3b2ddee9eef39fe48c20bff1ecb80c69"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "fc4fb4d3739d361e22c9c4c006af11c210e5fb7bce9e934ce32ba2ad322bad6a"
+      }
+    },
+    "head": "63eab5af78e4fd7a993a1a204f78c166af962e13"
+  },
+  "evidence": {
+    "checks": [
+      {
+        "artifact_identity": "4f28c0c624d81b4504b9f48fc220a0ee27e94e0c4044c86795c9b41177d7c4d9",
+        "command": ".\\gradlew.bat --offline --no-daemon --console=plain -q :app:testDebugUnitTest :app:assembleDebug :app:assembleDebugAndroidTest",
+        "outcome": "PASS",
+        "result": "141 unit tests, zero failures/errors; debug/test APK builds. Final fixture-only accessibility targeting correction rebuilt with :app:assembleDebugAndroidTest; production unchanged."
+      },
+      {
+        "artifact_identity": "4f28c0c624d81b4504b9f48fc220a0ee27e94e0c4044c86795c9b41177d7c4d9",
+        "command": "Invoke-FoodUsStoryDeviceChecks foodus-008 com.maksimowiczm.foodyou.app.ui.food.diary.aiscan.AiScanRetakeTest com.maksimowiczm.foodyou.app.ui.food.diary.aiscan.AiScanRetakeTest",
+        "outcome": "PASS",
+        "result": "Samsung SM-A057F Android15 physical1080x2400 and compact900x1600, four tests each. Actual camera composable/ViewModel, exact controlled activity contracts, retained prior Result/JPEG identity, success downscale, cancellation/denial/errors/gallery/permission refresh. Original display overrides restored."
+      },
+      {
+        "artifact_identity": "4f28c0c624d81b4504b9f48fc220a0ee27e94e0c4044c86795c9b41177d7c4d9",
+        "command": "git diff --check",
+        "outcome": "PASS"
+      }
+    ],
+    "decisions": [
+      "Preview directly invokes existing capture; obsolete discard-to-empty callback and VM method removed coherently from expect/actual/caller. iOS unsupported placeholder unchanged.",
+      "Retain previous JPEG and review while pending, canceled, denied or expected platform launch/decode/encode failure. Only successful JPEG encoding invokes photo callback; callback exceptions and unrelated/cancellation/fatal errors propagate.",
+      "Check current permission at each attempt, reuse existing TakePicturePreview/gallery/downscale. Preview has one accessible retake affordance.",
+      "Actual system camera/picker/permission UI and hardware are simulated; device tests verify production dispatch/state with generated results and wrapped permission answers, not physical camera hardware. No private photo/owner diary/settings or package permission changes, no live AI/network/data clearing.",
+      "No version/release/dependency/schema changes.",
+      "Inherited DeveloperActivity base lifecycle observes existing general secureScreen preference; test code adds no owner reads/writes and never accesses diary, AI settings/credentials or private photos. This narrows earlier run shorthand claiming zero global settings reads."
+    ],
+    "review": {
+      "artifact_identity": "4f28c0c624d81b4504b9f48fc220a0ee27e94e0c4044c86795c9b41177d7c4d9",
+      "outcome": "PASS",
+      "reviewer": "/root/review_foodus_008",
+      "scope": "Independent frozen acquisition/permission/error/state/privacy and test integrity review. Focused actual described click-target correction re-reviewed.",
+      "source_aggregate": "40836e763be42f4fa49e4dd86979ba1cc51bf84dad510a92c59bfc9df5c045e9"
+    },
+    "review_required": true
+  },
+  "metadata_before": {
+    "context/_boss-runs/milestone-b-sequential/briefing.md": {
+      "kind": "file",
+      "sha256": "13982e8497af9d0584b43458e436ecf286db465d517fd3b6cdd6343e10f79ac0"
+    },
+    "context/implementation-plans/milestone-b/foodus-008/plan.md": {
+      "kind": "file",
+      "sha256": "44dc6bd2386113ca232479531ff5cfd63cad3a19a98e264bb0a6061496417b6c"
+    },
+    "context/milestones/milestone-b.md": {
+      "kind": "file",
+      "sha256": "6d82970d15c4e11395e464b7c99144ab817d50ae493089a417290cf4d0414a1a"
+    }
+  },
+  "phase": "READY",
+  "record": "context/_boss-runs/milestone-b-sequential/foodus-008-receipt.json",
+  "repo": "D:\\forked-projects\\FoodYou",
+  "schema_version": 1,
+  "status_owner": "context/milestones/milestone-b.md#foodus-008",
+  "transaction_id": "d140d20cb61b40b78eefa13a2ecb862f"
+}

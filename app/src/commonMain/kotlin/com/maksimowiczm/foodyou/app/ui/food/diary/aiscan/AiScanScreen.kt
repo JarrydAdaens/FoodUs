@@ -117,7 +117,6 @@ fun AiScanScreen(
             AiScanCameraSection(
                 jpeg = state.jpeg,
                 onPhotoCaptured = viewModel::onPhotoCaptured,
-                onDiscardRetry = viewModel::onDiscard,
             )
 
             when (val current = state) {
