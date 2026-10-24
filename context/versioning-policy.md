@@ -60,12 +60,16 @@ certificate remain unchanged for in-place updates.
 
 ## Transition from existing releases
 
-This context update preserves the current catalog values as a **temporary legacy
-exception**. It neither publishes a release nor reinterprets a historical three-part
-value as a four-part value. When preparing the next release, replace `fork-version-name`
-with the tracker-derived four-part value and advance versionCode. From that point,
-maintain draft versions when tracked Stories close or reopen or the active milestone
-changes; those events alone do not authorize a release or increment ReleaseCount.
+The **temporary legacy exception ended on 2026-10-25**, when the owner explicitly
+requested the draft-version transition as part of Milestone B delivery. The catalog
+now holds the tracker-derived four-part value and an advanced versionCode. Historical
+three-part versions retain their original identities and publication status.
+
+Maintain draft versions when tracked Stories close or reopen or the active milestone
+changes. These events and local builds do not authorize a release or increment
+ReleaseCount. The first publication at an unpublished coordinate uses ReleaseCount
+`1`; increase versionCode again if needed for its distribution sequence. The draft
+transition does not satisfy the publication and household-rollout gates below.
 
 Before the first four-part publication:
 

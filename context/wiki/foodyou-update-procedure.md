@@ -69,11 +69,12 @@ any future candidate keystore be confirmed as the right one):
 
 Follow the [FoodUs Versioning Policy](../versioning-policy.md) and edit the current values in
 `gradle/libs.versions.toml`. Increase `android-versionCode` above every installed or shipped
-code. For the next release, transition the legacy `fork-version-name` to
-`Generation.Milestone.StoriesClosed.ReleaseCount` using the current numbered milestone
-plus Milestone B's closed Stories and the policy's migration checks. After transition,
-keep draft versions synchronized when tracked state
-changes; increment ReleaseCount only for publication. Read the catalog for present values.
+code. The owner-authorized draft transition has adopted
+`Generation.Milestone.StoriesClosed.ReleaseCount`, using the current numbered milestone
+plus Milestone B's closed Stories. Keep draft versions synchronized when tracked state
+changes; increment ReleaseCount only for publication. The first publication at an
+unpublished coordinate uses `1`, while local drafts use `0`. Read the catalog for
+present values; the policy's first-publication migration checks still apply.
 
 `fork-version-name` is the app's shipped Android versionName; the `v*` tag that triggers the
 release workflow must be `v<fork-version-name>` so Obtainium's installed-vs-latest comparison

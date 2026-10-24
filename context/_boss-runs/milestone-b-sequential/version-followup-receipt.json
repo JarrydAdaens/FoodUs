@@ -1,0 +1,186 @@
+{
+  "checked": {
+    "artifact_identity": "5ac916da2111d3e2be080b12ba9686537e9d6c84bfb74f7a1aac1337df8da278",
+    "base": "6c681534983d9bb183ec79cee3c5f7bd418248c7",
+    "diff_identity": "048d596e676bd3683a2d22db7b4a138bbe4983d42939d66d33ebe4b53afa2f91",
+    "files": {
+      ".github/workflows/release-apk.yml": {
+        "kind": "file",
+        "sha256": "96c8e6cb4763632356d2fe03ef6cf6854faf4e13579bec1b5746835f8b54a5b2"
+      },
+      "app/build.gradle.kts": {
+        "kind": "file",
+        "sha256": "04857b8d16e79fdc8e6e5ef0e332c6ab39b7e11feda385df098800495d3639d7"
+      },
+      "context/design.md": {
+        "kind": "file",
+        "sha256": "74deef5b42e7a9f88f647c8c5667a5474eae481036afab78e349bcd1da63f5f1"
+      },
+      "context/milestones/milestone-3.md": {
+        "kind": "file",
+        "sha256": "ea2c8e79f5e44deb22d3d7a2a5f650ce03e6bf7e950f197bf87182d965efaf86"
+      },
+      "context/milestones/milestone-b.md": {
+        "kind": "file",
+        "sha256": "7bb087ada5ce4020571389f533377b76baa94915a899ab35903b507f9d83fd37"
+      },
+      "context/versioning-policy.md": {
+        "kind": "file",
+        "sha256": "c244bdce0763fb9eedc68cd81fc7e234118f164ebfa377045ab6e967d661e599"
+      },
+      "context/wiki/foodyou-update-procedure.md": {
+        "kind": "file",
+        "sha256": "e87abb216f04093da007667cc5703ee1e272b01f63175cc4ffb99543481de773"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "5451d453384e067b3b08a4e4f2e8599cbb6858ceec4cd7ca4453ed095d40b0da"
+      }
+    },
+    "head": "6c681534983d9bb183ec79cee3c5f7bd418248c7"
+  },
+  "commit_authority": "User requested version update as part of current task; original commit-log --commit authority persists",
+  "commit_policy": "single",
+  "decisions": [
+    "Owner explicitly requested version update as part of current task after the10 Story commits. Original commit authorization persists; bounded configuration-only follow-up needs no separate optional reviewer.",
+    "Supersedes the final Story receipt legacy-catalog decision only; all sealed Story receipts and historical releases remain immutable.",
+    "Catalog is sole canonical current version. End temporary legacy exception and maintain draft tracking from now; code127 is above attached Samsung installed126.",
+    "ReleaseCount0 is unpublished. No tag/release/publication/push/pull. Before first publication, both-phone version codes, Obtainium migration preflight and signed household rollout remain required; only one phone attached now.",
+    "No new Story closure, generation or milestone advancement, app feature/storage/schema/dependency change, private data access or data clearing."
+  ],
+  "delivery": {
+    "artifact_identity": "cd4eddc4557f97a579a89b69e518a2c89c1e0ac2b68d7d57cbdd9c103517b24a",
+    "base": "6c681534983d9bb183ec79cee3c5f7bd418248c7",
+    "committed_files": {
+      ".github/workflows/release-apk.yml": {
+        "git_blob": "086a7c6d65a92d54afcc95e0516e98760c8d27a4",
+        "kind": "file"
+      },
+      "app/build.gradle.kts": {
+        "git_blob": "a596aa518dc6c95940e92243ef30eef40a0cc4d4",
+        "kind": "file"
+      },
+      "context/_boss-runs/milestone-b-sequential/briefing.md": {
+        "git_blob": "d3e7d957a89930b3935d4e007d16e6340d02588a",
+        "kind": "file"
+      },
+      "context/design.md": {
+        "git_blob": "a509f71160e44727ba4c4fbfdadb9fd238397389",
+        "kind": "file"
+      },
+      "context/milestones/milestone-3.md": {
+        "git_blob": "d6e819696454c868d572aba34ed585920f905418",
+        "kind": "file"
+      },
+      "context/milestones/milestone-b.md": {
+        "git_blob": "9b0d1e1683755ac0f0d4f37670aff0c2a6d75a39",
+        "kind": "file"
+      },
+      "context/versioning-policy.md": {
+        "git_blob": "30e91ba54997de2e6fdf3d6d45c488c5a1c94089",
+        "kind": "file"
+      },
+      "context/wiki/foodyou-update-procedure.md": {
+        "git_blob": "241144c05362b3d3d5c95730c72bd32e80d89ff0",
+        "kind": "file"
+      },
+      "gradle/libs.versions.toml": {
+        "git_blob": "b97cfdb92c04104fd90c271130239b231c24e8fd",
+        "kind": "file"
+      }
+    },
+    "diff_identity": "305638fee949c7a5dd979c77072fd7439c52ba6d7b58b00355944735bd5afd58",
+    "files": {
+      ".github/workflows/release-apk.yml": {
+        "kind": "file",
+        "sha256": "96c8e6cb4763632356d2fe03ef6cf6854faf4e13579bec1b5746835f8b54a5b2"
+      },
+      "app/build.gradle.kts": {
+        "kind": "file",
+        "sha256": "04857b8d16e79fdc8e6e5ef0e332c6ab39b7e11feda385df098800495d3639d7"
+      },
+      "context/_boss-runs/milestone-b-sequential/briefing.md": {
+        "kind": "file",
+        "sha256": "e494079a1a3e25f85783a1038354bb39dfdc2f39d968da72abfabf60203b7c60"
+      },
+      "context/design.md": {
+        "kind": "file",
+        "sha256": "74deef5b42e7a9f88f647c8c5667a5474eae481036afab78e349bcd1da63f5f1"
+      },
+      "context/milestones/milestone-3.md": {
+        "kind": "file",
+        "sha256": "ea2c8e79f5e44deb22d3d7a2a5f650ce03e6bf7e950f197bf87182d965efaf86"
+      },
+      "context/milestones/milestone-b.md": {
+        "kind": "file",
+        "sha256": "7bb087ada5ce4020571389f533377b76baa94915a899ab35903b507f9d83fd37"
+      },
+      "context/versioning-policy.md": {
+        "kind": "file",
+        "sha256": "c244bdce0763fb9eedc68cd81fc7e234118f164ebfa377045ab6e967d661e599"
+      },
+      "context/wiki/foodyou-update-procedure.md": {
+        "kind": "file",
+        "sha256": "e87abb216f04093da007667cc5703ee1e272b01f63175cc4ffb99543481de773"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "5451d453384e067b3b08a4e4f2e8599cbb6858ceec4cd7ca4453ed095d40b0da"
+      }
+    },
+    "head": "6c681534983d9bb183ec79cee3c5f7bd418248c7"
+  },
+  "evidence": {
+    "checks": [
+      {
+        "artifact_identity": "5ac916da2111d3e2be080b12ba9686537e9d6c84bfb74f7a1aac1337df8da278",
+        "command": ".\\gradlew.bat --offline --no-daemon --console=plain -q :app:assembleDebug",
+        "outcome": "PASS",
+        "result": "Debug APK builds with canonical four-part fork version."
+      },
+      {
+        "artifact_identity": "5ac916da2111d3e2be080b12ba9686537e9d6c84bfb74f7a1aac1337df8da278",
+        "command": "python app/build/validate-version-followup.py",
+        "outcome": "PASS",
+        "result": "Highest active numbered milestone3; terminal M3 IDs1,2,5 plus10 distinct B IDs; draft ReleaseCount0 derives1.3.13.0. APK, generated BuildConfig and installed Samsung report matching fork identity/code127, upstream3.4.9 retained."
+      },
+      {
+        "artifact_identity": "5ac916da2111d3e2be080b12ba9686537e9d6c84bfb74f7a1aac1337df8da278",
+        "command": "aapt2 dump badging app/build/outputs/apk/debug/app-debug.apk; adb -s R7AY205BVXL install -r -t [debug APK]; adb -s R7AY205BVXL shell dumpsys package io.github.jarrydadaens.foodus.dev [version lines only]",
+        "outcome": "PASS",
+        "result": "Actual metadata1.3.13.0-dev/code127; successful data-preserving same-package update from code126."
+      },
+      {
+        "artifact_identity": "5ac916da2111d3e2be080b12ba9686537e9d6c84bfb74f7a1aac1337df8da278",
+        "command": "GitHub plugin GET /repos/JarrydAdaens/FoodUs/releases?per_page=100 and /git/matching-refs/tags",
+        "outcome": "PASS",
+        "result": "Complete returned release/tag collections have onlyv2.19.0,v2.19.1,v2.23.0; no collision or publication at new coordinate."
+      },
+      {
+        "artifact_identity": "5ac916da2111d3e2be080b12ba9686537e9d6c84bfb74f7a1aac1337df8da278",
+        "command": "git diff --check",
+        "outcome": "PASS"
+      }
+    ],
+    "decisions": [
+      "Owner explicitly requested version update as part of current task after the10 Story commits. Original commit authorization persists; bounded configuration-only follow-up needs no separate optional reviewer.",
+      "Supersedes the final Story receipt legacy-catalog decision only; all sealed Story receipts and historical releases remain immutable.",
+      "Catalog is sole canonical current version. End temporary legacy exception and maintain draft tracking from now; code127 is above attached Samsung installed126.",
+      "ReleaseCount0 is unpublished. No tag/release/publication/push/pull. Before first publication, both-phone version codes, Obtainium migration preflight and signed household rollout remain required; only one phone attached now.",
+      "No new Story closure, generation or milestone advancement, app feature/storage/schema/dependency change, private data access or data clearing."
+    ],
+    "review_required": false
+  },
+  "metadata_before": {
+    "context/_boss-runs/milestone-b-sequential/briefing.md": {
+      "kind": "file",
+      "sha256": "db41f9d057f2e05bb52243d58d41ee74061c7058f0fe21f58ed5b71581ffe83f"
+    }
+  },
+  "phase": "READY",
+  "record": "context/_boss-runs/milestone-b-sequential/version-followup-receipt.json",
+  "repo": "D:\\forked-projects\\FoodYou",
+  "schema_version": 1,
+  "status_owner": "context/versioning-policy.md#transition-from-existing-releases",
+  "transaction_id": "e76b68c5fb574609935bf0e2ae1cee81"
+}

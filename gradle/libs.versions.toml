@@ -1,12 +1,12 @@
 [versions]
 version-name = "3.4.9"
 # FoodUs fork version, layered on top of the upstream version-name above.
-# Legacy value retained until the next release transitions to
-# Generation.Milestone.StoriesClosed.ReleaseCount; see context/versioning-policy.md.
-# This is the app's real shipped versionName and must match the v* release tag; the
+# Canonical Generation.Milestone.StoriesClosed.ReleaseCount draft;
+# see context/versioning-policy.md. Local builds do not increment ReleaseCount.
+# This supplies Android versionName and must match its v* release tag on publication; the
 # upstream version-name above is retained as derived-from metadata only.
-fork-version-name = "3.5.0"
-android-versionCode = "126"
+fork-version-name = "1.3.13.0"
+android-versionCode = "127"
 android-compileSdk = "36"
 android-minSdk = "28"
 android-targetSdk = "36"

@@ -382,3 +382,35 @@ The legacy catalog exception remains; no release/version/tag/push/pull or public
 occurred. Owner data and clipboard are preserved; only pre-existing unrelated
 attachments remain excluded. Final receipt prepared before terminal metadata;
 seal/commit/reconciliation complete delivery, without a bookkeeping commit.
+
+## Owner-requested version follow-up (2026-10-25)
+
+After the ten Story commits, the owner explicitly requested updating the version
+as part of this task. This authorizes ending the temporary legacy catalog exception
+and starting canonical four-part draft tracking now. The catalog remains the sole
+current version source. Story statuses and the numbered milestone remain unchanged.
+The active milestone and combined terminal Story count are derived from Design,
+Milestone 3 and Milestone B, with Externalized gates excluded and distinct IDs counted.
+
+This bounded coordinator follow-up changes only catalog values/comments and the
+policy/runbook transition wording. Existing commit authority carries forward.
+Deterministic derivation, current primary release/tag ledger, generated BuildConfig,
+APK metadata and data-preserving Samsung installation are the selected checks;
+no separate optional reviewer is needed for this configuration-only correction.
+No publication, tag, release, pull/push or source-history rewrite is authorized.
+First-publication Obtainium preflight, both-phone code inspection and signed-release
+rollout remain separate policy gates; one Samsung is currently attached. Its prior
+dev code was126; the release application ID was not installed on this phone.
+New receipt `version-followup-receipt.json` supersedes the legacy-version decision
+in the final Story receipt without modifying any sealed Story receipt.
+
+Version follow-up acceptance: narrow debug assemble passed. Automated tracker
+index/detail agreement derived the canonical value; generated BuildConfig preserved
+the upstream attribution and used the complete fork value. APK badging and installed
+Samsung package metadata matched code127 and the four-part debug version. The same-
+package install succeeded without uninstalling or clearing data. The current primary
+release/tag ledger had no collision. Whitespace passed. First-publication/second-
+phone/Obtainium/signing gates remain pending separate publication work, not blockers
+to the requested local draft update. New receipt prepared before final metadata;
+seal and authorized follow-up commit finish this request. No sealed Story receipt
+was changed and no new Story closure was counted.
