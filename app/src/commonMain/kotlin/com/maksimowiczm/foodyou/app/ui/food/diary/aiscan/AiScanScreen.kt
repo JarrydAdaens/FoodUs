@@ -52,6 +52,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.maksimowiczm.foodyou.ai.domain.AiFoodEstimate
+import com.maksimowiczm.foodyou.ai.domain.toNutritionFacts
+import com.maksimowiczm.foodyou.app.ui.food.shared.component.KnownNutrientList
+import com.maksimowiczm.foodyou.common.compose.utility.formatClipZeros
 import com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton
 import com.maksimowiczm.foodyou.food.domain.entity.FoodId
 import foodyou.app.generated.resources.*
@@ -66,7 +69,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun AiScanScreen(
     onBack: () -> Unit,
-    onSaveToQuickAdd: (name: String, calories: Double?, protein: Double?, fat: Double?) -> Unit,
+    onSaveToQuickAdd: (AiFoodEstimate) -> Unit,
     onAlignPickFood: (FoodId) -> Unit,
     onCreateCustomFood: () -> Unit,
     modifier: Modifier = Modifier,
@@ -126,14 +129,7 @@ fun AiScanScreen(
                 is AiScanUiState.Result ->
                     AiResultCard(
                         estimate = current.estimate,
-                        onSave = {
-                            onSaveToQuickAdd(
-                                current.estimate.name,
-                                current.estimate.calories,
-                                current.estimate.protein,
-                                current.estimate.fat,
-                            )
-                        },
+                        onSave = { onSaveToQuickAdd(current.estimate) },
                         onAlign = { alignQuery = current.estimate.name },
                     )
             }
@@ -243,10 +239,14 @@ private fun AiResultCard(
                     style = MaterialTheme.typography.bodyMedium,
                 )
             }
-            val summary = estimate.macroSummary()
-            if (summary.isNotEmpty()) {
-                Text(text = summary, style = MaterialTheme.typography.bodyMedium)
+            estimate.description?.let { Text(it) }
+            estimate.servingCount?.let {
+                Text("${stringResource(Res.string.label_number_of_servings)}: ${it.formatClipZeros()}")
             }
+            estimate.weightGrams?.let {
+                Text("${stringResource(Res.string.weight)}: ${it.formatClipZeros()} ${stringResource(Res.string.unit_gram_short)}")
+            }
+            KnownNutrientList(facts = estimate.toNutritionFacts())
 
             HorizontalDivider()
 
@@ -314,14 +314,3 @@ private fun AlignBottomSheet(
         }
     }
 }
-
-/** Builds a compact "123 kcal · P 10 g · F 5 g · Fibre 2 g · Sugar 8 g" line from present values. */
-private fun AiFoodEstimate.macroSummary(): String =
-    buildList {
-            calories?.let { add("${it.roundToInt()} kcal") }
-            protein?.let { add("P ${it.roundToInt()} g") }
-            fat?.let { add("F ${it.roundToInt()} g") }
-            fibre?.let { add("Fibre ${it.roundToInt()} g") }
-            sugar?.let { add("Sugar ${it.roundToInt()} g") }
-        }
-        .joinToString(" · ")

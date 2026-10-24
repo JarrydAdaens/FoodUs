@@ -3,7 +3,6 @@ package com.maksimowiczm.foodyou.app.ui.food.diary.quickadd
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.maksimowiczm.foodyou.common.domain.date.DateProvider
-import com.maksimowiczm.foodyou.common.domain.food.NutrientValue.Companion.toNutrientValue
 import com.maksimowiczm.foodyou.common.domain.food.NutritionFacts
 import com.maksimowiczm.foodyou.fooddiary.domain.repository.ManualDiaryEntryRepository
 import kotlinx.coroutines.channels.Channel
@@ -23,12 +22,8 @@ internal class CreateQuickAddViewModel(
 
     fun addEntry(
         name: String,
-        energy: Double,
-        proteins: Double,
-        carbohydrates: Double,
-        fats: Double,
+        nutritionFacts: NutritionFacts,
         description: String?,
-        fibre: Double?,
         servingCount: Double?,
         weightGrams: Double?,
     ) {
@@ -37,14 +32,7 @@ internal class CreateQuickAddViewModel(
                 name = name,
                 mealId = mealId,
                 date = date,
-                nutritionFacts =
-                    NutritionFacts(
-                        energy = energy.toNutrientValue(),
-                        proteins = proteins.toNutrientValue(),
-                        carbohydrates = carbohydrates.toNutrientValue(),
-                        fats = fats.toNutrientValue(),
-                        dietaryFiber = fibre.toNutrientValue(),
-                    ),
+                nutritionFacts = nutritionFacts,
                 createdAt = dateProvider.now(),
                 description = description,
                 servingCount = servingCount,

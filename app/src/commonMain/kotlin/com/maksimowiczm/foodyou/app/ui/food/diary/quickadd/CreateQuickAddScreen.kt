@@ -2,6 +2,9 @@ package com.maksimowiczm.foodyou.app.ui.food.diary.quickadd
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import com.maksimowiczm.foodyou.ai.domain.AiFoodEstimate
+import com.maksimowiczm.foodyou.ai.domain.toNutritionFacts
+import com.maksimowiczm.foodyou.common.domain.food.NutritionFacts
 import com.maksimowiczm.foodyou.app.ui.common.utility.LocalEnergyFormatter
 import com.maksimowiczm.foodyou.common.compose.extension.LaunchedCollectWithLifecycle
 import kotlinx.datetime.LocalDate
@@ -27,9 +30,11 @@ fun CreateQuickAddScreen(
     prefillProteins: Double? = null,
     prefillCarbohydrates: Double? = null,
     prefillFats: Double? = null,
+    scanEstimate: AiFoodEstimate? = null,
 ) {
     val viewModel: CreateQuickAddViewModel = koinViewModel { parametersOf(date, mealId) }
     val energyFormatter = LocalEnergyFormatter.current
+    val originalNutrition = scanEstimate?.toNutritionFacts() ?: NutritionFacts()
 
     val latestOnSave by rememberUpdatedState(onSave)
     LaunchedCollectWithLifecycle(viewModel.uiEvents) {
@@ -40,37 +45,46 @@ fun CreateQuickAddScreen(
 
     val formState =
         rememberQuickAddFormState(
-            name = prefillName ?: "",
-            proteins = prefillProteins,
-            carbohydrates = prefillCarbohydrates,
-            fats = prefillFats,
-            energy = prefillEnergyKcal,
+            name = scanEstimate?.name ?: prefillName ?: "",
+            proteins = scanEstimate?.protein ?: prefillProteins,
+            carbohydrates = scanEstimate?.carbohydrates ?: prefillCarbohydrates,
+            fats = scanEstimate?.fat ?: prefillFats,
+            energy = scanEstimate?.calories ?: prefillEnergyKcal,
+            description = scanEstimate?.description,
+            fibre = scanEstimate?.fibre,
+            sugar = scanEstimate?.sugar,
+            servingCount = if (scanEstimate != null) scanEstimate.servingCount else 1.0,
+            weightGrams = scanEstimate?.weightGrams,
+            preserveEnergy = scanEstimate != null,
         )
 
     QuickAddScreen(
         onBack = onBack,
         onSave = {
             val name = formState.name.value
-            val energy = formState.energy.value?.let(energyFormatter::toKcal) ?: 0.0
-            val proteins = formState.proteins.value ?: 0.0
-            val carbohydrates = formState.carbohydrates.value ?: 0.0
-            val fats = formState.fats.value ?: 0.0
 
             viewModel.addEntry(
                 name = name,
-                energy = energy,
-                proteins = proteins,
-                carbohydrates = carbohydrates,
-                fats = fats,
+                nutritionFacts = formState.toNutritionFacts(
+                    formatter = energyFormatter,
+                    original = originalNutrition,
+                    preserveUnknown = scanEstimate != null,
+                ),
                 description = formState.description.value,
-                fibre = formState.fibre.value,
                 servingCount = formState.servingCount.value,
                 weightGrams = formState.weightGrams.value,
             )
         },
         modifier = modifier,
         state = formState,
-        onPromoteToProduct = { onPromoteToProduct(formState.toPromotionSeed(energyFormatter)) },
-        onPromoteToRecipe = { onPromoteToRecipe(formState.toPromotionSeed(energyFormatter)) },
+        nutritionDetails = scanEstimate?.let {
+            formState.toNutritionFacts(energyFormatter, originalNutrition)
+        },
+        onPromoteToProduct = {
+            onPromoteToProduct(formState.toPromotionSeed(energyFormatter, originalNutrition))
+        },
+        onPromoteToRecipe = {
+            onPromoteToRecipe(formState.toPromotionSeed(energyFormatter, originalNutrition))
+        },
     )
 }

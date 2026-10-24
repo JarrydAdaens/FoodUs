@@ -71,7 +71,7 @@ column distinguishes required sequencing from independent work.
 | FOODUS-002 | Complete | [External databases in main Settings](#foodus-002) | UX | Samsung acceptance passed; completion receipt linked below |
 | FOODUS-003 | Complete | [Visible scanner hint with keyboard](#foodus-003) | Bug | Normal/compact Samsung keyboard acceptance passed |
 | FOODUS-004 | Not Started | [Review and select multiple scanned foods](#foodus-004) | Enhancement | FOODUS-005; settle selection/handoff behavior before implementation |
-| FOODUS-005 | Not Started | [Preserve scan data through Quick Add](#foodus-005) | Data integrity bug | No B prerequisite; investigate first in the scan-to-diary chain |
+| FOODUS-005 | Complete | [Preserve scan data through Quick Add](#foodus-005) | Data integrity bug | Samsung data-preservation acceptance passed; receipt linked below |
 | FOODUS-006 | Not Started | [Visible Quick Add conversion actions](#foodus-006) | UX | No hard B prerequisite; integrate with FOODUS-004/005/007 |
 | FOODUS-007 | Not Started | [Finish scan workflow after successful save](#foodus-007) | Navigation bug | FOODUS-005 and FOODUS-004 for final single/multi-item completion proof |
 | FOODUS-008 | Not Started | [Retake without discarding the prior photo](#foodus-008) | Workflow bug | No B prerequisite; reuse existing capture mechanism |
@@ -210,7 +210,14 @@ only regression evidence.
 
 ### FOODUS-005: Preserve accepted scan data through Quick Add and saving
 
-**Status:** Not Started
+**Status:** Complete (2026-10-24; completion provisional until receipt reconciles)
+
+**Delivery:** [Plan and acceptance evidence](../implementation-plans/milestone-b/foodus-005/plan.md),
+[completion receipt](../_boss-runs/milestone-b-sequential/foodus-005-receipt.json).
+All 128 unit tests, debug/test APK builds, independent integrity review, and four
+isolated Samsung Android 15 tests passed. The exact 780 kcal sample, optional
+nutrients and units, unknown energy, direct manual behavior, and historical Room
+readback are covered without changing the owner's stored diary or settings.
 
 **Reported problem / value:** Data is dropped or changed between scan review and Quick
 Add. The recorded case changed **780 kcal to 482 kcal**, retained **35 g protein / 38 g

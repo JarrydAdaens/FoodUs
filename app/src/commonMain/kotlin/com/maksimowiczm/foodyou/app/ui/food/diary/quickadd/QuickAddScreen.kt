@@ -28,6 +28,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigationevent.NavigationEventInfo
 import androidx.navigationevent.compose.NavigationEventHandler
 import androidx.navigationevent.compose.rememberNavigationEventState
+import com.maksimowiczm.foodyou.common.domain.food.NutritionFacts
+import com.maksimowiczm.foodyou.common.domain.food.NutritionFactsField
+import com.maksimowiczm.foodyou.app.ui.food.shared.component.KnownNutrientList
 import com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton
 import com.maksimowiczm.foodyou.app.ui.common.component.DiscardDialog
 import com.maksimowiczm.foodyou.common.compose.extension.add
@@ -45,6 +48,7 @@ internal fun QuickAddScreen(
     // screen). Enabled only once the fields validate, matching the save action.
     onPromoteToProduct: () -> Unit = {},
     onPromoteToRecipe: () -> Unit = {},
+    nutritionDetails: NutritionFacts? = null,
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val focusRequester = remember { FocusRequester() }
@@ -151,6 +155,13 @@ internal fun QuickAddScreen(
                 )
                 Spacer(Modifier.height(16.dp))
                 QuickAddForm(state = state, modifier = Modifier.focusRequester(focusRequester))
+                nutritionDetails?.let {
+                    KnownNutrientList(it, excludedFields = setOf(
+                        NutritionFactsField.Energy, NutritionFactsField.Proteins,
+                        NutritionFactsField.Carbohydrates, NutritionFactsField.Fats,
+                        NutritionFactsField.DietaryFiber, NutritionFactsField.Sugars,
+                    ))
+                }
             }
         }
     }

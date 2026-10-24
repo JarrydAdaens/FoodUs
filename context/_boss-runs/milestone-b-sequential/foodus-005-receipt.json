@@ -1,0 +1,407 @@
+{
+  "checked": {
+    "artifact_identity": "945b5d3c43f7cfac61865c88ecea06909d7d9f5ae99e5a1f76a043fe137a6a7d",
+    "base": "6e44b94286beb86db1c200f4626b1afce9358aa7",
+    "diff_identity": "6f9950afa0d828f8195e6a2e6691d1f137e4c74fafdf4aeb6846b91c4ddfa3dd",
+    "files": {
+      "app/build.gradle.kts": {
+        "kind": "file",
+        "sha256": "04857b8d16e79fdc8e6e5ef0e332c6ab39b7e11feda385df098800495d3639d7"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanKeyboardTest.kt": {
+        "kind": "file",
+        "sha256": "19f9fef1e92dcfbd327665e7eb0b201d144ec1ae3c4ef4641b0b38eeae6dd9ef"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/ScanDataPreservationTest.kt": {
+        "kind": "file",
+        "sha256": "bf452cb939fa29cf3f011b23f0019d918128d7c24779f665780f428c029e933c"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/ai/domain/AiFoodEstimate.kt": {
+        "kind": "file",
+        "sha256": "1e54542b3b40d6fc4b1ee7b497683281bd7e050c2e5f2459ba297f8d788bacb9"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/ai/domain/AiFoodEstimateParser.kt": {
+        "kind": "file",
+        "sha256": "9de02ee2a061307e2dfce5d9274a777dbd82e4558963fc644befdd5fa526fc50"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/ai/domain/AiScanPrompt.kt": {
+        "kind": "file",
+        "sha256": "b569e0a6cc8b3cc095f820ad6aa5a518acb602167dd87bd59b2047becec25636"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/navigation/FoodYouAppNavHost.kt": {
+        "kind": "file",
+        "sha256": "32306dc91c2feca802ae4d27e2fd9cc38b27b171bb019daad0467546cdc65103"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/component/NutrientList.kt": {
+        "kind": "file",
+        "sha256": "7727ea7d8a928d6cedaee8fe1b426f88e83677b8739d355290a253461d529150"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanScreen.kt": {
+        "kind": "file",
+        "sha256": "b11a64b75fe86bb9f71d4427a500ba970c48adac9434f91c312f5e5812ef7090"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/CreateQuickAddScreen.kt": {
+        "kind": "file",
+        "sha256": "f2f9666b0ce56ae30d0db578376814233eee060c29d53da2383ae0877a336468"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/CreateQuickAddViewModel.kt": {
+        "kind": "file",
+        "sha256": "c437f79efd7882a195f0b6cbb9186611e62390e76fb163b45360e0aeb47d5b55"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddForm.kt": {
+        "kind": "file",
+        "sha256": "0677956aa5ad633b9fd49c0a97dc36baae4db180cf8d640a657ab45fdd191bb9"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddFormState.kt": {
+        "kind": "file",
+        "sha256": "7e6e3d957fa33d79cd0c37c3f0d05c11f36c711d29094bf8d05603294ccc954c"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddNutritionMapping.kt": {
+        "kind": "file",
+        "sha256": "9fcf55bffcca95a5362c22466441e3eaa8b39264fe90526a186c4100019507ab"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddNutritionSnapshot.kt": {
+        "kind": "file",
+        "sha256": "ea21f22b21be100c30de68503d2551b6e45b9760f2cb09adc7c5c9fdcbff5d00"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddPromotionMapping.kt": {
+        "kind": "file",
+        "sha256": "ff7c55a517983b83afdb9a3e22d029787922923518fc22803e71daca4027365f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddPromotionSeed.kt": {
+        "kind": "file",
+        "sha256": "8e4c51fb6ff039a7beeff64ff9d3b51166a9cce048ddb07f0ec05519164f417e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddScreen.kt": {
+        "kind": "file",
+        "sha256": "fc3b50d2264c5251a193c83aa07c5172b20e51e50934eea8e839707a8075e57b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/UpdateQuickAddScreen.kt": {
+        "kind": "file",
+        "sha256": "6574b665a8cec34a824f1ab77577e44e216ecd4e8a80875fe913218c8959af3d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/UpdateQuickAddViewModel.kt": {
+        "kind": "file",
+        "sha256": "92bf98a7e55cccde96febd8575217ab265b0b90073b07b2c525fa45356b91b3d"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/ai/domain/AiScanPromptTest.kt": {
+        "kind": "file",
+        "sha256": "3842aa3f778f13ca94a062a13219ba2afafc85f4912d19803aeb819d19e6430c"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddNumberParserTest.kt": {
+        "kind": "file",
+        "sha256": "f2d904d93a101fb475a8ce34b81aa33e09d9b1b0aa5b45c0710c3d8f1e03c826"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/ScanNutritionPreservationTest.kt": {
+        "kind": "file",
+        "sha256": "f57d183bd19ddd35449dd8fbb208322b02212afb5e37c65685957337b021c57d"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "fc4fb4d3739d361e22c9c4c006af11c210e5fb7bce9e934ce32ba2ad322bad6a"
+      }
+    },
+    "head": "6e44b94286beb86db1c200f4626b1afce9358aa7"
+  },
+  "commit_authority": "User requested commit-log --commit after Samsung test for each Story",
+  "commit_policy": "single",
+  "decisions": [
+    "Canonical absolute kcal/gram nullable snapshot preserves unknowns and real zeros across parser/review/typed route/Quick Add/Room columns; explicit alternate kJ/kg units convert once.",
+    "No schema migration or historical rewrite. Existing 43 nullable Room nutrient columns reused; servings and weight stay metadata only.",
+    "Scan initialization disables implicit energy recalculation; direct manual defaults and deliberate calculation remain available. Quick Add rejects non-finite numeric input.",
+    "Both promotion seeds/routes preserve the snapshot; runtime destination editor preservation is FOODUS-006 acceptance and remains unclaimed here.",
+    "Synthetic generated JPEG, private Koin, real in-memory Room; no owner diary/settings writes, live AI, camera, credentials or private photos.",
+    "Accessibility fixture repaired for fresh host windows, safe gestures, hint labels and readback insets. Device rotation policy restored after test.",
+    "Legacy catalog retained under release transition; no release authorized."
+  ],
+  "delivery": {
+    "artifact_identity": "df4b21e86f626d306bc8e70e1dc6821b725de2257dafe21034ed8ec2aa63ad84",
+    "base": "6e44b94286beb86db1c200f4626b1afce9358aa7",
+    "committed_files": {
+      "app/build.gradle.kts": {
+        "git_blob": "a596aa518dc6c95940e92243ef30eef40a0cc4d4",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanKeyboardTest.kt": {
+        "git_blob": "d75e5dbddbf577a210d98e72455d33b1dd78dd66",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/ScanDataPreservationTest.kt": {
+        "git_blob": "7b52c2f42f60b2ed8493be2faffa4512141f5256",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/ai/domain/AiFoodEstimate.kt": {
+        "git_blob": "3fce950033fa403cda15a633687153af07d3c2b3",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/ai/domain/AiFoodEstimateParser.kt": {
+        "git_blob": "8167fdb991f121cc49874738f5aed5471ef35314",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/ai/domain/AiScanPrompt.kt": {
+        "git_blob": "d224617bebe6110642113203a28b6b2c0cc1d766",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/navigation/FoodYouAppNavHost.kt": {
+        "git_blob": "e55bf420d437c0aa5acdbf24af3e78d8f9bd5e83",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/component/NutrientList.kt": {
+        "git_blob": "70e3a8254bcb744d6ad820bbb20e17c127958f52",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanScreen.kt": {
+        "git_blob": "7f1bb8fc9f00073d62edd321f92ce8f040bf0f0c",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/CreateQuickAddScreen.kt": {
+        "git_blob": "9067950b1f67bb877f44c876ccda5fe5196328ae",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/CreateQuickAddViewModel.kt": {
+        "git_blob": "889f30eafbff24a30c709902c32b0354115977ee",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddForm.kt": {
+        "git_blob": "ccc86815d84e1caebe3763ddd144780b78693829",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddFormState.kt": {
+        "git_blob": "4744378944cfb73edcc30d20f5a756eae99382cd",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddNutritionMapping.kt": {
+        "git_blob": "e0e034ac493d1461643cb3786267d3a729e2b3b1",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddNutritionSnapshot.kt": {
+        "git_blob": "d3e275613a90aa100f6fb0e004cb0db59371d03c",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddPromotionMapping.kt": {
+        "git_blob": "0075016c8e36681dc51c63f83058ac968ec510c3",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddPromotionSeed.kt": {
+        "git_blob": "6f6e1524f48b7a29eec99d97df55d1d989767a95",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddScreen.kt": {
+        "git_blob": "b090018fa6f2982d8e09ce1d2aaa5cda5131c401",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/UpdateQuickAddScreen.kt": {
+        "git_blob": "198093e4c66cafca970808629462bf90dddb93e1",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/UpdateQuickAddViewModel.kt": {
+        "git_blob": "67bf5fd11447029f4680b750903461b74339d575",
+        "kind": "file"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/ai/domain/AiScanPromptTest.kt": {
+        "git_blob": "1afeac993ca9af1d2d27c0f4eebbc53115c65eb4",
+        "kind": "file"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddNumberParserTest.kt": {
+        "git_blob": "6665f98cfd5c03b5711f7ab2227ed157bf46c379",
+        "kind": "file"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/ScanNutritionPreservationTest.kt": {
+        "git_blob": "2534c882e6583ed312de553671f910ab0c622d20",
+        "kind": "file"
+      },
+      "context/_boss-runs/milestone-b-sequential/briefing.md": {
+        "git_blob": "ff82a394c63466905adba0d3004c1a4d2a7eb6f5",
+        "kind": "file"
+      },
+      "context/implementation-plans/milestone-b/foodus-005/plan.md": {
+        "git_blob": "302df7730a1cbf1895901f623e68697d13898d4f",
+        "kind": "file"
+      },
+      "context/milestones/milestone-b.md": {
+        "git_blob": "740a161d0d2931a44eedaa222d1db387029f365c",
+        "kind": "file"
+      },
+      "gradle/libs.versions.toml": {
+        "git_blob": "6dcdb5e97c35db4c4aad9e94864faaa8be7a75a7",
+        "kind": "file"
+      }
+    },
+    "diff_identity": "2675c2fd74fada5302921df0105c496c06af63fe09d46549798693889b84581a",
+    "files": {
+      "app/build.gradle.kts": {
+        "kind": "file",
+        "sha256": "04857b8d16e79fdc8e6e5ef0e332c6ab39b7e11feda385df098800495d3639d7"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanKeyboardTest.kt": {
+        "kind": "file",
+        "sha256": "19f9fef1e92dcfbd327665e7eb0b201d144ec1ae3c4ef4641b0b38eeae6dd9ef"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/ScanDataPreservationTest.kt": {
+        "kind": "file",
+        "sha256": "bf452cb939fa29cf3f011b23f0019d918128d7c24779f665780f428c029e933c"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/ai/domain/AiFoodEstimate.kt": {
+        "kind": "file",
+        "sha256": "1e54542b3b40d6fc4b1ee7b497683281bd7e050c2e5f2459ba297f8d788bacb9"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/ai/domain/AiFoodEstimateParser.kt": {
+        "kind": "file",
+        "sha256": "9de02ee2a061307e2dfce5d9274a777dbd82e4558963fc644befdd5fa526fc50"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/ai/domain/AiScanPrompt.kt": {
+        "kind": "file",
+        "sha256": "b569e0a6cc8b3cc095f820ad6aa5a518acb602167dd87bd59b2047becec25636"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/navigation/FoodYouAppNavHost.kt": {
+        "kind": "file",
+        "sha256": "32306dc91c2feca802ae4d27e2fd9cc38b27b171bb019daad0467546cdc65103"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/component/NutrientList.kt": {
+        "kind": "file",
+        "sha256": "7727ea7d8a928d6cedaee8fe1b426f88e83677b8739d355290a253461d529150"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanScreen.kt": {
+        "kind": "file",
+        "sha256": "b11a64b75fe86bb9f71d4427a500ba970c48adac9434f91c312f5e5812ef7090"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/CreateQuickAddScreen.kt": {
+        "kind": "file",
+        "sha256": "f2f9666b0ce56ae30d0db578376814233eee060c29d53da2383ae0877a336468"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/CreateQuickAddViewModel.kt": {
+        "kind": "file",
+        "sha256": "c437f79efd7882a195f0b6cbb9186611e62390e76fb163b45360e0aeb47d5b55"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddForm.kt": {
+        "kind": "file",
+        "sha256": "0677956aa5ad633b9fd49c0a97dc36baae4db180cf8d640a657ab45fdd191bb9"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddFormState.kt": {
+        "kind": "file",
+        "sha256": "7e6e3d957fa33d79cd0c37c3f0d05c11f36c711d29094bf8d05603294ccc954c"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddNutritionMapping.kt": {
+        "kind": "file",
+        "sha256": "9fcf55bffcca95a5362c22466441e3eaa8b39264fe90526a186c4100019507ab"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddNutritionSnapshot.kt": {
+        "kind": "file",
+        "sha256": "ea21f22b21be100c30de68503d2551b6e45b9760f2cb09adc7c5c9fdcbff5d00"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddPromotionMapping.kt": {
+        "kind": "file",
+        "sha256": "ff7c55a517983b83afdb9a3e22d029787922923518fc22803e71daca4027365f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddPromotionSeed.kt": {
+        "kind": "file",
+        "sha256": "8e4c51fb6ff039a7beeff64ff9d3b51166a9cce048ddb07f0ec05519164f417e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddScreen.kt": {
+        "kind": "file",
+        "sha256": "fc3b50d2264c5251a193c83aa07c5172b20e51e50934eea8e839707a8075e57b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/UpdateQuickAddScreen.kt": {
+        "kind": "file",
+        "sha256": "6574b665a8cec34a824f1ab77577e44e216ecd4e8a80875fe913218c8959af3d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/UpdateQuickAddViewModel.kt": {
+        "kind": "file",
+        "sha256": "92bf98a7e55cccde96febd8575217ab265b0b90073b07b2c525fa45356b91b3d"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/ai/domain/AiScanPromptTest.kt": {
+        "kind": "file",
+        "sha256": "3842aa3f778f13ca94a062a13219ba2afafc85f4912d19803aeb819d19e6430c"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddNumberParserTest.kt": {
+        "kind": "file",
+        "sha256": "f2d904d93a101fb475a8ce34b81aa33e09d9b1b0aa5b45c0710c3d8f1e03c826"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/ScanNutritionPreservationTest.kt": {
+        "kind": "file",
+        "sha256": "f57d183bd19ddd35449dd8fbb208322b02212afb5e37c65685957337b021c57d"
+      },
+      "context/_boss-runs/milestone-b-sequential/briefing.md": {
+        "kind": "file",
+        "sha256": "5aad45317ed14a7a505566feee49d5dea3488d293fae06c8d2070d8b6a7af9da"
+      },
+      "context/implementation-plans/milestone-b/foodus-005/plan.md": {
+        "kind": "file",
+        "sha256": "97fe74fde2bb39fca55de36328b295582603842350b12d434bd5316e0bdd8e67"
+      },
+      "context/milestones/milestone-b.md": {
+        "kind": "file",
+        "sha256": "14c09fa3ec89e41cd1e7d57e622749f3cf71c8815cd37ccc6238fc60f39bda10"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "fc4fb4d3739d361e22c9c4c006af11c210e5fb7bce9e934ce32ba2ad322bad6a"
+      }
+    },
+    "head": "6e44b94286beb86db1c200f4626b1afce9358aa7"
+  },
+  "evidence": {
+    "checks": [
+      {
+        "artifact_identity": "945b5d3c43f7cfac61865c88ecea06909d7d9f5ae99e5a1f76a043fe137a6a7d",
+        "command": ".\\gradlew.bat --offline --no-daemon --console=plain -q :app:testDebugUnitTest :app:assembleDebug :app:assembleDebugAndroidTest",
+        "outcome": "PASS",
+        "result": "128 tests in 26 suites; zero failures/errors. Production/common-test files unchanged during subsequent Android-only fixture repairs."
+      },
+      {
+        "artifact_identity": "945b5d3c43f7cfac61865c88ecea06909d7d9f5ae99e5a1f76a043fe137a6a7d",
+        "command": ".\\gradlew.bat --offline --no-daemon --console=plain -q :app:assembleDebugAndroidTest",
+        "outcome": "PASS",
+        "result": "Final Android fixture compiled and test APK installed with -r -t."
+      },
+      {
+        "artifact_identity": "945b5d3c43f7cfac61865c88ecea06909d7d9f5ae99e5a1f76a043fe137a6a7d",
+        "command": "D:\\dev\\AndroidSDK\\platform-tools\\adb.exe -s R7AY205BVXL shell am instrument -w -r -e class com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.ScanDataPreservationTest io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "outcome": "PASS",
+        "result": "Four synthetic tests passed on Samsung SM-A057F Android15, physical1080x2400 portrait. Exact780 sample, optional kJ/portion metadata, unknown energy, direct manual behavior and real in-memory Room historical readback."
+      },
+      {
+        "artifact_identity": "945b5d3c43f7cfac61865c88ecea06909d7d9f5ae99e5a1f76a043fe137a6a7d",
+        "command": "git diff --check",
+        "outcome": "PASS"
+      }
+    ],
+    "decisions": [
+      "Canonical absolute kcal/gram nullable snapshot preserves unknowns and real zeros across parser/review/typed route/Quick Add/Room columns; explicit alternate kJ/kg units convert once.",
+      "No schema migration or historical rewrite. Existing 43 nullable Room nutrient columns reused; servings and weight stay metadata only.",
+      "Scan initialization disables implicit energy recalculation; direct manual defaults and deliberate calculation remain available. Quick Add rejects non-finite numeric input.",
+      "Both promotion seeds/routes preserve the snapshot; runtime destination editor preservation is FOODUS-006 acceptance and remains unclaimed here.",
+      "Synthetic generated JPEG, private Koin, real in-memory Room; no owner diary/settings writes, live AI, camera, credentials or private photos.",
+      "Accessibility fixture repaired for fresh host windows, safe gestures, hint labels and readback insets. Device rotation policy restored after test.",
+      "Legacy catalog retained under release transition; no release authorized."
+    ],
+    "review": {
+      "artifact_identity": "945b5d3c43f7cfac61865c88ecea06909d7d9f5ae99e5a1f76a043fe137a6a7d",
+      "outcome": "PASS",
+      "reviewer": "/root/review_foodus_005",
+      "scope": "Independent final static data-integrity, boundary, privacy and regression review of the final source/test diff",
+      "source_aggregate": "42c7fce707e62fa92b19f924cba1bde90900030ff5a69669a0a265519d41f9fa"
+    },
+    "review_required": true
+  },
+  "metadata_before": {
+    "context/_boss-runs/milestone-b-sequential/briefing.md": {
+      "kind": "file",
+      "sha256": "07812b15af58154630c4e50d86470844cde9e5d25a6f9f9e98445099a07db60e"
+    },
+    "context/implementation-plans/milestone-b/foodus-005/plan.md": {
+      "kind": "file",
+      "sha256": "f78f3f9379927e9d36cd6eb31cbbf89907e218ce43537eb30f426bd26ee84155"
+    },
+    "context/milestones/milestone-b.md": {
+      "kind": "file",
+      "sha256": "b492ea69e25fc230364cba9c5f429ca88e1e06ead9bff3de93ead92667dc70ed"
+    }
+  },
+  "phase": "READY",
+  "record": "context/_boss-runs/milestone-b-sequential/foodus-005-receipt.json",
+  "repo": "D:\\forked-projects\\FoodYou",
+  "schema_version": 1,
+  "status_owner": "context/milestones/milestone-b.md#foodus-005",
+  "transaction_id": "95e78cb7f05d426fa9c19f5c7a451d5b"
+}

@@ -1,5 +1,11 @@
 package com.maksimowiczm.foodyou.app.navigation
 
+import com.maksimowiczm.foodyou.ai.domain.AiFoodEstimate
+import com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.QuickAddNutritionSnapshot
+import com.maksimowiczm.foodyou.ai.domain.AiFoodEstimateParser
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.encodeToString
+
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -227,6 +233,7 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 prefillProteins = route.prefillProteins,
                 prefillCarbohydrates = route.prefillCarbohydrates,
                 prefillFats = route.prefillFats,
+                scanEstimate = route.scanEstimateJson?.let(AiFoodEstimateParser::parse),
             )
         }
         forwardBackwardComposable<FoodDiaryAiScan> {
@@ -234,15 +241,12 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
 
             AiScanScreen(
                 onBack = { navController.popBackStackInclusive<FoodDiaryAiScan>() },
-                onSaveToQuickAdd = { name, calories, protein, fat ->
+                onSaveToQuickAdd = { estimate ->
                     navController.navigate(
                         FoodDiaryCreateQuickAdd(
                             epochDay = epochDay,
                             mealId = mealId,
-                            prefillName = name,
-                            prefillEnergyKcal = calories,
-                            prefillProteins = protein,
-                            prefillFats = fat,
+                            estimate = estimate,
                         )
                     )
                 },
@@ -601,7 +605,7 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
 @Serializable private object ExportCsvProducts
 
 @Serializable
-private data class FoodDiaryCreateQuickAdd(
+internal data class FoodDiaryCreateQuickAdd(
     val epochDay: Long,
     val mealId: Long,
     // Optional AI-scan prefill (Milestone 2, Story 6). Energy is in kilocalories.
@@ -610,7 +614,14 @@ private data class FoodDiaryCreateQuickAdd(
     val prefillProteins: Double? = null,
     val prefillCarbohydrates: Double? = null,
     val prefillFats: Double? = null,
-)
+    val scanEstimateJson: String? = null,
+) {
+    constructor(epochDay: Long, mealId: Long, estimate: AiFoodEstimate) : this(
+        epochDay = epochDay,
+        mealId = mealId,
+        scanEstimateJson = Json.encodeToString(estimate),
+    )
+}
 
 @Serializable private data class FoodDiaryAiScan(val epochDay: Long, val mealId: Long)
 
@@ -633,7 +644,7 @@ private data class FoodDiarySearch(
 // Story 19 promotion routes. Carry a flat copy of the mapped Quick Add fields (spec §6.2/§6.3); the
 // source diary entry is never referenced or mutated (§6.5).
 @Serializable
-private data class PromoteToProduct(
+internal data class PromoteToProduct(
     val name: String,
     val description: String?,
     val energyKcal: Double?,
@@ -643,6 +654,7 @@ private data class PromoteToProduct(
     val fibre: Double?,
     val servingCount: Double?,
     val weightGrams: Double?,
+    val nutritionFactsJson: String? = null,
 ) {
     constructor(
         seed: QuickAddPromotionSeed
@@ -656,6 +668,7 @@ private data class PromoteToProduct(
         fibre = seed.fibre,
         servingCount = seed.servingCount,
         weightGrams = seed.weightGrams,
+        nutritionFactsJson = seed.nutritionFacts?.let(QuickAddNutritionSnapshot::encode),
     )
 
     fun toSeed() =
@@ -669,11 +682,12 @@ private data class PromoteToProduct(
             fibre = fibre,
             servingCount = servingCount,
             weightGrams = weightGrams,
+            nutritionFacts = nutritionFactsJson?.let(QuickAddNutritionSnapshot::decode),
         )
 }
 
 @Serializable
-private data class PromoteToRecipe(
+internal data class PromoteToRecipe(
     val name: String,
     val description: String?,
     val energyKcal: Double?,
@@ -683,6 +697,7 @@ private data class PromoteToRecipe(
     val fibre: Double?,
     val servingCount: Double?,
     val weightGrams: Double?,
+    val nutritionFactsJson: String? = null,
 ) {
     constructor(
         seed: QuickAddPromotionSeed
@@ -696,6 +711,7 @@ private data class PromoteToRecipe(
         fibre = seed.fibre,
         servingCount = seed.servingCount,
         weightGrams = seed.weightGrams,
+        nutritionFactsJson = seed.nutritionFacts?.let(QuickAddNutritionSnapshot::encode),
     )
 
     fun toSeed() =
@@ -709,6 +725,7 @@ private data class PromoteToRecipe(
             fibre = fibre,
             servingCount = servingCount,
             weightGrams = weightGrams,
+            nutritionFacts = nutritionFactsJson?.let(QuickAddNutritionSnapshot::decode),
         )
 }
 

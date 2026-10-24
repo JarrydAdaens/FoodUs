@@ -46,35 +46,37 @@ fun UpdateQuickAddScreen(
             fats = entry.nutritionFacts.fats.value,
             description = entry.description,
             fibre = entry.nutritionFacts.dietaryFiber.value,
-            // Entries created before Story 18 have no serving count; treat that as one serving.
-            servingCount = entry.servingCount ?: 1.0,
+            // Quantity metadata never participates in calculations; preserve an unknown value.
+            servingCount = entry.servingCount,
             weightGrams = entry.weightGrams,
+            sugar = entry.nutritionFacts.sugars.value,
+            preserveEnergy = entry.nutritionFacts.let {
+                it.energy.value == null || it.proteins.value == null ||
+                    it.carbohydrates.value == null || it.fats.value == null
+            },
         )
 
     QuickAddScreen(
         onBack = onBack,
         onSave = {
             val name = formState.name.value
-            val energy = formState.energy.value?.let(energyFormatter::toKcal) ?: 0.0
-            val proteins = formState.proteins.value ?: 0.0
-            val carbohydrates = formState.carbohydrates.value ?: 0.0
-            val fats = formState.fats.value ?: 0.0
 
             viewModel.updateEntry(
                 name = name,
-                energy = energy,
-                proteins = proteins,
-                carbohydrates = carbohydrates,
-                fats = fats,
+                nutritionFacts = formState.toNutritionFacts(energyFormatter, entry.nutritionFacts),
                 description = formState.description.value,
-                fibre = formState.fibre.value,
                 servingCount = formState.servingCount.value,
                 weightGrams = formState.weightGrams.value,
             )
         },
         modifier = modifier,
         state = formState,
-        onPromoteToProduct = { onPromoteToProduct(formState.toPromotionSeed(energyFormatter)) },
-        onPromoteToRecipe = { onPromoteToRecipe(formState.toPromotionSeed(energyFormatter)) },
+        nutritionDetails = formState.toNutritionFacts(energyFormatter, entry.nutritionFacts),
+        onPromoteToProduct = {
+            onPromoteToProduct(formState.toPromotionSeed(energyFormatter, entry.nutritionFacts))
+        },
+        onPromoteToRecipe = {
+            onPromoteToRecipe(formState.toPromotionSeed(energyFormatter, entry.nutritionFacts))
+        },
     )
 }

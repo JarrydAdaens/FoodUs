@@ -104,3 +104,47 @@ editing. Original physical size, default fixed-rotation policy and free rotation
 restored. Portrait sizes verified; landscape remains outside accepted evidence.
 Receipt `foodus-003-receipt.json` prepared before terminal metadata; commit pending
 at seal time. No private persistent data was changed by the synthetic fixtures.
+
+## Dispatch FOODUS-005
+
+FOODUS-003 reconciled COMPLETED_COMMITTED at `6e44b942`; only unrelated attachments
+were dirty before dispatch. FOODUS-005 worker owns end-to-end scan estimate parsing,
+review, typed route/prefill, Quick Add form and mapping, any necessary domain/Room
+representation or migration, relevant unit/instrumentation regression files, and
+`context/implementation-plans/milestone-b/foodus-005/plan.md`. Keep the accepted
+FOODUS-003 editor/inset behavior. No collection, action visibility, completion
+navigation, camera-retake or credential-display changes in this Story. Preserve
+manual Quick Add energy controls, unknown-vs-zero nutrients, immutable history and
+servings/weight metadata semantics from Story 2.18. Exact observed sample has
+780 kcal,35g protein,38g fat,6g fibre,12g sugar; other sample fields are unknown.
+Coordinator owns trackers, receipt, Samsung execution, independent review and
+commit. Worker returns uncommitted; no device operations, pull/push or releases.
+Required checks: parser/mapping/form/persistence/readback with sample, optional
+fields and units, direct manual behavior; synthetic isolated Samsung review-to-
+entry-to-diary evidence. Use an in-memory/temporary database, never the owner's
+stored diary/settings. Stop on privacy/architecture conflict, unsupported external
+contract or missing migration evidence. One implementation worker `/root/foodus_005`;
+requested model/effort inherit, observed unknown. Independent data-integrity review
+is required before completion.
+
+FOODUS-005 independent review dispatch: `/root/review_foodus_005` is read-only over
+the final parser, route, form, promotion/snapshot mapping, display and regression
+diff, relevant configuration and acceptance. One implementation worker remains
+active; reviewer must distinguish intermediate observations from final frozen
+identity and wait for coordinator's final identity notification before approval.
+Check nullable/zero/energy/units/privacy/history boundaries and evidence gaps.
+Coordinator separately owns builds and physical Samsung acceptance. Model/effort
+inherit; observed unknown. No source/status/commit/device writes.
+
+FOODUS-005 final acceptance: 128 unit tests in 26 suites, debug/test APK builds,
+independent data-integrity review and whitespace passed. Samsung SM-A057F Android15
+portrait physical1080x2400 passed all four final cases (36.654s), after a focused
+optional case passed (14.155s). Exact 780 kcal sample and unknowns survive production
+review/typed route/Quick Add/Room historical readback; optional units/quantity edits,
+finite input validation, deliberate calculation and manual defaults are covered.
+Fixture-only driver issues were repaired with fresh host-window access, safe inset
+geometry, actual button semantics, explicit IME dismissal and accessibility scrolling;
+no assertion was waived. Original rotation policy restored. Receipt prepared before
+terminal metadata; `foodus-005-receipt.json` will seal before the authorized commit.
+No owner diary/settings were changed. FOODUS-006 must verify target promotion editors;
+FOODUS-007 owns full Log/home completion. No release/version transition was performed.

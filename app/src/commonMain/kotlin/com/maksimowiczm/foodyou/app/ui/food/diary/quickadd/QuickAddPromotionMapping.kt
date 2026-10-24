@@ -14,7 +14,10 @@ import kotlin.math.roundToInt
  */
 
 /** Captures the current form values as a promotion seed (§6.5: a copy, never the live entry). */
-internal fun QuickAddFormState.toPromotionSeed(energyFormatter: EnergyFormatter) =
+internal fun QuickAddFormState.toPromotionSeed(
+    energyFormatter: EnergyFormatter,
+    original: NutritionFacts = NutritionFacts(),
+) =
     QuickAddPromotionSeed(
         name = name.value,
         description = description.value,
@@ -25,6 +28,7 @@ internal fun QuickAddFormState.toPromotionSeed(energyFormatter: EnergyFormatter)
         fibre = fibre.value,
         servingCount = servingCount.value,
         weightGrams = weightGrams.value,
+        nutritionFacts = toNutritionFacts(energyFormatter, original),
     )
 
 /**
@@ -58,7 +62,7 @@ internal fun QuickAddPromotionSeed.toProductPrefill(): Product {
         servingWeight = null,
         source = FoodSource(FoodSource.Type.User),
         nutritionFacts =
-            NutritionFacts(
+            nutritionFacts?.let { it / basis * 100.0 } ?: NutritionFacts(
                 energy = energyKcal.per100(basis).toNutrientValue(),
                 proteins = proteins.per100(basis).toNutrientValue(),
                 carbohydrates = carbohydrates.per100(basis).toNutrientValue(),

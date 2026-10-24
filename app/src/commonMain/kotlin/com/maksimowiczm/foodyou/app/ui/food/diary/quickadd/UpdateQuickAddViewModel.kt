@@ -3,7 +3,7 @@ package com.maksimowiczm.foodyou.app.ui.food.diary.quickadd
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.maksimowiczm.foodyou.common.domain.date.DateProvider
-import com.maksimowiczm.foodyou.common.domain.food.NutrientValue.Companion.toNutrientValue
+import com.maksimowiczm.foodyou.common.domain.food.NutritionFacts
 import com.maksimowiczm.foodyou.fooddiary.domain.entity.ManualDiaryEntryId
 import com.maksimowiczm.foodyou.fooddiary.domain.repository.ManualDiaryEntryRepository
 import kotlinx.coroutines.channels.Channel
@@ -32,12 +32,8 @@ internal class UpdateQuickAddViewModel(
 
     fun updateEntry(
         name: String,
-        energy: Double,
-        proteins: Double,
-        carbohydrates: Double,
-        fats: Double,
+        nutritionFacts: NutritionFacts,
         description: String?,
-        fibre: Double?,
         servingCount: Double?,
         weightGrams: Double?,
     ) {
@@ -51,14 +47,7 @@ internal class UpdateQuickAddViewModel(
             val updatedEntry =
                 entry.copy(
                     name = name,
-                    nutritionFacts =
-                        entry.nutritionFacts.copy(
-                            energy = energy.toNutrientValue(),
-                            proteins = proteins.toNutrientValue(),
-                            carbohydrates = carbohydrates.toNutrientValue(),
-                            fats = fats.toNutrientValue(),
-                            dietaryFiber = fibre.toNutrientValue(),
-                        ),
+                    nutritionFacts = nutritionFacts,
                     description = description,
                     servingCount = servingCount,
                     weightGrams = weightGrams,

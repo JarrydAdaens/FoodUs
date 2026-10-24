@@ -25,6 +25,8 @@ import com.maksimowiczm.foodyou.app.ui.common.utility.LocalNutrientsOrder
 import com.maksimowiczm.foodyou.common.compose.utility.formatClipZeros
 import com.maksimowiczm.foodyou.common.domain.food.NutrientValue
 import com.maksimowiczm.foodyou.common.domain.food.NutritionFacts
+import com.maksimowiczm.foodyou.common.domain.food.NutritionFactsField
+import com.maksimowiczm.foodyou.common.domain.food.get
 import com.maksimowiczm.foodyou.settings.domain.entity.NutrientsOrder
 import foodyou.app.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
@@ -526,4 +528,98 @@ object NutrientListDefaults {
 
         Text(text = str, color = MaterialTheme.colorScheme.outline)
     }
+}
+
+/** Compact review of supplied snapshot values. Unknown nutrients are omitted rather than rendered
+ * as zero. Uses the same labels and gram -> mg/mcg presentation as the full nutrient list.
+ */
+@Composable
+fun KnownNutrientList(
+    facts: NutritionFacts,
+    modifier: Modifier = Modifier,
+    excludedFields: Set<NutritionFactsField> = emptySet(),
+) {
+    val energyFormatter = LocalEnergyFormatter.current
+    Column(modifier) {
+        NutritionFactsField.entries.forEach { field ->
+            val value = facts[field].value
+            if (value != null && field !in excludedFields) {
+                Nutrient(
+                    label = { Text(stringResource(field.label())) },
+                    value = {
+                        if (field == NutritionFactsField.Energy) {
+                            Text(energyFormatter.formatEnergy(value))
+                        } else {
+                            val (multiplier, suffix) = when (field) {
+                                NutritionFactsField.VitaminA, NutritionFactsField.VitaminB7,
+                                NutritionFactsField.VitaminB9, NutritionFactsField.VitaminB12,
+                                NutritionFactsField.VitaminD, NutritionFactsField.VitaminK,
+                                NutritionFactsField.Selenium, NutritionFactsField.Iodine,
+                                NutritionFactsField.Chromium ->
+                                1_000_000.0 to stringResource(Res.string.unit_microgram_short)
+                                NutritionFactsField.Cholesterol, NutritionFactsField.Caffeine,
+                                NutritionFactsField.VitaminB1, NutritionFactsField.VitaminB2,
+                                NutritionFactsField.VitaminB3, NutritionFactsField.VitaminB5,
+                                NutritionFactsField.VitaminB6, NutritionFactsField.VitaminC,
+                                NutritionFactsField.VitaminE, NutritionFactsField.Manganese,
+                                NutritionFactsField.Magnesium, NutritionFactsField.Potassium,
+                                NutritionFactsField.Calcium, NutritionFactsField.Copper,
+                                NutritionFactsField.Zinc, NutritionFactsField.Sodium,
+                                NutritionFactsField.Iron, NutritionFactsField.Phosphorus ->
+                                1_000.0 to stringResource(Res.string.unit_milligram_short)
+                                else -> 1.0 to stringResource(Res.string.unit_gram_short)
+                            }
+                            Text("${(value * multiplier).formatClipZeros()} $suffix")
+                        }
+                    },
+                )
+            }
+        }
+    }
+}
+
+private fun NutritionFactsField.label() = when (this) {
+    NutritionFactsField.Energy -> Res.string.unit_energy
+    NutritionFactsField.Proteins -> Res.string.nutriment_proteins
+    NutritionFactsField.Fats -> Res.string.nutriment_fats
+    NutritionFactsField.SaturatedFats -> Res.string.nutriment_saturated_fats
+    NutritionFactsField.TransFats -> Res.string.nutriment_trans_fats
+    NutritionFactsField.MonounsaturatedFats -> Res.string.nutriment_monounsaturated_fats
+    NutritionFactsField.PolyunsaturatedFats -> Res.string.nutriment_polyunsaturated_fats
+    NutritionFactsField.Omega3 -> Res.string.nutriment_omega_3
+    NutritionFactsField.Omega6 -> Res.string.nutriment_omega_6
+    NutritionFactsField.Carbohydrates -> Res.string.nutriment_carbohydrates
+    NutritionFactsField.Sugars -> Res.string.nutriment_sugars
+    NutritionFactsField.AddedSugars -> Res.string.nutriment_added_sugars
+    NutritionFactsField.DietaryFiber -> Res.string.nutriment_fiber
+    NutritionFactsField.SolubleFiber -> Res.string.nutriment_soluble_fiber
+    NutritionFactsField.InsolubleFiber -> Res.string.nutriment_insoluble_fiber
+    NutritionFactsField.Salt -> Res.string.nutriment_salt
+    NutritionFactsField.Cholesterol -> Res.string.nutriment_cholesterol
+    NutritionFactsField.Caffeine -> Res.string.nutriment_caffeine
+    NutritionFactsField.VitaminA -> Res.string.vitamin_a
+    NutritionFactsField.VitaminB1 -> Res.string.vitamin_b1
+    NutritionFactsField.VitaminB2 -> Res.string.vitamin_b2
+    NutritionFactsField.VitaminB3 -> Res.string.vitamin_b3
+    NutritionFactsField.VitaminB5 -> Res.string.vitamin_b5
+    NutritionFactsField.VitaminB6 -> Res.string.vitamin_b6
+    NutritionFactsField.VitaminB7 -> Res.string.vitamin_b7
+    NutritionFactsField.VitaminB9 -> Res.string.vitamin_b9
+    NutritionFactsField.VitaminB12 -> Res.string.vitamin_b12
+    NutritionFactsField.VitaminC -> Res.string.vitamin_c
+    NutritionFactsField.VitaminD -> Res.string.vitamin_d
+    NutritionFactsField.VitaminE -> Res.string.vitamin_e
+    NutritionFactsField.VitaminK -> Res.string.vitamin_k
+    NutritionFactsField.Manganese -> Res.string.mineral_manganese
+    NutritionFactsField.Magnesium -> Res.string.mineral_magnesium
+    NutritionFactsField.Potassium -> Res.string.mineral_potassium
+    NutritionFactsField.Calcium -> Res.string.mineral_calcium
+    NutritionFactsField.Copper -> Res.string.mineral_copper
+    NutritionFactsField.Zinc -> Res.string.mineral_zinc
+    NutritionFactsField.Sodium -> Res.string.mineral_sodium
+    NutritionFactsField.Iron -> Res.string.mineral_iron
+    NutritionFactsField.Phosphorus -> Res.string.mineral_phosphorus
+    NutritionFactsField.Selenium -> Res.string.mineral_selenium
+    NutritionFactsField.Iodine -> Res.string.mineral_iodine
+    NutritionFactsField.Chromium -> Res.string.mineral_chromium
 }
