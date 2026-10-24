@@ -2,7 +2,7 @@
 name: versioning-policy
 description: FoodUs four-part product version policy, tracker ownership, and Android release transition.
 metadata:
-  version: "2.0"
+  version: "2.1"
   owner: "Jarryd Adaens"
   repo: "FoodUs (fork of maksimowiczm/FoodYou)"
 ---
@@ -19,8 +19,8 @@ the starter version are independent of the app version.
 | Component | FoodUs rule |
 | --- | --- |
 | Generation | `1` for the existing FoodUs product generation. A substantial rebuild or successor starts a new generation by an explicit product decision; a channel change or tracker correction does not. |
-| Milestone | The highest numbered milestone actively In Progress in [Design's Milestones Index](design.md#milestones-index). Advancing starts the next milestone's count at its actual tracked closed total. |
-| StoriesClosed | Count distinct Stories in that milestone whose authoritative status is Done, Complete, Transferred, or Abandoned. Reset to the new milestone's count when Milestone changes. |
+| Milestone | The highest numbered milestone actively In Progress in [Design's Milestones Index](design.md#milestones-index). Milestone B does not change this component. |
+| StoriesClosed | Closed Stories in the current numbered milestone **plus closed Stories in Milestone B**, counting each distinct Story once. Closed statuses remain Done, Complete, Transferred, or Abandoned. When Milestone advances, use the new numbered milestone's closed count plus the cumulative B contribution. |
 | ReleaseCount | Published releases at that exact generation, milestone, and closed-count coordinate. An unpublished coordinate starts at `0`; the first publication uses `1`. Increment for each publication; local builds do not increment it. Reset to `0` when any preceding component changes, subject to the collision rule below. |
 
 The [milestone documents](milestones/README-MILESTONES.md) own Story status; their
@@ -33,8 +33,8 @@ not establish closure.
 FoodUs's **Externalized** relay Stories remain open while awaiting their contract or
 deployment gate. Externalized is not a synonym for the terminal Transferred state.
 The relay repository owns server delivery; its closed Stories do not contribute to
-the FoodUs app's count. Reopening an older numbered milestone does not change the
-version while a higher numbered milestone remains active.
+the FoodUs app's count. Reopening a Story that belongs only to an older numbered
+milestone does not change the version while a higher numbered milestone remains active.
 
 ## Shared source and consumers
 
@@ -69,8 +69,9 @@ changes; those events alone do not authorize a release or increment ReleaseCount
 
 Before the first four-part publication:
 
-1. Read the authoritative trackers afresh and derive the generation, active milestone,
-   and closed count. Include terminal closures only; do not use the highest Story ID.
+1. Read the authoritative trackers afresh and derive the generation, active numbered
+   milestone, and combined closed count from that milestone and Milestone B. Include
+   terminal closures only; do not use the highest Story ID.
 2. Check the complete GitHub Releases/tag history and codes installed on both phones.
    Local Git tags are only a partial ledger. Do not reuse a published identifier or code.
 3. Preflight Obtainium's selected-release and installed-version comparisons against an
@@ -104,8 +105,27 @@ below the installed or selected release, resolve and verify the distribution cha
 ordering before publishing; Android versionCode must still increase. Never rewrite a
 published release or silently increment Generation to hide a tracker change.
 
-FoodUs currently has no supplementary or lettered milestone mapping. Before counting
-one, record its authoritative tracker, receiving numbered milestone, stable Story
-identities, deduplication and transfer ownership, and whether counts carry forward.
+The owner adopted this supplementary mapping for [Milestone B: Bugs](milestones/milestone-b.md):
+
+`StoriesClosed = count(distinct closed Stories in current numbered milestone ∪ Milestone B)`
+
+The numbered milestone document owns its Stories' statuses; Milestone B owns its
+`FOODUS-xxx` statuses. B's entire closed total contributes to the current version,
+including when B itself is not In Progress. This contribution carries forward when
+the numbered milestone advances; only the numbered milestone's contribution changes.
+For example, 5 closed numbered-milestone Stories plus 2 closed B Stories gives `7`;
+advancing to a new numbered milestone with none closed gives `2`, retaining those B closures.
+
+A B closure or reopening changes this combined total and resets ReleaseCount under
+the existing draft/legacy-transition and collision rules. Reopening a B Story removes
+it from the total; closing it again counts that Story once, not another closure event.
+If one Story is referenced in both trackers or transferred between them, preserve
+its stable identity, record the alias/transfer and single status owner, and count it
+once. Different Stories with similar names or numeric suffixes remain distinct.
+
+The letter B is never a numeric version component. Creating or planning B advances
+neither the active numbered milestone nor the product generation. Before counting
+any other supplementary or lettered milestone, explicitly define its tracker,
+receiving-milestone, identity, deduplication, transfer, and carry-forward rules.
 Backlog entries and the separately versioned foodus-relay product do not contribute
 without such an explicitly adopted mapping.

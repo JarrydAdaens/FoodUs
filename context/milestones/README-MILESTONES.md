@@ -27,12 +27,13 @@ The high-level **Milestones Index** (the table of contents pointing at these fil
 - [milestone-1.md](milestone-1.md) - completed initialization milestone.
 - [milestone-2.md](milestone-2.md) - current customisation milestone.
 - [milestone-3.md](milestone-3.md) - current multiplayer milestone.
+- [milestone-b.md](milestone-b.md) - supplementary Bugs milestone; owns FOODUS-001 through FOODUS-010 from the October 2026 review.
 
 ## Rules
 
 - One file per milestone. Keep milestones thematic, not granular.
 - Each milestone directly contains its Story Index; stories do not live in a separate scheduling layer.
 - Keep the Milestones Index in [design.md](../design.md) in sync with the files here.
-- When Stories close or reopen, or the highest active numbered milestone advances, follow [the versioning policy](../versioning-policy.md) to maintain the shared product version. Count terminal statuses once per stable Story identity, never the highest Story ID. Apply the documented legacy-version transition; external relay gates still awaiting delivery remain open.
+- When Stories close or reopen, or the highest active numbered milestone advances, follow [the versioning policy](../versioning-policy.md) to maintain the shared product version. Combine closed Stories in the current numbered milestone with Milestone B's cumulative closed Stories, once per stable identity, never the highest Story ID. Apply the documented legacy-version transition; external relay gates still awaiting delivery remain open.
 - When a backlog story is too large for one coherent Story, reclassify it into a milestone here and in the Design index.
 - The system is progressive: complete a milestone and move on rather than perpetually re-opening old milestones.

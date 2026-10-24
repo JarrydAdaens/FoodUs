@@ -70,8 +70,9 @@ any future candidate keystore be confirmed as the right one):
 Follow the [FoodUs Versioning Policy](../versioning-policy.md) and edit the current values in
 `gradle/libs.versions.toml`. Increase `android-versionCode` above every installed or shipped
 code. For the next release, transition the legacy `fork-version-name` to
-`Generation.Milestone.StoriesClosed.ReleaseCount` using the policy's authoritative trackers
-and migration checks. After transition, keep draft versions synchronized when tracked state
+`Generation.Milestone.StoriesClosed.ReleaseCount` using the current numbered milestone
+plus Milestone B's closed Stories and the policy's migration checks. After transition,
+keep draft versions synchronized when tracked state
 changes; increment ReleaseCount only for publication. Read the catalog for present values.
 
 `fork-version-name` is the app's shipped Android versionName; the `v*` tag that triggers the
