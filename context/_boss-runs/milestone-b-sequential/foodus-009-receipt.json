@@ -1,0 +1,187 @@
+{
+  "checked": {
+    "artifact_identity": "cf4e068ae403a5fed6c4d6999d1fd08630914819b128e6ff576b645f63da40b3",
+    "base": "ce6bfffd4e14c2f686da4aad9f92e7911104ee5d",
+    "diff_identity": "9683a38fc5f053f0b268782bd4d7a2739028104715f6441fd306d931ef44f1d7",
+    "files": {
+      "app/build.gradle.kts": {
+        "kind": "file",
+        "sha256": "04857b8d16e79fdc8e6e5ef0e332c6ab39b7e11feda385df098800495d3639d7"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/changelog/FoodUsChangelogTest.kt": {
+        "kind": "file",
+        "sha256": "0d465be3095150806e2c4953e8d05df02550966443de3d989cdf2832a586880a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/changelog/AppUpdateChangelogModalBottomSheet.kt": {
+        "kind": "file",
+        "sha256": "7b46d9fbbd93aabce92e4cd7f1673507b6861d23d967e4cbc091705507c70323"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/changelog/infrastructure/StaticChangelog.kt": {
+        "kind": "file",
+        "sha256": "9c96d3056b6b76d3674a30100a0ec540e57517cac36084f57d674b5ad91d39f4"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/changelog/infrastructure/StaticChangelogTest.kt": {
+        "kind": "file",
+        "sha256": "dc6fde9418aa0417c454ad55474474130295cd146b2cb4fa06c16aede2579081"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "fc4fb4d3739d361e22c9c4c006af11c210e5fb7bce9e934ce32ba2ad322bad6a"
+      }
+    },
+    "head": "ce6bfffd4e14c2f686da4aad9f92e7911104ee5d"
+  },
+  "commit_authority": "User requested commit-log --commit after Samsung test for each Story",
+  "commit_policy": "single",
+  "decisions": [
+    "Exactly three entries newest first: published2.23.0, published2.19.1, historical1.0 announcement2026-07-24. UTC release publication dates; shipped changes verified by exact comparison diffs.",
+    "1.0 announcement explicitly states interim ACME name, later FoodUs rename and no published1.0 release. Disclaimer in changes survives existing copied-release text.",
+    "Current lookup and automatic seen-version storage use exact shared forkVersionName. Unpublished local3.5.0 and future four-part names have no invented release or installed badge; existing full-history automatic display/dismiss semantics preserved.",
+    "Upstream credits/license/About derived-from identity intact. Private synthetic settings/Koin and intercepted URI callback; inherited general secureScreen host read only, no owner writes or diary/AI credential/photo access.",
+    "No catalog/version/release/tag/dependency/schema change; no publication or remote Git mutation."
+  ],
+  "delivery": {
+    "artifact_identity": "6931d654de6cc11f201e6d67159192552a9e7293650affe575ade9cba4ed0414",
+    "base": "ce6bfffd4e14c2f686da4aad9f92e7911104ee5d",
+    "committed_files": {
+      "app/build.gradle.kts": {
+        "git_blob": "a596aa518dc6c95940e92243ef30eef40a0cc4d4",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/changelog/FoodUsChangelogTest.kt": {
+        "git_blob": "9c0eccc2b86ac8d067c764d8e6f8ad6fb647a13d",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/changelog/AppUpdateChangelogModalBottomSheet.kt": {
+        "git_blob": "a9061984a72320b4431f7a3bba15082d1ce78413",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/changelog/infrastructure/StaticChangelog.kt": {
+        "git_blob": "4961a0cfa347d22f42e7c4e606222f1b0dac6bff",
+        "kind": "file"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/changelog/infrastructure/StaticChangelogTest.kt": {
+        "git_blob": "a2cba2e7c52d450b35c8bbaf629fa84a48628f0b",
+        "kind": "file"
+      },
+      "context/_boss-runs/milestone-b-sequential/briefing.md": {
+        "git_blob": "6a27e6970fd2bfa1cc62e89b31efcd31641f1bb8",
+        "kind": "file"
+      },
+      "context/implementation-plans/milestone-b/foodus-009/plan.md": {
+        "git_blob": "78fba18a571827c4e4db6217b6c4f549a91b1a08",
+        "kind": "file"
+      },
+      "context/milestones/milestone-b.md": {
+        "git_blob": "869c2513af07f9e84a493e5394b567930df8083b",
+        "kind": "file"
+      },
+      "gradle/libs.versions.toml": {
+        "git_blob": "6dcdb5e97c35db4c4aad9e94864faaa8be7a75a7",
+        "kind": "file"
+      }
+    },
+    "diff_identity": "f0065dfaf43ebbdf9bfcf43a628bbdb095bf59e9798ffcad247e348572e33065",
+    "files": {
+      "app/build.gradle.kts": {
+        "kind": "file",
+        "sha256": "04857b8d16e79fdc8e6e5ef0e332c6ab39b7e11feda385df098800495d3639d7"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/changelog/FoodUsChangelogTest.kt": {
+        "kind": "file",
+        "sha256": "0d465be3095150806e2c4953e8d05df02550966443de3d989cdf2832a586880a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/changelog/AppUpdateChangelogModalBottomSheet.kt": {
+        "kind": "file",
+        "sha256": "7b46d9fbbd93aabce92e4cd7f1673507b6861d23d967e4cbc091705507c70323"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/changelog/infrastructure/StaticChangelog.kt": {
+        "kind": "file",
+        "sha256": "9c96d3056b6b76d3674a30100a0ec540e57517cac36084f57d674b5ad91d39f4"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/changelog/infrastructure/StaticChangelogTest.kt": {
+        "kind": "file",
+        "sha256": "dc6fde9418aa0417c454ad55474474130295cd146b2cb4fa06c16aede2579081"
+      },
+      "context/_boss-runs/milestone-b-sequential/briefing.md": {
+        "kind": "file",
+        "sha256": "a1ad9f1a608852effa8255c4f1590eac61c434404dd2519d4f77e10c4a539e70"
+      },
+      "context/implementation-plans/milestone-b/foodus-009/plan.md": {
+        "kind": "file",
+        "sha256": "dde1ad94d81e30fbf71020d3af3e1d07727fa5d188089152227b6fdd4037f9c8"
+      },
+      "context/milestones/milestone-b.md": {
+        "kind": "file",
+        "sha256": "5e61ba832c38462a7659b56fa0ee02e9c61159fe621812ea09bcdc8a13db737d"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "fc4fb4d3739d361e22c9c4c006af11c210e5fb7bce9e934ce32ba2ad322bad6a"
+      }
+    },
+    "head": "ce6bfffd4e14c2f686da4aad9f92e7911104ee5d"
+  },
+  "evidence": {
+    "checks": [
+      {
+        "artifact_identity": "cf4e068ae403a5fed6c4d6999d1fd08630914819b128e6ff576b645f63da40b3",
+        "command": ".\\gradlew.bat --offline --no-daemon --console=plain -q :app:testDebugUnitTest :app:assembleDebug :app:assembleDebugAndroidTest",
+        "outcome": "PASS",
+        "result": "145 unit tests, zero failures/errors; debug/test APK builds."
+      },
+      {
+        "artifact_identity": "cf4e068ae403a5fed6c4d6999d1fd08630914819b128e6ff576b645f63da40b3",
+        "command": "Invoke-FoodUsStoryDeviceChecks foodus-009 com.maksimowiczm.foodyou.app.ui.changelog.FoodUsChangelogTest",
+        "outcome": "PASS",
+        "result": "Samsung SM-A057F Android15 physical1080x2400: actual About/history/back/reentry and credit callback; published fork installed badge; exact fork seen/dismiss identity; unknown legacy/future four-part history without fabricated installed entry."
+      },
+      {
+        "artifact_identity": "cf4e068ae403a5fed6c4d6999d1fd08630914819b128e6ff576b645f63da40b3",
+        "command": "GitHub plugin GET /repos/JarrydAdaens/FoodUs/releases?per_page=100 plus page2 and v2.19.0...v2.19.1 / v2.19.1...v2.23.0 comparisons; local shipped commit diff checks",
+        "outcome": "PASS",
+        "result": "Full published ledger verified2026-10-25; latestv2.23.0 UTC2026-07-27, previousv2.19.1 UTC2026-07-26. Historical owner seed2026-07-24 and initial/rebrand commits qualify1.0 as announcement, not published tag. Primary links/identities in plan."
+      },
+      {
+        "artifact_identity": "cf4e068ae403a5fed6c4d6999d1fd08630914819b128e6ff576b645f63da40b3",
+        "command": "git diff --check",
+        "outcome": "PASS"
+      }
+    ],
+    "decisions": [
+      "Exactly three entries newest first: published2.23.0, published2.19.1, historical1.0 announcement2026-07-24. UTC release publication dates; shipped changes verified by exact comparison diffs.",
+      "1.0 announcement explicitly states interim ACME name, later FoodUs rename and no published1.0 release. Disclaimer in changes survives existing copied-release text.",
+      "Current lookup and automatic seen-version storage use exact shared forkVersionName. Unpublished local3.5.0 and future four-part names have no invented release or installed badge; existing full-history automatic display/dismiss semantics preserved.",
+      "Upstream credits/license/About derived-from identity intact. Private synthetic settings/Koin and intercepted URI callback; inherited general secureScreen host read only, no owner writes or diary/AI credential/photo access.",
+      "No catalog/version/release/tag/dependency/schema change; no publication or remote Git mutation."
+    ],
+    "review": {
+      "artifact_identity": "cf4e068ae403a5fed6c4d6999d1fd08630914819b128e6ff576b645f63da40b3",
+      "outcome": "PASS",
+      "reviewer": "/root/review_foodus_009",
+      "scope": "Independent frozen content/facts/announcement/installed-seen identity/upstream attribution/privacy/regression review; no findings. Focused runBlocking test-pattern correction approved; no dependency change.",
+      "source_aggregate": "fc75f892699d24f750553f531b3afabbf569d444371f55048eb7a23a37a2d8b5"
+    },
+    "review_required": true
+  },
+  "metadata_before": {
+    "context/_boss-runs/milestone-b-sequential/briefing.md": {
+      "kind": "file",
+      "sha256": "1ffc84c17206a27b33d11ce12737849301343dc8b47e27fab07341ccd2d34da3"
+    },
+    "context/implementation-plans/milestone-b/foodus-009/plan.md": {
+      "kind": "file",
+      "sha256": "3c93b034e47dfd50da55599e8608c606b8108a6606092fdd6b1f80582b08004b"
+    },
+    "context/milestones/milestone-b.md": {
+      "kind": "file",
+      "sha256": "9e1d4a0b9ae2402d4afec64d8d0582596cb308cc21ca53fc3dbd0951998d2cb5"
+    }
+  },
+  "phase": "READY",
+  "record": "context/_boss-runs/milestone-b-sequential/foodus-009-receipt.json",
+  "repo": "D:\\forked-projects\\FoodYou",
+  "schema_version": 1,
+  "status_owner": "context/milestones/milestone-b.md#foodus-009",
+  "transaction_id": "47e4f78de194413997e514a35570fd50"
+}

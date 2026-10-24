@@ -308,3 +308,37 @@ lifecycle observes secureScreen preference: this qualifies earlier zero-global-r
 shorthand across these DeveloperActivity fixtures, without mutating sealed receipts.
 No diary/AI credential/photo reads or owner writes introduced. Receipt prepared;
 seal/commit next, no release/version change.
+
+## Dispatch FOODUS-009
+
+FOODUS-008 reconciled COMPLETED_COMMITTED atce6bfff; only unrelated attachments
+dirty before dispatch. GitHub plugin GET verified full release collection (page2
+empty): latest published v2.23.0 UTC2026-07-27, previous v2.19.1 UTC2026-07-26,
+first v2.19.0 UTC2026-07-26. Comparisons retrieved and exact commit identities
+recorded in generated app/build/foodus-009-release-ledger.json. Local catalog3.5.0
+is not published; do not invent its release or treat it as latest shipped. Initial
+seed says1.0 on2026-07-24 under interim ACME identity; worker must verify history
+and label it as historical fork announcement, never a release tag.
+Worker `/root/foodus_009` owns fact verification, three-entry existing changelog,
+fork-version lookup and relevant tests/plan. Root owns trackers, builds/Samsung,
+independent fact/integrity review, receipt and commit. No publication/tag/pull/push,
+version change, rewriting old release records, later Story or private device data.
+Use UTC publication dates consistently and explicit unknown-version lookup without
+false shipped claim. Preserve upstream credit/license/About attribution. One worker,
+model/effort inherit, observed unknown. Content fact review required before closure.
+
+FOODUS-009 production freeze: StaticChangelog exact three verified entries, fork
+current lookup; automatic sheet seen identity now uses fork version. Independent
+reviewer `/root/review_foodus_009` audits facts/announcement qualification, upstream
+credit, shared version/unknown/transition behavior and regression validity. Common
+test ready; Android fixture still active, so final approval waits complete freeze.
+Read-only review; no build/device/edits/commit. Coordinator owns runtime/content gates.
+
+FOODUS-009 final acceptance: live full release ledger/page2 and shipped comparisons
+verified; qualified1.0 announcement uses owner seed and historical commits.145 unit
+tests/31 suites, APK builds, independent content/version review and whitespace passed.
+Samsung three actual About/history/automatic-sheet cases passed19.991s. Initial
+test-only unavailable runTest import corrected to existing runBlocking and re-reviewed.
+Fork installed/seen identity, unknown draft/four-part behavior, credit and Back pass.
+No publication/version changes or owner writes; receipt prepared before terminal
+metadata, seal/commit next. Next and last authorized Story is FOODUS-010.

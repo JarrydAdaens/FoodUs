@@ -75,7 +75,7 @@ column distinguishes required sequencing from independent work.
 | FOODUS-006 | Complete | [Visible Quick Add conversion actions](#foodus-006) | UX | Physical/compact Samsung layout and promotion acceptance passed |
 | FOODUS-007 | Complete | [Finish scan workflow after successful save](#foodus-007) | Navigation bug | Samsung single/multi completion, Back, failure/retry and direct-route acceptance passed |
 | FOODUS-008 | Complete | [Retake without discarding the prior photo](#foodus-008) | Workflow bug | Physical/compact Samsung controlled acquisition acceptance passed |
-| FOODUS-009 | Not Started | [FoodUs-specific What's New](#foodus-009) | Content bug | Actual release facts unverified; content acceptance blocked pending ledger verification |
+| FOODUS-009 | Complete | [FoodUs-specific What's New](#foodus-009) | Content bug | Release facts, history/version lookup and Samsung acceptance passed |
 | FOODUS-010 | Not Started | [Mask AI API key by default](#foodus-010) | Privacy UX bug | No B prerequisite; isolated settings correction |
 
 ## Stories
@@ -370,7 +370,16 @@ permission, retake, cancellation, and gallery-origin preview paths.
 
 ### FOODUS-009: Show verified FoodUs history in What's New
 
-**Status:** Not Started — release-content verification outstanding
+**Status:** Complete (2026-10-25; completion provisional until receipt reconciles)
+
+**Delivery:** [Plan and verified facts](../implementation-plans/milestone-b/foodus-009/plan.md),
+[completion receipt](../_boss-runs/milestone-b-sequential/foodus-009-receipt.json).
+145 unit tests, debug/test APK builds, independent fact/version review and all three
+Samsung About/history/automatic-sheet tests passed. Entries are published2.23.0,
+published2.19.1 and explicitly historical1.0 announcement, newest first. Live ledger
+and shipped diffs verified; unknown3.5.0/future fork names receive no invented entry
+or Installed badge. Upstream credit and exact fork seen/dismiss identity retained.
+
 
 **Reported problem / value:** About → What's New presents upstream Food You notes.
 The owner requested three initial FoodUs entries: the fork/1.0 announcement, the

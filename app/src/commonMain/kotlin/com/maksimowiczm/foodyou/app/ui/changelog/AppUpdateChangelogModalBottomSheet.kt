@@ -18,7 +18,7 @@ fun AppUpdateChangelogModalBottomSheet(modifier: Modifier = Modifier) {
         koinInject(named(Settings::class.qualifiedName!!))
     val appConfig = LocalAppConfig.current
 
-    val currentVersion = remember(appConfig) { appConfig.versionName }
+    val currentVersion = remember(appConfig) { appConfig.forkVersionName }
     val settings = settingsRepository.observe().collectAsStateWithLifecycle(null).value
 
     if (settings != null && currentVersion != settings.lastRememberedVersion) {
