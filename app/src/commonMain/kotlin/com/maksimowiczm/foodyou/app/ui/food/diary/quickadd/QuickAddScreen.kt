@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.MoreVert
@@ -49,6 +51,8 @@ internal fun QuickAddScreen(
     onPromoteToProduct: () -> Unit = {},
     onPromoteToRecipe: () -> Unit = {},
     nutritionDetails: NutritionFacts? = null,
+    busy: Boolean = false,
+    saveFailed: Boolean = false,
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val focusRequester = remember { FocusRequester() }
@@ -60,7 +64,9 @@ internal fun QuickAddScreen(
 
     var showDiscardDialog by rememberSaveable { mutableStateOf(false) }
     val handleBack = {
-        if (!state.isModified) {
+        if (busy) {
+            // Keep the form alive until persistence and its success acknowledgement finish.
+        } else if (!state.isModified) {
             onBack()
         } else {
             showDiscardDialog = true
@@ -68,8 +74,8 @@ internal fun QuickAddScreen(
     }
     NavigationEventHandler(
         state = rememberNavigationEventState(NavigationEventInfo.None),
-        isBackEnabled = state.isModified,
-        onBackCompleted = { showDiscardDialog = true },
+        isBackEnabled = true,
+        onBackCompleted = handleBack,
     )
     if (showDiscardDialog) {
         DiscardDialog(
@@ -85,10 +91,19 @@ internal fun QuickAddScreen(
 
     Scaffold(
         modifier = modifier,
+        bottomBar = {
+            if (saveFailed) {
+                Text(
+                    stringResource(Res.string.error_quick_add_save),
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.imePadding().navigationBarsPadding().padding(16.dp),
+                )
+            }
+        },
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(Res.string.headline_quick_add)) },
-                navigationIcon = { ArrowBackIconButton(handleBack) },
+                navigationIcon = { ArrowBackIconButton(handleBack, enabled = !busy) },
                 actions = {
                     var menuExpanded by remember { mutableStateOf(false) }
                     IconButton(onClick = { menuExpanded = true }) {
@@ -109,7 +124,7 @@ internal fun QuickAddScreen(
                                 menuExpanded = false
                                 onPromoteToProduct()
                             },
-                            enabled = state.isValid,
+                            enabled = state.isValid && !busy,
                         )
                         DropdownMenuItem(
                             text = {
@@ -119,17 +134,17 @@ internal fun QuickAddScreen(
                                 menuExpanded = false
                                 onPromoteToRecipe()
                             },
-                            enabled = state.isValid,
+                            enabled = state.isValid && !busy,
                         )
                     }
 
                     FilledIconButton(
                         onClick = {
-                            if (state.isValid) {
+                            if (state.isValid && !busy) {
                                 onSave()
                             }
                         },
-                        enabled = state.isValid,
+                        enabled = state.isValid && !busy,
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Save,

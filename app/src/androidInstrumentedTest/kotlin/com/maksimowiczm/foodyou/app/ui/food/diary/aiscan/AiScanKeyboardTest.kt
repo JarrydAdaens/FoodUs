@@ -105,7 +105,7 @@ class AiScanKeyboardTest {
                             MaterialTheme {
                                 AiScanScreen(
                                     onBack = { backCount++ },
-                                    onSaveToQuickAdd = { _ -> error("Not used") },
+                                    onSaveToQuickAdd = { _, _ -> error("Not used") },
                                     onAlignPickFood = { error("Not used") },
                                     onCreateCustomFood = { error("Not used") },
                                 )

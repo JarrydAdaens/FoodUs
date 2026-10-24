@@ -1,6 +1,5 @@
 package com.maksimowiczm.foodyou.app.ui.food.diary.aiscan
 
-import com.maksimowiczm.foodyou.ai.domain.AiFoodEstimate
 
 /** UI state for the AI scanning screen (Milestone 2, Story 6). */
 internal sealed interface AiScanUiState {
@@ -20,7 +19,11 @@ internal sealed interface AiScanUiState {
     data class Scanning(override val jpeg: ByteArray) : AiScanUiState
 
     /** The AI returned an estimate: show the result and the save/align actions. */
-    data class Result(override val jpeg: ByteArray, val estimate: AiFoodEstimate) : AiScanUiState
+    data class Result(
+        override val jpeg: ByteArray,
+        val review: AiScanReviewSession,
+        val rejectedCount: Int = 0,
+    ) : AiScanUiState
 
     /** The request failed; [message] is safe to display. */
     data class Failed(override val jpeg: ByteArray, val message: String) : AiScanUiState

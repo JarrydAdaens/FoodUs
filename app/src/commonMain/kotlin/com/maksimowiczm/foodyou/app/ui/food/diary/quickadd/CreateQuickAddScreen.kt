@@ -2,6 +2,7 @@ package com.maksimowiczm.foodyou.app.ui.food.diary.quickadd
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.maksimowiczm.foodyou.ai.domain.AiFoodEstimate
 import com.maksimowiczm.foodyou.ai.domain.toNutritionFacts
 import com.maksimowiczm.foodyou.common.domain.food.NutritionFacts
@@ -34,6 +35,7 @@ fun CreateQuickAddScreen(
 ) {
     val viewModel: CreateQuickAddViewModel = koinViewModel { parametersOf(date, mealId) }
     val energyFormatter = LocalEnergyFormatter.current
+    val saveState by viewModel.saveState.collectAsStateWithLifecycle()
     val originalNutrition = scanEstimate?.toNutritionFacts() ?: NutritionFacts()
 
     val latestOnSave by rememberUpdatedState(onSave)
@@ -59,7 +61,7 @@ fun CreateQuickAddScreen(
         )
 
     QuickAddScreen(
-        onBack = onBack,
+        onBack = { if (!viewModel.saveState.value.busy) onBack() },
         onSave = {
             val name = formState.name.value
 
@@ -77,14 +79,20 @@ fun CreateQuickAddScreen(
         },
         modifier = modifier,
         state = formState,
+        busy = saveState.busy,
+        saveFailed = saveState.failed,
         nutritionDetails = scanEstimate?.let {
             formState.toNutritionFacts(energyFormatter, originalNutrition)
         },
         onPromoteToProduct = {
-            onPromoteToProduct(formState.toPromotionSeed(energyFormatter, originalNutrition))
+            if (!viewModel.saveState.value.busy) {
+                onPromoteToProduct(formState.toPromotionSeed(energyFormatter, originalNutrition))
+            }
         },
         onPromoteToRecipe = {
-            onPromoteToRecipe(formState.toPromotionSeed(energyFormatter, originalNutrition))
+            if (!viewModel.saveState.value.busy) {
+                onPromoteToRecipe(formState.toPromotionSeed(energyFormatter, originalNutrition))
+            }
         },
     )
 }

@@ -18,6 +18,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 internal class AiScanViewModel(
     private val aiFoodScanner: AiFoodScanner,
@@ -48,6 +50,7 @@ internal class AiScanViewModel(
         _state.value = AiScanUiState.NoPhoto
     }
 
+    @OptIn(ExperimentalUuidApi::class)
     fun submit() {
         val jpeg = _state.value.jpeg ?: return
         _state.value = AiScanUiState.Scanning(jpeg)
@@ -55,12 +58,36 @@ internal class AiScanViewModel(
         viewModelScope.launch {
             _state.value =
                 when (val result = aiFoodScanner.scan(jpeg, hintText)) {
-                    is AiScanResult.Success -> AiScanUiState.Result(jpeg, result.estimate)
+                    is AiScanResult.Success -> if (result.estimates.isEmpty()) {
+                        AiScanUiState.Failed(jpeg, "No usable foods were identified. Try another photo.")
+                    } else AiScanUiState.Result(
+                        jpeg, AiScanReviewSession.create(Uuid.random().toString(), result.estimates), result.rejectedCount,
+                    )
                     is AiScanResult.Failure -> AiScanUiState.Failed(jpeg, result.message)
                     AiScanResult.NotConfigured ->
                         AiScanUiState.Failed(jpeg, NOT_CONFIGURED_MESSAGE)
                 }
         }
+    }
+
+    fun select(id: String, selected: Boolean) {
+        val current = _state.value as? AiScanUiState.Result ?: return
+        _state.value = current.copy(review = current.review.select(id, selected))
+    }
+
+    fun startSelected(): ScanReviewItem? {
+        val current = _state.value as? AiScanUiState.Result ?: return null
+        val updated = current.review.start()
+        _state.value = current.copy(review = updated)
+        return updated.next
+    }
+
+    fun acknowledgeSaved(id: String): ScanReviewItem? {
+        val current = _state.value as? AiScanUiState.Result ?: return null
+        val updated = current.review.acknowledgeSaved(id)
+        if (updated == current.review) return null
+        _state.value = current.copy(review = updated)
+        return updated.next
     }
 
     /** Searches locally saved custom foods (the user's own foods) by the AI-guessed name. */

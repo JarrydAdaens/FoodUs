@@ -223,7 +223,7 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
 
             CreateQuickAddScreen(
                 onBack = { navController.popBackStackInclusive<FoodDiaryCreateQuickAdd>() },
-                onSave = { navController.popBackStackInclusive<FoodDiaryCreateQuickAdd>() },
+                onSave = { ScanQuickAddHandoff.saved(navController, route) },
                 date = LocalDate.fromEpochDays(route.epochDay),
                 mealId = route.mealId,
                 onPromoteToProduct = { navController.navigate(PromoteToProduct(it)) },
@@ -238,15 +238,21 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
         }
         forwardBackwardComposable<FoodDiaryAiScan> {
             val (epochDay, mealId) = it.toRoute<FoodDiaryAiScan>()
+            val scannerState = it.savedStateHandle
+            val savedItemId by scannerState.getStateFlow<String?>(ScanQuickAddHandoff.SAVED_ITEM_KEY, null)
+                .collectAsStateWithLifecycle()
 
             AiScanScreen(
                 onBack = { navController.popBackStackInclusive<FoodDiaryAiScan>() },
-                onSaveToQuickAdd = { estimate ->
-                    navController.navigate(
-                        FoodDiaryCreateQuickAdd(
+                savedScanItemId = savedItemId,
+                onSavedScanItemConsumed = { scannerState[ScanQuickAddHandoff.SAVED_ITEM_KEY] = null },
+                onSaveToQuickAdd = { estimate, itemId ->
+                    ScanQuickAddHandoff.open(navController,
+                        ScanQuickAddHandoff.route(
                             epochDay = epochDay,
                             mealId = mealId,
                             estimate = estimate,
+                            itemId = itemId,
                         )
                     )
                 },
@@ -615,6 +621,7 @@ internal data class FoodDiaryCreateQuickAdd(
     val prefillCarbohydrates: Double? = null,
     val prefillFats: Double? = null,
     val scanEstimateJson: String? = null,
+    val scanItemId: String? = null,
 ) {
     constructor(epochDay: Long, mealId: Long, estimate: AiFoodEstimate) : this(
         epochDay = epochDay,

@@ -70,7 +70,7 @@ column distinguishes required sequencing from independent work.
 | FOODUS-001 | Complete | [AFCD in onboarding](#foodus-001) | Missing functionality | Samsung acceptance passed; completion receipt linked below |
 | FOODUS-002 | Complete | [External databases in main Settings](#foodus-002) | UX | Samsung acceptance passed; completion receipt linked below |
 | FOODUS-003 | Complete | [Visible scanner hint with keyboard](#foodus-003) | Bug | Normal/compact Samsung keyboard acceptance passed |
-| FOODUS-004 | Not Started | [Review and select multiple scanned foods](#foodus-004) | Enhancement | FOODUS-005; settle selection/handoff behavior before implementation |
+| FOODUS-004 | Complete | [Review and select multiple scanned foods](#foodus-004) | Enhancement | Samsung selection/queue acceptance and FOODUS-005 regressions passed |
 | FOODUS-005 | Complete | [Preserve scan data through Quick Add](#foodus-005) | Data integrity bug | Samsung data-preservation acceptance passed; receipt linked below |
 | FOODUS-006 | Not Started | [Visible Quick Add conversion actions](#foodus-006) | UX | No hard B prerequisite; integrate with FOODUS-004/005/007 |
 | FOODUS-007 | Not Started | [Finish scan workflow after successful save](#foodus-007) | Navigation bug | FOODUS-005 and FOODUS-004 for final single/multi-item completion proof |
@@ -175,7 +175,14 @@ keyboard shown/dismissed on compact and larger viewports.
 
 ### FOODUS-004: Review and select multiple foods from an AI photo scan
 
-**Status:** Not Started
+**Status:** Complete (2026-10-24; completion provisional until receipt reconciles)
+
+**Delivery:** [Plan and evidence](../implementation-plans/milestone-b/foodus-004/plan.md),
+[completion receipt](../_boss-runs/milestone-b-sequential/foodus-004-receipt.json).
+All 140 unit tests, debug/test APK builds, independent integrity review and eight
+Samsung Android15 tests passed: four new collection/selection/cancel/retry/count
+cases and all four FOODUS-005 preservation regressions. Runtime uses synthetic
+images and real in-memory Room; the owner's diary/settings are preserved.
 
 **Reported problem / value:** A mixed plate is collapsed into one structured result,
 preventing inspection and choice for separable foods.

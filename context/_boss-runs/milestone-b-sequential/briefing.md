@@ -148,3 +148,53 @@ no assertion was waived. Original rotation policy restored. Receipt prepared bef
 terminal metadata; `foodus-005-receipt.json` will seal before the authorized commit.
 No owner diary/settings were changed. FOODUS-006 must verify target promotion editors;
 FOODUS-007 owns full Log/home completion. No release/version transition was performed.
+
+## Dispatch FOODUS-004
+
+FOODUS-005 reconciled COMPLETED_COMMITTED at `2f3fe1f1`; only unrelated remote
+attachments were dirty. One implementation worker owns collection prompt/parser/
+result contracts, scan review selection, per-item Quick Add handoff/navigation,
+relevant regression tests and `context/implementation-plans/milestone-b/foodus-004/plan.md`.
+First gate is a recorded smallest selection/handoff design covering edit/save/cancel,
+partial failure and exact saved counts; report it before implementation. Preserve
+FOODUS-003 hint/IME and FOODUS-005 nullable snapshot/energy/storage contracts. No
+general split/merge editor, unrelated conversion UI, home completion, retake or keys.
+Coordinator owns trackers, builds, Samsung acceptance, independent review, receipt
+and commit; worker returns uncommitted. Private Koin/in-memory Room/generated JPEG
+only for runtime checks, no global data/settings writes or AI calls. Existing
+ScanDataPreservationTest supplies tested accessibility/IME/inset driver patterns.
+Required synthetic parser cases: single/coherent dish/multiple/empty/malformed/
+partly-invalid; selection, per-item edit/save/cancel, partial failure and exact count.
+Required independent review for collection/queue/persistence integrity. Requested
+model/effort inherit; observed unknown. No pull/push, releases or device data clearing.
+
+Worker `/root/foodus_004` recorded its pre-code design; coordinator accepted it
+before implementation. Use ordered complete snapshots, legacy singleton compatibility,
+visible rejected-member count, selectable cards and a scanner-scoped queue. IDs and
+acknowledgements must include the result generation as well as item ordinal. Only
+successful insertion acknowledges/advances; cancel returns review, failure remains
+editable, saved items cannot be submitted again. Guard in-flight/completed insertion.
+Last item returns to review summary here; FOODUS-007 owns home completion. Existing
+Align stays an explicit alternative, never an inferred saved acknowledgement or
+silent queue advance. No general editor expansion. Candidate implementation is now
+authorized within the dispatch ownership and original user request.
+
+FOODUS-004 independent review intent: read-only reviewer `/root/review_foodus_004`
+owns collection/input validation, review queue/IDs, navigation acknowledgement,
+save/cancel/failure/duplicate guards and test validity/privacy. Production/common
+tests/resources froze before coordinator core build; Android fixtures remain active.
+Wait for final fixture freeze and identity before final approval. Coordinator owns
+Samsung/build results and terminal metadata. No reviewer edits or device operations.
+Requested model/effort inherit; observed unknown.
+
+FOODUS-004 final acceptance: final unit/debug/test-APK command passed, 140 tests
+in30 suites with zero failures/errors. Independent static integrity review and
+whitespace passed, final source aggregate recorded in its plan/receipt. Samsung
+physical1080x2400 portrait passed four new MultiFoodScanTest methods plus all four
+FOODUS-005 preservation methods together (8tests,130.05s). Actual handoff helper,
+private Koin and real in-memory Room prove selection, complete per-item values,
+cancel/discard, failed later insertion/retry and exact counts; repeated handoff/
+pending-save actions cannot duplicate the live insertion. Original rotation policy
+restored. No owner diary/settings writes, paid AI, private photos or data clearing.
+Receipt prepared before terminal metadata; commit pending at seal time. Last-item
+home completion remains FOODUS-007. Next authorized Story after commit is FOODUS-006.

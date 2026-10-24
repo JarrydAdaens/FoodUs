@@ -2,7 +2,9 @@ package com.maksimowiczm.foodyou.ai.domain
 
 /** Outcome of an AI food-scan request. */
 sealed interface AiScanResult {
-    data class Success(val estimate: AiFoodEstimate) : AiScanResult
+    data class Success(val estimates: List<AiFoodEstimate>, val rejectedCount: Int = 0) : AiScanResult {
+        constructor(estimate: AiFoodEstimate) : this(listOf(estimate))
+    }
 
     /** No API key is configured (user settings and developer fallback are blank); no request was made. */
     data object NotConfigured : AiScanResult

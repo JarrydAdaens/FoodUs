@@ -21,9 +21,9 @@ import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.HorizontalDivider
@@ -38,6 +38,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.key
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -69,16 +70,25 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun AiScanScreen(
     onBack: () -> Unit,
-    onSaveToQuickAdd: (AiFoodEstimate) -> Unit,
+    onSaveToQuickAdd: (AiFoodEstimate, String) -> Unit,
     onAlignPickFood: (FoodId) -> Unit,
     onCreateCustomFood: () -> Unit,
     modifier: Modifier = Modifier,
+    savedScanItemId: String? = null,
+    onSavedScanItemConsumed: () -> Unit = {},
 ) {
     val viewModel: AiScanViewModel = koinViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
     val configured by viewModel.aiConfigured.collectAsStateWithLifecycle()
 
     var alignQuery by remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(savedScanItemId) {
+        savedScanItemId?.let { id ->
+            val next = viewModel.acknowledgeSaved(id)
+            onSavedScanItemConsumed()
+            next?.let { onSaveToQuickAdd(it.estimate, it.id) }
+        }
+    }
 
     Scaffold(
         modifier = modifier,
@@ -126,12 +136,34 @@ fun AiScanScreen(
 
                 is AiScanUiState.Scanning -> ScanningIndicator()
 
-                is AiScanUiState.Result ->
-                    AiResultCard(
-                        estimate = current.estimate,
-                        onSave = { onSaveToQuickAdd(current.estimate) },
-                        onAlign = { alignQuery = current.estimate.name },
-                    )
+                is AiScanUiState.Result -> {
+                    Text(stringResource(Res.string.neutral_ai_saved_count, current.review.savedIds.size))
+                    if (current.rejectedCount > 0) {
+                        Text(stringResource(Res.string.neutral_ai_omitted_count, current.rejectedCount))
+                    }
+                    current.review.items.forEach { item ->
+                        key(item.id) {
+                            AiResultCard(
+                                estimate = item.estimate,
+                                selected = item.id in current.review.selectedIds,
+                                saved = item.id in current.review.savedIds,
+                                single = current.review.items.size == 1,
+                                onSelected = { viewModel.select(item.id, it) },
+                                onAlign = { alignQuery = item.estimate.name },
+                            )
+                        }
+                    }
+                    Button(
+                        enabled = current.review.selectedCount > 0,
+                        onClick = {
+                            viewModel.startSelected()?.let { onSaveToQuickAdd(it.estimate, it.id) }
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        Text(if (current.review.items.size == 1) stringResource(Res.string.action_save)
+                            else stringResource(Res.string.action_ai_edit_selected, current.review.selectedCount))
+                    }
+                }
             }
         }
     }
@@ -219,44 +251,52 @@ private fun ScanningIndicator(modifier: Modifier = Modifier) {
 @Composable
 private fun AiResultCard(
     estimate: AiFoodEstimate,
-    onSave: () -> Unit,
+    selected: Boolean,
+    saved: Boolean,
+    single: Boolean,
+    onSelected: (Boolean) -> Unit,
     onAlign: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var expanded by remember { mutableStateOf(single) }
     ElevatedCard(modifier = modifier.fillMaxWidth()) {
         Column(
             modifier = Modifier.fillMaxWidth().padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            Text(text = estimate.name, style = MaterialTheme.typography.titleLarge)
-            estimate.certainty?.let {
-                Text(
-                    text =
-                        stringResource(
-                            Res.string.neutral_ai_certainty,
-                            "${(it * 100).roundToInt()}%",
-                        ),
-                    style = MaterialTheme.typography.bodyMedium,
-                )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(checked = selected, onCheckedChange = onSelected, enabled = !saved)
+                Text(text = estimate.name, style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
             }
-            estimate.description?.let { Text(it) }
-            estimate.servingCount?.let {
-                Text("${stringResource(Res.string.label_number_of_servings)}: ${it.formatClipZeros()}")
+            if (saved) Text(stringResource(Res.string.neutral_ai_item_saved))
+            OutlinedButton(onClick = { expanded = !expanded }) {
+                Text(stringResource(if (expanded) Res.string.action_ai_hide_details else Res.string.action_ai_show_details))
             }
-            estimate.weightGrams?.let {
-                Text("${stringResource(Res.string.weight)}: ${it.formatClipZeros()} ${stringResource(Res.string.unit_gram_short)}")
+            if (expanded) {
+                estimate.certainty?.let {
+                    Text(
+                        text =
+                            stringResource(
+                                Res.string.neutral_ai_certainty,
+                                "${(it * 100).roundToInt()}%",
+                            ),
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
+                estimate.description?.let { Text(it) }
+                estimate.servingCount?.let {
+                    Text("${stringResource(Res.string.label_number_of_servings)}: ${it.formatClipZeros()}")
+                }
+                estimate.weightGrams?.let {
+                    Text("${stringResource(Res.string.weight)}: ${it.formatClipZeros()} ${stringResource(Res.string.unit_gram_short)}")
+                }
+                KnownNutrientList(facts = estimate.toNutritionFacts())
             }
-            KnownNutrientList(facts = estimate.toNutritionFacts())
 
             HorizontalDivider()
 
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Button(onClick = onSave, modifier = Modifier.weight(1f)) {
-                    Icon(Icons.Default.Check, contentDescription = null)
-                    Spacer(Modifier.width(8.dp))
-                    Text(stringResource(Res.string.action_save))
-                }
-                OutlinedButton(onClick = onAlign, modifier = Modifier.weight(1f)) {
+                OutlinedButton(onClick = onAlign, enabled = !saved, modifier = Modifier.weight(1f)) {
                     Icon(Icons.Default.Tune, contentDescription = null)
                     Spacer(Modifier.width(8.dp))
                     Text(stringResource(Res.string.action_align))

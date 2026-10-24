@@ -9,6 +9,13 @@
 
     <!-- Per-meal add buttons (fork): AI scan and fast-text placeholder entry points. -->
     <string name="headline_ai_scanning">AI scanning</string>
+    <string name="neutral_ai_saved_count">Saved through Quick Add: %1$d</string>
+    <string name="neutral_ai_omitted_count">Unusable results omitted: %1$d. Review the remaining foods.</string>
+    <string name="neutral_ai_item_saved">Saved through Quick Add</string>
+    <string name="action_ai_edit_selected">Edit selected foods (%1$d)</string>
+    <string name="action_ai_show_details">Show nutrition and portion</string>
+    <string name="action_ai_hide_details">Hide nutrition and portion</string>
+    <string name="error_quick_add_save">Could not save this food. Your edits are retained. Try Save again.</string>
     <string name="headline_fast_text">Fast text</string>
 
     <!-- Fast-text placeholder screen (Milestone 2, Story 8). -->
