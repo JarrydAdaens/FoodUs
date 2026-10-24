@@ -7,12 +7,19 @@ import android.view.View
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityNodeInfo
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.ui.Modifier
 import androidx.compose.runtime.*
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.room.Room
 import androidx.test.core.app.launchActivity
 import androidx.test.filters.SdkSuppress
@@ -21,12 +28,14 @@ import com.maksimowiczm.foodyou.ai.domain.*
 import com.maksimowiczm.foodyou.app.infrastructure.android.DeveloperActivity
 import com.maksimowiczm.foodyou.app.infrastructure.room.FoodYouDatabase
 import com.maksimowiczm.foodyou.app.navigation.FoodDiaryCreateQuickAdd
+import com.maksimowiczm.foodyou.app.navigation.Home
 import com.maksimowiczm.foodyou.app.navigation.ScanQuickAddHandoff
 import com.maksimowiczm.foodyou.app.ui.common.utility.EnergyFormatter
 import com.maksimowiczm.foodyou.app.ui.common.utility.LocalEnergyFormatter
 import com.maksimowiczm.foodyou.app.ui.food.diary.aiscan.AiScanScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.aiscan.AiScanUiState
 import com.maksimowiczm.foodyou.app.ui.food.diary.aiscan.AiScanViewModel
+import com.maksimowiczm.foodyou.app.ui.food.diary.aiscan.AiScanReviewSession
 import com.maksimowiczm.foodyou.common.config.AppConfig
 import com.maksimowiczm.foodyou.common.domain.date.DateProvider
 import com.maksimowiczm.foodyou.common.domain.food.NutritionFacts
@@ -41,6 +50,7 @@ import java.io.ByteArrayOutputStream
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.withTimeout
 import kotlinx.datetime.LocalDateTime
 import com.maksimowiczm.foodyou.fooddiary.domain.entity.ManualDiaryEntryId
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -69,6 +79,7 @@ class MultiFoodScanTest {
     private lateinit var nav: NavHostController
     private lateinit var database: FoodYouDatabase
     private lateinit var repository: ManualDiaryEntryRepository
+    private lateinit var model: AiScanViewModel
     private var scannerCalls = 0
     private var acceptedRoute: FoodDiaryCreateQuickAdd? = null
 
@@ -76,6 +87,7 @@ class MultiFoodScanTest {
     @Volatile private var failNextChicken = false
     @Volatile private var insertGate: CompletableDeferred<Unit>? = null
     private var repeatFirstOpen = false
+    private var completionCount = 0
 
     @Test fun coherentDishKeepsFullSnapshotAndRapidRepeatedHandoffCreatesOneEntry() {
         repeatFirstOpen = true
@@ -100,6 +112,8 @@ class MultiFoodScanTest {
             SystemClock.sleep(250)
             assertEquals(0, entries().size)
             assertEquals(1, insertAttempts)
+            assertQuickAddRoute()
+            assertEquals(0, completionCount)
             onMain { insertGate!!.complete(Unit); Unit }
             expectSavedCount(1)
             val entry = entries().single()
@@ -113,8 +127,9 @@ class MultiFoodScanTest {
             assertEquals(0.012, entry.nutritionFacts.vitaminC.value)
             assertEquals(2.5, entry.servingCount)
             assertEquals(250.0, entry.weightGrams)
-            assertFalse("Saved item cannot be reselected", checkbox("Synthetic pie").isEnabled)
+            assertSavedCannotBeReselected("Synthetic pie")
             assertEquals(1, scannerCalls)
+            assertCompletedBackStack()
         }
     }
 
@@ -128,6 +143,9 @@ class MultiFoodScanTest {
         assertField(Res.string.nutriment_sugars, "0")
         clickSave()
         assertField(Res.string.product_name, "Synthetic chicken")
+        assertQuickAddRoute()
+        assertEquals(1, entries().size)
+        assertEquals(0, completionCount)
         assertField(Res.string.unit_energy, "780")
         assertField(Res.string.nutriment_fiber, "6")
         clickSave()
@@ -141,10 +159,14 @@ class MultiFoodScanTest {
         assertEquals(780.0, chicken.nutritionFacts.energy.value)
         assertEquals(6.0, chicken.nutritionFacts.dietaryFiber.value)
         assertEquals(0.0012, chicken.nutritionFacts.sodium.value)
-        assertFalse(checkbox("Synthetic bread").isEnabled)
-        assertFalse(checkbox("Synthetic chicken").isEnabled)
-        assertTrue(checkbox("Synthetic pasta").isEnabled)
+        assertSavedCannotBeReselected("Synthetic bread")
+        assertSavedCannotBeReselected("Synthetic chicken")
+        val review = review()
+        val pasta = review.items.single { it.estimate.name == "Synthetic pasta" }
+        assertFalse(pasta.id in review.savedIds)
+        assertTrue(pasta.id in review.select(pasta.id, true).selectedIds)
         assertEquals(2, insertAttempts)
+        assertCompletedBackStack()
     }
 
     @Test fun cancelUnsavedEditsThenRetryLaterFailureKeepsExactPartialCount() = withFlow(MULTIPLE) {
@@ -156,6 +178,17 @@ class MultiFoodScanTest {
         clickText(label(Res.string.action_discard))
         expectSavedCount(1)
         assertEquals(listOf("Synthetic bread"), entries().map { it.name })
+        // Duplicate and old-generation results must not imply an empty completed queue.
+        listOf(review().savedIds.single(), "old-generation:0").forEach { staleId ->
+            onMain { nav.currentBackStackEntry!!.savedStateHandle[ScanQuickAddHandoff.SAVED_ITEM_KEY] = staleId }
+            await("stale acknowledgement consumed") {
+                onMain { nav.currentBackStackEntry?.savedStateHandle
+                    ?.get<String>(ScanQuickAddHandoff.SAVED_ITEM_KEY) == null }
+            }
+            assertTrue(onMain { nav.currentDestination?.route == SCAN })
+            assertEquals(0, completionCount)
+            assertEquals(1, review().savedIds.size)
+        }
         assertTrue(checkbox("Synthetic pasta").performAction(AccessibilityNodeInfo.ACTION_CLICK))
         failNextChicken = true
         acceptSelected(count = 1)
@@ -164,6 +197,8 @@ class MultiFoodScanTest {
         findText(label(Res.string.error_quick_add_save))
         assertEquals(1, entries().size)
         assertField(Res.string.unit_energy, "780")
+        assertQuickAddRoute()
+        assertEquals(0, completionCount)
         assertTrue("Failed item remains retryable", saveControl().isEnabled)
         clickSave()
         expectSavedCount(2)
@@ -171,7 +206,51 @@ class MultiFoodScanTest {
         assertEquals(2, entries().size)
         assertEquals(3, insertAttempts)
         assertEquals(1, scannerCalls)
+        assertCompletedBackStack()
     }
+
+    @Test fun singleSaveFailureKeepsEditedValuesAndRetryCompletesOnlyAfterPersistence() = withFlow(PIE) {
+        acceptSelected(single = true)
+        setField(Res.string.product_name, "Synthetic chicken")
+        setField(Res.string.unit_energy, "791")
+        failNextChicken = true
+        clickSave()
+        findText(label(Res.string.error_quick_add_save))
+        assertField(Res.string.product_name, "Synthetic chicken")
+        assertField(Res.string.unit_energy, "791")
+        assertTrue(saveControl().isEnabled)
+        assertEquals(0, entries().size)
+        assertEquals(0, completionCount)
+        assertQuickAddRoute()
+        setField(Res.string.unit_energy, "792")
+        clickSave()
+        expectSavedCount(1)
+        val saved = entries().single()
+        assertEquals("Synthetic chicken", saved.name)
+        assertEquals(792.0, saved.nutritionFacts.energy.value)
+        assertEquals(6.0, saved.nutritionFacts.dietaryFiber.value)
+        assertEquals(2, insertAttempts)
+        assertCompletedBackStack()
+    }
+
+    @Test fun directQuickAddSaveReturnsToItsOwnPredecessorWithoutCompletingScan() =
+        withFlow(PIE, direct = true) {
+            clickText(OPEN_DIRECT)
+            assertField(Res.string.product_name, "Synthetic direct food")
+            clickSave()
+            findText(DIRECT_PREDECESSOR)
+            await("direct form popped") { onMain { nav.currentDestination?.route == DIRECT_PREDECESSOR } }
+            val saved = entries().single()
+            assertEquals("Synthetic direct food", saved.name)
+            assertEquals(1, insertAttempts)
+            assertEquals(0, scannerCalls)
+            assertEquals(0, completionCount)
+            assertTrue(onMain { nav.previousBackStackEntry?.destination?.hasRoute<Home>() == true })
+            assertTrue(onMain { nav.popBackStack() })
+            findText(HOME)
+            assertTrue(onMain { nav.currentDestination?.hasRoute<Home>() == true })
+            assertNoScanOrAddEntries()
+        }
 
     @Test fun emptyResponseShowsRetryableFailureWithoutSavingOrOpeningAForm() =
         withFlow("""{"foods":[]}""", expectResult = false) {
@@ -182,7 +261,7 @@ class MultiFoodScanTest {
             assertEquals(1, scannerCalls)
         }
 
-    private fun withFlow(json: String, expectResult: Boolean = true, checkFlow: () -> Unit) {
+    private fun withFlow(json: String, expectResult: Boolean = true, direct: Boolean = false, checkFlow: () -> Unit) {
         val applicationKoin = GlobalContext.get()
         database = Room.inMemoryDatabaseBuilder(instrumentation.targetContext, FoodYouDatabase::class.java).build()
         val roomRepository = RoomManualDiaryEntryRepository(database.manualDiaryEntryDao)
@@ -205,6 +284,7 @@ class MultiFoodScanTest {
             database.mealDao.insertWithLastRank(MealEntity(1, "Synthetic meal", 0, 0, 23, 59))
         }
         scannerCalls = 0
+        completionCount = 0
         acceptedRoute = null
         val config = object : AppConfig by applicationKoin.get<AppConfig>() {
             override val aiApiKey = ""
@@ -223,7 +303,7 @@ class MultiFoodScanTest {
                     ?: AiScanResult.Failure("Could not understand the AI response.")
             }
         }
-        val model = AiScanViewModel(scanner, applicationKoin.get<FoodSearchUseCase>(), ObserveAiConfigured(preferences, config))
+        model = AiScanViewModel(scanner, applicationKoin.get<FoodSearchUseCase>(), ObserveAiConfigured(preferences, config))
         val clock = applicationKoin.get<DateProvider>()
         val isolated = koinApplication {
             modules(module {
@@ -261,17 +341,21 @@ class MultiFoodScanTest {
                         KoinIsolatedContext(context = isolated) {
                             MaterialTheme {
                                 CompositionLocalProvider(LocalEnergyFormatter provides EnergyFormatter.kilocalories) {
-                                    FixtureHost()
+                                    FixtureHost(direct)
                                 }
                             }
                         }
                     }
-                    model.onPhotoCaptured(syntheticJpeg)
-                    model.submit()
+                    if (!direct) {
+                        model.onPhotoCaptured(syntheticJpeg)
+                        model.submit()
+                    }
                 }
-                await("synthetic scan result") {
-                    if (expectResult) model.state.value is AiScanUiState.Result
-                    else model.state.value is AiScanUiState.Failed
+                if (!direct) {
+                    await("synthetic scan result") {
+                        if (expectResult) model.state.value is AiScanUiState.Result
+                        else model.state.value is AiScanUiState.Failed
+                    }
                 }
                 instrumentation.waitForIdleSync()
                 checkFlow()
@@ -286,9 +370,29 @@ class MultiFoodScanTest {
         }
     }
 
-    @Composable private fun FixtureHost() {
+    @Composable private fun FixtureHost(direct: Boolean) {
         nav = rememberNavController()
-        NavHost(nav, startDestination = SCAN) {
+        LaunchedEffect(Unit) { nav.navigate(if (direct) DIRECT_PREDECESSOR else SCAN) }
+        NavHost(nav, startDestination = Home) {
+            composable<Home> {
+                // Canonical production destination, with synthetic readback instead of owner Home data.
+                val entries by repository.observeAll(1, date).collectAsState(initial = emptyList())
+                Column(Modifier.fillMaxSize().safeDrawingPadding()) {
+                    Text(HOME)
+                    Text(text(Res.string.neutral_ai_saved_count, entries.size))
+                    entries.forEach { Text(it.name) }
+                }
+            }
+            composable(DIRECT_PREDECESSOR) {
+                Column(Modifier.fillMaxSize().safeDrawingPadding()) {
+                    Text(DIRECT_PREDECESSOR)
+                    Button(onClick = { ScanQuickAddHandoff.open(nav,
+                        FoodDiaryCreateQuickAdd(date.toEpochDays().toLong(), 1,
+                            prefillName = "Synthetic direct food", prefillEnergyKcal = 100.0)) }) {
+                        Text(OPEN_DIRECT)
+                    }
+                }
+            }
             composable(SCAN) { entry ->
                 val savedId by entry.savedStateHandle.getStateFlow<String?>(ScanQuickAddHandoff.SAVED_ITEM_KEY, null)
                     .collectAsStateWithLifecycle()
@@ -296,6 +400,12 @@ class MultiFoodScanTest {
                     onBack = { error("Not used") },
                     savedScanItemId = savedId,
                     onSavedScanItemConsumed = { entry.savedStateHandle[ScanQuickAddHandoff.SAVED_ITEM_KEY] = null },
+                    onScanCompleted = {
+                        // Prove persistence exists before navigation success is signalled.
+                        assertEquals(review().savedIds.size, entries().size)
+                        completionCount++
+                        ScanQuickAddHandoff.complete(nav)
+                    },
                     onSaveToQuickAdd = { estimate, itemId ->
                         val route = ScanQuickAddHandoff.route(date.toEpochDays().toLong(), 1, estimate, itemId)
                         acceptedRoute = route
@@ -312,10 +422,11 @@ class MultiFoodScanTest {
             }
             composable<FoodDiaryCreateQuickAdd> { entry ->
                 val route = entry.toRoute<FoodDiaryCreateQuickAdd>()
-                val estimate = requireNotNull(AiFoodEstimateParser.parse(requireNotNull(route.scanEstimateJson)))
+                val estimate = route.scanEstimateJson?.let(AiFoodEstimateParser::parse)
                 CreateQuickAddScreen(onBack = { nav.popBackStack() },
                     onSave = { ScanQuickAddHandoff.saved(nav, route) },
-                    mealId = route.mealId, date = LocalDate.fromEpochDays(route.epochDay), scanEstimate = estimate)
+                    mealId = route.mealId, date = LocalDate.fromEpochDays(route.epochDay), scanEstimate = estimate,
+                    prefillName = route.prefillName, prefillEnergyKcal = route.prefillEnergyKcal)
             }
         }
     }
@@ -329,7 +440,39 @@ class MultiFoodScanTest {
 
     private fun clickSave() = clickText(label(Res.string.action_save))
 
-    private fun entries(): List<ManualDiaryEntry> = runBlocking { repository.observeAll(1, date).first() }
+    private fun entries(): List<ManualDiaryEntry> = runBlocking {
+        withTimeout(5_000) { repository.observeAll(1, date).first() }
+    }
+
+    private fun review(): AiScanReviewSession = (model.state.value as AiScanUiState.Result).review
+
+    private fun assertSavedCannotBeReselected(name: String) {
+        val review = review()
+        val id = review.items.single { it.estimate.name == name }.id
+        assertTrue(id in review.savedIds)
+        assertFalse(id in review.selectedIds)
+        assertEquals("Saved item cannot be reselected", review, review.select(id, true))
+    }
+
+    private fun assertQuickAddRoute() {
+        assertTrue(onMain { nav.currentDestination?.hasRoute<FoodDiaryCreateQuickAdd>() == true })
+    }
+
+    private fun assertNoScanOrAddEntries() {
+        assertTrue(onMain { runCatching { nav.getBackStackEntry(SCAN) }.isFailure })
+        assertTrue(onMain { runCatching { nav.getBackStackEntry<FoodDiaryCreateQuickAdd>() }.isFailure })
+    }
+
+    private fun assertCompletedBackStack() {
+        findText(HOME)
+        assertEquals(1, completionCount)
+        assertTrue(onMain { nav.currentDestination?.hasRoute<Home>() == true })
+        assertTrue(onMain { nav.previousBackStackEntry == null })
+        assertNoScanOrAddEntries()
+        // This is the same pop operation used by Back. No completed workflow can be reopened.
+        assertFalse(onMain { nav.popBackStack() })
+        assertNoScanOrAddEntries()
+    }
 
     private fun expectSavedCount(count: Int) {
         findText(text(Res.string.neutral_ai_saved_count, count))
@@ -390,6 +533,9 @@ class MultiFoodScanTest {
 
     private companion object {
         const val SCAN = "synthetic-multi-scan"
+        const val HOME = "Synthetic Home Log"
+        const val DIRECT_PREDECESSOR = "Synthetic direct predecessor"
+        const val OPEN_DIRECT = "Open synthetic direct Quick Add"
         const val PIE = """{"foods":[{"name":"Synthetic pie","calories":780,"protein":35,"fat":38,"fibre":6,"sugar":12,"vitaminC":0.012,"servingCount":2.5,"weightGrams":250}]}"""
         const val MULTIPLE = """{"foods":[{"name":"Synthetic bread","calories":100,"sugar":0},{"name":"Synthetic pasta","calories":200},{"name":"Synthetic chicken","calories":780,"protein":35,"fat":38,"fibre":6,"sugar":12,"sodium":0.0012},{}]}"""
     }

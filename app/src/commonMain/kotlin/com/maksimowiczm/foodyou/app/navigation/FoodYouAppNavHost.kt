@@ -246,6 +246,7 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 onBack = { navController.popBackStackInclusive<FoodDiaryAiScan>() },
                 savedScanItemId = savedItemId,
                 onSavedScanItemConsumed = { scannerState[ScanQuickAddHandoff.SAVED_ITEM_KEY] = null },
+                onScanCompleted = { ScanQuickAddHandoff.complete(navController) },
                 onSaveToQuickAdd = { estimate, itemId ->
                     ScanQuickAddHandoff.open(navController,
                         ScanQuickAddHandoff.route(
@@ -572,7 +573,7 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
     }
 }
 
-@Serializable private object Home
+@Serializable internal object Home
 
 @Serializable private object Settings
 

@@ -73,7 +73,7 @@ column distinguishes required sequencing from independent work.
 | FOODUS-004 | Complete | [Review and select multiple scanned foods](#foodus-004) | Enhancement | Samsung selection/queue acceptance and FOODUS-005 regressions passed |
 | FOODUS-005 | Complete | [Preserve scan data through Quick Add](#foodus-005) | Data integrity bug | Samsung data-preservation acceptance passed; receipt linked below |
 | FOODUS-006 | Complete | [Visible Quick Add conversion actions](#foodus-006) | UX | Physical/compact Samsung layout and promotion acceptance passed |
-| FOODUS-007 | Not Started | [Finish scan workflow after successful save](#foodus-007) | Navigation bug | FOODUS-005 and FOODUS-004 for final single/multi-item completion proof |
+| FOODUS-007 | Complete | [Finish scan workflow after successful save](#foodus-007) | Navigation bug | Samsung single/multi completion, Back, failure/retry and direct-route acceptance passed |
 | FOODUS-008 | Not Started | [Retake without discarding the prior photo](#foodus-008) | Workflow bug | No B prerequisite; reuse existing capture mechanism |
 | FOODUS-009 | Not Started | [FoodUs-specific What's New](#foodus-009) | Content bug | Actual release facts unverified; content acceptance blocked pending ledger verification |
 | FOODUS-010 | Not Started | [Mask AI API key by default](#foodus-010) | Privacy UX bug | No B prerequisite; isolated settings correction |
@@ -300,7 +300,14 @@ direct/scan/create/edit/historical paths, small-screen layout, Save, and cancell
 
 ### FOODUS-007: Finish the AI scan flow after a successful Quick Add save
 
-**Status:** Not Started
+**Status:** Complete (2026-10-25; completion provisional until receipt reconciles)
+
+**Delivery:** [Plan and evidence](../implementation-plans/milestone-b/foodus-007/plan.md),
+[completion receipt](../_boss-runs/milestone-b-sequential/foodus-007-receipt.json).
+All 141 unit tests, debug/test APK builds, independent navigation review and ten
+Samsung Android15 tests passed. Final accepted saves return to canonical Home/Log
+with scanner/form removed from Back; pending items, failed-save edits/retry, exact
+counts, cancellation, direct Quick Add and complete scan data remain covered.
 
 **Reported problem / value:** Saving a scan-derived entry returns to the scanner rather
 than the main dashboard, despite completing the operation.

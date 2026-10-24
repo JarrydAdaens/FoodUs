@@ -24,4 +24,9 @@ internal object ScanQuickAddHandoff {
         acknowledge(route, navController.previousBackStackEntry?.savedStateHandle)
         navController.popBackStackInclusive<FoodDiaryCreateQuickAdd>()
     }
+
+    /** Called only after the scanner accepts the final selected item's successful save. */
+    fun complete(navController: NavHostController) {
+        navController.popBackStack<Home>(inclusive = false)
+    }
 }

@@ -76,6 +76,7 @@ fun AiScanScreen(
     modifier: Modifier = Modifier,
     savedScanItemId: String? = null,
     onSavedScanItemConsumed: () -> Unit = {},
+    onScanCompleted: () -> Unit = {},
 ) {
     val viewModel: AiScanViewModel = koinViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -84,9 +85,13 @@ fun AiScanScreen(
     var alignQuery by remember { mutableStateOf<String?>(null) }
     LaunchedEffect(savedScanItemId) {
         savedScanItemId?.let { id ->
-            val next = viewModel.acknowledgeSaved(id)
+            val accepted = viewModel.acknowledgeSaved(id)
             onSavedScanItemConsumed()
-            next?.let { onSaveToQuickAdd(it.estimate, it.id) }
+            if (accepted != null) {
+                val next = accepted.next
+                if (next != null) onSaveToQuickAdd(next.estimate, next.id)
+                else onScanCompleted()
+            }
         }
     }
 

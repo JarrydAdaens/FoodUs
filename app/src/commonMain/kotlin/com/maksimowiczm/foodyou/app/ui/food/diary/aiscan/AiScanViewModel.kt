@@ -82,12 +82,13 @@ internal class AiScanViewModel(
         return updated.next
     }
 
-    fun acknowledgeSaved(id: String): ScanReviewItem? {
+    /** Null means a stale/duplicate acknowledgement, rather than a completed queue. */
+    fun acknowledgeSaved(id: String): AiScanReviewSession? {
         val current = _state.value as? AiScanUiState.Result ?: return null
         val updated = current.review.acknowledgeSaved(id)
         if (updated == current.review) return null
         _state.value = current.copy(review = updated)
-        return updated.next
+        return updated
     }
 
     /** Searches locally saved custom foods (the user's own foods) by the AI-guessed name. */

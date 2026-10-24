@@ -247,3 +247,33 @@ passed physical21.101s/compact39.103s. Ten final synthetic action screenshots
 inspected; display overrides restored. Failed intermediate whole invocations remain
 recorded, never represented as overall passes. Receipt prepared before terminal
 metadata; seal/commit next. No owner data writes or release/version change.
+
+## Dispatch FOODUS-007
+
+FOODUS-006 reconciled COMPLETED_COMMITTED at0b3f3e5c; only unrelated attachments
+dirty before dispatch. One worker `/root/foodus_007` owns successful scan completion
+navigation, queue-aware production handoff changes, relevant regression files and
+its Story plan. Preserve 004/005/006 persistence, selected queue, retries, counts,
+conversions and direct Quick Add navigation. Complete only after successful final
+selected save; remove completed scanner/add from Back stack to actual Home/Log.
+Use production navigation helper in private synthetic Samsung fixture and real
+in-memory Room; no owner settings/data, live AI, camera, keys or data clearing.
+Coordinator owns builds/device, milestone, receipt/commit and independent review.
+Return uncommitted; no later Story changes, pull/push, release/version/dependency.
+Read-only navigation/integrity review required. Inherit model/effort; observed unknown.
+
+FOODUS-007 production freeze: accepted design keeps successful insertion and typed
+handoff acknowledgement, then scanner validates generation/queue head. Only a new
+accepted final transition emits completion; helper pops canonical Home inclusive=false.
+Independent reviewer `/root/review_foodus_007` is read-only over navigation, queue,
+privacy and regression validity. Production review can begin while Android fixture
+is finalized; final approval requires frozen complete source identity. Coordinator
+owns runtime/build checks and terminal metadata. Model/effort inherit, observed unknown.
+
+FOODUS-007 final acceptance:141 unit tests/30 suites, debug/test APK builds,
+independent navigation/integrity review and whitespace passed. Samsung six final
+queue/completion/direct/failure cases plus four scan data regressions passed10/10,
+112.954s. Test-only assertion/import compile corrections re-reviewed; production
+unchanged. Canonical Home Back-stack and persisted count checked through production
+helper with private synthetic Home contents/Room. No owner data writes; original
+rotation policy restored. Receipt prepared before terminal metadata; commit next.

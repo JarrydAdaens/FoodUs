@@ -44,4 +44,17 @@ class AiScanReviewSessionTest {
         assertEquals(newScan, newScan.acknowledgeSaved("1:0"))
         assertEquals(newScan, newScan.select("1:0", true))
     }
+
+    @Test fun finalSelectedSuccessCompletesQueueWhileUnselectedItemsRemainUnsaved() {
+        val started = AiScanReviewSession.create("1", estimates).select("1:1", false).start()
+        val partial = started.acknowledgeSaved("1:0")
+        assertEquals("1:2", partial.next?.id)
+        val completed = partial.acknowledgeSaved("1:2")
+        assertNull(completed.next)
+        assertEquals(setOf("1:0", "1:2"), completed.savedIds)
+        assertEquals(0, completed.selectedCount)
+        assertEquals(completed, completed.acknowledgeSaved("1:2"))
+        assertEquals(completed, completed.acknowledgeSaved("stale:2"))
+        assertFalse("1:1" in completed.savedIds, "Unselected sibling must not be counted as persisted")
+    }
 }
