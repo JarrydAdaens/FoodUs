@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.maksimowiczm.foodyou.app.navigation.forwardBackwardComposable
+import com.maksimowiczm.foodyou.app.ui.database.australianfoodcompositiondatabase.AustralianFoodCompositionDatabaseScreen
 import com.maksimowiczm.foodyou.common.compose.extension.LaunchedCollectWithLifecycle
 import kotlinx.serialization.Serializable
 import org.koin.compose.viewmodel.koinViewModel
@@ -46,8 +47,16 @@ fun Onboarding(onFinish: () -> Unit, modifier: Modifier = Modifier) {
                         popUpTo(BeforeYouStart) { inclusive = true }
                     }
                 },
+                onAustralianFoodCompositionDatabase = {
+                    navController.navigate(AustralianFoodCompositionDatabase) {
+                        launchSingleTop = true
+                    }
+                },
                 state = state,
             )
+        }
+        forwardBackwardComposable<AustralianFoodCompositionDatabase> {
+            AustralianFoodCompositionDatabaseScreen(onBack = { navController.popBackStack() })
         }
         forwardBackwardComposable<AlmostDone> { AlmostDoneScreen() }
     }
@@ -56,5 +65,7 @@ fun Onboarding(onFinish: () -> Unit, modifier: Modifier = Modifier) {
 @Serializable private data object BeforeYouStart
 
 @Serializable private data object FoodDatabase
+
+@Serializable private data object AustralianFoodCompositionDatabase
 
 @Serializable private data object AlmostDone

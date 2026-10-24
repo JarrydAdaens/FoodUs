@@ -33,11 +33,11 @@ Milestones 1-3 and their completed Story evidence remain unchanged.
 
 ## Status
 
-**Not Started.** Planning assembled 2026-10-24; implementation and runtime reproduction
-have not started. Source inspection below informs scope but does not prove reproduction
-or close any Story. No implementation plan exists for these Stories yet. Create one
-under `context/implementation-plans/milestone-b/` when selected work needs durable
-acceptance, recovery, or continuation; keep the `FOODUS-xxx` identity in its path/title.
+**In Progress.** Sequential execution started 2026-10-24 with Samsung device checks
+and a completion commit required before each next Story. Dependency order is
+001, 002, 003, 005, 004, 006, 007, 008, 009, 010. Execution policy and ownership:
+[run briefing](../_boss-runs/milestone-b-sequential/briefing.md). Plans and evidence
+live under `context/implementation-plans/milestone-b/`; this milestone owns status.
 
 Milestone B is supplementary, not a new numbered milestone or a product generation.
 Its closed Stories are added to the current numbered milestone's closed Stories for
@@ -67,7 +67,7 @@ column distinguishes required sequencing from independent work.
 
 | ID | Status | Story | Type | Depends on / readiness |
 | --- | --- | --- | --- | --- |
-| FOODUS-001 | Not Started | [AFCD in onboarding](#foodus-001) | Missing functionality | No B prerequisite; existing AFCD setup is present |
+| FOODUS-001 | Complete | [AFCD in onboarding](#foodus-001) | Missing functionality | Samsung acceptance passed; completion receipt linked below |
 | FOODUS-002 | Not Started | [External databases in main Settings](#foodus-002) | UX | No B prerequisite; reuse current destination |
 | FOODUS-003 | Not Started | [Visible scanner hint with keyboard](#foodus-003) | Bug | No B prerequisite; needs runtime reproduction |
 | FOODUS-004 | Not Started | [Review and select multiple scanned foods](#foodus-004) | Enhancement | FOODUS-005; settle selection/handoff behavior before implementation |
@@ -84,7 +84,13 @@ column distinguishes required sequencing from independent work.
 
 ### FOODUS-001: Include Australian Food Composition Database in onboarding
 
-**Status:** Not Started
+**Status:** Complete (2026-10-24; completion provisional until receipt reconciles)
+
+**Delivery:** [Plan and acceptance evidence](../implementation-plans/milestone-b/foodus-001/plan.md),
+[completion receipt](../_boss-runs/milestone-b-sequential/foodus-001-receipt.json).
+Debug assemble, all 120 unit tests, and both isolated onboarding tests on Samsung
+SM-A057F / Android 15 passed. Existing AFCD management/import implementation is reused;
+device fixtures simulate import success and failure without changing saved app data.
 
 **Reported problem / value:** A first-time user cannot choose the Australian Food
 Composition Database (AFCD) alongside other food sources during setup.
