@@ -33,11 +33,13 @@ Milestones 1-3 and their completed Story evidence remain unchanged.
 
 ## Status
 
-**In Progress.** Sequential execution started 2026-10-24 with Samsung device checks
-and a completion commit required before each next Story. Dependency order is
-001, 002, 003, 005, 004, 006, 007, 008, 009, 010. Execution policy and ownership:
-[run briefing](../_boss-runs/milestone-b-sequential/briefing.md). Plans and evidence
-live under `context/implementation-plans/milestone-b/`; this milestone owns status.
+**Complete (2026-10-25).** All ten Stories met their recorded acceptance gates.
+Each Story was tested on the attached Samsung and receives its own completion
+commit before the next Story starts. Dependency order was 001, 002, 003, 005, 004,
+006, 007, 008, 009, 010. The final delivery remains provisional until its sealed
+[receipt](../_boss-runs/milestone-b-sequential/foodus-010-receipt.json) reconciles.
+[Run briefing](../_boss-runs/milestone-b-sequential/briefing.md) records ownership
+and checks; each Story links its plan and receipt below. This milestone owns status.
 
 Milestone B is supplementary, not a new numbered milestone or a product generation.
 Its closed Stories are added to the current numbered milestone's closed Stories for
@@ -76,7 +78,7 @@ column distinguishes required sequencing from independent work.
 | FOODUS-007 | Complete | [Finish scan workflow after successful save](#foodus-007) | Navigation bug | Samsung single/multi completion, Back, failure/retry and direct-route acceptance passed |
 | FOODUS-008 | Complete | [Retake without discarding the prior photo](#foodus-008) | Workflow bug | Physical/compact Samsung controlled acquisition acceptance passed |
 | FOODUS-009 | Complete | [FoodUs-specific What's New](#foodus-009) | Content bug | Release facts, history/version lookup and Samsung acceptance passed |
-| FOODUS-010 | Not Started | [Mask AI API key by default](#foodus-010) | Privacy UX bug | No B prerequisite; isolated settings correction |
+| FOODUS-010 | Complete | [Mask AI API key by default](#foodus-010) | Privacy UX bug | Physical/compact Samsung masking, lifecycle, paste and save acceptance passed |
 
 ## Stories
 
@@ -415,7 +417,18 @@ initial entries, no placeholders, and runtime About/What's New with upstream cre
 
 ### FOODUS-010: Mask the AI provider API key by default
 
-**Status:** Not Started
+**Status:** Complete (2026-10-25; completion provisional until receipt reconciles)
+
+**Delivery:** [Plan and privacy evidence](../implementation-plans/milestone-b/foodus-010/plan.md),
+[completion receipt](../_boss-runs/milestone-b-sequential/foodus-010-receipt.json).
+145 unit tests, debug/test APK builds, independent privacy review and three Samsung
+tests at each physical/compact viewport passed. All 22 synthetic field images were
+inspected: 14 hidden fields show bullets; eight deliberate reveals show dummy text.
+Retained/fresh navigation, real recreation with restored-state sentinel, background,
+private clipboard paste, editing, validation and save are covered. Native password
+semantics retain underlying editable text for privileged accessibility; masking is
+verified from rendered pixels. No owner credentials or clipboard data were used.
+
 
 **Reported problem / value:** Opening AI Settings exposes the key. The owner requests
 masked display with a deliberate reveal/hide control that does not retain visibility.

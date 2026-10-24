@@ -9,13 +9,19 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.TextObfuscationMode
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material.icons.outlined.Visibility
+import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LargeFlexibleTopAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedSecureTextField
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -27,6 +33,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton
 import com.maksimowiczm.foodyou.common.compose.extension.add
@@ -38,6 +47,17 @@ import org.koin.compose.viewmodel.koinViewModel
 fun AiSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
     val viewModel: AiSettingsViewModel = koinViewModel()
     val validation by viewModel.validation.collectAsStateWithLifecycle()
+    var keyVisible by remember { mutableStateOf(false) }
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    DisposableEffect(lifecycle) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_PAUSE || event == Lifecycle.Event.ON_STOP) {
+                keyVisible = false
+            }
+        }
+        lifecycle.addObserver(observer)
+        onDispose { lifecycle.removeObserver(observer) }
+    }
 
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
@@ -72,9 +92,29 @@ fun AiSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             }
 
             item {
-                AiField(
+                OutlinedSecureTextField(
                     state = viewModel.apiKey,
-                    label = stringResource(Res.string.headline_api_key),
+                    modifier = Modifier.fillMaxWidth(),
+                    label = { Text(stringResource(Res.string.headline_api_key)) },
+                    textObfuscationMode =
+                        if (keyVisible) TextObfuscationMode.Visible else TextObfuscationMode.Hidden,
+                    trailingIcon = {
+                        IconButton(
+                            onClick = { keyVisible = !keyVisible },
+                            shapes = IconButtonDefaults.shapes(),
+                        ) {
+                            Icon(
+                                imageVector =
+                                    if (keyVisible) Icons.Outlined.VisibilityOff
+                                    else Icons.Outlined.Visibility,
+                                contentDescription =
+                                    stringResource(
+                                        if (keyVisible) Res.string.action_hide_password
+                                        else Res.string.action_show_password
+                                    ),
+                            )
+                        }
+                    },
                 )
             }
 

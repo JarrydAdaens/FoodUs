@@ -342,3 +342,43 @@ test-only unavailable runTest import corrected to existing runBlocking and re-re
 Fork installed/seen identity, unknown draft/four-part behavior, credit and Back pass.
 No publication/version changes or owner writes; receipt prepared before terminal
 metadata, seal/commit next. Next and last authorized Story is FOODUS-010.
+
+## Dispatch FOODUS-010
+
+FOODUS-009 reconciled COMPLETED_COMMITTED at958da852; only unrelated attachments
+were dirty. Last worker `/root/foodus_010` owns AI key display correction, relevant
+resources/regression tests and its Story plan. Mask by default on opening/re-entry/
+recreation; explicit reveal/hide with local non-restored visibility. Preserve draft
+editing/paste, validation/save and all storage/provider precedence. Reuse native
+state-based secure field pattern and localized password actions where suitable.
+Dummy keys and isolated repositories/validator only; no real key, live network,
+owner settings writes, clipboard disclosure, credential logs/screenshots or data
+clearing. Existing host secureScreen preference observation remains qualified.
+Coordinator owns builds, physical/compact Samsung, required independent privacy
+review, trackers/Design B closure, receipt and final per-Story commit. No version
+transition/release/publication/tag/pull/push or other product changes. Inherit model/
+effort, observed unknown. Worker returns frozen uncommitted code, no device/build.
+
+FOODUS-010 production freeze: only AiSettingsScreen.kt, native resolved outlined
+secure editor, screen-local non-saveable visibility, lifecycle pause/stop reset,
+existing localized eye actions and same VM draft state. Reviewer `/root/review_foodus_010`
+performs read-only privacy/state/API/fixture review. Final test freeze/hash pending;
+coordinator separately runs builds and physical/compact Samsung gates. No reviewer
+edits, build/device or commit. Model/effort inherit, observed unknown.
+
+FOODUS-010 final acceptance: 145 unit tests/31 suites, debug/test APK builds,
+independent privacy review and whitespace passed. The initial fixture confused
+native editable accessibility text with rendered obfuscation; exact cached binary
+provenance established separate codepoint rendering. No production change followed.
+Final test APK and all three phone tests passed physical 19.795s/compact 50.955s.
+All 22 bounded synthetic-field images were inspected: 14 bullet-masked, eight
+legibly revealed dummy keys. Private paste, real recreation/restoration sentinel,
+retained/fresh navigation, background, edit/validate/save passed. Final display
+readback confirms physical 1080x2400/default fixed policy/free rotation restored.
+
+All ten authorized Stories now have acceptance evidence. Milestone B and its Design
+index close in this final Story bundle, with no next implementation dispatch.
+The legacy catalog exception remains; no release/version/tag/push/pull or publication
+occurred. Owner data and clipboard are preserved; only pre-existing unrelated
+attachments remain excluded. Final receipt prepared before terminal metadata;
+seal/commit/reconciliation complete delivery, without a bookkeeping commit.
