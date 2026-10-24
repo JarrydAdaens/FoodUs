@@ -32,6 +32,7 @@ fun SettingsScreen(
     onGoals: () -> Unit,
     onPersonalization: () -> Unit,
     onDatabase: () -> Unit,
+    onExternalDatabases: () -> Unit,
     onAiSettings: () -> Unit,
     onRelaySettings: () -> Unit,
     modifier: Modifier = Modifier,
@@ -77,6 +78,15 @@ fun SettingsScreen(
             item {
                 GoalsSettingsListItem(
                     onClick = onGoals,
+                    shape = shape,
+                    color = color,
+                    contentColor = contentColor,
+                )
+            }
+
+            item {
+                ExternalDatabasesSettingsListItem(
+                    onClick = onExternalDatabases,
                     shape = shape,
                     color = color,
                     contentColor = contentColor,

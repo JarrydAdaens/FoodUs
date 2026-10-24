@@ -68,7 +68,7 @@ column distinguishes required sequencing from independent work.
 | ID | Status | Story | Type | Depends on / readiness |
 | --- | --- | --- | --- | --- |
 | FOODUS-001 | Complete | [AFCD in onboarding](#foodus-001) | Missing functionality | Samsung acceptance passed; completion receipt linked below |
-| FOODUS-002 | Not Started | [External databases in main Settings](#foodus-002) | UX | No B prerequisite; reuse current destination |
+| FOODUS-002 | Complete | [External databases in main Settings](#foodus-002) | UX | Samsung acceptance passed; completion receipt linked below |
 | FOODUS-003 | Not Started | [Visible scanner hint with keyboard](#foodus-003) | Bug | No B prerequisite; needs runtime reproduction |
 | FOODUS-004 | Not Started | [Review and select multiple scanned foods](#foodus-004) | Enhancement | FOODUS-005; settle selection/handoff behavior before implementation |
 | FOODUS-005 | Not Started | [Preserve scan data through Quick Add](#foodus-005) | Data integrity bug | No B prerequisite; investigate first in the scan-to-diary chain |
@@ -116,7 +116,12 @@ flow, AFCD setup success/failure, and regression of existing choices and skip.
 
 ### FOODUS-002: Move external database navigation to main Settings
 
-**Status:** Not Started
+**Status:** Complete (2026-10-24; completion provisional until receipt reconciles)
+
+**Delivery:** [Plan and evidence](../implementation-plans/milestone-b/foodus-002/plan.md),
+[completion receipt](../_boss-runs/milestone-b-sequential/foodus-002-receipt.json).
+Debug/test APK builds and Samsung Android 15 navigation regression passed. The
+production route callback was inspected; device fixtures preserve saved app data.
 
 **Reported problem / value:** External database management is buried under Settings
 then Database; the owner wants the existing action directly on main Settings.

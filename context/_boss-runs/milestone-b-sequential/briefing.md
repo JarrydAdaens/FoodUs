@@ -36,3 +36,21 @@ instrumentation tests, and whitespace check passed. Initial test-container lifec
 failure was corrected with private Koin context and cleanup identity assertion.
 Receipt: `foodus-001-receipt.json`; completion commit pending at seal time.
 No optional independent review selected for this bounded screen reuse.
+
+## Dispatch FOODUS-002
+
+FOODUS-001 reconciled COMPLETED_COMMITTED at `874f80bc`; only unrelated attachments
+were dirty before this dispatch. FOODUS-002 worker owns main Settings, Database
+Settings, their relevant navigation callbacks/wiring, regression test files, and
+`context/implementation-plans/milestone-b/foodus-002/plan.md`. Move the existing
+external-database action to main Settings; retain import/export/backup and Back.
+Coordinator owns trackers, device execution, receipt, commit. No other Story edits.
+One worker `/root/foodus_002`; requested model/effort inherit, observed unknown.
+Return uncommitted; preserve other edits. Required checks: deterministic regression,
+debug build, Samsung route/absence/Back/retained-action evidence. Stop on privacy or
+architecture conflict; no device data clearing, pull, push, or release.
+
+FOODUS-002 acceptance: debug/test APK builds and one Samsung Android15 navigation
+test passed; actual production callback relocation and whitespace inspected.
+Missing language stub in first fixture run was corrected; no production repair.
+Receipt `foodus-002-receipt.json`; completion commit pending at seal time.

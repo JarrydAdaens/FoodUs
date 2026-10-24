@@ -1,0 +1,183 @@
+{
+  "checked": {
+    "artifact_identity": "618c8a2fda6a4d3fb9b7fb98b0157ced40f4edd4ba5ddac555d676aefa5e222f",
+    "base": "874f80bcbcb09dc1619bd39f8ef5430074059e5d",
+    "diff_identity": "1b07a97abca3ae7bce0ce0fb87860ef1134dfac9baf23ef8dabc122ffb70bb8d",
+    "files": {
+      "app/build.gradle.kts": {
+        "kind": "file",
+        "sha256": "04857b8d16e79fdc8e6e5ef0e332c6ab39b7e11feda385df098800495d3639d7"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/settings/ExternalDatabasesNavigationTest.kt": {
+        "kind": "file",
+        "sha256": "1a1a091b1208fd7bf7e8f3134506ed86675e359b27861bf838ea05881af13e86"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/navigation/FoodYouAppNavHost.kt": {
+        "kind": "file",
+        "sha256": "d9820d90083fbc98266dde5999342e486343b93b6766deeb79f9ba61abecd7db"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/database/master/DatabaseSettingsScreen.kt": {
+        "kind": "file",
+        "sha256": "b5fc345454360e1775be3f1e615e59cac74d3b13072f7d15e6ff860c8717781e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/settings/ExternalDatabasesSettingsListItem.kt": {
+        "kind": "file",
+        "sha256": "ccdd9d76a9f38a71c98359075045f0a20afee4f250947939d473137d17da1228"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/settings/SettingsScreen.kt": {
+        "kind": "file",
+        "sha256": "7084210c63bc9990c30be569ba62c2b5d159fdd18788f7b4c8c41ebe9ce1d173"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "fc4fb4d3739d361e22c9c4c006af11c210e5fb7bce9e934ce32ba2ad322bad6a"
+      }
+    },
+    "head": "874f80bcbcb09dc1619bd39f8ef5430074059e5d"
+  },
+  "commit_authority": "User requested commit-log --commit after Samsung test for each Story",
+  "commit_policy": "single",
+  "decisions": [
+    "Reuse existing external database destination.",
+    "Synthetic screen NavHost covers UI; actual production callback placement inspected directly.",
+    "No full unit rerun for UI callback relocation; prior 120 tests passed in FOODUS-001.",
+    "Legacy catalog version retained under release transition."
+  ],
+  "delivery": {
+    "artifact_identity": "ce2d51b42e500e5cad4b879032baa0e1aafc39f757a5d5db3611bcf82d572775",
+    "base": "874f80bcbcb09dc1619bd39f8ef5430074059e5d",
+    "committed_files": {
+      "app/build.gradle.kts": {
+        "git_blob": "a596aa518dc6c95940e92243ef30eef40a0cc4d4",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/settings/ExternalDatabasesNavigationTest.kt": {
+        "git_blob": "4ee013140877f8917ab0f669a20fb89c553c8556",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/navigation/FoodYouAppNavHost.kt": {
+        "git_blob": "4498379599ce94e51c998a5ac671b67c3fc82567",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/database/master/DatabaseSettingsScreen.kt": {
+        "git_blob": "38fa181d8aef1626cbcd74d0a638ddabb8c4d54a",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/settings/ExternalDatabasesSettingsListItem.kt": {
+        "git_blob": "433b500397ecb834708d4f999e1a061a90643e76",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/settings/SettingsScreen.kt": {
+        "git_blob": "b1e5fa1594c2f1f9e1385569ce28cc04fcdfe095",
+        "kind": "file"
+      },
+      "context/_boss-runs/milestone-b-sequential/briefing.md": {
+        "git_blob": "61b35ee42447810382de59906b80037bf297e3c3",
+        "kind": "file"
+      },
+      "context/implementation-plans/milestone-b/foodus-002/plan.md": {
+        "git_blob": "4eb7cc8a606e5009171180e47a24d5eaaf323ba7",
+        "kind": "file"
+      },
+      "context/milestones/milestone-b.md": {
+        "git_blob": "99a40fe5dfa668593e4b307b9e01d2e8100ab509",
+        "kind": "file"
+      },
+      "gradle/libs.versions.toml": {
+        "git_blob": "6dcdb5e97c35db4c4aad9e94864faaa8be7a75a7",
+        "kind": "file"
+      }
+    },
+    "diff_identity": "2bb70df239eed6399f61f45de61dd6ab7bd9583a60f9e60df91c03252b76eac5",
+    "files": {
+      "app/build.gradle.kts": {
+        "kind": "file",
+        "sha256": "04857b8d16e79fdc8e6e5ef0e332c6ab39b7e11feda385df098800495d3639d7"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/settings/ExternalDatabasesNavigationTest.kt": {
+        "kind": "file",
+        "sha256": "1a1a091b1208fd7bf7e8f3134506ed86675e359b27861bf838ea05881af13e86"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/navigation/FoodYouAppNavHost.kt": {
+        "kind": "file",
+        "sha256": "d9820d90083fbc98266dde5999342e486343b93b6766deeb79f9ba61abecd7db"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/database/master/DatabaseSettingsScreen.kt": {
+        "kind": "file",
+        "sha256": "b5fc345454360e1775be3f1e615e59cac74d3b13072f7d15e6ff860c8717781e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/settings/ExternalDatabasesSettingsListItem.kt": {
+        "kind": "file",
+        "sha256": "ccdd9d76a9f38a71c98359075045f0a20afee4f250947939d473137d17da1228"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/settings/SettingsScreen.kt": {
+        "kind": "file",
+        "sha256": "7084210c63bc9990c30be569ba62c2b5d159fdd18788f7b4c8c41ebe9ce1d173"
+      },
+      "context/_boss-runs/milestone-b-sequential/briefing.md": {
+        "kind": "file",
+        "sha256": "7ee6fb64dd630af76d6c83cb2a35abe731c7e7ae8f9ddd4c8df1ce3f09df1e58"
+      },
+      "context/implementation-plans/milestone-b/foodus-002/plan.md": {
+        "kind": "file",
+        "sha256": "4102018814bf9449d02e44c9847e63ffa0e941f0f3849dfbd27d88a26c4c0294"
+      },
+      "context/milestones/milestone-b.md": {
+        "kind": "file",
+        "sha256": "178682f4c948cfff2d3e377899a38609626391023b843ac3b03fee68dd75114e"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "fc4fb4d3739d361e22c9c4c006af11c210e5fb7bce9e934ce32ba2ad322bad6a"
+      }
+    },
+    "head": "874f80bcbcb09dc1619bd39f8ef5430074059e5d"
+  },
+  "evidence": {
+    "checks": [
+      {
+        "artifact_identity": "618c8a2fda6a4d3fb9b7fb98b0157ced40f4edd4ba5ddac555d676aefa5e222f",
+        "command": ".\\gradlew.bat --offline --no-daemon --console=plain -q :app:assembleDebug :app:assembleDebugAndroidTest",
+        "outcome": "PASS"
+      },
+      {
+        "artifact_identity": "618c8a2fda6a4d3fb9b7fb98b0157ced40f4edd4ba5ddac555d676aefa5e222f",
+        "command": "adb shell am instrument -w -r -e class com.maksimowiczm.foodyou.app.ui.settings.ExternalDatabasesNavigationTest io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "outcome": "PASS",
+        "result": "Samsung SM-A057F Android15; OK (1 test), 9.24 seconds. Serial selected explicitly; APK updates install -r -t preserve data."
+      },
+      {
+        "artifact_identity": "618c8a2fda6a4d3fb9b7fb98b0157ced40f4edd4ba5ddac555d676aefa5e222f",
+        "command": "git diff --check; coordinator inspection of production navigation callback relocation",
+        "outcome": "PASS"
+      }
+    ],
+    "decisions": [
+      "Reuse existing external database destination.",
+      "Synthetic screen NavHost covers UI; actual production callback placement inspected directly.",
+      "No full unit rerun for UI callback relocation; prior 120 tests passed in FOODUS-001.",
+      "Legacy catalog version retained under release transition."
+    ],
+    "review_required": false
+  },
+  "metadata_before": {
+    "context/_boss-runs/milestone-b-sequential/briefing.md": {
+      "kind": "file",
+      "sha256": "b185438c9540699a86f22b21ce06e51a449acae58030d2ea2c80147652b3493d"
+    },
+    "context/implementation-plans/milestone-b/foodus-002/plan.md": {
+      "kind": "file",
+      "sha256": "ed90542b32b50851ce92ac112fee0dd544a16dc573ac9cc7ac58354b062b93aa"
+    },
+    "context/milestones/milestone-b.md": {
+      "kind": "file",
+      "sha256": "1e4edd82c271a8a8efb58eac4124313917fbfb9ff747f2e81e08861244b74cc9"
+    }
+  },
+  "phase": "READY",
+  "record": "context/_boss-runs/milestone-b-sequential/foodus-002-receipt.json",
+  "repo": "D:\\forked-projects\\FoodYou",
+  "schema_version": 1,
+  "status_owner": "context/milestones/milestone-b.md#foodus-002",
+  "transaction_id": "aec903067e39478a9c698badb0352bb2"
+}
