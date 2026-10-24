@@ -5,12 +5,20 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.input.TextFieldLineLimits
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -29,12 +37,16 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -62,7 +74,6 @@ fun AiScanScreen(
     val viewModel: AiScanViewModel = koinViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
     val configured by viewModel.aiConfigured.collectAsStateWithLifecycle()
-    val hint by viewModel.hint.collectAsStateWithLifecycle()
 
     var alignQuery by remember { mutableStateOf<String?>(null) }
 
@@ -79,6 +90,8 @@ fun AiScanScreen(
             modifier =
                 Modifier.fillMaxWidth()
                     .padding(paddingValues)
+                    .consumeWindowInsets(paddingValues)
+                    .imePadding()
                     .verticalScroll(rememberScrollState())
                     .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -101,8 +114,7 @@ fun AiScanScreen(
                         )
                     }
                     SubmitSection(
-                        hint = hint,
-                        onHintChange = viewModel::onHintChange,
+                        hint = viewModel.hint,
                         configured = configured,
                         photoCaptured = current.jpeg != null,
                         onSubmit = viewModel::submit,
@@ -152,20 +164,32 @@ fun AiScanScreen(
  */
 @Composable
 private fun SubmitSection(
-    hint: String,
-    onHintChange: (String) -> Unit,
+    hint: TextFieldState,
     configured: Boolean,
     photoCaptured: Boolean,
     onSubmit: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val bringHintIntoView = remember { BringIntoViewRequester() }
+    var hintFocused by remember { mutableStateOf(false) }
+    val imeBottom = WindowInsets.ime.getBottom(LocalDensity.current)
+    LaunchedEffect(hintFocused, imeBottom) {
+        if (hintFocused) {
+            withFrameNanos { }
+            bringHintIntoView.bringIntoView()
+        }
+    }
+
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
         OutlinedTextField(
-            value = hint,
-            onValueChange = onHintChange,
-            modifier = Modifier.fillMaxWidth(),
+            state = hint,
+            modifier =
+                Modifier.fillMaxWidth()
+                    .bringIntoViewRequester(bringHintIntoView)
+                    .onFocusChanged { hintFocused = it.isFocused },
             label = { Text(stringResource(Res.string.label_ai_scan_hint)) },
             supportingText = { Text(stringResource(Res.string.description_ai_scan_hint)) },
+            lineLimits = TextFieldLineLimits.MultiLine(minHeightInLines = 3, maxHeightInLines = 3),
         )
         Button(
             onClick = onSubmit,

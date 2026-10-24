@@ -1,5 +1,6 @@
 package com.maksimowiczm.foodyou.app.ui.food.diary.aiscan
 
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -34,14 +35,10 @@ internal class AiScanViewModel(
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), false)
 
     /** Optional per-scan hint (layer 3): in-memory screen state only, never persisted. */
-    val hint = MutableStateFlow("")
+    val hint = TextFieldState()
 
     private val _state = MutableStateFlow<AiScanUiState>(AiScanUiState.NoPhoto)
     val state: StateFlow<AiScanUiState> = _state.asStateFlow()
-
-    fun onHintChange(value: String) {
-        hint.value = value
-    }
 
     fun onPhotoCaptured(jpeg: ByteArray) {
         _state.value = AiScanUiState.Captured(jpeg)
@@ -54,7 +51,7 @@ internal class AiScanViewModel(
     fun submit() {
         val jpeg = _state.value.jpeg ?: return
         _state.value = AiScanUiState.Scanning(jpeg)
-        val hintText = hint.value.trim().takeIf { it.isNotBlank() }
+        val hintText = hint.text.toString().trim().takeIf { it.isNotBlank() }
         viewModelScope.launch {
             _state.value =
                 when (val result = aiFoodScanner.scan(jpeg, hintText)) {

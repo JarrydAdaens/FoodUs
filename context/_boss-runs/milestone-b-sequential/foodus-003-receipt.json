@@ -1,0 +1,174 @@
+{
+  "checked": {
+    "artifact_identity": "94791111593c79403e80266f76e15dd0a5288ba0534620b9831d3b4072339d26",
+    "base": "a37824617e46f70316ce3531e330224ad6549797",
+    "diff_identity": "759d1aebb6c69a4048a0349e2c5cb1be974b76ef4c58e3fc7eed8b3259c29b82",
+    "files": {
+      "app/build.gradle.kts": {
+        "kind": "file",
+        "sha256": "04857b8d16e79fdc8e6e5ef0e332c6ab39b7e11feda385df098800495d3639d7"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanKeyboardTest.kt": {
+        "kind": "file",
+        "sha256": "80ed82058a5d1044c10b2c859ed3c6539702d6860c6904bd13379e1f14fd4395"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanScreen.kt": {
+        "kind": "file",
+        "sha256": "b3d8c7c2eac8c2fc0c337f0ca9befb9743ec745bc9bc7d402f20b3614bf4cd0f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanViewModel.kt": {
+        "kind": "file",
+        "sha256": "f0419271adc01e5c7977ad416a51c8174a7a3d6793d41b55a4e10cea6bf6eece"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "fc4fb4d3739d361e22c9c4c006af11c210e5fb7bce9e934ce32ba2ad322bad6a"
+      }
+    },
+    "head": "a37824617e46f70316ce3531e330224ad6549797"
+  },
+  "commit_authority": "User requested commit-log --commit after Samsung test for each Story",
+  "commit_policy": "single",
+  "decisions": [
+    "Stable three-line state-based editor with internal caret scrolling; focus/IME-only whole-field relocation.",
+    "Samsung semantic bounds include helper text; actual input border/inner geometry measured and active glyphs visually inspected.",
+    "No live AI, credentials, private photos, settings writes, diary writes or data clearing.",
+    "Landscape not claimed; portrait physical and compact viewports are acceptance evidence.",
+    "Legacy catalog retained under release transition; no release authorized."
+  ],
+  "delivery": {
+    "artifact_identity": "6c126e92398f15107680c8c9fab529b48cdb62c295c0761a7f74cfe9cb8599de",
+    "base": "a37824617e46f70316ce3531e330224ad6549797",
+    "committed_files": {
+      "app/build.gradle.kts": {
+        "git_blob": "a596aa518dc6c95940e92243ef30eef40a0cc4d4",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanKeyboardTest.kt": {
+        "git_blob": "108655dfc112fe37f4013c81ee241f2ea7f9c92d",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanScreen.kt": {
+        "git_blob": "f6403b4bd8cb56766138df6a8416665462aaf52a",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanViewModel.kt": {
+        "git_blob": "563a7dc696a465f319f4816b33bb922cd06c1bf8",
+        "kind": "file"
+      },
+      "context/_boss-runs/milestone-b-sequential/briefing.md": {
+        "git_blob": "2e0ac933d95f3e46a75b9c9e83dc81575b64126a",
+        "kind": "file"
+      },
+      "context/implementation-plans/milestone-b/foodus-003/plan.md": {
+        "git_blob": "d36b52b25bb83bf4837ee30b45c9c43a9563544e",
+        "kind": "file"
+      },
+      "context/milestones/milestone-b.md": {
+        "git_blob": "b7e9ad036e00a6de10451e9bc58e9ba9d9fc97d2",
+        "kind": "file"
+      },
+      "gradle/libs.versions.toml": {
+        "git_blob": "6dcdb5e97c35db4c4aad9e94864faaa8be7a75a7",
+        "kind": "file"
+      }
+    },
+    "diff_identity": "cb87618aa469b4184462962ae33aa6951e4418ad38135312d801f4f6a3c72c55",
+    "files": {
+      "app/build.gradle.kts": {
+        "kind": "file",
+        "sha256": "04857b8d16e79fdc8e6e5ef0e332c6ab39b7e11feda385df098800495d3639d7"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanKeyboardTest.kt": {
+        "kind": "file",
+        "sha256": "80ed82058a5d1044c10b2c859ed3c6539702d6860c6904bd13379e1f14fd4395"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanScreen.kt": {
+        "kind": "file",
+        "sha256": "b3d8c7c2eac8c2fc0c337f0ca9befb9743ec745bc9bc7d402f20b3614bf4cd0f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanViewModel.kt": {
+        "kind": "file",
+        "sha256": "f0419271adc01e5c7977ad416a51c8174a7a3d6793d41b55a4e10cea6bf6eece"
+      },
+      "context/_boss-runs/milestone-b-sequential/briefing.md": {
+        "kind": "file",
+        "sha256": "47b8cd8471394e6ded868190c513758e486ff02275b9c4300276a1d709ee6f6b"
+      },
+      "context/implementation-plans/milestone-b/foodus-003/plan.md": {
+        "kind": "file",
+        "sha256": "521e43d8f6f4543c6b473946bc0c0cb09a7ad50825e275c5218af57e6b9cfb1a"
+      },
+      "context/milestones/milestone-b.md": {
+        "kind": "file",
+        "sha256": "b11f0d9007ede4b858417a4dd7e5c2b6bc663e17513d48cbb9ae6eb8f3f5dc7b"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "fc4fb4d3739d361e22c9c4c006af11c210e5fb7bce9e934ce32ba2ad322bad6a"
+      }
+    },
+    "head": "a37824617e46f70316ce3531e330224ad6549797"
+  },
+  "evidence": {
+    "checks": [
+      {
+        "artifact_identity": "94791111593c79403e80266f76e15dd0a5288ba0534620b9831d3b4072339d26",
+        "command": ".\\gradlew.bat --offline --no-daemon --console=plain -q :app:assembleDebug :app:assembleDebugAndroidTest",
+        "outcome": "PASS"
+      },
+      {
+        "artifact_identity": "94791111593c79403e80266f76e15dd0a5288ba0534620b9831d3b4072339d26",
+        "command": "D:\\dev\\AndroidSDK\\platform-tools\\adb.exe -s R7AY205BVXL shell am instrument -w -r -e class com.maksimowiczm.foodyou.app.ui.food.diary.aiscan.AiScanKeyboardTest io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "outcome": "PASS",
+        "result": "SM-A057F Android15, density450. Physical1080x2400: OK(2 tests),36.262s. Compact900x1600: OK(2 tests),38.519s. Size reset, fixed rotation policy default and free rotation restored. Data-preserving APK updates only.",
+        "setup": "Run once at physical1080x2400; repeat after wm size 900x1600. Both use fixed-to-user-rotation enabled and user-rotation lock 0; all prior display settings restored in finally."
+      },
+      {
+        "artifact_identity": "94791111593c79403e80266f76e15dd0a5288ba0534620b9831d3b4072339d26",
+        "command": "view_image: short, multiline, multiline-earlier-edit PNGs at 1080x2400 and 900x1600 under app/build/foodus-003-screens/foodus-003-keyboard",
+        "outcome": "PASS",
+        "result": "All six fresh synthetic active hint/caret lines visible above real IME. Last-line append and first-line edit inspected; complete text retained by assertions. Full field geometry, scrolling, Submit, dismissal gap and Back verified on device."
+      },
+      {
+        "artifact_identity": "94791111593c79403e80266f76e15dd0a5288ba0534620b9831d3b4072339d26",
+        "command": "git diff --check",
+        "outcome": "PASS"
+      }
+    ],
+    "decisions": [
+      "Stable three-line state-based editor with internal caret scrolling; focus/IME-only whole-field relocation.",
+      "Samsung semantic bounds include helper text; actual input border/inner geometry measured and active glyphs visually inspected.",
+      "No live AI, credentials, private photos, settings writes, diary writes or data clearing.",
+      "Landscape not claimed; portrait physical and compact viewports are acceptance evidence.",
+      "Legacy catalog retained under release transition; no release authorized."
+    ],
+    "review": {
+      "artifact_identity": "94791111593c79403e80266f76e15dd0a5288ba0534620b9831d3b4072339d26",
+      "outcome": "PASS",
+      "reviewer": "/root/review_foodus_003",
+      "scope": "Final production and Android regression diff; final SHA256 files match reviewed hashes. Read-only static PASS, device/visual evidence supplied separately."
+    },
+    "review_required": true
+  },
+  "metadata_before": {
+    "context/_boss-runs/milestone-b-sequential/briefing.md": {
+      "kind": "file",
+      "sha256": "56a4d615c71e66412b6b6d2c015def8f11d31271016ecb14b5c3d8933d782bf1"
+    },
+    "context/implementation-plans/milestone-b/foodus-003/plan.md": {
+      "kind": "file",
+      "sha256": "3e2a69dd6273023af860e5e3f4140722b1d9c940fd93817b82f6521bbc7d13d0"
+    },
+    "context/milestones/milestone-b.md": {
+      "kind": "file",
+      "sha256": "27c852ead805b78295e151c3d93b929e5a27ede228a4297deba8a95ecbc9be6e"
+    }
+  },
+  "phase": "READY",
+  "record": "context/_boss-runs/milestone-b-sequential/foodus-003-receipt.json",
+  "repo": "D:\\forked-projects\\FoodYou",
+  "schema_version": 1,
+  "status_owner": "context/milestones/milestone-b.md#foodus-003",
+  "transaction_id": "fe15fbebaa744af9aa8c174ebdadc90a"
+}
