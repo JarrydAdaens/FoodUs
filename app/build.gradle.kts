@@ -163,7 +163,7 @@ android {
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = libs.versions.android.versionCode.get().toInt()
-        // The shipped Android versionName is the fork's own <milestone>.<story>.<build> version so
+        // The shipped Android versionName follows context/versioning-policy.md and its legacy transition so
         // installed-version checks (Obtainium) line up with the fork's v* release tags. The
         // upstream Food You version stays available as BuildConfig.VERSION_NAME metadata.
         versionName = libs.versions.fork.version.name.get()

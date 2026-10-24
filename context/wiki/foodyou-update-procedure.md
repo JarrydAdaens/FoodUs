@@ -69,12 +69,21 @@ any future candidate keystore be confirmed as the right one):
 
 Follow the [FoodUs Versioning Policy](../versioning-policy.md) and edit the current values in
 `gradle/libs.versions.toml`. Increase `android-versionCode` above every installed or shipped
-code; choose `fork-version-name` from the delivered `<milestone>.<story>.<build>` state. Read the
-catalog for the present values rather than using a historical release example.
+code. For the next release, transition the legacy `fork-version-name` to
+`Generation.Milestone.StoriesClosed.ReleaseCount` using the policy's authoritative trackers
+and migration checks. After transition, keep draft versions synchronized when tracked state
+changes; increment ReleaseCount only for publication. Read the catalog for present values.
 
 `fork-version-name` is the app's shipped Android versionName; the `v*` tag that triggers the
 release workflow must be `v<fork-version-name>` so Obtainium's installed-vs-latest comparison
-works without workarounds.
+has matching identifiers. Before the first four-part release, preflight Obtainium selection
+using an isolated test source with representative old/new releases (separate publication
+authorization required), and prove a signed-candidate update on a test device or emulator.
+The new name may sort below historical tags; Android install ordering comes from versionCode.
+After authorized publication, verify actual Obtainium discovery and update on the first
+phone before rolling out to the second. Keep the same-signature sideload fallback in §4.
+Record the canonical version, tag, versionCode, and source revision in the GitHub release
+notes as the release ledger. Never rewrite an existing tag or release to migrate the scheme.
 
 - Simple scheme (plan Q4): before each shipped build, set it to `installed + 1`.
 - On upstream merges: take `max(upstream, ours) + 1` if shipping. This single line is the one

@@ -108,8 +108,9 @@ build but Android is primary. Current upstream version: 3.4.9 (GPL-3.0).
 
 **Creator.** The upstream project is created and maintained by Mateusz Maksimowicz
 ([maksimowiczm](https://github.com/maksimowiczm) on GitHub). This repository is Jarryd Adaens's fork
-of it — FoodUs — which will carry its own identity, versioning (starting at 1.0, layered on
-top of the upstream version), and upstream attribution once Milestone 2's identity story lands.
+of it — FoodUs — with its own shipped identity and upstream attribution. The
+[versioning policy](versioning-policy.md) defines its adopted four-part product version
+and the transition from historical three-part releases; upstream versioning remains attribution.
 
 **Who it is for.** People who want to log what they eat and track calories, macros, and
 micronutrients without accounts, ads, subscriptions, or upsells.
@@ -259,7 +260,7 @@ JSON remains the canonical source; app-specific formats are generated exports.
 ### Primary Configuration
 
 - `gradle/libs.versions.toml` — version catalog: fork version (`fork-version-name`,
-  `<milestone>.<story>.<build>`, the shipped versionName), upstream version-name kept as
+  the shipped versionName under the adopted policy and its legacy transition), upstream version-name kept as
   derived-from metadata, versionCode, SDK levels
   (min 28, compile/target 36), and every dependency version. Change dependencies here, not in
   build files. [FoodUs Versioning Policy](versioning-policy.md) owns the release version rules.

@@ -73,3 +73,77 @@ No unresolved selected-file conflict. Git metadata for the supplied starter was 
 The initial update omitted the starter's standalone versioning-policy route. That source document specifies an optional four-component scheme, while FoodUs's catalog, build, release workflow, and published versions use `<milestone>.<story>.<build>` plus Android `versionCode`. The correction adds `context/versioning-policy.md` for the existing FoodUs contract and routes release work to it from `AGENTS.md`, Design, and the update runbook. The runbook's old literal version sample was replaced with an instruction to read current catalog values. No product version or release identity changed.
 
 The starter policy was inspected from `D:\Code Projects\agentic_rails\agentic_rails_context_starter\context\versioning-policy.md` (SHA-256 `95202E7069F1BF28C20265AE7EE99BA17180C1C7958956E766F076402424CE93`); it was not copied or declared adopted. The exact original `AGENTS.md`, Design, and runbook bytes are recoverable from commit `fffc6ee2`. Local links and heading fragments pass, the documented catalog/build/release-guard relationships match source, and `git diff --check` passes. Mandatory Claude reading is 646 words after adding the route (AGENTS 645, wrapper 1). No app build was run for this documentation correction. A future change to the four-component scheme would require an explicit compatibility decision rather than a context update.
+
+## 2026-10-24 update: adopt the new versioning policy
+
+### Scope, source, and comparison
+
+The owner invoked `rails-update-from-starter` against the same local starter and explicitly requested the new versioning policy for FoodUs. This supersedes the earlier decision above to retain the old policy. Start state: clean checkout at `43cbffc079c45c10ae3b351167b1975fd2349051`. The target remains unprofiled with no generator baseline. A separate Core/Codex fixture with FoodUs identity, JDK 21, actual Gradle commands, privacy constraints, and no-pull/push policy was previewed and generated under the recovery directory; its 591-word entry point is comparison evidence only. No fixture manifest or profile is adopted by FoodUs.
+
+The source's loose `main` ref resolves to `f4519a4a3ef12c7ebc3e3b911567f97ad2293dac`; source worktree Git status is inaccessible in this sandbox. Actual input hashes identify the inspected content, including any source edits; this is not a claim about the latest remote version. The source checkout stays read-only.
+
+| Source input | SHA-256 |
+| --- | --- |
+| `README.md` | `c775f27a8254e895c05a3c9b363b4b2b8d58d303ae2e75440c18ea08423fb6dc` |
+| `scripts/starter.py` | `5c50af6461fcb672c500a5015a604f165a03d42a76e28fc41e4607ee4ff8534b` |
+| `templates/core/AGENTS.md` | `3dbb7ea69f847de2036ea86bb864243946dc6b65cbae79e0e9b07e8365d05aeb` |
+| `context/agenticworkflow.md` | `205234262311b8ae8e7176eee8406442eca518e77e3fe02beb9dd6f3105244a1` |
+| `context/versioning-policy.md` (policy 1.1) | `95202e7069f1bf28c20265ae7ee99ba17180c1c7958956e766f076402424ce93` |
+| `context/milestones/README-MILESTONES.md` | `43e8ccfb611d6f0283a40bd330e9117260a50778bae7455e41558382103a0c57` |
+
+### Disposition and recovery before the batch
+
+- Edit `context/versioning-policy.md`: adopt Generation.Milestone.StoriesClosed.ReleaseCount with exact tracker ownership, terminal-status counting, reopen/supplement rules, release ledger, and Android/tag/display mappings. Treat Externalized relay gates as open. Preserve the legacy catalog values during this context-only transition; migrate when preparing the next release unless the owner requests immediate catalog migration.
+- Edit `AGENTS.md`, `context/agenticworkflow.md`, `context/design.md`, `context/milestones/README-MILESTONES.md`, `context/milestones/MILESTONE_TEMPLATE.md`, and `context/wiki/foodyou-update-procedure.md`: route closure, milestone advancement, and releases to the adopted policy and remove active instructions to use the highest Story ID/build ordinal.
+- Edit comments only in `gradle/libs.versions.toml`, `app/build.gradle.kts`, and `app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/config/AppConfig.kt` to point at the policy while preserving current values and behavior.
+- Append to this existing plan. No tracked additions or removals. Preserve populated milestones, prior plans, dictations, backlog records, laws, harness, wrappers, source checkout, version values, signing identity, and release workflow. No unresolved text merge; reconciliation is manual because a target baseline is absent.
+
+Exact pre-edit bytes for all eleven selected paths are saved in `.recovery/review-20261024/original/`, with pre-edit hashes, all source-input hashes, and hashes of 1,123 protected tracked files in `.recovery/review-20261024/state.json`. The plan's existing ignore rule covers recovery output. Each resolved snapshot path was checked to remain under this checkout, and copies matched originals. Recheck the full pending batch before mutation and keep last-written hashes there. Recovery is per file, not a crash-safe tree transaction. Original clean bytes also remain recoverable at the start commit.
+
+### Reading measurement before the batch
+
+Method: whitespace-delimited words across complete UTF-8 files, including frontmatter and code, each mandatory import once. Codex starts with `AGENTS.md` (645 words); Claude starts with `CLAUDE.md` (1) importing AGENTS (646 total). The standing harness review adds `harness/README-HARNESS.md` (1,042), so the effective mandatory working sets are **1,687 Codex / 1,688 Claude**. The earlier entry-only totals above omitted this standing review and are not comparable full working-set measurements. No other project-local always-applied import was found. Global instructions and skill catalogs are excluded. Optional workflow (822 words), Design, and policy (462 words before this batch) are task-triggered. The harness contract is retained despite exceeding the starter's 400–800-word review target; no module is installed to run for this documentation change.
+
+### Continuation
+
+Next: apply the previewed batch after matching saved hashes; check preserved files and source inputs, links/anchors, exact catalog/build/display/release relationships, and realistic routing/counting scenarios. Record independent review and actual results here. No commit, pull, push, publication, deployment, or app-version bump is authorized by this update.
+
+### Independent review repair batch
+
+The independent evaluator confirmed closure counting and consumer mappings and found one sequencing defect: production Obtainium discovery cannot run before its release is published. Repair only the policy/runbook to separate isolated-source and signed-candidate preflight from postpublication discovery on the first phone and then the second. Tighten the versionCode bound to the actual Kotlin Int consumer. The preceding batch matches all saved last-written hashes. Next: apply those edits, recheck links and semantics, then record final evidence and hashes.
+
+### Final checks and routing evidence
+
+- Applied manual reconciliation to the eleven previewed paths, with no tracked additions, removals, profile change, or baseline enrollment. Core comparison and inherited-process review found the existing entry routing already slim; the necessary change is policy adoption and its status/release routes. Backlog guidance/templates, populated milestones and plans, laws, harness and wrapper remain intact. All 1,123 protected tracked file hashes and the actual source-input hashes match the saved pre-edit inventory.
+- All 44 local Markdown links/fragments in affected guidance resolve; Claude still imports AGENTS. No target `.agentic-rails.json` was created. `git diff --check` passes. Catalog parsing before/after is identical for every value. Removing comments produces identical executable build/config code. Actual sources confirm catalog → Android versionName / BuildConfig → About, upstream attribution separately, tag equality and APK naming, and JDK 21 / documented CI commands.
+- Status inspection finds the highest active milestone is 3, with Stories 1, 2, and 5 Complete. Its two Externalized relay gates are open. The count is three, not highest Story ID five or a count including external gates. This is dated acceptance evidence, not another live version source.
+- Routing scenarios: a bounded app correction reaches affected files, laws and meaningful checks; Story continuation reaches its owning milestone and existing plan; closure/reopening or milestone advancement now also reaches the policy; relay/security work still reaches Design, laws, the owner-released server gate and plan; release preparation reaches the policy, catalog, workflow and runbook; rationale recovery reaches Dictation then maintained truth. No route creates a new milestone tracker or changes an existing Story's acceptance/status.
+- After measurement (same whitespace method): AGENTS 646, Claude wrapper 1, standing harness review 1,042. Effective mandatory working sets are **1,688 Codex / 1,689 Claude**, versus **1,687 / 1,688 before**. Entry-only sizes are 646 / 647, versus 645 / 646. The one-word increase supplies closure/milestone routes; further slimming would remove retained project instructions. Workflow (868) and policy (1,093) remain task-triggered, rather than startup imports. No token/cost/latency savings or fresh-host activation is claimed.
+- No application build, emulator/device run, signed install, remote release-ledger audit, or Obtainium rollout was performed. This change touches documentation and comments only. The policy records release-time compatibility checks and separates preflight from postpublication rollout; their execution remains work for the next authorized release, not an incomplete check of this context edit. The catalog remains fork `3.5.0`, Android code `126`, upstream `3.4.9` under the explicit temporary legacy exception.
+
+Final non-plan file SHA-256 values follow. The plan's own changing hash and full pre-edit inventory are saved in the ignored state receipt; exact original bytes also remain recoverable from the clean start commit. Do not overwrite concurrent changes when resuming.
+
+| Path | Last-written SHA-256 |
+| --- | --- |
+| `AGENTS.md` | `c94117cac7e131d7226f18d61383cf806a5b5fe9211b975a334a3f58f26be14b` |
+| `context/agenticworkflow.md` | `b113155ea48d3da8741ecb7b78bbebaf332df40018df8bc5c4fce72c9678973e` |
+| `context/design.md` | `cb4934be4f3f4aa31c8648af1e634e7277cb06a0cc8dbac6b893a0dc88a5a068` |
+| `context/versioning-policy.md` | `88984acddc76478cd5932e2b183ed107faed43a47fc29e118edeb7ee28dc1009` |
+| `context/milestones/README-MILESTONES.md` | `2625ec05474d8cad956c1950be5e194a6d8836e81580e1a2fee57c360b5d785b` |
+| `context/milestones/MILESTONE_TEMPLATE.md` | `8297ee18382bb3f55a5ba420a5bc4a06a7a9edad3a71557d26a4e09a0eee81e6` |
+| `context/wiki/foodyou-update-procedure.md` | `4582476f91a2d1f2f30aa7ac98805dd66d6e0213285f9327189e1aebbca8b85c` |
+| `gradle/libs.versions.toml` | `fc4fb4d3739d361e22c9c4c006af11c210e5fb7bce9e934ce32ba2ad322bad6a` |
+| `app/build.gradle.kts` | `04857b8d16e79fdc8e6e5ef0e332c6ab39b7e11feda385df098800495d3639d7` |
+| `app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/config/AppConfig.kt` | `358f1459a3d2deb38000b781aa638eb2baed12f9373c51c8d478bc9142b6daf8` |
+
+### Completion
+
+Independent reviewer `/root/context_policy_review` returned **PASS WITH NOTES**, no remaining findings, against HEAD `43cbffc079c45c10ae3b351167b1975fd2349051`, the final policy/runbook hashes above, and the other selected-file hashes before this final evidence append. The sole finding (unpublished production release discovery) was repaired and re-reviewed. Notes concern the deliberately unperformed future release/device checks described above.
+
+This context update is complete. No unresolved selected-file conflict, no historical relocation, no app-version change, and no commit, pull, push, publication, or deployment. The next product action is an independently authorized release preparation following the adopted transition; derive versions from the trackers then rather than this dated receipt. Changed instructions on disk do not retract instructions already loaded into this conversation. Fresh-session host activation remains unobserved.
+
+Final workspace observation: an unrelated untracked `.codex-remote-attachments/` directory appeared during final verification. It was not created or modified as part of this update and remains untouched. Tracked changes still match the eleven previewed paths.
+
+### Subsequent commit authorization
+
+The owner subsequently requested `commit-log --commit`. The reviewed eleven-file context update is authorized for a local commit using that skill. Leave the unrelated untracked attachment directory and ignored recovery files unstaged; do not pull or push.

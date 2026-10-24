@@ -98,4 +98,5 @@ Stories deliberately left out of this milestone or moved to a later one.
 ## Notes
 
 - Keep this Story Index in sync with the [Milestones Index](../design.md#milestones-index) in Design.
+- On Story closure, reopening, or milestone advancement, maintain the shared product version under [the versioning policy](../versioning-policy.md), including its transition rules. Derive closed counts from statuses, not Story identifiers.
 - If a story turns out to be milestone-sized, reclassify it into its own milestone rather than forcing it into this one.

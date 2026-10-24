@@ -33,6 +33,7 @@ The backlog is an unscheduled Story pool, informally Milestone -1, rather than a
 | Architecture, privacy, relay, or version decision | Relevant Design sections and actual configuration; route release details to the adopted runbook. |
 | Milestone planning or Story selection | Design's Milestones Index, the relevant milestone, and backlog entries when choosing unscheduled work. |
 | Existing substantial Story | Its milestone Story section, current plan, and handover if present. |
+| Story closure, reopening, milestone advancement, or release | [Versioning policy](versioning-policy.md) and authoritative milestone statuses; follow its transition and release mappings. |
 | Harness-triggered behavior | Harness index and the matching module contract; record a missing check as an explicit limit. |
 | Intent recovery or scope revision | Relevant Dictation, then reconcile the accepted decision into maintained context. |
 
@@ -52,6 +53,6 @@ Complexity describes reasoning difficulty, effort describes work volume, and ris
 
 Meaningful checks follow the changed artifact: tests for new behavior and bug fixes, relevant structure checks for documentation and configuration, and device or emulator evidence for runtime claims. Run a matching harness gate when its trigger applies. If a required check cannot run, leave the result incomplete and explain the limit. Keep secrets and private data out of plans and logs.
 
-At a Story boundary, update its milestone status and plan evidence. For an interrupted plan, record what changed, what remains, and the next concrete step so a fresh session can continue from repository state. Historical implementation logs and completion reviews remain at their original paths. Do not require a new postmortem, estimate dashboard, advisor, persona, or per-Story commit for routine work.
+At a Story boundary, update its milestone status and plan evidence. When a Story closes or reopens, or the active milestone advances, maintain the shared product version under the [versioning policy](versioning-policy.md), including its legacy-version transition. For an interrupted plan, record what changed, what remains, and the next concrete step so a fresh session can continue from repository state. Historical implementation logs and completion reviews remain at their original paths. Do not require a new postmortem, estimate dashboard, advisor, persona, or per-Story commit for routine work.
 
 <!-- rails-lint-allow: VC001 VC002 VC003 VC004 -->

@@ -33,5 +33,6 @@ The high-level **Milestones Index** (the table of contents pointing at these fil
 - One file per milestone. Keep milestones thematic, not granular.
 - Each milestone directly contains its Story Index; stories do not live in a separate scheduling layer.
 - Keep the Milestones Index in [design.md](../design.md) in sync with the files here.
+- When Stories close or reopen, or the highest active numbered milestone advances, follow [the versioning policy](../versioning-policy.md) to maintain the shared product version. Count terminal statuses once per stable Story identity, never the highest Story ID. Apply the documented legacy-version transition; external relay gates still awaiting delivery remain open.
 - When a backlog story is too large for one coherent Story, reclassify it into a milestone here and in the Design index.
 - The system is progressive: complete a milestone and move on rather than perpetually re-opening old milestones.
