@@ -75,7 +75,10 @@ internal fun CreateProductScreen(
                 navigationIcon = { ArrowBackIconButton(handleBack) },
                 actions = {
                     FilledIconButton(onClick = { onCreate(state) }, enabled = state.isValid) {
-                        Icon(imageVector = Icons.Outlined.Save, contentDescription = null)
+                        Icon(
+                            imageVector = Icons.Outlined.Save,
+                            contentDescription = stringResource(Res.string.action_save),
+                        )
                     }
                 },
                 scrollBehavior = scrollBehavior,

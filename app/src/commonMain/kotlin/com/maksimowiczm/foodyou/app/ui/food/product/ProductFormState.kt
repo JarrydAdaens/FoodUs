@@ -33,7 +33,11 @@ import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
 
 @Composable
-internal fun rememberProductFormState(product: Product? = null): ProductFormState {
+internal fun rememberProductFormState(
+    product: Product? = null,
+    // Quick Add promotion carries authoritative totals, including explicit or unknown energy.
+    preserveEnergy: Boolean = false,
+): ProductFormState {
     val name =
         rememberFormField(
             initialValue = product?.name ?: "",
@@ -143,8 +147,10 @@ internal fun rememberProductFormState(product: Product? = null): ProductFormStat
         )
 
     val autoCalculateEnergyState =
-        rememberSaveable(product) {
-            if (product == null) {
+        rememberSaveable(product, preserveEnergy) {
+            if (preserveEnergy) {
+                mutableStateOf(false)
+            } else if (product == null) {
                 mutableStateOf(true)
             } else {
                 val energy = product.nutritionFacts.energy.value

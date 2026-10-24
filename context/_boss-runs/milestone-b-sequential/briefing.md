@@ -198,3 +198,52 @@ pending-save actions cannot duplicate the live insertion. Original rotation poli
 restored. No owner diary/settings writes, paid AI, private photos or data clearing.
 Receipt prepared before terminal metadata; commit pending at seal time. Last-item
 home completion remains FOODUS-007. Next authorized Story after commit is FOODUS-006.
+
+## Dispatch FOODUS-006
+
+FOODUS-004 reconciled COMPLETED_COMMITTED at `691fdf49`; only unrelated remote
+attachments were dirty before dispatch. One worker `/root/foodus_006` owns visible
+Product/Recipe actions in shared Quick Add, necessary promotion-runtime repairs,
+targeted regression tests and its Story plan. Preserve Save, manual/scan/create/
+edit/historical use, cancellation, source snapshots and existing Story19 mapping.
+Remove redundant overflow actions and use a compact accessible layout, without
+forcing all actions into the toolbar. Existing completed Story19 decisions and
+implementation supersede its historical plan's stale OPEN questions; no new product
+decision is required. No home-completion, retake, release-history or key edits.
+
+FOODUS-005 recorded a source lead: ProductFormState may enable automatic energy
+when any macro is unknown, even with explicit780 kcal. Required scan-origin
+promotion regression must reproduce or disprove this before any repair; keep a
+repair scoped to promotion prefill where possible, preserving normal product forms.
+Test actual production editors/mapping and cancellation over isolated repositories,
+not only route/seed serialization. Keep direct manual behavior and original history.
+Use shared ScanTestDriver for Samsung fixtures; generated images, private Koin and
+in-memory/temporary DB only, no global diary/settings writes, AI/private photos/keys.
+
+Coordinator owns trackers, builds, Samsung checks (physical and compact viewport),
+independent review, receipt and commit. Worker returns uncommitted, preserves other
+edits and unrelated attachments, and performs no builds/device/commit/pull/push.
+Independent review required for any promotion data-path repair. Requested model/
+effort inherit; observed unknown. Do not edit later Stories or publish a release.
+
+FOODUS-006 baseline reproduced on Samsung: initial Product prefill retained780,
+then filling its required unknown carbohydrate with0 changed energy to482
+(one failed assertion,26.415s). Coordinator authorized a promotion-prefill-only
+manual-energy initialization flag; normal Product/RemoteProduct defaults remain.
+The final seven-file implementation/test/plan candidate is frozen. Required
+independent reviewer `/root/review_foodus_006` is read-only over shared action layout,
+scoped energy initialization, accessibility descriptions and the five-method
+synthetic production-editor/Room fixture. Coordinator owns builds and physical/
+compact Samsung checks plus eight prior data/queue regressions on the physical
+viewport. No review build/device/edit/commit actions; model/effort inherit,
+observed unknown. Final source identity must be recorded before completion.
+
+FOODUS-006 final acceptance:140 unit tests/30 suites, debug/test APK builds,
+independent review and whitespace passed. Physical five full conversion cases
+passed338.054s; compact four passed plus final reported-scan case65.289s. Scoped
+Android status records and unchanged production/shared-driver/prior-test hashes
+verify the earlier eight FOODUS-004/005 passes. Final five-source layout method
+passed physical21.101s/compact39.103s. Ten final synthetic action screenshots
+inspected; display overrides restored. Failed intermediate whole invocations remain
+recorded, never represented as overall passes. Receipt prepared before terminal
+metadata; seal/commit next. No owner data writes or release/version change.

@@ -1,0 +1,213 @@
+{
+  "checked": {
+    "artifact_identity": "d275eee42371a3da242a8fdf02afaabce070eff2201f14244e148870078e0f91",
+    "base": "691fdf4925ddcc5b04b9272685f2abf1b74b8e3b",
+    "diff_identity": "796b14c961544b59741bd0953c1ceb93d02561fc570ce78eb64f8b907a26a815",
+    "files": {
+      "app/build.gradle.kts": {
+        "kind": "file",
+        "sha256": "04857b8d16e79fdc8e6e5ef0e332c6ab39b7e11feda385df098800495d3639d7"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddConversionTest.kt": {
+        "kind": "file",
+        "sha256": "a31fdf676e5dac1df28c4eba475e07fdc273924285ef8e82d509f4bf2aaa5f1b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddScreen.kt": {
+        "kind": "file",
+        "sha256": "677650a19aa1b4729d3fde68416f2910df1807147d2e7996e46ea4d18cf6b73f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/ProductForm.kt": {
+        "kind": "file",
+        "sha256": "d6ceddada62775e1c65a54e8cfbd7d607ac223d1f366ead6e33b1ff5cb33492e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/ProductFormState.kt": {
+        "kind": "file",
+        "sha256": "dca558d09d42221db954801742fbd5ee1aed569abda45781b9f0f7c414410787"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/create/CreateProductApp.kt": {
+        "kind": "file",
+        "sha256": "7bf6b1dab5156573b77ca6056e3ceaa4cf81b92cfdc89817de6a86da0529e013"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/create/CreateProductScreen.kt": {
+        "kind": "file",
+        "sha256": "95be921326425c407264273dd08aeda639800883bfe8132dea7a5acc0377085c"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "fc4fb4d3739d361e22c9c4c006af11c210e5fb7bce9e934ce32ba2ad322bad6a"
+      }
+    },
+    "head": "691fdf4925ddcc5b04b9272685f2abf1b74b8e3b"
+  },
+  "commit_authority": "User requested commit-log --commit after Samsung test for each Story",
+  "commit_policy": "single",
+  "decisions": [
+    "Stack labelled full-width Product/Recipe actions above shared Quick Add form; Save remains in toolbar; redundant overflow removed, validation and busy guards retained.",
+    "Samsung baseline reproduced explicit780 energy changing to482 after required missing carbohydrate filled0. Promotion Product prefill now starts manual for explicit or unknown energy; deliberate calculation remains available. Ordinary Product defaults unchanged.",
+    "Actual production Product/Recipe editors and isolated Room verify weight conversion/fallback, nullable backing facts, cancel cleanup, repeat promotions and source history preserved until explicit source save.",
+    "Existing Recipe sum uses Incomplete(0) for unknown aggregate. Stored Product/ingredient/source nulls remain strict; supplied Recipe values require Complete and correct numeric total. No global arithmetic change.",
+    "Passed earlier data gates retained with unchanged production. Final fixture adds bounded scroll anchoring and simultaneous full target geometry below toolbar, without weakening data assertions.",
+    "Private Koin, generated inputs and in-memory Room only; no owner diary/settings writes, live AI, private photos, credentials, data clearing, schema/dependency/version changes or release."
+  ],
+  "delivery": {
+    "artifact_identity": "3ed903ab192bf0047d5d501addf71f8ea7073b26e28d2eb070b86cde98381ccb",
+    "base": "691fdf4925ddcc5b04b9272685f2abf1b74b8e3b",
+    "committed_files": {
+      "app/build.gradle.kts": {
+        "git_blob": "a596aa518dc6c95940e92243ef30eef40a0cc4d4",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddConversionTest.kt": {
+        "git_blob": "b3a111a83818d65474c465fd3f5e995985b34af2",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddScreen.kt": {
+        "git_blob": "b7d71b8237862d22dffcea6aa85a93fd8b7e9980",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/ProductForm.kt": {
+        "git_blob": "0375c5c36a3ab34b0d411036679f2cc9ba149610",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/ProductFormState.kt": {
+        "git_blob": "c07cf47f76d83c877a09514691e2dbc4ee8e3920",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/create/CreateProductApp.kt": {
+        "git_blob": "f73c7275f372ea8e3657373fdfa8903866efd5e4",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/create/CreateProductScreen.kt": {
+        "git_blob": "1660a66f6923afd117559cb0c5fe7bcafbb3def0",
+        "kind": "file"
+      },
+      "context/_boss-runs/milestone-b-sequential/briefing.md": {
+        "git_blob": "d7afac6132512f494db2c041c263862ca39d12e7",
+        "kind": "file"
+      },
+      "context/implementation-plans/milestone-b/foodus-006/plan.md": {
+        "git_blob": "8f2381a5896b9ad4ff7fccea3f221d4600ebf96f",
+        "kind": "file"
+      },
+      "context/milestones/milestone-b.md": {
+        "git_blob": "dbe7b0e8e9f65a91ab37ba24a86fad58c81f742d",
+        "kind": "file"
+      },
+      "gradle/libs.versions.toml": {
+        "git_blob": "6dcdb5e97c35db4c4aad9e94864faaa8be7a75a7",
+        "kind": "file"
+      }
+    },
+    "diff_identity": "d8f30f969463fdd444dbec98973ffbe908aa8919f2eb1207329f0b0736d8f657",
+    "files": {
+      "app/build.gradle.kts": {
+        "kind": "file",
+        "sha256": "04857b8d16e79fdc8e6e5ef0e332c6ab39b7e11feda385df098800495d3639d7"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddConversionTest.kt": {
+        "kind": "file",
+        "sha256": "a31fdf676e5dac1df28c4eba475e07fdc273924285ef8e82d509f4bf2aaa5f1b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddScreen.kt": {
+        "kind": "file",
+        "sha256": "677650a19aa1b4729d3fde68416f2910df1807147d2e7996e46ea4d18cf6b73f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/ProductForm.kt": {
+        "kind": "file",
+        "sha256": "d6ceddada62775e1c65a54e8cfbd7d607ac223d1f366ead6e33b1ff5cb33492e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/ProductFormState.kt": {
+        "kind": "file",
+        "sha256": "dca558d09d42221db954801742fbd5ee1aed569abda45781b9f0f7c414410787"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/create/CreateProductApp.kt": {
+        "kind": "file",
+        "sha256": "7bf6b1dab5156573b77ca6056e3ceaa4cf81b92cfdc89817de6a86da0529e013"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/create/CreateProductScreen.kt": {
+        "kind": "file",
+        "sha256": "95be921326425c407264273dd08aeda639800883bfe8132dea7a5acc0377085c"
+      },
+      "context/_boss-runs/milestone-b-sequential/briefing.md": {
+        "kind": "file",
+        "sha256": "7e4e71f4f26a4f4787591931651813407c9932a2acd3f8f8dfbd59a71c859889"
+      },
+      "context/implementation-plans/milestone-b/foodus-006/plan.md": {
+        "kind": "file",
+        "sha256": "33042f7be8d7343926eff04c97108c640d8727a02930e78bba0c550b7db49f0c"
+      },
+      "context/milestones/milestone-b.md": {
+        "kind": "file",
+        "sha256": "d5c646bfed2a76609fd34c4ace558e31aa101a9bb40eb6173a3ef67bde9e1855"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "fc4fb4d3739d361e22c9c4c006af11c210e5fb7bce9e934ce32ba2ad322bad6a"
+      }
+    },
+    "head": "691fdf4925ddcc5b04b9272685f2abf1b74b8e3b"
+  },
+  "evidence": {
+    "checks": [
+      {
+        "artifact_identity": "d275eee42371a3da242a8fdf02afaabce070eff2201f14244e148870078e0f91",
+        "command": ".\\gradlew.bat --offline --no-daemon --console=plain -q :app:testDebugUnitTest :app:assembleDebug :app:assembleDebugAndroidTest",
+        "outcome": "PASS",
+        "result": "Final production: 140 tests/30 suites, zero failures/errors; debug/test APKs built. Fixture-only changes subsequently rebuilt with :app:assembleDebugAndroidTest."
+      },
+      {
+        "artifact_identity": "d275eee42371a3da242a8fdf02afaabce070eff2201f14244e148870078e0f91",
+        "command": "python app/build/check-foodus-006-preserved-data.py",
+        "outcome": "PASS",
+        "result": "Exact Android status records prove five physical conversion cases, four compact conversion cases, and earlier eight FOODUS-004/005 cases; production/shared driver/prior tests unchanged by fingerprint. Original failing invocations are not claimed overall passes."
+      },
+      {
+        "artifact_identity": "d275eee42371a3da242a8fdf02afaabce070eff2201f14244e148870078e0f91",
+        "command": "Invoke-FoodUsStoryDeviceChecks foodus-006 QuickAddConversionTest#sourceActionLayoutAcrossDirectScanWeightedCurrentAndHistoricalForms [same compact] QuickAddConversionTest#scanProductKeepsExplicitEnergyWhenUserCompletesRequiredMissingMacro",
+        "outcome": "PASS",
+        "result": "Samsung SM-A057F Android15: all five source layouts at1080x2400 and900x1600; full reported scan conversion at compact. Synthetic window screenshots inspected; display overrides restored."
+      },
+      {
+        "artifact_identity": "d275eee42371a3da242a8fdf02afaabce070eff2201f14244e148870078e0f91",
+        "command": "git diff --check",
+        "outcome": "PASS"
+      }
+    ],
+    "decisions": [
+      "Stack labelled full-width Product/Recipe actions above shared Quick Add form; Save remains in toolbar; redundant overflow removed, validation and busy guards retained.",
+      "Samsung baseline reproduced explicit780 energy changing to482 after required missing carbohydrate filled0. Promotion Product prefill now starts manual for explicit or unknown energy; deliberate calculation remains available. Ordinary Product defaults unchanged.",
+      "Actual production Product/Recipe editors and isolated Room verify weight conversion/fallback, nullable backing facts, cancel cleanup, repeat promotions and source history preserved until explicit source save.",
+      "Existing Recipe sum uses Incomplete(0) for unknown aggregate. Stored Product/ingredient/source nulls remain strict; supplied Recipe values require Complete and correct numeric total. No global arithmetic change.",
+      "Passed earlier data gates retained with unchanged production. Final fixture adds bounded scroll anchoring and simultaneous full target geometry below toolbar, without weakening data assertions.",
+      "Private Koin, generated inputs and in-memory Room only; no owner diary/settings writes, live AI, private photos, credentials, data clearing, schema/dependency/version changes or release."
+    ],
+    "review": {
+      "artifact_identity": "d275eee42371a3da242a8fdf02afaabce070eff2201f14244e148870078e0f91",
+      "outcome": "PASS",
+      "reviewer": "/root/review_foodus_006",
+      "scope": "Independent promotion integrity, action layout, privacy and regression review; final anchoring/layout renewal included.",
+      "source_aggregate": "85f585d964ca1418e8ec9e31efd3b28ceefd1dda1c1dc6b6f358e3acd1c8a718"
+    },
+    "review_required": true
+  },
+  "metadata_before": {
+    "context/_boss-runs/milestone-b-sequential/briefing.md": {
+      "kind": "file",
+      "sha256": "d86fb3a41fb9900da51c08364f47d45dbdf0d8b2017b1f7a07188c45fa4d3e65"
+    },
+    "context/implementation-plans/milestone-b/foodus-006/plan.md": {
+      "kind": "file",
+      "sha256": "1f313f68f1cae6093ec07fd5ff25d2411a9ee2b24093176ff8b11621d7b24e82"
+    },
+    "context/milestones/milestone-b.md": {
+      "kind": "file",
+      "sha256": "266dd51539e02e791da158e32410a83fd654b69be610dbdbe0f5ee4ae05ef5ed"
+    }
+  },
+  "phase": "READY",
+  "record": "context/_boss-runs/milestone-b-sequential/foodus-006-receipt.json",
+  "repo": "D:\\forked-projects\\FoodYou",
+  "schema_version": 1,
+  "status_owner": "context/milestones/milestone-b.md#foodus-006",
+  "transaction_id": "879f18cab7e54f5ca7fa3f75a60cc3fc"
+}

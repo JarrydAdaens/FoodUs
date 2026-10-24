@@ -2,19 +2,17 @@ package com.maksimowiczm.foodyou.app.ui.food.diary.quickadd
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.MoreVert
 import androidx.compose.material.icons.outlined.Save
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -105,39 +103,6 @@ internal fun QuickAddScreen(
                 title = { Text(stringResource(Res.string.headline_quick_add)) },
                 navigationIcon = { ArrowBackIconButton(handleBack, enabled = !busy) },
                 actions = {
-                    var menuExpanded by remember { mutableStateOf(false) }
-                    IconButton(onClick = { menuExpanded = true }) {
-                        Icon(
-                            imageVector = Icons.Outlined.MoreVert,
-                            contentDescription = stringResource(Res.string.action_show_more),
-                        )
-                    }
-                    DropdownMenu(
-                        expanded = menuExpanded,
-                        onDismissRequest = { menuExpanded = false },
-                    ) {
-                        DropdownMenuItem(
-                            text = {
-                                Text(stringResource(Res.string.action_promote_to_product))
-                            },
-                            onClick = {
-                                menuExpanded = false
-                                onPromoteToProduct()
-                            },
-                            enabled = state.isValid && !busy,
-                        )
-                        DropdownMenuItem(
-                            text = {
-                                Text(stringResource(Res.string.action_promote_to_recipe))
-                            },
-                            onClick = {
-                                menuExpanded = false
-                                onPromoteToRecipe()
-                            },
-                            enabled = state.isValid && !busy,
-                        )
-                    }
-
                     FilledIconButton(
                         onClick = {
                             if (state.isValid && !busy) {
@@ -163,6 +128,24 @@ internal fun QuickAddScreen(
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
             contentPadding = paddingValues.add(horizontal = 16.dp, vertical = 8.dp),
         ) {
+            item {
+                OutlinedButton(
+                    onClick = { if (state.isValid && !busy) onPromoteToProduct() },
+                    enabled = state.isValid && !busy,
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text(stringResource(Res.string.action_promote_to_product))
+                }
+                Spacer(Modifier.height(8.dp))
+                OutlinedButton(
+                    onClick = { if (state.isValid && !busy) onPromoteToRecipe() },
+                    enabled = state.isValid && !busy,
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text(stringResource(Res.string.action_promote_to_recipe))
+                }
+                Spacer(Modifier.height(16.dp))
+            }
             item {
                 Text(
                     text = stringResource(Res.string.description_quick_add),

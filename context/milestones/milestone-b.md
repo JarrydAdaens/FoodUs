@@ -72,7 +72,7 @@ column distinguishes required sequencing from independent work.
 | FOODUS-003 | Complete | [Visible scanner hint with keyboard](#foodus-003) | Bug | Normal/compact Samsung keyboard acceptance passed |
 | FOODUS-004 | Complete | [Review and select multiple scanned foods](#foodus-004) | Enhancement | Samsung selection/queue acceptance and FOODUS-005 regressions passed |
 | FOODUS-005 | Complete | [Preserve scan data through Quick Add](#foodus-005) | Data integrity bug | Samsung data-preservation acceptance passed; receipt linked below |
-| FOODUS-006 | Not Started | [Visible Quick Add conversion actions](#foodus-006) | UX | No hard B prerequisite; integrate with FOODUS-004/005/007 |
+| FOODUS-006 | Complete | [Visible Quick Add conversion actions](#foodus-006) | UX | Physical/compact Samsung layout and promotion acceptance passed |
 | FOODUS-007 | Not Started | [Finish scan workflow after successful save](#foodus-007) | Navigation bug | FOODUS-005 and FOODUS-004 for final single/multi-item completion proof |
 | FOODUS-008 | Not Started | [Retake without discarding the prior photo](#foodus-008) | Workflow bug | No B prerequisite; reuse existing capture mechanism |
 | FOODUS-009 | Not Started | [FoodUs-specific What's New](#foodus-009) | Content bug | Actual release facts unverified; content acceptance blocked pending ledger verification |
@@ -265,7 +265,16 @@ direct manual entry. Establish this correction before the multi-item expansion.
 
 ### FOODUS-006: Show Quick Add conversion actions as visible buttons
 
-**Status:** Not Started
+**Status:** Complete (2026-10-24; completion provisional until receipt reconciles)
+
+**Delivery:** [Plan and acceptance evidence](../implementation-plans/milestone-b/foodus-006/plan.md),
+[completion receipt](../_boss-runs/milestone-b-sequential/foodus-006-receipt.json).
+All140 unit tests, debug/test APK builds and independent review passed. Samsung
+physical/compact layouts passed across all five source variants; actual conversion,
+cancel/repeat/save and history data gates passed at both sizes. Ten final synthetic
+layout screenshots inspected; temporary display overrides restored. Promotion-only
+energy initialization preserves supplied values when required macros are completed.
+
 
 **Reported problem / value:** Convert to Product and Convert to Recipe are hidden in
 the ellipsis menu despite Save being directly visible.

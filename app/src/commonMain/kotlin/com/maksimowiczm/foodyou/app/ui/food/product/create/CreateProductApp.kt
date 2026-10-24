@@ -49,7 +49,7 @@ internal fun CreateProductApp(
                 val state =
                     when {
                         product != null -> rememberProductFormState(product)
-                        prefillProduct != null -> rememberProductFormState(prefillProduct)
+                        prefillProduct != null -> rememberProductFormState(prefillProduct, preserveEnergy = true)
                         else -> rememberProductFormState()
                     }
 

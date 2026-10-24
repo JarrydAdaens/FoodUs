@@ -720,9 +720,15 @@ private fun EnergyTextField(
                 ) {
                     IconButton(onClick = { onAutoCalculateToggle(!autoCalculate) }) {
                         if (autoCalculate) {
-                            Icon(imageVector = Icons.Outlined.Calculate, contentDescription = null)
+                            Icon(
+                                imageVector = Icons.Outlined.Calculate,
+                                contentDescription = stringResource(Res.string.headline_auto_calculate_energy),
+                            )
                         } else {
-                            Icon(imageVector = Icons.Outlined.Keyboard, contentDescription = null)
+                            Icon(
+                                imageVector = Icons.Outlined.Keyboard,
+                                contentDescription = stringResource(Res.string.headline_manual_energy_input),
+                            )
                         }
                     }
                 }
