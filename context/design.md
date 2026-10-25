@@ -2,7 +2,7 @@
 name: design
 description: Design specification for FoodUs - a personal, privacy-first fork of the Food You KMP/Compose food diary - covering architecture, principles, constraints, the context tier system, and the embedded milestones index.
 metadata:
-  version: "3.1"
+  version: "3.2"
   agentic_rails_source_version: "3.0"
   owner: "Jarryd Adaens"
   repo: "FoodYou (fork of maksimowiczm/FoodYou)"
@@ -164,18 +164,72 @@ approachable despite living mostly in one Gradle module.
 
 ### Domain Model (shared vocabulary)
 
-These concepts underpin the Milestone 1 data-recovery work and the Milestone 2 UI work:
+The owner accepted this vocabulary on 2026-10-25. This section owns the target domain
+language; source identifiers that still use earlier names are implementation debt.
 
-| Concept | Definition |
+| Domain/code concept | User-facing wording | Definition |
+| --- | --- | --- |
+| **Product** | Food | An individual nutritional item, including ordinary ingredients and packaged products. Nutrition is defined directly; brand, barcode, package weight, serving weight, and notes are optional metadata. Existing storage uses nutrition per 100 g or 100 mL. |
+| **Recipe** | Recipe | Ingredients and their amounts combined into a new composite item with a serving yield. Its nutrition is derived from its ingredients. Ordinary logging creates one portioned diary entry for the Recipe. |
+| **Meal** | Meal / Meals | A named, saved, reusable bundle. Loading it appends each constituent as a separate diary entry; it does not merge the bundle into a new Recipe. A constituent may represent a Product, a portion of a Recipe, or a captured Quick Add entry. |
+| **DiarySlot** | The configured name, such as Breakfast or Lunch | A named diary category with its time window and display order. It is a destination for entries, independent of a reusable Meal definition. |
+| **DiaryEntry** | Entry, usually displayed by its item name | A dated record assigned to a DiarySlot, carrying a nutritional snapshot of the amount logged. It is distinct from the reusable definition and must preserve historical nutrition when definitions change. |
+
+**Food** is friendly user-facing vocabulary, not a fourth domain entity. **Template**
+is not a separate product concept. The accepted reusable-bundle type is now **Meal**,
+superseding the earlier `MealTemplate` target name. Product, Recipe, and Meal remain
+distinct concepts even if a shared library eventually presents them together.
+
+For example, a Meal named "Usual breakfast" may contain an omelette Recipe and toast
+from a Product. Loading it into tomorrow's Breakfast DiarySlot creates two DiaryEntries;
+the omelette's ingredients remain combined inside its Recipe entry. Viewing or editing
+a saved definition is separate from logging it.
+
+#### Serving, portion, and quantity
+
+A **serving** is a reference quantity: one serving of a Recipe or a defined unit of a
+Product. A **portion** is the amount actually used or eaten, such as two servings or
+150 g. Quantity and unit must be explicit where known. Recipe yield is how many
+servings the complete Recipe makes; a diary portion is how much was logged.
+
+These are semantic decisions, not authorization to introduce a new Portion class or
+change numeric storage automatically. Existing `Measurement` types already represent
+amounts in weight, volume, servings, or packages. Preserve unknown weights and units;
+never invent a gram basis for a saved entry. Quick Add stores absolute nutrition totals;
+its optional serving count and weight are descriptive metadata and must not silently
+rescale those totals. A placeholder is an unresolved DiaryEntry, not another reusable
+catalogue type.
+
+#### Current source names and implementation transition
+
+| Existing identifier/role | Accepted target or planning requirement |
 | --- | --- |
-| **Custom food** | A food built from scratch by specifying its fundamentals — macros, minerals, fats, proteins, etc. — and given a name. |
-| **Recipe** | A collection of distinct ingredient foods making up one final food item. When used, it stays **collapsed** into a single diary entry (e.g. "birthday cake"). |
-| **Meal** | Also built from components, but when inserted into the diary it **expands**: each sub-item is added as its own entry (e.g. "chicken sandwich" inserts bread + mayonnaise + 100 g chicken + 50 g cheese). |
-| **Diary entry** | A reference to a food that was eaten — not the definition of the food. Links to a food and gives it a portion size. |
-| **Placeholder entry** | (Planned, Milestone 2.) A zero-calorie diary entry holding only a name and description — a marker that something was eaten, resolved into real data later. |
+| `Product` and `Recipe` | Keep their distinct roles and existing creation/editing foundations. |
+| `MealTemplate` and its related item, ID, repository, use-case, and UI names | Adopt the `Meal` family for reusable bundles, including `MealItem` and related names. Remove template terminology from this feature's UI. |
+| Current diary-category `Meal` and category `mealId` references | Adopt `DiarySlot` and corresponding slot identifiers. Free the `Meal` name for the reusable bundle without confusing the two identities. |
+| `DiaryMeal`, the category-and-entries aggregate | Keep it as a diary grouping/projection; choose a name describing that role during planning. It is not the saved reusable Meal. |
+| Shared `Food` interface and related polymorphic APIs | Choose a precise role-based name once the shared abstraction's responsibilities are settled. Do not rename it to `Product`: Recipes also implement it. No replacement interface name is selected by this decision. |
 
-Recipes and meals overlap conceptually; the difference is collapse-vs-expand behavior at insertion
-time.
+This is a target design; these source renames and the new library are not delivered.
+Implementation must handle the existing name collision coherently, update relevant
+APIs/state/navigation/resources/tests, and preserve stable identities and serialized
+meaning. Kotlin type renames must not implicitly rename Room tables or columns, break
+backups, reassign entries to different slots, or lose saved bundles. Keep explicit
+legacy storage mappings or use a tested data-preserving migration where needed.
+Historical Story evidence, paths, and upstream source namespaces retain their identities.
+
+A central Meals library/editor is selected in
+[Milestone 2 Story 24](milestones/milestone-2.md#story-24), extending Story 13's delivered
+save/apply/delete flow. It must share one saved collection with diary actions, support
+rename and constituent editing with explicit Save/Cancel, and preserve existing diary
+snapshots when saved Meals change. Legacy bundle items currently store a name and total
+nutrition without a live Product/Recipe link or original amount/unit; the editing model
+and any additional portion metadata need a deliberate implementation decision.
+
+A combined Foods/Recipes/Meals management destination remains a future design choice;
+it is not an additional accepted feature in Story 24. Naming the shared abstraction,
+the diary-group projection, and the editor's handling of unknown portions are planning
+decisions. No third-party studies or extracted reference material belong in this context.
 
 ---
 

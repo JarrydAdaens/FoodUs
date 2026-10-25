@@ -2,7 +2,7 @@
 name: milestone-2
 description: Milestone 2 - Customisation. Change how the application works - FoodUs identity, AI-assisted logging, ergonomics, adopted upstream bug fixes, Australian food-data providers with offline-first local storage, and an expanded Quick Add with promotion to custom products/recipes.
 metadata:
-  version: "3.1"
+  version: "3.3"
   agentic_rails_source_version: "3.0"
   owner: "Jarryd Adaens"
   repo: "FoodUs (fork of maksimowiczm/FoodYou)"
@@ -23,6 +23,7 @@ Start actually changing how the application works — making logging easier for 
 adding the fork's own identity and AI integrations. It also broadens the app's food data — adding
 first-class Australian providers stored locally for offline-first search — and expands Quick Add so
 estimated foods carry more detail and can later graduate into reusable custom products or recipes.
+Saved reusable bundles are presented as Meals, with a central place to view and edit them.
 
 ## Why it matters
 
@@ -40,7 +41,8 @@ estimated foods carry more detail and can later graduate into reusable custom pr
 The app carries the FoodUs identity (with upstream attribution and layered versioning), the
 four-button per-meal logging surface (search, quick add, AI scan, fast placeholder) works end to
 end including placeholder resolution, the settings ergonomics options (graphs, week layout) ship,
-reusable meal templates let a day's entries be saved and re-applied on other days, and adopted
+reusable Meals let a day's entries be saved and re-applied on other days, a central
+Meals library supports editing those bundles using the accepted domain vocabulary, and adopted
 upstream bugs are fixed. In addition, the Australian Food Composition Database provider works
 through the normal provider UI with locally stored, offline-first search; FoodSwitch is either
 integrated or its access blocker is documented; provider update-checks persist the last successful
@@ -52,9 +54,10 @@ without altering the original diary snapshot.
 
 In Progress — reopened 2026-07-26 by the
 [owner's addendum](../dictations-tier-0/2026-07-26_addendum_ai-settings-branding-foodus.md) after
-daily use. 22 of 23 stories complete (all addendum Stories 21–23 landed 2026-07-27); Story 16
-(FoodSwitch) remains blocked on an external data licence, documented per its own gate — no
-unstarted stories remain. The milestone is not yet closable as written: the Definition of Done's
+daily use. 22 of 24 stories complete (all addendum Stories 21–23 landed 2026-07-27); Story 16
+(FoodSwitch) remains blocked on an external data licence, documented per its own gate, and
+Story 24 (Meals library and terminology), added by the owner on 2026-10-25, is Not Started.
+The milestone is not yet closable as written: Story 24 remains undelivered and the Definition of Done's
 "adopted upstream bugs are fixed" clause is unmet — the Story 12 bug stories are still staged in
 `../backlog/backlog-1.md` and were never pulled into this milestone's story list. Closing requires
 the owner to either schedule those fixes or revise that DoD clause. The original 19-story run
@@ -109,6 +112,7 @@ Definition of Done. Story 16 can resume only after its licence gate is released.
 | 21 | Complete | [Three-layer AI prompt architecture](#story-21) | Feature | 4 | 4 | 3 | [plan](../implementation-plans/milestone-2/story-21-three-layer-ai-prompts/plan.md) |
 | 22 | Complete | [AI settings screen](#story-22) | Feature | 4 | 5 | 4 | [plan](../implementation-plans/milestone-2/story-22-ai-settings-screen/plan.md) |
 | 23 | Complete | [Provider website info links](#story-23) | Feature | 2 | 2 | 1 | [plan](../implementation-plans/milestone-2/story-23-provider-website-links/plan.md) |
+| 24 | Not Started | [Meals library and domain terminology](#story-24) | Feature | — | — | — | — |
 
 ---
 
@@ -421,6 +425,9 @@ first-class entity or built on the existing recipe/`DiaryMeal` machinery.
 
 **Status:** Complete (2026-07-25, commit `0e699bbb`) — new first-class `MealTemplate`/`MealTemplateItem` tables (Room 33→34, additive). Snapshot semantics: applying recreates each item as its own manual diary entry with the exact stored nutrition (survives later product deletion; tradeoff: re-applied items lose the live-product link). UX: meal-card overflow menu — Save as template / Apply template (bottom sheet with delete). Full save→apply→delete loop emulator-verified; use-case tests pass.
 
+**Follow-up:** [Story 24](#story-24) adds the Meals library, editing, and the owner's revised
+UI terminology. This extends the delivered feature; Story 13 remains Complete.
+
 ---
 
 <a id="story-14"></a>
@@ -714,6 +721,90 @@ provider — docs were not stale and upstream added nothing.
 
 ---
 
+<a id="story-24"></a>
+
+### Story 24: Meals library and domain terminology
+
+**Type:** Feature
+
+**Status:** Not Started (2026-10-25; owner-requested addition to the current delivery milestone).
+
+**Summary:** Present saved reusable bundles of food entries to users as **Meals**, and give
+them one central place to view, edit, and manage every saved Meal. Preserve the existing
+save-and-load workflow: save a bundle once, then add its separate entries to a chosen diary
+day and DiarySlot whenever it is eaten again. Use the accepted
+[Design vocabulary](../design.md#domain-model-shared-vocabulary): Product, Recipe, Meal,
+DiarySlot, and DiaryEntry, with serving and portion given separate meanings.
+
+**Why / value:** Recurring meals need maintenance as portions or ingredients change. Today
+the saved bundles can be applied or deleted from a meal-card sheet, but cannot be edited
+in a dedicated library, and the UI exposes the implementation word "template".
+
+**Naming contract:** Use **Meal** / **Meals** in labels, titles, dialogs, accessibility text,
+and user-facing messages for this feature; examples are "Save Meal", "Load Meal", and
+"Meal name". The owner's later 2026-10-25 decision supersedes the earlier `MealTemplate`
+target naming: the reusable bundle becomes **Meal** in code too, while the existing
+diary-category `Meal` becomes **DiarySlot**. Align related components, state, routes,
+use cases, and repository APIs with their roles. Product remains the atomic nutritional
+item and Recipe the composite item; Food is UI vocabulary. The common `Food` interface
+needs its own role-based naming decision, since it also covers Recipes. Do not globally
+replace Food with Product or rename unrelated template concepts and historical records.
+
+**Transition ownership:** Record the current-to-target mapping in Design and plan the
+coupled diary-category/reusable-bundle rename before implementing it. Preserve IDs,
+explicit legacy storage/serialization mappings, backup compatibility, and all existing
+entries. Naming changes alone do not authorize destructive schema or data changes.
+
+**Existing implementation evidence (2026-10-25 source inspection):** Story 13 already owns
+the `fooddiary` domain types, snapshot persistence, and save/apply use cases. Its
+`MealTemplateRepository` exposes observe/read/save/delete, with no update operation.
+The diary home `MealCard.kt` contains `SaveTemplateDialog` and `ApplyTemplateSheet`;
+the shared English strings say "Save as template", "Apply template", and "Template name".
+`MealTemplateItem` stores a name and portion-adjusted nutrition totals, rather than a live
+food reference or an explicit per-100 g serving model. Build on these contracts.
+
+**Rough scope / acceptance criteria:**
+
+- Provide a clearly discoverable **Meals** library reachable independently of a populated
+  diary meal card. Show all saved Meals, a useful empty state, their names and constituent
+  entries, and a path to edit or delete a selected Meal. The central library and existing
+  diary save/load actions observe the same persisted collection.
+- A user can rename a Meal and add, remove, or edit its constituent entries and their
+  portions/nutrition. Changes can be saved or cancelled. Reject blank names and empty or
+  invalid bundles with clear feedback; failed saves preserve the prior saved Meal. Support
+  the existing snapshot model and do not invent gram weights or per-100 g values that the
+  saved data does not contain.
+- Saving a diary bundle still creates a reusable Meal. Loading a Meal into a selected
+  date and diary slot appends each constituent as its own diary entry with the intended
+  amounts and nutrition; it does not replace existing entries or collapse the bundle
+  into a Recipe. An explicit load applies it once; a failed operation leaves no partial
+  bundle. Persist edits across navigation and app restart.
+- Apply Meal/Meals wording across this feature's entry points, library/editor, save/load
+  dialogs, errors, and accessibility text using shared string resources. Internal naming
+  follows the accepted Product/Recipe/Meal/DiarySlot/DiaryEntry contract. Breakfast/Lunch
+  remain diary destinations; a Recipe within a loaded Meal remains one constituent entry.
+  A serving is a reference quantity and a portion the amount used or eaten; preserve
+  Quick Add absolute totals and unknown original amount/unit values.
+- Existing saved Meals survive an in-place upgrade. Editing or deleting a saved Meal
+  affects future loads only; previously logged diary snapshots and source foods/recipes
+  remain unchanged. Keep stable identities and use a data-preserving migration if the
+  editor needs schema changes; avoid destructive storage renames for terminology alone.
+- Add meaningful regression checks for update/cancel/validation, persistence, transactional
+  load, and historical snapshot isolation. Verify the visible save → library → edit →
+  load → delete workflow on a device or emulator with synthetic data, including existing
+  saved Meals and the empty-library path. No cloud or relay dependency is introduced.
+
+**Dependencies and planning seam:** Depends on the completed [Story 13](#story-13).
+No FoodSwitch licence or multiplayer/server gate blocks this work. The implementation
+plan should choose the library's navigation entry point and the editor's portion model
+from the existing UI and stored totals, then identify any migration and upgrade checks.
+It must also resolve the common-interface and diary-group projection names by role and
+sequence the conflicting Meal/MealTemplate names safely. Product/Recipe foundations
+already exist; a new unified catalogue hub is not required by this Story.
+It has not been estimated or implemented; this Story owns status and acceptance.
+
+---
+
 ## Interdependency Order
 
 1. Story 5 (four-button rework) hosts Stories 6 and 8; build the button surface first or alongside.
@@ -736,6 +827,8 @@ provider — docs were not stale and upstream added nothing.
 11. Addendum stories (2026-07-26): Story 22 (AI settings) precedes Story 21 (three-layer prompts —
     its layer-2 field lives on the settings screen); Story 20 (identity) is complete and
     independent; Story 23 (provider links) is independent.
+12. Story 24 (Meals library and terminology) builds on completed Story 13. It is ready for
+    planning independently of Story 16's external licence gate and Milestone 3's relay work.
 
 ---
 
@@ -751,6 +844,11 @@ provider — docs were not stale and upstream added nothing.
   [2026-07-26 addendum](../dictations-tier-0/2026-07-26_addendum_ai-settings-branding-foodus.md)
   (items 1, 2, 4, 5; item 3 completed Story 3 in place). The addendum's Milestone 3 definition
   (multi-user) is a separate effort and is not represented here.
+- Story 24 was requested directly by the owner on 2026-10-25 for a central editor/manager
+  and Meal/Meals UI wording. The owner's subsequent vocabulary decision replaces the
+  initial MealTemplate target with Meal, distinguishes DiarySlot and DiaryEntry, and
+  reserves Product and Recipe for their separate roles. It extends Story 13 without
+  reopening or renumbering it; Design owns the complete vocabulary and transition.
 
 ---
 
