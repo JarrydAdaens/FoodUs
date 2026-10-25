@@ -147,3 +147,61 @@ Final workspace observation: an unrelated untracked `.codex-remote-attachments/`
 ### Subsequent commit authorization
 
 The owner subsequently requested `commit-log --commit`. The reviewed eleven-file context update is authorized for a local commit using that skill. Leave the unrelated untracked attachment directory and ignored recovery files unstaged; do not pull or push.
+
+## 2026-10-25 owner revision: generation, release counter, and APK filenames
+
+The owner explicitly superseded the earlier version derivation: original Food You is
+Generation 1, the FoodUs fork is Generation 2, and development advances to Generation 3
+for the multiplayer direction now. Design selects Milestone 2 for delivery despite
+parallel Milestone 3 work. Milestone 2 has 22 terminal Stories (Story 16 remains blocked)
+and Milestone B has ten, contributing 32 once per stable Story identity. No Story closes
+and no multiplayer/server deployment gate is satisfied by this versioning decision.
+
+ReleaseCount now counts lifetime FoodUs publications, including historical three-part
+releases, without resets on generation, milestone, Story closure, or reopening. A fresh
+read of the complete GitHub Releases listing found v2.19.0, v2.19.1, and v2.23.0 only;
+the development count is three and the next authorized publication uses four. Upstream
+releases, unpublished tags/candidates, local builds, downloads, and installs do not count.
+The catalog was updated to `3.2.32.3` / Android code `128`, preserving upstream attribution
+and all other catalog values. This is dated evidence; the catalog remains authoritative.
+
+The owner also requested descriptive APK filenames. Gradle packaging names debug output
+`foodus-dev-<version>.apk` and unsigned release output `foodus-<version>-unsigned.apk`,
+with dots replaced by underscores only in filenames. The local signing helper and GitHub
+workflow produce `foodus-<version>.apk`; embedded version names and release tags retain
+dots. Application IDs, build-type suffixes, and signing configuration are preserved.
+The signing helper's obsolete hardcoded SDK path was found absent on this machine;
+standard SDK environment lookup now locates its existing build-tools installation.
+
+Validation complete: tracker index/detail agreement, selected-milestone derivation,
+lifetime publication baseline, catalog preservation, numeric ordering above published
+legacy tags, local documentation links, and whitespace checks passed. The version-only
+debug assemble passed, followed by the combined `:app:assembleDebug :app:assembleRelease`
+build after filename changes (4m 55s, 202 actionable tasks). Generated BuildConfig retains
+upstream `3.4.9` and carries the new fork version. AGP output metadata and actual aapt2
+badging agree on both new filenames, application IDs, version names, and code 128.
+Debug signature verification passed. All seven workflow shell blocks passed Bash syntax
+checks; executing the filename resolver produced paths matching the built APKs. The
+signing helper passed PowerShell syntax and actual align/sign/verify checks for its
+catalog-derived input and default signed filename, using a disposable test key outside
+the repository; all test-signed APKs and the test key were deleted. Build logs retain
+compiler experimental-feature and Compose mapping warnings; neither build failed.
+
+The owner subsequently requested a one-time debug APK delivery to `E:\MyBrain\food-us`.
+Copied `foodus-dev-3_2_32_3.apk` there after checking embedded identity/version and its
+signature; source and destination SHA-256 checksums match (95,067,876 bytes). This local
+copy does not count as a publication. No app was installed or cleared; no production
+release was signed, committed, tagged, published, pulled, or pushed. The copy destination
+is not wired into the build or workflow.
+
+The requested policy, configuration, naming, regeneration, and local delivery are complete.
+Next: owner installs the Dev APK to try the changes; a future authorized public release
+must reconcile the lifetime ledger and increment ReleaseCount before publication.
+Obtainium discovery, both-phone code inspection, and signed household rollout remain
+release-time checks; the legacy local development name `3.5.0` needs separate comparison
+if present on a device because it sorts above the newly selected milestone-2 name.
+
+The owner subsequently invoked `commit-log --commit` for the completed session changes.
+Local commits are authorized; publication, tagging, distribution, pull, and push remain
+separate actions. Committing configuration and context does not increment ReleaseCount
+or close any implementation Story.

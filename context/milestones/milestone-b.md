@@ -42,9 +42,9 @@ commit before the next Story starts. Dependency order was 001, 002, 003, 005, 00
 and checks; each Story links its plan and receipt below. This milestone owns status.
 
 Milestone B is supplementary, not a new numbered milestone or a product generation.
-Its closed Stories are added to the current numbered milestone's closed Stories for
+Its closed Stories are added to the selected delivery milestone's closed Stories for
 the StoriesClosed version component. B's cumulative contribution carries forward
-when the numbered milestone advances; the [versioning policy](../versioning-policy.md#reopened-and-supplementary-stories)
+when the delivery milestone advances; the [versioning policy](../versioning-policy.md#reopened-and-supplementary-stories)
 owns counting, deduplication, reopening, and release rules. Planning this milestone
 closes no Stories and changes no app version.
 

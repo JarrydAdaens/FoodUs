@@ -28,6 +28,15 @@ jobs:
             exit 1
           fi
 
+      - name: Resolve APK filenames
+        id: apk
+        run: |
+          FORK_VERSION=$(sed -n 's/^fork-version-name = "\(.*\)"/\1/p' gradle/libs.versions.toml)
+          FILE_VERSION="${FORK_VERSION//./_}"
+          echo "version=$FILE_VERSION" >> "$GITHUB_OUTPUT"
+          echo "unsigned=app/build/outputs/apk/release/foodus-${FILE_VERSION}-unsigned.apk" >> "$GITHUB_OUTPUT"
+          echo "signed=foodus-${FILE_VERSION}.apk" >> "$GITHUB_OUTPUT"
+
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
@@ -54,13 +63,15 @@ jobs:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          UNSIGNED_APK: ${{ steps.apk.outputs.unsigned }}
+          SIGNED_APK: ${{ steps.apk.outputs.signed }}
         run: |
           printf '%s' "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.jks"
 
           echo "Aligning APK..."
 
           zipalign -f -p -v 4 \
-            app/build/outputs/apk/release/app-release-unsigned.apk \
+            "$UNSIGNED_APK" \
             aligned.apk
 
           echo "Signing APK with keystore..."
@@ -70,7 +81,7 @@ jobs:
             --ks "$RUNNER_TEMP/release.jks" \
             --ks-key-alias "$KEY_ALIAS" \
             --ks-pass "pass:${KEYSTORE_PASSWORD}" \
-            --out signed.apk \
+            --out "$SIGNED_APK" \
             aligned.apk
 
           echo "APK signed successfully."
@@ -83,17 +94,17 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         env:
           GH_TOKEN: ${{ github.token }}
+          SIGNED_APK: ${{ steps.apk.outputs.signed }}
         run: |
-          mv signed.apk "FoodUs-${GITHUB_REF_NAME}.apk"
           gh release create "$GITHUB_REF_NAME" \
-            "FoodUs-${GITHUB_REF_NAME}.apk" \
+            "$SIGNED_APK" \
             --generate-notes
 
       - name: Upload signed APK
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}
         uses: actions/upload-artifact@v4
         with:
-          name: signed-apk
-          path: signed.apk
+          name: foodus-${{ steps.apk.outputs.version }}
+          path: ${{ steps.apk.outputs.signed }}
           if-no-files-found: error
           retention-days: 30

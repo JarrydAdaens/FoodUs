@@ -1,3 +1,4 @@
+import com.android.build.gradle.api.ApkVariantOutput
 import java.util.Properties
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -209,6 +210,20 @@ android {
             versionNameSuffix = "-preview"
             manifestPlaceholders["applicationIcon"] = "@mipmap/ic_launcher_preview"
             manifestPlaceholders["applicationRoundIcon"] = "@mipmap/ic_launcher_round_preview"
+        }
+    }
+    // Set the packaging output name so AGP's install metadata points at the same APK.
+    // Filenames do not change the application ID, embedded version, or signing key.
+    applicationVariants.all {
+        val fileVersion = libs.versions.fork.version.name.get().replace('.', '_')
+        val channel = when (buildType.name) {
+            "debug" -> "-dev"
+            "release" -> ""
+            else -> "-${buildType.name.lowercase()}"
+        }
+        val unsigned = if (signingConfig == null) "-unsigned" else ""
+        outputs.all {
+            (this as ApkVariantOutput).outputFileName = "foodus$channel-$fileVersion$unsigned.apk"
         }
     }
     compileOptions {

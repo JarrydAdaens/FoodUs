@@ -98,6 +98,19 @@ The backlog (`backlog/`) is not a numbered tier. It is a staging pool — inform
 
 Keep this index in sync as milestones are added, completed, reordered, or reclassified. When a backlog Story is too large for one coherent work unit, promote it into this index as a new milestone.
 
+### Product generation and delivery milestone
+
+The owner's 2026-10-25 versioning decision identifies original Food You as Generation 1,
+this FoodUs fork as Generation 2, and the multiplayer FoodUs direction with foodus-relay
+as Generation 3. Current development advances to Generation 3 now; this does not assert
+that multiplayer is complete or the relay is deployed. Those Milestone 3 gates remain open.
+
+For product version derivation, the owner selects **Milestone 2** as the current delivery
+milestone while its remaining Stories are open. Its closed Stories and Milestone B's closed
+Stories contribute under the [versioning policy](versioning-policy.md). Milestone 3 work
+can remain In Progress without changing that selection. Advancing the delivery milestone
+requires an explicit owner decision recorded here; generation and milestone are independent.
+
 ---
 
 ## Executive Summary
