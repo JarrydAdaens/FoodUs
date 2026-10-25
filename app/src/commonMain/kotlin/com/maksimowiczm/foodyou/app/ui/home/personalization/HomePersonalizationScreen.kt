@@ -56,7 +56,7 @@ import sh.calvin.reorderable.rememberReorderableLazyListState
 @Composable
 fun HomePersonalizationScreen(
     onBack: () -> Unit,
-    onMeals: () -> Unit,
+    onDiarySlots: () -> Unit,
     onGoals: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -67,7 +67,7 @@ fun HomePersonalizationScreen(
     HomePersonalizationScreen(
         order = order,
         onBack = onBack,
-        onMeals = onMeals,
+        onDiarySlots = onDiarySlots,
         onGoals = onGoals,
         onReorder = viewModel::updateOrder,
         modifier = modifier,
@@ -79,7 +79,7 @@ fun HomePersonalizationScreen(
 private fun HomePersonalizationScreen(
     order: List<HomeCard>,
     onBack: () -> Unit,
-    onMeals: () -> Unit,
+    onDiarySlots: () -> Unit,
     onGoals: () -> Unit,
     onReorder: (List<HomeCard>) -> Unit,
     modifier: Modifier = Modifier,
@@ -179,7 +179,7 @@ private fun HomePersonalizationScreen(
                             when (card) {
                                 HomeCard.Calendar -> CalendarCardContent()
                                 HomeCard.Goals -> GoalsCardContent(onMore = onGoals)
-                                HomeCard.Meals -> MealsCardContent(onMore = onMeals)
+                                HomeCard.DiarySlots -> DiarySlotsCardContent(onMore = onDiarySlots)
                             }
                         }
                     }
@@ -230,12 +230,12 @@ private fun RowScope.CalendarCardContent() {
 
 @Composable
 context(_: ReorderableCollectionItemScope)
-private fun RowScope.MealsCardContent(onMore: () -> Unit) {
+private fun RowScope.DiarySlotsCardContent(onMore: () -> Unit) {
     Box(modifier = Modifier.size(48.dp), contentAlignment = Alignment.Center) {
         Icon(imageVector = Icons.Outlined.Restaurant, contentDescription = null)
     }
     Spacer(Modifier.width(16.dp))
-    Text(stringResource(Res.string.headline_meals))
+    Text(stringResource(Res.string.headline_diary_slots))
     Spacer(Modifier.weight(1f))
     IconButton(onClick = onMore) {
         Icon(

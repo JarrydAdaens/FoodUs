@@ -12,7 +12,7 @@ import kotlinx.datetime.LocalDateTime
  * item.
  *
  * @param id The unique identifier of the manual diary entry.
- * @param mealId The identifier of the meal to which this entry belongs.
+ * @param diarySlotId The identifier of the diarySlot to which this entry belongs.
  * @param date The date of the diary entry.
  * @param nutritionFacts The nutrition facts for the food item based on the weight.
  * @param createdAt The timestamp when the entry was created.
@@ -29,7 +29,7 @@ import kotlinx.datetime.LocalDateTime
  */
 data class ManualDiaryEntry(
     val id: ManualDiaryEntryId,
-    override val mealId: Long,
+    override val diarySlotId: Long,
     override val date: LocalDate,
     override val name: String,
     override val nutritionFacts: NutritionFacts,
@@ -39,4 +39,8 @@ data class ManualDiaryEntry(
     val isPlaceholder: Boolean = false,
     val servingCount: Double? = null,
     val weightGrams: Double? = null,
+    /** Exact captured amount from a loaded Meal; never a normalization basis. */
+    val capturedPortion: com.maksimowiczm.foodyou.common.domain.measurement.Measurement? = null,
+    val portionDescription: com.maksimowiczm.foodyou.common.domain.food.PortionDescription? = null,
+    val nutritionMetadata: com.maksimowiczm.foodyou.common.domain.food.NutritionMetadata? = null,
 ) : DiaryEntry

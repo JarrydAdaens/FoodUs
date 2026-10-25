@@ -19,31 +19,29 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.maksimowiczm.foodyou.app.ui.common.component.IncompleteFoodsList
+import com.maksimowiczm.foodyou.app.ui.common.utility.stringResource
 import com.maksimowiczm.foodyou.app.ui.common.utility.stringResourceWithWeight
 import com.maksimowiczm.foodyou.app.ui.food.component.EnergyProgressIndicator
 import com.maksimowiczm.foodyou.app.ui.food.shared.component.NutrientList
 import com.maksimowiczm.foodyou.common.domain.food.isComplete
 import com.maksimowiczm.foodyou.common.domain.measurement.Measurement
-import com.maksimowiczm.foodyou.food.domain.entity.FoodId
+import com.maksimowiczm.foodyou.common.domain.measurement.MeasurementResolver
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
+import foodyou.app.generated.resources.*
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun NutrientList(
     food: FoodModel,
     measurement: Measurement,
-    onEditFood: (FoodId) -> Unit,
+    onEditFood: (NutritionalItemId) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    // This is stupid that it is here but it's going to be deleted in 4.0.0
-    val facts =
-        remember(food, measurement) {
-            val weight =
-                try {
-                    food.weight(measurement)
-                } catch (_: IllegalStateException) {
-                    100.0
-                }
-            food.nutritionFacts * (weight / 100)
-        }
+    val facts = food.nutritionFor(measurement)
+    if (facts == null) {
+        Text(stringResource(Res.string.error_portion_save), color = MaterialTheme.colorScheme.error, modifier = modifier)
+        return
+    }
 
     Column(modifier) {
         Row(
@@ -74,7 +72,7 @@ internal fun NutrientList(
                 totalWeight = food.totalWeight,
                 servingWeight = food.servingWeight,
                 isLiquid = food.isLiquid,
-            ) ?: error("Invalid measurement: $measurement for ${food.foodId}")
+            ) ?: measurement.stringResource()
 
         Text(
             text = measurementString,
@@ -87,7 +85,7 @@ internal fun NutrientList(
         if (food is RecipeModel && !food.nutritionFacts.isComplete) {
             val foods =
                 food.allIngredients
-                    .filter { (foodId, _, facts) -> foodId is FoodId.Product && !facts.isComplete }
+                    .filter { (foodId, _, facts) -> foodId is NutritionalItemId.Product && !facts.isComplete }
                     .map { (foodId, name) -> foodId to name }
 
             IncompleteFoodsList(

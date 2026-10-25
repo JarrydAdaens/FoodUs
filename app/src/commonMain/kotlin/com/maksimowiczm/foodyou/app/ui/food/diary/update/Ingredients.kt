@@ -11,20 +11,21 @@ import androidx.compose.ui.unit.dp
 import com.maksimowiczm.foodyou.app.ui.common.component.FoodErrorListItem
 import com.maksimowiczm.foodyou.app.ui.common.component.FoodListItem
 import com.maksimowiczm.foodyou.app.ui.common.utility.LocalEnergyFormatter
+import com.maksimowiczm.foodyou.app.ui.common.utility.stringResource
 import com.maksimowiczm.foodyou.app.ui.common.utility.stringResourceWithWeight
 import com.maksimowiczm.foodyou.common.compose.extension.add
 import com.maksimowiczm.foodyou.common.compose.extension.horizontal
 import com.maksimowiczm.foodyou.common.compose.extension.vertical
 import com.maksimowiczm.foodyou.common.compose.utility.formatClipZeros
-import com.maksimowiczm.foodyou.fooddiary.domain.entity.DiaryFoodRecipe
-import com.maksimowiczm.foodyou.fooddiary.domain.entity.DiaryFoodRecipeIngredient
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.RecipeSnapshot
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.RecipeIngredientSnapshot
 import foodyou.app.generated.resources.*
 import kotlin.math.roundToInt
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun Ingredients(
-    ingredients: List<DiaryFoodRecipeIngredient>,
+    ingredients: List<RecipeIngredientSnapshot>,
     contentPadding: PaddingValues,
     modifier: Modifier = Modifier,
 ) {
@@ -41,7 +42,7 @@ internal fun Ingredients(
             color = MaterialTheme.colorScheme.primary,
         )
         ingredients.forEach { ingredient ->
-            val facts = ingredient.nutritionFacts
+            val facts = ingredient.nutritionFacts ?: com.maksimowiczm.foodyou.common.domain.food.NutritionFacts()
             val proteins = facts.proteins.value
             val carbs = facts.carbohydrates.value
             val fats = facts.fats.value
@@ -51,14 +52,13 @@ internal fun Ingredients(
                     totalWeight = ingredient.food.totalWeight,
                     servingWeight = ingredient.food.servingWeight,
                     isLiquid = ingredient.food.isLiquid,
-                )
+                ) ?: ingredient.measurement.stringResource()
 
             if (
                 proteins == null ||
                     carbs == null ||
                     fats == null ||
-                    energy == null ||
-                    measurementString == null
+                    energy == null
             ) {
                 FoodErrorListItem(
                     headline = ingredient.food.name,
@@ -85,7 +85,7 @@ internal fun Ingredients(
                     },
                     measurement = { Text(measurementString) },
                     contentPadding = horizontal.add(vertical = 8.dp),
-                    isRecipe = ingredient.food is DiaryFoodRecipe,
+                    isRecipe = ingredient.food is RecipeSnapshot,
                 )
             }
         }

@@ -6,20 +6,21 @@ import android.os.SystemClock
 import android.view.View
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityNodeInfo
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.ui.Modifier
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.room.Room
 import androidx.test.core.app.launchActivity
 import androidx.test.filters.SdkSuppress
@@ -32,29 +33,28 @@ import com.maksimowiczm.foodyou.app.navigation.Home
 import com.maksimowiczm.foodyou.app.navigation.ScanQuickAddHandoff
 import com.maksimowiczm.foodyou.app.ui.common.utility.EnergyFormatter
 import com.maksimowiczm.foodyou.app.ui.common.utility.LocalEnergyFormatter
+import com.maksimowiczm.foodyou.app.ui.food.diary.aiscan.AiScanReviewSession
 import com.maksimowiczm.foodyou.app.ui.food.diary.aiscan.AiScanScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.aiscan.AiScanUiState
 import com.maksimowiczm.foodyou.app.ui.food.diary.aiscan.AiScanViewModel
-import com.maksimowiczm.foodyou.app.ui.food.diary.aiscan.AiScanReviewSession
 import com.maksimowiczm.foodyou.common.config.AppConfig
 import com.maksimowiczm.foodyou.common.domain.date.DateProvider
 import com.maksimowiczm.foodyou.common.domain.food.NutritionFacts
 import com.maksimowiczm.foodyou.common.domain.userpreferences.UserPreferencesRepository
-import com.maksimowiczm.foodyou.food.search.domain.FoodSearchUseCase
+import com.maksimowiczm.foodyou.food.search.domain.NutritionalItemSearchUseCase
 import com.maksimowiczm.foodyou.fooddiary.domain.entity.ManualDiaryEntry
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.ManualDiaryEntryId
 import com.maksimowiczm.foodyou.fooddiary.domain.repository.ManualDiaryEntryRepository
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.repository.RoomManualDiaryEntryRepository
-import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.MealEntity
+import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.DiarySlotEntity
 import foodyou.app.generated.resources.*
 import java.io.ByteArrayOutputStream
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.withTimeout
-import kotlinx.datetime.LocalDateTime
-import com.maksimowiczm.foodyou.fooddiary.domain.entity.ManualDiaryEntryId
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
 import org.junit.Assert.*
@@ -266,22 +266,23 @@ class MultiFoodScanTest {
         database = Room.inMemoryDatabaseBuilder(instrumentation.targetContext, FoodYouDatabase::class.java).build()
         val roomRepository = RoomManualDiaryEntryRepository(database.manualDiaryEntryDao)
         repository = object : ManualDiaryEntryRepository by roomRepository {
-            override suspend fun insert(name: String, mealId: Long, date: LocalDate,
+            override suspend fun insert(name: String, diarySlotId: Long, date: LocalDate,
                 nutritionFacts: NutritionFacts, createdAt: LocalDateTime, description: String?,
-                isPlaceholder: Boolean, servingCount: Double?, weightGrams: Double?): ManualDiaryEntryId {
+                isPlaceholder: Boolean, servingCount: Double?, weightGrams: Double?,
+                capturedPortion: com.maksimowiczm.foodyou.common.domain.measurement.Measurement?): ManualDiaryEntryId {
                 insertAttempts++
                 insertGate?.await()
                 if (name == "Synthetic chicken" && failNextChicken) {
                     failNextChicken = false
                     throw IllegalStateException("Synthetic insert failure")
                 }
-                return roomRepository.insert(name, mealId, date, nutritionFacts, createdAt,
-                    description, isPlaceholder, servingCount, weightGrams)
+                return roomRepository.insert(name, diarySlotId, date, nutritionFacts, createdAt,
+                    description, isPlaceholder, servingCount, weightGrams, capturedPortion)
             }
         }
         insertAttempts = 0
         runBlocking {
-            database.mealDao.insertWithLastRank(MealEntity(1, "Synthetic meal", 0, 0, 23, 59))
+            database.diarySlotDao.insertWithLastRank(DiarySlotEntity(1, "Synthetic meal", 0, 0, 23, 59))
         }
         scannerCalls = 0
         completionCount = 0
@@ -303,12 +304,12 @@ class MultiFoodScanTest {
                     ?: AiScanResult.Failure("Could not understand the AI response.")
             }
         }
-        model = AiScanViewModel(scanner, applicationKoin.get<FoodSearchUseCase>(), ObserveAiConfigured(preferences, config))
+        model = AiScanViewModel(scanner, applicationKoin.get<NutritionalItemSearchUseCase>(), ObserveAiConfigured(preferences, config))
         val clock = applicationKoin.get<DateProvider>()
         val isolated = koinApplication {
             modules(module {
                 viewModel { model }
-                viewModel { (entryDate: LocalDate, mealId: Long) -> CreateQuickAddViewModel(mealId, entryDate, repository, clock) }
+                viewModel { (entryDate: LocalDate, diarySlotId: Long) -> CreateQuickAddViewModel(diarySlotId, entryDate, repository, clock) }
             })
         }
         val automation = instrumentation.uiAutomation
@@ -425,7 +426,7 @@ class MultiFoodScanTest {
                 val estimate = route.scanEstimateJson?.let(AiFoodEstimateParser::parse)
                 CreateQuickAddScreen(onBack = { nav.popBackStack() },
                     onSave = { ScanQuickAddHandoff.saved(nav, route) },
-                    mealId = route.mealId, date = LocalDate.fromEpochDays(route.epochDay), scanEstimate = estimate,
+                    diarySlotId = route.diarySlotId, date = LocalDate.fromEpochDays(route.epochDay), scanEstimate = estimate,
                     prefillName = route.prefillName, prefillEnergyKcal = route.prefillEnergyKcal)
             }
         }

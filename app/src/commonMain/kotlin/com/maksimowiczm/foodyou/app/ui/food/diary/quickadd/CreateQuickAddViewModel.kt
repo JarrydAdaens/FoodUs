@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.datetime.LocalDate
 
 internal class CreateQuickAddViewModel(
-    private val mealId: Long,
+    private val diarySlotId: Long,
     private val date: LocalDate,
     private val manualDiaryEntryRepository: ManualDiaryEntryRepository,
     private val dateProvider: DateProvider,
@@ -37,7 +37,7 @@ internal class CreateQuickAddViewModel(
             try {
                 manualDiaryEntryRepository.insert(
                     name = name,
-                    mealId = mealId,
+                    diarySlotId = diarySlotId,
                     date = date,
                     nutritionFacts = nutritionFacts,
                     createdAt = dateProvider.now(),

@@ -6,14 +6,17 @@ import com.maksimowiczm.foodyou.common.log.Logger
 import com.maksimowiczm.foodyou.common.log.logAndReturnFailure
 import com.maksimowiczm.foodyou.common.result.Ok
 import com.maksimowiczm.foodyou.common.result.Result
-import com.maksimowiczm.foodyou.food.domain.entity.FoodHistory
-import com.maksimowiczm.foodyou.food.domain.entity.FoodId
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemHistory
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
 import com.maksimowiczm.foodyou.food.domain.entity.Recipe
 import com.maksimowiczm.foodyou.food.domain.entity.RecipeIngredient
-import com.maksimowiczm.foodyou.food.domain.repository.FoodHistoryRepository
+import com.maksimowiczm.foodyou.food.domain.repository.NutritionalItemHistoryRepository
 import com.maksimowiczm.foodyou.food.domain.repository.ProductRepository
 import com.maksimowiczm.foodyou.food.domain.repository.RecipeRepository
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.CancellationException
+import com.maksimowiczm.foodyou.common.result.Err
+import com.maksimowiczm.foodyou.common.domain.food.hasValidValues
 
 sealed interface CreateRecipeError {
     data object EmptyName : CreateRecipeError
@@ -22,7 +25,11 @@ sealed interface CreateRecipeError {
 
     data object EmptyIngredients : CreateRecipeError
 
-    data class IngredientNotFound(val foodId: FoodId) : CreateRecipeError
+    data class IngredientNotFound(val foodId: NutritionalItemId) : CreateRecipeError
+
+    data object InvalidIngredient : CreateRecipeError
+
+    data object SaveFailed : CreateRecipeError
 
     data object CircularIngredient : CreateRecipeError
 }
@@ -30,7 +37,7 @@ sealed interface CreateRecipeError {
 class CreateRecipeUseCase(
     private val recipeRepository: RecipeRepository,
     private val productRepository: ProductRepository,
-    private val historyRepository: FoodHistoryRepository,
+    private val historyRepository: NutritionalItemHistoryRepository,
     private val transactionProvider: TransactionProvider,
     private val logger: Logger,
 ) {
@@ -39,9 +46,24 @@ class CreateRecipeUseCase(
         servings: Int,
         note: String?,
         isLiquid: Boolean,
-        ingredients: List<Pair<FoodId, Measurement>>,
-        history: FoodHistory.CreationHistory,
-    ): Result<FoodId.Recipe, CreateRecipeError> {
+        ingredients: List<Pair<NutritionalItemId, Measurement>>,
+        history: NutritionalItemHistory.CreationHistory,
+    ): Result<NutritionalItemId.Recipe, CreateRecipeError> = try {
+        createValidated(name, servings, note, isLiquid, ingredients, history)
+    } catch (cancelled: CancellationException) {
+        throw cancelled
+    } catch (_: Exception) {
+        Err(CreateRecipeError.SaveFailed)
+    }
+
+    private suspend fun createValidated(
+        name: String,
+        servings: Int,
+        note: String?,
+        isLiquid: Boolean,
+        ingredients: List<Pair<NutritionalItemId, Measurement>>,
+        history: NutritionalItemHistory.CreationHistory,
+    ): Result<NutritionalItemId.Recipe, CreateRecipeError> {
         if (name.isBlank()) {
             return logger.logAndReturnFailure(
                 tag = TAG,
@@ -67,14 +89,17 @@ class CreateRecipeUseCase(
         }
 
         return transactionProvider.withTransaction {
+            if (recipeRepository.hasRecipeCycle(null, ingredients.map { it.first })) {
+                return@withTransaction Err(CreateRecipeError.CircularIngredient)
+            }
             val ingredients =
                 ingredients.map { (foodId, measurement) ->
                     val food =
                         when (foodId) {
-                            is FoodId.Product ->
+                            is NutritionalItemId.Product ->
                                 productRepository.observeProduct(foodId).firstOrNull()
 
-                            is FoodId.Recipe -> recipeRepository.observeRecipe(foodId).firstOrNull()
+                            is NutritionalItemId.Recipe -> recipeRepository.observeRecipe(foodId).firstOrNull()
                         }
 
                     if (food == null) {
@@ -85,12 +110,15 @@ class CreateRecipeUseCase(
                         )
                     }
 
+                    if (food.nutritionFor(measurement) == null) {
+                        return@withTransaction Err(CreateRecipeError.InvalidIngredient)
+                    }
                     RecipeIngredient(food, measurement)
                 }
 
             val recipe =
                 Recipe(
-                    id = FoodId.Recipe(0L),
+                    id = NutritionalItemId.Recipe(0L),
                     name = name,
                     servings = servings,
                     note = note?.takeIf { it.isNotBlank() },
@@ -98,15 +126,8 @@ class CreateRecipeUseCase(
                     ingredients = ingredients,
                 )
 
-            // Check for circular references in ingredients
-            val flatIngredients = recipe.flatIngredients()
-            val ingredientIds = flatIngredients.map { it.id }.toSet()
-            if (flatIngredients.size != ingredientIds.size) {
-                return@withTransaction logger.logAndReturnFailure(
-                    tag = TAG,
-                    error = CreateRecipeError.CircularIngredient,
-                    message = { "Recipe contains circular ingredient references." },
-                )
+            if (!recipe.isResolvable || !recipe.totalNutrition.hasValidValues()) {
+                return@withTransaction Err(CreateRecipeError.InvalidIngredient)
             }
 
             val recipeId =

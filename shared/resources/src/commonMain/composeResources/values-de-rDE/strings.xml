@@ -6,7 +6,7 @@
     <string name="headline_daily_goals">Tägliche Ziele</string>
     <string name="headline_general">Allgemein</string>
     <string name="headline_macronutrients">Makronährstoffe</string>
-    <string name="headline_meals">Mahlzeiten</string>
+    <string name="headline_diary_slots">Mahlzeiten</string>
     <string name="headline_delete_food">Entferne Essen</string>
     <string name="headline_edit_product">Produkt bearbeiten</string>
     <string name="headline_permission_required">Berechtigung erforderlich</string>
@@ -30,7 +30,7 @@
     <string name="headline_home" description="Home screen">Startseite</string>
     <string name="headline_home_settings" description="Home screen settings">Einstellungen Startseite</string>
     <string name="headline_calendar">Kalender</string>
-    <string name="headline_meals_settings">Einstellung der Mahlzeiten</string>
+    <string name="headline_diary_slots_settings">Einstellung der Mahlzeiten</string>
     <string name="headline_horizontal">Horizontal</string>
     <string name="headline_vertical">Vertikal</string>
     <string name="headline_values_per">Werte pro</string>
@@ -124,7 +124,7 @@
     <string name="action_save">Speichern</string>
     <string name="action_delete">Löschen</string>
     <string name="action_confirm">Bestätigen</string>
-    <string name="action_add_meal">Mahlzeit hinzufügen</string>
+    <string name="action_add_diary_slot">Mahlzeit hinzufügen</string>
     <string name="action_edit">Bearbeiten</string>
     <string name="action_insert_suggested_search">Vorgeschlagene Suche einfügen</string>
     <string name="action_edit_entry">Eintrag bearbeiten</string>
@@ -142,7 +142,7 @@
     <string name="action_move_up" description="reorder list item up">Nach Oben</string>
     <string name="action_move_down" description="reorder list item down">Nach Unten</string>
     <string name="action_use_time_based_ordering">Zeitbasierte Sortierung</string>
-    <string name="action_ignore_all_day_meals">Ganztägige Mahlzeiten ignorieren</string>
+    <string name="action_ignore_all_day_diary_slots">Ganztägige Mahlzeiten ignorieren</string>
     <string name="action_add_ingredient" description="Add ingredient to the recipe">Zutat hinzufügen</string>
     <string name="action_delete_ingredient">Zutat entfernen</string>
     <string name="action_download">Herunterladen</string>
@@ -172,9 +172,9 @@
         <item quantity="other">%1$d verbleibende Kilojoule</item>
     </plurals>
     <string name="neutral_set_your_daily_goals">Lege deine täglichen Ernährungsziele fest</string>
-    <string name="neutral_set_your_meal_schedule">Lege deinen Essensplan fest</string>
-    <string name="neutral_permanently_delete_meal">Mahlzeit dauerhaft löschen?</string>
-    <string name="neutral_meal_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">Mahlzeit wird dauerhaft gelöscht. Alle Daten zu dieser Mahlzeit gehen verloren.</string>
+    <string name="neutral_set_your_diary_slot_schedule">Lege deinen Essensplan fest</string>
+    <string name="neutral_permanently_delete_diary_slot">Mahlzeit dauerhaft löschen?</string>
+    <string name="neutral_diary_slot_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">Mahlzeit wird dauerhaft gelöscht. Alle Daten zu dieser Mahlzeit gehen verloren.</string>
     <string name="neutral_required">Erforderlich</string>
     <string name="neutral_help_translating_the_app">Hilf mit, die App zu übersetzen</string>
     <string name="neutral_copied">Informationen in die Zwischenablage gespeichert</string>
@@ -207,8 +207,8 @@
     <string name="description_delete_food">Lebensmittel werden unwiderruflich gelöscht</string>
     <string name="description_delete_product_entry" description="Tell user that this entry will be deleted only from diary and won't affect the product itself. Product won't be deleted from the database.">Dieser Eintrag wird aus Deinem Tagebuch gelöscht. Du kannst ihn jederzeit wieder hinzufügen.</string>
     <string name="description_about_setting">Mehr über die App erfahren</string>
-    <string name="description_time_based_meals_sorting">Wenn aktiviert, werden aktuell laufende Mahlzeiten zuerst angezeigt</string>
-    <string name="description_action_ignore_all_day_meals">Ganztägige Mahlzeiten am Ende der Liste anzeigen</string>
+    <string name="description_time_based_diary_slots_sorting">Wenn aktiviert, werden aktuell laufende Mahlzeiten zuerst angezeigt</string>
+    <string name="description_action_ignore_all_day_diary_slots">Ganztägige Mahlzeiten am Ende der Liste anzeigen</string>
     <string name="description_incomplete_nutrition_data">Einige der verwendeten Produkte haben diesen Wert nicht, daher könnte der angezeigte Wert ungenau sein</string>
     <string name="description_translation_warning">Die Übersetzungen werden von Freiwilligen erstellt. Sie können fehlerhaft sein und teils gänzlich fehlen. Falls du Fehler findest, zögere nicht dabei mitzuhelfen, sie zu verbessern.</string>
     <string name="description_home_settings">Passe deine Startseite an</string>

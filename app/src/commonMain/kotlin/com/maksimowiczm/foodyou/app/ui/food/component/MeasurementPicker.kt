@@ -36,6 +36,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.maksimowiczm.foodyou.app.ui.common.form.FormField
 import com.maksimowiczm.foodyou.app.ui.common.form.nullableFloatParser
@@ -55,13 +57,22 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun MeasurementPicker(state: MeasurementPickerState, modifier: Modifier = Modifier) {
     val latestState by rememberUpdatedState(state)
-    LaunchedEffect(state.inputField.value, state.type) {
-        val value = state.inputField.value ?: return@LaunchedEffect
+    LaunchedEffect(state.inputField.textFieldState.text, state.type, state.possibleTypes) {
+        if (latestState.type !in latestState.possibleTypes) return@LaunchedEffect
+        val value = state.inputField.textFieldState.text.toString().toFloatOrNull()
+            ?.takeIf { it.isFinite() && it > 0f } ?: return@LaunchedEffect
         val measurement = Measurement.from(state.type, value.toDouble())
         latestState.measurement = measurement
     }
 
     Column(modifier) {
+        if (state.inputField.error != null) {
+            Text(
+                text = org.jetbrains.compose.resources.stringResource(Res.string.error_portion_amount),
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier.padding(horizontal = 16.dp),
+            )
+        }
         Row {
             Box(modifier = Modifier.size(48.dp), contentAlignment = Alignment.Center) {
                 Icon(painter = painterResource(Res.drawable.ic_weight), contentDescription = null)
@@ -84,7 +95,7 @@ fun MeasurementPicker(state: MeasurementPickerState, modifier: Modifier = Modifi
             modifier = Modifier.padding(horizontal = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            state.suggestions.forEach { measurement ->
+            state.suggestions.filter { it.type in state.possibleTypes }.forEach { measurement ->
                 SuggestionChip(
                     onClick = {
                         state.inputField.textFieldState.setTextAndPlaceCursorAtEnd(
@@ -107,6 +118,7 @@ private fun Input(
     onSelect: (MeasurementType) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val amountLabel = org.jetbrains.compose.resources.stringResource(Res.string.measurement_amount)
     var expanded by rememberSaveable { mutableStateOf(false) }
 
     val inputColor by
@@ -143,7 +155,9 @@ private fun Input(
         ) {
             BasicTextField(
                 state = formField.textFieldState,
-                modifier = Modifier.height(48.dp).padding(horizontal = 16.dp),
+                modifier = Modifier.height(48.dp).padding(horizontal = 16.dp).semantics {
+                    contentDescription = amountLabel
+                },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                 textStyle = LocalTextStyle.current.merge(LocalContentColor.current),
                 lineLimits = TextFieldLineLimits.SingleLine,
@@ -210,10 +224,31 @@ fun rememberMeasurementPickerState(
             validateFirst = true,
         )
     val typeState = rememberSaveable { mutableStateOf(selectedMeasurement.type) }
+    val lastSupportedType = rememberSaveable {
+        mutableStateOf(typeState.value.takeIf { it in possibleTypes })
+    }
     val measurementState =
-        rememberSaveable(selectedMeasurement, stateSaver = Measurement.Saver) {
+        rememberSaveable(stateSaver = Measurement.Saver) {
             mutableStateOf(selectedMeasurement)
         }
+
+    LaunchedEffect(possibleTypes, selectedMeasurement, typeState.value) {
+        if (typeState.value in possibleTypes) {
+            lastSupportedType.value = typeState.value
+        } else if (lastSupportedType.value == typeState.value) {
+            // An explicit invalid initial request stays invalid. Only reconcile a selection
+            // whose type this picker previously offered and which has since become unavailable.
+            val replacement = selectedMeasurement.takeIf { it.type in possibleTypes }
+                ?: suggestions.firstOrNull { it.type in possibleTypes }
+                ?: possibleTypes.firstOrNull()?.let { Measurement.from(it, 1.0) }
+            if (replacement != null) {
+                inputField.textFieldState.setTextAndPlaceCursorAtEnd(replacement.rawValue.formatClipZeros())
+                typeState.value = replacement.type
+                measurementState.value = replacement
+                lastSupportedType.value = replacement.type
+            }
+        }
+    }
 
     return remember(suggestions, possibleTypes, inputField, typeState, measurementState) {
         MeasurementPickerState(

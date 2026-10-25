@@ -6,14 +6,14 @@ import com.maksimowiczm.foodyou.app.ui.food.product.create.CreateProductApp
 import com.maksimowiczm.foodyou.app.ui.food.product.create.CreateProductEvent
 import com.maksimowiczm.foodyou.app.ui.food.product.create.CreateProductViewModel
 import com.maksimowiczm.foodyou.common.compose.extension.LaunchedCollectWithLifecycle
-import com.maksimowiczm.foodyou.food.domain.entity.FoodId
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
 import com.maksimowiczm.foodyou.food.domain.entity.Product
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun CreateProductScreen(
     onBack: () -> Unit,
-    onCreate: (FoodId.Product) -> Unit,
+    onCreate: (NutritionalItemId.Product) -> Unit,
     onUpdateUsdaApiKey: () -> Unit,
     onUpdateOpenFoodFactsCredentials: () -> Unit,
     modifier: Modifier = Modifier,

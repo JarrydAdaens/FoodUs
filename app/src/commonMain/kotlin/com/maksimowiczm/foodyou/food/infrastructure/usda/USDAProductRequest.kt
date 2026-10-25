@@ -4,7 +4,7 @@ import com.maksimowiczm.foodyou.common.domain.userpreferences.UserPreferencesRep
 import com.maksimowiczm.foodyou.common.result.Err
 import com.maksimowiczm.foodyou.common.result.Ok
 import com.maksimowiczm.foodyou.common.result.Result
-import com.maksimowiczm.foodyou.food.domain.entity.RemoteFoodException
+import com.maksimowiczm.foodyou.food.domain.entity.RemoteProductException
 import com.maksimowiczm.foodyou.food.domain.entity.RemoteProduct
 import com.maksimowiczm.foodyou.food.domain.entity.RemoteProductRequest
 import com.maksimowiczm.foodyou.food.search.domain.FoodSearchPreferences
@@ -18,9 +18,9 @@ internal class USDAProductRequest(
 ) : RemoteProductRequest {
     private suspend fun apiKey() = preferencesRepository.observe().first().usda.apiKey
 
-    override suspend fun execute(): Result<RemoteProduct, RemoteFoodException> =
+    override suspend fun execute(): Result<RemoteProduct, RemoteProductException> =
         dataSource
             .getFood(id, apiKey = apiKey())
             .map(mapper::toRemoteProduct)
-            .fold(onSuccess = ::Ok, onFailure = { Err(RemoteFoodException.fromThrowable(it)) })
+            .fold(onSuccess = ::Ok, onFailure = { Err(RemoteProductException.fromThrowable(it)) })
 }

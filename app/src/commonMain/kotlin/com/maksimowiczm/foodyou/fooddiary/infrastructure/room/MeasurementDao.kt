@@ -55,11 +55,11 @@ abstract class MeasurementDao {
         SELECT * 
         FROM Measurement
         WHERE 
-            mealId = :mealId 
+            mealId = :diarySlotId
             AND epochDay = :epochDay 
         """
     )
-    abstract fun observeMeasurements(mealId: Long, epochDay: Long): Flow<List<MeasurementEntity>>
+    abstract fun observeMeasurements(diarySlotId: Long, epochDay: Long): Flow<List<MeasurementEntity>>
 
     @Query(
         """
@@ -78,6 +78,11 @@ abstract class MeasurementDao {
     )
 
     @Insert abstract suspend fun insertDiaryRecipe(diaryRecipe: DiaryRecipeEntity): Long
+
+    @Insert abstract suspend fun insertReportedComponents(components: List<DiaryReportedRecipeComponentEntity>)
+
+    @Query("SELECT * FROM DiaryReportedRecipeComponent WHERE recipeId = :recipeId ORDER BY position")
+    abstract fun observeReportedComponents(recipeId: Long): Flow<List<DiaryReportedRecipeComponentEntity>>
 
     @Query(
         """

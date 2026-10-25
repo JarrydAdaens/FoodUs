@@ -11,7 +11,7 @@ import androidx.navigationevent.compose.rememberNavigationEventState
 import com.maksimowiczm.foodyou.app.ui.common.component.DiscardDialog
 import com.maksimowiczm.foodyou.common.compose.extension.LaunchedCollectWithLifecycle
 import com.maksimowiczm.foodyou.common.domain.measurement.Measurement
-import com.maksimowiczm.foodyou.food.domain.entity.FoodId
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
 import foodyou.app.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -19,8 +19,8 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun CreateRecipeScreen(
     onBack: () -> Unit,
-    onCreate: (FoodId.Recipe) -> Unit,
-    onEditFood: (FoodId) -> Unit,
+    onCreate: (NutritionalItemId.Recipe) -> Unit,
+    onEditFood: (NutritionalItemId) -> Unit,
     onUpdateUsdaApiKey: () -> Unit,
     onUpdateOpenFoodFactsCredentials: () -> Unit,
     modifier: Modifier = Modifier,
@@ -30,12 +30,16 @@ fun CreateRecipeScreen(
     initialName: String = "",
     initialServings: Int = 1,
     initialNote: String? = null,
-    initialIngredient: Pair<FoodId, Measurement>? = null,
+    initialIngredient: Pair<NutritionalItemId, Measurement>? = null,
 ) {
     val viewModel = koinViewModel<CreateRecipeViewModel>()
     val latestOnCreate by rememberUpdatedState(onCreate)
+    var saveFailed by remember { mutableStateOf(false) }
+    val saving by viewModel.saving.collectAsStateWithLifecycle()
+    if (saveFailed) RecipeSaveErrorDialog { saveFailed = false }
     LaunchedCollectWithLifecycle(viewModel.events) {
         when (it) {
+            CreateRecipeEvent.SaveFailed -> saveFailed = true
             is CreateRecipeEvent.Created -> latestOnCreate(it.recipeId)
         }
     }
@@ -57,7 +61,7 @@ fun CreateRecipeScreen(
             initialIngredients = initialIngredients,
         )
     val asRecipe =
-        remember(formState.ingredients) { viewModel.intoRecipe(formState) }
+        remember(formState.draft()) { viewModel.intoRecipe(formState.draft()) }
             .collectAsStateWithLifecycle(null)
             .value
 
@@ -92,6 +96,7 @@ fun CreateRecipeScreen(
         onUpdateUsdaApiKey = onUpdateUsdaApiKey,
         onUpdateOpenFoodFactsCredentials = onUpdateOpenFoodFactsCredentials,
         state = formState,
+        saving = saving,
         topBarTitle = stringResource(Res.string.headline_create_recipe),
         mainRecipeId = null,
         recipe = asRecipe,

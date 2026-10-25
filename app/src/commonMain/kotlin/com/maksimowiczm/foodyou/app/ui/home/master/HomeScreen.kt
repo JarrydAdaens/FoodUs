@@ -12,6 +12,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
@@ -21,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.maksimowiczm.foodyou.app.ui.home.calendar.CalendarCard
 import com.maksimowiczm.foodyou.app.ui.home.goals.GoalsCard
-import com.maksimowiczm.foodyou.app.ui.home.meals.card.MealsCards
+import com.maksimowiczm.foodyou.app.ui.home.meals.card.DiarySlotsCards
 import com.maksimowiczm.foodyou.app.ui.home.poll.PollsCard
 import com.maksimowiczm.foodyou.app.ui.home.shared.rememberHomeState
 import com.maksimowiczm.foodyou.settings.domain.entity.HomeCard
@@ -33,14 +34,15 @@ import org.koin.compose.viewmodel.koinViewModel
 fun HomeScreen(
     onSettings: () -> Unit,
     onTitle: () -> Unit,
-    onMealCardLongClick: (mealId: Long) -> Unit,
-    onMealCardAddClick: (epochDay: Long, mealId: Long) -> Unit,
-    onMealCardQuickAddClick: (epochDay: Long, mealId: Long) -> Unit,
-    onMealCardAiScanClick: (epochDay: Long, mealId: Long) -> Unit,
-    onMealCardFastTextClick: (epochDay: Long, mealId: Long) -> Unit,
+    onDiarySlotCardLongClick: (diarySlotId: Long) -> Unit,
+    onDiarySlotCardAddClick: (epochDay: Long, diarySlotId: Long) -> Unit,
+    onDiarySlotCardQuickAddClick: (epochDay: Long, diarySlotId: Long) -> Unit,
+    onDiarySlotCardAiScanClick: (epochDay: Long, diarySlotId: Long) -> Unit,
+    onDiarySlotCardFastTextClick: (epochDay: Long, diarySlotId: Long) -> Unit,
     onGoalsCardLongClick: () -> Unit,
     onGoalsCardClick: (epochDay: Long) -> Unit,
     onEditDiaryEntryClick: (foodEntryId: Long?, manualEntryId: Long?, isPlaceholder: Boolean) -> Unit,
+    onMeals: (epochDay: Long) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     val viewModel: HomeViewModel = koinViewModel()
@@ -64,6 +66,9 @@ fun HomeScreen(
                     )
                 },
                 actions = {
+                    TextButton(onClick = { onMeals(homeState.selectedDate.toEpochDays()) }) {
+                        Text(stringResource(Res.string.meals_library))
+                    }
                     IconButton(onClick = onSettings) {
                         Icon(
                             imageVector = Icons.Filled.Settings,
@@ -99,15 +104,15 @@ fun HomeScreen(
                             modifier = Modifier.padding(horizontal = 8.dp).padding(bottom = 8.dp),
                         )
 
-                    HomeCard.Meals ->
-                        MealsCards(
+                    HomeCard.DiarySlots ->
+                        DiarySlotsCards(
                             homeState = homeState,
-                            onAdd = onMealCardAddClick,
-                            onQuickAdd = onMealCardQuickAddClick,
-                            onAiScan = onMealCardAiScanClick,
-                            onFastText = onMealCardFastTextClick,
+                            onAdd = onDiarySlotCardAddClick,
+                            onQuickAdd = onDiarySlotCardQuickAddClick,
+                            onAiScan = onDiarySlotCardAiScanClick,
+                            onFastText = onDiarySlotCardFastTextClick,
                             onEditEntry = onEditDiaryEntryClick,
-                            onLongClick = onMealCardLongClick,
+                            onLongClick = onDiarySlotCardLongClick,
                             contentPadding = PaddingValues(horizontal = 8.dp),
                             modifier = Modifier.padding(bottom = 8.dp),
                         )

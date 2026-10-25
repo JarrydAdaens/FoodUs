@@ -57,7 +57,7 @@ import com.maksimowiczm.foodyou.ai.domain.toNutritionFacts
 import com.maksimowiczm.foodyou.app.ui.food.shared.component.KnownNutrientList
 import com.maksimowiczm.foodyou.common.compose.utility.formatClipZeros
 import com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton
-import com.maksimowiczm.foodyou.food.domain.entity.FoodId
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
 import foodyou.app.generated.resources.*
 import kotlin.math.roundToInt
 import org.jetbrains.compose.resources.stringResource
@@ -71,7 +71,7 @@ import org.koin.compose.viewmodel.koinViewModel
 fun AiScanScreen(
     onBack: () -> Unit,
     onSaveToQuickAdd: (AiFoodEstimate, String) -> Unit,
-    onAlignPickFood: (FoodId) -> Unit,
+    onAlignPickFood: (NutritionalItemId) -> Unit,
     onCreateCustomFood: () -> Unit,
     modifier: Modifier = Modifier,
     savedScanItemId: String? = null,
@@ -314,7 +314,7 @@ private fun AiResultCard(
 private fun AlignBottomSheet(
     query: String,
     viewModel: AiScanViewModel,
-    onPickFood: (FoodId) -> Unit,
+    onPickFood: (NutritionalItemId) -> Unit,
     onCreateCustomFood: () -> Unit,
     onDismiss: () -> Unit,
 ) {

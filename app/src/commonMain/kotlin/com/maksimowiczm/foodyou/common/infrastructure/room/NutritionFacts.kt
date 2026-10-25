@@ -2,6 +2,17 @@ package com.maksimowiczm.foodyou.common.infrastructure.room
 
 import com.maksimowiczm.foodyou.common.domain.food.NutrientValue.Companion.toNutrientValue
 import com.maksimowiczm.foodyou.common.domain.food.NutritionFacts
+import com.maksimowiczm.foodyou.common.domain.food.hasValidValues
+
+/** Validate the actual encoded units too: finite grams can overflow a stored microgram column. */
+fun toValidatedEntityNutrients(nutritionFacts: NutritionFacts): Triple<Nutrients, Vitamins, Minerals> {
+    require(nutritionFacts.hasValidValues()) { "Invalid nutrition" }
+    val encoded = toEntityNutrients(nutritionFacts)
+    require(toNutritionFacts(encoded.first, encoded.second, encoded.third).hasValidValues()) {
+        "Nutrition cannot be stored finitely"
+    }
+    return encoded
+}
 
 fun toEntityNutrients(nutritionFacts: NutritionFacts): Triple<Nutrients, Vitamins, Minerals> {
     val nutrients =

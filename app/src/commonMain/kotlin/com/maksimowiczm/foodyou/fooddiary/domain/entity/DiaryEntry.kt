@@ -4,8 +4,9 @@ import com.maksimowiczm.foodyou.common.domain.food.NutritionFacts
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 
+/** A dated, portion-total nutritional snapshot assigned to a [DiarySlot]. */
 sealed interface DiaryEntry {
-    val mealId: Long
+    val diarySlotId: Long
     val date: LocalDate
     val name: String
     val nutritionFacts: NutritionFacts

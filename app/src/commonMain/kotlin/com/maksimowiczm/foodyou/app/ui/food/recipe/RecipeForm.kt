@@ -42,11 +42,12 @@ import com.maksimowiczm.foodyou.app.ui.common.component.FoodListItem
 import com.maksimowiczm.foodyou.app.ui.common.component.FoodListItemSkeleton
 import com.maksimowiczm.foodyou.app.ui.common.form.FormField
 import com.maksimowiczm.foodyou.app.ui.common.utility.LocalEnergyFormatter
+import com.maksimowiczm.foodyou.app.ui.common.utility.stringResource
 import com.maksimowiczm.foodyou.app.ui.common.utility.stringResourceWithWeight
 import com.maksimowiczm.foodyou.common.compose.extension.add
 import com.maksimowiczm.foodyou.common.compose.utility.formatClipZeros
-import com.maksimowiczm.foodyou.food.domain.entity.FoodId
-import com.maksimowiczm.foodyou.food.domain.usecase.ObserveFoodUseCase
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
+import com.maksimowiczm.foodyou.food.domain.usecase.ObserveNutritionalItemUseCase
 import com.valentinilk.shimmer.Shimmer
 import com.valentinilk.shimmer.ShimmerBounds
 import com.valentinilk.shimmer.rememberShimmer
@@ -117,7 +118,7 @@ internal fun RecipeForm(
             )
 
             state.name.TextField(
-                label = stringResource(Res.string.product_name),
+                label = stringResource(Res.string.recipe_name),
                 modifier = Modifier.fillMaxWidth().padding(horizontalPadding),
                 supportingText = stringResource(Res.string.neutral_required),
             )
@@ -201,16 +202,25 @@ private fun IngredientListItem(
     shimmer: Shimmer,
     modifier: Modifier = Modifier,
 ) {
-    val observeFoodUseCase: ObserveFoodUseCase = koinInject()
+    val observeFoodUseCase: ObserveNutritionalItemUseCase = koinInject()
 
     val food = observeFoodUseCase.observe(ingredient.foodId).collectAsStateWithLifecycle(null).value
 
     if (food == null) {
-        return FoodListItemSkeleton(shimmer, modifier)
+        return FoodErrorListItem(
+            headline = stringResource(Res.string.recipe_ingredient_unavailable),
+            errorMessage = stringResource(Res.string.error_food_is_missing_required_fields),
+            modifier = modifier,
+            trailingContent = {
+                IconButton(onDelete) {
+                    Icon(Icons.Outlined.Delete, contentDescription = stringResource(Res.string.action_delete))
+                }
+            },
+        )
     }
 
-    val factor = food.weight(ingredient.measurement)?.div(100)
-    if (factor == null) {
+    val measurementFacts = food.nutritionFor(ingredient.measurement)
+    if (measurementFacts == null) {
         return FoodErrorListItem(
             headline = food.headline,
             errorMessage = stringResource(Res.string.error_measurement_error),
@@ -219,17 +229,16 @@ private fun IngredientListItem(
             trailingContent = {
                 Row {
                     IconButton(onEdit) {
-                        Icon(imageVector = Icons.Outlined.Edit, contentDescription = null)
+                        Icon(imageVector = Icons.Outlined.Edit, contentDescription = stringResource(Res.string.action_edit) + ": " + food.headline)
                     }
                     IconButton(onDelete) {
-                        Icon(imageVector = Icons.Outlined.Delete, contentDescription = null)
+                        Icon(imageVector = Icons.Outlined.Delete, contentDescription = stringResource(Res.string.action_delete) + ": " + food.headline)
                     }
                 }
             },
         )
     }
 
-    val measurementFacts = food.nutritionFacts * factor
     val proteins = measurementFacts.proteins.value
     val carbohydrates = measurementFacts.carbohydrates.value
     val fats = measurementFacts.fats.value
@@ -239,14 +248,13 @@ private fun IngredientListItem(
             totalWeight = food.totalWeight,
             servingWeight = food.servingWeight,
             isLiquid = food.isLiquid,
-        )
+        ) ?: ingredient.measurement.stringResource()
 
     if (
         proteins == null ||
             carbohydrates == null ||
             fats == null ||
-            energy == null ||
-            measurementString == null
+            energy == null
     ) {
         return FoodErrorListItem(
             headline = food.headline,
@@ -256,10 +264,10 @@ private fun IngredientListItem(
             trailingContent = {
                 Row {
                     IconButton(onEdit) {
-                        Icon(imageVector = Icons.Outlined.Edit, contentDescription = null)
+                        Icon(imageVector = Icons.Outlined.Edit, contentDescription = stringResource(Res.string.action_edit) + ": " + food.headline)
                     }
                     IconButton(onDelete) {
-                        Icon(imageVector = Icons.Outlined.Delete, contentDescription = null)
+                        Icon(imageVector = Icons.Outlined.Delete, contentDescription = stringResource(Res.string.action_delete) + ": " + food.headline)
                     }
                 }
             },
@@ -289,14 +297,14 @@ private fun IngredientListItem(
         trailingContent = {
             Row {
                 IconButton(onEdit) {
-                    Icon(imageVector = Icons.Outlined.Edit, contentDescription = null)
+                    Icon(imageVector = Icons.Outlined.Edit, contentDescription = stringResource(Res.string.action_edit) + ": " + food.headline)
                 }
                 IconButton(onDelete) {
-                    Icon(imageVector = Icons.Outlined.Delete, contentDescription = null)
+                    Icon(imageVector = Icons.Outlined.Delete, contentDescription = stringResource(Res.string.action_delete) + ": " + food.headline)
                 }
             }
         },
-        isRecipe = ingredient.foodId is FoodId.Recipe,
+        isRecipe = ingredient.foodId is NutritionalItemId.Recipe,
     )
 }
 

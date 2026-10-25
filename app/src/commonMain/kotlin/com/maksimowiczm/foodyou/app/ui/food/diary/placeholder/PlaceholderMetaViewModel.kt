@@ -6,9 +6,10 @@ import com.maksimowiczm.foodyou.ai.domain.AiQueryResult
 import com.maksimowiczm.foodyou.ai.domain.AiSearchQueryGenerator
 import com.maksimowiczm.foodyou.ai.domain.ObserveAiConfigured
 import com.maksimowiczm.foodyou.fooddiary.domain.entity.ManualDiaryEntryId
+import com.maksimowiczm.foodyou.fooddiary.domain.repository.DiarySlotRepository
 import com.maksimowiczm.foodyou.fooddiary.domain.repository.ManualDiaryEntryRepository
-import com.maksimowiczm.foodyou.fooddiary.domain.repository.MealRepository
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -29,7 +30,7 @@ import kotlinx.coroutines.launch
 internal class PlaceholderMetaViewModel(
     private val manualEntryId: Long,
     private val manualDiaryEntryRepository: ManualDiaryEntryRepository,
-    mealRepository: MealRepository,
+    diarySlotRepository: DiarySlotRepository,
     private val aiSearchQueryGenerator: AiSearchQueryGenerator,
     observeAiConfigured: ObserveAiConfigured,
 ) : ViewModel() {
@@ -43,19 +44,25 @@ internal class PlaceholderMetaViewModel(
     private val generating = MutableStateFlow(false)
     private val error = MutableStateFlow<String?>(null)
 
-    private val entryFlow =
+    val readFailed = MutableStateFlow(false)
+    private val refresh = MutableStateFlow(0)
+    fun retryRead() { readFailed.value = false; refresh.value++ }
+    private val entryFlow = refresh.flatMapLatest {
         manualDiaryEntryRepository.observe(ManualDiaryEntryId(manualEntryId))
+            .catch { readFailed.value = true; emit(null) }
+    }
 
-    private val mealNameFlow =
+    private val diarySlotNameFlow =
         entryFlow.flatMapLatest { entry ->
             if (entry == null) flowOf(null)
-            else mealRepository.observeMeal(entry.mealId).map { it?.name }
+            else diarySlotRepository.observeDiarySlot(entry.diarySlotId).map { it?.name }
+                .catch { readFailed.value = true; emit(null) }
         }
 
     val uiState: StateFlow<PlaceholderMetaUiState> =
-        combine(entryFlow, mealNameFlow, generating, error, aiConfiguredFlow) {
+        combine(entryFlow, diarySlotNameFlow, generating, error, aiConfiguredFlow) {
                 entry,
-                mealName,
+                diarySlotName,
                 generating,
                 error,
                 aiConfigured ->
@@ -65,10 +72,10 @@ internal class PlaceholderMetaViewModel(
                     PlaceholderMetaUiState(
                         loaded = true,
                         epochDay = entry.date.toEpochDays(),
-                        mealId = entry.mealId,
+                        diarySlotId = entry.diarySlotId,
                         name = entry.name,
                         description = entry.description,
-                        mealName = mealName,
+                        diarySlotName = diarySlotName,
                         aiConfigured = aiConfigured,
                         generatingQuery = generating,
                         errorMessage = error,
@@ -89,7 +96,7 @@ internal class PlaceholderMetaViewModel(
         viewModelScope.launch {
             error.value = null
             generating.value = true
-            val result = aiSearchQueryGenerator.generateQuery(current.mealName, current.note())
+            val result = aiSearchQueryGenerator.generateQuery(current.diarySlotName, current.note())
             generating.value = false
 
             when (result) {
@@ -97,7 +104,7 @@ internal class PlaceholderMetaViewModel(
                     eventChannel.send(
                         PlaceholderMetaEvent.QueryGenerated(
                             epochDay = current.epochDay,
-                            mealId = current.mealId,
+                            diarySlotId = current.diarySlotId,
                             query = result.query,
                         )
                     )

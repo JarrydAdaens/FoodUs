@@ -2,11 +2,13 @@ package com.maksimowiczm.foodyou.common.domain.food
 
 import kotlin.jvm.JvmInline
 
+@kotlinx.serialization.Serializable(with = NutrientValueSerializer::class)
 sealed interface NutrientValue {
     val value: Double?
 
     /** Represents a nutrient value that is known and complete. */
     @JvmInline
+    @kotlinx.serialization.Serializable
     value class Complete(override val value: Double) : NutrientValue {
         operator fun plus(other: Complete) = Complete(value + other.value)
 
@@ -23,6 +25,7 @@ sealed interface NutrientValue {
      * complete data).
      */
     @JvmInline
+    @kotlinx.serialization.Serializable
     value class Incomplete(override val value: Double?) : NutrientValue {
         operator fun plus(other: Incomplete) =
             when {
@@ -74,6 +77,19 @@ sealed interface NutrientValue {
         fun Double?.toNutrientValue() = from(this)
 
         fun Float?.toNutrientValue() = from(this?.toDouble())
+    }
+}
+
+/** Internal captures retain incomplete partial values as well as unknown versus explicit zero. */
+object NutrientValueSerializer : kotlinx.serialization.KSerializer<NutrientValue> {
+    @kotlinx.serialization.Serializable
+    private data class StoredValue(val value: Double?, val complete: Boolean)
+    override val descriptor = StoredValue.serializer().descriptor
+    override fun serialize(encoder: kotlinx.serialization.encoding.Encoder, value: NutrientValue) =
+        encoder.encodeSerializableValue(StoredValue.serializer(), StoredValue(value.value, value.isComplete))
+    override fun deserialize(decoder: kotlinx.serialization.encoding.Decoder): NutrientValue {
+        val stored = decoder.decodeSerializableValue(StoredValue.serializer())
+        return if (stored.complete) NutrientValue.Complete(requireNotNull(stored.value)) else NutrientValue.Incomplete(stored.value)
     }
 }
 

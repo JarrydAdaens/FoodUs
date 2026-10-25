@@ -2,14 +2,14 @@ package com.maksimowiczm.foodyou.food.search.infrastructure
 
 import com.maksimowiczm.foodyou.common.infrastructure.koin.userPreferencesRepository
 import com.maksimowiczm.foodyou.common.infrastructure.koin.userPreferencesRepositoryOf
-import com.maksimowiczm.foodyou.food.domain.repository.FoodSearchHistoryRepository
+import com.maksimowiczm.foodyou.food.domain.repository.NutritionalItemSearchHistoryRepository
 import com.maksimowiczm.foodyou.food.search.domain.FoodRemoteMediatorFactoryAggregate
-import com.maksimowiczm.foodyou.food.search.domain.FoodSearchRepository
+import com.maksimowiczm.foodyou.food.search.domain.NutritionalItemSearchRepository
 import com.maksimowiczm.foodyou.food.search.domain.ProductRemoteMediatorFactory
 import com.maksimowiczm.foodyou.food.search.infrastructure.openfoodfacts.OpenFoodFactsRemoteMediatorFactory
 import com.maksimowiczm.foodyou.food.search.infrastructure.repository.DataStoreFoodSearchPreferencesRepository
-import com.maksimowiczm.foodyou.food.search.infrastructure.repository.RoomFoodSearchHistoryRepository
-import com.maksimowiczm.foodyou.food.search.infrastructure.repository.RoomFoodSearchRepository
+import com.maksimowiczm.foodyou.food.search.infrastructure.repository.RoomNutritionalItemSearchHistoryRepository
+import com.maksimowiczm.foodyou.food.search.infrastructure.repository.RoomNutritionalItemSearchRepository
 import com.maksimowiczm.foodyou.food.search.infrastructure.room.FoodSearchDatabase
 import com.maksimowiczm.foodyou.food.search.infrastructure.usda.USDARemoteMediatorFactory
 import org.koin.core.module.Module
@@ -20,8 +20,8 @@ import org.koin.dsl.bind
 fun Module.foodSearchInfrastructureModule() {
     factoryOf(::FoodRemoteMediatorFactoryAggregateImpl).bind<FoodRemoteMediatorFactoryAggregate>()
 
-    factoryOf(::RoomFoodSearchHistoryRepository).bind<FoodSearchHistoryRepository>()
-    factoryOf(::RoomFoodSearchRepository).bind<FoodSearchRepository>()
+    factoryOf(::RoomNutritionalItemSearchHistoryRepository).bind<NutritionalItemSearchHistoryRepository>()
+    factoryOf(::RoomNutritionalItemSearchRepository).bind<NutritionalItemSearchRepository>()
 
     userPreferencesRepositoryOf(::DataStoreFoodSearchPreferencesRepository)
 

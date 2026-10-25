@@ -13,12 +13,12 @@ import androidx.compose.ui.unit.dp
 import com.maksimowiczm.foodyou.app.ui.food.component.Icon
 import com.maksimowiczm.foodyou.app.ui.food.component.stringResource
 import com.maksimowiczm.foodyou.common.compose.utility.LocalClipboardManager
-import com.maksimowiczm.foodyou.common.domain.food.FoodSource
+import com.maksimowiczm.foodyou.common.domain.food.ProductSource
 import foodyou.app.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun Source(source: FoodSource, modifier: Modifier = Modifier) {
+fun Source(source: ProductSource, modifier: Modifier = Modifier) {
     val url = source.url
     val clipboardManger = LocalClipboardManager.current
     val sourceStr = stringResource(Res.string.headline_source)

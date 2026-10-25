@@ -2,7 +2,7 @@
 name: design
 description: Design specification for FoodUs - a personal, privacy-first fork of the Food You KMP/Compose food diary - covering architecture, principles, constraints, the context tier system, and the embedded milestones index.
 metadata:
-  version: "3.2"
+  version: "3.3"
   agentic_rails_source_version: "3.0"
   owner: "Jarryd Adaens"
   repo: "FoodYou (fork of maksimowiczm/FoodYou)"
@@ -200,17 +200,86 @@ its optional serving count and weight are descriptive metadata and must not sile
 rescale those totals. A placeholder is an unresolved DiaryEntry, not another reusable
 catalogue type.
 
+#### Accepted Recipe calculation and editing contract
+
+Story 27's [plan](implementation-plans/milestone-2/story-27-recipe-composition-portions/plan.md)
+selects ingredient totals as the starting point. A Recipe portion of q reference
+servings scales those totals by q / yield; a whole-Recipe/package fraction scales
+its complete totals directly. Do not require a fabricated gram/mL basis as an
+intermediate for serving nutrition. Nested Recipe serving portions use the same
+rule, once at each composition boundary. Existing positive integer yield storage
+remains; portions and ingredient measurements can be fractional.
+
+A Recipe's aggregate metric basis is known only when all constituent amounts have
+a complete compatible mass/volume basis. Never sum grams and millilitres or infer
+density. Metric portions and per-100 Recipe facts require that known basis; mixed
+ingredient Recipes can still use serving fractions when their ingredient totals
+resolve. Unknown nutrient fields remain incomplete, not a partial sum or invented
+zero. Legacy unavailable compositions stay readable as unavailable data. New
+save/log/unpack operations reject invalid or unresolvable required amounts before
+writes, with recoverable feedback.
+
+The complete editor draft drives previews. Save validates candidate graph edges
+and metadata/ingredients atomically, rejecting self/indirect cycles while retaining
+valid shared branches; Cancel and failed saves preserve the prior definition.
+Ordinary logging remains one captured Recipe entry. Explicit unpack validates and
+atomically appends/replaces direct constituents using the Recipe portion fraction;
+nested Recipes remain single constituents until explicitly unpacked themselves.
+Historical Recipe snapshots require an internal calculation-contract discriminator.
+Concrete baseline inspection showed that a mixed 100 g / 100 mL Recipe logged as
+100 g displayed 150 energy units under the old calculation, while strict new basis
+rules would make it unavailable. Unknown-nutrient aggregation also changes results.
+The persisted composition and measurement alone cannot identify the intended rule.
+
+Story 27 therefore owns an additive schema 39 → 40 migration adding a DiaryRecipe
+snapshot calculation contract: existing rows default to legacy 0, fresh captures
+from live definitions use current 1, and copying existing snapshots retains their
+contract. Preserve recorded legacy nutrition through its frozen legacy calculation;
+apply strict total-first/compatible-basis rules to new captures. Do not silently
+reinterpret old contracts during reads, copy or unpack. New density/unit models,
+live diary references and external relay/CSV/wire changes remain outside scope.
+Keep schema 39 intact, verify all existing columns/IDs and new default 0 through
+real migration/reopen tests. Story 24's separate nullable amount-metadata migration
+will follow the accepted predecessor schema, expected 40 → 41.
+The same migration also corrects the proven Recipe dependency-view defect: traversal
+follows typed Recipe IDs, terminates on cycles, and cannot confuse a same-number
+Product with a Recipe. Preserve the view identity/output contract and stored rows;
+verify actual DAO queries and all consumers against the corrected ancestry meaning.
+Implementation/acceptance remains owned by Story 27.
+
 #### Current source names and implementation transition
 
 | Existing identifier/role | Accepted target or planning requirement |
 | --- | --- |
 | `Product` and `Recipe` | Keep their distinct roles and existing creation/editing foundations. |
 | `MealTemplate` and its related item, ID, repository, use-case, and UI names | Adopt the `Meal` family for reusable bundles, including `MealItem` and related names. Remove template terminology from this feature's UI. |
-| Current diary-category `Meal` and category `mealId` references | Adopt `DiarySlot` and corresponding slot identifiers. Free the `Meal` name for the reusable bundle without confusing the two identities. |
-| `DiaryMeal`, the category-and-entries aggregate | Keep it as a diary grouping/projection; choose a name describing that role during planning. It is not the saved reusable Meal. |
-| Shared `Food` interface and related polymorphic APIs | Choose a precise role-based name once the shared abstraction's responsibilities are settled. Do not rename it to `Product`: Recipes also implement it. No replacement interface name is selected by this decision. |
+| Former diary-category `Meal` and category `mealId` references | Adopt `DiarySlot` and corresponding slot identifiers. Free the `Meal` name for the reusable bundle without confusing the two identities. |
+| `DiaryMeal`, the category-and-entries aggregate | Story 25's plan selects `DiarySlotEntries` for this diary grouping/projection. It is not the saved reusable Meal. |
+| Shared `Food` interface and related polymorphic APIs | Story 26 implements `NutritionalItem` / `NutritionalItemId` for the sealed Product-or-Recipe definition and typed identity. Product and Recipe remain distinct variants; synthetic Product/identity/snapshot acceptance is recorded in Story 26. |
 
-This is a target design; these source renames and the new library are not delivered.
+Story 26's [plan](implementation-plans/milestone-2/story-26-product-terminology-portions/plan.md)
+selects **NutritionalItem** as a shared reusable-definition role, not a fourth user
+concept. It owns typed identity, display headline, canonical nutrition, liquid status,
+optional known reference/total basis and supported portion resolution. Captured
+definitions use **NutritionalItemSnapshot**, **ProductSnapshot**, **RecipeSnapshot**,
+and **RecipeIngredientSnapshot** without live catalogue IDs. A dated, portioned
+snapshot uses **NutritionalItemDiaryEntry**, distinct from generic DiaryEntry and
+ManualDiaryEntry. Product-only provenance and remote errors use Product names.
+Shared search/history/suggestion APIs use the selected role; UI Food wording,
+upstream namespaces, legacy storage/serialized identities and external names remain.
+
+[Story 25](milestones/milestone-2.md#story-25) delivers the DiarySlot/Meal separation and
+DiarySlotEntries projection, with legacy persistence/serialization preserved and
+synthetic upgrade/backup/navigation acceptance.
+[Story 26](milestones/milestone-2.md#story-26) delivers the shared typed/snapshot
+terminology and Product serving/basis/portion reconciliation with unit, real-Room,
+actual-screen and historical-data acceptance.
+[Story 27](milestones/milestone-2.md#story-27) delivers Recipe composition/yield, ordinary
+snapshot logging and explicit unpack, with historical calculation preservation and
+synthetic unit, Room, actual-screen and upgrade acceptance. [Story 24](milestones/milestone-2.md#story-24) delivers the selected Meals library/editor
+and captured-portion model, with atomic save/update/load, preserved legacy data,
+actual-screen workflows and production process-restart acceptance recorded in the
+[batch completion record](_boss-runs/milestone-2-domain-meals-sequential/domain-meals-batch-receipt.json).
 Implementation must handle the existing name collision coherently, update relevant
 APIs/state/navigation/resources/tests, and preserve stable identities and serialized
 meaning. Kotlin type renames must not implicitly rename Room tables or columns, break
@@ -222,14 +291,66 @@ A central Meals library/editor is selected in
 [Milestone 2 Story 24](milestones/milestone-2.md#story-24), extending Story 13's delivered
 save/apply/delete flow. It must share one saved collection with diary actions, support
 rename and constituent editing with explicit Save/Cancel, and preserve existing diary
-snapshots when saved Meals change. Legacy bundle items currently store a name and total
-nutrition without a live Product/Recipe link or original amount/unit; the editing model
-and any additional portion metadata need a deliberate implementation decision.
+snapshots when saved Meals change. The [accepted implementation plan](implementation-plans/milestone-2/story-24-meals-library-editor/plan.md)
+selects an always-visible Meals action beside Settings in Home, a private Save/Cancel
+draft, and one shared saved collection. MealItem stores absolute captured totals.
+Retained item IDs/order and aggregate creation time survive atomic updates. Loading
+validates one committed Meal and its destination, then appends each constituent as a
+separate manual snapshot in one transaction, guarded against duplicate submissions.
+
+Story 24 adds six nullable quantity-context columns in schema 40 → 41: MealTemplateItem
+gets capturedPortionType/value plus descriptive servingCount/weightGrams;
+ManualDiaryEntry gets capturedPortionType/value. Existing rows remain null. Known
+portions use the existing Measurement types; legacy original amounts stay unknown.
+A same-unit amount edit or explicit whole-portion scale changes captured totals once;
+direct descriptive count/weight edits leave nutrition unchanged and clear a conflicting
+known captured portion with explanation. Name/nutrient edits and no-op context edits
+preserve quantity metadata. No density, missing basis, live source link or amount is
+invented. New captures normalize incomplete nutrient fields to unknown before preview
+and flat persistence, across all 43 fields; existing saved numeric values and Recipe
+historical contracts remain unchanged. Schema 39 and accepted 40 exports are immutable.
 
 A combined Foods/Recipes/Meals management destination remains a future design choice;
-it is not an additional accepted feature in Story 24. Naming the shared abstraction,
-the diary-group projection, and the editor's handling of unknown portions are planning
-decisions. No third-party studies or extracted reference material belong in this context.
+it is not an additional accepted feature in Story 24. The shared abstraction and diary-group projection are selected above;
+the editor's unknown-portion contract is selected in its plan. No third-party studies or extracted reference material belong in this context.
+
+The owner selected implementation in Milestone 2, ordered
+[25: DiarySlot/Meal separation](milestones/milestone-2.md#story-25) →
+[26: Product terminology and portions](milestones/milestone-2.md#story-26) →
+[27: Recipe composition and portions](milestones/milestone-2.md#story-27) →
+[24: Meals library/editor](milestones/milestone-2.md#story-24). Story 25 owns the existing
+diary-group projection's naming decision, Story 26 the shared interface's naming and
+Product portion contract, Story 27 Recipe yield/composition, and Story 24 legacy saved-
+Meal editing semantics. The milestone owns each Story's acceptance and current status.
+This selection records implementation work without changing the app version or closing
+Stories. A combined catalogue hub and additional import/sharing features remain outside
+this batch.
+
+
+After the original batch and private APK delivery, the owner authorized
+[Story 28](milestones/milestone-2.md#story-28) for faithful structured personal-library
+import because the existing CSV path flattens Products/Recipes/Meals. The planned
+extension must preserve declared nonmetric serving references, reported Recipe
+nutrition independently of ingredient-derived facts, unknown yields and ordered inline
+components, and Meal absolute snapshots/portion text. It remains local and additive;
+existing diary/settings and legacy definitions/snapshots retain their meaning. A
+FoodUs-owned format and synthetic fixtures belong in source; account-specific adapters,
+raw records and derived personal packages remain private outside the checkout.
+The [adopted plan](implementation-plans/milestone-2/story-28-structured-personal-import/plan.md)
+selects explicit legacy-metric/reference-serving Product bases captured in snapshots;
+separate reported Recipe panels and ordered inline components with nullable yields;
+preserved calculation 0/1 plus an explicit reported snapshot mode; independent Meal
+reported panels and immutable descriptive provenance; and a typed source-identity ledger
+with atomic conflict rejection. Reported composition/reference edits require nutrition
+review; ordinary derived behavior remains unchanged. Reported unpack is unavailable
+in v1, snapshots never depend on live catalogue foreign keys, and CSV export cannot
+mislabel unsupported serving-only facts as metric facts. The source uses a versioned
+FoodUs-owned format, separate from private account adapters. Story28 passed Android
+acceptance on 2026-10-26 with schema42 and private APK delivery. Original schema39–41
+exports and historical calculation contracts remain unchanged. The package imports
+the library, not diary history. Reported Unpack/structured export remain unavailable;
+metric CSV rejects unsupported reference facts, and full native backup retains them.
+See the adopted plan and final receipt for evidence and remaining platform/identity limits.
 
 ---
 

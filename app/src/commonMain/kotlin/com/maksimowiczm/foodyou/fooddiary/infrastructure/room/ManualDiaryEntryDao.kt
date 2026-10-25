@@ -16,10 +16,10 @@ interface ManualDiaryEntryDao {
         """
             SELECT * 
             FROM ManualDiaryEntry 
-            WHERE mealId = :mealId AND dateEpochDay = :dateEpochDay
+            WHERE mealId = :diarySlotId AND dateEpochDay = :dateEpochDay
         """
     )
-    fun observeAll(mealId: Long, dateEpochDay: Long): Flow<List<ManualDiaryEntryEntity>>
+    fun observeAll(diarySlotId: Long, dateEpochDay: Long): Flow<List<ManualDiaryEntryEntity>>
 
     @Insert suspend fun insert(entry: ManualDiaryEntryEntity): Long
 

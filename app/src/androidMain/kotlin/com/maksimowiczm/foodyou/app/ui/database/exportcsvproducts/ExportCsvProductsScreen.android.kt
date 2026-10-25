@@ -17,6 +17,8 @@ import com.maksimowiczm.foodyou.app.ui.common.component.SomethingWentWrongScreen
 import com.maksimowiczm.foodyou.app.ui.common.utility.LocalAppConfig
 import java.time.LocalDateTime
 import org.koin.compose.viewmodel.koinViewModel
+import foodyou.app.generated.resources.*
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 actual fun ExportCsvProductsScreen(onBack: () -> Unit, onFinish: () -> Unit, modifier: Modifier) {
@@ -24,6 +26,7 @@ actual fun ExportCsvProductsScreen(onBack: () -> Unit, onFinish: () -> Unit, mod
     val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
 
     val context = LocalContext.current
+    LaunchedEffect(viewModel) { viewModel.prepare(context.applicationContext) }
     val launcher =
         rememberLauncherForActivityResult(
             ActivityResultContracts.CreateDocument("application/csv")
@@ -45,6 +48,8 @@ actual fun ExportCsvProductsScreen(onBack: () -> Unit, onFinish: () -> Unit, mod
             is UiState.Exported,
             is UiState.Exporting -> Unit
 
+            UiState.Preparing -> Unit
+
             UiState.WaitingForFile -> launcher.launch(fileName)
         }
     }
@@ -53,14 +58,14 @@ actual fun ExportCsvProductsScreen(onBack: () -> Unit, onFinish: () -> Unit, mod
         is UiState.Error ->
             SomethingWentWrongScreen(
                 onBack = onBack,
-                message = uiState.message,
+                message = stringResource(if (uiState.metricUnavailable) Res.string.captured_csv_unavailable else Res.string.captured_csv_failed),
                 modifier = modifier,
             )
 
         is UiState.Exported ->
             SuccessScreen(count = uiState.count, onBack = onBack, modifier = modifier)
 
-        UiState.WaitingForFile ->
+        UiState.WaitingForFile, UiState.Preparing ->
             Scaffold(modifier) { paddingValues ->
                 Box(
                     modifier =

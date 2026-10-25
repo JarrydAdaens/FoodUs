@@ -2,7 +2,7 @@ package com.maksimowiczm.foodyou.app.ui.database.australianfoodcompositiondataba
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.maksimowiczm.foodyou.common.domain.food.FoodSource
+import com.maksimowiczm.foodyou.common.domain.food.ProductSource
 import com.maksimowiczm.foodyou.common.domain.userpreferences.UserPreferencesRepository
 import com.maksimowiczm.foodyou.food.search.domain.FoodSearchPreferences
 import com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase.domain.AfcdImportProgress
@@ -36,7 +36,7 @@ internal class AustralianFoodCompositionDatabaseViewModel(
     val uiState =
         combine(
                 preferencesRepository.observe(),
-                metadataRepository.observe(FoodSource.Type.AustralianFoodCompositionDatabase),
+                metadataRepository.observe(ProductSource.Type.AustralianFoodCompositionDatabase),
                 phase,
             ) { prefs, metadata, phase ->
                 AustralianFoodCompositionDatabaseUiState(

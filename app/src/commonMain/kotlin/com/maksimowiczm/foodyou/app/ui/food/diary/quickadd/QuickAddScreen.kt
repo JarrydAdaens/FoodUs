@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigationevent.NavigationEventInfo
 import androidx.navigationevent.compose.NavigationEventHandler
 import androidx.navigationevent.compose.rememberNavigationEventState
+import com.maksimowiczm.foodyou.app.ui.common.utility.stringResource
 import com.maksimowiczm.foodyou.common.domain.food.NutritionFacts
 import com.maksimowiczm.foodyou.common.domain.food.NutritionFactsField
 import com.maksimowiczm.foodyou.app.ui.food.shared.component.KnownNutrientList
@@ -51,6 +52,7 @@ internal fun QuickAddScreen(
     nutritionDetails: NutritionFacts? = null,
     busy: Boolean = false,
     saveFailed: Boolean = false,
+    capturedPortion: com.maksimowiczm.foodyou.common.domain.measurement.Measurement? = null,
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val focusRequester = remember { FocusRequester() }
@@ -152,6 +154,10 @@ internal fun QuickAddScreen(
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Spacer(Modifier.height(16.dp))
+                capturedPortion?.let {
+                    Text(it.stringResource())
+                    Text(stringResource(Res.string.meals_quantity_help))
+                }
                 QuickAddForm(state = state, modifier = Modifier.focusRequester(focusRequester))
                 nutritionDetails?.let {
                     KnownNutrientList(it, excludedFields = setOf(

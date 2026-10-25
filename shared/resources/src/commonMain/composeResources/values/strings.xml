@@ -26,12 +26,12 @@
     <!-- Quick Add expansion fields (Milestone 2, Story 18). -->
     <string name="label_number_of_servings">Number of servings</string>
 
-    <!-- Reusable meal templates (Milestone 2, Story 13). -->
-    <string name="action_meal_template_menu">Meal template options</string>
-    <string name="action_save_as_template">Save as template</string>
-    <string name="action_apply_template">Apply template</string>
-    <string name="label_template_name">Template name</string>
-    <string name="neutral_template_item_count">%1$d items</string>
+    <!-- Reusable saved Meals (Milestone 2, Story 13). -->
+    <string name="action_saved_meal_menu">Meal options</string>
+    <string name="action_save_as_meal">Save as Meal</string>
+    <string name="action_load_meal">Load Meal</string>
+    <string name="label_meal_name">Meal name</string>
+    <string name="neutral_meal_item_count">%1$d items</string>
 
     <!-- Placeholder resolution meta screen (Milestone 2, Story 9). -->
     <string name="headline_resolve_placeholder">Resolve placeholder</string>
@@ -68,7 +68,7 @@
     <string name="headline_daily_goals">Daily goals</string>
     <string name="headline_general">General</string>
     <string name="headline_macronutrients">Macronutrients</string>
-    <string name="headline_meals">Meals</string>
+    <string name="headline_diary_slots">Diary slots</string>
     <string name="headline_delete_food">Delete food</string>
     <string name="headline_edit_product">Edit product</string>
     <string name="headline_permission_required">Permission required</string>
@@ -92,7 +92,7 @@
     <string name="headline_home" description="Home screen">Home</string>
     <string name="headline_home_settings" description="Home screen settings">Home settings</string>
     <string name="headline_calendar">Calendar</string>
-    <string name="headline_meals_settings">Meals settings</string>
+    <string name="headline_diary_slots_settings">Diary slot settings</string>
     <string name="headline_horizontal">Horizontal</string>
     <string name="headline_vertical">Vertical</string>
     <string name="headline_values_per">Values per</string>
@@ -198,7 +198,7 @@
     <string name="action_save">Save</string>
     <string name="action_delete">Delete</string>
     <string name="action_confirm">Confirm</string>
-    <string name="action_add_meal">Add meal</string>
+    <string name="action_add_diary_slot">Add diary slot</string>
     <string name="action_edit">Edit</string>
     <string name="action_insert_suggested_search">Insert suggested search</string>
     <string name="action_edit_entry">Edit entry</string>
@@ -216,7 +216,7 @@
     <string name="action_move_up" description="reorder list item up">Move up</string>
     <string name="action_move_down" description="reorder list item down">Move down</string>
     <string name="action_use_time_based_ordering">Use time-based ordering</string>
-    <string name="action_ignore_all_day_meals">Ignore all-day meals</string>
+    <string name="action_ignore_all_day_diary_slots">Ignore all-day diary slots</string>
     <string name="action_add_ingredient" description="Add ingredient to the recipe">Add ingredient</string>
     <string name="action_delete_ingredient">Delete ingredient</string>
     <string name="action_download">Download</string>
@@ -247,9 +247,9 @@
         <item quantity="other">%1$d kilojoules left</item>
     </plurals>
     <string name="neutral_set_your_daily_goals">Set your daily nutrition goals</string>
-    <string name="neutral_set_your_meal_schedule">Set your meal schedule</string>
-    <string name="neutral_permanently_delete_meal">Permanently delete meal?</string>
-    <string name="neutral_meal_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">Meal will be deleted permanently. All data related to this meal will be lost.</string>
+    <string name="neutral_set_your_diary_slot_schedule">Set your diary slot schedule</string>
+    <string name="neutral_permanently_delete_diary_slot">Permanently delete diary slot?</string>
+    <string name="neutral_diary_slot_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">Diary slot will be deleted permanently. All entries assigned to this slot will be lost.</string>
     <string name="neutral_required">Required</string>
     <string name="neutral_help_translating_the_app">Help translate the app</string>
     <string name="neutral_copied">Info copied to clipboard</string>
@@ -287,8 +287,8 @@
     <string name="description_delete_food">Food will be deleted permanently</string>
     <string name="description_delete_product_entry" description="Tell user that this entry will be deleted only from diary and won't affect the product itself. Product won't be deleted from the database.">This entry will be deleted from your diary. You can add it again anytime.</string>
     <string name="description_about_setting">Learn more about the app</string>
-    <string name="description_time_based_meals_sorting">When enabled, meals that are currently happening will be displayed first</string>
-    <string name="description_action_ignore_all_day_meals">All-day meals will be displayed at the end of the list</string>
+    <string name="description_time_based_diary_slots_sorting">When enabled, diary slots that are currently happening will be displayed first</string>
+    <string name="description_action_ignore_all_day_diary_slots">All-day diary slots will be displayed at the end of the list</string>
     <string name="description_incomplete_nutrition_data">Some of the used products lack this value; therefore, the displayed value might not be accurate</string>
     <string name="description_translation_warning">Translations are created by volunteers. They may not be perfect and some translations may be missing. If you notice any mistakes don't hesitate to help improving them.</string>
     <string name="description_home_settings">Customize your home page</string>
@@ -669,4 +669,134 @@
     <string name="notification_entry_added_to_your_diary">%1$s added %2$s to your diary</string>
     <string name="notification_entry_failed_to_add">%1$s could not be added to your diary</string>
     <string name="notification_unknown_message_version_refused">A message using an unsupported format (version %1$s) was refused</string>
+    <string name="product_nutrition_basis">Nutrition basis</string>
+    <string name="description_product_nutrition_basis">Enter nutrition for the selected reference amount. This does not set the amount you log.</string>
+    <string name="product_reference_serving">Reference serving amount</string>
+    <string name="portion_amount_to_log">Amount to log</string>
+    <string name="measurement_amount">Amount</string>
+    <string name="error_portion_amount">Enter a valid amount greater than zero.</string>
+    <string name="error_product_nutrition_basis">Enter a known serving or package amount and correct any nutrition errors before changing the nutrition basis. Your current values are unchanged.</string>
+    <string name="error_product_save">Could not save this food. Check that nutrition is finite and nonnegative and reference amounts are positive, then try again.</string>
+    <string name="error_portion_save">Could not save this portion. Use a positive finite amount and a supported unit with a known serving or package amount.</string>
+    <string name="recipe_name">Recipe name</string>
+    <string name="recipe_total_nutrition">Whole Recipe nutrition</string>
+    <string name="recipe_per_serving">Nutrition per serving</string>
+    <string name="error_recipe_save">Recipe could not be saved. Check the yield and ingredient amounts, then try again. Your saved Recipe has not changed.</string>
+    <string name="recipe_ingredient_unavailable">Ingredient unavailable</string>
+    <!-- Meals library/editor (Milestone 2, Story 24). -->
+    <string name="meals_library">Meals</string>
+    <string name="meals_empty">No saved Meals yet</string>
+    <string name="meals_empty_help">Save the entries in a diary slot as a Meal to reuse them here.</string>
+    <string name="meals_go_diary">Go to diary</string>
+    <string name="meals_edit">Edit Meal</string>
+    <string name="meals_edit_item">Edit Meal entry</string>
+    <string name="meals_add_item">Add Food or Recipe</string>
+    <string name="meals_remove_item">Remove entry</string>
+    <string name="meals_item_name">Entry name</string>
+    <string name="meals_original_unknown">Original amount unknown</string>
+    <string name="meals_captured_amount">Captured amount</string>
+    <string name="meals_captured_nutrition">Nutrition for this captured portion</string>
+    <string name="meals_scale">Scale captured portion</string>
+    <string name="meals_scale_factor">Portion multiplier</string>
+    <string name="meals_scale_help">This explicitly scales nutrition and any known quantity details together. Unknown amounts stay unknown.</string>
+    <string name="meals_quantity_help">Quantity details are descriptive. Editing them leaves nutrition unchanged and replaces any saved portion context.</string>
+    <string name="meals_incomplete_help">Incomplete nutrition is kept as unknown. Empty nutrient fields remain unknown.</string>
+    <string name="meals_invalid">Enter a name, at least one entry, and valid amounts and nutrition. Amounts must be positive and all numbers finite.</string>
+    <string name="meals_unavailable">This Meal or its data is unavailable. Please try again.</string>
+    <string name="meals_save_failed">Could not save Meal. The previous saved Meal is unchanged.</string>
+    <string name="meals_load_failed">Could not load Meal. No entries were added.</string>
+    <string name="meals_delete_failed">Could not delete Meal. Please try again.</string>
+    <string name="meals_delete">Delete Meal</string>
+    <string name="meals_delete_help">Delete this saved Meal? Previously logged diary entries will stay unchanged.</string>
+    <string name="meals_discard">Discard Meal changes?</string>
+    <string name="meals_discard_help">The saved Meal will stay unchanged.</string>
+    <string name="meals_diary_unavailable">Diary data is unavailable. Please try again.</string>
+    <string name="meals_retry">Retry</string>
+    <string name="meals_loading">Loading Meals…</string>
+    <string name="meals_choose_slot">Choose a diary slot</string>
+    <string name="meals_apply_changes">Use changes</string>
+    <string name="meals_saved">Meal saved</string>
+    <string name="meals_loaded">Meal loaded</string>
+    <string name="library_import_title">Import FoodUs library</string>
+    <string name="library_import_description">Add Foods, Recipes and Meals from a local FoodUs library file. Your diary and settings stay unchanged.</string>
+    <string name="library_choose_file">Choose library file</string>
+    <string name="library_reading">Reading and checking the file…</string>
+    <string name="library_importing">Importing library…</string>
+    <string name="library_preview_title">Review import</string>
+    <string name="library_preview_foods">Foods to add: %1$d</string>
+    <string name="library_preview_recipes">Recipes to add: %1$d</string>
+    <string name="library_preview_meals">Meals to add: %1$d</string>
+    <string name="library_preview_skipped">Previously imported records kept: %1$d</string>
+    <string name="library_metric_unavailable">%1$d definitions have no known metric serving amount. Supported portions depend on their declared nutrition basis.</string>
+    <string name="library_nutrition_unavailable">%1$d definitions have an unavailable nutrition basis. Their captured information will be kept for viewing and editing.</string>
+    <string name="library_legacy_overlap">Older CSV imports may overlap. Existing Foods are kept because their original identities cannot be established exactly.</string>
+    <string name="library_conflicts">Conflicting records: %1$d. Nothing will be imported from this file.</string>
+    <string name="library_confirm">Import library</string>
+    <string name="library_complete">Library import complete</string>
+    <string name="library_done">Done</string>
+    <string name="library_android_only">Library file import is currently available on Android.</string>
+    <string name="library_kind_food">Food</string>
+    <string name="library_kind_recipe">Recipe</string>
+    <string name="library_kind_meal">Meal</string>
+    <string name="library_error_record">%1$s record %2$d</string>
+    <string name="library_error_conflict">This file conflicts with an earlier import or a mapped item was deleted. Nothing was changed.</string>
+    <string name="library_error_version">This FoodUs library format or version is not supported.</string>
+    <string name="library_error_limit">The file exceeds the supported library size or content limits.</string>
+    <string name="library_error_file">The file could not be opened. Choose an accessible local file.</string>
+    <string name="library_error_persistence">The import could not be saved. No partial import was kept.</string>
+    <string name="library_error_nutrition">The file contains an invalid number, unit or nutrition basis. Nothing was imported.</string>
+    <string name="library_error_invalid">The file contains invalid structure, identities or references. Nothing was imported.</string>
+    <string name="captured_reference_serving">Nutrition for one declared serving</string>
+    <string name="captured_metric_100">Nutrition per 100 g or 100 mL</string>
+    <string name="captured_reference_amount">Declared reference quantity (optional)</string>
+    <string name="captured_reference_unit">Declared unit or portion name</string>
+    <string name="captured_reference_text">Original portion description</string>
+    <string name="captured_reference_metric">Known reference metric amount (optional)</string>
+    <string name="captured_metric_unit">Known metric unit</string>
+    <string name="captured_no_metric">Metric amount unknown</string>
+    <string name="captured_reported">Reported nutrition</string>
+    <string name="captured_whole">Reported for the whole item</string>
+    <string name="captured_serving">Reported for one declared serving</string>
+    <string name="captured_unspecified">Reported basis unspecified — portion conversion unavailable</string>
+    <string name="captured_unavailable">Nutrition basis unavailable</string>
+    <string name="captured_yield">Known serving yield (optional)</string>
+    <string name="captured_unknown_yield">Serving yield unknown</string>
+    <string name="captured_needs_review">This reported panel needs review after a composition or reference change. Confirm or update it before logging.</string>
+    <string name="captured_confirm_reference">I confirm these nutrition facts apply to this reference quantity.</string>
+    <string name="captured_confirm_panel">I confirm this reported panel applies to the displayed composition and basis.</string>
+    <string name="captured_invalid">Check the entered values and reference confirmation. Known quantities must be positive and all facts must fit supported numeric units.</string>
+    <string name="captured_components">Captured components</string>
+    <string name="captured_component_add">Add component</string>
+    <string name="captured_component_edit">Edit component</string>
+    <string name="captured_component_name">Component name</string>
+    <string name="captured_component_facts">This component has its own captured nutrition</string>
+    <string name="captured_linked_food">Captured Food reference</string>
+    <string name="captured_linked_recipe">Captured Recipe reference</string>
+    <string name="captured_link_remove">Remove reference</string>
+    <string name="captured_original_quantity">Original descriptive quantity</string>
+    <string name="captured_metadata">Additional captured information</string>
+    <string name="captured_definition_metadata">Definition information</string>
+    <string name="captured_percent_daily">Reported daily values</string>
+    <string name="captured_truncated">The original component text was marked as truncated.</string>
+    <string name="captured_unpack_unavailable">Unpack requires nutrition calculated from linked ingredients. Reported nutrition stays as one Recipe entry.</string>
+    <string name="captured_panel_basis">Reported panel basis</string>
+    <string name="captured_move_up">Move up</string>
+    <string name="captured_move_down">Move down</string>
+    <string name="captured_remove">Remove</string>
+    <string name="captured_meal_panel">Separately reported Meal panel</string>
+    <string name="captured_meal_panel_help">Loading uses each constituent’s absolute facts. This reported panel does not replace or rebalance them.</string>
+    <string name="captured_meal_review">The Meal composition has changed. This retained reported panel needs review; constituent snapshots can still be loaded.</string>
+    <string name="captured_csv_unavailable">CSV needs a known metric reference for every Food. This library contains serving-only facts. Use the full database backup to preserve them.</string>
+    <string name="captured_reference_short">Declared reference: %1$s</string>
+    <string name="captured_unknown_value">Unknown</string>
+    <string name="captured_known_yield">Known serving yield: %1$d</string>
+    <string name="captured_meal_items_energy">Constituent total: %1$s kcal</string>
+    <string name="captured_meal_reported_energy">Reported panel: %1$s kcal</string>
+    <string name="captured_hide_details">Hide nutrition details</string>
+    <string name="captured_show_details">Show all nutrition details</string>
+    <string name="captured_csv_failed">CSV could not be saved. Try again with an accessible destination. Use the full database backup to preserve the complete library.</string>
+    <string name="library_added_foods">Foods added: %1$d</string>
+    <string name="library_added_recipes">Recipes added: %1$d</string>
+    <string name="library_added_meals">Meals added: %1$d</string>
+    <string name="captured_incomplete_value">%1$s (incomplete)</string>
 </resources>

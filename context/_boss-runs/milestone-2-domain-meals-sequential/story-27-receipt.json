@@ -1,0 +1,981 @@
+{
+  "checked": {
+    "artifact_identity": "b3c4c94e11d8d8d2fb5e4ac2995037ac2c4781050bffafe0a13056b402ea14f0",
+    "base": "8b698162ff7b3de0e7338f3ca2d68790edacb752",
+    "diff_identity": "9a7bd64941d1850f730da4670e9e0cb910acf2965c972a904d72ff7f83051ad4",
+    "files": {
+      "app/schemas/com.maksimowiczm.foodyou.app.infrastructure.room.FoodYouDatabase/39.json": {
+        "kind": "file",
+        "sha256": "666ff1773c463a92bb8c1d5512b96760d6ce3a7e0b08a2a441a1265d97ed29e3"
+      },
+      "app/schemas/com.maksimowiczm.foodyou.app.infrastructure.room.FoodYouDatabase/40.json": {
+        "kind": "file",
+        "sha256": "6392aeff08f3291136480faa479eda13729a726d4779a4f6006f16dd9b0bd31b"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddConversionTest.kt": {
+        "kind": "file",
+        "sha256": "6ac16ba207a6d37701a45327b94962f05494fecc8aa22a195e4bea7c372e3867"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/food/ProductPortionPersistenceTest.kt": {
+        "kind": "file",
+        "sha256": "221dcafedceaeaf1caa1181c4b6ecde5d161e4d35dda8ef3a8b11c78b6372e3c"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/food/ProductWorkflowTest.kt": {
+        "kind": "file",
+        "sha256": "9c3835c67eea2f13f9d129f0ef47f0aff69dd24e39c28f927304534fd099f6e5"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/food/RecipePersistenceTest.kt": {
+        "kind": "file",
+        "sha256": "f06b0644519a50f1b9aabf5292e29598f9b5cdbbb1dde5f73a572b7a793fac80"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/food/RecipeWorkflowTest.kt": {
+        "kind": "file",
+        "sha256": "10bdeb62d40a52d85d217cc804607287b1447d1d83f82bdb0d350eed721d7df2"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/fooddiary/LegacyDiarySlotMealFixtureTest.kt": {
+        "kind": "file",
+        "sha256": "d6a7c2446d45d53b8e8e2e472204b686e81b39c5d0d22ed62794185a45ce7628"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/room/FoodYouDatabase.kt": {
+        "kind": "file",
+        "sha256": "aec2023fdcad203f2e2dd3d8d6e7b2af031911f804ccc44d819846898360b33b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/room/migration/RecipeSnapshotCalculationMigration.kt": {
+        "kind": "file",
+        "sha256": "e4e4daee3e30d80516ef8263d7d718cdce98f87a45de6bebabc419908cce2187"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/AddEntryScreen.kt": {
+        "kind": "file",
+        "sha256": "1f7327da91ac5d138ba8511aedbe619b1216208a08db0aaa90dfa748994ac324"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/AddEntryViewModel.kt": {
+        "kind": "file",
+        "sha256": "e1b57ecf31cd7752c6874f080f80b909dffa4cf59277acdb019a306cb59212b3"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/FoodModel.kt": {
+        "kind": "file",
+        "sha256": "b63e47c1960d91489b716ecedde78200d12b8446b1808023fd4d17a8b759682d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/IngredientModel.kt": {
+        "kind": "file",
+        "sha256": "dae2ee00490f24613456524feddb4be11d9439bd941c637caa3ad3d9efa69659"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/Ingredients.kt": {
+        "kind": "file",
+        "sha256": "65906c51731279f1f641b3c090c2bcdc4ea270c98e4e7a9efe09bcc28651adcd"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/NutrientList.kt": {
+        "kind": "file",
+        "sha256": "a9072dacd4fd9c65356ef35438d718ebbc7592f6b806391967df0e315bed391a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/RecipeModel.kt": {
+        "kind": "file",
+        "sha256": "049e35ecc912b5ee612e0e62e2ead9eba7251e3bb21afe9579b71e90f7df8f8f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/Ingredients.kt": {
+        "kind": "file",
+        "sha256": "6fcd726dbebddbdcbd06939d0d4ee7adf1161e64d12d60a4e589166c2a71edda"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/NutrientList.kt": {
+        "kind": "file",
+        "sha256": "de92e2bf1625aafea97a52665aac92001be0269a188a212d0a8f8affbd0b49e7"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/UpdateEntryScreen.kt": {
+        "kind": "file",
+        "sha256": "63b8e40121e9410ccd53cd0bb336208fa0c5f4ca8bf34e5aa18f6687f49fb055"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/UpdateNutritionalItemDiaryEntryViewModel.kt": {
+        "kind": "file",
+        "sha256": "669e3ec6fcb5c0efbc0d1feec6345f55b100cd3f5941ba3c9e856479fa07672a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/CreateRecipeEvent.kt": {
+        "kind": "file",
+        "sha256": "eabc98e6e2ce5796f27da634db09e412ef8fb867e3811f0fe64b03a4578775cf"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/CreateRecipeScreen.kt": {
+        "kind": "file",
+        "sha256": "b6560cc17f17868153d79b44e4722b16afc1130afd0881f4156a158e660e410c"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/CreateRecipeViewModel.kt": {
+        "kind": "file",
+        "sha256": "ab342a2572323fb58a0c9a1c84770ec4431cc08ee288f68a750c00e6727573f7"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/MeasureIngredientScreen.kt": {
+        "kind": "file",
+        "sha256": "460cb282d3008522621aee8e67533ed70315a9e85a01e316875b2116b552dc14"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/MeasureIngredientViewModel.kt": {
+        "kind": "file",
+        "sha256": "e3110a11d85eed7ce3f79fa1ee568161a9bc49e984531081246d22e300545a0b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/RecipeApp.kt": {
+        "kind": "file",
+        "sha256": "b7be8f8c3dc2f621308a35ed001b37ef14d54dd4190bc550cc9e598fec3da986"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/RecipeForm.kt": {
+        "kind": "file",
+        "sha256": "26078b2bf436f175a8070027fe8d7310640b9018c641ba60c8a792b30c3028d7"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/RecipeFormState.kt": {
+        "kind": "file",
+        "sha256": "23a882ca2cbe1a39dcc1ec2b3f2e215dafd26b013f4de392ef167521c149a63d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/RecipeSaveErrorDialog.kt": {
+        "kind": "file",
+        "sha256": "544aa8616759581060742be8fe2417479590ceb0b8efa1738b9c5b787051d52e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/RecipeViewModel.kt": {
+        "kind": "file",
+        "sha256": "7e4b8eb320615c602b7994d38cda04e8ae7ab666a9e31dc062aeafcdb0c3367c"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/UpdateRecipeEvent.kt": {
+        "kind": "file",
+        "sha256": "7b08f74f2bde7eecec3c54c11aae376365b392d3e2dc56dd2b4ee9a3705d0e78"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/UpdateRecipeScreen.kt": {
+        "kind": "file",
+        "sha256": "94d65fdb6687bf98bef14fc56035f70fe654e038d6acf6e0c5a94466d20ffddf"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/UpdateRecipeViewModel.kt": {
+        "kind": "file",
+        "sha256": "211328d23accd75679234ef34688d8f8035d3b2c16296675751b65e3ef892558"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodSearchListItem.kt": {
+        "kind": "file",
+        "sha256": "6406dda832cb3464489fe364ea8fb266d91b9b8a42853b148b8d5906c06770c6"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotFoodListItem.kt": {
+        "kind": "file",
+        "sha256": "4dab853d6b986874bde88ed406025d1d07378766abfd5e5402599c72d99f6a60"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/domain/food/RecipeCalculation.kt": {
+        "kind": "file",
+        "sha256": "d18d6347ae645913c10b271866ce2bbc7402032cfca54ba133a8dcbf45519cf7"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/NutritionalItem.kt": {
+        "kind": "file",
+        "sha256": "6029999c02556736728f085ca47e2cf7d2b96561164d2ac56bed4348c0d60ec9"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/Recipe.kt": {
+        "kind": "file",
+        "sha256": "ab77a40879d0467507b2d664885bcb5f37e5bc5082d6465c8239cb501ab6a421"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/RecipeIngredient.kt": {
+        "kind": "file",
+        "sha256": "fa354127f2b6acd7bef4fdd624f29eb7d5c3d19cc11de0d78608f609f067fc48"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/RecipeRepository.kt": {
+        "kind": "file",
+        "sha256": "482b4fb8d27c8c7340779afa5644d142a5f4b6d825d2328b0b1b8baf8ceec3d4"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/CreateRecipeUseCase.kt": {
+        "kind": "file",
+        "sha256": "f691358c90b7f5132be7cf752acf7b995257ecad553970ec59b3abd0581ecf44"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/ObserveMeasurementSuggestionsUseCase.kt": {
+        "kind": "file",
+        "sha256": "a3e6bb9b977a0188dd26d305eb4a73fb0bb77bfe2e4fd754958bf5f3fb7c2d57"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/RecipeGraphValidation.kt": {
+        "kind": "file",
+        "sha256": "aa95dd81ded1b00fca88dd2a0fdede19eb36b1f24d12e922805dab63ac6195df"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/UpdateRecipeUseCase.kt": {
+        "kind": "file",
+        "sha256": "89c2197427d146ad928024e4c4e4922cce5a9e0245f432664633c09241a734c5"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/repository/RoomRecipeRepository.kt": {
+        "kind": "file",
+        "sha256": "0fdcd455ce1dddc5f85a0ef326fc1774bc7732562935c84e49d6626353ae28bc"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/room/RecipeDao.kt": {
+        "kind": "file",
+        "sha256": "0eaffe1b38d02a7505a80a1eff6c60261de58ccc0e45fb39c131d98fdd20d17f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/room/RecipeAllIngredientsView.kt": {
+        "kind": "file",
+        "sha256": "1c9c7f28bd32d5874cdf26c50f712f000545eda5187176f03658582e9ba0b79e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/NutritionalItemDiaryEntry.kt": {
+        "kind": "file",
+        "sha256": "3a8988313ee53f8fb36631e2db6aa47dc21184a8c5d30c90ef0f42b09bc11e49"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/NutritionalItemSnapshot.kt": {
+        "kind": "file",
+        "sha256": "2230cbad545199918365111e705ed8d3e8911e9da8226b7abe78673647d9e49e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/ProductSnapshot.kt": {
+        "kind": "file",
+        "sha256": "08bb68736b5ffe32df83074c8176fabea4d38e7df461f569c92d326bb6e6fcdc"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/RecipeIngredientSnapshot.kt": {
+        "kind": "file",
+        "sha256": "88b04b5d9143cd9fea8c09c9fd5d8fab3665373a48ea7d7b9ca5a9c9e68a930f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/RecipeSnapshot.kt": {
+        "kind": "file",
+        "sha256": "b9b5847199d6213f3008c97a537c9fd67632920e9aed5ddc45cd10284cceecb0"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/CreateNutritionalItemDiaryEntryUseCase.kt": {
+        "kind": "file",
+        "sha256": "274bb92960c83e53c38ff19219f99a23955a28d875283b68402a020dfba48748"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/UnpackNutritionalItemDiaryEntryUseCase.kt": {
+        "kind": "file",
+        "sha256": "7d9cd04c9685c0fe486cfa771eae65740d1276b9fb334ba6d205aa764e1b3c96"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/UpdateNutritionalItemDiaryEntryUseCase.kt": {
+        "kind": "file",
+        "sha256": "b62bba1afe9257aa2469c110ba09926ff7b5e67b8a0ecda1e424bfee37a71e26"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/RoomNutritionalItemDiaryEntryRepository.kt": {
+        "kind": "file",
+        "sha256": "7595ea5603369f85d5c80e8dc21b4c6fd91c24f10224293d1cb3410fce8c8a12"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/DiaryRecipeEntity.kt": {
+        "kind": "file",
+        "sha256": "3ceba097e9c020a26972d8e56996b78b0e41474e4e6a75d0d29c7e86ce1a7747"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/food/domain/RecipePortionTest.kt": {
+        "kind": "file",
+        "sha256": "757ed7bbc9ab48c922e65e895f1ecab2874964bc2af0c7f39f3a389c0ea30bac"
+      },
+      "context/implementation-plans/milestone-2/story-27-recipe-composition-portions/plan.md": {
+        "kind": "file",
+        "sha256": "9359f7186eb2a9c36cb699e1d47ac7d613abc8d823ad20cd1b3ea81fac4ce182"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "eda396fd76df32195cc2ed50c143c3f64d218b44d2bc30fed9e2c0e3b9714d12"
+      },
+      "shared/resources/src/commonMain/composeResources/values/strings.xml": {
+        "kind": "file",
+        "sha256": "4b2b3b6be1053a97ef4d9a3243d91046c8d8fb63c2ec7acb3d89a1a0211199f2"
+      }
+    },
+    "head": "8b698162ff7b3de0e7338f3ca2d68790edacb752"
+  },
+  "commit_authority": null,
+  "commit_policy": "none",
+  "decisions": [
+    "Total-first Recipe/yield/portion composition; one ordinary diary snapshot; explicit atomic unpack; compatible metric basis only; strict unknowns for fresh captures.",
+    "Necessary internal schema39\u219240 preserves historical calculation contract0 versus fresh contract1; typed finite ancestry view corrects demonstrated exclusion/cycle faults. No wire/CSV contract changes.",
+    "Two actual Recipe screen workflows and fresh canonical projection passed current production/test artifacts; twelve unaffected runtime passes retained with explicit prior artifact provenance after independent scoped review. Failed attempts preserved.",
+    "Candidate3.2.35.3/code131 matches25+10 terminal stories only on acceptance. ReleaseCount3 retained. No commit/publication/physical phone operation."
+  ],
+  "delivery": {
+    "artifact_identity": "d5dc93b65aa3b97a843f2b82bfdfd5a182a184d9057a09ac31abddd97fc7db23",
+    "base": "8b698162ff7b3de0e7338f3ca2d68790edacb752",
+    "committed_files": {
+      "app/schemas/com.maksimowiczm.foodyou.app.infrastructure.room.FoodYouDatabase/39.json": {
+        "git_blob": "93644a49d0ca424e923a26bfb207ab39e6920c5b",
+        "kind": "file"
+      },
+      "app/schemas/com.maksimowiczm.foodyou.app.infrastructure.room.FoodYouDatabase/40.json": {
+        "git_blob": "c546e9c1713f25c66dfc895d027bb2a89a4f5ce4",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddConversionTest.kt": {
+        "git_blob": "fbb565e8e6a626cb578f17c29049f535ebe51c98",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/food/ProductPortionPersistenceTest.kt": {
+        "git_blob": "d8aa14b629de22f370b18cd3682e048745e9aa95",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/food/ProductWorkflowTest.kt": {
+        "git_blob": "f1a16a8bcc5d42dae295d258846c95172a1ede4c",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/food/RecipePersistenceTest.kt": {
+        "git_blob": "16008ad4db3e43c29991c6c39255ea0cf9bc9cb1",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/food/RecipeWorkflowTest.kt": {
+        "git_blob": "7a92a1f809520cd8b1123716478a750b7e183859",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/fooddiary/LegacyDiarySlotMealFixtureTest.kt": {
+        "git_blob": "f03cfbb5127265a4d53416207d5c15f769d04564",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/room/FoodYouDatabase.kt": {
+        "git_blob": "40e2e8ea63f9b2a1e742b9e7c95b5c92d1209e44",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/room/migration/RecipeSnapshotCalculationMigration.kt": {
+        "git_blob": "f292a69e7f87affd17406402adc3cbbe74fb9956",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/AddEntryScreen.kt": {
+        "git_blob": "371de312d5077653cbe8f3b44d3b090a8b006ee8",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/AddEntryViewModel.kt": {
+        "git_blob": "4eb5d575fc282052052e0e6ce4d434225e66345d",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/FoodModel.kt": {
+        "git_blob": "5fec8055f97ea3e43189a215cc756fd19e9a4c52",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/IngredientModel.kt": {
+        "git_blob": "f4d83e06828d296ed188526b17e270e98e85c366",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/Ingredients.kt": {
+        "git_blob": "a10401fe70bb9349a832ae40b531b462b5e369c3",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/NutrientList.kt": {
+        "git_blob": "780a077a28d8f30ab37486cb8c9648dddcce241e",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/RecipeModel.kt": {
+        "git_blob": "ef46a14428e5c9b2fd54f74540a2cf1fd19b1a13",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/Ingredients.kt": {
+        "git_blob": "48d72c15d25e90d4b13ce8743eeffd337209e1c0",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/NutrientList.kt": {
+        "git_blob": "f87d1acc4a2876992d472e18f4de8c392037337f",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/UpdateEntryScreen.kt": {
+        "git_blob": "f4e8adcdd814b14c3e69d149c81669de70aab71d",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/UpdateNutritionalItemDiaryEntryViewModel.kt": {
+        "git_blob": "87cbd6fb6a8b464839bf7f685d5c5a85c69fc76f",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/CreateRecipeEvent.kt": {
+        "git_blob": "68184607afc11fdbbb0323bf32bba12be0c6a81f",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/CreateRecipeScreen.kt": {
+        "git_blob": "37afa2fc0d16d24c11198cb4c02b83c3d6649714",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/CreateRecipeViewModel.kt": {
+        "git_blob": "e91b5a63c3b254eff6118dfc140c9c7379d502e0",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/MeasureIngredientScreen.kt": {
+        "git_blob": "bc6c9aee63a6c967c31dc046b6b9e9451efa48b2",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/MeasureIngredientViewModel.kt": {
+        "git_blob": "ff48a4215b16a48bd78338de60e6dd25cdd41d9b",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/RecipeApp.kt": {
+        "git_blob": "b1a10e79a9e739b7e5a025355e92c57df1eca31d",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/RecipeForm.kt": {
+        "git_blob": "e0cd40a6c5203a241ff0eadf47c544010a2cb893",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/RecipeFormState.kt": {
+        "git_blob": "dafe655f0dab5b7e1c1757ce29bebf00d39c19d0",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/RecipeSaveErrorDialog.kt": {
+        "git_blob": "102a962095ebd553b0b84d275890bbabbca9f25a",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/RecipeViewModel.kt": {
+        "git_blob": "144682c4cf24792572bbfe9faa4fde901e7c18fa",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/UpdateRecipeEvent.kt": {
+        "git_blob": "1de77981acadf721c5dd8f047703012470561651",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/UpdateRecipeScreen.kt": {
+        "git_blob": "6095837b7027e2c268193311564d6d6d91a97ca4",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/UpdateRecipeViewModel.kt": {
+        "git_blob": "5b1f5a2dc9cad70c1ad3f7eb16911876184ffc12",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodSearchListItem.kt": {
+        "git_blob": "049c8bad4cc206853c6db04042749e6cba50ed7a",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotFoodListItem.kt": {
+        "git_blob": "8421bc80e62e4475e1d56f4d2cd06727ad90a3da",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/domain/food/RecipeCalculation.kt": {
+        "git_blob": "011c54728bf8ad559c729a41f8f0606dcaec8530",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/NutritionalItem.kt": {
+        "git_blob": "d53baee6731fe07c28b9961ba9b2cbe0fca173a9",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/Recipe.kt": {
+        "git_blob": "0845dd9044e4460fab19f300bc6a0f08e9ac42d5",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/RecipeIngredient.kt": {
+        "git_blob": "9b200bb3fa85be7169c4cef625225577fe42a915",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/RecipeRepository.kt": {
+        "git_blob": "41e5655bc3650a6c65691d5135981854eaa08ad9",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/CreateRecipeUseCase.kt": {
+        "git_blob": "24926c0dbd0719e91aa7af1a51eed2d875da35fb",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/ObserveMeasurementSuggestionsUseCase.kt": {
+        "git_blob": "73f240d6a767fc9825d90f091c777d3f74f39e37",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/RecipeGraphValidation.kt": {
+        "git_blob": "b30851d496f5aa0de35f1b3d30b69b2587da0b55",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/UpdateRecipeUseCase.kt": {
+        "git_blob": "9804beb1e3167e0b62d70bde7a4313c975951c92",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/repository/RoomRecipeRepository.kt": {
+        "git_blob": "d3161de42785114ad9a57cd3dc89e0b841c9e49d",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/room/RecipeDao.kt": {
+        "git_blob": "6256baf2096242701e13bf1bab6e149fd3653931",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/room/RecipeAllIngredientsView.kt": {
+        "git_blob": "4ec34480398df3f3b573405f106e9759cb393417",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/NutritionalItemDiaryEntry.kt": {
+        "git_blob": "452173f3531735954993f157b189f73b95a8479b",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/NutritionalItemSnapshot.kt": {
+        "git_blob": "388efbd7b93271db1db4331fe6dbb7b9d2f34348",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/ProductSnapshot.kt": {
+        "git_blob": "f01f7b1a5a7bdcd14966f77b639aacbfa5106484",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/RecipeIngredientSnapshot.kt": {
+        "git_blob": "2b785737e339793e48a26d4f52238568257eafc6",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/RecipeSnapshot.kt": {
+        "git_blob": "773807826cb6633c8ea4883764c553f252b6cd03",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/CreateNutritionalItemDiaryEntryUseCase.kt": {
+        "git_blob": "f2f6c51c8e4a01759eda0ce43aac128f2844243d",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/UnpackNutritionalItemDiaryEntryUseCase.kt": {
+        "git_blob": "08ae9b9537e029a9f75a455cee6a18ba0d480faf",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/UpdateNutritionalItemDiaryEntryUseCase.kt": {
+        "git_blob": "f26b29d4596e01386f6d93c781ee1244917d354c",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/RoomNutritionalItemDiaryEntryRepository.kt": {
+        "git_blob": "8bc7980a75ccfc992dfba590bdf6c249ced1bd6b",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/DiaryRecipeEntity.kt": {
+        "git_blob": "80b8b38970f4e9879ae687f7ccac0810f0068793",
+        "kind": "file"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/food/domain/RecipePortionTest.kt": {
+        "git_blob": "e581274cea4021022a377622b8afadbf59fd909f",
+        "kind": "file"
+      },
+      "context/_boss-runs/milestone-2-domain-meals-sequential/briefing.md": {
+        "git_blob": "e52c3c0eb753a9b73838c5b4936c8117524e9e70",
+        "kind": "file"
+      },
+      "context/design.md": {
+        "git_blob": "d7d1ce990c7b6a84724a3afeeddc25cb3ee90312",
+        "kind": "file"
+      },
+      "context/implementation-plans/milestone-2/story-27-recipe-composition-portions/plan.md": {
+        "git_blob": "7b7ad5d5c02c553a2e3657640aa8235877ba6585",
+        "kind": "file"
+      },
+      "context/milestones/milestone-2.md": {
+        "git_blob": "4f40e35e1bd4823e3c41c37c2d39cd32e7c94283",
+        "kind": "file"
+      },
+      "gradle/libs.versions.toml": {
+        "git_blob": "71d6eaabf1c9b52c503362483f062d8ba23efa73",
+        "kind": "file"
+      },
+      "shared/resources/src/commonMain/composeResources/values/strings.xml": {
+        "git_blob": "b97215eadb1f8179a2f51addeee07fd1f2613244",
+        "kind": "file"
+      }
+    },
+    "diff_identity": "fd054311d0a759c081babfd14e7193d0772fc36c6ea7f21d12c1838dd2061f7f",
+    "files": {
+      "app/schemas/com.maksimowiczm.foodyou.app.infrastructure.room.FoodYouDatabase/39.json": {
+        "kind": "file",
+        "sha256": "666ff1773c463a92bb8c1d5512b96760d6ce3a7e0b08a2a441a1265d97ed29e3"
+      },
+      "app/schemas/com.maksimowiczm.foodyou.app.infrastructure.room.FoodYouDatabase/40.json": {
+        "kind": "file",
+        "sha256": "6392aeff08f3291136480faa479eda13729a726d4779a4f6006f16dd9b0bd31b"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddConversionTest.kt": {
+        "kind": "file",
+        "sha256": "6ac16ba207a6d37701a45327b94962f05494fecc8aa22a195e4bea7c372e3867"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/food/ProductPortionPersistenceTest.kt": {
+        "kind": "file",
+        "sha256": "221dcafedceaeaf1caa1181c4b6ecde5d161e4d35dda8ef3a8b11c78b6372e3c"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/food/ProductWorkflowTest.kt": {
+        "kind": "file",
+        "sha256": "9c3835c67eea2f13f9d129f0ef47f0aff69dd24e39c28f927304534fd099f6e5"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/food/RecipePersistenceTest.kt": {
+        "kind": "file",
+        "sha256": "f06b0644519a50f1b9aabf5292e29598f9b5cdbbb1dde5f73a572b7a793fac80"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/food/RecipeWorkflowTest.kt": {
+        "kind": "file",
+        "sha256": "10bdeb62d40a52d85d217cc804607287b1447d1d83f82bdb0d350eed721d7df2"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/fooddiary/LegacyDiarySlotMealFixtureTest.kt": {
+        "kind": "file",
+        "sha256": "d6a7c2446d45d53b8e8e2e472204b686e81b39c5d0d22ed62794185a45ce7628"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/room/FoodYouDatabase.kt": {
+        "kind": "file",
+        "sha256": "aec2023fdcad203f2e2dd3d8d6e7b2af031911f804ccc44d819846898360b33b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/room/migration/RecipeSnapshotCalculationMigration.kt": {
+        "kind": "file",
+        "sha256": "e4e4daee3e30d80516ef8263d7d718cdce98f87a45de6bebabc419908cce2187"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/AddEntryScreen.kt": {
+        "kind": "file",
+        "sha256": "1f7327da91ac5d138ba8511aedbe619b1216208a08db0aaa90dfa748994ac324"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/AddEntryViewModel.kt": {
+        "kind": "file",
+        "sha256": "e1b57ecf31cd7752c6874f080f80b909dffa4cf59277acdb019a306cb59212b3"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/FoodModel.kt": {
+        "kind": "file",
+        "sha256": "b63e47c1960d91489b716ecedde78200d12b8446b1808023fd4d17a8b759682d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/IngredientModel.kt": {
+        "kind": "file",
+        "sha256": "dae2ee00490f24613456524feddb4be11d9439bd941c637caa3ad3d9efa69659"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/Ingredients.kt": {
+        "kind": "file",
+        "sha256": "65906c51731279f1f641b3c090c2bcdc4ea270c98e4e7a9efe09bcc28651adcd"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/NutrientList.kt": {
+        "kind": "file",
+        "sha256": "a9072dacd4fd9c65356ef35438d718ebbc7592f6b806391967df0e315bed391a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/RecipeModel.kt": {
+        "kind": "file",
+        "sha256": "049e35ecc912b5ee612e0e62e2ead9eba7251e3bb21afe9579b71e90f7df8f8f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/Ingredients.kt": {
+        "kind": "file",
+        "sha256": "6fcd726dbebddbdcbd06939d0d4ee7adf1161e64d12d60a4e589166c2a71edda"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/NutrientList.kt": {
+        "kind": "file",
+        "sha256": "de92e2bf1625aafea97a52665aac92001be0269a188a212d0a8f8affbd0b49e7"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/UpdateEntryScreen.kt": {
+        "kind": "file",
+        "sha256": "63b8e40121e9410ccd53cd0bb336208fa0c5f4ca8bf34e5aa18f6687f49fb055"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/UpdateNutritionalItemDiaryEntryViewModel.kt": {
+        "kind": "file",
+        "sha256": "669e3ec6fcb5c0efbc0d1feec6345f55b100cd3f5941ba3c9e856479fa07672a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/CreateRecipeEvent.kt": {
+        "kind": "file",
+        "sha256": "eabc98e6e2ce5796f27da634db09e412ef8fb867e3811f0fe64b03a4578775cf"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/CreateRecipeScreen.kt": {
+        "kind": "file",
+        "sha256": "b6560cc17f17868153d79b44e4722b16afc1130afd0881f4156a158e660e410c"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/CreateRecipeViewModel.kt": {
+        "kind": "file",
+        "sha256": "ab342a2572323fb58a0c9a1c84770ec4431cc08ee288f68a750c00e6727573f7"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/MeasureIngredientScreen.kt": {
+        "kind": "file",
+        "sha256": "460cb282d3008522621aee8e67533ed70315a9e85a01e316875b2116b552dc14"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/MeasureIngredientViewModel.kt": {
+        "kind": "file",
+        "sha256": "e3110a11d85eed7ce3f79fa1ee568161a9bc49e984531081246d22e300545a0b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/RecipeApp.kt": {
+        "kind": "file",
+        "sha256": "b7be8f8c3dc2f621308a35ed001b37ef14d54dd4190bc550cc9e598fec3da986"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/RecipeForm.kt": {
+        "kind": "file",
+        "sha256": "26078b2bf436f175a8070027fe8d7310640b9018c641ba60c8a792b30c3028d7"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/RecipeFormState.kt": {
+        "kind": "file",
+        "sha256": "23a882ca2cbe1a39dcc1ec2b3f2e215dafd26b013f4de392ef167521c149a63d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/RecipeSaveErrorDialog.kt": {
+        "kind": "file",
+        "sha256": "544aa8616759581060742be8fe2417479590ceb0b8efa1738b9c5b787051d52e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/RecipeViewModel.kt": {
+        "kind": "file",
+        "sha256": "7e4b8eb320615c602b7994d38cda04e8ae7ab666a9e31dc062aeafcdb0c3367c"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/UpdateRecipeEvent.kt": {
+        "kind": "file",
+        "sha256": "7b08f74f2bde7eecec3c54c11aae376365b392d3e2dc56dd2b4ee9a3705d0e78"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/UpdateRecipeScreen.kt": {
+        "kind": "file",
+        "sha256": "94d65fdb6687bf98bef14fc56035f70fe654e038d6acf6e0c5a94466d20ffddf"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/UpdateRecipeViewModel.kt": {
+        "kind": "file",
+        "sha256": "211328d23accd75679234ef34688d8f8035d3b2c16296675751b65e3ef892558"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodSearchListItem.kt": {
+        "kind": "file",
+        "sha256": "6406dda832cb3464489fe364ea8fb266d91b9b8a42853b148b8d5906c06770c6"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotFoodListItem.kt": {
+        "kind": "file",
+        "sha256": "4dab853d6b986874bde88ed406025d1d07378766abfd5e5402599c72d99f6a60"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/domain/food/RecipeCalculation.kt": {
+        "kind": "file",
+        "sha256": "d18d6347ae645913c10b271866ce2bbc7402032cfca54ba133a8dcbf45519cf7"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/NutritionalItem.kt": {
+        "kind": "file",
+        "sha256": "6029999c02556736728f085ca47e2cf7d2b96561164d2ac56bed4348c0d60ec9"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/Recipe.kt": {
+        "kind": "file",
+        "sha256": "ab77a40879d0467507b2d664885bcb5f37e5bc5082d6465c8239cb501ab6a421"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/RecipeIngredient.kt": {
+        "kind": "file",
+        "sha256": "fa354127f2b6acd7bef4fdd624f29eb7d5c3d19cc11de0d78608f609f067fc48"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/RecipeRepository.kt": {
+        "kind": "file",
+        "sha256": "482b4fb8d27c8c7340779afa5644d142a5f4b6d825d2328b0b1b8baf8ceec3d4"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/CreateRecipeUseCase.kt": {
+        "kind": "file",
+        "sha256": "f691358c90b7f5132be7cf752acf7b995257ecad553970ec59b3abd0581ecf44"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/ObserveMeasurementSuggestionsUseCase.kt": {
+        "kind": "file",
+        "sha256": "a3e6bb9b977a0188dd26d305eb4a73fb0bb77bfe2e4fd754958bf5f3fb7c2d57"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/RecipeGraphValidation.kt": {
+        "kind": "file",
+        "sha256": "aa95dd81ded1b00fca88dd2a0fdede19eb36b1f24d12e922805dab63ac6195df"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/UpdateRecipeUseCase.kt": {
+        "kind": "file",
+        "sha256": "89c2197427d146ad928024e4c4e4922cce5a9e0245f432664633c09241a734c5"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/repository/RoomRecipeRepository.kt": {
+        "kind": "file",
+        "sha256": "0fdcd455ce1dddc5f85a0ef326fc1774bc7732562935c84e49d6626353ae28bc"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/room/RecipeDao.kt": {
+        "kind": "file",
+        "sha256": "0eaffe1b38d02a7505a80a1eff6c60261de58ccc0e45fb39c131d98fdd20d17f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/room/RecipeAllIngredientsView.kt": {
+        "kind": "file",
+        "sha256": "1c9c7f28bd32d5874cdf26c50f712f000545eda5187176f03658582e9ba0b79e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/NutritionalItemDiaryEntry.kt": {
+        "kind": "file",
+        "sha256": "3a8988313ee53f8fb36631e2db6aa47dc21184a8c5d30c90ef0f42b09bc11e49"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/NutritionalItemSnapshot.kt": {
+        "kind": "file",
+        "sha256": "2230cbad545199918365111e705ed8d3e8911e9da8226b7abe78673647d9e49e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/ProductSnapshot.kt": {
+        "kind": "file",
+        "sha256": "08bb68736b5ffe32df83074c8176fabea4d38e7df461f569c92d326bb6e6fcdc"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/RecipeIngredientSnapshot.kt": {
+        "kind": "file",
+        "sha256": "88b04b5d9143cd9fea8c09c9fd5d8fab3665373a48ea7d7b9ca5a9c9e68a930f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/RecipeSnapshot.kt": {
+        "kind": "file",
+        "sha256": "b9b5847199d6213f3008c97a537c9fd67632920e9aed5ddc45cd10284cceecb0"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/CreateNutritionalItemDiaryEntryUseCase.kt": {
+        "kind": "file",
+        "sha256": "274bb92960c83e53c38ff19219f99a23955a28d875283b68402a020dfba48748"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/UnpackNutritionalItemDiaryEntryUseCase.kt": {
+        "kind": "file",
+        "sha256": "7d9cd04c9685c0fe486cfa771eae65740d1276b9fb334ba6d205aa764e1b3c96"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/UpdateNutritionalItemDiaryEntryUseCase.kt": {
+        "kind": "file",
+        "sha256": "b62bba1afe9257aa2469c110ba09926ff7b5e67b8a0ecda1e424bfee37a71e26"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/RoomNutritionalItemDiaryEntryRepository.kt": {
+        "kind": "file",
+        "sha256": "7595ea5603369f85d5c80e8dc21b4c6fd91c24f10224293d1cb3410fce8c8a12"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/DiaryRecipeEntity.kt": {
+        "kind": "file",
+        "sha256": "3ceba097e9c020a26972d8e56996b78b0e41474e4e6a75d0d29c7e86ce1a7747"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/food/domain/RecipePortionTest.kt": {
+        "kind": "file",
+        "sha256": "757ed7bbc9ab48c922e65e895f1ecab2874964bc2af0c7f39f3a389c0ea30bac"
+      },
+      "context/_boss-runs/milestone-2-domain-meals-sequential/briefing.md": {
+        "kind": "file",
+        "sha256": "aa29a31f563339c6a37a37ca6d4572dbdbaedf09f23695814eae979a782a4c6b"
+      },
+      "context/design.md": {
+        "kind": "file",
+        "sha256": "df35fea52201da8065561114406ddfe87bb37d4957e62f036ec5a3a3ea55cbf9"
+      },
+      "context/implementation-plans/milestone-2/story-27-recipe-composition-portions/plan.md": {
+        "kind": "file",
+        "sha256": "9359f7186eb2a9c36cb699e1d47ac7d613abc8d823ad20cd1b3ea81fac4ce182"
+      },
+      "context/milestones/milestone-2.md": {
+        "kind": "file",
+        "sha256": "ef99d0edaf127e36407359dba5bedf1b48a97ed9d8e8d1f342ca6e0812552764"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "eda396fd76df32195cc2ed50c143c3f64d218b44d2bc30fed9e2c0e3b9714d12"
+      },
+      "shared/resources/src/commonMain/composeResources/values/strings.xml": {
+        "kind": "file",
+        "sha256": "4b2b3b6be1053a97ef4d9a3243d91046c8d8fb63c2ec7acb3d89a1a0211199f2"
+      }
+    },
+    "head": "8b698162ff7b3de0e7338f3ca2d68790edacb752"
+  },
+  "evidence": {
+    "checks": [
+      {
+        "apkSha256": "507d069ea025d9da7fbac967b997ce279fe1e993a805ec0b087a18e083fd4a60",
+        "artifact_identity": "b3c4c94e11d8d8d2fb5e4ac2995037ac2c4781050bffafe0a13056b402ea14f0",
+        "command": ".\\gradlew.bat --no-daemon :app:testDebugUnitTest :app:assembleDebug :app:assembleDebugAndroidTest",
+        "details": "165 unit tests in 34 suites; no failures/errors/skips. save-action-verification.log; later test-only diagnostics/selectors assembled in stage-diagnostics-verification.log. Production APK unchanged through test-only repairs.",
+        "outcome": "PASS"
+      },
+      {
+        "artifact_identity": "b3c4c94e11d8d8d2fb5e4ac2995037ac2c4781050bffafe0a13056b402ea14f0",
+        "command": "git -c core.safecrlf=false diff --check",
+        "details": "diff-check-final.log; immutable schema39 and generated schema40 hashes independently checked.",
+        "outcome": "PASS"
+      },
+      {
+        "apkSha256": "275c13ea6b7a90adfaf69d9d8552dbeae2474d710cfee2138b7387f2552ce3a4",
+        "artifact_identity": "b3c4c94e11d8d8d2fb5e4ac2995037ac2c4781050bffafe0a13056b402ea14f0",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class com.maksimowiczm.foodyou.food.RecipePersistenceTest#schema39MigrationPreservesLegacyCalculationsAndCopyWhileNewCapturesUseCurrentContract io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "details": "Selected independent review approved12unchanged implementation paths from prior13passes;canonicalrechecked,2affectedRecipeworkflows rerun after realSave/Unpacklabels and boundedscopedfixturecorrections. Domain,migration,schemaandpredecessorpathsunchanged.",
+        "log": "app/build/m2-domain-meals/story27/runtime-attempt-02/instrument-02.log",
+        "outcome": "PASS",
+        "testApkSha256": "b84bf7da89114da8310121b85d59476a31c8ab181bd516b07007903224809b80"
+      },
+      {
+        "apkSha256": "275c13ea6b7a90adfaf69d9d8552dbeae2474d710cfee2138b7387f2552ce3a4",
+        "artifact_identity": "b3c4c94e11d8d8d2fb5e4ac2995037ac2c4781050bffafe0a13056b402ea14f0",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class com.maksimowiczm.foodyou.food.RecipePersistenceTest#exclusionDaoTerminatesLegacyCyclesAndDoesNotConfuseProductAndRecipeIds io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "details": "Selected independent review approved12unchanged implementation paths from prior13passes;canonicalrechecked,2affectedRecipeworkflows rerun after realSave/Unpacklabels and boundedscopedfixturecorrections. Domain,migration,schemaandpredecessorpathsunchanged.",
+        "log": "app/build/m2-domain-meals/story27/runtime-attempt-02/instrument-03.log",
+        "outcome": "PASS",
+        "testApkSha256": "b84bf7da89114da8310121b85d59476a31c8ab181bd516b07007903224809b80"
+      },
+      {
+        "apkSha256": "275c13ea6b7a90adfaf69d9d8552dbeae2474d710cfee2138b7387f2552ce3a4",
+        "artifact_identity": "b3c4c94e11d8d8d2fb5e4ac2995037ac2c4781050bffafe0a13056b402ea14f0",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class com.maksimowiczm.foodyou.food.RecipePersistenceTest#definitionsFailuresCyclesSnapshotsMealsAndAtomicUnpackUseRealRoomTransactions io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "details": "Selected independent review approved12unchanged implementation paths from prior13passes;canonicalrechecked,2affectedRecipeworkflows rerun after realSave/Unpacklabels and boundedscopedfixturecorrections. Domain,migration,schemaandpredecessorpathsunchanged.",
+        "log": "app/build/m2-domain-meals/story27/runtime-attempt-02/instrument-04.log",
+        "outcome": "PASS",
+        "testApkSha256": "b84bf7da89114da8310121b85d59476a31c8ab181bd516b07007903224809b80"
+      },
+      {
+        "apkSha256": "275c13ea6b7a90adfaf69d9d8552dbeae2474d710cfee2138b7387f2552ce3a4",
+        "artifact_identity": "b3c4c94e11d8d8d2fb5e4ac2995037ac2c4781050bffafe0a13056b402ea14f0",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class com.maksimowiczm.foodyou.food.ProductPortionPersistenceTest#typedDefinitionsPortionsFailuresAndHistoricalSnapshotsSurviveReopen io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "details": "Selected independent review approved12unchanged implementation paths from prior13passes;canonicalrechecked,2affectedRecipeworkflows rerun after realSave/Unpacklabels and boundedscopedfixturecorrections. Domain,migration,schemaandpredecessorpathsunchanged.",
+        "log": "app/build/m2-domain-meals/story27/runtime-attempt-02/instrument-07.log",
+        "outcome": "PASS",
+        "testApkSha256": "b84bf7da89114da8310121b85d59476a31c8ab181bd516b07007903224809b80"
+      },
+      {
+        "apkSha256": "275c13ea6b7a90adfaf69d9d8552dbeae2474d710cfee2138b7387f2552ce3a4",
+        "artifact_identity": "b3c4c94e11d8d8d2fb5e4ac2995037ac2c4781050bffafe0a13056b402ea14f0",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.QuickAddConversionTest#scanProductKeepsExplicitEnergyWhenUserCompletesRequiredMissingMacro io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "details": "Selected independent review approved12unchanged implementation paths from prior13passes;canonicalrechecked,2affectedRecipeworkflows rerun after realSave/Unpacklabels and boundedscopedfixturecorrections. Domain,migration,schemaandpredecessorpathsunchanged.",
+        "log": "app/build/m2-domain-meals/story27/runtime-attempt-02/instrument-08.log",
+        "outcome": "PASS",
+        "testApkSha256": "b84bf7da89114da8310121b85d59476a31c8ab181bd516b07007903224809b80"
+      },
+      {
+        "apkSha256": "275c13ea6b7a90adfaf69d9d8552dbeae2474d710cfee2138b7387f2552ce3a4",
+        "artifact_identity": "b3c4c94e11d8d8d2fb5e4ac2995037ac2c4781050bffafe0a13056b402ea14f0",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.QuickAddConversionTest#weightedScanRecipeCancelCleansPlaceholderAndRepeatSavePreservesTotals io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "details": "Selected independent review approved12unchanged implementation paths from prior13passes;canonicalrechecked,2affectedRecipeworkflows rerun after realSave/Unpacklabels and boundedscopedfixturecorrections. Domain,migration,schemaandpredecessorpathsunchanged.",
+        "log": "app/build/m2-domain-meals/story27/runtime-attempt-02/instrument-09.log",
+        "outcome": "PASS",
+        "testApkSha256": "b84bf7da89114da8310121b85d59476a31c8ab181bd516b07007903224809b80"
+      },
+      {
+        "apkSha256": "275c13ea6b7a90adfaf69d9d8552dbeae2474d710cfee2138b7387f2552ce3a4",
+        "artifact_identity": "b3c4c94e11d8d8d2fb5e4ac2995037ac2c4781050bffafe0a13056b402ea14f0",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.QuickAddConversionTest#currentEditPromotionsPreserveSnapshotAndUnsavedEditsAllowingRepeats io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "details": "Selected independent review approved12unchanged implementation paths from prior13passes;canonicalrechecked,2affectedRecipeworkflows rerun after realSave/Unpacklabels and boundedscopedfixturecorrections. Domain,migration,schemaandpredecessorpathsunchanged.",
+        "log": "app/build/m2-domain-meals/story27/runtime-attempt-02/instrument-10.log",
+        "outcome": "PASS",
+        "testApkSha256": "b84bf7da89114da8310121b85d59476a31c8ab181bd516b07007903224809b80"
+      },
+      {
+        "apkSha256": "275c13ea6b7a90adfaf69d9d8552dbeae2474d710cfee2138b7387f2552ce3a4",
+        "artifact_identity": "b3c4c94e11d8d8d2fb5e4ac2995037ac2c4781050bffafe0a13056b402ea14f0",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.QuickAddConversionTest#historicalEditPromotionsPreserveSnapshotAndUnsavedEditsAllowingRepeats io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "details": "Selected independent review approved12unchanged implementation paths from prior13passes;canonicalrechecked,2affectedRecipeworkflows rerun after realSave/Unpacklabels and boundedscopedfixturecorrections. Domain,migration,schemaandpredecessorpathsunchanged.",
+        "log": "app/build/m2-domain-meals/story27/runtime-attempt-02/instrument-11.log",
+        "outcome": "PASS",
+        "testApkSha256": "b84bf7da89114da8310121b85d59476a31c8ab181bd516b07007903224809b80"
+      },
+      {
+        "apkSha256": "275c13ea6b7a90adfaf69d9d8552dbeae2474d710cfee2138b7387f2552ce3a4",
+        "artifact_identity": "b3c4c94e11d8d8d2fb5e4ac2995037ac2c4781050bffafe0a13056b402ea14f0",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.ScanDataPreservationTest#optionalNutrientsAndPortionSurviveKilojouleFormAndMetadataEditWithoutScaling io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "details": "Selected independent review approved12unchanged implementation paths from prior13passes;canonicalrechecked,2affectedRecipeworkflows rerun after realSave/Unpacklabels and boundedscopedfixturecorrections. Domain,migration,schemaandpredecessorpathsunchanged.",
+        "log": "app/build/m2-domain-meals/story27/runtime-attempt-02/instrument-12.log",
+        "outcome": "PASS",
+        "testApkSha256": "b84bf7da89114da8310121b85d59476a31c8ab181bd516b07007903224809b80"
+      },
+      {
+        "apkSha256": "275c13ea6b7a90adfaf69d9d8552dbeae2474d710cfee2138b7387f2552ce3a4",
+        "artifact_identity": "b3c4c94e11d8d8d2fb5e4ac2995037ac2c4781050bffafe0a13056b402ea14f0",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.ScanDataPreservationTest#reported780SampleSurvivesReviewQuickAddSaveAndHistoricalReadback io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "details": "Selected independent review approved12unchanged implementation paths from prior13passes;canonicalrechecked,2affectedRecipeworkflows rerun after realSave/Unpacklabels and boundedscopedfixturecorrections. Domain,migration,schemaandpredecessorpathsunchanged.",
+        "log": "app/build/m2-domain-meals/story27/runtime-attempt-02/instrument-13.log",
+        "outcome": "PASS",
+        "testApkSha256": "b84bf7da89114da8310121b85d59476a31c8ab181bd516b07007903224809b80"
+      },
+      {
+        "apkSha256": "275c13ea6b7a90adfaf69d9d8552dbeae2474d710cfee2138b7387f2552ce3a4",
+        "artifact_identity": "b3c4c94e11d8d8d2fb5e4ac2995037ac2c4781050bffafe0a13056b402ea14f0",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class com.maksimowiczm.foodyou.food.ProductWorkflowTest#createEditSearchSelectLogEditAgainAndCancelPreserveCapturedNutrition io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "details": "Selected independent review approved12unchanged implementation paths from prior13passes;canonicalrechecked,2affectedRecipeworkflows rerun after realSave/Unpacklabels and boundedscopedfixturecorrections. Domain,migration,schemaandpredecessorpathsunchanged.",
+        "log": "app/build/m2-domain-meals/story27/runtime-attempt-02/instrument-14.log",
+        "outcome": "PASS",
+        "testApkSha256": "b84bf7da89114da8310121b85d59476a31c8ab181bd516b07007903224809b80"
+      },
+      {
+        "apkSha256": "275c13ea6b7a90adfaf69d9d8552dbeae2474d710cfee2138b7387f2552ce3a4",
+        "artifact_identity": "b3c4c94e11d8d8d2fb5e4ac2995037ac2c4781050bffafe0a13056b402ea14f0",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class com.maksimowiczm.foodyou.food.ProductWorkflowTest#liquidFractionLogsMillilitersAndUnknownServingFailsWithoutGramFallback io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "details": "Selected independent review approved12unchanged implementation paths from prior13passes;canonicalrechecked,2affectedRecipeworkflows rerun after realSave/Unpacklabels and boundedscopedfixturecorrections. Domain,migration,schemaandpredecessorpathsunchanged.",
+        "log": "app/build/m2-domain-meals/story27/runtime-attempt-02/instrument-15.log",
+        "outcome": "PASS",
+        "testApkSha256": "b84bf7da89114da8310121b85d59476a31c8ab181bd516b07007903224809b80"
+      },
+      {
+        "apkSha256": "507d069ea025d9da7fbac967b997ce279fe1e993a805ec0b087a18e083fd4a60",
+        "artifact_identity": "b3c4c94e11d8d8d2fb5e4ac2995037ac2c4781050bffafe0a13056b402ea14f0",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class com.maksimowiczm.foodyou.food.RecipeWorkflowTest#createComposeYieldSaveLogEditCancelAndExplicitUnpackAreSeparate io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "details": "Selected independent review approved12unchanged implementation paths from prior13passes;canonicalrechecked,2affectedRecipeworkflows rerun after realSave/Unpacklabels and boundedscopedfixturecorrections. Domain,migration,schemaandpredecessorpathsunchanged.",
+        "log": "app/build/m2-domain-meals/story27/stage-workflow-01.log",
+        "outcome": "PASS",
+        "testApkSha256": "5488fa5c21d4100ef4cbad385f6671bd6e2c935cd569c407a5bbb00737328a42"
+      },
+      {
+        "apkSha256": "507d069ea025d9da7fbac967b997ce279fe1e993a805ec0b087a18e083fd4a60",
+        "artifact_identity": "b3c4c94e11d8d8d2fb5e4ac2995037ac2c4781050bffafe0a13056b402ea14f0",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class com.maksimowiczm.foodyou.food.RecipeWorkflowTest#nestedMixedRecipeUsesServingWithoutInventingMetricBasis io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "details": "Selected independent review approved12unchanged implementation paths from prior13passes;canonicalrechecked,2affectedRecipeworkflows rerun after realSave/Unpacklabels and boundedscopedfixturecorrections. Domain,migration,schemaandpredecessorpathsunchanged.",
+        "log": "app/build/m2-domain-meals/story27/stage-workflow-02.log",
+        "outcome": "PASS",
+        "testApkSha256": "5488fa5c21d4100ef4cbad385f6671bd6e2c935cd569c407a5bbb00737328a42"
+      },
+      {
+        "apkSha256": "507d069ea025d9da7fbac967b997ce279fe1e993a805ec0b087a18e083fd4a60",
+        "artifact_identity": "b3c4c94e11d8d8d2fb5e4ac2995037ac2c4781050bffafe0a13056b402ea14f0",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class com.maksimowiczm.foodyou.fooddiary.LegacyDiarySlotMealFixtureTest#verifyCanonicalRecipeCalculationUpgrade io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "details": "Schema40 legacy projection exactly equals original schema39 synthetic fixture; no clear/uninstall.",
+        "log": "app/build/m2-domain-meals/story27/canonical-post-workflow.log",
+        "outcome": "PASS",
+        "testApkSha256": "5488fa5c21d4100ef4cbad385f6671bd6e2c935cd569c407a5bbb00737328a42"
+      }
+    ],
+    "decisions": [
+      "Total-first Recipe/yield/portion composition; one ordinary diary snapshot; explicit atomic unpack; compatible metric basis only; strict unknowns for fresh captures.",
+      "Necessary internal schema39\u219240 preserves historical calculation contract0 versus fresh contract1; typed finite ancestry view corrects demonstrated exclusion/cycle faults. No wire/CSV contract changes.",
+      "Two actual Recipe screen workflows and fresh canonical projection passed current production/test artifacts; twelve unaffected runtime passes retained with explicit prior artifact provenance after independent scoped review. Failed attempts preserved.",
+      "Candidate3.2.35.3/code131 matches25+10 terminal stories only on acceptance. ReleaseCount3 retained. No commit/publication/physical phone operation."
+    ],
+    "review": {
+      "artifact_identity": "b3c4c94e11d8d8d2fb5e4ac2995037ac2c4781050bffafe0a13056b402ea14f0",
+      "details": "All62 current checked paths match reviewed source freeze6cb, schema39/40, plan and version. Actual APK identities/package/version match. 165 unit tests and all15 distinct runtime logs accepted; twelve retained with prior artifact provenance, two Recipe workflows plus canonical current. No unresolved findings.",
+      "outcome": "PASS",
+      "reviewer": "/root/review_story27"
+    },
+    "review_required": true
+  },
+  "metadata_before": {
+    "context/_boss-runs/milestone-2-domain-meals-sequential/briefing.md": {
+      "kind": "file",
+      "sha256": "68e3bef4518cf562302caac7d3504b8bfff7d455a1a3554e724ec482a5b92531"
+    },
+    "context/design.md": {
+      "kind": "file",
+      "sha256": "9cdf40738bffa0dc2fc949eefa419e6d43f6d9af71f165a17536adafcad34cd0"
+    },
+    "context/milestones/milestone-2.md": {
+      "kind": "file",
+      "sha256": "63e7113d9e4fa5104d68840156be9b2180bef226215e49c6dd06d152d4e6c5bb"
+    }
+  },
+  "phase": "VERIFIED_UNCOMMITTED",
+  "record": "context/_boss-runs/milestone-2-domain-meals-sequential/story-27-receipt.json",
+  "repo": "D:\\forked-projects\\FoodYou",
+  "schema_version": 1,
+  "status_owner": "context/milestones/milestone-2.md#story-27",
+  "transaction_id": "cc26aff4a85b4b11a6e4fb852151ca2b"
+}

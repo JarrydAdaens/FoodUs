@@ -19,22 +19,29 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.maksimowiczm.foodyou.app.ui.common.component.IncompleteFoodsList
+import com.maksimowiczm.foodyou.app.ui.common.utility.stringResource
 import com.maksimowiczm.foodyou.app.ui.common.utility.stringResourceWithWeight
 import com.maksimowiczm.foodyou.app.ui.food.component.EnergyProgressIndicator
 import com.maksimowiczm.foodyou.app.ui.food.shared.component.NutrientList
 import com.maksimowiczm.foodyou.common.domain.food.isComplete
 import com.maksimowiczm.foodyou.common.domain.measurement.Measurement
-import com.maksimowiczm.foodyou.fooddiary.domain.entity.DiaryFood
-import com.maksimowiczm.foodyou.fooddiary.domain.entity.DiaryFoodRecipe
+import com.maksimowiczm.foodyou.common.domain.measurement.MeasurementResolver
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.NutritionalItemSnapshot
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.RecipeSnapshot
+import foodyou.app.generated.resources.*
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun NutrientList(
-    food: DiaryFood,
+    food: NutritionalItemSnapshot,
     measurement: Measurement,
     modifier: Modifier = Modifier,
 ) {
-    val weight = remember(food, measurement) { food.weight(measurement) }
-    val facts = remember(food, weight) { food.nutritionFacts * (weight / 100) }
+    val facts = food.nutritionFor(measurement)
+    if (facts == null) {
+        Text(stringResource(Res.string.error_portion_save), color = MaterialTheme.colorScheme.error, modifier = modifier)
+        return
+    }
 
     Column(modifier) {
         Row(
@@ -65,7 +72,7 @@ internal fun NutrientList(
                 totalWeight = food.totalWeight,
                 servingWeight = food.servingWeight,
                 isLiquid = food.isLiquid,
-            ) ?: error("Invalid measurement: $measurement for ${food.name}")
+            ) ?: measurement.stringResource()
 
         Text(
             text = measurementString,
@@ -75,7 +82,7 @@ internal fun NutrientList(
 
         NutrientList(facts)
 
-        if (food is DiaryFoodRecipe && !food.nutritionFacts.isComplete) {
+        if (food is RecipeSnapshot && !food.nutritionFacts.isComplete) {
             val foods =
                 remember(food) {
                     food

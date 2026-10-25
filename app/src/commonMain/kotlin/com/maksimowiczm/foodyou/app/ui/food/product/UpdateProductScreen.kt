@@ -3,7 +3,7 @@ package com.maksimowiczm.foodyou.app.ui.food.product
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.maksimowiczm.foodyou.app.ui.food.product.update.UpdateProductScreen
-import com.maksimowiczm.foodyou.food.domain.entity.FoodId
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -11,7 +11,7 @@ import org.koin.core.parameter.parametersOf
 fun UpdateProductScreen(
     onBack: () -> Unit,
     onUpdate: () -> Unit,
-    productId: FoodId.Product,
+    productId: NutritionalItemId.Product,
     modifier: Modifier = Modifier,
 ) {
     UpdateProductScreen(

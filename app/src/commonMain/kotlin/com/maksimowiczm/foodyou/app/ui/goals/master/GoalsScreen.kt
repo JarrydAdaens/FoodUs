@@ -60,6 +60,7 @@ fun GoalsScreen(onBack: () -> Unit, epochDay: Long, modifier: Modifier = Modifie
     val date = LocalDate.fromEpochDays(epochDay)
     val viewModel: GoalsViewModel = koinViewModel()
     val dateFormatter = LocalDateFormatter.current
+    val failedDates by viewModel.failedDates.collectAsStateWithLifecycle()
 
     val screenState = rememberGoalsScreenState(selectedDate = date)
 
@@ -102,7 +103,12 @@ fun GoalsScreen(onBack: () -> Unit, epochDay: Long, modifier: Modifier = Modifie
                     val uiState =
                         viewModel.observeUiStateByDate(date).collectAsStateWithLifecycle().value
 
-                    if (uiState == null) {
+                    if (date in failedDates) {
+                        Column(Modifier.padding(16.dp)) {
+                            Text(stringResource(Res.string.meals_diary_unavailable))
+                            TextButton(onClick = { viewModel.retryRead(date) }) { Text(stringResource(Res.string.meals_retry)) }
+                        }
+                    } else if (uiState == null) {
                         Box(
                             modifier = Modifier.fillParentMaxSize(),
                             contentAlignment = Alignment.Center,
@@ -120,20 +126,20 @@ fun GoalsScreen(onBack: () -> Unit, epochDay: Long, modifier: Modifier = Modifie
 
 @Composable
 private fun GoalsPage(uiState: GoalsScreenUiState, modifier: Modifier = Modifier) {
-    val meals = uiState.meals
+    val diarySlots = uiState.diarySlots
     val goals = uiState.goal
 
-    var selectedMealsIds by rememberSaveable(meals) { mutableStateOf(meals.map { it.id }) }
+    var selectedDiarySlotsIds by rememberSaveable(diarySlots) { mutableStateOf(diarySlots.map { it.id }) }
 
-    val filteredMeals =
-        remember(meals, selectedMealsIds) { meals.filter { it.id in selectedMealsIds } }
-    val nutritionFacts = remember(filteredMeals) { filteredMeals.map { it.nutritionFacts }.sum() }
+    val filteredDiarySlots =
+        remember(diarySlots, selectedDiarySlotsIds) { diarySlots.filter { it.id in selectedDiarySlotsIds } }
+    val nutritionFacts = remember(filteredDiarySlots) { filteredDiarySlots.map { it.nutritionFacts }.sum() }
 
     Column(modifier) {
-        MealsFilter(
-            meals = meals,
-            selectedMealsIds = selectedMealsIds,
-            onSelectedMealsIdsChange = { selectedMealsIds = it },
+        DiarySlotsFilter(
+            diarySlots = diarySlots,
+            selectedDiarySlotsIds = selectedDiarySlotsIds,
+            onSelectedDiarySlotsIdsChange = { selectedDiarySlotsIds = it },
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
         )
         NutrientList(
@@ -141,9 +147,9 @@ private fun GoalsPage(uiState: GoalsScreenUiState, modifier: Modifier = Modifier
             goals = goals,
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
         )
-        if (meals.incompleteFoods.isNotEmpty()) {
+        if (diarySlots.incompleteFoods.isNotEmpty()) {
             IncompleteFoodsList(
-                foods = meals.incompleteFoods,
+                foods = diarySlots.incompleteFoods,
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
             )
         }
@@ -151,29 +157,29 @@ private fun GoalsPage(uiState: GoalsScreenUiState, modifier: Modifier = Modifier
 }
 
 @Composable
-private fun MealsFilter(
-    meals: List<MealModel>,
-    selectedMealsIds: List<Long>,
-    onSelectedMealsIdsChange: (List<Long>) -> Unit,
+private fun DiarySlotsFilter(
+    diarySlots: List<DiarySlotModel>,
+    selectedDiarySlotsIds: List<Long>,
+    onSelectedDiarySlotsIdsChange: (List<Long>) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     FlowRow(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        meals.forEachIndexed { i, meal ->
-            val selected = meal.id in selectedMealsIds
+        diarySlots.forEachIndexed { i, diarySlot ->
+            val selected = diarySlot.id in selectedDiarySlotsIds
 
-            key(meal.id) {
+            key(diarySlot.id) {
                 FilterChip(
                     selected = selected,
                     onClick = {
-                        val selectedMealsIds =
+                        val selectedDiarySlotsIds =
                             if (selected) {
-                                selectedMealsIds - meal.id
+                                selectedDiarySlotsIds - diarySlot.id
                             } else {
-                                selectedMealsIds + meal.id
+                                selectedDiarySlotsIds + diarySlot.id
                             }
-                        onSelectedMealsIdsChange(selectedMealsIds)
+                        onSelectedDiarySlotsIdsChange(selectedDiarySlotsIds)
                     },
-                    label = { Text(meal.name) },
+                    label = { Text(diarySlot.name) },
                     modifier = Modifier.animatePlacement(),
                     leadingIcon = {
                         if (selected) {

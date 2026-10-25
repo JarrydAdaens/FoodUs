@@ -20,8 +20,8 @@ import com.maksimowiczm.foodyou.settings.domain.entity.Translation
 import com.maksimowiczm.foodyou.settings.domain.repository.TranslationRepository
 import foodyou.app.generated.resources.*
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.compose.resources.StringResource
@@ -108,7 +108,7 @@ class ExternalDatabasesNavigationTest {
                 SettingsScreen(
                     onBack = {},
                     onAbout = {},
-                    onMeals = {},
+                    onDiarySlots = {},
                     onLanguage = {},
                     onGoals = {},
                     onPersonalization = {},
@@ -129,6 +129,7 @@ class ExternalDatabasesNavigationTest {
                 DatabaseSettingsScreen(
                     onBack = { navController.popBackStack() },
                     onImportCsvProducts = { fixture.dataActions.add("import") },
+                    onImportLibrary = { fixture.dataActions.add("library") },
                     onExportCsvProducts = { fixture.dataActions.add("export") },
                     onDatabaseBackup = { fixture.dataActions.add("backup") },
                 )

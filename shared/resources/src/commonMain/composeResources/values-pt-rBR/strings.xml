@@ -6,7 +6,7 @@
     <string name="headline_daily_goals">Metas diárias</string>
     <string name="headline_general">Geral</string>
     <string name="headline_macronutrients">Macronutrientes</string>
-    <string name="headline_meals">Refeições</string>
+    <string name="headline_diary_slots">Refeições</string>
     <string name="headline_delete_food">Excluir alimento</string>
     <string name="headline_edit_product">Editar produto</string>
     <string name="headline_permission_required">Permissão necessária</string>
@@ -110,7 +110,7 @@
     <string name="action_save">Salvar</string>
     <string name="action_delete">Excluir</string>
     <string name="action_confirm">Confirmar</string>
-    <string name="action_add_meal">Adicionar refeição</string>
+    <string name="action_add_diary_slot">Adicionar refeição</string>
     <string name="action_edit">Editar</string>
     <string name="action_insert_suggested_search">Inserir pesquisa sugerida</string>
     <string name="action_edit_entry">Editar entrada</string>
@@ -148,9 +148,9 @@
         <item quantity="one">%1$d caloria restante</item>
         <item quantity="other">%1$d calorias restantes</item>
     </plurals>
-    <string name="neutral_set_your_meal_schedule">Defina sua programação de refeições</string>
-    <string name="neutral_permanently_delete_meal">Excluir permanentemente a refeição?</string>
-    <string name="neutral_meal_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">A refeição será excluída permanentemente. Todos os dados relacionados a essa refeição serão perdidos.</string>
+    <string name="neutral_set_your_diary_slot_schedule">Defina sua programação de refeições</string>
+    <string name="neutral_permanently_delete_diary_slot">Excluir permanentemente a refeição?</string>
+    <string name="neutral_diary_slot_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">A refeição será excluída permanentemente. Todos os dados relacionados a essa refeição serão perdidos.</string>
     <string name="neutral_required">Obrigatório</string>
     <string name="neutral_help_translating_the_app">Ajude a traduzir o aplicativo</string>
     <string name="neutral_copied">Informações copiadas para a área de transferência</string>
@@ -175,7 +175,7 @@
     <string name="description_delete_food">Alimento será excluído permanentemente</string>
     <string name="description_delete_product_entry" description="Tell user that this entry will be deleted only from diary and won't affect the product itself. Product won't be deleted from the database.">Essa entrada será excluída de seu diário. Você pode adicioná-la novamente a qualquer momento.</string>
     <string name="description_about_setting">Saiba mais sobre o aplicativo</string>
-    <string name="description_time_based_meals_sorting">Quando ativado, as refeições que estão acontecendo no momento serão exibidas primeiro</string>
+    <string name="description_time_based_diary_slots_sorting">Quando ativado, as refeições que estão acontecendo no momento serão exibidas primeiro</string>
     <string name="description_incomplete_nutrition_data">Alguns dos produtos usados não têm esse valor; portanto, o valor exibido pode não ser exato</string>
     <string name="description_translation_warning">As traduções são feitas por voluntários. Elas podem não ser perfeitas e podem estar faltando algumas traduções. Se você notar algum erro, não hesite em ajudar a melhorá-las.</string>
     <string name="description_show_macronutrients_goals">Mostrar os objetivos de macronutrientes</string>

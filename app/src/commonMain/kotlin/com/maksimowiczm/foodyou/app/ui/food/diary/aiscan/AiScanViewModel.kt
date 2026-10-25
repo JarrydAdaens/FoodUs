@@ -8,9 +8,9 @@ import androidx.paging.cachedIn
 import com.maksimowiczm.foodyou.ai.domain.AiFoodScanner
 import com.maksimowiczm.foodyou.ai.domain.AiScanResult
 import com.maksimowiczm.foodyou.ai.domain.ObserveAiConfigured
-import com.maksimowiczm.foodyou.common.domain.food.FoodSource
-import com.maksimowiczm.foodyou.food.search.domain.FoodSearch
-import com.maksimowiczm.foodyou.food.search.domain.FoodSearchUseCase
+import com.maksimowiczm.foodyou.common.domain.food.ProductSource
+import com.maksimowiczm.foodyou.food.search.domain.NutritionalItemSearch
+import com.maksimowiczm.foodyou.food.search.domain.NutritionalItemSearchUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -23,7 +23,7 @@ import kotlin.uuid.Uuid
 
 internal class AiScanViewModel(
     private val aiFoodScanner: AiFoodScanner,
-    private val foodSearchUseCase: FoodSearchUseCase,
+    private val foodSearchUseCase: NutritionalItemSearchUseCase,
     observeAiConfigured: ObserveAiConfigured,
 ) : ViewModel() {
 
@@ -88,9 +88,9 @@ internal class AiScanViewModel(
     }
 
     /** Searches locally saved custom foods (the user's own foods) by the AI-guessed name. */
-    fun searchCustomFoods(query: String): Flow<PagingData<FoodSearch>> =
+    fun searchCustomFoods(query: String): Flow<PagingData<NutritionalItemSearch>> =
         foodSearchUseCase
-            .search(query = query, source = FoodSource.Type.User, excludedRecipeId = null)
+            .search(query = query, source = ProductSource.Type.User, excludedRecipeId = null)
             .cachedIn(viewModelScope)
 
     private companion object {

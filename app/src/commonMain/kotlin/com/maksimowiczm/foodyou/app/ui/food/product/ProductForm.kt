@@ -50,7 +50,7 @@ import com.maksimowiczm.foodyou.app.ui.common.utility.stringResource
 import com.maksimowiczm.foodyou.app.ui.food.component.Icon
 import com.maksimowiczm.foodyou.app.ui.food.component.stringResource
 import com.maksimowiczm.foodyou.common.compose.component.unorderedList
-import com.maksimowiczm.foodyou.common.domain.food.FoodSource
+import com.maksimowiczm.foodyou.common.domain.food.ProductSource
 import com.maksimowiczm.foodyou.common.domain.measurement.Measurement
 import com.maksimowiczm.foodyou.settings.domain.entity.NutrientsOrder
 import foodyou.app.generated.resources.*
@@ -81,6 +81,20 @@ internal fun ProductForm(
         modifier = modifier.padding(verticalPadding),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
+        if (state.basisUnavailable) {
+            Text(
+                text = stringResource(Res.string.error_product_nutrition_basis),
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier.padding(horizontalPadding),
+            )
+        }
+        if (state.saveFailed) {
+            Text(
+                text = stringResource(Res.string.error_product_save),
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier.padding(horizontalPadding),
+            )
+        }
         General(state = state, horizontalPadding = horizontalPadding)
 
         Text(
@@ -216,10 +230,20 @@ private fun General(state: ProductFormState, horizontalPadding: PaddingValues) {
         }
     }
 
+    Text(
+        text = stringResource(Res.string.product_nutrition_basis),
+        modifier = Modifier.padding(horizontalPadding),
+        style = MaterialTheme.typography.labelLarge,
+    )
+    Text(
+        text = stringResource(Res.string.description_product_nutrition_basis),
+        modifier = Modifier.padding(horizontalPadding),
+        style = MaterialTheme.typography.bodySmall,
+    )
     MeasurementPicker(
         isLiquid = state.isLiquid,
         selected = state.measurement,
-        onSelect = { state.measurement = it },
+        onSelect = state::selectNutritionBasis,
         modifier = Modifier.padding(8.dp).padding(horizontalPadding).fillMaxWidth(),
     )
 
@@ -236,7 +260,7 @@ private fun General(state: ProductFormState, horizontalPadding: PaddingValues) {
     )
 
     state.servingWeight.TextField(
-        label = stringResource(Res.string.product_serving_weight),
+        label = stringResource(Res.string.product_reference_serving),
         modifier = Modifier.padding(horizontalPadding).fillMaxWidth(),
         required = state.measurement is Measurement.Serving,
         suffix =
@@ -772,8 +796,8 @@ private fun EnergyTextField(
 @Composable
 private fun SourcePicker(
     url: FormField<String?, Nothing>,
-    type: FoodSource.Type,
-    onTypeChange: (FoodSource.Type) -> Unit,
+    type: ProductSource.Type,
+    onTypeChange: (ProductSource.Type) -> Unit,
     modifier: Modifier = Modifier,
     imeAction: ImeAction = ImeAction.Next,
 ) {
@@ -782,7 +806,7 @@ private fun SourcePicker(
     val dropdownMenu =
         @Composable {
             DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-                FoodSource.Type.entries.forEach {
+                ProductSource.Type.entries.forEach {
                     DropdownMenuItem(
                         leadingIcon = { it.Icon() },
                         text = { Text(it.stringResource()) },

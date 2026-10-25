@@ -293,3 +293,16 @@ barcode/GTIN). `source` is `"shopping-list"`.
 Units follow this file's conventions: `sodium` in **mg** (source panels that gave grams were
 ×1000 — cross-checked against `salt = sodium × 2.5`); `energyKcal` derived from `energyKj`
 (÷4.184) where a source gave only kJ (noted in `researchNotes`).
+
+
+## Private input location
+
+Real personal library records and generated account exports are maintained outside
+this public checkout. The historical working-data paths in earlier Story evidence
+identify their former location; the generic schema and exporter code remain available.
+Supply an explicit private input/output path to legacy tools. Do not place actual
+account records in ignored checkout folders or public test fixtures.
+
+Byte-verified private copies were preserved before the old real JSON/CSV working
+copies were removed. This working-tree hygiene does not erase historical Git objects;
+history and any prior remote exposure require a separately scoped decision.

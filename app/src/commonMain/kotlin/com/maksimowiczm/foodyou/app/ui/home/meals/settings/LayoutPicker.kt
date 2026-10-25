@@ -18,20 +18,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
-import com.maksimowiczm.foodyou.fooddiary.domain.entity.MealsCardsLayout
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.DiarySlotsCardsLayout
 import foodyou.app.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun LayoutPicker(
-    layout: MealsCardsLayout,
-    onLayoutChange: (MealsCardsLayout) -> Unit,
+    layout: DiarySlotsCardsLayout,
+    onLayoutChange: (DiarySlotsCardsLayout) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(modifier = modifier, horizontalArrangement = Arrangement.SpaceEvenly) {
         LayoutContainer(
-            selected = layout == MealsCardsLayout.Horizontal,
-            onClick = { onLayoutChange(MealsCardsLayout.Horizontal) },
+            selected = layout == DiarySlotsCardsLayout.Horizontal,
+            onClick = { onLayoutChange(DiarySlotsCardsLayout.Horizontal) },
             layout = { LayoutHorizontal() },
             label = {
                 Text(
@@ -42,8 +42,8 @@ internal fun LayoutPicker(
         )
 
         LayoutContainer(
-            selected = layout == MealsCardsLayout.Vertical,
-            onClick = { onLayoutChange(MealsCardsLayout.Vertical) },
+            selected = layout == DiarySlotsCardsLayout.Vertical,
+            onClick = { onLayoutChange(DiarySlotsCardsLayout.Vertical) },
             layout = { LayoutVertical() },
             label = {
                 Text(

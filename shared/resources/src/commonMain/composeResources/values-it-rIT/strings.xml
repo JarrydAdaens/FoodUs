@@ -6,7 +6,7 @@
     <string name="headline_daily_goals">Obiettivi giornalieri</string>
     <string name="headline_general">Generale</string>
     <string name="headline_macronutrients">Macronutrienti</string>
-    <string name="headline_meals">Pasti</string>
+    <string name="headline_diary_slots">Pasti</string>
     <string name="headline_delete_food">Elimina cibo</string>
     <string name="headline_edit_product">Modifica prodotto</string>
     <string name="headline_permission_required">Autorizzazione richiesta</string>
@@ -30,7 +30,7 @@
     <string name="headline_home" description="Home screen">Home</string>
     <string name="headline_home_settings" description="Home screen settings">Impostazioni home</string>
     <string name="headline_calendar">Calendario</string>
-    <string name="headline_meals_settings">Impostazioni pasti</string>
+    <string name="headline_diary_slots_settings">Impostazioni pasti</string>
     <string name="headline_horizontal">Orizzontale</string>
     <string name="headline_vertical">Verticale</string>
     <string name="headline_values_per">Valori per</string>
@@ -124,7 +124,7 @@
     <string name="action_save">Salva</string>
     <string name="action_delete">Elimina</string>
     <string name="action_confirm">Conferma</string>
-    <string name="action_add_meal">Aggiungi pasto</string>
+    <string name="action_add_diary_slot">Aggiungi pasto</string>
     <string name="action_edit">Modifica</string>
     <string name="action_insert_suggested_search">Inserisci ricerca suggerita</string>
     <string name="action_edit_entry">Modifica voce</string>
@@ -142,7 +142,7 @@
     <string name="action_move_up" description="reorder list item up">Sposta su</string>
     <string name="action_move_down" description="reorder list item down">Sposta giù</string>
     <string name="action_use_time_based_ordering">Usa ordine basato sul tempo</string>
-    <string name="action_ignore_all_day_meals">Ignora i pasti di tutto il giorno</string>
+    <string name="action_ignore_all_day_diary_slots">Ignora i pasti di tutto il giorno</string>
     <string name="action_add_ingredient" description="Add ingredient to the recipe">Aggiungi ingrediente</string>
     <string name="action_delete_ingredient">Elimina ingrediente</string>
     <string name="action_download">Scarica</string>
@@ -172,9 +172,9 @@
         <item quantity="other">%1$d kilojoule rimasti</item>
     </plurals>
     <string name="neutral_set_your_daily_goals">Imposta i tuoi obiettivi nutrizionali giornalieri</string>
-    <string name="neutral_set_your_meal_schedule">Imposta il tuo programma dei pasti</string>
-    <string name="neutral_permanently_delete_meal">Eliminare definitivamente il pasto?</string>
-    <string name="neutral_meal_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">Il pasto verrà eliminato definitivamente. Tutti i dati relativi a questo pasto verranno persi.</string>
+    <string name="neutral_set_your_diary_slot_schedule">Imposta il tuo programma dei pasti</string>
+    <string name="neutral_permanently_delete_diary_slot">Eliminare definitivamente il pasto?</string>
+    <string name="neutral_diary_slot_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">Il pasto verrà eliminato definitivamente. Tutti i dati relativi a questo pasto verranno persi.</string>
     <string name="neutral_required">Richiesto</string>
     <string name="neutral_help_translating_the_app">Aiuta a tradurre l'app</string>
     <string name="neutral_copied">Informazioni copiate negli appunti</string>
@@ -207,8 +207,8 @@
     <string name="description_delete_food">L'alimento verrà eliminato definitivamente</string>
     <string name="description_delete_product_entry" description="Tell user that this entry will be deleted only from diary and won't affect the product itself. Product won't be deleted from the database.">Questa voce verrà eliminata dal tuo diario. Puoi aggiungerla di nuovo in qualsiasi momento.</string>
     <string name="description_about_setting">Scopri di più sull'app</string>
-    <string name="description_time_based_meals_sorting">Se abilitato, i pasti in corso verranno mostrati per primi</string>
-    <string name="description_action_ignore_all_day_meals">I pasti di tutto il giorno verranno mostrati alla fine della lista</string>
+    <string name="description_time_based_diary_slots_sorting">Se abilitato, i pasti in corso verranno mostrati per primi</string>
+    <string name="description_action_ignore_all_day_diary_slots">I pasti di tutto il giorno verranno mostrati alla fine della lista</string>
     <string name="description_incomplete_nutrition_data">Alcuni dei prodotti utilizzati non dispongono di questo valore; pertanto, il valore visualizzato potrebbe non essere accurato</string>
     <string name="description_translation_warning">Le traduzioni sono create da volontari. Potrebbero non essere perfette e alcune traduzioni potrebbero mancare. Se noti degli errori, non esitare a contribuire per migliorarle.</string>
     <string name="description_home_settings">Personalizza la tua pagina home</string>

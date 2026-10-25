@@ -10,14 +10,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.maksimowiczm.foodyou.common.compose.component.unorderedList
 import com.maksimowiczm.foodyou.common.compose.utility.LocalDateFormatter
-import com.maksimowiczm.foodyou.food.domain.entity.FoodHistory
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemHistory
 import foodyou.app.generated.resources.*
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun FoodHistory(events: List<FoodHistory>, modifier: Modifier = Modifier.Companion) {
+internal fun NutritionalItemHistory(events: List<NutritionalItemHistory>, modifier: Modifier = Modifier.Companion) {
     val dateFormatter = LocalDateFormatter.current
 
     val dates =
@@ -46,12 +46,12 @@ internal fun FoodHistory(events: List<FoodHistory>, modifier: Modifier = Modifie
 }
 
 @Composable
-private fun FoodHistory.stringResource(): String =
+private fun NutritionalItemHistory.stringResource(): String =
     when (this) {
-        is FoodHistory.Created -> stringResource(Res.string.headline_created)
-        is FoodHistory.Downloaded -> stringResource(Res.string.headline_downloaded)
-        is FoodHistory.Imported -> stringResource(Res.string.headline_imported)
-        is FoodHistory.Edited -> stringResource(Res.string.headline_edited)
-        is FoodHistory.ImportedFromFoodYou2 ->
+        is NutritionalItemHistory.Created -> stringResource(Res.string.headline_created)
+        is NutritionalItemHistory.Downloaded -> stringResource(Res.string.headline_downloaded)
+        is NutritionalItemHistory.Imported -> stringResource(Res.string.headline_imported)
+        is NutritionalItemHistory.Edited -> stringResource(Res.string.headline_edited)
+        is NutritionalItemHistory.ImportedFromFoodYou2 ->
             stringResource(Res.string.headline_imported_from_food_you_2)
     }

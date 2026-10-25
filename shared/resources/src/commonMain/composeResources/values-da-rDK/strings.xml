@@ -6,7 +6,7 @@
     <string name="headline_daily_goals">Daglige mål</string>
     <string name="headline_general">Generelt</string>
     <string name="headline_macronutrients">Makronæringsstoffer</string>
-    <string name="headline_meals">Måltider</string>
+    <string name="headline_diary_slots">Måltider</string>
     <string name="headline_edit_product">Redigér produkt</string>
     <string name="headline_permission_required">Tilladelse kræves</string>
     <string name="headline_language">Sprog</string>
@@ -29,7 +29,7 @@
     <string name="headline_home" description="Home screen">Hjem</string>
     <string name="headline_home_settings" description="Home screen settings">Hjemindstillinger</string>
     <string name="headline_calendar">Kalender</string>
-    <string name="headline_meals_settings">Måltidsindstillinger</string>
+    <string name="headline_diary_slots_settings">Måltidsindstillinger</string>
     <string name="headline_horizontal">Vandret</string>
     <string name="headline_vertical">Lodret</string>
     <string name="headline_values_per">Værdier pr.</string>
@@ -100,7 +100,7 @@
     <string name="action_save">Gem</string>
     <string name="action_delete">Slet</string>
     <string name="action_confirm">Bekræft</string>
-    <string name="action_add_meal">Tilføj måltid</string>
+    <string name="action_add_diary_slot">Tilføj måltid</string>
     <string name="action_edit">Redigér</string>
     <string name="action_insert_suggested_search">Indsæt foreslået søgning</string>
     <string name="action_edit_entry">Redigér optegnelse</string>
@@ -117,7 +117,7 @@
     <string name="action_move_up" description="reorder list item up">Flyt op</string>
     <string name="action_move_down" description="reorder list item down">Flyt ned</string>
     <string name="action_use_time_based_ordering">Brug tidsbaseret sortering</string>
-    <string name="action_ignore_all_day_meals">Ignorér heldagsmåltider</string>
+    <string name="action_ignore_all_day_diary_slots">Ignorér heldagsmåltider</string>
     <string name="action_add_ingredient" description="Add ingredient to the recipe">Tilføj ingrediens</string>
     <string name="action_delete_ingredient">Slet ingrediens</string>
     <string name="action_download">Download</string>
@@ -137,9 +137,9 @@
         <item quantity="one">%1$d kalorie tilbage</item>
         <item quantity="other">%1$d kalorier tilbage</item>
     </plurals>
-    <string name="neutral_set_your_meal_schedule">Sæt madplan</string>
-    <string name="neutral_permanently_delete_meal">Slet måltid permanent?</string>
-    <string name="neutral_meal_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">Måltid slettes permanent, og alle data relateret hertil går tabt.</string>
+    <string name="neutral_set_your_diary_slot_schedule">Sæt madplan</string>
+    <string name="neutral_permanently_delete_diary_slot">Slet måltid permanent?</string>
+    <string name="neutral_diary_slot_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">Måltid slettes permanent, og alle data relateret hertil går tabt.</string>
     <string name="neutral_required">Obligatorisk</string>
     <string name="neutral_help_translating_the_app">Hjælp med app-oversættelsen</string>
     <string name="neutral_copied">Info kopieret til udklipsholder</string>
@@ -165,8 +165,8 @@
     </plurals>
     <string name="description_delete_product_entry" description="Tell user that this entry will be deleted only from diary and won't affect the product itself. Product won't be deleted from the database.">Denne optegnelse slettes fra madjournalen. Den kan når som helst tilføjes igen.</string>
     <string name="description_about_setting">Læs mere om appen</string>
-    <string name="description_time_based_meals_sorting">Når aktiveret, vises måltider, som p.t. finder sted, først</string>
-    <string name="description_action_ignore_all_day_meals">Heldagsmåltider vise til slut på listen</string>
+    <string name="description_time_based_diary_slots_sorting">Når aktiveret, vises måltider, som p.t. finder sted, først</string>
+    <string name="description_action_ignore_all_day_diary_slots">Heldagsmåltider vise til slut på listen</string>
     <string name="description_incomplete_nutrition_data">Nogle af de brugte produkter mangler denne værdi, hvorfor den viste værdi muligvis ikke retvisende</string>
     <string name="description_translation_warning">Oversættelser er foretaget af frivillige. De er måske ikke perfekte, og nogle oversættelser kan mangle. Opdages fejl, så tøv ikke med at forbedre dem.</string>
     <string name="description_home_settings">Tilpas startsiden</string>

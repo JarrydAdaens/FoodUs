@@ -2,12 +2,12 @@ package com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase.
 
 import com.maksimowiczm.foodyou.common.domain.database.TransactionProvider
 import com.maksimowiczm.foodyou.common.domain.date.DateProvider
-import com.maksimowiczm.foodyou.common.domain.food.FoodSource
+import com.maksimowiczm.foodyou.common.domain.food.ProductSource
 import com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase.AustralianFoodCompositionDatabaseConfig
 import com.maksimowiczm.foodyou.importexport.providermetadata.domain.ProviderMetadata
 import com.maksimowiczm.foodyou.importexport.providermetadata.domain.ProviderMetadataRepository
-import com.maksimowiczm.foodyou.food.domain.entity.FoodHistory
-import com.maksimowiczm.foodyou.food.domain.repository.FoodHistoryRepository
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemHistory
+import com.maksimowiczm.foodyou.food.domain.repository.NutritionalItemHistoryRepository
 import com.maksimowiczm.foodyou.food.domain.repository.ProductRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
@@ -41,13 +41,13 @@ internal class ImportAustralianFoodCompositionDatabaseUseCaseImpl(
     private val repository: AustralianFoodCompositionDatabaseRepository,
     private val transactionProvider: TransactionProvider,
     private val productRepository: ProductRepository,
-    private val historyRepository: FoodHistoryRepository,
+    private val historyRepository: NutritionalItemHistoryRepository,
     private val metadataRepository: ProviderMetadataRepository,
     private val dateProvider: DateProvider,
 ) : ImportAustralianFoodCompositionDatabaseUseCase {
 
     override fun import(): Flow<AfcdImportProgress> = channelFlow {
-        val source = FoodSource.Type.AustralianFoodCompositionDatabase
+        val source = ProductSource.Type.AustralianFoodCompositionDatabase
         try {
             send(AfcdImportProgress.Downloading)
 
@@ -72,7 +72,7 @@ internal class ImportAustralianFoodCompositionDatabaseUseCaseImpl(
                             packageWeight = null,
                             servingWeight = null,
                             source =
-                                FoodSource(
+                                ProductSource(
                                     type = source,
                                     url = AustralianFoodCompositionDatabaseConfig.SOURCE_URL,
                                 ),
@@ -81,7 +81,7 @@ internal class ImportAustralianFoodCompositionDatabaseUseCaseImpl(
                         )
                     historyRepository.insert(
                         id,
-                        FoodHistory.Imported(timestamp = dateProvider.nowInstant()),
+                        NutritionalItemHistory.Imported(timestamp = dateProvider.nowInstant()),
                     )
 
                     if (position % PROGRESS_STRIDE == 0 || position == total - 1) {
@@ -111,7 +111,7 @@ internal class ImportAustralianFoodCompositionDatabaseUseCaseImpl(
     }
 
     /** Records the failure while preserving any previously installed dataset metadata. */
-    private suspend fun recordFailure(source: FoodSource.Type, error: Exception) {
+    private suspend fun recordFailure(source: ProductSource.Type, error: Exception) {
         val previous = metadataRepository.observe(source).first()
         metadataRepository.put(
             ProviderMetadata(

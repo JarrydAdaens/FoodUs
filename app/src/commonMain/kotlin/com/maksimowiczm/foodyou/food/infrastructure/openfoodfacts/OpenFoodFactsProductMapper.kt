@@ -1,6 +1,6 @@
 package com.maksimowiczm.foodyou.food.infrastructure.openfoodfacts
 
-import com.maksimowiczm.foodyou.common.domain.food.FoodSource
+import com.maksimowiczm.foodyou.common.domain.food.ProductSource
 import com.maksimowiczm.foodyou.food.domain.entity.RemoteNutritionFacts
 import com.maksimowiczm.foodyou.food.domain.entity.RemoteProduct
 import com.maksimowiczm.foodyou.food.infrastructure.openfoodfacts.model.OpenFoodFactsProduct
@@ -13,7 +13,7 @@ internal class OpenFoodFactsProductMapper {
 
         val packageWeight = product.packageWeight?.takeIf { it > 0 }
         val servingWeight = product.servingWeight?.takeIf { it > 0 }
-        val source = FoodSource(type = FoodSource.Type.OpenFoodFacts, url = product.url)
+        val source = ProductSource(type = ProductSource.Type.OpenFoodFacts, url = product.url)
 
         val nutritionFacts =
             product.nutritionFacts?.let {

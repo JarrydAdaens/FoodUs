@@ -48,19 +48,19 @@ import com.maksimowiczm.foodyou.common.domain.food.NutritionFactsField
 import com.maksimowiczm.foodyou.common.domain.food.get
 import com.maksimowiczm.foodyou.common.domain.measurement.Measurement
 import com.maksimowiczm.foodyou.common.log.Logger
-import com.maksimowiczm.foodyou.food.domain.entity.FoodId
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
 import com.maksimowiczm.foodyou.food.domain.entity.Recipe
 import com.maksimowiczm.foodyou.food.domain.usecase.CreateProductUseCase
 import com.maksimowiczm.foodyou.food.domain.usecase.CreateRecipeUseCase
-import com.maksimowiczm.foodyou.food.domain.usecase.DeleteFoodUseCase
-import com.maksimowiczm.foodyou.food.domain.usecase.ObserveFoodUseCase
-import com.maksimowiczm.foodyou.food.infrastructure.repository.RoomFoodHistoryRepository
+import com.maksimowiczm.foodyou.food.domain.usecase.DeleteNutritionalItemUseCase
+import com.maksimowiczm.foodyou.food.domain.usecase.ObserveNutritionalItemUseCase
+import com.maksimowiczm.foodyou.food.infrastructure.repository.RoomNutritionalItemHistoryRepository
 import com.maksimowiczm.foodyou.food.infrastructure.repository.RoomProductRepository
 import com.maksimowiczm.foodyou.food.infrastructure.repository.RoomRecipeRepository
 import com.maksimowiczm.foodyou.fooddiary.domain.entity.ManualDiaryEntry
 import com.maksimowiczm.foodyou.fooddiary.domain.entity.ManualDiaryEntryId
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.repository.RoomManualDiaryEntryRepository
-import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.MealEntity
+import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.DiarySlotEntity
 import foodyou.app.generated.resources.*
 import java.io.File
 import java.util.concurrent.CountDownLatch
@@ -102,7 +102,7 @@ class QuickAddConversionTest {
     private lateinit var recipes: RoomRecipeRepository
     private lateinit var date: LocalDate
     private var existingId: ManualDiaryEntryId? = null
-    private val createdRecipes = mutableStateListOf<FoodId.Recipe>()
+    private val createdRecipes = mutableStateListOf<NutritionalItemId.Recipe>()
     private var saved by mutableStateOf(false)
 
     @Test fun scanProductKeepsExplicitEnergyWhenUserCompletesRequiredMissingMacro() {
@@ -176,7 +176,7 @@ class QuickAddConversionTest {
         val recipe = savedRecipe()
         assertEquals(3, recipe.servings)
         assertEquals("Synthetic description", recipe.note)
-        assertEquals(250.0, recipe.totalWeight, 0.000001)
+        assertEquals(250.0, recipe.totalWeight!!, 0.000001)
         assertRecipeTotals(source.toNutritionFacts(), recipe)
         field(Res.string.label_number_of_servings, "2.5")
         field(Res.string.weight, "250")
@@ -296,14 +296,14 @@ class QuickAddConversionTest {
         diary = RoomManualDiaryEntryRepository(database.manualDiaryEntryDao)
         products = RoomProductRepository(database.productDao)
         recipes = RoomRecipeRepository(database.recipeDao, products)
-        val history = RoomFoodHistoryRepository(database.foodEventDao)
+        val history = RoomNutritionalItemHistoryRepository(database.foodEventDao)
         val createProduct = CreateProductUseCase(products, history, database, SilentLogger)
         val createRecipe = CreateRecipeUseCase(recipes, products, history, database, SilentLogger)
-        val observeFood = ObserveFoodUseCase(products, recipes)
-        val deleteFood = DeleteFoodUseCase(products, recipes, database, SilentLogger)
+        val observeFood = ObserveNutritionalItemUseCase(products, recipes)
+        val deleteFood = DeleteNutritionalItemUseCase(products, recipes, database, SilentLogger)
         val cleanupScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
         existingId = runBlocking {
-            database.mealDao.insertWithLastRank(MealEntity(1, "Synthetic meal", 0, 0, 23, 59))
+            database.diarySlotDao.insertWithLastRank(DiarySlotEntity(1, "Synthetic meal", 0, 0, 23, 59))
             if (existing) {
                 val source = estimate(requireNotNull(json))
                 diary.insert(source.name, 1, date, source.toNutritionFacts(), clock.now(), source.description,
@@ -315,7 +315,7 @@ class QuickAddConversionTest {
         val isolated = koinApplication {
             modules(module {
                 single { observeFood }
-                viewModel { (entryDate: LocalDate, meal: Long) -> CreateQuickAddViewModel(meal, entryDate, diary, clock) }
+                viewModel { (entryDate: LocalDate, diarySlot: Long) -> CreateQuickAddViewModel(diarySlot, entryDate, diary, clock) }
                 viewModel { (id: ManualDiaryEntryId) -> UpdateQuickAddViewModel(id, diary, clock) }
                 viewModel { DownloadProductHolder() }
                 viewModel { CreateProductViewModel(createProduct, clock) }
@@ -388,7 +388,7 @@ class QuickAddConversionTest {
                 val route = entry.toRoute<FoodDiaryCreateQuickAdd>()
                 CreateQuickAddScreen(
                     onBack = { error("No owner navigation") }, onSave = { saved = true; nav.navigate("synthetic-saved") },
-                    mealId = route.mealId, date = LocalDate.fromEpochDays(route.epochDay),
+                    diarySlotId = route.diarySlotId, date = LocalDate.fromEpochDays(route.epochDay),
                     scanEstimate = estimate(requireNotNull(route.scanEstimateJson)),
                     onPromoteToProduct = { nav.navigate(PromoteToProduct(it)) },
                     onPromoteToRecipe = { nav.navigate(PromoteToRecipe(it)) },
@@ -397,7 +397,7 @@ class QuickAddConversionTest {
             composable("synthetic-direct") {
                 CreateQuickAddScreen(
                     onBack = { error("No owner navigation") }, onSave = { saved = true; nav.navigate("synthetic-saved") },
-                    mealId = 1, date = date, prefillName = "Synthetic direct food", prefillProteins = 35.0, prefillFats = 38.0,
+                    diarySlotId = 1, date = date, prefillName = "Synthetic direct food", prefillProteins = 35.0, prefillFats = 38.0,
                     onPromoteToProduct = { nav.navigate(PromoteToProduct(it)) },
                     onPromoteToRecipe = { nav.navigate(PromoteToRecipe(it)) },
                 )
@@ -430,7 +430,7 @@ class QuickAddConversionTest {
                         onUpdateUsdaApiKey = { error("No configuration") },
                         onUpdateOpenFoodFactsCredentials = { error("No configuration") },
                         initialName = seed.name, initialServings = seed.recipeServings, initialNote = seed.description,
-                        initialIngredient = FoodId.Product(productId) to Measurement.Gram(seed.recipeIngredientWeightGrams),
+                        initialIngredient = NutritionalItemId.Product(productId) to Measurement.Gram(seed.recipeIngredientWeightGrams),
                     )
                 }
             }
@@ -579,18 +579,16 @@ class QuickAddConversionTest {
     }
 
     private fun assertRecipeTotals(expected: NutritionFacts, recipe: Recipe) {
-        // The stored backing Product must preserve unknowns exactly. Existing Recipe.sum folds
-        // from Complete(0), so an unknown ingredient produces an INCOMPLETE partial total of zero.
-        // Check that established aggregate contract separately; do not treat it as a known zero.
+        // Current Recipe totals preserve unknowns exactly, including the backing Product facts.
         val ingredient = recipe.ingredients.single()
-        assertFacts(expected / recipe.totalWeight * 100.0, ingredient.food.nutritionFacts)
-        val totals = recipe.nutritionFacts * recipe.totalWeight / 100.0
+        assertFacts(expected / requireNotNull(recipe.totalWeight) * 100.0, ingredient.food.nutritionFacts)
+        val totals = recipe.totalNutrition
         NutritionFactsField.entries.forEach { field ->
             val value = expected[field].value
             val actual = totals[field]
             if (value == null) {
                 assertTrue("Unknown $field remains an incomplete recipe aggregate", actual.isIncomplete)
-                assertEquals("Unknown $field has the existing zero partial total", 0.0, requireNotNull(actual.value), 0.000001)
+                assertNull("Unknown $field must not acquire a zero partial total", actual.value)
             } else {
                 assertTrue("Supplied $field remains a complete recipe aggregate", actual.isComplete)
                 assertEquals("Supplied $field survives recipe derivation", value, requireNotNull(actual.value), 0.000001)

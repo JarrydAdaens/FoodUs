@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import com.maksimowiczm.foodyou.common.infrastructure.room.FoodSourceType
+import com.maksimowiczm.foodyou.common.infrastructure.room.ProductSourceType
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -46,7 +46,7 @@ abstract class ProductDao {
         WHERE sourceType = :source
         """
     )
-    abstract suspend fun deleteProductsBySource(source: FoodSourceType)
+    abstract suspend fun deleteProductsBySource(source: ProductSourceType)
 
     @Query(
         """
@@ -64,7 +64,7 @@ abstract class ProductDao {
         name: String,
         brand: String?,
         barcode: String?,
-        source: FoodSourceType,
+        source: ProductSourceType,
     ): Boolean
 
     /**

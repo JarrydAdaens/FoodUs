@@ -7,9 +7,9 @@ import androidx.paging.RemoteMediator
 import com.maksimowiczm.foodyou.common.domain.database.TransactionProvider
 import com.maksimowiczm.foodyou.common.domain.date.DateProvider
 import com.maksimowiczm.foodyou.common.log.Logger
-import com.maksimowiczm.foodyou.food.domain.entity.FoodHistory
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemHistory
 import com.maksimowiczm.foodyou.food.domain.entity.Product
-import com.maksimowiczm.foodyou.food.domain.repository.FoodHistoryRepository
+import com.maksimowiczm.foodyou.food.domain.repository.NutritionalItemHistoryRepository
 import com.maksimowiczm.foodyou.food.domain.repository.ProductRepository
 import com.maksimowiczm.foodyou.food.infrastructure.network.RemoteProductMapper
 import com.maksimowiczm.foodyou.food.infrastructure.usda.USDAMapper
@@ -25,7 +25,7 @@ internal class USDARemoteMediator<K : Any, T : Any>(
     private val apiKey: String?,
     private val transactionProvider: TransactionProvider,
     private val productRepository: ProductRepository,
-    private val historyRepository: FoodHistoryRepository,
+    private val historyRepository: NutritionalItemHistoryRepository,
     private val remoteDataSource: USDARemoteDataSource,
     private val pagingKeyDao: USDAPagingKeyDao,
     private val productMapper: USDAMapper,
@@ -126,7 +126,7 @@ internal class USDARemoteMediator<K : Any, T : Any>(
         if (id != null) {
             historyRepository.insert(
                 foodId = id,
-                history = FoodHistory.Downloaded(timestamp = now, url = this.source.url),
+                history = NutritionalItemHistory.Downloaded(timestamp = now, url = this.source.url),
             )
         }
     }

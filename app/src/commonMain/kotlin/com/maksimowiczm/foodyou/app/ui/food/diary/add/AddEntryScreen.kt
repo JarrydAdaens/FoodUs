@@ -42,18 +42,23 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton
 import com.maksimowiczm.foodyou.app.ui.food.component.MeasurementPicker
+import com.maksimowiczm.foodyou.app.ui.food.component.CapturedReferenceText
+import com.maksimowiczm.foodyou.app.ui.food.component.CapturedMetadataView
+import com.maksimowiczm.foodyou.app.ui.food.component.reportedBasisLabel
+import com.maksimowiczm.foodyou.app.ui.food.component.CapturedNutritionSummary
 import com.maksimowiczm.foodyou.app.ui.food.diary.component.ChipsDatePicker
-import com.maksimowiczm.foodyou.app.ui.food.diary.component.ChipsMealPicker
+import com.maksimowiczm.foodyou.app.ui.food.diary.component.ChipsDiarySlotPicker
 import com.maksimowiczm.foodyou.app.ui.food.diary.component.FoodMeasurementFormState
 import com.maksimowiczm.foodyou.app.ui.food.diary.component.Source
+import com.maksimowiczm.foodyou.app.ui.food.diary.component.PortionSaveErrorDialog
 import com.maksimowiczm.foodyou.app.ui.food.diary.component.rememberFoodMeasurementFormState
 import com.maksimowiczm.foodyou.common.compose.extension.LaunchedCollectWithLifecycle
 import com.maksimowiczm.foodyou.common.compose.extension.add
 import com.maksimowiczm.foodyou.common.domain.measurement.Measurement
 import com.maksimowiczm.foodyou.common.extension.minus
 import com.maksimowiczm.foodyou.common.extension.plus
-import com.maksimowiczm.foodyou.food.domain.entity.FoodHistory
-import com.maksimowiczm.foodyou.food.domain.entity.FoodId
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemHistory
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
 import foodyou.app.generated.resources.*
 import kotlin.time.Duration.Companion.days
 import kotlinx.datetime.LocalDate
@@ -64,29 +69,32 @@ import org.koin.core.parameter.parametersOf
 @Composable
 fun AddEntryScreen(
     onBack: () -> Unit,
-    onEditFood: (FoodId) -> Unit,
+    onEditFood: (NutritionalItemId) -> Unit,
     onEntryAdded: () -> Unit,
     onFoodDeleted: () -> Unit,
-    onIngredient: (FoodId, Measurement) -> Unit,
-    foodId: FoodId,
-    mealId: Long,
+    onIngredient: (NutritionalItemId, Measurement) -> Unit,
+    foodId: NutritionalItemId,
+    diarySlotId: Long,
     date: LocalDate,
     measurement: Measurement?,
     animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: AddEntryViewModel = koinViewModel { parametersOf(foodId) }
+    var saveFailed by rememberSaveable { mutableStateOf(false) }
+    if (saveFailed) PortionSaveErrorDialog { saveFailed = false }
 
     LaunchedCollectWithLifecycle(viewModel.uiEvents) {
         when (it) {
             is AddEntryEvent.FoodDeleted -> onFoodDeleted()
             is AddEntryEvent.EntryAdded -> onEntryAdded()
+            AddEntryEvent.SaveFailed -> saveFailed = true
         }
     }
 
     val food = viewModel.food.collectAsStateWithLifecycle().value
     val events by viewModel.foodHistory.collectAsStateWithLifecycle()
-    val meals = viewModel.meals.collectAsStateWithLifecycle().value
+    val diarySlots = viewModel.diarySlots.collectAsStateWithLifecycle().value
     val today by viewModel.today.collectAsStateWithLifecycle()
     val suggestions = viewModel.suggestions.collectAsStateWithLifecycle().value
     val possibleTypes = viewModel.possibleMeasurementTypes.collectAsStateWithLifecycle().value
@@ -97,19 +105,12 @@ fun AddEntryScreen(
         remember(measurement, measurementSuggestion) {
             val realMeasurement = measurement ?: measurementSuggestion
             if (realMeasurement == null) return@remember null
-            if (food == null) return@remember realMeasurement
-
-            try {
-                food.weight(realMeasurement)
-                realMeasurement
-            } catch (_: IllegalStateException) {
-                if (food.isLiquid) Measurement.Milliliter(100.0) else Measurement.Gram(100.0)
-            }
+            realMeasurement
         }
 
     if (
         food == null ||
-            meals == null ||
+            diarySlots == null ||
             suggestions == null ||
             possibleTypes == null ||
             selectedMeasurement == null
@@ -124,10 +125,10 @@ fun AddEntryScreen(
                         .distinct()
                         .sorted(),
                 selectedDate = date,
-                meals = meals.map { it.name },
-                selectedMeal =
-                    remember(meals, mealId) {
-                            meals.firstOrNull { it.id == mealId } ?: meals.firstOrNull()
+                diarySlots = diarySlots.map { it.name },
+                selectedDiarySlot =
+                    remember(diarySlots, diarySlotId) {
+                            diarySlots.firstOrNull { it.id == diarySlotId } ?: diarySlots.firstOrNull()
                         }
                         ?.name,
                 suggestions = suggestions,
@@ -138,29 +139,29 @@ fun AddEntryScreen(
         AddEntryScreen(
             onBack = onBack,
             onAdd = {
-                val selectedMealId =
-                    state.mealsState.selectedMeal?.let { mealName ->
-                        meals.firstOrNull { it.name == mealName }?.id
+                val selectedDiarySlotId =
+                    state.diarySlotsState.selectedDiarySlot?.let { diarySlotName ->
+                        diarySlots.firstOrNull { it.name == diarySlotName }?.id
                     }
 
-                if (selectedMealId != null) {
+                if (selectedDiarySlotId != null) {
                     viewModel.addEntry(
                         measurement = state.measurementState.measurement,
-                        mealId = selectedMealId,
+                        diarySlotId = selectedDiarySlotId,
                         date = state.dateState.selectedDate,
                     )
                 }
             },
             onUnpack = {
-                val selectedMealId =
-                    state.mealsState.selectedMeal?.let { mealName ->
-                        meals.firstOrNull { it.name == mealName }?.id
+                val selectedDiarySlotId =
+                    state.diarySlotsState.selectedDiarySlot?.let { diarySlotName ->
+                        diarySlots.firstOrNull { it.name == diarySlotName }?.id
                     }
 
-                if (selectedMealId != null) {
+                if (selectedDiarySlotId != null) {
                     viewModel.unpack(
                         measurement = state.measurementState.measurement,
-                        mealId = selectedMealId,
+                        diarySlotId = selectedDiarySlotId,
                         date = state.dateState.selectedDate,
                     )
                 }
@@ -182,11 +183,11 @@ private fun AddEntryScreen(
     onBack: () -> Unit,
     onAdd: () -> Unit,
     onUnpack: () -> Unit,
-    onEditFood: (FoodId) -> Unit,
+    onEditFood: (NutritionalItemId) -> Unit,
     onDelete: () -> Unit,
-    onIngredient: (FoodId, Measurement) -> Unit,
+    onIngredient: (NutritionalItemId, Measurement) -> Unit,
     food: FoodModel,
-    history: List<FoodHistory>,
+    history: List<NutritionalItemHistory>,
     state: FoodMeasurementFormState,
     animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
@@ -211,6 +212,8 @@ private fun AddEntryScreen(
                         visible =
                             !animatedVisibilityScope.transition.isRunning &&
                                 state.isValid &&
+                                (food.nutritionFor(state.measurementState.measurement)!=null ||
+                                    food is ProductModel && food.factBasis==com.maksimowiczm.foodyou.common.domain.food.ProductFactBasis.METRIC_100) &&
                                 (food !is RecipeModel || food.isValid),
                         alignment = Alignment.BottomEnd,
                     ),
@@ -227,7 +230,7 @@ private fun AddEntryScreen(
                         icon = {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Outlined.CallSplit,
-                                contentDescription = null,
+                                contentDescription = stringResource(Res.string.action_unpack),
                             )
                         },
                         text = { Text(stringResource(Res.string.action_unpack)) },
@@ -270,29 +273,52 @@ private fun AddEntryScreen(
         ) {
             item { HorizontalDivider(Modifier.padding(horizontal = 8.dp)) }
 
+            if(food is ProductModel && food.factBasis==com.maksimowiczm.foodyou.common.domain.food.ProductFactBasis.REFERENCE_SERVING) {
+                item { Column(Modifier.padding(16.dp),verticalArrangement=Arrangement.spacedBy(4.dp)) {
+                    Text(stringResource(Res.string.captured_reference_serving),style=MaterialTheme.typography.titleMedium)
+                    CapturedReferenceText(food.referencePortion)
+                    CapturedMetadataView(food.nutritionMetadata)
+                } }
+            }
+            if(food is RecipeModel && food.reportedNutrition!=null) {
+                item { Column(Modifier.padding(16.dp),verticalArrangement=Arrangement.spacedBy(4.dp)) {
+                    Text(reportedBasisLabel(food.reportedNutrition.basis),style=MaterialTheme.typography.titleMedium)
+                    var showCapturedFacts by remember(food.foodId) { mutableStateOf(false) }
+                    TextButton(onClick={showCapturedFacts=!showCapturedFacts}) {
+                        Text(stringResource(if(showCapturedFacts)Res.string.captured_hide_details else Res.string.captured_show_details))
+                    }
+                    if(showCapturedFacts)CapturedNutritionSummary(food.reportedNutrition.facts)
+                    if(food.knownYield==null)Text(stringResource(Res.string.captured_unknown_yield))
+                    else Text(stringResource(Res.string.captured_known_yield,food.knownYield))
+                    CapturedReferenceText(food.reportedNutrition.reference)
+                    if(food.reportedNutrition.needsReview)Text(stringResource(Res.string.captured_needs_review),color=MaterialTheme.colorScheme.error)
+                    Text(stringResource(Res.string.captured_unpack_unavailable))
+                    CapturedMetadataView(food.reportedNutrition.definitionMetadata,true)
+                    CapturedMetadataView(food.reportedNutrition.metadata)
+                    Text(stringResource(Res.string.captured_components),style=MaterialTheme.typography.titleMedium)
+                    food.reportedComponents.forEach { component ->
+                        Text(component.name,style=MaterialTheme.typography.titleSmall)
+                        CapturedReferenceText(component.portion)
+                        CapturedMetadataView(component.metadata)
+                    }
+                } }
+            }
+
             item {
                 ChipsDatePicker(state = state.dateState, modifier = Modifier.padding(8.dp))
                 HorizontalDivider(Modifier.padding(horizontal = 8.dp))
-                ChipsMealPicker(state = state.mealsState, modifier = Modifier.padding(8.dp))
+                ChipsDiarySlotPicker(state = state.diarySlotsState, modifier = Modifier.padding(8.dp))
                 HorizontalDivider(Modifier.padding(horizontal = 8.dp))
+                Text(stringResource(Res.string.portion_amount_to_log), modifier = Modifier.padding(8.dp))
                 MeasurementPicker(state = state.measurementState, modifier = Modifier.padding(8.dp))
             }
 
-            if (food is RecipeModel) {
+            if (food is RecipeModel && food.reportedNutrition==null) {
                 item {
                     // This is stupid that it is here but it's going to be deleted in 4.0.0
                     val ingredients =
                         remember(state.measurementState.measurement, food) {
-                            val realMeasurement = state.measurementState.measurement
-
-                            val weight =
-                                try {
-                                    food.weight(realMeasurement)
-                                } catch (_: IllegalStateException) {
-                                    100.0
-                                }
-
-                            food.unpack(weight)
+                            food.unpack(state.measurementState.measurement)
                         }
 
                     HorizontalDivider(Modifier.padding(horizontal = 8.dp))
@@ -348,7 +374,7 @@ private fun AddEntryScreen(
             if (history.isNotEmpty()) {
                 item {
                     HorizontalDivider(Modifier.padding(horizontal = 8.dp))
-                    FoodHistory(events = history, modifier = Modifier.padding(16.dp))
+                    NutritionalItemHistory(events = history, modifier = Modifier.padding(16.dp))
                 }
             }
         }

@@ -1,27 +1,29 @@
 package com.maksimowiczm.foodyou.food.domain
 
 import com.maksimowiczm.foodyou.common.infrastructure.koin.eventHandlerOf
-import com.maksimowiczm.foodyou.food.domain.event.FoodDiaryEntryCreatedEventHandler
+import com.maksimowiczm.foodyou.food.domain.event.NutritionalItemDiaryEntryCreatedEventHandler
 import com.maksimowiczm.foodyou.food.domain.usecase.CreateProductUseCase
 import com.maksimowiczm.foodyou.food.domain.usecase.CreateRecipeUseCase
-import com.maksimowiczm.foodyou.food.domain.usecase.DeleteFoodUseCase
+import com.maksimowiczm.foodyou.food.domain.usecase.DeleteNutritionalItemUseCase
 import com.maksimowiczm.foodyou.food.domain.usecase.DownloadProductUseCase
-import com.maksimowiczm.foodyou.food.domain.usecase.ObserveFoodUseCase
+import com.maksimowiczm.foodyou.food.domain.usecase.ObserveNutritionalItemUseCase
 import com.maksimowiczm.foodyou.food.domain.usecase.ObserveMeasurementSuggestionsUseCase
 import com.maksimowiczm.foodyou.food.domain.usecase.UpdateProductUseCase
 import com.maksimowiczm.foodyou.food.domain.usecase.UpdateRecipeUseCase
+import com.maksimowiczm.foodyou.food.domain.usecase.UpdateCapturedDefinitionUseCase
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
 
 fun Module.foodDomainModule() {
     factoryOf(::CreateProductUseCase)
     factoryOf(::CreateRecipeUseCase)
-    factoryOf(::DeleteFoodUseCase)
+    factoryOf(::DeleteNutritionalItemUseCase)
     factoryOf(::DownloadProductUseCase)
-    factoryOf(::ObserveFoodUseCase)
+    factoryOf(::ObserveNutritionalItemUseCase)
     factoryOf(::ObserveMeasurementSuggestionsUseCase)
     factoryOf(::UpdateProductUseCase)
     factoryOf(::UpdateRecipeUseCase)
+    factoryOf(::UpdateCapturedDefinitionUseCase)
 
-    eventHandlerOf(::FoodDiaryEntryCreatedEventHandler)
+    eventHandlerOf(::NutritionalItemDiaryEntryCreatedEventHandler)
 }

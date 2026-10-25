@@ -7,9 +7,9 @@ import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 
 fun Module.foodDiaryQuickAdd() {
-    viewModel { (date: LocalDate, mealId: Long) ->
+    viewModel { (date: LocalDate, diarySlotId: Long) ->
         CreateQuickAddViewModel(
-            mealId = mealId,
+            diarySlotId = diarySlotId,
             date = date,
             manualDiaryEntryRepository = get(),
             dateProvider = get(),

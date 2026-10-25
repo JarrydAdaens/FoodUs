@@ -8,6 +8,9 @@ import com.maksimowiczm.foodyou.fooddiary.domain.entity.ManualDiaryEntryId
 import com.maksimowiczm.foodyou.fooddiary.domain.repository.ManualDiaryEntryRepository
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.ManualDiaryEntryDao
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.ManualDiaryEntryEntity
+import com.maksimowiczm.foodyou.common.domain.measurement.rawValue
+import com.maksimowiczm.foodyou.common.domain.measurement.type
+import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.capturedPortion
 import kotlin.time.Instant
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -22,14 +25,14 @@ internal class RoomManualDiaryEntryRepository(private val dao: ManualDiaryEntryD
     override fun observe(id: ManualDiaryEntryId): Flow<ManualDiaryEntry?> =
         dao.observe(id.value).map { it?.toModel() }
 
-    override fun observeAll(mealId: Long, date: LocalDate): Flow<List<ManualDiaryEntry>> =
-        dao.observeAll(mealId, date.toEpochDays()).map { list ->
+    override fun observeAll(diarySlotId: Long, date: LocalDate): Flow<List<ManualDiaryEntry>> =
+        dao.observeAll(diarySlotId, date.toEpochDays()).map { list ->
             list.map(ManualDiaryEntryEntity::toModel)
         }
 
     override suspend fun insert(
         name: String,
-        mealId: Long,
+        diarySlotId: Long,
         date: LocalDate,
         nutritionFacts: NutritionFacts,
         createdAt: LocalDateTime,
@@ -37,11 +40,12 @@ internal class RoomManualDiaryEntryRepository(private val dao: ManualDiaryEntryD
         isPlaceholder: Boolean,
         servingCount: Double?,
         weightGrams: Double?,
+        capturedPortion: com.maksimowiczm.foodyou.common.domain.measurement.Measurement?,
     ): ManualDiaryEntryId {
         val entry =
             ManualDiaryEntry(
                 id = ManualDiaryEntryId(0),
-                mealId = mealId,
+                diarySlotId = diarySlotId,
                 date = date,
                 name = name,
                 nutritionFacts = nutritionFacts,
@@ -51,6 +55,7 @@ internal class RoomManualDiaryEntryRepository(private val dao: ManualDiaryEntryD
                 isPlaceholder = isPlaceholder,
                 servingCount = servingCount,
                 weightGrams = weightGrams,
+                capturedPortion = capturedPortion,
             )
         val id = dao.insert(entry.toEntity())
         return ManualDiaryEntryId(id)
@@ -58,13 +63,16 @@ internal class RoomManualDiaryEntryRepository(private val dao: ManualDiaryEntryD
 
     override suspend fun update(entry: ManualDiaryEntry) = dao.update(entry.toEntity())
 
+    override suspend fun insert(entry: ManualDiaryEntry): ManualDiaryEntryId =
+        ManualDiaryEntryId(dao.insert(entry.toEntity().copy(id = 0)))
+
     override suspend fun delete(id: ManualDiaryEntryId) = dao.delete(id.value)
 }
 
 private fun ManualDiaryEntryEntity.toModel(): ManualDiaryEntry =
     ManualDiaryEntry(
         id = ManualDiaryEntryId(id),
-        mealId = mealId,
+        diarySlotId = diarySlotId,
         date = LocalDate.fromEpochDays(dateEpochDay.toInt()),
         name = name,
         nutritionFacts =
@@ -79,6 +87,9 @@ private fun ManualDiaryEntryEntity.toModel(): ManualDiaryEntry =
         isPlaceholder = isPlaceholder,
         servingCount = servingCount,
         weightGrams = weightGrams,
+        capturedPortion = capturedPortion(capturedPortionType, capturedPortionValue),
+        portionDescription = portionDescription,
+        nutritionMetadata = nutritionMetadata,
     )
 
 private fun ManualDiaryEntry.toEntity(): ManualDiaryEntryEntity {
@@ -86,7 +97,7 @@ private fun ManualDiaryEntry.toEntity(): ManualDiaryEntryEntity {
 
     return ManualDiaryEntryEntity(
         id = id.value,
-        mealId = mealId,
+        diarySlotId = diarySlotId,
         dateEpochDay = date.toEpochDays(),
         name = name,
         nutrients = nutrients,
@@ -98,5 +109,9 @@ private fun ManualDiaryEntry.toEntity(): ManualDiaryEntryEntity {
         isPlaceholder = isPlaceholder,
         servingCount = servingCount,
         weightGrams = weightGrams,
+        capturedPortionType = capturedPortion?.type,
+        capturedPortionValue = capturedPortion?.rawValue,
+        portionDescription = portionDescription,
+        nutritionMetadata = nutritionMetadata,
     )
 }

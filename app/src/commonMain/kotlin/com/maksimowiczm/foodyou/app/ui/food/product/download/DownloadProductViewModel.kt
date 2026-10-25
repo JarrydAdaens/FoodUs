@@ -2,7 +2,7 @@ package com.maksimowiczm.foodyou.app.ui.food.product.download
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.maksimowiczm.foodyou.common.domain.food.FoodSource
+import com.maksimowiczm.foodyou.common.domain.food.ProductSource
 import com.maksimowiczm.foodyou.common.result.onError
 import com.maksimowiczm.foodyou.common.result.onSuccess
 import com.maksimowiczm.foodyou.food.domain.usecase.DownloadProductError
@@ -44,7 +44,7 @@ internal class DownloadProductViewModel(
                     val product =
                         it.copy(
                             source =
-                                FoodSource(type = FoodSource.Type.User, url = it.source.url ?: text)
+                                ProductSource(type = ProductSource.Type.User, url = it.source.url ?: text)
                         )
 
                     downloadProductHolder.setProduct(product)

@@ -25,7 +25,7 @@ import com.maksimowiczm.foodyou.ai.domain.ObserveAiConfigured
 import com.maksimowiczm.foodyou.app.infrastructure.android.DeveloperActivity
 import com.maksimowiczm.foodyou.common.config.AppConfig
 import com.maksimowiczm.foodyou.common.domain.userpreferences.UserPreferencesRepository
-import com.maksimowiczm.foodyou.food.search.domain.FoodSearchUseCase
+import com.maksimowiczm.foodyou.food.search.domain.NutritionalItemSearchUseCase
 import foodyou.app.generated.resources.*
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -89,7 +89,7 @@ class AiScanKeyboardTest {
         val model = AiScanViewModel(
             scanner,
             // Align is outside this test; no search operation is called.
-            applicationKoin.get<FoodSearchUseCase>(),
+            applicationKoin.get<NutritionalItemSearchUseCase>(),
             ObserveAiConfigured(settings, config),
         ).apply { onPhotoCaptured(syntheticJpeg()) }
         val isolated = koinApplication { modules(module { viewModel { model } }) }

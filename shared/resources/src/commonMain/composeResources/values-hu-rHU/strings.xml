@@ -6,7 +6,7 @@
     <string name="headline_daily_goals">Napi célok</string>
     <string name="headline_general">Általános</string>
     <string name="headline_macronutrients">Makrotápanyagok</string>
-    <string name="headline_meals">Étkezések</string>
+    <string name="headline_diary_slots">Étkezések</string>
     <string name="headline_delete_food">Étel törlése</string>
     <string name="headline_edit_product">Termék szerkesztése</string>
     <string name="headline_permission_required">Engedély szükséges</string>
@@ -30,7 +30,7 @@
     <string name="headline_home" description="Home screen">Kezdőlap</string>
     <string name="headline_home_settings" description="Home screen settings">Kezdőlap beállításai</string>
     <string name="headline_calendar">Naptár</string>
-    <string name="headline_meals_settings">Étkezések beállításai</string>
+    <string name="headline_diary_slots_settings">Étkezések beállításai</string>
     <string name="headline_horizontal">Vízszintes</string>
     <string name="headline_vertical">Függőleges</string>
     <string name="headline_values_per">Értékek a következőre</string>
@@ -124,7 +124,7 @@
     <string name="action_save">Mentés</string>
     <string name="action_delete">Törlés</string>
     <string name="action_confirm">Megerősít</string>
-    <string name="action_add_meal">Étkezés hozzáadása</string>
+    <string name="action_add_diary_slot">Étkezés hozzáadása</string>
     <string name="action_edit">Szerkesztés</string>
     <string name="action_insert_suggested_search">Javasolt keresés beszúrása</string>
     <string name="action_edit_entry">Bejegyzés szerkesztése</string>
@@ -142,7 +142,7 @@
     <string name="action_move_up" description="reorder list item up">Mozgatás fel</string>
     <string name="action_move_down" description="reorder list item down">Mozgatás le</string>
     <string name="action_use_time_based_ordering">Időalapú rendezést használata</string>
-    <string name="action_ignore_all_day_meals">Egész napos étkezés mellőzése</string>
+    <string name="action_ignore_all_day_diary_slots">Egész napos étkezés mellőzése</string>
     <string name="action_add_ingredient" description="Add ingredient to the recipe">Összetevő hozzáadása</string>
     <string name="action_delete_ingredient">Összetevők törlése</string>
     <string name="action_download">Letöltés</string>
@@ -172,9 +172,9 @@
         <item quantity="other">%1$d kilojoule hátra</item>
     </plurals>
     <string name="neutral_set_your_daily_goals">Állítsa be napi tápanyag céljait</string>
-    <string name="neutral_set_your_meal_schedule">Állítsa be az étrendjét</string>
-    <string name="neutral_permanently_delete_meal">Véglegesen törli az étkezést?</string>
-    <string name="neutral_meal_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">Az étkezés véglegesen törlésre kerül. Minden ezzel kapcsolatos adat elvesződik.</string>
+    <string name="neutral_set_your_diary_slot_schedule">Állítsa be az étrendjét</string>
+    <string name="neutral_permanently_delete_diary_slot">Véglegesen törli az étkezést?</string>
+    <string name="neutral_diary_slot_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">Az étkezés véglegesen törlésre kerül. Minden ezzel kapcsolatos adat elvesződik.</string>
     <string name="neutral_required">Szükséges</string>
     <string name="neutral_help_translating_the_app">Segédkezzen az app lefordításában</string>
     <string name="neutral_copied">Az információ a vágólapra másolva</string>
@@ -207,8 +207,8 @@
     <string name="description_delete_food">Az étel véglegesen törlődik</string>
     <string name="description_delete_product_entry" description="Tell user that this entry will be deleted only from diary and won't affect the product itself. Product won't be deleted from the database.">Ez a bejegyzés törlésre kerül a naplójából, azonban bármikor újra hozzáadható.</string>
     <string name="description_about_setting">Tudjon meg többet az applikációról</string>
-    <string name="description_time_based_meals_sorting">Ha be van kapcsolva, az éppen aktuális étkezések jelennek meg elsőként</string>
-    <string name="description_action_ignore_all_day_meals">Az egész napos étkezések a lista végére kerülnek</string>
+    <string name="description_time_based_diary_slots_sorting">Ha be van kapcsolva, az éppen aktuális étkezések jelennek meg elsőként</string>
+    <string name="description_action_ignore_all_day_diary_slots">Az egész napos étkezések a lista végére kerülnek</string>
     <string name="description_incomplete_nutrition_data">Néhány termék nem rendelkezik ezzel, ezért a megjelenített érték nem biztos, hogy pontos</string>
     <string name="description_translation_warning">A fordításokat önkéntesek végzik. Lehet, hogy nem tökéletes és néhány fordítás hiányozhat. Ha hibát talál, kérem, segítsen tökéletesíteni őket.</string>
     <string name="description_home_settings">Kezdőlap testreszabása</string>

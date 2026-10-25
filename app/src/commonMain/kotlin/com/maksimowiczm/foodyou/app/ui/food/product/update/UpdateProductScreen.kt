@@ -49,6 +49,10 @@ internal fun UpdateProductScreen(
         // TODO loading state
         return
     } else {
+        if(product.factBasis==com.maksimowiczm.foodyou.common.domain.food.ProductFactBasis.REFERENCE_SERVING || product.nutritionMetadata?.reference!=null) {
+            CapturedProductEditor(product,onBack,onUpdate,modifier)
+            return
+        }
         val productForm = rememberProductFormState(product)
         val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
@@ -88,7 +92,7 @@ internal fun UpdateProductScreen(
                             onClick = { viewModel.updateProduct(productForm) },
                             enabled = productForm.isValid,
                         ) {
-                            Icon(imageVector = Icons.Outlined.Save, contentDescription = null)
+                            Icon(imageVector = Icons.Outlined.Save, contentDescription = stringResource(Res.string.action_save))
                         }
                     },
                     scrollBehavior = scrollBehavior,

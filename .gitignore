@@ -33,3 +33,6 @@ captures
 
 # Owner working data: generated exports are derived output, regenerable at will
 jarryd/working-data/exports/
+
+# Personal recovery payloads belong in private storage outside this checkout
+/jarryd/working-data/master-data.json

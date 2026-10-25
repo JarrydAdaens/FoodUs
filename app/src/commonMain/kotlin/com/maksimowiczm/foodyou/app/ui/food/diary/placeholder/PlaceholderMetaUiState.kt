@@ -10,11 +10,11 @@ import androidx.compose.runtime.Immutable
 internal data class PlaceholderMetaUiState(
     val loaded: Boolean = false,
     val epochDay: Long = 0,
-    val mealId: Long = 0,
+    val diarySlotId: Long = 0,
     val name: String = "",
     val description: String? = null,
-    /** Name of the meal being logged into (e.g. "Lunch"), used only as AI context. */
-    val mealName: String? = null,
+    /** Name of the diarySlot being logged into (e.g. "Lunch"), used only as AI context. */
+    val diarySlotName: String? = null,
     val aiConfigured: Boolean = false,
     val generatingQuery: Boolean = false,
     /** Last AI failure message, safe to show to the user; null when there is nothing to report. */

@@ -38,11 +38,11 @@ import com.maksimowiczm.foodyou.common.config.AppConfig
 import com.maksimowiczm.foodyou.common.domain.date.DateProvider
 import com.maksimowiczm.foodyou.common.domain.food.NutritionFacts
 import com.maksimowiczm.foodyou.common.domain.userpreferences.UserPreferencesRepository
-import com.maksimowiczm.foodyou.food.search.domain.FoodSearchUseCase
+import com.maksimowiczm.foodyou.food.search.domain.NutritionalItemSearchUseCase
 import com.maksimowiczm.foodyou.fooddiary.domain.entity.ManualDiaryEntry
 import com.maksimowiczm.foodyou.fooddiary.domain.repository.ManualDiaryEntryRepository
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.repository.RoomManualDiaryEntryRepository
-import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.MealEntity
+import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.DiarySlotEntity
 import foodyou.app.generated.resources.*
 import java.io.ByteArrayOutputStream
 import kotlinx.coroutines.flow.*
@@ -189,7 +189,7 @@ class ScanDataPreservationTest {
         database = Room.inMemoryDatabaseBuilder(instrumentation.targetContext, FoodYouDatabase::class.java).build()
         repository = RoomManualDiaryEntryRepository(database.manualDiaryEntryDao)
         runBlocking {
-            database.mealDao.insertWithLastRank(MealEntity(1, "Synthetic meal", 0, 0, 23, 59))
+            database.diarySlotDao.insertWithLastRank(DiarySlotEntity(1, "Synthetic meal", 0, 0, 23, 59))
         }
         scannerCalls = 0
         acceptedRoute = null
@@ -209,12 +209,12 @@ class ScanDataPreservationTest {
                 return AiScanResult.Success(requireNotNull(AiFoodEstimateParser.parse(requireNotNull(json))))
             }
         }
-        val model = AiScanViewModel(scanner, applicationKoin.get<FoodSearchUseCase>(), ObserveAiConfigured(preferences, config))
+        val model = AiScanViewModel(scanner, applicationKoin.get<NutritionalItemSearchUseCase>(), ObserveAiConfigured(preferences, config))
         val clock = applicationKoin.get<DateProvider>()
         val isolated = koinApplication {
             modules(module {
                 viewModel { model }
-                viewModel { (entryDate: LocalDate, mealId: Long) -> CreateQuickAddViewModel(mealId, entryDate, repository, clock) }
+                viewModel { (entryDate: LocalDate, diarySlotId: Long) -> CreateQuickAddViewModel(diarySlotId, entryDate, repository, clock) }
                 viewModel { (id: com.maksimowiczm.foodyou.fooddiary.domain.entity.ManualDiaryEntryId) -> UpdateQuickAddViewModel(id, repository, clock) }
             })
         }
@@ -292,11 +292,11 @@ class ScanDataPreservationTest {
                 val route = entry.toRoute<FoodDiaryCreateQuickAdd>()
                 val estimate = requireNotNull(AiFoodEstimateParser.parse(requireNotNull(route.scanEstimateJson)))
                 CreateQuickAddScreen(onBack = { error("Not used") }, onSave = { nav.navigate(SAVED) },
-                    mealId = route.mealId, date = LocalDate.fromEpochDays(route.epochDay), scanEstimate = estimate)
+                    diarySlotId = route.diarySlotId, date = LocalDate.fromEpochDays(route.epochDay), scanEstimate = estimate)
             }
             composable(MANUAL) {
                 CreateQuickAddScreen(onBack = { error("Not used") }, onSave = { nav.navigate(SAVED) },
-                    mealId = 1, date = date, prefillName = "Synthetic manual food", prefillProteins = 35.0, prefillFats = 38.0)
+                    diarySlotId = 1, date = date, prefillName = "Synthetic manual food", prefillProteins = 35.0, prefillFats = 38.0)
             }
             composable(SAVED) {
                 val entries by repository.observeAll(1, date).collectAsState(initial = emptyList())

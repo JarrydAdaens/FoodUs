@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.maksimowiczm.foodyou.app.ui.food.component.DownloadProductOpenFoodFactsUnavailableErrorCard
 import com.maksimowiczm.foodyou.app.ui.food.component.DownloadProductUsdaErrorCard
-import com.maksimowiczm.foodyou.food.domain.entity.RemoteFoodException
+import com.maksimowiczm.foodyou.food.domain.entity.RemoteProductException
 import com.maksimowiczm.foodyou.food.domain.usecase.DownloadProductError
 import foodyou.app.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
@@ -86,32 +86,32 @@ private fun DownloadErrorCard(message: String, modifier: Modifier = Modifier) {
 
 @Composable
 private fun DownloadErrorCard(
-    error: RemoteFoodException,
+    error: RemoteProductException,
     onUpdateUsdaApiKey: () -> Unit,
     onUpdateOpenFoodFactsCredentials: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val text =
         when (error) {
-            is RemoteFoodException.OpenFoodFacts.RateLimit -> error.message
+            is RemoteProductException.OpenFoodFacts.RateLimit -> error.message
 
-            is RemoteFoodException.OpenFoodFacts.ServiceUnavailable ->
+            is RemoteProductException.OpenFoodFacts.ServiceUnavailable ->
                 return DownloadProductOpenFoodFactsUnavailableErrorCard(
                     onUpdateCredentials = onUpdateOpenFoodFactsCredentials,
                     modifier = modifier,
                 )
 
-            is RemoteFoodException.ProductNotFoundException ->
+            is RemoteProductException.ProductNotFoundException ->
                 stringResource(Res.string.error_product_not_found)
 
-            is RemoteFoodException.USDA ->
+            is RemoteProductException.USDA ->
                 return DownloadProductUsdaErrorCard(
                     error = error,
                     onUpdateApiKey = onUpdateUsdaApiKey,
                     modifier = modifier,
                 )
 
-            is RemoteFoodException.Unknown -> error.message
+            is RemoteProductException.Unknown -> error.message
         } ?: stringResource(Res.string.error_unknown_error)
 
     DownloadErrorCard(message = text, modifier = modifier)

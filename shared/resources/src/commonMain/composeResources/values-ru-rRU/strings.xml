@@ -6,7 +6,7 @@
     <string name="headline_daily_goals">Ежедневные цели</string>
     <string name="headline_general">Общее</string>
     <string name="headline_macronutrients">Макронутриенты</string>
-    <string name="headline_meals">Приемы пищи</string>
+    <string name="headline_diary_slots">Приемы пищи</string>
     <string name="headline_delete_food">Удалить продукт питания</string>
     <string name="headline_edit_product">Изменить продукт</string>
     <string name="headline_permission_required">Требуется разрешение</string>
@@ -30,7 +30,7 @@
     <string name="headline_home" description="Home screen">Главная</string>
     <string name="headline_home_settings" description="Home screen settings">Настройки главного экрана</string>
     <string name="headline_calendar">Календарь</string>
-    <string name="headline_meals_settings">Настройки приёмов пищи</string>
+    <string name="headline_diary_slots_settings">Настройки приёмов пищи</string>
     <string name="headline_horizontal">Горизонтально</string>
     <string name="headline_vertical">Вертикально</string>
     <string name="headline_values_per">Значения на</string>
@@ -128,7 +128,7 @@
     <string name="action_save">Сохранить</string>
     <string name="action_delete">Удалить</string>
     <string name="action_confirm">Подтвердить</string>
-    <string name="action_add_meal">Добавить прием пищи</string>
+    <string name="action_add_diary_slot">Добавить прием пищи</string>
     <string name="action_edit">Изменить</string>
     <string name="action_insert_suggested_search">Вставить предложенный поиск</string>
     <string name="action_edit_entry">Изменить запись</string>
@@ -146,7 +146,7 @@
     <string name="action_move_up" description="reorder list item up">Вверх</string>
     <string name="action_move_down" description="reorder list item down">Вниз</string>
     <string name="action_use_time_based_ordering">Использовать сортировку по времени</string>
-    <string name="action_ignore_all_day_meals">Исключать приемы пищи за весь день</string>
+    <string name="action_ignore_all_day_diary_slots">Исключать приемы пищи за весь день</string>
     <string name="action_add_ingredient" description="Add ingredient to the recipe">Добавить ингредиент</string>
     <string name="action_delete_ingredient">Удалить ингредиент</string>
     <string name="action_download">Загрузить</string>
@@ -180,9 +180,9 @@
         <item quantity="other">Осталось %1$d килоджоуля</item>
     </plurals>
     <string name="neutral_set_your_daily_goals">Задайте свои ежедневные цели по питанию</string>
-    <string name="neutral_set_your_meal_schedule">Установите ваш режим питания</string>
-    <string name="neutral_permanently_delete_meal">Удалить приём пищи навсегда?</string>
-    <string name="neutral_meal_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">Приём пищи будет удален навсегда. Все данные, связанные с этим приёмом пищи будут утеряны.</string>
+    <string name="neutral_set_your_diary_slot_schedule">Установите ваш режим питания</string>
+    <string name="neutral_permanently_delete_diary_slot">Удалить приём пищи навсегда?</string>
+    <string name="neutral_diary_slot_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">Приём пищи будет удален навсегда. Все данные, связанные с этим приёмом пищи будут утеряны.</string>
     <string name="neutral_required">Обязательно</string>
     <string name="neutral_help_translating_the_app">Помогите перевести приложение</string>
     <string name="neutral_copied">Информация скопирована в буфер обмена</string>
@@ -219,8 +219,8 @@
     <string name="description_delete_food">Продукт будет удален безвозвратно</string>
     <string name="description_delete_product_entry" description="Tell user that this entry will be deleted only from diary and won't affect the product itself. Product won't be deleted from the database.">Эта запись будет удалена из вашего дневника. Вы можете добавить её снова в любой момент.</string>
     <string name="description_about_setting">Узнать больше о приложении</string>
-    <string name="description_time_based_meals_sorting">Если включено, текущие приёмы пищи будут отображаться первыми</string>
-    <string name="description_action_ignore_all_day_meals">Приёмы пищи за весь день будут отображаться в конце списка</string>
+    <string name="description_time_based_diary_slots_sorting">Если включено, текущие приёмы пищи будут отображаться первыми</string>
+    <string name="description_action_ignore_all_day_diary_slots">Приёмы пищи за весь день будут отображаться в конце списка</string>
     <string name="description_incomplete_nutrition_data">Некоторые из использованных продуктов не имеют этого значения; поэтому отображаемое значение может быть неточным</string>
     <string name="description_translation_warning">Переводы создаются добровольцами. Они могут быть неидеальными, а некоторые переводы могут отсутствовать. Если вы заметите какие-либо ошибки, не стесняйтесь помочь в их исправлении.</string>
     <string name="description_home_settings">Настройте вашу главную страницу</string>

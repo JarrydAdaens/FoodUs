@@ -39,9 +39,9 @@ import com.maksimowiczm.foodyou.app.ui.common.component.FullScreenCameraBarcodeS
 import com.maksimowiczm.foodyou.common.compose.extension.add
 import com.maksimowiczm.foodyou.common.domain.measurement.Measurement
 import com.maksimowiczm.foodyou.common.extension.error
-import com.maksimowiczm.foodyou.food.domain.entity.FoodId
-import com.maksimowiczm.foodyou.food.domain.entity.RemoteFoodException
-import com.maksimowiczm.foodyou.food.search.domain.FoodSearch
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
+import com.maksimowiczm.foodyou.food.domain.entity.RemoteProductException
+import com.maksimowiczm.foodyou.food.search.domain.NutritionalItemSearch
 import com.valentinilk.shimmer.ShimmerBounds
 import com.valentinilk.shimmer.rememberShimmer
 import foodyou.app.generated.resources.*
@@ -52,11 +52,11 @@ import org.koin.core.parameter.parametersOf
 
 @Composable
 fun FoodSearchApp(
-    onFoodClick: (FoodSearch, Measurement) -> Unit,
+    onFoodClick: (NutritionalItemSearch, Measurement) -> Unit,
     onUpdateUsdaApiKey: () -> Unit,
     onUpdateOpenFoodFactsCredentials: () -> Unit,
     modifier: Modifier = Modifier,
-    excludedRecipe: FoodId.Recipe? = null,
+    excludedRecipe: NutritionalItemId.Recipe? = null,
     initialQuery: String? = null,
 ) {
     val viewModel: FoodSearchViewModel = koinViewModel { parametersOf(excludedRecipe) }
@@ -78,7 +78,7 @@ private fun FoodSearchApp(
     uiState: FoodSearchUiState,
     onSearch: (String?) -> Unit,
     onSourceChange: (FoodFilter.Source) -> Unit,
-    onFoodClick: (FoodSearch, Measurement) -> Unit,
+    onFoodClick: (NutritionalItemSearch, Measurement) -> Unit,
     onUpdateUsdaApiKey: () -> Unit,
     onUpdateOpenFoodFactsCredentials: () -> Unit,
     modifier: Modifier = Modifier,
@@ -180,7 +180,7 @@ private fun FoodSearchApp(
                 )
             }
 
-            val error = pages?.loadState?.error as? RemoteFoodException
+            val error = pages?.loadState?.error as? RemoteProductException
 
             when (val ex = error) {
                 null -> Unit
@@ -235,7 +235,7 @@ private fun FoodSearchApp(
 
                     when (food) {
                         null -> FoodListItemSkeleton(shimmer)
-                        is FoodSearch.Product -> {
+                        is NutritionalItemSearch.Product -> {
                             val measurement = food.suggestedMeasurement
                             FoodSearchListItem(
                                 food = food,
@@ -244,7 +244,7 @@ private fun FoodSearchApp(
                             )
                         }
 
-                        is FoodSearch.Recipe -> {
+                        is NutritionalItemSearch.Recipe -> {
                             val measurement = food.suggestedMeasurement
                             FoodSearchListItem(
                                 food = food,

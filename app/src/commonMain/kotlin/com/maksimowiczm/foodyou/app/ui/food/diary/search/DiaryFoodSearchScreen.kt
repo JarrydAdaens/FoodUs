@@ -49,7 +49,7 @@ import com.maksimowiczm.foodyou.common.compose.extension.LaunchedCollectWithLife
 import com.maksimowiczm.foodyou.common.compose.extension.toDp
 import com.maksimowiczm.foodyou.common.compose.utility.LocalDateFormatter
 import com.maksimowiczm.foodyou.common.domain.measurement.Measurement
-import com.maksimowiczm.foodyou.food.domain.entity.FoodId
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
 import com.valentinilk.shimmer.shimmer
 import foodyou.app.generated.resources.*
 import kotlinx.datetime.LocalDate
@@ -63,19 +63,19 @@ fun DiaryFoodSearchScreen(
     onBack: () -> Unit,
     onCreateRecipe: () -> Unit,
     onCreateProduct: () -> Unit,
-    onMeasure: (FoodId, Measurement) -> Unit,
+    onMeasure: (NutritionalItemId, Measurement) -> Unit,
     onUpdateUsdaApiKey: () -> Unit,
     onUpdateOpenFoodFactsCredentials: () -> Unit,
     date: LocalDate,
-    mealId: Long,
+    diarySlotId: Long,
     animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
     initialQuery: String? = null,
 ) {
     val dateFormatter = LocalDateFormatter.current
 
-    val viewModel: DiaryFoodSearchViewModel = koinViewModel { parametersOf(mealId) }
-    val meal = viewModel.meal.collectAsStateWithLifecycle().value
+    val viewModel: DiaryFoodSearchViewModel = koinViewModel { parametersOf(diarySlotId) }
+    val diarySlot = viewModel.diarySlot.collectAsStateWithLifecycle().value
 
     val snackBarHostState = remember { SnackbarHostState() }
     val message = stringResource(Res.string.neutral_measurement_added)
@@ -97,8 +97,8 @@ fun DiaryFoodSearchScreen(
         @Composable {
             TopAppBar(
                 title = {
-                    updateTransition(meal).Crossfade(contentKey = { it?.toString() }) {
-                        if (meal == null) {
+                    updateTransition(diarySlot).Crossfade(contentKey = { it?.toString() }) {
+                        if (diarySlot == null) {
                             Spacer(
                                 modifier =
                                     Modifier.height(LocalTextStyle.current.toDp() - 4.dp)
@@ -111,7 +111,7 @@ fun DiaryFoodSearchScreen(
                                         )
                             )
                         } else {
-                            Text(meal.name)
+                            Text(diarySlot.name)
                         }
                     }
                 },

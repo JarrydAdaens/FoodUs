@@ -8,8 +8,8 @@ import com.maksimowiczm.foodyou.ai.domain.AiFoodEstimate
 internal object ScanQuickAddHandoff {
     const val SAVED_ITEM_KEY = "scan.quickAdd.savedItem"
 
-    fun route(epochDay: Long, mealId: Long, estimate: AiFoodEstimate, itemId: String) =
-        FoodDiaryCreateQuickAdd(epochDay, mealId, estimate).copy(scanItemId = itemId)
+    fun route(epochDay: Long, diarySlotId: Long, estimate: AiFoodEstimate, itemId: String) =
+        FoodDiaryCreateQuickAdd(epochDay, diarySlotId, estimate).copy(scanItemId = itemId)
 
     fun acknowledge(route: FoodDiaryCreateQuickAdd, scannerState: SavedStateHandle?) {
         route.scanItemId?.let { scannerState?.set(SAVED_ITEM_KEY, it) }

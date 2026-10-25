@@ -1,0 +1,2594 @@
+{
+  "checked": {
+    "artifact_identity": "d4148d717e040c6b0bc065dedd67863aa6a11dc49842c48b3f7a6e0a1a65acaf",
+    "base": "8b698162ff7b3de0e7338f3ca2d68790edacb752",
+    "diff_identity": "c8c0644d746078e0574d8ec3dac40503a8d83533e7e1d4854ba8031f6b95b3c1",
+    "files": {
+      "app/schemas/com.maksimowiczm.foodyou.app.infrastructure.room.FoodYouDatabase/39.json": {
+        "kind": "file",
+        "sha256": "666ff1773c463a92bb8c1d5512b96760d6ce3a7e0b08a2a441a1265d97ed29e3"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanKeyboardTest.kt": {
+        "kind": "file",
+        "sha256": "61cc54d298a7375d513430c58847a08fc02700febb68035d9081592705ac8c1e"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanRetakeTest.kt": {
+        "kind": "file",
+        "sha256": "8e7dfc7b46b470049edc8116b6dad3710ba16929d32875a0908abf9c7934dc52"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/MultiFoodScanTest.kt": {
+        "kind": "file",
+        "sha256": "737b1671ee9ccf857738a3d8d89a1a52cbd28a99df7f28d13fbf85a7afb20e06"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddConversionTest.kt": {
+        "kind": "file",
+        "sha256": "f7bda62bb76321e3f5847bbdfe7391b616ed8b143fff04291c15ed7d614cf066"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/ScanDataPreservationTest.kt": {
+        "kind": "file",
+        "sha256": "79b031469f313e901c79286e994392e9d4ba0ac3410e46a8af7b725647a797cf"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/onboarding/OnboardingAfcdTest.kt": {
+        "kind": "file",
+        "sha256": "c96f90b0a696aec8eaf7691ee4931d9fbed851b512c3b54d0e6cef97dd45a2f8"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/food/ProductPortionPersistenceTest.kt": {
+        "kind": "file",
+        "sha256": "71017b0f1d8f5404294e4474f82203b74898a923c7614b809ec376fb64a99a94"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/food/ProductWorkflowTest.kt": {
+        "kind": "file",
+        "sha256": "c1bec18991931c64feb74f2beaaab2a6a1a551390d18f2bfae97564d38bfaebb"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/fooddiary/DiarySlotMealPersistenceTest.kt": {
+        "kind": "file",
+        "sha256": "de7ac63aa200122dc20d41b5b5e9ee35781d06865180689e01cdeb40327233a8"
+      },
+      "app/src/androidMain/kotlin/com/maksimowiczm/foodyou/app/ui/database/importcsvproducts/ImportCsvProductsViewModel.kt": {
+        "kind": "file",
+        "sha256": "ee64f2e03533591350dad68e33468f7c4541dee613dfcd051a9a7ee267035c73"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/room/FoodYouDatabase.kt": {
+        "kind": "file",
+        "sha256": "f86a05bf17216d386c778e271be6e8e551b863a190a333aa2bc7a81480a04bc8"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/navigation/FoodYouAppNavHost.kt": {
+        "kind": "file",
+        "sha256": "a384c6b07ff3d544f25fd43c8b53d3da2124c63bfcc872f1cbd3e454ed3f25b9"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/common/form/Validator.kt": {
+        "kind": "file",
+        "sha256": "09c46607614bbc19d0dd06079ca1768d16432a0e0cd1b49ca106f3ae99b936c9"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/database/australianfoodcompositiondatabase/AustralianFoodCompositionDatabaseViewModel.kt": {
+        "kind": "file",
+        "sha256": "b269f14cbd64c8236690c26046474af773f685847a486194af8aec384d86f8d8"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/FoodModule.kt": {
+        "kind": "file",
+        "sha256": "2e333938e7e507cb468d73a52e244e230213a7be7d133338e0162c698afd6abb"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/component/DownloadProductErrorCard.kt": {
+        "kind": "file",
+        "sha256": "94b317473d661a4f0b8cb966594e20ce7884001b88edc64dc84780e1d825cf6d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/component/FoodSource.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/component/MeasurementPicker.kt": {
+        "kind": "file",
+        "sha256": "b2ac40a72c76548040454def3db8d97f830f6ad2b700d26e505255c2c337396f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/component/ProductSource.kt": {
+        "kind": "file",
+        "sha256": "64bf3b86f0dae04eca95c7ac493658d5a1241273d7b6aa72b70c6d41c11e2e8b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/AddEntryEvent.kt": {
+        "kind": "file",
+        "sha256": "09247e5437bf1b44f2cb9ebd3ef87032aa93dd69d7a096635dba293b6a255c78"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/AddEntryScreen.kt": {
+        "kind": "file",
+        "sha256": "b10f20cb07294210fbac8544f18df6ee568307bff7fe2cb8d892da3d7a1451eb"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/AddEntryViewModel.kt": {
+        "kind": "file",
+        "sha256": "c41cc707956465afa5ae61efaed6f559b75ac00dfb22651be4cf6285d5149a8a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/Food.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/FoodEvents.kt": {
+        "kind": "file",
+        "sha256": "642edf96210fd0cb634966c2fc602717f00e08ddfd90ef21aafb29f90cf890d7"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/FoodModel.kt": {
+        "kind": "file",
+        "sha256": "752db6de9fcd5c173e10ac84dbf8a78021d20fa64cf06f0179788d466787066d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/IngredientModel.kt": {
+        "kind": "file",
+        "sha256": "5123048ee7d3cbe016ae9c9e96e5a9ba12a274c5c61531f721a0573ccad12d04"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/Ingredients.kt": {
+        "kind": "file",
+        "sha256": "52cd159c37813f1a9627f64a28802eda0d89c4a4e9c1671b4a228bd7f896a9cb"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/NutrientList.kt": {
+        "kind": "file",
+        "sha256": "718bf3cb6136407d2372b33b0a256b552f28b832889075345ec3734b457178f7"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/NutritionalItem.kt": {
+        "kind": "file",
+        "sha256": "88ac27601fd5dac01639f62ee240a41becb810b8275da8e8d35a1bb0f834d729"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/ProductModel.kt": {
+        "kind": "file",
+        "sha256": "5110771d0cbbcd317c97bdf7ce5354035bfa921162a37d99f659f445417e610f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/RecipeModel.kt": {
+        "kind": "file",
+        "sha256": "1cbe9b03f7fe287d197ba8fa5a30280cd64f46f5b25d8a729bcaa6b00a8a0495"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanScreen.kt": {
+        "kind": "file",
+        "sha256": "7611faced481ccc68b6e8da87a7da6001c2613c3f9e4671d21b11708af76f43e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanViewModel.kt": {
+        "kind": "file",
+        "sha256": "30296149d5116c3b68e8329f0ada6d846fbe678664f0d9d7affe8ad47c42fe81"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/component/PortionSaveErrorDialog.kt": {
+        "kind": "file",
+        "sha256": "0d4f823056f3091f8d19f58168e01d77b256852215cd49c828941922b15c6b7e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/component/Source.kt": {
+        "kind": "file",
+        "sha256": "60509b12ab5444efd33da9d4c6959e6f129d5ab7a63b6d4aaf87aeb2c42e995a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/PromoteToRecipePlaceholderViewModel.kt": {
+        "kind": "file",
+        "sha256": "8c2397e105a0328bc921184a9125e4125cf97255908158d0a79427c184a13f94"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddPromotionMapping.kt": {
+        "kind": "file",
+        "sha256": "62ca7d12a10ce24cb90c5720d69346e61e6a0c2a9285b26129e384698e4f1051"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/search/DiaryFoodSearchScreen.kt": {
+        "kind": "file",
+        "sha256": "031fd4217ed96ef69d334df6849c0e3bf4e3ff3e0405b7b2100f5853a61766f4"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/search/DiaryFoodSearchViewModel.kt": {
+        "kind": "file",
+        "sha256": "89d4b60cc7bd832e47891fc482bdf68138434b0dfa9e10c73c60aab148ddc720"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/FoodDiaryUpdateModule.kt": {
+        "kind": "file",
+        "sha256": "0fa1e6ead2d78326713a7c67339f56c3267a2e6d07495c1dc42714bd676aee37"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/Ingredients.kt": {
+        "kind": "file",
+        "sha256": "885f8b74a070dde89aafc5ea3158e44ed79134b16d93618eafd4ef23b1702d58"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/NutrientList.kt": {
+        "kind": "file",
+        "sha256": "df2fbab3ff37177bc4040763d3fb20a5395bd41db19c65ba0d0d30d9794fa7c1"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/UpdateEntryEvent.kt": {
+        "kind": "file",
+        "sha256": "eb21dca83813cf97e64f94999962eecda385639b56c44363caad20001da92e50"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/UpdateEntryScreen.kt": {
+        "kind": "file",
+        "sha256": "f806fe14eeb8b7c02618a2b4dbae512750779dd0cdc2aa44d62f881ff19ef200"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/UpdateFoodDiaryEntryViewModel.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/UpdateNutritionalItemDiaryEntryViewModel.kt": {
+        "kind": "file",
+        "sha256": "b9074a156930756edaa16ab18f0e8b1d4a4f8390863f51d16305ec685c086cf4"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/CreateProductScreen.kt": {
+        "kind": "file",
+        "sha256": "0ecfebff457960e73fa489bbc04dde08c13b98b6946eb051c99f3f8cd602ced4"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/ProductForm.kt": {
+        "kind": "file",
+        "sha256": "a1c9b5e0ccebcf37f1b2fa46f11c5067af8dbf2d24a96cb009e65a7fd9d90506"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/ProductFormState.kt": {
+        "kind": "file",
+        "sha256": "deadb0b0cbde1eabf3d7d1b9c4b337a19e65be4527c9d025c2769eac7a03a70c"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/UpdateProductScreen.kt": {
+        "kind": "file",
+        "sha256": "d33f9ea1bed50fcd79939739eb2bb3a73e26a2789c62238848cb2438d15aa3a2"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/create/CreateProductEvent.kt": {
+        "kind": "file",
+        "sha256": "1f3ef4d25ca68191cba445766687dd42f6b3feb42282f22bdc00a5f0b6e6e405"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/create/CreateProductViewModel.kt": {
+        "kind": "file",
+        "sha256": "2e9684bdaf5eef010e06c94933ef5e132fa7eb1d8b6278ba2dab92dfd166b438"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/download/DownloadErrorCard.kt": {
+        "kind": "file",
+        "sha256": "684887682e1ac3c3703a210816bb6d897983a6cfa1a12590586f7ac0f5c05739"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/download/DownloadProductViewModel.kt": {
+        "kind": "file",
+        "sha256": "4761899177a86c7fb16f2f360a9180bef9de84f7436086aba5a4eb2bf8d6ba7e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/update/UpdateProductScreen.kt": {
+        "kind": "file",
+        "sha256": "048a1ce1cb3222ca6abb2e4d08f052e95b8254b4f2aa33033cbb75b6dfe7d18b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/update/UpdateProductViewModel.kt": {
+        "kind": "file",
+        "sha256": "360ebbd929b451b4d63e1d2347ff0d672a9bd66147327f87cd682912bb7ecf4e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/CreateRecipeEvent.kt": {
+        "kind": "file",
+        "sha256": "644c0b47d86c488ff4c0549350fd35fe38e9eb432c7a02fc692cf293911ed62f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/CreateRecipeScreen.kt": {
+        "kind": "file",
+        "sha256": "528af6b07b3483d7a231469e60eebb3827ca5b27cfe53c27c8c197856c9db54c"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/CreateRecipeViewModel.kt": {
+        "kind": "file",
+        "sha256": "217e5b9e603edb068675cedc42b6c791740c1ddfa002427dde7f4843f3e0010e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/MeasureIngredientViewModel.kt": {
+        "kind": "file",
+        "sha256": "f1d844c9bd938efbcb70e2ed23bdc6766ce54d0935ca66df413a5a2159aa0e27"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/MinimalIngredient.kt": {
+        "kind": "file",
+        "sha256": "854706f68843261b75bb921cb3c05f2b8f41159e25d565989ce0dc6734d6dd02"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/RecipeApp.kt": {
+        "kind": "file",
+        "sha256": "731887d405807973eab2b119245bb8c4d24eeaf9c60018cfe190c224f06b6448"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/RecipeForm.kt": {
+        "kind": "file",
+        "sha256": "7f03fb005577a1e36921e25d4b54db500dc7030ddaa335cc12c5c48f5ad9e28b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/RecipeViewModel.kt": {
+        "kind": "file",
+        "sha256": "c43be047a1a704dca35c7ea0b8dd3fae9b1c296c5cbca06f71e046bc74adccee"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/UpdateRecipeScreen.kt": {
+        "kind": "file",
+        "sha256": "8a3083ecebd9d89eb9c846f55101a0288f98a2998b32256c106fd06aab258eb6"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/UpdateRecipeViewModel.kt": {
+        "kind": "file",
+        "sha256": "f31642a05048977d49352f2f5f8f4f748c79cf7e760395f39472b6260258d71b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodFilter.kt": {
+        "kind": "file",
+        "sha256": "57fbe76ddbd816b11d15375cdb681d63cf2fddecd00320d1c3318a4385282d2c"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodSearchApp.kt": {
+        "kind": "file",
+        "sha256": "6c83cefa2bebba904e9305c1d017ca46405a13b433659a0c8722a0476c4e8362"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodSearchErrorCard.kt": {
+        "kind": "file",
+        "sha256": "713f7e80e33330a5cfcb7265356ff0c909cfe0724be557ea002bb71fde06dc3d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodSearchListItem.kt": {
+        "kind": "file",
+        "sha256": "f46589c2467717ecc797c7016546b95cd874698318967d7f52c38927594f8c31"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodSearchUiState.kt": {
+        "kind": "file",
+        "sha256": "13831385373cf38f45e54bc9e6a0a9d98bb8e8126b97ccf486ee36637920b523"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodSearchViewModel.kt": {
+        "kind": "file",
+        "sha256": "dfc36fec0b0ca65e38cfd49feea2cd21abaa1a0b0806895a5a67e2800d762716"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotModel.kt": {
+        "kind": "file",
+        "sha256": "481a86e4604abc7ec1cf5088a0137688bbe64e0d68ae3d8be19c34010bf21343"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotsCardsViewModel.kt": {
+        "kind": "file",
+        "sha256": "efb6d95ee42e268a16879687966e175f8340dd2a899f00cbd6b6ffcf177cf4cc"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/domain/food/FoodSource.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/domain/food/NutritionValidation.kt": {
+        "kind": "file",
+        "sha256": "58e0c0c6c166bd192fbe02bf1d80ee79791a51f39806789dc691622c9b81024a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/domain/food/ProductSource.kt": {
+        "kind": "file",
+        "sha256": "cc8aeeaa630df0ad61b834e38e76c4853d9dee468442042bedcb47be62708685"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/domain/measurement/MeasurementResolver.kt": {
+        "kind": "file",
+        "sha256": "56f9f68f2a71a03eee7f13f5065e3d1cfbaa2674f64cd84bc81ebf8ee9d06986"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/infrastructure/room/FoodSourceType.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/infrastructure/room/FoodSourceTypeConverter.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/infrastructure/room/ProductSourceType.kt": {
+        "kind": "file",
+        "sha256": "860853f83091462c4a9e8a166305bbed2368c93f4326e13e9342008914f9dd1e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/infrastructure/room/ProductSourceTypeConverter.kt": {
+        "kind": "file",
+        "sha256": "26767d9f0b5433395baf0c375d71b2551833f2c2eb69751f1801e77d345f5c27"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/FoodDomainModule.kt": {
+        "kind": "file",
+        "sha256": "0193fe859a62641e8ce620f65dfac02274ad2db22cb5ced864077b49d4fc4bc4"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/Food.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/FoodHistory.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/FoodId.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/FoodSearchHistory.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/NutritionalItem.kt": {
+        "kind": "file",
+        "sha256": "bc590a0cae1abf12b82eed9199b662274c5f09f2e4dc29334243ed1060582ccf"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/NutritionalItemHistory.kt": {
+        "kind": "file",
+        "sha256": "4fcaf047bd02aea51c1d7c6ef03d11d42a37f7c0a5034f5829f0155fce895e3a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/NutritionalItemId.kt": {
+        "kind": "file",
+        "sha256": "1b241bab0490539afff55e5d6b36b600543ffba671254725ae6880afcd1b297f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/NutritionalItemSearchHistory.kt": {
+        "kind": "file",
+        "sha256": "9e32d941e34150e8948f457144bc39b668a174090d14310085081b7791c01414"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/Product.kt": {
+        "kind": "file",
+        "sha256": "d2894d4af2a00c19f1fe6219088061ea9deaf40f73ad7e787105e30052fd9ced"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/ProductNutritionBasis.kt": {
+        "kind": "file",
+        "sha256": "a666445330daf541263fd1896b305923b8391c34d593877dc4af43c5234804cc"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/Recipe.kt": {
+        "kind": "file",
+        "sha256": "7c4ee28f104b0746834c2ce19cf7458e71628caf515ce2e523d74390a1b56656"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/RecipeIngredient.kt": {
+        "kind": "file",
+        "sha256": "9d69c705284e2e30c03ec472bbcadd66d42063816f37b6a7dbefa1d04fb18ca9"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/RemoteFoodException.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/RemoteProduct.kt": {
+        "kind": "file",
+        "sha256": "d81c248577bfdfd239dfcee799427dce1bd4594bfe185eab056ac7336ed5286e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/RemoteProductException.kt": {
+        "kind": "file",
+        "sha256": "47843ba4701a0645ee3eb9227bf13edab5354c19eb1530a3aed2bb4cfac1a122"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/RemoteProductRequest.kt": {
+        "kind": "file",
+        "sha256": "2fa74e0f4d70b96a63b25982845a0c6a63a584d70a7a6eb37f31cc10836c4570"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/event/FoodDiaryEntryCreatedEventHandler.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/event/NutritionalItemDiaryEntryCreatedEventHandler.kt": {
+        "kind": "file",
+        "sha256": "2410845f7c8667211704f808f4a509430fbfd3192ca46bbee1c7dab0456c2756"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/FoodHistoryRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/FoodMeasurementSuggestionRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/FoodSearchHistoryRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/NutritionalItemHistoryRepository.kt": {
+        "kind": "file",
+        "sha256": "0f5847f32d7b540ea801bc3c73992e9bc594e0576dc77d0243bb5531e11210d3"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/NutritionalItemMeasurementSuggestionRepository.kt": {
+        "kind": "file",
+        "sha256": "c234dd5238bbb99996eeddbb7a40d18f502cd012377a914bf50b084d35aef9bd"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/NutritionalItemSearchHistoryRepository.kt": {
+        "kind": "file",
+        "sha256": "cbbf853c8dfa94e3f6e775edc49a3c27d31fc0eab89733573a92c54006a87eb0"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/ProductRepository.kt": {
+        "kind": "file",
+        "sha256": "153048a13215ecfec8946a51452382ad2d05bac0109f8e692f418a3958634f8b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/RecipeRepository.kt": {
+        "kind": "file",
+        "sha256": "4838a5b126ff1bc38280596fbadb4449fcd27823a7fab2f623416b5325929a56"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/CreateProductUseCase.kt": {
+        "kind": "file",
+        "sha256": "681ea08a800d877bbaf7786e1fa151ebdfe8f50eed6e8a801d42a8b47e50ed38"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/CreateRecipeUseCase.kt": {
+        "kind": "file",
+        "sha256": "3705f8427d7e20cdb90d3c173de893782f32f6c01aacd6547d08b2334baabcce"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/DeleteFoodUseCase.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/DeleteNutritionalItemUseCase.kt": {
+        "kind": "file",
+        "sha256": "d31f541b9d7b7a087ce32bc5d5262df5287f46ab7bf3b17574a741488a3a861b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/DownloadProductUseCase.kt": {
+        "kind": "file",
+        "sha256": "aeb3757e7e9d2668a903487b1d8b30250e1428a7dfd800ba2c1795cdd9199bc8"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/ObserveFoodUseCase.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/ObserveMeasurementSuggestionsUseCase.kt": {
+        "kind": "file",
+        "sha256": "1e1460379e5bb84bfefe5565ee73f07c0e8493e0893e750bb9647451be19a86b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/ObserveNutritionalItemUseCase.kt": {
+        "kind": "file",
+        "sha256": "93d85d35e02f67bb7a2182db6a38714b0722a2d7ed9bd5fe6acfe6ee1a915a6d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/UpdateProductUseCase.kt": {
+        "kind": "file",
+        "sha256": "ae309a603019716a91fef0bf21e9d87b9a0a1ed482ed04237b477c0619eb0dc1"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/UpdateRecipeUseCase.kt": {
+        "kind": "file",
+        "sha256": "d500a3aa5146f4dd75ac507bde43b1f31d51dca2857bbba820b55f2e5d4ef35f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/FoodInfrastructureModule.kt": {
+        "kind": "file",
+        "sha256": "438b4b8944b2d8931f1deec11c87894b3f58c0195e325ed0c0425d771a6146f4"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/network/RemoteProductMapper.kt": {
+        "kind": "file",
+        "sha256": "066d296f4068b1c7fc42a9926ebdf603290df1092dc716c1d67989905e81c518"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/openfoodfacts/OpenFoodFactsProductMapper.kt": {
+        "kind": "file",
+        "sha256": "278e806634d39eae16791726317a1681031944acc7d7b965b8a4da97896fb89d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/openfoodfacts/OpenFoodFactsProductRequest.kt": {
+        "kind": "file",
+        "sha256": "8d5bc5149b8df412573ea66a62b0084428ec69286beef2b47b9c694dc7ff0b89"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/openfoodfacts/OpenFoodFactsRemoteDataSource.kt": {
+        "kind": "file",
+        "sha256": "8ece195de56cd1d5153cc8b9aed65c9ac47cb4e7785e3547db67964345b6a0ca"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/repository/RoomFoodHistoryRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/repository/RoomFoodMeasurementSuggestionRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/repository/RoomNutritionalItemHistoryRepository.kt": {
+        "kind": "file",
+        "sha256": "3dab3aac5af90f39a0371bfa2d9e5e687a4b9f7ddf0111e392812067c9c0049b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/repository/RoomNutritionalItemMeasurementSuggestionRepository.kt": {
+        "kind": "file",
+        "sha256": "a63883569e0e73fa06f3de7318788108fe5834ab28769fb1b4543657e8ca49ea"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/repository/RoomProductRepository.kt": {
+        "kind": "file",
+        "sha256": "ae5057f5cff4a4a9ce5cf7f1608785912bc84fefe8d69d2966d1e21a92961126"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/repository/RoomRecipeRepository.kt": {
+        "kind": "file",
+        "sha256": "8f9ffc8f80d0935fa9766181c6a2e7003728afa860a68ab3cc5f8146f7a030d6"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/room/ProductDao.kt": {
+        "kind": "file",
+        "sha256": "f8ca5618e5659b8976873a6212dc7fd1ff7b3f19353c266ba359b4d91c062e6e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/room/ProductEntity.kt": {
+        "kind": "file",
+        "sha256": "eec9d66c2db9455016b5aff3c06b439b80309be9c11f8ed87366fee9534f0419"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/usda/USDAMapper.kt": {
+        "kind": "file",
+        "sha256": "a4897705059ba07f9c5cf25fd254995d4f7791c7a4538e86729f1b884102f5ab"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/usda/USDAProductRequest.kt": {
+        "kind": "file",
+        "sha256": "efd970a318eb03ce33c65dab57612ab8bde787915dabc85fb6f1dd338834b58e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/usda/USDARemoteDataSource.kt": {
+        "kind": "file",
+        "sha256": "98b843290b5009a36225c868efdc81a3cbbb0f5fdc56b93fdfc29496f1f86a17"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/FoodSearch.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/FoodSearchEvent.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/FoodSearchEventHandler.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/FoodSearchRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/FoodSearchUseCase.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/NutritionalItemSearch.kt": {
+        "kind": "file",
+        "sha256": "26460eda0f3e76b3bb96cb384ac763370967a4f8cd02bb9ba4bc7f8d2550d972"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/NutritionalItemSearchEvent.kt": {
+        "kind": "file",
+        "sha256": "a7c9674020c9af3f86d50a95e98def69afa315b42e36d395ba0757254c342517"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/NutritionalItemSearchEventHandler.kt": {
+        "kind": "file",
+        "sha256": "8cecfdf2ac47c97718adfe14a490258a04fd9b00ded06d9b762f476bfc4e8f96"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/NutritionalItemSearchRepository.kt": {
+        "kind": "file",
+        "sha256": "8261ef075a80d8bf4f1ba17fe9b65b3a9d5a21ec9855196ff658c6412b80bad2"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/NutritionalItemSearchUseCase.kt": {
+        "kind": "file",
+        "sha256": "8604ed08879bc290692eead7e23752c3b7f5fe7d600b2157ca4c3459121ce0fb"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/SearchModule.kt": {
+        "kind": "file",
+        "sha256": "8ceff5902a373f3fc7a9d14b61bc5fb747f0fe416524c179014e5dde8dee4625"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/FoodSearchModule.kt": {
+        "kind": "file",
+        "sha256": "7841a767c98785b3c19fc1ba1e67ea496f1a42a3dbfc6393c73bce623658312e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/openfoodfacts/OpenFoodFactsRemoteMediator.kt": {
+        "kind": "file",
+        "sha256": "58dabde6c3329c4a488564af9c4c836c4f64ba1ee4d42ee6cbeb87748d77929b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/openfoodfacts/OpenFoodFactsRemoteMediatorFactory.kt": {
+        "kind": "file",
+        "sha256": "d7c88886266fdf1e26dd0f660364ba674cf560ca3ee15edcbb84d9f17effd2f4"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/repository/RoomFoodSearchHistoryRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/repository/RoomFoodSearchRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/repository/RoomNutritionalItemSearchHistoryRepository.kt": {
+        "kind": "file",
+        "sha256": "000312e1111d5ec9842493f786b84ebd3d6a20204b9620f59e98d2977fcfb8d5"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/repository/RoomNutritionalItemSearchRepository.kt": {
+        "kind": "file",
+        "sha256": "cfed300b8ec5fa00e4fb28c90088721e7fc2668587d6cf02e14752fe6ea77927"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/room/FoodSearch.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/room/FoodSearchDao.kt": {
+        "kind": "file",
+        "sha256": "563bfa8213678841be23b70f878dfde772f89ee9e823f1223c023b8a14b38a20"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/room/NutritionalItemSearch.kt": {
+        "kind": "file",
+        "sha256": "62c8338f35bbd589db9cf18f0445a807f0dbd42af1182cadd62ea99726f28930"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/usda/USDARemoteMediator.kt": {
+        "kind": "file",
+        "sha256": "9f8da4111e1c96db927d14d0f5619b1143ad537429769f74d67ef8888c116b0c"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/usda/USDARemoteMediatorFactory.kt": {
+        "kind": "file",
+        "sha256": "254a670e3a450cbbf77a35242f32321a011239339121dee0120738ef42467dd9"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/FoodDiaryDomainModule.kt": {
+        "kind": "file",
+        "sha256": "cbc8e228ad57e9612a909df5fe0727a8366deb2c3fc5931f129d2de6bc90177c"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiaryFood.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiaryFoodProduct.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiaryFoodRecipe.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiaryFoodRecipeIngredient.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/FoodDiaryEntry.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/NutritionalItemDiaryEntry.kt": {
+        "kind": "file",
+        "sha256": "a820fd1e877c73219b8fa2f4e296d64c0d2462f9cfd72d776da93a43c313573d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/NutritionalItemSnapshot.kt": {
+        "kind": "file",
+        "sha256": "5b545708cdaec648deaffdadb5767a0683dee0f04deb914d825e4f1f20781c5f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/ProductSnapshot.kt": {
+        "kind": "file",
+        "sha256": "dbedd9d4a499e586b59c6e8a5cd34dd96b5d2f89e0fa8a14d444947856cc15fd"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/RecipeIngredientSnapshot.kt": {
+        "kind": "file",
+        "sha256": "1f05c4077500c5db45223958fd9ecff6a0e18ccff938e7c10d49a90fe864f8c9"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/RecipeSnapshot.kt": {
+        "kind": "file",
+        "sha256": "4e73eea1d48809b2cb740476bc1fa95d0c043666764f7200c29a82e4fa1dbc96"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/event/FoodDiaryEntryCreatedEvent.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/event/NutritionalItemDiaryEntryCreatedEvent.kt": {
+        "kind": "file",
+        "sha256": "4a168079b50d1f89a9493284d894a894342a3af40647f0fbf94245c85af0277a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/repository/FoodDiaryEntryRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/repository/NutritionalItemDiaryEntryRepository.kt": {
+        "kind": "file",
+        "sha256": "2ecdcb7206fc66a9377a405b8fa8a08e5db0e2a28753d7937567a2999ed838b2"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/CreateFoodDiaryEntryUseCase.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/CreateNutritionalItemDiaryEntryUseCase.kt": {
+        "kind": "file",
+        "sha256": "2b6cfda8aa55fa139f032e0f498d0d6eddae0f248e5a6e8bc05c30a8387e470f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/ObserveDiarySlotEntriesUseCase.kt": {
+        "kind": "file",
+        "sha256": "c233b4890b9a68668cecbc5c336f68537d2488daf585cebdc672e9a8f86e1a7e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/SaveMealUseCase.kt": {
+        "kind": "file",
+        "sha256": "e1a04c7d863fde9dadaa476a0b88a2185e65469348dbdfeeb6656c8a35ae5e29"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/UnpackFoodDiaryEntryUseCase.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/UnpackNutritionalItemDiaryEntryUseCase.kt": {
+        "kind": "file",
+        "sha256": "6a693fcf802d09b2752375777fbf297e1e158d6af269066238d37b8c468da494"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/UpdateFoodDiaryEntryUseCase.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/UpdateNutritionalItemDiaryEntryUseCase.kt": {
+        "kind": "file",
+        "sha256": "87b8acb1a1b40f860d2319825f14c4ce19efa67136597d884a777472c71fdeef"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/FoodDiaryInfrastructureModule.kt": {
+        "kind": "file",
+        "sha256": "da24731ded7fee0ddd6a8e52ab8a454dc3a9622a63d12f1ee56108c1e38c7db8"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/RoomFoodDiaryEntryRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/RoomNutritionalItemDiaryEntryRepository.kt": {
+        "kind": "file",
+        "sha256": "82341da7ea37db014882bfd4743eada9138e0529470b46c32678fb1ae3f3c27b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/DiaryProductEntity.kt": {
+        "kind": "file",
+        "sha256": "434de66e6522af84fa686c5ff1049dae4945cb99caee641f4dfed5e89c2aeb72"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/australianfoodcompositiondatabase/domain/CheckAustralianFoodCompositionDatabaseUpdateUseCase.kt": {
+        "kind": "file",
+        "sha256": "bf07e72cc694ba96ce80313d1f263e20f92cf0a03aa898ca501d03ea1df5cc99"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/australianfoodcompositiondatabase/domain/ImportAustralianFoodCompositionDatabaseUseCase.kt": {
+        "kind": "file",
+        "sha256": "7239cff7530e7560ef8071d28b3d6e4994a81d2f151e88803e4d22d9854269eb"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/domain/usecase/ImportCsvProductUseCase.kt": {
+        "kind": "file",
+        "sha256": "425bc618a3f528f37051a6a924e32d478f8c6b9f865232692ce74c09cef0a1f6"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/providermetadata/domain/ProviderMetadata.kt": {
+        "kind": "file",
+        "sha256": "4c36d7bf76efb4d5b91a473344f5e83519c712f4d744d62def85076fd387770b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/providermetadata/domain/ProviderMetadataRepository.kt": {
+        "kind": "file",
+        "sha256": "f091b715159761d03e9e359db84eee35f0a8ac291bd3cd1f54a2cc7974dbcee5"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/providermetadata/infrastructure/RoomProviderMetadataRepository.kt": {
+        "kind": "file",
+        "sha256": "5949adb8938a677410959b283f72375c3589a9b4f3093ec2c8725498c3bdfa19"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/providermetadata/infrastructure/room/ProviderMetadataDao.kt": {
+        "kind": "file",
+        "sha256": "ddaa4a2723590f9ff3253634cbd8cbb6661890ec68767bb7b5a5a1420fbee756"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/providermetadata/infrastructure/room/ProviderMetadataEntity.kt": {
+        "kind": "file",
+        "sha256": "bf450765cf880cfb2f2120fb82f93806e45ecc60e01c1b39ef34ea48c1b41634"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/swissfoodcompositiondatabase/domain/ImportSwissFoodCompositionDatabaseUseCase.kt": {
+        "kind": "file",
+        "sha256": "d1d4c37175261e0470d4ba3978add8ac21e81175b648b52f077b6405a5a2f94e"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/food/domain/ProductPortionTest.kt": {
+        "kind": "file",
+        "sha256": "c0436ac94c419f5dfe78067b32999d95e0ed2bb2ac9d1dd60eb3f0796553affd"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/MealUseCasesTest.kt": {
+        "kind": "file",
+        "sha256": "963092fcfb832fef2bbb12da18342e468affd0f3450f8ba23aefee80a8ac8006"
+      },
+      "context/implementation-plans/milestone-2/story-26-product-terminology-portions/plan.md": {
+        "kind": "file",
+        "sha256": "c01bb689773590e55e1ec32bfb2494c7e51b44a9f177e0a5814a3454588eccc7"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "d9ce7b2a00b013132e14fff4ec0627472d8893a31b0ecde05186592306ef2889"
+      },
+      "shared/resources/src/commonMain/composeResources/values/strings.xml": {
+        "kind": "file",
+        "sha256": "f7910a6909f3fbde57c0fc354e029015e8e0f962c3305df480a20ab29673a6ef"
+      }
+    },
+    "head": "8b698162ff7b3de0e7338f3ca2d68790edacb752"
+  },
+  "commit_authority": null,
+  "commit_policy": "none",
+  "decisions": [
+    "Product-only validation/normalization;NutritionalItem typed Product-or-Recipe role and explicit captured snapshot/datedentry families. UI remains Food.",
+    "PreserveRoom39/DataStore/nav/CSV/providercontracts and unknownnutrition;QuickAddabsolute totals independent of optional metadata.",
+    "43nutrientbasis conversion including B12,reference40g\u00d72=80g,liquid/fraction/unknown/invalidamounts tested.",
+    "Runtimefirstattempthelperfault correctedwithout timeout/assertionweakening;productionAPK7e7748...unchanged. Retained7passingmethods from AA799testAPK plus rerun2workflows+canonical on48fe763testAPK yields10uniquePASS methods;failedattemptlogs retained.",
+    "Commitpolicy none;no release/tag/push/ownerphone use. Candidate3.2.34.3/code130 anticipates successful closure24+10;ReleaseCount3 retained."
+  ],
+  "delivery": {
+    "artifact_identity": "fd6cf96beca3dbf191be07159b977e253e5f5922768c3e7fc1e13314ca1e8622",
+    "base": "8b698162ff7b3de0e7338f3ca2d68790edacb752",
+    "committed_files": {
+      "app/schemas/com.maksimowiczm.foodyou.app.infrastructure.room.FoodYouDatabase/39.json": {
+        "git_blob": "93644a49d0ca424e923a26bfb207ab39e6920c5b",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanKeyboardTest.kt": {
+        "git_blob": "a06c3b95a90cf8f44e1c9c1da462a33a103f9ab8",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanRetakeTest.kt": {
+        "git_blob": "f7cf2ef5ece9ba856324454828cce0facb7b34ca",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/MultiFoodScanTest.kt": {
+        "git_blob": "60e5c73588a22ffe038cb1c572f47595bb6815e9",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddConversionTest.kt": {
+        "git_blob": "bf599b0c7e19d7d578f21ba65ae525f4fe06cada",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/ScanDataPreservationTest.kt": {
+        "git_blob": "40a3337b676d4d6c7912cfa3e918a1dc918e139e",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/onboarding/OnboardingAfcdTest.kt": {
+        "git_blob": "327d47d678c63e321e517e407b4293219dde24a7",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/food/ProductPortionPersistenceTest.kt": {
+        "git_blob": "3390b74f008724e4b0c722dff362f682cac15d8a",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/food/ProductWorkflowTest.kt": {
+        "git_blob": "f36a5dd492fc7668822748e8c456e18f931715ea",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/fooddiary/DiarySlotMealPersistenceTest.kt": {
+        "git_blob": "617ea4bf7a5eab752d0f97155fd9b061eafe873d",
+        "kind": "file"
+      },
+      "app/src/androidMain/kotlin/com/maksimowiczm/foodyou/app/ui/database/importcsvproducts/ImportCsvProductsViewModel.kt": {
+        "git_blob": "0ec4b74c193d5910a9616fe47648bcbf6dc2cbbf",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/room/FoodYouDatabase.kt": {
+        "git_blob": "165d02db0a965749271577fb0cc267ac752ed73f",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/navigation/FoodYouAppNavHost.kt": {
+        "git_blob": "8e1ff66ad3075e35722e3f4910c2fbb83786172c",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/common/form/Validator.kt": {
+        "git_blob": "167087ba57dff3da6cb84a75055b67b9e64592f5",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/database/australianfoodcompositiondatabase/AustralianFoodCompositionDatabaseViewModel.kt": {
+        "git_blob": "1dc498661f81ecd211841fc75b52386012986928",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/FoodModule.kt": {
+        "git_blob": "6d8bd5d46e176dc112f91d474c16553bc4aa2a4c",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/component/DownloadProductErrorCard.kt": {
+        "git_blob": "54ea61268af9f0426c769dc428b81d346bffc0ba",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/component/FoodSource.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/component/MeasurementPicker.kt": {
+        "git_blob": "4ee6782f1f4b6385de387c7cef771f8962b340b5",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/component/ProductSource.kt": {
+        "git_blob": "b06facddab3e83f27be00a339e0da0eed4fbf690",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/AddEntryEvent.kt": {
+        "git_blob": "ccf254917c40fbfd5ad926e17051f6348ee1ffab",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/AddEntryScreen.kt": {
+        "git_blob": "8b5b94afa81796a33a58a88f66ed6f6bf02b8218",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/AddEntryViewModel.kt": {
+        "git_blob": "489582620abe8dff13735dbeb98797a2dfac47b3",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/Food.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/FoodEvents.kt": {
+        "git_blob": "31248b67ba986139cea4b7fbff340985ba951fb5",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/FoodModel.kt": {
+        "git_blob": "08199c19f0467cbc7cdcfff33ad1ad19f85cab59",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/IngredientModel.kt": {
+        "git_blob": "c81f9a9e92badf030b075a03573ce84a32d02aa4",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/Ingredients.kt": {
+        "git_blob": "d298faaeb921fdce80c86f54a691a02e6765181d",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/NutrientList.kt": {
+        "git_blob": "9b9b7527bcec46e84989b84bd80adc0ad065272f",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/NutritionalItem.kt": {
+        "git_blob": "bb66640d46c3a288cd49c2cde379943da49177f7",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/ProductModel.kt": {
+        "git_blob": "66cbd3eb71a268be29de226ce49df4330e8500d7",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/RecipeModel.kt": {
+        "git_blob": "61fef748d99b834728f9c2f11ce68b0b0bf8dc33",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanScreen.kt": {
+        "git_blob": "50fd32c4b138cc563fd00632bcf8a1153d63cd26",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanViewModel.kt": {
+        "git_blob": "ed793adc82d853e9897bcab4a2c5dc5465acffb8",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/component/PortionSaveErrorDialog.kt": {
+        "git_blob": "453a341f91272a2e751196c7464bc668ec7c8ddd",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/component/Source.kt": {
+        "git_blob": "8a55511db0f852a69c5a4df26525ba471c9b072b",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/PromoteToRecipePlaceholderViewModel.kt": {
+        "git_blob": "bbc0b157636fa8e0dd1ff8798660dc8a2fa182c2",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddPromotionMapping.kt": {
+        "git_blob": "b2c335ed7e4da6c82683b9c04e2453a673ab0fc3",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/search/DiaryFoodSearchScreen.kt": {
+        "git_blob": "6aa16ab5261d069da9990be1876edbf7c2f834a6",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/search/DiaryFoodSearchViewModel.kt": {
+        "git_blob": "c29d30d02bd82b10bda98fe0a2e701a3a06456cf",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/FoodDiaryUpdateModule.kt": {
+        "git_blob": "0d58ac4d88ff275e8e86aea4ce99412359065812",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/Ingredients.kt": {
+        "git_blob": "99850d368254bdf51a4ba0e2a898852225e445a6",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/NutrientList.kt": {
+        "git_blob": "36c77c823cd0119fb00fe06e3c9a3ce174b0449a",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/UpdateEntryEvent.kt": {
+        "git_blob": "5988b261819d24ff25ac1c668edf5a8eada42d7d",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/UpdateEntryScreen.kt": {
+        "git_blob": "dc1f146f8e24fbb4869f915407089f18bc1fb164",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/UpdateFoodDiaryEntryViewModel.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/UpdateNutritionalItemDiaryEntryViewModel.kt": {
+        "git_blob": "08029e5280e4055950bb79e9b660379fc6019030",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/CreateProductScreen.kt": {
+        "git_blob": "7cfb00fc70563c3a82067523805f45353815207c",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/ProductForm.kt": {
+        "git_blob": "a2e87d78de62468615b5db2fd687dd03b4f643d0",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/ProductFormState.kt": {
+        "git_blob": "daacc835da0393f5c2cf3078299b1ad944756697",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/UpdateProductScreen.kt": {
+        "git_blob": "7f932cd9c0480321a6d7f498a4735df7576c7e2d",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/create/CreateProductEvent.kt": {
+        "git_blob": "833f0665fcd6e4fb0f48bf37f90f151e5ac404a3",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/create/CreateProductViewModel.kt": {
+        "git_blob": "0170146135b8e7d535df534508b470ed298e4c96",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/download/DownloadErrorCard.kt": {
+        "git_blob": "57cfec1793db1e7c303bf11d3e6d4e368ea8bf95",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/download/DownloadProductViewModel.kt": {
+        "git_blob": "efe0c0d09dd5433e8ff67d05583d90848fed72bc",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/update/UpdateProductScreen.kt": {
+        "git_blob": "fab885a4633d0e65c71caa45033cd4c75afc4395",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/update/UpdateProductViewModel.kt": {
+        "git_blob": "d3096f5e3df8d51cc1f701368ffa951c0ebeb84a",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/CreateRecipeEvent.kt": {
+        "git_blob": "77fb570d0521fd147792dd6b7af97ec7748efcce",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/CreateRecipeScreen.kt": {
+        "git_blob": "9c71b145566d329a5115b38e27523ebc393b40f0",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/CreateRecipeViewModel.kt": {
+        "git_blob": "ebefaebd0580cf02ae507b04e073dd016288c59b",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/MeasureIngredientViewModel.kt": {
+        "git_blob": "e28226e556a48c346cc0ccd540d4aed5be2ccf03",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/MinimalIngredient.kt": {
+        "git_blob": "44412cdbef8ac24d7b31696c0d22a559c05fdc60",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/RecipeApp.kt": {
+        "git_blob": "4804a7098c63238cfeac94c2168d5e3392d40536",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/RecipeForm.kt": {
+        "git_blob": "437ea417b8d76b700d61880eb967d8db79f071ed",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/RecipeViewModel.kt": {
+        "git_blob": "6d8d50985ea6bbdf566f4bcb1499bc082deca6e3",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/UpdateRecipeScreen.kt": {
+        "git_blob": "5ac8b98ba32096a566de9a79368d13854c71d658",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/UpdateRecipeViewModel.kt": {
+        "git_blob": "7a2250030f6d80d7b8e317f523acf9e780fdb4e4",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodFilter.kt": {
+        "git_blob": "f13ed5bc855b8220646c40583cc724d3108439e4",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodSearchApp.kt": {
+        "git_blob": "16eedccb705e960297457009695d5e165e053ed9",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodSearchErrorCard.kt": {
+        "git_blob": "effc2d039eb2024c777bd8c12876e95b697c4a3e",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodSearchListItem.kt": {
+        "git_blob": "057a59f8f9494455fa040c540fa48018875a0b2c",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodSearchUiState.kt": {
+        "git_blob": "39f63e29008d39b76020eadbc14e075dfb582f41",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodSearchViewModel.kt": {
+        "git_blob": "4e82bf9d1a4e12ce15ea3e88c6b6494c242fe69c",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotModel.kt": {
+        "git_blob": "2ad3cafcae2516c83056db8be5f18a749d4f9fa9",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotsCardsViewModel.kt": {
+        "git_blob": "f3731a05397f6d831573745377cbbca18580256e",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/domain/food/FoodSource.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/domain/food/NutritionValidation.kt": {
+        "git_blob": "25a306e359fbe6c5f98e64f417cb95f4dc810aca",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/domain/food/ProductSource.kt": {
+        "git_blob": "c676e7910baa6ab9203b18b04efb33017a75105e",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/domain/measurement/MeasurementResolver.kt": {
+        "git_blob": "70800a8e906ec049ca4b9300cf5e317625412e9f",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/infrastructure/room/FoodSourceType.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/infrastructure/room/FoodSourceTypeConverter.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/infrastructure/room/ProductSourceType.kt": {
+        "git_blob": "eba6f0a60e9cc4b3c1d6e32b50d7cfad609f62d9",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/infrastructure/room/ProductSourceTypeConverter.kt": {
+        "git_blob": "cc08eaf51e8cce3f67f778332f64a2979771d549",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/FoodDomainModule.kt": {
+        "git_blob": "1d2f405ae3f087542f8d466992d65d48ad73c9b3",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/Food.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/FoodHistory.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/FoodId.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/FoodSearchHistory.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/NutritionalItem.kt": {
+        "git_blob": "76bcb700252935e71d791ac13e420bbb0cd0241f",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/NutritionalItemHistory.kt": {
+        "git_blob": "5597e89ae39c998bd13a4bfec83286bc26034d3e",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/NutritionalItemId.kt": {
+        "git_blob": "57d301dbf99d70a737d8548f301ea6fe81522b1b",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/NutritionalItemSearchHistory.kt": {
+        "git_blob": "af761ddb4ba3da0287540c66aae88e5332f68aa5",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/Product.kt": {
+        "git_blob": "bf9b36ec3c394e1a05f75f933790e2c35e60cc1b",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/ProductNutritionBasis.kt": {
+        "git_blob": "320670dfa13e2e1528db859e809dc90b598f5f70",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/Recipe.kt": {
+        "git_blob": "1c09a8ad7e46513dc66767b7fb6e322c807afe03",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/RecipeIngredient.kt": {
+        "git_blob": "acb342e9d8af25934797cbb65f2c19e7b769287a",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/RemoteFoodException.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/RemoteProduct.kt": {
+        "git_blob": "8df817e183571886b29e0490e4fd41a665b0d7ac",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/RemoteProductException.kt": {
+        "git_blob": "6f6627c330a2d4689c121112d9a2be7f671d47c6",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/RemoteProductRequest.kt": {
+        "git_blob": "528df37d9d5605f530ae55664d34e14a95ccd58d",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/event/FoodDiaryEntryCreatedEventHandler.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/event/NutritionalItemDiaryEntryCreatedEventHandler.kt": {
+        "git_blob": "c4f64ba3368af6225729f05c85fb0d81986f8d38",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/FoodHistoryRepository.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/FoodMeasurementSuggestionRepository.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/FoodSearchHistoryRepository.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/NutritionalItemHistoryRepository.kt": {
+        "git_blob": "2171e11e96e1c361409b5c69fc20beb907918a5b",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/NutritionalItemMeasurementSuggestionRepository.kt": {
+        "git_blob": "7a1283a7d7bfa36c6acc31e4fc5016cc2cc97e4a",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/NutritionalItemSearchHistoryRepository.kt": {
+        "git_blob": "db7ed4aefa2e1b1f0dfb653e915df5a6d5dda63c",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/ProductRepository.kt": {
+        "git_blob": "c2fccd633ae2afaacc43cd29308d40511075c86d",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/RecipeRepository.kt": {
+        "git_blob": "464618f855afaa4a66cc69d4ef622dd7e58d9a26",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/CreateProductUseCase.kt": {
+        "git_blob": "fc3176820091aee7f686f0fab59731ebcb36801f",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/CreateRecipeUseCase.kt": {
+        "git_blob": "2173f9b379a0c1c061eda9beed85d9e385ad465e",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/DeleteFoodUseCase.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/DeleteNutritionalItemUseCase.kt": {
+        "git_blob": "3678292de011afe3c346a664934f479a6b4719eb",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/DownloadProductUseCase.kt": {
+        "git_blob": "d40ee24f3686400900404c48016e0b9bc6ce0583",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/ObserveFoodUseCase.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/ObserveMeasurementSuggestionsUseCase.kt": {
+        "git_blob": "475945a673d8923cdcb9ef0db47028e2c38526c8",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/ObserveNutritionalItemUseCase.kt": {
+        "git_blob": "56b6f91d3ae92e0249c98b9190bf37bb89c8dc73",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/UpdateProductUseCase.kt": {
+        "git_blob": "1603e99512a5edd92052dbeb1d2b34f5a3dbcb00",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/UpdateRecipeUseCase.kt": {
+        "git_blob": "1db04f7e9b40576d0ded60d52fc2188fe658dc45",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/FoodInfrastructureModule.kt": {
+        "git_blob": "0192dbe33ec6a1162345a1a4659b2c96f1eb5f04",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/network/RemoteProductMapper.kt": {
+        "git_blob": "942c8fbdea7573d52f5ae3572355efb4453fab4e",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/openfoodfacts/OpenFoodFactsProductMapper.kt": {
+        "git_blob": "71da9a6610908ea77737e79a3c081b6f65cf0163",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/openfoodfacts/OpenFoodFactsProductRequest.kt": {
+        "git_blob": "b92102ffabe0978f581c48bcf9754eb03e023243",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/openfoodfacts/OpenFoodFactsRemoteDataSource.kt": {
+        "git_blob": "bae97e9d8f16963495afeadabfc77d819162f08b",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/repository/RoomFoodHistoryRepository.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/repository/RoomFoodMeasurementSuggestionRepository.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/repository/RoomNutritionalItemHistoryRepository.kt": {
+        "git_blob": "f35ed3128c973e64777885654a1625609280549f",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/repository/RoomNutritionalItemMeasurementSuggestionRepository.kt": {
+        "git_blob": "79676aeebbf8c3e90994590d26c0d1d33187c68e",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/repository/RoomProductRepository.kt": {
+        "git_blob": "328e8337ab9db1fc1cc424866072e45626567ede",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/repository/RoomRecipeRepository.kt": {
+        "git_blob": "3694ab7674ac075ac1b633d9141b663684dd6ebb",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/room/ProductDao.kt": {
+        "git_blob": "f8e99400742fe6456c3a116ba9725255949282be",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/room/ProductEntity.kt": {
+        "git_blob": "49f746e56cf15e7d0267a629ef1b13d1b6869ab7",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/usda/USDAMapper.kt": {
+        "git_blob": "33e713fbd3dab36435e5da2b921282775b519be1",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/usda/USDAProductRequest.kt": {
+        "git_blob": "b015db59942fa1cbc39bd5a3810d895da2761f82",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/usda/USDARemoteDataSource.kt": {
+        "git_blob": "fe2b3c25ec33b4465c685eb65c37c20ca1e1851e",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/FoodSearch.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/FoodSearchEvent.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/FoodSearchEventHandler.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/FoodSearchRepository.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/FoodSearchUseCase.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/NutritionalItemSearch.kt": {
+        "git_blob": "ee0c91f6314dc9e4a484381f4910b2894747a9a5",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/NutritionalItemSearchEvent.kt": {
+        "git_blob": "25fa3a631727abb31a2102f69f6eb3cf57833ac0",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/NutritionalItemSearchEventHandler.kt": {
+        "git_blob": "aed290a55a568d9f6e2a8c4205a94327beabb87c",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/NutritionalItemSearchRepository.kt": {
+        "git_blob": "3d80899d32d99ab55f764d60f87b7e2059102eb2",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/NutritionalItemSearchUseCase.kt": {
+        "git_blob": "0756c736f3ea32b4f7df64ebb0f65ae72d1be438",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/SearchModule.kt": {
+        "git_blob": "eeee1ca1fabf7c25201d48bd2a25190f7f157603",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/FoodSearchModule.kt": {
+        "git_blob": "d6eefe23f59cd908d3fc92c5c1a5b3e9c053e6e5",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/openfoodfacts/OpenFoodFactsRemoteMediator.kt": {
+        "git_blob": "50d259bf5d5a06b933e85e889ece66e3a54bb113",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/openfoodfacts/OpenFoodFactsRemoteMediatorFactory.kt": {
+        "git_blob": "06058c14c4d6d001109f4f2e5d3422f3c40ee541",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/repository/RoomFoodSearchHistoryRepository.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/repository/RoomFoodSearchRepository.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/repository/RoomNutritionalItemSearchHistoryRepository.kt": {
+        "git_blob": "92e2af37aa2165d08e647cc574fbc269e68c0294",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/repository/RoomNutritionalItemSearchRepository.kt": {
+        "git_blob": "fb712761af6cb689c62fd49d377476effb372bc4",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/room/FoodSearch.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/room/FoodSearchDao.kt": {
+        "git_blob": "1454b212cd8106e05bf275ec1655d43a53921ad5",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/room/NutritionalItemSearch.kt": {
+        "git_blob": "e18ea5eb5e628ab6fb185bb0e8373743d86b5eaf",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/usda/USDARemoteMediator.kt": {
+        "git_blob": "e44379ddb24b5b14720b0302e2a6461af5760f48",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/usda/USDARemoteMediatorFactory.kt": {
+        "git_blob": "3102190a189bebd71be130bcceae138bf650136b",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/FoodDiaryDomainModule.kt": {
+        "git_blob": "621ad1b0e3a9bde2fcd0d6fabf1aa38b3cc57433",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiaryFood.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiaryFoodProduct.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiaryFoodRecipe.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiaryFoodRecipeIngredient.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/FoodDiaryEntry.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/NutritionalItemDiaryEntry.kt": {
+        "git_blob": "c5410b384df7cf1eb9259e3f68d859825ae35fe1",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/NutritionalItemSnapshot.kt": {
+        "git_blob": "3cbbe0c6d549ad28996f7b97713d1e6e40ef9080",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/ProductSnapshot.kt": {
+        "git_blob": "4cb50b6ac845c06cbeccb44b66c71ee4d1183ef8",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/RecipeIngredientSnapshot.kt": {
+        "git_blob": "309393878375ddb08ab9b87da84f8147421006a1",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/RecipeSnapshot.kt": {
+        "git_blob": "8436112ed8c4acee9f6805d193c31227106e8d9e",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/event/FoodDiaryEntryCreatedEvent.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/event/NutritionalItemDiaryEntryCreatedEvent.kt": {
+        "git_blob": "af21ae2ac0d5c6ec832089745f95086819b012c6",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/repository/FoodDiaryEntryRepository.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/repository/NutritionalItemDiaryEntryRepository.kt": {
+        "git_blob": "315352a2b7b230c6cd728c4c351f5eec547a648f",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/CreateFoodDiaryEntryUseCase.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/CreateNutritionalItemDiaryEntryUseCase.kt": {
+        "git_blob": "e69b891c0a5af387d5bf6e71321848d93a65c221",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/ObserveDiarySlotEntriesUseCase.kt": {
+        "git_blob": "7a812aface7ba870a49bdb9fe95a120a0e345ee5",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/SaveMealUseCase.kt": {
+        "git_blob": "491ddfd7e524b78a69e414b0cac5c4eff8462889",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/UnpackFoodDiaryEntryUseCase.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/UnpackNutritionalItemDiaryEntryUseCase.kt": {
+        "git_blob": "1cd8d4474d2bec46e47dd27f08aca9b349e0b0fd",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/UpdateFoodDiaryEntryUseCase.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/UpdateNutritionalItemDiaryEntryUseCase.kt": {
+        "git_blob": "e8e05bac3063eba68900e873cc3005bd8d8ec725",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/FoodDiaryInfrastructureModule.kt": {
+        "git_blob": "bc1641190bbbd16e172cc2b5974dc13727341992",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/RoomFoodDiaryEntryRepository.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/RoomNutritionalItemDiaryEntryRepository.kt": {
+        "git_blob": "94c0129dda7c433c5a6385613ca42a68930a43db",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/DiaryProductEntity.kt": {
+        "git_blob": "6c2ab86e6c1eeadf10f0e9b7919856b5701c34cf",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/australianfoodcompositiondatabase/domain/CheckAustralianFoodCompositionDatabaseUpdateUseCase.kt": {
+        "git_blob": "4b50a20e2e7f6cef4141b0139c1fa6787d04f1fa",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/australianfoodcompositiondatabase/domain/ImportAustralianFoodCompositionDatabaseUseCase.kt": {
+        "git_blob": "85d8658c8a4ad990976f2c3c46cc1c7954ea6471",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/domain/usecase/ImportCsvProductUseCase.kt": {
+        "git_blob": "a5a67134f3bbebe24caa879096d41608a2a798a1",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/providermetadata/domain/ProviderMetadata.kt": {
+        "git_blob": "1ec6690e1cc22f63b2ccd88686f775db731eb24c",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/providermetadata/domain/ProviderMetadataRepository.kt": {
+        "git_blob": "db59120d593f8fff81b147882e20ce16e3c9b9d3",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/providermetadata/infrastructure/RoomProviderMetadataRepository.kt": {
+        "git_blob": "5f9b504ef5a8acf04c17ed0eb354c63dc11fdd4f",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/providermetadata/infrastructure/room/ProviderMetadataDao.kt": {
+        "git_blob": "8f9773e08fe20648afc7fa4a10dcae21a33a22d6",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/providermetadata/infrastructure/room/ProviderMetadataEntity.kt": {
+        "git_blob": "45e0fb180a57465eb83778c31c1b96ceb63adb52",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/swissfoodcompositiondatabase/domain/ImportSwissFoodCompositionDatabaseUseCase.kt": {
+        "git_blob": "4ba05f3e295b2b4b967747f5f984c1d5d306e99a",
+        "kind": "file"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/food/domain/ProductPortionTest.kt": {
+        "git_blob": "e27e78e1fb81aef4ad8a76aec19f7d2649948dde",
+        "kind": "file"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/MealUseCasesTest.kt": {
+        "git_blob": "323b36352d310da34fce8eb8c1cd46375280d54e",
+        "kind": "file"
+      },
+      "context/_boss-runs/milestone-2-domain-meals-sequential/briefing.md": {
+        "git_blob": "0df2ade9cf2a03eb2fc61341d3ab93c604c7bb3e",
+        "kind": "file"
+      },
+      "context/design.md": {
+        "git_blob": "4718a67384843963aec870ecb33aa6e336266f62",
+        "kind": "file"
+      },
+      "context/implementation-plans/milestone-2/story-26-product-terminology-portions/plan.md": {
+        "git_blob": "54722cbd008792ad3070712abf10eb338ac33570",
+        "kind": "file"
+      },
+      "context/milestones/milestone-2.md": {
+        "git_blob": "f25d1a167083dc5f9a34ecbd99a03662986f78a5",
+        "kind": "file"
+      },
+      "gradle/libs.versions.toml": {
+        "git_blob": "a3894b251606e429a30860a49d9e6122b7d63512",
+        "kind": "file"
+      },
+      "shared/resources/src/commonMain/composeResources/values/strings.xml": {
+        "git_blob": "804cc7a9fac9980b5cbbb80257b683911a8f38ab",
+        "kind": "file"
+      }
+    },
+    "diff_identity": "df7dc734198f2b21e7358dec64cae8a5c8307445cdbdae0d5b232c30d3c1e276",
+    "files": {
+      "app/schemas/com.maksimowiczm.foodyou.app.infrastructure.room.FoodYouDatabase/39.json": {
+        "kind": "file",
+        "sha256": "666ff1773c463a92bb8c1d5512b96760d6ce3a7e0b08a2a441a1265d97ed29e3"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanKeyboardTest.kt": {
+        "kind": "file",
+        "sha256": "61cc54d298a7375d513430c58847a08fc02700febb68035d9081592705ac8c1e"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanRetakeTest.kt": {
+        "kind": "file",
+        "sha256": "8e7dfc7b46b470049edc8116b6dad3710ba16929d32875a0908abf9c7934dc52"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/MultiFoodScanTest.kt": {
+        "kind": "file",
+        "sha256": "737b1671ee9ccf857738a3d8d89a1a52cbd28a99df7f28d13fbf85a7afb20e06"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddConversionTest.kt": {
+        "kind": "file",
+        "sha256": "f7bda62bb76321e3f5847bbdfe7391b616ed8b143fff04291c15ed7d614cf066"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/ScanDataPreservationTest.kt": {
+        "kind": "file",
+        "sha256": "79b031469f313e901c79286e994392e9d4ba0ac3410e46a8af7b725647a797cf"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/onboarding/OnboardingAfcdTest.kt": {
+        "kind": "file",
+        "sha256": "c96f90b0a696aec8eaf7691ee4931d9fbed851b512c3b54d0e6cef97dd45a2f8"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/food/ProductPortionPersistenceTest.kt": {
+        "kind": "file",
+        "sha256": "71017b0f1d8f5404294e4474f82203b74898a923c7614b809ec376fb64a99a94"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/food/ProductWorkflowTest.kt": {
+        "kind": "file",
+        "sha256": "c1bec18991931c64feb74f2beaaab2a6a1a551390d18f2bfae97564d38bfaebb"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/fooddiary/DiarySlotMealPersistenceTest.kt": {
+        "kind": "file",
+        "sha256": "de7ac63aa200122dc20d41b5b5e9ee35781d06865180689e01cdeb40327233a8"
+      },
+      "app/src/androidMain/kotlin/com/maksimowiczm/foodyou/app/ui/database/importcsvproducts/ImportCsvProductsViewModel.kt": {
+        "kind": "file",
+        "sha256": "ee64f2e03533591350dad68e33468f7c4541dee613dfcd051a9a7ee267035c73"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/room/FoodYouDatabase.kt": {
+        "kind": "file",
+        "sha256": "f86a05bf17216d386c778e271be6e8e551b863a190a333aa2bc7a81480a04bc8"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/navigation/FoodYouAppNavHost.kt": {
+        "kind": "file",
+        "sha256": "a384c6b07ff3d544f25fd43c8b53d3da2124c63bfcc872f1cbd3e454ed3f25b9"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/common/form/Validator.kt": {
+        "kind": "file",
+        "sha256": "09c46607614bbc19d0dd06079ca1768d16432a0e0cd1b49ca106f3ae99b936c9"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/database/australianfoodcompositiondatabase/AustralianFoodCompositionDatabaseViewModel.kt": {
+        "kind": "file",
+        "sha256": "b269f14cbd64c8236690c26046474af773f685847a486194af8aec384d86f8d8"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/FoodModule.kt": {
+        "kind": "file",
+        "sha256": "2e333938e7e507cb468d73a52e244e230213a7be7d133338e0162c698afd6abb"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/component/DownloadProductErrorCard.kt": {
+        "kind": "file",
+        "sha256": "94b317473d661a4f0b8cb966594e20ce7884001b88edc64dc84780e1d825cf6d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/component/FoodSource.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/component/MeasurementPicker.kt": {
+        "kind": "file",
+        "sha256": "b2ac40a72c76548040454def3db8d97f830f6ad2b700d26e505255c2c337396f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/component/ProductSource.kt": {
+        "kind": "file",
+        "sha256": "64bf3b86f0dae04eca95c7ac493658d5a1241273d7b6aa72b70c6d41c11e2e8b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/AddEntryEvent.kt": {
+        "kind": "file",
+        "sha256": "09247e5437bf1b44f2cb9ebd3ef87032aa93dd69d7a096635dba293b6a255c78"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/AddEntryScreen.kt": {
+        "kind": "file",
+        "sha256": "b10f20cb07294210fbac8544f18df6ee568307bff7fe2cb8d892da3d7a1451eb"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/AddEntryViewModel.kt": {
+        "kind": "file",
+        "sha256": "c41cc707956465afa5ae61efaed6f559b75ac00dfb22651be4cf6285d5149a8a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/Food.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/FoodEvents.kt": {
+        "kind": "file",
+        "sha256": "642edf96210fd0cb634966c2fc602717f00e08ddfd90ef21aafb29f90cf890d7"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/FoodModel.kt": {
+        "kind": "file",
+        "sha256": "752db6de9fcd5c173e10ac84dbf8a78021d20fa64cf06f0179788d466787066d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/IngredientModel.kt": {
+        "kind": "file",
+        "sha256": "5123048ee7d3cbe016ae9c9e96e5a9ba12a274c5c61531f721a0573ccad12d04"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/Ingredients.kt": {
+        "kind": "file",
+        "sha256": "52cd159c37813f1a9627f64a28802eda0d89c4a4e9c1671b4a228bd7f896a9cb"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/NutrientList.kt": {
+        "kind": "file",
+        "sha256": "718bf3cb6136407d2372b33b0a256b552f28b832889075345ec3734b457178f7"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/NutritionalItem.kt": {
+        "kind": "file",
+        "sha256": "88ac27601fd5dac01639f62ee240a41becb810b8275da8e8d35a1bb0f834d729"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/ProductModel.kt": {
+        "kind": "file",
+        "sha256": "5110771d0cbbcd317c97bdf7ce5354035bfa921162a37d99f659f445417e610f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/RecipeModel.kt": {
+        "kind": "file",
+        "sha256": "1cbe9b03f7fe287d197ba8fa5a30280cd64f46f5b25d8a729bcaa6b00a8a0495"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanScreen.kt": {
+        "kind": "file",
+        "sha256": "7611faced481ccc68b6e8da87a7da6001c2613c3f9e4671d21b11708af76f43e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanViewModel.kt": {
+        "kind": "file",
+        "sha256": "30296149d5116c3b68e8329f0ada6d846fbe678664f0d9d7affe8ad47c42fe81"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/component/PortionSaveErrorDialog.kt": {
+        "kind": "file",
+        "sha256": "0d4f823056f3091f8d19f58168e01d77b256852215cd49c828941922b15c6b7e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/component/Source.kt": {
+        "kind": "file",
+        "sha256": "60509b12ab5444efd33da9d4c6959e6f129d5ab7a63b6d4aaf87aeb2c42e995a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/PromoteToRecipePlaceholderViewModel.kt": {
+        "kind": "file",
+        "sha256": "8c2397e105a0328bc921184a9125e4125cf97255908158d0a79427c184a13f94"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddPromotionMapping.kt": {
+        "kind": "file",
+        "sha256": "62ca7d12a10ce24cb90c5720d69346e61e6a0c2a9285b26129e384698e4f1051"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/search/DiaryFoodSearchScreen.kt": {
+        "kind": "file",
+        "sha256": "031fd4217ed96ef69d334df6849c0e3bf4e3ff3e0405b7b2100f5853a61766f4"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/search/DiaryFoodSearchViewModel.kt": {
+        "kind": "file",
+        "sha256": "89d4b60cc7bd832e47891fc482bdf68138434b0dfa9e10c73c60aab148ddc720"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/FoodDiaryUpdateModule.kt": {
+        "kind": "file",
+        "sha256": "0fa1e6ead2d78326713a7c67339f56c3267a2e6d07495c1dc42714bd676aee37"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/Ingredients.kt": {
+        "kind": "file",
+        "sha256": "885f8b74a070dde89aafc5ea3158e44ed79134b16d93618eafd4ef23b1702d58"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/NutrientList.kt": {
+        "kind": "file",
+        "sha256": "df2fbab3ff37177bc4040763d3fb20a5395bd41db19c65ba0d0d30d9794fa7c1"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/UpdateEntryEvent.kt": {
+        "kind": "file",
+        "sha256": "eb21dca83813cf97e64f94999962eecda385639b56c44363caad20001da92e50"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/UpdateEntryScreen.kt": {
+        "kind": "file",
+        "sha256": "f806fe14eeb8b7c02618a2b4dbae512750779dd0cdc2aa44d62f881ff19ef200"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/UpdateFoodDiaryEntryViewModel.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/UpdateNutritionalItemDiaryEntryViewModel.kt": {
+        "kind": "file",
+        "sha256": "b9074a156930756edaa16ab18f0e8b1d4a4f8390863f51d16305ec685c086cf4"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/CreateProductScreen.kt": {
+        "kind": "file",
+        "sha256": "0ecfebff457960e73fa489bbc04dde08c13b98b6946eb051c99f3f8cd602ced4"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/ProductForm.kt": {
+        "kind": "file",
+        "sha256": "a1c9b5e0ccebcf37f1b2fa46f11c5067af8dbf2d24a96cb009e65a7fd9d90506"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/ProductFormState.kt": {
+        "kind": "file",
+        "sha256": "deadb0b0cbde1eabf3d7d1b9c4b337a19e65be4527c9d025c2769eac7a03a70c"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/UpdateProductScreen.kt": {
+        "kind": "file",
+        "sha256": "d33f9ea1bed50fcd79939739eb2bb3a73e26a2789c62238848cb2438d15aa3a2"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/create/CreateProductEvent.kt": {
+        "kind": "file",
+        "sha256": "1f3ef4d25ca68191cba445766687dd42f6b3feb42282f22bdc00a5f0b6e6e405"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/create/CreateProductViewModel.kt": {
+        "kind": "file",
+        "sha256": "2e9684bdaf5eef010e06c94933ef5e132fa7eb1d8b6278ba2dab92dfd166b438"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/download/DownloadErrorCard.kt": {
+        "kind": "file",
+        "sha256": "684887682e1ac3c3703a210816bb6d897983a6cfa1a12590586f7ac0f5c05739"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/download/DownloadProductViewModel.kt": {
+        "kind": "file",
+        "sha256": "4761899177a86c7fb16f2f360a9180bef9de84f7436086aba5a4eb2bf8d6ba7e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/update/UpdateProductScreen.kt": {
+        "kind": "file",
+        "sha256": "048a1ce1cb3222ca6abb2e4d08f052e95b8254b4f2aa33033cbb75b6dfe7d18b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/update/UpdateProductViewModel.kt": {
+        "kind": "file",
+        "sha256": "360ebbd929b451b4d63e1d2347ff0d672a9bd66147327f87cd682912bb7ecf4e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/CreateRecipeEvent.kt": {
+        "kind": "file",
+        "sha256": "644c0b47d86c488ff4c0549350fd35fe38e9eb432c7a02fc692cf293911ed62f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/CreateRecipeScreen.kt": {
+        "kind": "file",
+        "sha256": "528af6b07b3483d7a231469e60eebb3827ca5b27cfe53c27c8c197856c9db54c"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/CreateRecipeViewModel.kt": {
+        "kind": "file",
+        "sha256": "217e5b9e603edb068675cedc42b6c791740c1ddfa002427dde7f4843f3e0010e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/MeasureIngredientViewModel.kt": {
+        "kind": "file",
+        "sha256": "f1d844c9bd938efbcb70e2ed23bdc6766ce54d0935ca66df413a5a2159aa0e27"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/MinimalIngredient.kt": {
+        "kind": "file",
+        "sha256": "854706f68843261b75bb921cb3c05f2b8f41159e25d565989ce0dc6734d6dd02"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/RecipeApp.kt": {
+        "kind": "file",
+        "sha256": "731887d405807973eab2b119245bb8c4d24eeaf9c60018cfe190c224f06b6448"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/RecipeForm.kt": {
+        "kind": "file",
+        "sha256": "7f03fb005577a1e36921e25d4b54db500dc7030ddaa335cc12c5c48f5ad9e28b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/RecipeViewModel.kt": {
+        "kind": "file",
+        "sha256": "c43be047a1a704dca35c7ea0b8dd3fae9b1c296c5cbca06f71e046bc74adccee"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/UpdateRecipeScreen.kt": {
+        "kind": "file",
+        "sha256": "8a3083ecebd9d89eb9c846f55101a0288f98a2998b32256c106fd06aab258eb6"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/UpdateRecipeViewModel.kt": {
+        "kind": "file",
+        "sha256": "f31642a05048977d49352f2f5f8f4f748c79cf7e760395f39472b6260258d71b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodFilter.kt": {
+        "kind": "file",
+        "sha256": "57fbe76ddbd816b11d15375cdb681d63cf2fddecd00320d1c3318a4385282d2c"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodSearchApp.kt": {
+        "kind": "file",
+        "sha256": "6c83cefa2bebba904e9305c1d017ca46405a13b433659a0c8722a0476c4e8362"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodSearchErrorCard.kt": {
+        "kind": "file",
+        "sha256": "713f7e80e33330a5cfcb7265356ff0c909cfe0724be557ea002bb71fde06dc3d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodSearchListItem.kt": {
+        "kind": "file",
+        "sha256": "f46589c2467717ecc797c7016546b95cd874698318967d7f52c38927594f8c31"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodSearchUiState.kt": {
+        "kind": "file",
+        "sha256": "13831385373cf38f45e54bc9e6a0a9d98bb8e8126b97ccf486ee36637920b523"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodSearchViewModel.kt": {
+        "kind": "file",
+        "sha256": "dfc36fec0b0ca65e38cfd49feea2cd21abaa1a0b0806895a5a67e2800d762716"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotModel.kt": {
+        "kind": "file",
+        "sha256": "481a86e4604abc7ec1cf5088a0137688bbe64e0d68ae3d8be19c34010bf21343"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotsCardsViewModel.kt": {
+        "kind": "file",
+        "sha256": "efb6d95ee42e268a16879687966e175f8340dd2a899f00cbd6b6ffcf177cf4cc"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/domain/food/FoodSource.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/domain/food/NutritionValidation.kt": {
+        "kind": "file",
+        "sha256": "58e0c0c6c166bd192fbe02bf1d80ee79791a51f39806789dc691622c9b81024a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/domain/food/ProductSource.kt": {
+        "kind": "file",
+        "sha256": "cc8aeeaa630df0ad61b834e38e76c4853d9dee468442042bedcb47be62708685"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/domain/measurement/MeasurementResolver.kt": {
+        "kind": "file",
+        "sha256": "56f9f68f2a71a03eee7f13f5065e3d1cfbaa2674f64cd84bc81ebf8ee9d06986"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/infrastructure/room/FoodSourceType.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/infrastructure/room/FoodSourceTypeConverter.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/infrastructure/room/ProductSourceType.kt": {
+        "kind": "file",
+        "sha256": "860853f83091462c4a9e8a166305bbed2368c93f4326e13e9342008914f9dd1e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/infrastructure/room/ProductSourceTypeConverter.kt": {
+        "kind": "file",
+        "sha256": "26767d9f0b5433395baf0c375d71b2551833f2c2eb69751f1801e77d345f5c27"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/FoodDomainModule.kt": {
+        "kind": "file",
+        "sha256": "0193fe859a62641e8ce620f65dfac02274ad2db22cb5ced864077b49d4fc4bc4"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/Food.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/FoodHistory.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/FoodId.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/FoodSearchHistory.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/NutritionalItem.kt": {
+        "kind": "file",
+        "sha256": "bc590a0cae1abf12b82eed9199b662274c5f09f2e4dc29334243ed1060582ccf"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/NutritionalItemHistory.kt": {
+        "kind": "file",
+        "sha256": "4fcaf047bd02aea51c1d7c6ef03d11d42a37f7c0a5034f5829f0155fce895e3a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/NutritionalItemId.kt": {
+        "kind": "file",
+        "sha256": "1b241bab0490539afff55e5d6b36b600543ffba671254725ae6880afcd1b297f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/NutritionalItemSearchHistory.kt": {
+        "kind": "file",
+        "sha256": "9e32d941e34150e8948f457144bc39b668a174090d14310085081b7791c01414"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/Product.kt": {
+        "kind": "file",
+        "sha256": "d2894d4af2a00c19f1fe6219088061ea9deaf40f73ad7e787105e30052fd9ced"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/ProductNutritionBasis.kt": {
+        "kind": "file",
+        "sha256": "a666445330daf541263fd1896b305923b8391c34d593877dc4af43c5234804cc"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/Recipe.kt": {
+        "kind": "file",
+        "sha256": "7c4ee28f104b0746834c2ce19cf7458e71628caf515ce2e523d74390a1b56656"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/RecipeIngredient.kt": {
+        "kind": "file",
+        "sha256": "9d69c705284e2e30c03ec472bbcadd66d42063816f37b6a7dbefa1d04fb18ca9"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/RemoteFoodException.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/RemoteProduct.kt": {
+        "kind": "file",
+        "sha256": "d81c248577bfdfd239dfcee799427dce1bd4594bfe185eab056ac7336ed5286e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/RemoteProductException.kt": {
+        "kind": "file",
+        "sha256": "47843ba4701a0645ee3eb9227bf13edab5354c19eb1530a3aed2bb4cfac1a122"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/entity/RemoteProductRequest.kt": {
+        "kind": "file",
+        "sha256": "2fa74e0f4d70b96a63b25982845a0c6a63a584d70a7a6eb37f31cc10836c4570"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/event/FoodDiaryEntryCreatedEventHandler.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/event/NutritionalItemDiaryEntryCreatedEventHandler.kt": {
+        "kind": "file",
+        "sha256": "2410845f7c8667211704f808f4a509430fbfd3192ca46bbee1c7dab0456c2756"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/FoodHistoryRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/FoodMeasurementSuggestionRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/FoodSearchHistoryRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/NutritionalItemHistoryRepository.kt": {
+        "kind": "file",
+        "sha256": "0f5847f32d7b540ea801bc3c73992e9bc594e0576dc77d0243bb5531e11210d3"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/NutritionalItemMeasurementSuggestionRepository.kt": {
+        "kind": "file",
+        "sha256": "c234dd5238bbb99996eeddbb7a40d18f502cd012377a914bf50b084d35aef9bd"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/NutritionalItemSearchHistoryRepository.kt": {
+        "kind": "file",
+        "sha256": "cbbf853c8dfa94e3f6e775edc49a3c27d31fc0eab89733573a92c54006a87eb0"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/ProductRepository.kt": {
+        "kind": "file",
+        "sha256": "153048a13215ecfec8946a51452382ad2d05bac0109f8e692f418a3958634f8b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/repository/RecipeRepository.kt": {
+        "kind": "file",
+        "sha256": "4838a5b126ff1bc38280596fbadb4449fcd27823a7fab2f623416b5325929a56"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/CreateProductUseCase.kt": {
+        "kind": "file",
+        "sha256": "681ea08a800d877bbaf7786e1fa151ebdfe8f50eed6e8a801d42a8b47e50ed38"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/CreateRecipeUseCase.kt": {
+        "kind": "file",
+        "sha256": "3705f8427d7e20cdb90d3c173de893782f32f6c01aacd6547d08b2334baabcce"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/DeleteFoodUseCase.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/DeleteNutritionalItemUseCase.kt": {
+        "kind": "file",
+        "sha256": "d31f541b9d7b7a087ce32bc5d5262df5287f46ab7bf3b17574a741488a3a861b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/DownloadProductUseCase.kt": {
+        "kind": "file",
+        "sha256": "aeb3757e7e9d2668a903487b1d8b30250e1428a7dfd800ba2c1795cdd9199bc8"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/ObserveFoodUseCase.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/ObserveMeasurementSuggestionsUseCase.kt": {
+        "kind": "file",
+        "sha256": "1e1460379e5bb84bfefe5565ee73f07c0e8493e0893e750bb9647451be19a86b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/ObserveNutritionalItemUseCase.kt": {
+        "kind": "file",
+        "sha256": "93d85d35e02f67bb7a2182db6a38714b0722a2d7ed9bd5fe6acfe6ee1a915a6d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/UpdateProductUseCase.kt": {
+        "kind": "file",
+        "sha256": "ae309a603019716a91fef0bf21e9d87b9a0a1ed482ed04237b477c0619eb0dc1"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/domain/usecase/UpdateRecipeUseCase.kt": {
+        "kind": "file",
+        "sha256": "d500a3aa5146f4dd75ac507bde43b1f31d51dca2857bbba820b55f2e5d4ef35f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/FoodInfrastructureModule.kt": {
+        "kind": "file",
+        "sha256": "438b4b8944b2d8931f1deec11c87894b3f58c0195e325ed0c0425d771a6146f4"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/network/RemoteProductMapper.kt": {
+        "kind": "file",
+        "sha256": "066d296f4068b1c7fc42a9926ebdf603290df1092dc716c1d67989905e81c518"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/openfoodfacts/OpenFoodFactsProductMapper.kt": {
+        "kind": "file",
+        "sha256": "278e806634d39eae16791726317a1681031944acc7d7b965b8a4da97896fb89d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/openfoodfacts/OpenFoodFactsProductRequest.kt": {
+        "kind": "file",
+        "sha256": "8d5bc5149b8df412573ea66a62b0084428ec69286beef2b47b9c694dc7ff0b89"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/openfoodfacts/OpenFoodFactsRemoteDataSource.kt": {
+        "kind": "file",
+        "sha256": "8ece195de56cd1d5153cc8b9aed65c9ac47cb4e7785e3547db67964345b6a0ca"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/repository/RoomFoodHistoryRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/repository/RoomFoodMeasurementSuggestionRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/repository/RoomNutritionalItemHistoryRepository.kt": {
+        "kind": "file",
+        "sha256": "3dab3aac5af90f39a0371bfa2d9e5e687a4b9f7ddf0111e392812067c9c0049b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/repository/RoomNutritionalItemMeasurementSuggestionRepository.kt": {
+        "kind": "file",
+        "sha256": "a63883569e0e73fa06f3de7318788108fe5834ab28769fb1b4543657e8ca49ea"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/repository/RoomProductRepository.kt": {
+        "kind": "file",
+        "sha256": "ae5057f5cff4a4a9ce5cf7f1608785912bc84fefe8d69d2966d1e21a92961126"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/repository/RoomRecipeRepository.kt": {
+        "kind": "file",
+        "sha256": "8f9ffc8f80d0935fa9766181c6a2e7003728afa860a68ab3cc5f8146f7a030d6"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/room/ProductDao.kt": {
+        "kind": "file",
+        "sha256": "f8ca5618e5659b8976873a6212dc7fd1ff7b3f19353c266ba359b4d91c062e6e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/room/ProductEntity.kt": {
+        "kind": "file",
+        "sha256": "eec9d66c2db9455016b5aff3c06b439b80309be9c11f8ed87366fee9534f0419"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/usda/USDAMapper.kt": {
+        "kind": "file",
+        "sha256": "a4897705059ba07f9c5cf25fd254995d4f7791c7a4538e86729f1b884102f5ab"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/usda/USDAProductRequest.kt": {
+        "kind": "file",
+        "sha256": "efd970a318eb03ce33c65dab57612ab8bde787915dabc85fb6f1dd338834b58e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/infrastructure/usda/USDARemoteDataSource.kt": {
+        "kind": "file",
+        "sha256": "98b843290b5009a36225c868efdc81a3cbbb0f5fdc56b93fdfc29496f1f86a17"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/FoodSearch.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/FoodSearchEvent.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/FoodSearchEventHandler.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/FoodSearchRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/FoodSearchUseCase.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/NutritionalItemSearch.kt": {
+        "kind": "file",
+        "sha256": "26460eda0f3e76b3bb96cb384ac763370967a4f8cd02bb9ba4bc7f8d2550d972"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/NutritionalItemSearchEvent.kt": {
+        "kind": "file",
+        "sha256": "a7c9674020c9af3f86d50a95e98def69afa315b42e36d395ba0757254c342517"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/NutritionalItemSearchEventHandler.kt": {
+        "kind": "file",
+        "sha256": "8cecfdf2ac47c97718adfe14a490258a04fd9b00ded06d9b762f476bfc4e8f96"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/NutritionalItemSearchRepository.kt": {
+        "kind": "file",
+        "sha256": "8261ef075a80d8bf4f1ba17fe9b65b3a9d5a21ec9855196ff658c6412b80bad2"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/NutritionalItemSearchUseCase.kt": {
+        "kind": "file",
+        "sha256": "8604ed08879bc290692eead7e23752c3b7f5fe7d600b2157ca4c3459121ce0fb"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/domain/SearchModule.kt": {
+        "kind": "file",
+        "sha256": "8ceff5902a373f3fc7a9d14b61bc5fb747f0fe416524c179014e5dde8dee4625"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/FoodSearchModule.kt": {
+        "kind": "file",
+        "sha256": "7841a767c98785b3c19fc1ba1e67ea496f1a42a3dbfc6393c73bce623658312e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/openfoodfacts/OpenFoodFactsRemoteMediator.kt": {
+        "kind": "file",
+        "sha256": "58dabde6c3329c4a488564af9c4c836c4f64ba1ee4d42ee6cbeb87748d77929b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/openfoodfacts/OpenFoodFactsRemoteMediatorFactory.kt": {
+        "kind": "file",
+        "sha256": "d7c88886266fdf1e26dd0f660364ba674cf560ca3ee15edcbb84d9f17effd2f4"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/repository/RoomFoodSearchHistoryRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/repository/RoomFoodSearchRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/repository/RoomNutritionalItemSearchHistoryRepository.kt": {
+        "kind": "file",
+        "sha256": "000312e1111d5ec9842493f786b84ebd3d6a20204b9620f59e98d2977fcfb8d5"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/repository/RoomNutritionalItemSearchRepository.kt": {
+        "kind": "file",
+        "sha256": "cfed300b8ec5fa00e4fb28c90088721e7fc2668587d6cf02e14752fe6ea77927"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/room/FoodSearch.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/room/FoodSearchDao.kt": {
+        "kind": "file",
+        "sha256": "563bfa8213678841be23b70f878dfde772f89ee9e823f1223c023b8a14b38a20"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/room/NutritionalItemSearch.kt": {
+        "kind": "file",
+        "sha256": "62c8338f35bbd589db9cf18f0445a807f0dbd42af1182cadd62ea99726f28930"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/usda/USDARemoteMediator.kt": {
+        "kind": "file",
+        "sha256": "9f8da4111e1c96db927d14d0f5619b1143ad537429769f74d67ef8888c116b0c"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/food/search/infrastructure/usda/USDARemoteMediatorFactory.kt": {
+        "kind": "file",
+        "sha256": "254a670e3a450cbbf77a35242f32321a011239339121dee0120738ef42467dd9"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/FoodDiaryDomainModule.kt": {
+        "kind": "file",
+        "sha256": "cbc8e228ad57e9612a909df5fe0727a8366deb2c3fc5931f129d2de6bc90177c"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiaryFood.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiaryFoodProduct.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiaryFoodRecipe.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiaryFoodRecipeIngredient.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/FoodDiaryEntry.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/NutritionalItemDiaryEntry.kt": {
+        "kind": "file",
+        "sha256": "a820fd1e877c73219b8fa2f4e296d64c0d2462f9cfd72d776da93a43c313573d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/NutritionalItemSnapshot.kt": {
+        "kind": "file",
+        "sha256": "5b545708cdaec648deaffdadb5767a0683dee0f04deb914d825e4f1f20781c5f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/ProductSnapshot.kt": {
+        "kind": "file",
+        "sha256": "dbedd9d4a499e586b59c6e8a5cd34dd96b5d2f89e0fa8a14d444947856cc15fd"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/RecipeIngredientSnapshot.kt": {
+        "kind": "file",
+        "sha256": "1f05c4077500c5db45223958fd9ecff6a0e18ccff938e7c10d49a90fe864f8c9"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/RecipeSnapshot.kt": {
+        "kind": "file",
+        "sha256": "4e73eea1d48809b2cb740476bc1fa95d0c043666764f7200c29a82e4fa1dbc96"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/event/FoodDiaryEntryCreatedEvent.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/event/NutritionalItemDiaryEntryCreatedEvent.kt": {
+        "kind": "file",
+        "sha256": "4a168079b50d1f89a9493284d894a894342a3af40647f0fbf94245c85af0277a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/repository/FoodDiaryEntryRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/repository/NutritionalItemDiaryEntryRepository.kt": {
+        "kind": "file",
+        "sha256": "2ecdcb7206fc66a9377a405b8fa8a08e5db0e2a28753d7937567a2999ed838b2"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/CreateFoodDiaryEntryUseCase.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/CreateNutritionalItemDiaryEntryUseCase.kt": {
+        "kind": "file",
+        "sha256": "2b6cfda8aa55fa139f032e0f498d0d6eddae0f248e5a6e8bc05c30a8387e470f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/ObserveDiarySlotEntriesUseCase.kt": {
+        "kind": "file",
+        "sha256": "c233b4890b9a68668cecbc5c336f68537d2488daf585cebdc672e9a8f86e1a7e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/SaveMealUseCase.kt": {
+        "kind": "file",
+        "sha256": "e1a04c7d863fde9dadaa476a0b88a2185e65469348dbdfeeb6656c8a35ae5e29"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/UnpackFoodDiaryEntryUseCase.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/UnpackNutritionalItemDiaryEntryUseCase.kt": {
+        "kind": "file",
+        "sha256": "6a693fcf802d09b2752375777fbf297e1e158d6af269066238d37b8c468da494"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/UpdateFoodDiaryEntryUseCase.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/UpdateNutritionalItemDiaryEntryUseCase.kt": {
+        "kind": "file",
+        "sha256": "87b8acb1a1b40f860d2319825f14c4ce19efa67136597d884a777472c71fdeef"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/FoodDiaryInfrastructureModule.kt": {
+        "kind": "file",
+        "sha256": "da24731ded7fee0ddd6a8e52ab8a454dc3a9622a63d12f1ee56108c1e38c7db8"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/RoomFoodDiaryEntryRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/RoomNutritionalItemDiaryEntryRepository.kt": {
+        "kind": "file",
+        "sha256": "82341da7ea37db014882bfd4743eada9138e0529470b46c32678fb1ae3f3c27b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/DiaryProductEntity.kt": {
+        "kind": "file",
+        "sha256": "434de66e6522af84fa686c5ff1049dae4945cb99caee641f4dfed5e89c2aeb72"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/australianfoodcompositiondatabase/domain/CheckAustralianFoodCompositionDatabaseUpdateUseCase.kt": {
+        "kind": "file",
+        "sha256": "bf07e72cc694ba96ce80313d1f263e20f92cf0a03aa898ca501d03ea1df5cc99"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/australianfoodcompositiondatabase/domain/ImportAustralianFoodCompositionDatabaseUseCase.kt": {
+        "kind": "file",
+        "sha256": "7239cff7530e7560ef8071d28b3d6e4994a81d2f151e88803e4d22d9854269eb"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/domain/usecase/ImportCsvProductUseCase.kt": {
+        "kind": "file",
+        "sha256": "425bc618a3f528f37051a6a924e32d478f8c6b9f865232692ce74c09cef0a1f6"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/providermetadata/domain/ProviderMetadata.kt": {
+        "kind": "file",
+        "sha256": "4c36d7bf76efb4d5b91a473344f5e83519c712f4d744d62def85076fd387770b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/providermetadata/domain/ProviderMetadataRepository.kt": {
+        "kind": "file",
+        "sha256": "f091b715159761d03e9e359db84eee35f0a8ac291bd3cd1f54a2cc7974dbcee5"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/providermetadata/infrastructure/RoomProviderMetadataRepository.kt": {
+        "kind": "file",
+        "sha256": "5949adb8938a677410959b283f72375c3589a9b4f3093ec2c8725498c3bdfa19"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/providermetadata/infrastructure/room/ProviderMetadataDao.kt": {
+        "kind": "file",
+        "sha256": "ddaa4a2723590f9ff3253634cbd8cbb6661890ec68767bb7b5a5a1420fbee756"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/providermetadata/infrastructure/room/ProviderMetadataEntity.kt": {
+        "kind": "file",
+        "sha256": "bf450765cf880cfb2f2120fb82f93806e45ecc60e01c1b39ef34ea48c1b41634"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/importexport/swissfoodcompositiondatabase/domain/ImportSwissFoodCompositionDatabaseUseCase.kt": {
+        "kind": "file",
+        "sha256": "d1d4c37175261e0470d4ba3978add8ac21e81175b648b52f077b6405a5a2f94e"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/food/domain/ProductPortionTest.kt": {
+        "kind": "file",
+        "sha256": "c0436ac94c419f5dfe78067b32999d95e0ed2bb2ac9d1dd60eb3f0796553affd"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/MealUseCasesTest.kt": {
+        "kind": "file",
+        "sha256": "963092fcfb832fef2bbb12da18342e468affd0f3450f8ba23aefee80a8ac8006"
+      },
+      "context/_boss-runs/milestone-2-domain-meals-sequential/briefing.md": {
+        "kind": "file",
+        "sha256": "4a4909226f47dca119cc7609ff9fa91b11beda7bfd5692cac4c6eed8476d90e4"
+      },
+      "context/design.md": {
+        "kind": "file",
+        "sha256": "c664fd200ec219a26325b9306125879a09a2ae83e4e28c8f1777749d1820d928"
+      },
+      "context/implementation-plans/milestone-2/story-26-product-terminology-portions/plan.md": {
+        "kind": "file",
+        "sha256": "c01bb689773590e55e1ec32bfb2494c7e51b44a9f177e0a5814a3454588eccc7"
+      },
+      "context/milestones/milestone-2.md": {
+        "kind": "file",
+        "sha256": "4cf5fed1b7791e3eda340308922767b22d44c85fca727ff59468637b3eab851f"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "d9ce7b2a00b013132e14fff4ec0627472d8893a31b0ecde05186592306ef2889"
+      },
+      "shared/resources/src/commonMain/composeResources/values/strings.xml": {
+        "kind": "file",
+        "sha256": "f7910a6909f3fbde57c0fc354e029015e8e0f962c3305df480a20ab29673a6ef"
+      }
+    },
+    "head": "8b698162ff7b3de0e7338f3ca2d68790edacb752"
+  },
+  "evidence": {
+    "checks": [
+      {
+        "apkSha256": "7e7748ba567ed92526ae7403ef845b0d61bfbc99d09bb3b7d84aa1d5c3b9dd76",
+        "artifact_identity": "d4148d717e040c6b0bc065dedd67863aa6a11dc49842c48b3f7a6e0a1a65acaf",
+        "command": ".\\gradlew.bat --no-daemon :app:testDebugUnitTest :app:assembleDebug :app:assembleDebugAndroidTest",
+        "details": "159unit tests33suites0fail/error/skip in final-verification.log. Test-helper-only correction renewed three-task assembly in verification-runtime-repair.log;productionAPKunchanged,no sourcebehavior change.",
+        "outcome": "PASS"
+      },
+      {
+        "artifact_identity": "d4148d717e040c6b0bc065dedd67863aa6a11dc49842c48b3f7a6e0a1a65acaf",
+        "command": "git -c core.safecrlf=false diff --check",
+        "details": "diff-check.log;generatedschema39hash unchanged666ff1773c463a92bb8c1d5512b96760d6ce3a7e0b08a2a441a1265d97ed29e3.",
+        "outcome": "PASS"
+      },
+      {
+        "apkSha256": "7e7748ba567ed92526ae7403ef845b0d61bfbc99d09bb3b7d84aa1d5c3b9dd76",
+        "artifact_identity": "d4148d717e040c6b0bc065dedd67863aa6a11dc49842c48b3f7a6e0a1a65acaf",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class com.maksimowiczm.foodyou.food.ProductPortionPersistenceTest#typedDefinitionsPortionsFailuresAndHistoricalSnapshotsSurviveReopen io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "details": "Isolated synthetic Room/Koin and actual production screens;retainedunchangedtests use identicalproductionAPK and unchangedtestclasssource.",
+        "log": "app/build/m2-domain-meals/story26/instrument-01.log",
+        "outcome": "PASS",
+        "testApkSha256": "aa7994195b5293180d0d5163fe556cc98847c60e945819b541632acd3ff1c1f3"
+      },
+      {
+        "apkSha256": "7e7748ba567ed92526ae7403ef845b0d61bfbc99d09bb3b7d84aa1d5c3b9dd76",
+        "artifact_identity": "d4148d717e040c6b0bc065dedd67863aa6a11dc49842c48b3f7a6e0a1a65acaf",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.QuickAddConversionTest#scanProductKeepsExplicitEnergyWhenUserCompletesRequiredMissingMacro io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "details": "Isolated synthetic Room/Koin and actual production screens;retainedunchangedtests use identicalproductionAPK and unchangedtestclasssource.",
+        "log": "app/build/m2-domain-meals/story26/remaining-instrument-04.log",
+        "outcome": "PASS",
+        "testApkSha256": "aa7994195b5293180d0d5163fe556cc98847c60e945819b541632acd3ff1c1f3"
+      },
+      {
+        "apkSha256": "7e7748ba567ed92526ae7403ef845b0d61bfbc99d09bb3b7d84aa1d5c3b9dd76",
+        "artifact_identity": "d4148d717e040c6b0bc065dedd67863aa6a11dc49842c48b3f7a6e0a1a65acaf",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.QuickAddConversionTest#weightedScanRecipeCancelCleansPlaceholderAndRepeatSavePreservesTotals io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "details": "Isolated synthetic Room/Koin and actual production screens;retainedunchangedtests use identicalproductionAPK and unchangedtestclasssource.",
+        "log": "app/build/m2-domain-meals/story26/remaining-instrument-05.log",
+        "outcome": "PASS",
+        "testApkSha256": "aa7994195b5293180d0d5163fe556cc98847c60e945819b541632acd3ff1c1f3"
+      },
+      {
+        "apkSha256": "7e7748ba567ed92526ae7403ef845b0d61bfbc99d09bb3b7d84aa1d5c3b9dd76",
+        "artifact_identity": "d4148d717e040c6b0bc065dedd67863aa6a11dc49842c48b3f7a6e0a1a65acaf",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.QuickAddConversionTest#currentEditPromotionsPreserveSnapshotAndUnsavedEditsAllowingRepeats io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "details": "Isolated synthetic Room/Koin and actual production screens;retainedunchangedtests use identicalproductionAPK and unchangedtestclasssource.",
+        "log": "app/build/m2-domain-meals/story26/remaining-instrument-06.log",
+        "outcome": "PASS",
+        "testApkSha256": "aa7994195b5293180d0d5163fe556cc98847c60e945819b541632acd3ff1c1f3"
+      },
+      {
+        "apkSha256": "7e7748ba567ed92526ae7403ef845b0d61bfbc99d09bb3b7d84aa1d5c3b9dd76",
+        "artifact_identity": "d4148d717e040c6b0bc065dedd67863aa6a11dc49842c48b3f7a6e0a1a65acaf",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.QuickAddConversionTest#historicalEditPromotionsPreserveSnapshotAndUnsavedEditsAllowingRepeats io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "details": "Isolated synthetic Room/Koin and actual production screens;retainedunchangedtests use identicalproductionAPK and unchangedtestclasssource.",
+        "log": "app/build/m2-domain-meals/story26/remaining-instrument-07.log",
+        "outcome": "PASS",
+        "testApkSha256": "aa7994195b5293180d0d5163fe556cc98847c60e945819b541632acd3ff1c1f3"
+      },
+      {
+        "apkSha256": "7e7748ba567ed92526ae7403ef845b0d61bfbc99d09bb3b7d84aa1d5c3b9dd76",
+        "artifact_identity": "d4148d717e040c6b0bc065dedd67863aa6a11dc49842c48b3f7a6e0a1a65acaf",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.ScanDataPreservationTest#optionalNutrientsAndPortionSurviveKilojouleFormAndMetadataEditWithoutScaling io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "details": "Isolated synthetic Room/Koin and actual production screens;retainedunchangedtests use identicalproductionAPK and unchangedtestclasssource.",
+        "log": "app/build/m2-domain-meals/story26/remaining-instrument-08.log",
+        "outcome": "PASS",
+        "testApkSha256": "aa7994195b5293180d0d5163fe556cc98847c60e945819b541632acd3ff1c1f3"
+      },
+      {
+        "apkSha256": "7e7748ba567ed92526ae7403ef845b0d61bfbc99d09bb3b7d84aa1d5c3b9dd76",
+        "artifact_identity": "d4148d717e040c6b0bc065dedd67863aa6a11dc49842c48b3f7a6e0a1a65acaf",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.ScanDataPreservationTest#reported780SampleSurvivesReviewQuickAddSaveAndHistoricalReadback io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "details": "Isolated synthetic Room/Koin and actual production screens;retainedunchangedtests use identicalproductionAPK and unchangedtestclasssource.",
+        "log": "app/build/m2-domain-meals/story26/remaining-instrument-09.log",
+        "outcome": "PASS",
+        "testApkSha256": "aa7994195b5293180d0d5163fe556cc98847c60e945819b541632acd3ff1c1f3"
+      },
+      {
+        "apkSha256": "7e7748ba567ed92526ae7403ef845b0d61bfbc99d09bb3b7d84aa1d5c3b9dd76",
+        "artifact_identity": "d4148d717e040c6b0bc065dedd67863aa6a11dc49842c48b3f7a6e0a1a65acaf",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class com.maksimowiczm.foodyou.food.ProductWorkflowTest#createEditSearchSelectLogEditAgainAndCancelPreserveCapturedNutrition io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "details": "Isolated synthetic Room/Koin and actual production screens;retainedunchangedtests use identicalproductionAPK and unchangedtestclasssource.",
+        "log": "app/build/m2-domain-meals/story26/retry-workflow-01.log",
+        "outcome": "PASS",
+        "testApkSha256": "48fe7637826bcb1041ccf7bf00cc0d0a152986646ef011b769a1a7c2bae59442"
+      },
+      {
+        "apkSha256": "7e7748ba567ed92526ae7403ef845b0d61bfbc99d09bb3b7d84aa1d5c3b9dd76",
+        "artifact_identity": "d4148d717e040c6b0bc065dedd67863aa6a11dc49842c48b3f7a6e0a1a65acaf",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class com.maksimowiczm.foodyou.food.ProductWorkflowTest#liquidFractionLogsMillilitersAndUnknownServingFailsWithoutGramFallback io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "details": "Isolated synthetic Room/Koin and actual production screens;retainedunchangedtests use identicalproductionAPK and unchangedtestclasssource.",
+        "log": "app/build/m2-domain-meals/story26/retry-workflow-02.log",
+        "outcome": "PASS",
+        "testApkSha256": "48fe7637826bcb1041ccf7bf00cc0d0a152986646ef011b769a1a7c2bae59442"
+      },
+      {
+        "apkSha256": "7e7748ba567ed92526ae7403ef845b0d61bfbc99d09bb3b7d84aa1d5c3b9dd76",
+        "artifact_identity": "d4148d717e040c6b0bc065dedd67863aa6a11dc49842c48b3f7a6e0a1a65acaf",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class com.maksimowiczm.foodyou.fooddiary.LegacyDiarySlotMealFixtureTest#verifyCanonicalDatabaseAfterUpgrade io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "details": "Syntheticcanonicalrows byte-identical before/after,inplace128\u2192129\u2192130,no clear/uninstall.",
+        "log": "app/build/m2-domain-meals/story26/retry-workflow-03.log",
+        "outcome": "PASS",
+        "testApkSha256": "48fe7637826bcb1041ccf7bf00cc0d0a152986646ef011b769a1a7c2bae59442"
+      }
+    ],
+    "decisions": [
+      "Product-only validation/normalization;NutritionalItem typed Product-or-Recipe role and explicit captured snapshot/datedentry families. UI remains Food.",
+      "PreserveRoom39/DataStore/nav/CSV/providercontracts and unknownnutrition;QuickAddabsolute totals independent of optional metadata.",
+      "43nutrientbasis conversion including B12,reference40g\u00d72=80g,liquid/fraction/unknown/invalidamounts tested.",
+      "Runtimefirstattempthelperfault correctedwithout timeout/assertionweakening;productionAPK7e7748...unchanged. Retained7passingmethods from AA799testAPK plus rerun2workflows+canonical on48fe763testAPK yields10uniquePASS methods;failedattemptlogs retained.",
+      "Commitpolicy none;no release/tag/push/ownerphone use. Candidate3.2.34.3/code130 anticipates successful closure24+10;ReleaseCount3 retained."
+    ],
+    "review": {
+      "artifact_identity": "d4148d717e040c6b0bc065dedd67863aa6a11dc49842c48b3f7a6e0a1a65acaf",
+      "details": "Independentreviewverifiedall200paths/nohashdrift,all10individualrunnerlogsPASS,APKhashes/version/schema39match;correctedtesthelperassertions/timeoutnotweakened,noremainingfindings.",
+      "outcome": "PASS",
+      "reviewer": "/root/review_story26"
+    },
+    "review_required": true
+  },
+  "metadata_before": {
+    "context/_boss-runs/milestone-2-domain-meals-sequential/briefing.md": {
+      "kind": "file",
+      "sha256": "610e79bbcac46efe11f488f0486e6ba5a3aefef5a1d7626432fe9d6edcafbfa2"
+    },
+    "context/design.md": {
+      "kind": "file",
+      "sha256": "acaa23f942fb37344d96d1ebfbc9adecbd5fc3633bc938b3ecd13759cb6ba63b"
+    },
+    "context/milestones/milestone-2.md": {
+      "kind": "file",
+      "sha256": "39a19eaaea1815bdcd3ed058d27a6cc3bce4b8766cb444d4b14008b87b308313"
+    }
+  },
+  "phase": "VERIFIED_UNCOMMITTED",
+  "record": "context/_boss-runs/milestone-2-domain-meals-sequential/story-26-receipt.json",
+  "repo": "D:\\forked-projects\\FoodYou",
+  "schema_version": 1,
+  "status_owner": "context/milestones/milestone-2.md#story-26",
+  "transaction_id": "810944bb78f54122a6d4d3a82f029750"
+}

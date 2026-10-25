@@ -132,7 +132,7 @@ internal fun rememberQuickAddFormState(
                 positiveDoubleValidator(
                     onNotPositive = { QuickAddFormFieldError.NotPositiveNumber }
                 ),
-            textFieldState = rememberTextFieldState(servingCount?.formatClipZeros() ?: ""),
+            textFieldState = rememberTextFieldState(servingCount?.toString()?.removeSuffix(".0") ?: ""),
         )
 
     val weightGramsForm =
@@ -143,7 +143,7 @@ internal fun rememberQuickAddFormState(
                 positiveDoubleValidator(
                     onNotPositive = { QuickAddFormFieldError.NotPositiveNumber }
                 ),
-            textFieldState = rememberTextFieldState(weightGrams?.formatClipZeros() ?: ""),
+            textFieldState = rememberTextFieldState(weightGrams?.toString()?.removeSuffix(".0") ?: ""),
         )
 
     val energyForm =

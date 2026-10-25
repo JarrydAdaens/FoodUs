@@ -9,7 +9,7 @@ import androidx.test.core.app.launchActivity
 import androidx.test.platform.app.InstrumentationRegistry
 import com.maksimowiczm.foodyou.app.infrastructure.android.DeveloperActivity
 import com.maksimowiczm.foodyou.app.ui.database.australianfoodcompositiondatabase.AustralianFoodCompositionDatabaseViewModel
-import com.maksimowiczm.foodyou.common.domain.food.FoodSource
+import com.maksimowiczm.foodyou.common.domain.food.ProductSource
 import com.maksimowiczm.foodyou.common.domain.userpreferences.UserPreferencesRepository
 import com.maksimowiczm.foodyou.food.domain.repository.OpenFoodFactsCredentialsRepository
 import com.maksimowiczm.foodyou.food.search.domain.FoodSearchPreferences
@@ -189,7 +189,7 @@ class OnboardingAfcdTest {
             }
         }
         private val metadataRepository = object : ProviderMetadataRepository {
-            override fun observe(source: FoodSource.Type) = metadata
+            override fun observe(source: ProductSource.Type) = metadata
             override suspend fun put(metadata: ProviderMetadata) {
                 this@Fixture.metadata.value = metadata
             }
@@ -202,7 +202,7 @@ class OnboardingAfcdTest {
                 emit(AfcdImportProgress.Importing(1f))
                 metadataRepository.put(
                     ProviderMetadata(
-                        source = FoodSource.Type.AustralianFoodCompositionDatabase,
+                        source = ProductSource.Type.AustralianFoodCompositionDatabase,
                         installedVersion = "test-release",
                         publicationDate = null,
                         checksum = null,

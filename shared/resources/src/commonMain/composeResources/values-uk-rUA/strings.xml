@@ -6,7 +6,7 @@
     <string name="headline_daily_goals">Денна ціль</string>
     <string name="headline_general">Загальні</string>
     <string name="headline_macronutrients">Макроелементи</string>
-    <string name="headline_meals">Страви</string>
+    <string name="headline_diary_slots">Страви</string>
     <string name="headline_edit_product">Редагувати продукт</string>
     <string name="headline_permission_required">Потрібен дозвіл</string>
     <string name="headline_language">Мова</string>
@@ -29,7 +29,7 @@
     <string name="headline_home" description="Home screen">Головна</string>
     <string name="headline_home_settings" description="Home screen settings">Налаштування головної</string>
     <string name="headline_calendar">Календар</string>
-    <string name="headline_meals_settings">Налаштування страв</string>
+    <string name="headline_diary_slots_settings">Налаштування страв</string>
     <string name="headline_horizontal">Горизонтально</string>
     <string name="headline_vertical">Вертикально</string>
     <string name="headline_values_per">Значення на</string>
@@ -127,7 +127,7 @@
     <string name="action_save">Зберегти</string>
     <string name="action_delete">Видалити</string>
     <string name="action_confirm">Підтвердити</string>
-    <string name="action_add_meal">Додати страву</string>
+    <string name="action_add_diary_slot">Додати страву</string>
     <string name="action_edit">Редагувати</string>
     <string name="action_insert_suggested_search">Вставити запропонований пошук</string>
     <string name="action_edit_entry">Редагувати запис</string>
@@ -144,7 +144,7 @@
     <string name="action_move_up" description="reorder list item up">Вгору</string>
     <string name="action_move_down" description="reorder list item down">Вниз</string>
     <string name="action_use_time_based_ordering">Впорядковувати за часом</string>
-    <string name="action_ignore_all_day_meals">Ігнорувати страви без визначеного часу</string>
+    <string name="action_ignore_all_day_diary_slots">Ігнорувати страви без визначеного часу</string>
     <string name="action_add_ingredient" description="Add ingredient to the recipe">Додати інгредієнт</string>
     <string name="action_delete_ingredient">Видалити інгредієнт</string>
     <string name="action_download">Завантажити</string>
@@ -176,9 +176,9 @@
         <item quantity="many">Залишилося %1$d кілоджоулів</item>
         <item quantity="other">Залишилося %1$d кілоджоулів</item>
     </plurals>
-    <string name="neutral_set_your_meal_schedule">Визначте свій розклад страв.</string>
-    <string name="neutral_permanently_delete_meal">Видалити страву остаточно?</string>
-    <string name="neutral_meal_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">Страву буде видалено остаточно. Всі дані пов'язані з цією стравою буде втрачено.</string>
+    <string name="neutral_set_your_diary_slot_schedule">Визначте свій розклад страв.</string>
+    <string name="neutral_permanently_delete_diary_slot">Видалити страву остаточно?</string>
+    <string name="neutral_diary_slot_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">Страву буде видалено остаточно. Всі дані пов'язані з цією стравою буде втрачено.</string>
     <string name="neutral_required">Обов'язкове</string>
     <string name="neutral_help_translating_the_app">Допомогти перекласти додаток</string>
     <string name="neutral_copied">Інформацію скопійовано в буфер обміну</string>
@@ -207,8 +207,8 @@
     </plurals>
     <string name="description_delete_product_entry" description="Tell user that this entry will be deleted only from diary and won't affect the product itself. Product won't be deleted from the database.">Цей запис буде видалено з вашого щоденнику. Ви зможете додати його знову в будь-який час.</string>
     <string name="description_about_setting">Дізнатися більше про додаток</string>
-    <string name="description_time_based_meals_sorting">Якщо ввімкнене, то страви, що відбуваються прямо зараз, будуть показуватися першими</string>
-    <string name="description_action_ignore_all_day_meals">Страви без визначеного часу будуть показуватися наприкінці списку</string>
+    <string name="description_time_based_diary_slots_sorting">Якщо ввімкнене, то страви, що відбуваються прямо зараз, будуть показуватися першими</string>
+    <string name="description_action_ignore_all_day_diary_slots">Страви без визначеного часу будуть показуватися наприкінці списку</string>
     <string name="description_incomplete_nutrition_data">У деяких з використаних продуктів відсутнє це значення; через це, показане значення може бути неточним</string>
     <string name="description_translation_warning">Переклади створені волонтерами. Вони можуть бути неточними або відсутніми в деяких місцях. Якщо ви бачите помилки, допоможіть нам виправити їх.</string>
     <string name="description_home_settings">Налаштуйте свій головний екран</string>

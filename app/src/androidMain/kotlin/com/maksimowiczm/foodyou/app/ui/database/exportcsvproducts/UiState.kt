@@ -5,9 +5,11 @@ import androidx.compose.runtime.*
 @Immutable
 internal sealed interface UiState {
 
+    @Immutable data object Preparing : UiState
+
     @Immutable data object WaitingForFile : UiState
 
-    @Immutable data class Error(val message: String?) : UiState
+    @Immutable data class Error(val metricUnavailable: Boolean = false) : UiState
 
     @Immutable data class Exporting(val count: Int) : UiState
 

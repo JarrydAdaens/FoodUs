@@ -2,12 +2,12 @@ package com.maksimowiczm.foodyou.food.infrastructure.network
 
 import com.maksimowiczm.foodyou.common.domain.food.NutrientValue.Companion.toNutrientValue
 import com.maksimowiczm.foodyou.common.domain.food.NutritionFacts
-import com.maksimowiczm.foodyou.food.domain.entity.FoodId
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
 import com.maksimowiczm.foodyou.food.domain.entity.Product
 import com.maksimowiczm.foodyou.food.domain.entity.RemoteProduct
 
 internal class RemoteProductMapper {
-    fun toModel(remote: RemoteProduct, id: FoodId.Product = FoodId.Product(0)): Product {
+    fun toModel(remote: RemoteProduct, id: NutritionalItemId.Product = NutritionalItemId.Product(0)): Product {
         val name = remote.name
         if (name == null) {
             error("Product name cannot be null")

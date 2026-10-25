@@ -1,6 +1,6 @@
 package com.maksimowiczm.foodyou.importexport.providermetadata.domain
 
-import com.maksimowiczm.foodyou.common.domain.food.FoodSource
+import com.maksimowiczm.foodyou.common.domain.food.ProductSource
 
 /**
  * Domain view of a downloadable provider's installed dataset and last check outcome.
@@ -8,7 +8,7 @@ import com.maksimowiczm.foodyou.common.domain.food.FoodSource
  * @param installed Whether a dataset has ever been imported for this provider.
  */
 data class ProviderMetadata(
-    val source: FoodSource.Type,
+    val source: ProductSource.Type,
     val installedVersion: String?,
     val publicationDate: String?,
     val checksum: String?,

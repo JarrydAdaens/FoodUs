@@ -7,7 +7,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.maksimowiczm.foodyou.app.ui.food.component.Icon
 import com.maksimowiczm.foodyou.app.ui.food.component.stringResource
-import com.maksimowiczm.foodyou.common.domain.food.FoodSource
+import com.maksimowiczm.foodyou.common.domain.food.ProductSource
 import foodyou.app.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 
@@ -54,11 +54,11 @@ internal data class FoodFilter(val source: Source = DefaultFilter) {
                         modifier = modifier,
                     )
 
-                OpenFoodFacts -> FoodSource.Type.OpenFoodFacts.Icon(modifier)
-                USDA -> FoodSource.Type.USDA.Icon(modifier)
-                SwissFoodCompositionDatabase -> FoodSource.Type.SwissFoodCompositionDatabase.Icon()
+                OpenFoodFacts -> ProductSource.Type.OpenFoodFacts.Icon(modifier)
+                USDA -> ProductSource.Type.USDA.Icon(modifier)
+                SwissFoodCompositionDatabase -> ProductSource.Type.SwissFoodCompositionDatabase.Icon()
                 AustralianFoodCompositionDatabase ->
-                    FoodSource.Type.AustralianFoodCompositionDatabase.Icon()
+                    ProductSource.Type.AustralianFoodCompositionDatabase.Icon()
             }
 
         @Composable
@@ -66,8 +66,8 @@ internal data class FoodFilter(val source: Source = DefaultFilter) {
             when (this) {
                 Recent -> stringResource(Res.string.headline_recent)
                 YourFood -> stringResource(Res.string.headline_your_food)
-                OpenFoodFacts -> FoodSource.Type.OpenFoodFacts.stringResource()
-                USDA -> FoodSource.Type.USDA.stringResource()
+                OpenFoodFacts -> ProductSource.Type.OpenFoodFacts.stringResource()
+                USDA -> ProductSource.Type.USDA.stringResource()
                 SwissFoodCompositionDatabase ->
                     stringResource(Res.string.headline_swiss_food_composition_database)
                 AustralianFoodCompositionDatabase ->

@@ -25,6 +25,7 @@ fun DatabaseSettingsScreen(
     onImportCsvProducts: () -> Unit,
     onExportCsvProducts: () -> Unit,
     onDatabaseBackup: () -> Unit,
+    onImportLibrary: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
@@ -43,6 +44,8 @@ fun DatabaseSettingsScreen(
             modifier = Modifier.fillMaxSize().nestedScroll(scrollBehavior.nestedScrollConnection),
             contentPadding = paddingValues,
         ) {
+            item { SettingsListItem(icon={Icon(Icons.Outlined.FileOpen,null)},label={Text(stringResource(Res.string.library_import_title))},
+                supportingContent={Text(stringResource(Res.string.library_import_description))},onClick=onImportLibrary) }
             item { ImportCsvProductsSettingsListItem(onImportCsvProducts) }
             item { ExportCsvProductsSettingsListItem(onExportCsvProducts) }
             item { DatabaseBackup(onDatabaseBackup) }

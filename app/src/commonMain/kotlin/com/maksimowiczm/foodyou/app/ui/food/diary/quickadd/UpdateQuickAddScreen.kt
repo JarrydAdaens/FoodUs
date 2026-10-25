@@ -1,6 +1,7 @@
 package com.maksimowiczm.foodyou.app.ui.food.diary.quickadd
 
 import androidx.compose.runtime.*
+import foodyou.app.generated.resources.*
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.maksimowiczm.foodyou.app.ui.common.utility.LocalEnergyFormatter
@@ -30,6 +31,14 @@ fun UpdateQuickAddScreen(
         }
     }
 
+    val readFailed by viewModel.readFailed.collectAsStateWithLifecycle()
+    if (readFailed) {
+        androidx.compose.material3.AlertDialog(
+            onDismissRequest = onBack,
+            text = { androidx.compose.material3.Text(org.jetbrains.compose.resources.stringResource(foodyou.app.generated.resources.Res.string.meals_unavailable)) },
+            confirmButton = { androidx.compose.material3.TextButton(onClick = viewModel::retryRead) { androidx.compose.material3.Text(org.jetbrains.compose.resources.stringResource(foodyou.app.generated.resources.Res.string.meals_retry)) } },
+        )
+    }
     val entry = viewModel.entry.collectAsStateWithLifecycle().value
 
     if (entry == null) {
@@ -69,6 +78,7 @@ fun UpdateQuickAddScreen(
                 weightGrams = formState.weightGrams.value,
             )
         },
+        capturedPortion = entry.capturedPortion,
         modifier = modifier,
         state = formState,
         nutritionDetails = formState.toNutritionFacts(energyFormatter, entry.nutritionFacts),

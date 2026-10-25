@@ -38,7 +38,7 @@ import com.maksimowiczm.foodyou.common.domain.measurement.MeasurementType
 import com.maksimowiczm.foodyou.common.domain.measurement.from
 import com.maksimowiczm.foodyou.common.domain.measurement.rawValue
 import com.maksimowiczm.foodyou.common.domain.measurement.type
-import com.maksimowiczm.foodyou.food.domain.entity.FoodId
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
 import com.maksimowiczm.foodyou.food.domain.entity.Product
 import com.maksimowiczm.foodyou.food.domain.entity.Recipe
 import foodyou.app.generated.resources.*
@@ -51,12 +51,13 @@ import org.koin.core.parameter.parametersOf
 internal fun RecipeApp(
     onBack: () -> Unit,
     onSave: (RecipeFormState) -> Unit,
-    onEditFood: (FoodId) -> Unit,
+    onEditFood: (NutritionalItemId) -> Unit,
     onUpdateUsdaApiKey: () -> Unit,
     onUpdateOpenFoodFactsCredentials: () -> Unit,
     state: RecipeFormState,
     topBarTitle: String,
-    mainRecipeId: FoodId.Recipe?,
+    saving: Boolean,
+    mainRecipeId: NutritionalItemId.Recipe?,
     recipe: Recipe?,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
@@ -71,7 +72,7 @@ internal fun RecipeApp(
                         title = { Text(topBarTitle) },
                         navigationIcon = { ArrowBackIconButton(onBack) },
                         actions = {
-                            FilledIconButton(onClick = { onSave(state) }, enabled = state.isValid) {
+                            FilledIconButton(onClick = { onSave(state) }, enabled = state.isValid && !saving) {
                                 Icon(
                                     imageVector = Icons.Outlined.Save,
                                     contentDescription = stringResource(Res.string.action_save),
@@ -111,20 +112,20 @@ internal fun RecipeApp(
                         item {
                             HorizontalDivider(Modifier.padding(bottom = 8.dp))
                             Text(
-                                text = stringResource(Res.string.headline_summary),
+                                text = stringResource(Res.string.recipe_total_nutrition),
                                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                                 color = MaterialTheme.colorScheme.primary,
                                 style = MaterialTheme.typography.labelLarge,
                             )
 
-                            val facts =
-                                recipe.nutritionFacts *
-                                    Measurement.Package(1.0).weight(recipe.totalWeight) / 100.0
+                            val facts = recipe.totalNutrition
                             NutrientList(
                                 facts = facts,
                                 modifier = Modifier.padding(horizontal = 8.dp),
                             )
 
+                            Text(stringResource(Res.string.recipe_per_serving), modifier = Modifier.padding(horizontal = 16.dp))
+                            NutrientList(recipe.nutritionFor(Measurement.Serving(1.0)) ?: com.maksimowiczm.foodyou.common.domain.food.NutritionFacts())
                             if (!facts.isComplete) {
                                 val foods =
                                     recipe
@@ -238,20 +239,20 @@ private data class IngredientMeasurement(
     val quantity: Double,
 ) {
     constructor(
-        foodId: FoodId,
+        foodId: NutritionalItemId,
         measurement: Measurement,
     ) : this(
-        productId = (foodId as? FoodId.Product)?.id,
-        recipeId = (foodId as? FoodId.Recipe)?.id,
+        productId = (foodId as? NutritionalItemId.Product)?.id,
+        recipeId = (foodId as? NutritionalItemId.Recipe)?.id,
         measurementType = measurement.type,
         quantity = measurement.rawValue,
     )
 
-    val foodId: FoodId
+    val foodId: NutritionalItemId
         get() =
             when {
-                productId != null -> FoodId.Product(productId)
-                recipeId != null -> FoodId.Recipe(recipeId)
+                productId != null -> NutritionalItemId.Product(productId)
+                recipeId != null -> NutritionalItemId.Recipe(recipeId)
                 else -> throw IllegalStateException("Food ID is not set")
             }
 

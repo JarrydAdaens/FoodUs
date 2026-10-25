@@ -16,7 +16,7 @@ import org.koin.core.parameter.parametersOf
 fun CreateQuickAddScreen(
     onBack: () -> Unit,
     onSave: () -> Unit,
-    mealId: Long,
+    diarySlotId: Long,
     date: LocalDate,
     modifier: Modifier = Modifier,
     // Story 19 promotion. Opens the product/recipe editor prefilled from the current form values
@@ -33,7 +33,7 @@ fun CreateQuickAddScreen(
     prefillFats: Double? = null,
     scanEstimate: AiFoodEstimate? = null,
 ) {
-    val viewModel: CreateQuickAddViewModel = koinViewModel { parametersOf(date, mealId) }
+    val viewModel: CreateQuickAddViewModel = koinViewModel { parametersOf(date, diarySlotId) }
     val energyFormatter = LocalEnergyFormatter.current
     val saveState by viewModel.saveState.collectAsStateWithLifecycle()
     val originalNutrition = scanEstimate?.toNutritionFacts() ?: NutritionFacts()

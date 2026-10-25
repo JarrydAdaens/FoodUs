@@ -1,78 +1,69 @@
 package com.maksimowiczm.foodyou.food.domain.entity
 
 import com.maksimowiczm.foodyou.common.domain.food.NutritionFacts
-import com.maksimowiczm.foodyou.common.domain.food.WeightCalculator
-import com.maksimowiczm.foodyou.common.domain.food.sum
+import com.maksimowiczm.foodyou.common.domain.food.RecipeCalculation
+import com.maksimowiczm.foodyou.common.domain.food.hasValidValues
 import com.maksimowiczm.foodyou.common.domain.measurement.Measurement
+import com.maksimowiczm.foodyou.common.domain.measurement.MeasurementResolver
+import com.maksimowiczm.foodyou.common.domain.food.ReportedNutrition
+import com.maksimowiczm.foodyou.common.domain.food.ReportedRecipeComponent
 
-/**
- * Represents a recipe in the food domain.
- *
- * @param id The unique identifier for the recipe.
- * @param name The name of the recipe.
- * @param servings The number of servings the recipe yields.
- * @param ingredients The list of ingredients used in the recipe.
- * @param note An optional note for the recipe.
- * @param isLiquid Indicates whether the recipe is a liquid.
- */
+/** A combined item. Yield is reference servings; diary portions scale captured ingredient totals. */
 data class Recipe(
-    override val id: FoodId.Recipe,
+    override val id: NutritionalItemId.Recipe,
     val name: String,
-    val servings: Int,
+    val servings: Int?,
     val ingredients: List<RecipeIngredient>,
     val note: String?,
     override val isLiquid: Boolean,
-) : Food {
+    val reportedNutrition: ReportedNutrition? = null,
+    val reportedComponents: List<ReportedRecipeComponent> = emptyList(),
+) : NutritionalItem {
+    val isReported: Boolean get() = reportedNutrition != null
     override val headline: String = name
 
-    override val totalWeight = ingredients.mapNotNull { it.weight }.sum()
+    override val totalWeight: Double? = if (isReported) reportedNutrition?.totalMetric(isLiquid, servings) else RecipeCalculation.totalWeight(
+        isLiquid, ingredients.map { it.food.isLiquid to it.weight },
+    )
+    override val servingWeight: Double? = if (isReported) {
+        if (reportedNutrition?.basis == com.maksimowiczm.foodyou.common.domain.food.ReportedBasis.REFERENCE_SERVING) reportedNutrition.referenceMetric(isLiquid)
+        else servings?.takeIf { it > 0 }?.let { totalWeight?.div(it) }
+    } else servings?.takeIf { it > 0 }?.let { totalWeight?.div(it)?.takeIf { it.isFinite() && it > 0.0 } }
+    val totalNutrition: NutritionFacts = if (isReported) reportedNutrition?.nutritionFor(Measurement.Package(1.0), isLiquid, servings) ?: NutritionFacts()
+        else RecipeCalculation.totalNutrition(ingredients.map { it.nutritionFacts })
+    val isResolvable: Boolean = if (isReported) reportedNutrition?.let { !it.needsReview && it.facts.hasValidValues() && it.basis in listOf(com.maksimowiczm.foodyou.common.domain.food.ReportedBasis.WHOLE_ITEM, com.maksimowiczm.foodyou.common.domain.food.ReportedBasis.REFERENCE_SERVING) } == true
+        else servings != null && servings > 0 && ingredients.isNotEmpty() && ingredients.all { it.nutritionFacts != null } &&
+        !RecipeCalculation.hasAggregateOverflow(isLiquid, ingredients.map { it.food.isLiquid to it.weight })
 
-    override val servingWeight = totalWeight / servings
+    /** Per-100 facts exist only for a complete compatible metric basis. */
+    override val nutritionFacts: NutritionFacts = if (isReported) reportedNutrition?.nutritionFor(
+        if (isLiquid) Measurement.Milliliter(100.0) else Measurement.Gram(100.0), isLiquid, servings,
+    ) ?: NutritionFacts() else totalWeight?.let { totalNutrition / it * 100.0 } ?: NutritionFacts()
 
-    override val nutritionFacts: NutritionFacts by lazy {
-        if (ingredients.isEmpty()) {
-            NutritionFacts.Empty
-        } else {
-            ingredients.mapNotNull { it.nutritionFacts }.sum() / totalWeight * 100.0
-        }
+    override fun weight(measurement: Measurement): Double? =
+        MeasurementResolver.metricAmount(measurement, isLiquid, totalWeight, servingWeight)
+
+    fun fraction(measurement: Measurement): Double? =
+        RecipeCalculation.fraction(measurement, servings, isLiquid, totalWeight)
+
+    override fun nutritionFor(measurement: Measurement): NutritionFacts? {
+        if (isReported) return reportedNutrition?.nutritionFor(measurement, isLiquid, servings)
+        if (!isResolvable) return null
+        val fraction = fraction(measurement) ?: return null
+        return (totalNutrition * fraction).takeIf { it.hasValidValues() }
     }
 
-    override fun weight(measurement: Measurement): Double =
-        WeightCalculator.calculateWeight(
-            measurement = measurement,
-            totalWeight = totalWeight,
-            servingWeight = servingWeight,
-        )
+    fun flatIngredients(): List<NutritionalItem> = ingredients.flatMap {
+        val item = it.food
+        if (item is Recipe) listOf(item) + item.flatIngredients() else listOf(item)
+    }.distinct()
 
-    /**
-     * Returns a list of all ingredients in the recipe, including those from nested recipes. If an
-     * ingredient is a recipe, it recursively includes its ingredients. Each food is included only
-     * once in the final list.
-     */
-    fun flatIngredients(): List<Food> =
-        ingredients
-            .flatMap { ingredient ->
-                val food = ingredient.food
-                if (food is Recipe) {
-                    listOf(food) + food.flatIngredients()
-                } else {
-                    listOf(food)
-                }
-            }
-            .distinct()
-
-    /**
-     * Unpacks the recipe into a list of ingredients with their weights adjusted according to the
-     * specified measurement.
-     *
-     * @param weight The total weight to adjust the ingredients to.
-     * @return A list of [RecipeIngredient] with weights adjusted according to the specified weight.
-     */
-    fun unpack(weight: Double): List<RecipeIngredient> {
-        val fraction = weight / totalWeight
-
-        return ingredients.map { (food, measurement) ->
-            RecipeIngredient(food = food, measurement = measurement * fraction)
-        }
+    /** Unpack only direct constituents. Nested Recipes stay combined until explicitly unpacked. */
+    fun unpack(measurement: Measurement): List<RecipeIngredient>? {
+        if (isReported) return null
+        if (nutritionFor(measurement) == null) return null
+        val fraction = fraction(measurement) ?: return null
+        val scaled = ingredients.map { it.copy(measurement = it.measurement * fraction) }
+        return scaled.takeIf { list -> list.all { it.nutritionFacts != null } }
     }
 }

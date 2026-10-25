@@ -23,9 +23,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.animateFloatingActionButton
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -33,19 +35,25 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton
 import com.maksimowiczm.foodyou.app.ui.food.component.MeasurementPicker
+import com.maksimowiczm.foodyou.app.ui.food.component.CapturedReferenceText
+import com.maksimowiczm.foodyou.app.ui.food.component.CapturedMetadataView
+import com.maksimowiczm.foodyou.app.ui.food.component.CapturedNutritionSummary
+import com.maksimowiczm.foodyou.app.ui.food.component.reportedBasisLabel
+import com.maksimowiczm.foodyou.common.domain.food.ProductFactBasis
 import com.maksimowiczm.foodyou.app.ui.food.diary.component.ChipsDatePicker
-import com.maksimowiczm.foodyou.app.ui.food.diary.component.ChipsMealPicker
+import com.maksimowiczm.foodyou.app.ui.food.diary.component.ChipsDiarySlotPicker
 import com.maksimowiczm.foodyou.app.ui.food.diary.component.FoodMeasurementFormState
 import com.maksimowiczm.foodyou.app.ui.food.diary.component.Source
+import com.maksimowiczm.foodyou.app.ui.food.diary.component.PortionSaveErrorDialog
 import com.maksimowiczm.foodyou.app.ui.food.diary.component.rememberFoodMeasurementFormState
 import com.maksimowiczm.foodyou.common.compose.extension.LaunchedCollectWithLifecycle
 import com.maksimowiczm.foodyou.common.compose.extension.add
 import com.maksimowiczm.foodyou.common.extension.minus
 import com.maksimowiczm.foodyou.common.extension.plus
-import com.maksimowiczm.foodyou.fooddiary.domain.entity.DiaryFoodProduct
-import com.maksimowiczm.foodyou.fooddiary.domain.entity.DiaryFoodRecipe
-import com.maksimowiczm.foodyou.fooddiary.domain.entity.FoodDiaryEntry
-import com.maksimowiczm.foodyou.fooddiary.domain.entity.FoodDiaryEntryId
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.ProductSnapshot
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.RecipeSnapshot
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.NutritionalItemDiaryEntry
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.NutritionalItemDiaryEntryId
 import foodyou.app.generated.resources.*
 import kotlin.time.Duration.Companion.days
 import org.jetbrains.compose.resources.stringResource
@@ -60,17 +68,20 @@ fun UpdateEntryScreen(
     animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
 ) {
-    val viewModel: UpdateFoodDiaryEntryViewModel = koinViewModel {
-        parametersOf(FoodDiaryEntryId(entryId))
+    val viewModel: UpdateNutritionalItemDiaryEntryViewModel = koinViewModel {
+        parametersOf(NutritionalItemDiaryEntryId(entryId))
     }
 
+    var saveFailed by rememberSaveable { mutableStateOf(false) }
+    if (saveFailed) PortionSaveErrorDialog { saveFailed = false }
     LaunchedCollectWithLifecycle(viewModel.uiEvents) {
         when (it) {
             is UpdateEntryEvent.Saved -> onSave()
+            UpdateEntryEvent.SaveFailed -> saveFailed = true
         }
     }
 
-    val meals by viewModel.meals.collectAsStateWithLifecycle()
+    val diarySlots by viewModel.diarySlots.collectAsStateWithLifecycle()
     val entry = viewModel.entry.collectAsStateWithLifecycle().value
     val possibleTypes = viewModel.possibleMeasurementTypes.collectAsStateWithLifecycle().value
     val suggestions = viewModel.suggestions.collectAsStateWithLifecycle().value
@@ -88,9 +99,9 @@ fun UpdateEntryScreen(
                         .distinct()
                         .sorted(),
                 selectedDate = entry.date,
-                meals = remember(meals) { meals.map { it.name } },
-                selectedMeal =
-                    remember(meals, entry) { meals.firstOrNull { it.id == entry.mealId }?.name },
+                diarySlots = remember(diarySlots) { diarySlots.map { it.name } },
+                selectedDiarySlot =
+                    remember(diarySlots, entry) { diarySlots.firstOrNull { it.id == entry.diarySlotId }?.name },
                 suggestions = suggestions,
                 possibleTypes = possibleTypes,
                 selectedMeasurement = entry.measurement,
@@ -99,29 +110,29 @@ fun UpdateEntryScreen(
         UpdateEntryScreen(
             onBack = onBack,
             onUnpack = {
-                val selectedMealId =
-                    state.mealsState.selectedMeal?.let { mealName ->
-                        meals.firstOrNull { it.name == mealName }?.id
+                val selectedDiarySlotId =
+                    state.diarySlotsState.selectedDiarySlot?.let { diarySlotName ->
+                        diarySlots.firstOrNull { it.name == diarySlotName }?.id
                     }
 
-                if (selectedMealId != null) {
+                if (selectedDiarySlotId != null) {
                     viewModel.unpack(
                         measurement = state.measurementState.measurement,
-                        mealId = selectedMealId,
+                        diarySlotId = selectedDiarySlotId,
                         date = state.dateState.selectedDate,
                     )
                 }
             },
             onSave = {
-                val selectedMealId =
-                    state.mealsState.selectedMeal?.let { mealName ->
-                        meals.firstOrNull { it.name == mealName }?.id
+                val selectedDiarySlotId =
+                    state.diarySlotsState.selectedDiarySlot?.let { diarySlotName ->
+                        diarySlots.firstOrNull { it.name == diarySlotName }?.id
                     }
 
-                if (selectedMealId != null) {
+                if (selectedDiarySlotId != null) {
                     viewModel.save(
                         measurement = state.measurementState.measurement,
-                        mealId = selectedMealId,
+                        diarySlotId = selectedDiarySlotId,
                         date = state.dateState.selectedDate,
                     )
                 }
@@ -140,11 +151,12 @@ private fun UpdateEntryScreen(
     onUnpack: () -> Unit,
     onSave: () -> Unit,
     state: FoodMeasurementFormState,
-    entry: FoodDiaryEntry,
+    entry: NutritionalItemDiaryEntry,
     animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val canUnpack = entry.food is RecipeSnapshot && entry.food.reportedNutrition == null && entry.food.calculationVersion in 0..1
     val topBar =
         @Composable {
             MediumTopAppBar(
@@ -158,13 +170,13 @@ private fun UpdateEntryScreen(
             Column(
                 modifier =
                     Modifier.animateFloatingActionButton(
-                        visible = !animatedVisibilityScope.transition.isRunning && state.isValid,
+                        visible = !animatedVisibilityScope.transition.isRunning && state.isValid && entry.food.nutritionFor(state.measurementState.measurement) != null,
                         alignment = Alignment.BottomEnd,
                     ),
                 horizontalAlignment = Alignment.End,
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                if (entry.food is DiaryFoodRecipe) {
+                if (canUnpack) {
                     ExtendedFloatingActionButton(
                         onClick = {
                             if (state.isValid) {
@@ -208,7 +220,7 @@ private fun UpdateEntryScreen(
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
             contentPadding =
                 paddingValues.add(vertical = 8.dp).let {
-                    if (entry.food is DiaryFoodRecipe) {
+                    if (canUnpack) {
                         it.add(bottom = 8.dp + 56.dp + 8.dp + 80.dp + 24.dp) // Double FAB
                     } else {
                         it.add(bottom = 80.dp + 24.dp) // FAB
@@ -220,16 +232,39 @@ private fun UpdateEntryScreen(
             item {
                 ChipsDatePicker(state = state.dateState, modifier = Modifier.padding(8.dp))
                 HorizontalDivider(Modifier.padding(horizontal = 8.dp))
-                ChipsMealPicker(state = state.mealsState, modifier = Modifier.padding(8.dp))
+                ChipsDiarySlotPicker(state = state.diarySlotsState, modifier = Modifier.padding(8.dp))
                 HorizontalDivider(Modifier.padding(horizontal = 8.dp))
+                Text(stringResource(Res.string.portion_amount_to_log), modifier = Modifier.padding(8.dp))
                 MeasurementPicker(state = state.measurementState, modifier = Modifier.padding(8.dp))
             }
 
             val food = entry.food
-            if (food is DiaryFoodRecipe) {
+            if(food is ProductSnapshot && food.factBasis==ProductFactBasis.REFERENCE_SERVING) {
+                item { Column(Modifier.padding(16.dp),verticalArrangement=Arrangement.spacedBy(4.dp)) {
+                    Text(stringResource(Res.string.captured_reference_serving),style=MaterialTheme.typography.titleMedium)
+                    CapturedReferenceText(food.referencePortion)
+                    CapturedMetadataView(food.nutritionMetadata)
+                } }
+            }
+            if(food is RecipeSnapshot && food.reportedNutrition!=null) {
+                item { Column(Modifier.padding(16.dp),verticalArrangement=Arrangement.spacedBy(4.dp)) {
+                    Text(reportedBasisLabel(food.reportedNutrition.basis),style=MaterialTheme.typography.titleMedium)
+                    Text(stringResource(Res.string.captured_unpack_unavailable))
+                    CapturedReferenceText(food.reportedNutrition.reference)
+                    var showFacts by remember(food) { mutableStateOf(false) }
+                    TextButton(onClick={showFacts=!showFacts}) { Text(stringResource(if(showFacts)Res.string.captured_hide_details else Res.string.captured_show_details)) }
+                    if(showFacts)CapturedNutritionSummary(food.reportedNutrition.facts)
+                    CapturedMetadataView(food.reportedNutrition.metadata)
+                    CapturedMetadataView(food.reportedNutrition.definitionMetadata,true)
+                    food.reportedComponents.forEach { component ->
+                        Text(component.name);CapturedReferenceText(component.portion);CapturedMetadataView(component.metadata)
+                    }
+                } }
+            }
+            if (food is RecipeSnapshot && canUnpack) {
                 item {
                     val measurement = state.measurementState.measurement
-                    val ingredients = food.unpack(measurement)
+                    val ingredients = food.unpack(measurement).orEmpty()
 
                     HorizontalDivider(Modifier.padding(horizontal = 8.dp))
                     Ingredients(
@@ -264,7 +299,7 @@ private fun UpdateEntryScreen(
                 }
             }
 
-            if (food is DiaryFoodProduct) {
+            if (food is ProductSnapshot) {
                 item {
                     HorizontalDivider(Modifier.padding(horizontal = 8.dp))
                     Column(Modifier.padding(8.dp)) {

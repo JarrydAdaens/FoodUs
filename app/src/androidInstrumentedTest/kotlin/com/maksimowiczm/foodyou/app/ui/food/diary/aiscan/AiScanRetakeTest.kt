@@ -46,7 +46,7 @@ import com.maksimowiczm.foodyou.app.infrastructure.android.DeveloperActivity
 import com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.ScanTestDriver
 import com.maksimowiczm.foodyou.common.config.AppConfig
 import com.maksimowiczm.foodyou.common.domain.userpreferences.UserPreferencesRepository
-import com.maksimowiczm.foodyou.food.search.domain.FoodSearchUseCase
+import com.maksimowiczm.foodyou.food.search.domain.NutritionalItemSearchUseCase
 import foodyou.app.generated.resources.*
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -262,7 +262,7 @@ class AiScanRetakeTest {
                     activity.window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
                     registry = ControlledRegistry()
                     permissionContext = CameraPermissionContext(activity)
-                    model = AiScanViewModel(scanner, applicationKoin.get<FoodSearchUseCase>(),
+                    model = AiScanViewModel(scanner, applicationKoin.get<NutritionalItemSearchUseCase>(),
                         ObserveAiConfigured(settings, config))
                     store.put("synthetic-retake", model)
                     if (initialPhoto) {

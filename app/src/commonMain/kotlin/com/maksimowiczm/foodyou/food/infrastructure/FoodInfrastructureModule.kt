@@ -1,15 +1,15 @@
 package com.maksimowiczm.foodyou.food.infrastructure
 
-import com.maksimowiczm.foodyou.food.domain.repository.FoodHistoryRepository
-import com.maksimowiczm.foodyou.food.domain.repository.FoodMeasurementSuggestionRepository
+import com.maksimowiczm.foodyou.food.domain.repository.NutritionalItemHistoryRepository
+import com.maksimowiczm.foodyou.food.domain.repository.NutritionalItemMeasurementSuggestionRepository
 import com.maksimowiczm.foodyou.food.domain.repository.ProductRepository
 import com.maksimowiczm.foodyou.food.domain.repository.RecipeRepository
 import com.maksimowiczm.foodyou.food.domain.repository.RemoteProductRequestFactory
 import com.maksimowiczm.foodyou.food.infrastructure.network.RemoteProductMapper
 import com.maksimowiczm.foodyou.food.infrastructure.network.RemoteProductRequestFactoryImpl
 import com.maksimowiczm.foodyou.food.infrastructure.openfoodfacts.openFoodFactsModule
-import com.maksimowiczm.foodyou.food.infrastructure.repository.RoomFoodHistoryRepository
-import com.maksimowiczm.foodyou.food.infrastructure.repository.RoomFoodMeasurementSuggestionRepository
+import com.maksimowiczm.foodyou.food.infrastructure.repository.RoomNutritionalItemHistoryRepository
+import com.maksimowiczm.foodyou.food.infrastructure.repository.RoomNutritionalItemMeasurementSuggestionRepository
 import com.maksimowiczm.foodyou.food.infrastructure.repository.RoomProductRepository
 import com.maksimowiczm.foodyou.food.infrastructure.repository.RoomRecipeRepository
 import com.maksimowiczm.foodyou.food.infrastructure.room.FoodDatabase
@@ -25,8 +25,8 @@ fun Module.foodInfrastructureModule() {
     factory { database.productDao }
     factory { database.recipeDao }
 
-    factoryOf(::RoomFoodHistoryRepository).bind<FoodHistoryRepository>()
-    factoryOf(::RoomFoodMeasurementSuggestionRepository).bind<FoodMeasurementSuggestionRepository>()
+    factoryOf(::RoomNutritionalItemHistoryRepository).bind<NutritionalItemHistoryRepository>()
+    factoryOf(::RoomNutritionalItemMeasurementSuggestionRepository).bind<NutritionalItemMeasurementSuggestionRepository>()
     factoryOf(::RoomProductRepository).bind<ProductRepository>()
     factoryOf(::RoomRecipeRepository).bind<RecipeRepository>()
 

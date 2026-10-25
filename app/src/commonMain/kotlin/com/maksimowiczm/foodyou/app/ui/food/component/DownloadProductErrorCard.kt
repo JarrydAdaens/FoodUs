@@ -19,13 +19,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
-import com.maksimowiczm.foodyou.food.domain.entity.RemoteFoodException
+import com.maksimowiczm.foodyou.food.domain.entity.RemoteProductException
 import foodyou.app.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun DownloadProductUsdaErrorCard(
-    error: RemoteFoodException.USDA,
+    error: RemoteProductException.USDA,
     onUpdateApiKey: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -34,15 +34,15 @@ fun DownloadProductUsdaErrorCard(
 
     val errorText =
         when (error) {
-            is RemoteFoodException.USDA.ApiKeyDisabledException,
-            is RemoteFoodException.USDA.ApiKeyInvalidException,
-            is RemoteFoodException.USDA.ApiKeyIsMissingException,
-            is RemoteFoodException.USDA.ApiKeyUnauthorizedException ->
+            is RemoteProductException.USDA.ApiKeyDisabledException,
+            is RemoteProductException.USDA.ApiKeyInvalidException,
+            is RemoteProductException.USDA.ApiKeyIsMissingException,
+            is RemoteProductException.USDA.ApiKeyUnauthorizedException ->
                 stringResource(Res.string.error_api_key_is_invalid)
 
-            is RemoteFoodException.USDA.ApiKeyUnverifiedException ->
+            is RemoteProductException.USDA.ApiKeyUnverifiedException ->
                 stringResource(Res.string.error_usda_not_verified)
-            is RemoteFoodException.USDA.RateLimitException ->
+            is RemoteProductException.USDA.RateLimitException ->
                 stringResource(Res.string.error_usda_rate_limit)
         }
 

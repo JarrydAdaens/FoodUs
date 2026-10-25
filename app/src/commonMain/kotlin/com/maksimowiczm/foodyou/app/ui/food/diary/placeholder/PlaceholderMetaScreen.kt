@@ -49,21 +49,22 @@ import org.koin.core.parameter.parametersOf
 fun PlaceholderMetaScreen(
     manualEntryId: Long,
     onBack: () -> Unit,
-    onSearch: (epochDay: Long, mealId: Long) -> Unit,
-    onQuickAdd: (epochDay: Long, mealId: Long, name: String) -> Unit,
-    onAiQuery: (epochDay: Long, mealId: Long, query: String) -> Unit,
+    onSearch: (epochDay: Long, diarySlotId: Long) -> Unit,
+    onQuickAdd: (epochDay: Long, diarySlotId: Long, name: String) -> Unit,
+    onAiQuery: (epochDay: Long, diarySlotId: Long, query: String) -> Unit,
     onRemoved: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: PlaceholderMetaViewModel = koinViewModel { parametersOf(manualEntryId) }
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val readFailed by viewModel.readFailed.collectAsStateWithLifecycle()
 
     val latestOnAiQuery by rememberUpdatedState(onAiQuery)
     val latestOnRemoved by rememberUpdatedState(onRemoved)
     LaunchedCollectWithLifecycle(viewModel.events) { event ->
         when (event) {
             is PlaceholderMetaEvent.QueryGenerated ->
-                latestOnAiQuery(event.epochDay, event.mealId, event.query)
+                latestOnAiQuery(event.epochDay, event.diarySlotId, event.query)
 
             PlaceholderMetaEvent.Deleted -> latestOnRemoved()
         }
@@ -86,6 +87,11 @@ fun PlaceholderMetaScreen(
                     .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
+            if (readFailed) {
+                Text(stringResource(Res.string.meals_diary_unavailable))
+                TextButton(onClick = viewModel::retryRead) { Text(stringResource(Res.string.meals_retry)) }
+                return@Column
+            }
             if (!state.loaded) return@Column
 
             ElevatedCard(modifier = Modifier.fillMaxWidth()) {
@@ -109,14 +115,14 @@ fun PlaceholderMetaScreen(
                 icon = Icons.Outlined.Search,
                 label = stringResource(Res.string.action_search),
                 enabled = true,
-                onClick = { onSearch(state.epochDay, state.mealId) },
+                onClick = { onSearch(state.epochDay, state.diarySlotId) },
             )
 
             ResolutionOption(
                 icon = Icons.Outlined.Bolt,
                 label = stringResource(Res.string.headline_quick_add),
                 enabled = true,
-                onClick = { onQuickAdd(state.epochDay, state.mealId, state.name) },
+                onClick = { onQuickAdd(state.epochDay, state.diarySlotId, state.name) },
             )
 
             ResolutionOption(

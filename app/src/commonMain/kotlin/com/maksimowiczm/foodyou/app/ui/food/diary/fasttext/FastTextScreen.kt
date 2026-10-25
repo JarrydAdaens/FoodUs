@@ -39,17 +39,17 @@ import org.koin.core.parameter.parametersOf
 /**
  * Fast-text placeholder capture (Milestone 2, Story 8). The fastest logging path: type a name (and,
  * optionally, a description) and save with one tap. Saving records a zero-nutrition placeholder in
- * the diary via [FastTextViewModel]. [date] and [mealId] identify the diary meal being logged into.
+ * the diary via [FastTextViewModel]. [date] and [diarySlotId] identify the diary diarySlot being logged into.
  */
 @Composable
 fun FastTextScreen(
     date: LocalDate,
-    mealId: Long,
+    diarySlotId: Long,
     onBack: () -> Unit,
     onSave: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val viewModel: FastTextViewModel = koinViewModel { parametersOf(date, mealId) }
+    val viewModel: FastTextViewModel = koinViewModel { parametersOf(date, diarySlotId) }
 
     val latestOnSave by rememberUpdatedState(onSave)
     LaunchedCollectWithLifecycle(viewModel.events) {

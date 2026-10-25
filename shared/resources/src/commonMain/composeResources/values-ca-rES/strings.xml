@@ -6,7 +6,7 @@
     <string name="headline_daily_goals">Objectiu diari</string>
     <string name="headline_general">General</string>
     <string name="headline_macronutrients">Macronutrients</string>
-    <string name="headline_meals">Àpats</string>
+    <string name="headline_diary_slots">Àpats</string>
     <string name="headline_edit_product">Editar producte</string>
     <string name="headline_permission_required">Permís necessari</string>
     <string name="headline_language">Idioma</string>
@@ -29,7 +29,7 @@
     <string name="headline_home" description="Home screen">Inici</string>
     <string name="headline_home_settings" description="Home screen settings">Configuració d'Inici</string>
     <string name="headline_calendar">Calendari</string>
-    <string name="headline_meals_settings">Configuració dels àpats</string>
+    <string name="headline_diary_slots_settings">Configuració dels àpats</string>
     <string name="headline_horizontal">Horitzontal</string>
     <string name="headline_vertical">Vertical</string>
     <string name="headline_values_per">Valors per</string>
@@ -104,7 +104,7 @@
     <string name="action_save">Guardar</string>
     <string name="action_delete">Eliminar</string>
     <string name="action_confirm">Confirmar</string>
-    <string name="action_add_meal">Afegeix un àpat</string>
+    <string name="action_add_diary_slot">Afegeix un àpat</string>
     <string name="action_edit">Editar</string>
     <string name="action_insert_suggested_search">Inserta la cerca suggerida</string>
     <string name="action_edit_entry">Editar entrada</string>
@@ -121,7 +121,7 @@
     <string name="action_move_up" description="reorder list item up">Moure amunt</string>
     <string name="action_move_down" description="reorder list item down">Moure avall</string>
     <string name="action_use_time_based_ordering">Utilitzar ordre temporal</string>
-    <string name="action_ignore_all_day_meals">Ignora els àpats de tot el dia</string>
+    <string name="action_ignore_all_day_diary_slots">Ignora els àpats de tot el dia</string>
     <string name="action_add_ingredient" description="Add ingredient to the recipe">Afegir ingredient</string>
     <string name="action_delete_ingredient">Eliminar ingredient</string>
     <string name="action_download">Descarregar</string>
@@ -144,9 +144,9 @@
         <item quantity="one">%1$d caloria restant</item>
         <item quantity="other">%1$d calories restants</item>
     </plurals>
-    <string name="neutral_set_your_meal_schedule">Estableix l'horari dels àpats</string>
-    <string name="neutral_permanently_delete_meal">Eliminar àpat permanentment?</string>
-    <string name="neutral_meal_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">L'àpat s'eliminarà permanentment. Es perdran totes les dades relacionades amb aquest àpat.</string>
+    <string name="neutral_set_your_diary_slot_schedule">Estableix l'horari dels àpats</string>
+    <string name="neutral_permanently_delete_diary_slot">Eliminar àpat permanentment?</string>
+    <string name="neutral_diary_slot_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">L'àpat s'eliminarà permanentment. Es perdran totes les dades relacionades amb aquest àpat.</string>
     <string name="neutral_required">Obligatori</string>
     <string name="neutral_help_translating_the_app">Ajuda a traduir l'aplicació</string>
     <string name="neutral_copied">Informació copiada al porta-retalls</string>
@@ -173,8 +173,8 @@
     </plurals>
     <string name="description_delete_product_entry" description="Tell user that this entry will be deleted only from diary and won't affect the product itself. Product won't be deleted from the database.">Aquesta entrada s'eliminarà del vostre diari. Pots afegir-lo de nou en qualsevol moment.</string>
     <string name="description_about_setting">Més informació sobre l'aplicació</string>
-    <string name="description_time_based_meals_sorting">Quan s'activa, els àpats actuals es mostraran primer</string>
-    <string name="description_action_ignore_all_day_meals">Els àpats de tot el dia es mostraran al final de la llista</string>
+    <string name="description_time_based_diary_slots_sorting">Quan s'activa, els àpats actuals es mostraran primer</string>
+    <string name="description_action_ignore_all_day_diary_slots">Els àpats de tot el dia es mostraran al final de la llista</string>
     <string name="description_incomplete_nutrition_data">Alguns dels productes utilitzats no tenen aquest valor; per tant, el valor mostrat pot no ser precís</string>
     <string name="description_translation_warning">Les traduccions són creades per voluntaris. Pot ser que no siguin perfectes i que faltin algunes traduccions. Si notes algun error no dubtis a ajudar a millorar-los.</string>
     <string name="description_home_settings">Personalitza la teva pantalla d'inici</string>

@@ -1,10 +1,10 @@
 package com.maksimowiczm.foodyou.app.ui.food.diary.quickadd
 
 import com.maksimowiczm.foodyou.app.ui.common.utility.EnergyFormatter
-import com.maksimowiczm.foodyou.common.domain.food.FoodSource
+import com.maksimowiczm.foodyou.common.domain.food.ProductSource
 import com.maksimowiczm.foodyou.common.domain.food.NutrientValue.Companion.toNutrientValue
 import com.maksimowiczm.foodyou.common.domain.food.NutritionFacts
-import com.maksimowiczm.foodyou.food.domain.entity.FoodId
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
 import com.maksimowiczm.foodyou.food.domain.entity.Product
 import kotlin.math.roundToInt
 
@@ -52,7 +52,7 @@ private fun Double?.per100(basis: Double): Double? = this?.let { it / basis * 10
 internal fun QuickAddPromotionSeed.toProductPrefill(): Product {
     val basis = basisWeightGrams
     return Product(
-        id = FoodId.Product(0L),
+        id = NutritionalItemId.Product(0L),
         name = name,
         brand = null,
         barcode = null,
@@ -60,7 +60,7 @@ internal fun QuickAddPromotionSeed.toProductPrefill(): Product {
         isLiquid = false,
         packageWeight = weightGrams?.takeIf { it > 0.0 },
         servingWeight = null,
-        source = FoodSource(FoodSource.Type.User),
+        source = ProductSource(ProductSource.Type.User),
         nutritionFacts =
             nutritionFacts?.let { it / basis * 100.0 } ?: NutritionFacts(
                 energy = energyKcal.per100(basis).toNutrientValue(),

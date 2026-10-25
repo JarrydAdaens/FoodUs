@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -57,8 +58,16 @@ internal fun GoalsCard(
 
     val model = viewModel.model.collectAsStateWithLifecycle().value
     val expand by viewModel.expandGoalsCard.collectAsStateWithLifecycle()
+    val readFailed by viewModel.readFailed.collectAsStateWithLifecycle()
 
-    if (model == null) {
+    if (readFailed) {
+        FoodYouHomeCard(modifier = modifier, onClick = viewModel::retryRead, onLongClick = onLongClick) {
+            Column(Modifier.padding(16.dp)) {
+                Text(stringResource(Res.string.meals_diary_unavailable))
+                TextButton(onClick = viewModel::retryRead) { Text(stringResource(Res.string.meals_retry)) }
+            }
+        }
+    } else if (model == null) {
         GoalsCardSkeleton(
             shimmer = homeState.shimmer,
             expand = expand,

@@ -11,13 +11,14 @@ import androidx.compose.ui.unit.dp
 import com.maksimowiczm.foodyou.app.ui.common.component.FoodErrorListItem
 import com.maksimowiczm.foodyou.app.ui.common.component.FoodListItem
 import com.maksimowiczm.foodyou.app.ui.common.utility.LocalEnergyFormatter
+import com.maksimowiczm.foodyou.app.ui.common.utility.stringResource
 import com.maksimowiczm.foodyou.app.ui.common.utility.stringResourceWithWeight
 import com.maksimowiczm.foodyou.common.compose.extension.add
 import com.maksimowiczm.foodyou.common.compose.extension.horizontal
 import com.maksimowiczm.foodyou.common.compose.extension.vertical
 import com.maksimowiczm.foodyou.common.compose.utility.formatClipZeros
 import com.maksimowiczm.foodyou.common.domain.measurement.Measurement
-import com.maksimowiczm.foodyou.food.domain.entity.FoodId
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
 import foodyou.app.generated.resources.*
 import kotlin.math.roundToInt
 import org.jetbrains.compose.resources.stringResource
@@ -25,7 +26,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 internal fun Ingredients(
     ingredients: List<IngredientModel>,
-    onIngredient: (FoodId, Measurement) -> Unit,
+    onIngredient: (NutritionalItemId, Measurement) -> Unit,
     contentPadding: PaddingValues,
     modifier: Modifier = Modifier,
 ) {
@@ -52,15 +53,9 @@ internal fun Ingredients(
                     totalWeight = ingredient.totalWeight,
                     servingWeight = ingredient.servingWeight,
                     isLiquid = ingredient.isLiquid,
-                )
+                ) ?: ingredient.measurement.stringResource()
 
-            if (measurementString == null) {
-                FoodErrorListItem(
-                    headline = ingredient.name,
-                    errorMessage = stringResource(Res.string.error_measurement_error),
-                    contentPadding = horizontal.add(vertical = 8.dp),
-                )
-            } else if (proteins == null || carbs == null || fats == null || energy == null) {
+            if (proteins == null || carbs == null || fats == null || energy == null) {
                 FoodErrorListItem(
                     headline = ingredient.name,
                     errorMessage = stringResource(Res.string.error_food_is_missing_required_fields),

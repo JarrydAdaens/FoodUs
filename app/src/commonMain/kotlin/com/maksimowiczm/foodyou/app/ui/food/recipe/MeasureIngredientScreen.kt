@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton
 import com.maksimowiczm.foodyou.app.ui.common.component.IncompleteFoodsList
+import com.maksimowiczm.foodyou.app.ui.common.utility.stringResource
 import com.maksimowiczm.foodyou.app.ui.common.utility.stringResourceWithWeight
 import com.maksimowiczm.foodyou.app.ui.food.component.EnergyProgressIndicator
 import com.maksimowiczm.foodyou.app.ui.food.component.MeasurementPicker
@@ -58,15 +59,7 @@ internal fun MeasureIngredientScreen(
         return
     }
 
-    // This is stupid that it is here but it's going to be deleted in 4.0.0
-    val selectedMeasurement =
-        remember(measurement) {
-            if (food.weight(measurement) != null) {
-                measurement
-            } else {
-                if (food.isLiquid) Measurement.Milliliter(100.0) else Measurement.Gram(100.0)
-            }
-        }
+    val selectedMeasurement = measurement
 
     val measurementPickerState =
         rememberMeasurementPickerState(
@@ -74,6 +67,9 @@ internal fun MeasureIngredientScreen(
             possibleTypes = possibleMeasurements,
             selectedMeasurement = selectedMeasurement,
         )
+
+    val portionFacts = food.nutritionFor(measurementPickerState.measurement)
+    val amountValid = measurementPickerState.inputField.error == null && portionFacts != null
 
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
@@ -87,9 +83,9 @@ internal fun MeasureIngredientScreen(
             )
         },
         floatingActionButton = {
-            LargeExtendedFloatingActionButton(
+            if (amountValid) LargeExtendedFloatingActionButton(
                 onClick = { onSave(measurementPickerState.measurement) },
-                icon = { Icon(imageVector = Icons.Filled.Edit, contentDescription = null) },
+                icon = { Icon(imageVector = Icons.Filled.Edit, contentDescription = stringResource(Res.string.action_save)) },
                 text = { Text(stringResource(Res.string.action_save)) },
             )
         },
@@ -115,15 +111,11 @@ internal fun MeasureIngredientScreen(
 
             item {
                 val measurement = measurementPickerState.measurement
-                val facts =
-                    remember(food, measurement) {
-                        val weight =
-                            food.weight(measurement)
-                                ?: error(
-                                    "Invalid measurement: $measurement for food: ${food.headline}"
-                                )
-                        food.nutritionFacts * (weight / 100)
-                    }
+                val facts = portionFacts
+                if (facts == null) {
+                    Text(stringResource(Res.string.error_portion_save), color = MaterialTheme.colorScheme.error)
+                    return@item
+                }
 
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(8.dp),
@@ -156,7 +148,7 @@ internal fun MeasureIngredientScreen(
                         totalWeight = food.totalWeight,
                         servingWeight = food.servingWeight,
                         isLiquid = food.isLiquid,
-                    ) ?: error("Invalid measurement: $measurement for food ${food.id}")
+                    ) ?: measurement.stringResource()
 
                 Text(
                     text = measurementString,

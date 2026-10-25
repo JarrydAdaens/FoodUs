@@ -1,5 +1,6 @@
 package com.maksimowiczm.foodyou.fooddiary.infrastructure.room
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
@@ -11,7 +12,7 @@ import com.maksimowiczm.foodyou.common.domain.measurement.MeasurementType
     foreignKeys =
         [
             ForeignKey(
-                entity = MealEntity::class,
+                entity = DiarySlotEntity::class,
                 parentColumns = ["id"],
                 childColumns = ["mealId"],
                 onDelete = ForeignKey.CASCADE,
@@ -21,7 +22,7 @@ import com.maksimowiczm.foodyou.common.domain.measurement.MeasurementType
 )
 data class MeasurementEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    val mealId: Long,
+    @ColumnInfo(name = "mealId") val diarySlotId: Long,
     val epochDay: Long,
 
     // Product or Recipe

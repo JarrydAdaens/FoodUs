@@ -2,7 +2,7 @@ package com.maksimowiczm.foodyou.food.infrastructure.usda
 
 import com.maksimowiczm.foodyou.common.config.NetworkConfig
 import com.maksimowiczm.foodyou.common.log.Logger
-import com.maksimowiczm.foodyou.food.domain.entity.RemoteFoodException
+import com.maksimowiczm.foodyou.food.domain.entity.RemoteProductException
 import com.maksimowiczm.foodyou.food.infrastructure.usda.model.AbridgedFoodItem
 import com.maksimowiczm.foodyou.food.infrastructure.usda.model.SearchResult
 import io.ktor.client.HttpClient
@@ -91,12 +91,12 @@ class USDARemoteDataSource(
 
             HttpStatusCode.NotFound -> {
                 logger.d(TAG) { "Product not found" }
-                Result.failure(RemoteFoodException.ProductNotFoundException())
+                Result.failure(RemoteProductException.ProductNotFoundException())
             }
 
             HttpStatusCode.TooManyRequests -> {
                 logger.w(TAG) { "USDA API rate limit exceeded" }
-                Result.failure(RemoteFoodException.USDA.RateLimitException())
+                Result.failure(RemoteProductException.USDA.RateLimitException())
             }
 
             HttpStatusCode.Forbidden -> {
@@ -108,13 +108,13 @@ class USDARemoteDataSource(
             HttpStatusCode.BadRequest -> {
                 val body = response.bodyAsText()
                 logger.e(TAG) { "Bad request: $body" }
-                Result.failure(RemoteFoodException.Unknown("Bad request parameter"))
+                Result.failure(RemoteProductException.Unknown("Bad request parameter"))
             }
 
             else -> {
                 logger.e(TAG) { "Unexpected response: ${response.status}" }
                 Result.failure(
-                    RemoteFoodException.Unknown("Unexpected response: ${response.status}")
+                    RemoteProductException.Unknown("Unexpected response: ${response.status}")
                 )
             }
         }
@@ -123,28 +123,28 @@ class USDARemoteDataSource(
     private suspend fun HttpResponse.getError(): Exception {
         val body = bodyAsText()
         return when {
-            body.contains("API_KEY_MISSING") -> RemoteFoodException.USDA.ApiKeyIsMissingException()
-            body.contains("API_KEY_INVALID") -> RemoteFoodException.USDA.ApiKeyInvalidException()
-            body.contains("API_KEY_DISABLED") -> RemoteFoodException.USDA.ApiKeyDisabledException()
+            body.contains("API_KEY_MISSING") -> RemoteProductException.USDA.ApiKeyIsMissingException()
+            body.contains("API_KEY_INVALID") -> RemoteProductException.USDA.ApiKeyInvalidException()
+            body.contains("API_KEY_DISABLED") -> RemoteProductException.USDA.ApiKeyDisabledException()
             body.contains("API_KEY_UNAUTHORIZED") ->
-                RemoteFoodException.USDA.ApiKeyUnauthorizedException()
+                RemoteProductException.USDA.ApiKeyUnauthorizedException()
             body.contains("API_KEY_UNVERIFIED") ->
-                RemoteFoodException.USDA.ApiKeyUnverifiedException()
-            else -> RemoteFoodException.Unknown("Unknown USDA API error: $body")
+                RemoteProductException.USDA.ApiKeyUnverifiedException()
+            else -> RemoteProductException.Unknown("Unknown USDA API error: $body")
         }
     }
 
     private fun <T> handleException(e: Exception, method: String, context: String): Result<T> {
         return when (e) {
             is CancellationException -> throw e
-            is RemoteFoodException -> {
+            is RemoteProductException -> {
                 logger.e(TAG) { "$method failed for $context: ${e.message}" }
                 Result.failure(e)
             }
 
             else -> {
                 logger.e(TAG) { "$method failed for $context: ${e.message}" }
-                Result.failure(RemoteFoodException.Unknown(e.message))
+                Result.failure(RemoteProductException.Unknown(e.message))
             }
         }
     }

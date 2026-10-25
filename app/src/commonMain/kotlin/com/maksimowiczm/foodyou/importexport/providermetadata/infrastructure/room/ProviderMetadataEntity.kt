@@ -2,7 +2,7 @@ package com.maksimowiczm.foodyou.importexport.providermetadata.infrastructure.ro
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.maksimowiczm.foodyou.common.infrastructure.room.FoodSourceType
+import com.maksimowiczm.foodyou.common.infrastructure.room.ProductSourceType
 
 /**
  * Persisted state for a downloadable food provider dataset. One row per provider [sourceType].
@@ -14,7 +14,7 @@ import com.maksimowiczm.foodyou.common.infrastructure.room.FoodSourceType
  */
 @Entity(tableName = "ProviderMetadata")
 data class ProviderMetadataEntity(
-    @PrimaryKey val sourceType: FoodSourceType,
+    @PrimaryKey val sourceType: ProductSourceType,
     val installedVersion: String?,
     val publicationDate: String?,
     val checksum: String?,

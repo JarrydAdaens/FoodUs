@@ -6,7 +6,7 @@
     <string name="headline_daily_goals">Objectifs journaliers</string>
     <string name="headline_general">Général</string>
     <string name="headline_macronutrients">Macronutriments</string>
-    <string name="headline_meals">Repas</string>
+    <string name="headline_diary_slots">Repas</string>
     <string name="headline_delete_food">Supprimer aliment</string>
     <string name="headline_edit_product">Modifier le produit</string>
     <string name="headline_permission_required">Autorisation nécessaire</string>
@@ -30,7 +30,7 @@
     <string name="headline_home" description="Home screen">Accueil</string>
     <string name="headline_home_settings" description="Home screen settings">Paramètres d'accueil</string>
     <string name="headline_calendar">Calendrier</string>
-    <string name="headline_meals_settings">Paramètres des repas</string>
+    <string name="headline_diary_slots_settings">Paramètres des repas</string>
     <string name="headline_horizontal">Horizontal</string>
     <string name="headline_vertical">Vertical</string>
     <string name="headline_values_per">Valeurs par</string>
@@ -124,7 +124,7 @@
     <string name="action_save">Sauvegarder</string>
     <string name="action_delete">Supprimer</string>
     <string name="action_confirm">Confirmer</string>
-    <string name="action_add_meal">Ajouter un repas</string>
+    <string name="action_add_diary_slot">Ajouter un repas</string>
     <string name="action_edit">Modifier</string>
     <string name="action_insert_suggested_search">Insérer la recherche suggérée</string>
     <string name="action_edit_entry">Modifier l'entrée</string>
@@ -142,7 +142,7 @@
     <string name="action_move_up" description="reorder list item up">Déplacer vers le haut</string>
     <string name="action_move_down" description="reorder list item down">Déplacer vers le bas</string>
     <string name="action_use_time_based_ordering">Classer en fonction de l'horaire</string>
-    <string name="action_ignore_all_day_meals">Ignorer les repas de la journée</string>
+    <string name="action_ignore_all_day_diary_slots">Ignorer les repas de la journée</string>
     <string name="action_add_ingredient" description="Add ingredient to the recipe">Ajouter un ingrédient</string>
     <string name="action_delete_ingredient">Supprimer l'ingrédient</string>
     <string name="action_download">Télécharger</string>
@@ -172,9 +172,9 @@
         <item quantity="other">%1$d kilojoules restants</item>
     </plurals>
     <string name="neutral_set_your_daily_goals">Définissez vos objectifs nutritionnels quotidiens</string>
-    <string name="neutral_set_your_meal_schedule">Définissez vos horaires de repas</string>
-    <string name="neutral_permanently_delete_meal">Supprimer définitivement le repas ?</string>
-    <string name="neutral_meal_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">Le repas sera supprimé définitivement. Toutes les données associées seront perdues.</string>
+    <string name="neutral_set_your_diary_slot_schedule">Définissez vos horaires de repas</string>
+    <string name="neutral_permanently_delete_diary_slot">Supprimer définitivement le repas ?</string>
+    <string name="neutral_diary_slot_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">Le repas sera supprimé définitivement. Toutes les données associées seront perdues.</string>
     <string name="neutral_required">Requis</string>
     <string name="neutral_help_translating_the_app">Contribuer à la traduction de l'application</string>
     <string name="neutral_copied">Info copiée dans le presse-papiers</string>
@@ -207,8 +207,8 @@
     <string name="description_delete_food">L'aliment sera supprimé définitivement</string>
     <string name="description_delete_product_entry" description="Tell user that this entry will be deleted only from diary and won't affect the product itself. Product won't be deleted from the database.">Cette entrée sera supprimée de votre journal. Vous pourrez l'ajouter de nouveau à tout moment.</string>
     <string name="description_about_setting">En savoir plus sur l'application</string>
-    <string name="description_time_based_meals_sorting">Les repas en cours seront affichés en haut lorsqu'elle est activée</string>
-    <string name="description_action_ignore_all_day_meals">Les repas de toute la journée seront affichés à la fin de la liste</string>
+    <string name="description_time_based_diary_slots_sorting">Les repas en cours seront affichés en haut lorsqu'elle est activée</string>
+    <string name="description_action_ignore_all_day_diary_slots">Les repas de toute la journée seront affichés à la fin de la liste</string>
     <string name="description_incomplete_nutrition_data">Certains produits utilisés n'ont pas cette valeur ; la valeur affichée pourrait donc être inexacte</string>
     <string name="description_translation_warning">Les traductions sont réalisées par des bénévoles. Elles peuvent contenir des erreurs ou être incomplètes. Si vous remarquez des erreurs, n'hésitez pas à contribuer à leur amélioration.</string>
     <string name="description_home_settings">Personnalisez votre page d'accueil</string>

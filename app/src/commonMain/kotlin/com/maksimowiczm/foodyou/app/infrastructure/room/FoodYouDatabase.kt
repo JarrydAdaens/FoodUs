@@ -1,5 +1,13 @@
 package com.maksimowiczm.foodyou.app.infrastructure.room
 
+import com.maksimowiczm.foodyou.app.infrastructure.room.migration.RecipeSnapshotCalculationMigration
+import com.maksimowiczm.foodyou.app.infrastructure.room.migration.MealPortionMetadataMigration
+import com.maksimowiczm.foodyou.app.infrastructure.room.migration.StructuredLibraryMigration
+import com.maksimowiczm.foodyou.common.infrastructure.room.LibraryValueConverters
+import com.maksimowiczm.foodyou.food.infrastructure.room.ReportedRecipeComponentEntity
+import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.DiaryReportedRecipeComponentEntity
+import com.maksimowiczm.foodyou.importexport.structuredlibrary.infrastructure.room.LibraryIdentityEntity
+import com.maksimowiczm.foodyou.importexport.structuredlibrary.infrastructure.room.LibraryIdentityDao
 import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
@@ -7,10 +15,10 @@ import androidx.room.TypeConverters
 import androidx.room.immediateTransaction
 import androidx.room.migration.Migration
 import androidx.room.useWriterConnection
+import com.maksimowiczm.foodyou.app.infrastructure.room.migration.AustralianFoodProviderMigration
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.FoodSearchFtsCyrillicMigration
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.FoodSearchFtsMigration
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.LegacyMigrations
-import com.maksimowiczm.foodyou.app.infrastructure.room.migration.AustralianFoodProviderMigration
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.MealTemplateMigration
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.PlaceholderDiaryEntryMigration
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.ProfileKeyMigration
@@ -22,7 +30,7 @@ import com.maksimowiczm.foodyou.app.infrastructure.room.migration.foodYou3Migrat
 import com.maksimowiczm.foodyou.app.infrastructure.room.migration.unlinkDiaryMigration
 import com.maksimowiczm.foodyou.common.domain.database.TransactionProvider
 import com.maksimowiczm.foodyou.common.domain.database.TransactionScope as DomainTransactionScope
-import com.maksimowiczm.foodyou.common.infrastructure.room.FoodSourceTypeConverter
+import com.maksimowiczm.foodyou.common.infrastructure.room.ProductSourceTypeConverter
 import com.maksimowiczm.foodyou.common.infrastructure.room.MeasurementTypeConverter
 import com.maksimowiczm.foodyou.common.infrastructure.room.RoomTransactionScope
 import com.maksimowiczm.foodyou.food.infrastructure.room.FoodDatabase
@@ -40,18 +48,18 @@ import com.maksimowiczm.foodyou.food.search.infrastructure.room.OpenFoodFactsPag
 import com.maksimowiczm.foodyou.food.search.infrastructure.room.RecipeAllIngredientsView
 import com.maksimowiczm.foodyou.food.search.infrastructure.room.SearchEntry
 import com.maksimowiczm.foodyou.food.search.infrastructure.room.USDAPagingKeyEntity
-import com.maksimowiczm.foodyou.importexport.providermetadata.infrastructure.room.ProviderMetadataDatabase
-import com.maksimowiczm.foodyou.importexport.providermetadata.infrastructure.room.ProviderMetadataEntity
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.DiaryProductEntity
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.DiaryRecipeEntity
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.DiaryRecipeIngredientEntity
+import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.DiarySlotEntity
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.FoodDiaryDatabase
-import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.InitializeMealsCallback
+import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.InitializeDiarySlotsCallback
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.ManualDiaryEntryEntity
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.MealEntity
-import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.MealTemplateEntity
-import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.MealTemplateItemEntity
+import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.MealItemEntity
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.MeasurementEntity
+import com.maksimowiczm.foodyou.importexport.providermetadata.infrastructure.room.ProviderMetadataDatabase
+import com.maksimowiczm.foodyou.importexport.providermetadata.infrastructure.room.ProviderMetadataEntity
 import com.maksimowiczm.foodyou.notification.infrastructure.room.NotificationDatabase
 import com.maksimowiczm.foodyou.notification.infrastructure.room.NotificationEntity
 import com.maksimowiczm.foodyou.profile.infrastructure.room.ProfileDatabase
@@ -69,7 +77,7 @@ import com.maksimowiczm.foodyou.sponsorship.infrastructure.room.SponsorshipEntit
             USDAPagingKeyEntity::class,
             FoodEventEntity::class,
             SearchEntry::class,
-            MealEntity::class,
+            DiarySlotEntity::class,
             MeasurementEntity::class,
             DiaryProductEntity::class,
             DiaryRecipeEntity::class,
@@ -77,20 +85,23 @@ import com.maksimowiczm.foodyou.sponsorship.infrastructure.room.SponsorshipEntit
             SponsorshipEntity::class,
             MeasurementSuggestionEntity::class,
             ManualDiaryEntryEntity::class,
-            MealTemplateEntity::class,
-            MealTemplateItemEntity::class,
+            MealEntity::class,
+            MealItemEntity::class,
             ProductFts::class,
             RecipeFts::class,
             ProviderMetadataEntity::class,
             ProfileEntity::class,
             NotificationEntity::class,
+            ReportedRecipeComponentEntity::class,
+            DiaryReportedRecipeComponentEntity::class,
+            LibraryIdentityEntity::class,
         ],
     views = [RecipeAllIngredientsView::class, LatestMeasurementSuggestion::class],
     version = FoodYouDatabase.VERSION,
     exportSchema = true,
     autoMigrations =
         [
-            /** @see [LegacyMigrations.MIGRATION_1_2] Add rank to MealEntity */
+            /** @see [LegacyMigrations.MIGRATION_1_2] Add rank to DiarySlotEntity */
             /** @see [LegacyMigrations.MIGRATION_2_3] 2.0.0 schema change */
             AutoMigration(from = 3, to = 4),
             AutoMigration(from = 4, to = 5),
@@ -138,9 +149,10 @@ import com.maksimowiczm.foodyou.sponsorship.infrastructure.room.SponsorshipEntit
         ],
 )
 @TypeConverters(
-    FoodSourceTypeConverter::class,
+    ProductSourceTypeConverter::class,
     MeasurementTypeConverter::class,
     FoodEventTypeConverter::class,
+    LibraryValueConverters::class,
 )
 abstract class FoodYouDatabase :
     RoomDatabase(),
@@ -153,6 +165,8 @@ abstract class FoodYouDatabase :
     ProfileDatabase,
     NotificationDatabase {
 
+    abstract val libraryIdentityDao: LibraryIdentityDao
+
     override suspend fun <T> withTransaction(block: suspend DomainTransactionScope<T>.() -> T): T =
         useWriterConnection {
             it.immediateTransaction {
@@ -162,7 +176,7 @@ abstract class FoodYouDatabase :
         }
 
     companion object {
-        const val VERSION = 39
+        const val VERSION = 42
 
         private val migrations: List<Migration> =
             listOf(
@@ -186,13 +200,16 @@ abstract class FoodYouDatabase :
                 QuickAddExpansionMigration,
                 ProfileMigration,
                 ProfileKeyMigration,
+                RecipeSnapshotCalculationMigration,
+                MealPortionMetadataMigration,
+                StructuredLibraryMigration,
             )
 
         fun Builder<FoodYouDatabase>.buildDatabase(
-            mealsCallback: InitializeMealsCallback
+            diarySlotsCallback: InitializeDiarySlotsCallback
         ): FoodYouDatabase {
             addMigrations(*migrations.toTypedArray())
-            addCallback(mealsCallback)
+            addCallback(diarySlotsCallback)
             return build()
         }
     }

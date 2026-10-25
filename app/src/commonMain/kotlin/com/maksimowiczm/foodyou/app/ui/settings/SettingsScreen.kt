@@ -27,7 +27,7 @@ import org.jetbrains.compose.resources.stringResource
 fun SettingsScreen(
     onBack: () -> Unit,
     onAbout: () -> Unit,
-    onMeals: () -> Unit,
+    onDiarySlots: () -> Unit,
     onLanguage: () -> Unit,
     onGoals: () -> Unit,
     onPersonalization: () -> Unit,
@@ -67,8 +67,8 @@ fun SettingsScreen(
             }
 
             item {
-                MealSettingsListItem(
-                    onClick = onMeals,
+                DiarySlotSettingsListItem(
+                    onClick = onDiarySlots,
                     shape = shape,
                     color = color,
                     contentColor = contentColor,

@@ -21,20 +21,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.maksimowiczm.foodyou.app.ui.food.component.DownloadProductOpenFoodFactsUnavailableErrorCard
 import com.maksimowiczm.foodyou.app.ui.food.component.DownloadProductUsdaErrorCard
-import com.maksimowiczm.foodyou.food.domain.entity.RemoteFoodException
+import com.maksimowiczm.foodyou.food.domain.entity.RemoteProductException
 import foodyou.app.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun FoodSearchErrorCard(
-    error: RemoteFoodException,
+    error: RemoteProductException,
     onRetry: () -> Unit,
     onUsdaApiKey: () -> Unit,
     onUpdateOpenFoodFactsCredentials: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     when (error) {
-        is RemoteFoodException.Unknown ->
+        is RemoteProductException.Unknown ->
             FoodSearchErrorCard(
                 message = null,
                 detailedMessage = error.message,
@@ -42,13 +42,13 @@ internal fun FoodSearchErrorCard(
                 modifier = modifier,
             )
 
-        is RemoteFoodException.OpenFoodFacts.ServiceUnavailable ->
+        is RemoteProductException.OpenFoodFacts.ServiceUnavailable ->
             DownloadProductOpenFoodFactsUnavailableErrorCard(
                 onUpdateCredentials = onUpdateOpenFoodFactsCredentials,
                 modifier = modifier,
             )
 
-        is RemoteFoodException.OpenFoodFacts.RateLimit ->
+        is RemoteProductException.OpenFoodFacts.RateLimit ->
             FoodSearchErrorCard(
                 message = stringResource(Res.string.error_open_food_facts_timeout),
                 detailedMessage = null,
@@ -56,14 +56,14 @@ internal fun FoodSearchErrorCard(
                 modifier = modifier,
             )
 
-        is RemoteFoodException.ProductNotFoundException -> Unit
+        is RemoteProductException.ProductNotFoundException -> Unit
 
-        is RemoteFoodException.USDA.ApiKeyDisabledException,
-        is RemoteFoodException.USDA.ApiKeyInvalidException,
-        is RemoteFoodException.USDA.ApiKeyIsMissingException,
-        is RemoteFoodException.USDA.ApiKeyUnauthorizedException,
-        is RemoteFoodException.USDA.ApiKeyUnverifiedException,
-        is RemoteFoodException.USDA.RateLimitException ->
+        is RemoteProductException.USDA.ApiKeyDisabledException,
+        is RemoteProductException.USDA.ApiKeyInvalidException,
+        is RemoteProductException.USDA.ApiKeyIsMissingException,
+        is RemoteProductException.USDA.ApiKeyUnauthorizedException,
+        is RemoteProductException.USDA.ApiKeyUnverifiedException,
+        is RemoteProductException.USDA.RateLimitException ->
             DownloadProductUsdaErrorCard(
                 error = error,
                 onUpdateApiKey = onUsdaApiKey,

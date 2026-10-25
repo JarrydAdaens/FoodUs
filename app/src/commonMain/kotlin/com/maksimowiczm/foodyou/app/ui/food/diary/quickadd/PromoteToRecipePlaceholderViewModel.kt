@@ -6,10 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.maksimowiczm.foodyou.common.domain.date.DateProvider
 import com.maksimowiczm.foodyou.common.result.onError
 import com.maksimowiczm.foodyou.common.result.onSuccess
-import com.maksimowiczm.foodyou.food.domain.entity.FoodHistory
-import com.maksimowiczm.foodyou.food.domain.entity.FoodId
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemHistory
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
 import com.maksimowiczm.foodyou.food.domain.usecase.CreateProductUseCase
-import com.maksimowiczm.foodyou.food.domain.usecase.DeleteFoodUseCase
+import com.maksimowiczm.foodyou.food.domain.usecase.DeleteNutritionalItemUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,7 +31,7 @@ import kotlinx.coroutines.launch
 internal class PromoteToRecipePlaceholderViewModel(
     private val seed: QuickAddPromotionSeed,
     private val createProductUseCase: CreateProductUseCase,
-    private val deleteFoodUseCase: DeleteFoodUseCase,
+    private val deleteFoodUseCase: DeleteNutritionalItemUseCase,
     private val dateProvider: DateProvider,
     private val applicationScope: CoroutineScope,
     private val savedStateHandle: SavedStateHandle,
@@ -57,7 +57,7 @@ internal class PromoteToRecipePlaceholderViewModel(
                         servingWeight = product.servingWeight,
                         source = product.source,
                         nutritionFacts = product.nutritionFacts,
-                        history = FoodHistory.Created(dateProvider.nowInstant()),
+                        history = NutritionalItemHistory.Created(dateProvider.nowInstant()),
                     )
                     .onSuccess {
                         savedStateHandle[KEY] = it.id
@@ -81,7 +81,7 @@ internal class PromoteToRecipePlaceholderViewModel(
         settled = true
 
         val id = productIdState.value ?: return
-        applicationScope.launch { deleteFoodUseCase.delete(FoodId.Product(id)) }
+        applicationScope.launch { deleteFoodUseCase.delete(NutritionalItemId.Product(id)) }
     }
 
     private companion object {

@@ -5,7 +5,7 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.maksimowiczm.foodyou.common.csv.CsvParser
-import com.maksimowiczm.foodyou.common.domain.food.FoodSource
+import com.maksimowiczm.foodyou.common.domain.food.ProductSource
 import com.maksimowiczm.foodyou.common.log.Logger
 import com.maksimowiczm.foodyou.importexport.domain.entity.ProductField
 import com.maksimowiczm.foodyou.importexport.domain.usecase.ImportCsvProductUseCase
@@ -116,7 +116,7 @@ internal class ImportCsvProductsViewModel(
             .import(
                 mapper = mapper,
                 stream = stream,
-                source = FoodSource.Type.User,
+                source = ProductSource.Type.User,
                 skipHeader = true,
             )
             .catch { throw it }

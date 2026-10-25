@@ -1,6 +1,6 @@
 package com.maksimowiczm.foodyou.importexport.swissfoodcompositiondatabase.domain
 
-import com.maksimowiczm.foodyou.common.domain.food.FoodSource
+import com.maksimowiczm.foodyou.common.domain.food.ProductSource
 import com.maksimowiczm.foodyou.importexport.domain.entity.ProductField
 import com.maksimowiczm.foodyou.importexport.domain.usecase.ImportCsvProductUseCase
 import kotlinx.coroutines.flow.Flow
@@ -27,7 +27,7 @@ internal class ImportSwissFoodCompositionDatabaseUseCaseImpl(
                 importCsvProductUseCase.import(
                     mapper = order,
                     stream = lines,
-                    source = FoodSource.Type.SwissFoodCompositionDatabase,
+                    source = ProductSource.Type.SwissFoodCompositionDatabase,
                     skipHeader = true,
                 )
             }
