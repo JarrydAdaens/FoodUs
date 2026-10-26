@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.food.diary.component
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.FlowRow
@@ -21,19 +24,19 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun ChipsDiarySlotPicker(state: ChipsDiarySlotPickerState, modifier: Modifier = Modifier) {
-    Row(modifier) {
-        Box(modifier = Modifier.size(48.dp), contentAlignment = Alignment.Center) {
-            Icon(imageVector = Icons.Default.Restaurant, contentDescription = null)
+    Row((modifier).uiName("ChipsDiarySlotPicker.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "ChipsDiarySlotPicker")) {
+        Box(modifier = (Modifier.size(48.dp)).uiName("ChipsDiarySlotPicker.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "ChipsDiarySlotPicker"), contentAlignment = Alignment.Center) {
+            Icon(imageVector = Icons.Default.Restaurant, contentDescription = null, modifier = Modifier.uiName("ChipsDiarySlotPicker.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "ChipsDiarySlotPicker"))
         }
 
         Spacer(Modifier.width(8.dp))
 
-        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.uiName("ChipsDiarySlotPicker.FlowRow.1", "androidx.compose.foundation.layout.FlowRow", uiInspectionSource, "ChipsDiarySlotPicker")) {
             state.diarySlots.forEachIndexed { i, diarySlot ->
                 InputChip(
                     selected = diarySlot == state.selectedDiarySlot,
                     onClick = { state.selectedDiarySlot = diarySlot },
-                    label = { Text(diarySlot) },
+                    label = { Text(diarySlot, modifier = Modifier.uiName("ChipsDiarySlotPicker.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "ChipsDiarySlotPicker")) }, modifier = Modifier.uiName("ChipsDiarySlotPicker.InputChip.1", "androidx.compose.material3.InputChip", uiInspectionSource, "ChipsDiarySlotPicker")
                 )
             }
         }
@@ -71,3 +74,9 @@ class ChipsDiarySlotPickerState(initialDiarySlots: List<String>, selectedDiarySl
 
     var selectedDiarySlot by mutableStateOf(selectedDiarySlot)
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.diary.component",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/component/ChipsDiarySlotPicker.kt",
+)

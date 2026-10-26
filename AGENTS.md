@@ -2,7 +2,7 @@
 name: agents
 description: FoodUs project instructions and task-based context routing.
 metadata:
-  version: "4.0"
+  version: "4.1"
   owner: "Jarryd Adaens"
   repo: "FoodUs (fork of maksimowiczm/FoodYou)"
 ---
@@ -29,6 +29,8 @@ Start with this file and the files involved in the request. Read `context/agenti
 
 ## 0.2: Repository Expectations
 
-Review `harness/README-HARNESS.md` and the module whose documented trigger matches the change. Run matching gates and verifiers, using an independent evaluator sub-agent when available and applicable. A visible or runtime behavior claim needs the matching harness result or a documented reason it could not run. The harness currently lists no installed modules, so choose meaningful tests and direct runtime evidence for the affected behavior.
+Review `harness/README-HARNESS.md` and the module whose documented trigger matches the change. Run matching gates and verifiers, using an independent evaluator sub-agent when available and applicable. A visible or runtime behavior claim needs the matching harness result or a documented reason it could not run.
+
+- When adding or changing application UI call sites or the inspection naming API, run `harness/ui-name-coverage/run.ps1` under the [UI name coverage contract](harness/ui-name-coverage/README.md). Its lexical source inventory supplements meaningful tests and direct runtime selection evidence; it does not prove complete runtime coverage.
 
 Investigate discoverable uncertainty before asking. State consequential assumptions, choose the smallest coherent change, and preserve unrelated edits, project contracts, and historical paths. Refactor when necessary for the requested outcome; do not add speculative features or tuning controls unless requested. Validate external inputs at their boundaries and keep sensitive values out of artifacts. New behavior and bug fixes need meaningful regression checks; document a required check that could not run. Update the owning Story or plan when its status, acceptance, or dependency changes. Report changed files, checks, and material limits. Shared skills supplement repository instructions and do not silently change this project's process.

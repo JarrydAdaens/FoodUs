@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.language
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -42,20 +45,26 @@ internal actual fun SystemSettingsListItem(modifier: Modifier) {
         }
 
     if (isSystemLocaleSettingsAvailable) {
-        Column(modifier) {
-            HorizontalDivider()
+        Column((modifier).uiName("SystemSettingsListItem.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "SystemSettingsListItem")) {
+            HorizontalDivider( modifier = Modifier.uiName("SystemSettingsListItem.HorizontalDivider.1", "androidx.compose.material3.HorizontalDivider", uiInspectionSource, "SystemSettingsListItem"))
             ListItem(
                 headlineContent = {
-                    Text(stringResource(Res.string.headline_system_language_settings))
+                    Text(stringResource(Res.string.headline_system_language_settings), modifier = Modifier.uiName("SystemSettingsListItem.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "SystemSettingsListItem"))
                 },
-                modifier = Modifier.clickable { context.startActivity(intent) },
+                modifier = (Modifier.clickable { context.startActivity(intent) }).uiName("SystemSettingsListItem.ListItem.1", "androidx.compose.material3.ListItem", uiInspectionSource, "SystemSettingsListItem"),
                 trailingContent = {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                        contentDescription = null,
+                        contentDescription = null, modifier = Modifier.uiName("SystemSettingsListItem.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "SystemSettingsListItem")
                     )
                 },
             )
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.language",
+    "app/src/androidMain/kotlin/com/maksimowiczm/foodyou/app/ui/language/LanguageScreen.android.kt",
+)

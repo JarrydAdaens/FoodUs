@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.common.component
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -20,17 +23,17 @@ fun IncompleteFoodsList(
 ) {
     val desc = "* " + stringResource(Res.string.description_incomplete_nutrition_data)
 
-    Column(modifier) {
+    Column((modifier).uiName("IncompleteFoodsList.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "IncompleteFoodsList")) {
         Text(
             text = desc,
             style = MaterialTheme.typography.labelLarge,
-            color = MaterialTheme.colorScheme.outline,
+            color = MaterialTheme.colorScheme.outline, modifier = Modifier.uiName("IncompleteFoodsList.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "IncompleteFoodsList")
         )
         Spacer(Modifier.height(8.dp))
         Text(
             text = stringResource(Res.string.headline_incomplete_products),
             style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.outline,
+            color = MaterialTheme.colorScheme.outline, modifier = Modifier.uiName("IncompleteFoodsList.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "IncompleteFoodsList")
         )
         foods.forEachIndexed { i, food ->
             Text(
@@ -38,14 +41,20 @@ fun IncompleteFoodsList(
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.outline,
                 modifier =
-                    if (onFoodClick == null) Modifier
+                    (if (onFoodClick == null) Modifier
                     else
                         Modifier.clickable(
                             interactionSource = null,
                             indication = null,
                             onClick = { onFoodClick(i) },
-                        ),
+                        )).uiName("IncompleteFoodsList.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "IncompleteFoodsList"),
             )
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.common.component",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/common/component/IncompleteFoodsList.kt",
+)

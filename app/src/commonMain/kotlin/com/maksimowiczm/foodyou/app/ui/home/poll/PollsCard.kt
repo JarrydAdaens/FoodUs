@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.home.poll
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,7 +40,7 @@ internal fun PollsCard(modifier: Modifier = Modifier) {
                 is LinkPoll -> uriHandler.openUri(poll.url)
             }
         },
-        modifier = modifier,
+        modifier = (modifier).uiName("PollsCard.PollsCard.1", "com.maksimowiczm.foodyou.app.ui.home.poll.PollsCard", uiInspectionSource, "PollsCard"),
     )
 }
 
@@ -52,14 +55,14 @@ private fun PollsCard(
         return
     }
 
-    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    Column(modifier = (modifier).uiName("PollsCard.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "PollsCard"), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         polls.forEach { poll ->
             when (poll) {
                 is LinkPoll ->
                     LinkPollCard(
                         poll = poll,
                         onDismiss = { onDismiss(poll) },
-                        onOpen = { onOpen(poll) },
+                        onOpen = { onOpen(poll) }, modifier = Modifier.uiName("PollsCard.LinkPollCard.1", "com.maksimowiczm.foodyou.app.ui.home.poll.LinkPollCard", uiInspectionSource, "PollsCard")
                     )
             }
         }
@@ -74,24 +77,30 @@ private fun LinkPollCard(
     modifier: Modifier = Modifier,
 ) {
     Surface(
-        modifier = modifier,
+        modifier = (modifier).uiName("LinkPollCard.Surface.1", "androidx.compose.material3.Surface", uiInspectionSource, "LinkPollCard"),
         shape = MaterialTheme.shapes.medium,
         color = MaterialTheme.colorScheme.secondaryContainer,
         contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = (Modifier.padding(16.dp)).uiName("LinkPollCard.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "LinkPollCard"),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            Text(text = poll.title, style = MaterialTheme.typography.titleLarge)
-            Text(text = poll.description, style = MaterialTheme.typography.bodyMedium)
+            Text(text = poll.title, style = MaterialTheme.typography.titleLarge, modifier = Modifier.uiName("LinkPollCard.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "LinkPollCard"))
+            Text(text = poll.description, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.uiName("LinkPollCard.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "LinkPollCard"))
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = (Modifier.fillMaxWidth()).uiName("LinkPollCard.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "LinkPollCard"),
                 horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
             ) {
-                TextButton(onDismiss) { Text(stringResource(Res.string.action_dont_show_again)) }
-                Button(onOpen) { Text(stringResource(Res.string.action_open_poll)) }
+                TextButton(onDismiss, modifier = Modifier.uiName("LinkPollCard.TextButton.1", "androidx.compose.material3.TextButton", uiInspectionSource, "LinkPollCard")) { Text(stringResource(Res.string.action_dont_show_again), modifier = Modifier.uiName("LinkPollCard.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "LinkPollCard")) }
+                Button(onOpen, modifier = Modifier.uiName("LinkPollCard.Button.1", "androidx.compose.material3.Button", uiInspectionSource, "LinkPollCard")) { Text(stringResource(Res.string.action_open_poll), modifier = Modifier.uiName("LinkPollCard.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "LinkPollCard")) }
             }
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.home.poll",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/poll/PollsCard.kt",
+)

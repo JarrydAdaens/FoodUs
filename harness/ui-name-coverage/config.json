@@ -1,0 +1,183 @@
+{
+  "sourceRoots": [
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/navigation",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/compose/component",
+    "app/src/androidMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/android",
+    "app/src/androidMain/kotlin/com/maksimowiczm/foodyou/app/ui",
+    "app/src/androidMain/kotlin/com/maksimowiczm/foodyou/common/compose/component",
+    "shared/barcodescanner/src/commonMain/kotlin",
+    "shared/barcodescanner/src/androidMain/kotlin"
+  ],
+  "excludedPaths": [
+    "/developer/inspection/",
+    "/FoodYouAbstractActivity.kt"
+  ],
+  "scopeFunctions": [
+    "FoodYouApp",
+    "FoodUsAppShell",
+    "Onboarding"
+  ],
+  "framework": {
+    "androidx.compose.foundation.layout": [
+      "Box",
+      "BoxWithConstraints",
+      "Column",
+      "Row",
+      "FlowRow",
+      "FlowColumn"
+    ],
+    "androidx.compose.foundation.lazy": [
+      "LazyColumn",
+      "LazyRow"
+    ],
+    "androidx.compose.foundation.lazy.grid": [
+      "LazyVerticalGrid",
+      "LazyHorizontalGrid"
+    ],
+    "androidx.compose.foundation.lazy.staggeredgrid": [
+      "LazyHorizontalStaggeredGrid",
+      "LazyVerticalStaggeredGrid"
+    ],
+    "androidx.compose.foundation.pager": [
+      "HorizontalPager",
+      "VerticalPager"
+    ],
+    "androidx.compose.foundation": [
+      "Canvas",
+      "Image"
+    ],
+    "androidx.compose.foundation.text": [
+      "BasicText",
+      "BasicTextField"
+    ],
+    "androidx.compose.ui.viewinterop": [
+      "AndroidView"
+    ],
+    "androidx.compose.material3": [
+      "Text",
+      "Icon",
+      "Button",
+      "TextButton",
+      "OutlinedButton",
+      "FilledTonalButton",
+      "ElevatedButton",
+      "IconButton",
+      "FilledIconButton",
+      "FilledTonalIconButton",
+      "OutlinedIconButton",
+      "IconToggleButton",
+      "Checkbox",
+      "TriStateCheckbox",
+      "Switch",
+      "RadioButton",
+      "Slider",
+      "RangeSlider",
+      "TextField",
+      "OutlinedTextField",
+      "PlainTooltip",
+      "Surface",
+      "Card",
+      "ElevatedCard",
+      "OutlinedCard",
+      "Scaffold",
+      "TopAppBar",
+      "CenterAlignedTopAppBar",
+      "LargeTopAppBar",
+      "MediumTopAppBar",
+      "LargeFlexibleTopAppBar",
+      "MediumFlexibleTopAppBar",
+      "BottomAppBar",
+      "NavigationBar",
+      "NavigationBarItem",
+      "NavigationRail",
+      "NavigationRailItem",
+      "ListItem",
+      "HorizontalDivider",
+      "VerticalDivider",
+      "AssistChip",
+      "FilterChip",
+      "InputChip",
+      "SuggestionChip",
+      "ElevatedAssistChip",
+      "ElevatedFilterChip",
+      "ElevatedSuggestionChip",
+      "FloatingActionButton",
+      "SmallFloatingActionButton",
+      "LargeFloatingActionButton",
+      "ExtendedFloatingActionButton",
+      "CircularProgressIndicator",
+      "LinearProgressIndicator",
+      "CircularWavyProgressIndicator",
+      "LinearWavyProgressIndicator",
+      "Snackbar",
+      "SnackbarHost",
+      "Badge",
+      "BadgedBox",
+      "Tab",
+      "PrimaryTabRow",
+      "SecondaryTabRow",
+      "ScrollableTabRow",
+      "PrimaryScrollableTabRow",
+      "SecondaryScrollableTabRow",
+      "DatePicker",
+      "DatePickerDefaults.DatePickerTitle",
+      "DateRangePicker",
+      "TimePicker",
+      "TimeInput",
+      "DropdownMenuItem",
+      "HorizontalFloatingToolbar",
+      "VerticalFloatingToolbar",
+      "LoadingIndicator",
+      "ContainedLoadingIndicator",
+      "ToggleButton",
+      "TonalToggleButton",
+      "LargeExtendedFloatingActionButton",
+      "FloatingActionButtonMenuItem",
+      "FlexibleBottomAppBar",
+      "ButtonGroup",
+      "OutlinedSecureTextField",
+      "SplitButtonLayout",
+      "SearchBar",
+      "FloatingActionButtonMenu",
+      "ToggleFloatingActionButton",
+      "SecureTextField"
+    ],
+    "androidx.compose.animation": [
+      "AnimatedVisibility",
+      "AnimatedContent",
+      "Crossfade"
+    ],
+    "androidx.compose.material3.SearchBarDefaults": [
+      "InputField"
+    ],
+    "androidx.compose.material3.SplitButtonDefaults": [
+      "LeadingButton",
+      "TrailingButton"
+    ],
+    "com.github.skydoves.colorpicker.compose": [
+      "HsvColorPicker",
+      "BrightnessSlider"
+    ],
+    "sh.calvin.reorderable": [
+      "ReorderableItem"
+    ]
+  },
+  "surfaces": {
+    "androidx.compose.ui.window": [
+      "Dialog",
+      "Popup"
+    ],
+    "androidx.compose.material3": [
+      "AlertDialog",
+      "BasicAlertDialog",
+      "DatePickerDialog",
+      "TimePickerDialog",
+      "DropdownMenu",
+      "ExposedDropdownMenu",
+      "ModalBottomSheet",
+      "ExpandedFullScreenSearchBar",
+      "TooltipBox"
+    ]
+  }
+}

@@ -1,5 +1,9 @@
 package com.maksimowiczm.foodyou.app.ui.food.search
 
+
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
@@ -34,24 +38,24 @@ internal fun FoodSearchBarInputField(
         textFieldState = textFieldState,
         searchBarState = searchBarState,
         onSearch = onSearch,
-        modifier = modifier,
-        placeholder = { Text(stringResource(Res.string.action_search)) },
+        modifier = (modifier).uiName("FoodSearchBarInputField.InputField.1", "androidx.compose.material3.SearchBarDefaults.InputField", uiInspectionSource, "FoodSearchBarInputField"),
+        placeholder = { Text(stringResource(Res.string.action_search), modifier = Modifier.uiName("FoodSearchBarInputField.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "FoodSearchBarInputField")) },
         leadingIcon = {
             if (searchBarState.targetValue == SearchBarValue.Expanded) {
                 ArrowBackIconButton(
-                    onClick = { coroutineScope.launch { searchBarState.animateToCollapsed() } }
+                    onClick = { coroutineScope.launch { searchBarState.animateToCollapsed() } }, modifier = Modifier.uiName("FoodSearchBarInputField.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "FoodSearchBarInputField")
                 )
             } else {
-                Icon(imageVector = Icons.Outlined.Search, contentDescription = null)
+                Icon(imageVector = Icons.Outlined.Search, contentDescription = null, modifier = Modifier.uiName("FoodSearchBarInputField.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "FoodSearchBarInputField"))
             }
         },
         trailingIcon = {
-            Row {
+            Row (modifier = Modifier.uiName("FoodSearchBarInputField.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "FoodSearchBarInputField")) {
                 if (textFieldState.text.isEmpty()) {
-                    IconButton(onBarcodeScanner) {
+                    IconButton(onBarcodeScanner, modifier = Modifier.uiName("FoodSearchBarInputField.IconButton.1", "androidx.compose.material3.IconButton", uiInspectionSource, "FoodSearchBarInputField")) {
                         Icon(
                             painter = painterResource(Res.drawable.ic_barcode_scanner),
-                            contentDescription = stringResource(Res.string.action_scan_barcode),
+                            contentDescription = stringResource(Res.string.action_scan_barcode), modifier = Modifier.uiName("FoodSearchBarInputField.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "FoodSearchBarInputField")
                         )
                     }
                 } else {
@@ -61,11 +65,11 @@ internal fun FoodSearchBarInputField(
                             if (searchBarState.targetValue == SearchBarValue.Collapsed) {
                                 onSearch(null)
                             }
-                        }
+                        }, modifier = Modifier.uiName("FoodSearchBarInputField.IconButton.2", "androidx.compose.material3.IconButton", uiInspectionSource, "FoodSearchBarInputField")
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Clear,
-                            contentDescription = stringResource(Res.string.action_clear),
+                            contentDescription = stringResource(Res.string.action_clear), modifier = Modifier.uiName("FoodSearchBarInputField.Icon.3", "androidx.compose.material3.Icon", uiInspectionSource, "FoodSearchBarInputField")
                         )
                     }
                 }
@@ -73,3 +77,9 @@ internal fun FoodSearchBarInputField(
         },
     )
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.search",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodSearchBarInputField.kt",
+)

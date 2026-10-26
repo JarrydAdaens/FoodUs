@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.theme
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -23,16 +26,16 @@ fun AdditionalSettings(
     onUpdateTheme: (Theme) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier) {
+    Column((modifier).uiName("AdditionalSettings.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "AdditionalSettings")) {
         PlatformAdditionalSettings(themeSettings = themeSettings, onUpdateTheme = onUpdateTheme)
         ListItem(
-            headlineContent = { Text(stringResource(Res.string.headline_random_theme)) },
+            headlineContent = { Text(stringResource(Res.string.headline_random_theme), modifier = Modifier.uiName("AdditionalSettings.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "AdditionalSettings")) },
             modifier =
-                Modifier.clickable { onRandomizeTheme(!themeSettings.randomizeOnLaunch) }
-                    .semantics { role = Role.Switch },
-            supportingContent = { Text(stringResource(Res.string.description_random_theme)) },
+                (Modifier.clickable { onRandomizeTheme(!themeSettings.randomizeOnLaunch) }
+                    .semantics { role = Role.Switch }).uiName("AdditionalSettings.ListItem.1", "androidx.compose.material3.ListItem", uiInspectionSource, "AdditionalSettings"),
+            supportingContent = { Text(stringResource(Res.string.description_random_theme), modifier = Modifier.uiName("AdditionalSettings.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "AdditionalSettings")) },
             trailingContent = {
-                Switch(checked = themeSettings.randomizeOnLaunch, onCheckedChange = null)
+                Switch(checked = themeSettings.randomizeOnLaunch, onCheckedChange = null, modifier = Modifier.uiName("AdditionalSettings.Switch.1", "androidx.compose.material3.Switch", uiInspectionSource, "AdditionalSettings"))
             },
         )
     }
@@ -42,4 +45,10 @@ fun AdditionalSettings(
 expect fun ColumnScope.PlatformAdditionalSettings(
     themeSettings: ThemeSettings,
     onUpdateTheme: (Theme) -> Unit,
+)
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.theme",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/theme/AdditionalSettings.kt",
 )

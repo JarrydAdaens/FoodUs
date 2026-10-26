@@ -1,5 +1,9 @@
 package com.maksimowiczm.foodyou.app.ui.food.diary.search
 
+
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.LunchDining
@@ -29,7 +33,7 @@ internal fun FoodDiarySearchFloatingActionButton(
 
     FloatingActionButtonMenu(
         expanded = fabExpanded,
-        modifier = modifier,
+        modifier = (modifier).uiName("FoodDiarySearchFloatingActionButton.FloatingActionButtonMenu.1", "androidx.compose.material3.FloatingActionButtonMenu", uiInspectionSource, "FoodDiarySearchFloatingActionButton"),
         button = {
             ToggleFloatingActionButton(
                 checked = fabExpanded,
@@ -40,7 +44,7 @@ internal fun FoodDiarySearchFloatingActionButton(
                         stop = colorScheme.secondary,
                         fraction = it,
                     )
-                },
+                }, modifier = Modifier.uiName("FoodDiarySearchFloatingActionButton.ToggleFloatingActionButton.1", "androidx.compose.material3.ToggleFloatingActionButton", uiInspectionSource, "FoodDiarySearchFloatingActionButton")
             ) {
                 val rotation by remember { derivedStateOf { checkedProgress * 45f } }
 
@@ -60,28 +64,34 @@ internal fun FoodDiarySearchFloatingActionButton(
                             stringResource(Res.string.action_create)
                         },
                     tint = tintColor,
-                    modifier = Modifier.graphicsLayer { rotationZ = rotation },
+                    modifier = (Modifier.graphicsLayer { rotationZ = rotation }).uiName("FoodDiarySearchFloatingActionButton.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "FoodDiarySearchFloatingActionButton"),
                 )
             }
         },
     ) {
         FloatingActionButtonMenuItem(
-            modifier = Modifier,
+            modifier = (Modifier).uiName("FoodDiarySearchFloatingActionButton.FloatingActionButtonMenuItem.1", "androidx.compose.material3.FloatingActionButtonMenuItem", uiInspectionSource, "FoodDiarySearchFloatingActionButton"),
             onClick = {
                 onCreateRecipe()
                 onFabExpandedChange(false)
             },
-            icon = { Icon(painterResource(Res.drawable.ic_skillet_filled), null) },
-            text = { Text(stringResource(Res.string.headline_recipe)) },
+            icon = { Icon(painterResource(Res.drawable.ic_skillet_filled), null, modifier = Modifier.uiName("FoodDiarySearchFloatingActionButton.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "FoodDiarySearchFloatingActionButton")) },
+            text = { Text(stringResource(Res.string.headline_recipe), modifier = Modifier.uiName("FoodDiarySearchFloatingActionButton.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "FoodDiarySearchFloatingActionButton")) },
         )
         FloatingActionButtonMenuItem(
-            modifier = Modifier,
+            modifier = (Modifier).uiName("FoodDiarySearchFloatingActionButton.FloatingActionButtonMenuItem.2", "androidx.compose.material3.FloatingActionButtonMenuItem", uiInspectionSource, "FoodDiarySearchFloatingActionButton"),
             onClick = {
                 onCreateProduct()
                 onFabExpandedChange(false)
             },
-            icon = { Icon(Icons.Filled.LunchDining, null) },
-            text = { Text(stringResource(Res.string.headline_product)) },
+            icon = { Icon(Icons.Filled.LunchDining, null, modifier = Modifier.uiName("FoodDiarySearchFloatingActionButton.Icon.3", "androidx.compose.material3.Icon", uiInspectionSource, "FoodDiarySearchFloatingActionButton")) },
+            text = { Text(stringResource(Res.string.headline_product), modifier = Modifier.uiName("FoodDiarySearchFloatingActionButton.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "FoodDiarySearchFloatingActionButton")) },
         )
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.diary.search",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/search/FoodDiarySearchFloatingActionButton.kt",
+)

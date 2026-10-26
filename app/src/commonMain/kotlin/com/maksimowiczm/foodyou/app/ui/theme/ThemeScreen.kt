@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.theme
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.material3.LargeFlexibleTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -28,12 +31,12 @@ fun ThemeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
         // TODO loading state
     } else {
         Scaffold(
-            modifier = modifier,
+            modifier = (modifier).uiName("ThemeScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "ThemeScreen"),
             topBar = {
                 LargeFlexibleTopAppBar(
-                    title = { Text(stringResource(Res.string.headline_appearance)) },
-                    navigationIcon = { ArrowBackIconButton(onBack) },
-                    scrollBehavior = scrollBehavior,
+                    title = { Text(stringResource(Res.string.headline_appearance), modifier = Modifier.uiName("ThemeScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "ThemeScreen")) },
+                    navigationIcon = { ArrowBackIconButton(onBack, modifier = Modifier.uiName("ThemeScreen.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "ThemeScreen")) },
+                    scrollBehavior = scrollBehavior, modifier = Modifier.uiName("ThemeScreen.LargeFlexibleTopAppBar.1", "androidx.compose.material3.LargeFlexibleTopAppBar", uiInspectionSource, "ThemeScreen")
                 )
             },
             content = { paddingValues ->
@@ -45,9 +48,15 @@ fun ThemeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                     nutrientsColors = nutrientsColors,
                     onNutrientsColorsChange = viewModel::updateNutrientsColors,
                     contentPadding = paddingValues.add(vertical = 8.dp),
-                    modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+                    modifier = (Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)).uiName("ThemeScreen.ThemeScreenContent.1", "com.maksimowiczm.foodyou.app.ui.theme.ThemeScreenContent", uiInspectionSource, "ThemeScreen"),
                 )
             },
         )
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.theme",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/theme/ThemeScreen.kt",
+)

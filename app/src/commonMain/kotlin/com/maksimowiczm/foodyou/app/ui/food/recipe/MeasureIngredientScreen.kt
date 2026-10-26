@@ -1,5 +1,9 @@
 package com.maksimowiczm.foodyou.app.ui.food.recipe
 
+
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -74,58 +78,58 @@ internal fun MeasureIngredientScreen(
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     Scaffold(
-        modifier = modifier,
+        modifier = (modifier).uiName("MeasureIngredientScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "MeasureIngredientScreen"),
         topBar = {
             MediumTopAppBar(
-                title = { Text(food.headline) },
-                navigationIcon = { ArrowBackIconButton(onBack) },
-                scrollBehavior = scrollBehavior,
+                title = { Text(food.headline, modifier = Modifier.uiName("MeasureIngredientScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "MeasureIngredientScreen")) },
+                navigationIcon = { ArrowBackIconButton(onBack, modifier = Modifier.uiName("MeasureIngredientScreen.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "MeasureIngredientScreen")) },
+                scrollBehavior = scrollBehavior, modifier = Modifier.uiName("MeasureIngredientScreen.MediumTopAppBar.1", "androidx.compose.material3.MediumTopAppBar", uiInspectionSource, "MeasureIngredientScreen")
             )
         },
         floatingActionButton = {
             if (amountValid) LargeExtendedFloatingActionButton(
                 onClick = { onSave(measurementPickerState.measurement) },
-                icon = { Icon(imageVector = Icons.Filled.Edit, contentDescription = stringResource(Res.string.action_save)) },
-                text = { Text(stringResource(Res.string.action_save)) },
+                icon = { Icon(imageVector = Icons.Filled.Edit, contentDescription = stringResource(Res.string.action_save), modifier = Modifier.uiName("MeasureIngredientScreen.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "MeasureIngredientScreen")) },
+                text = { Text(stringResource(Res.string.action_save), modifier = Modifier.uiName("MeasureIngredientScreen.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "MeasureIngredientScreen")) }, modifier = Modifier.uiName("MeasureIngredientScreen.LargeExtendedFloatingActionButton.1", "androidx.compose.material3.LargeExtendedFloatingActionButton", uiInspectionSource, "MeasureIngredientScreen")
             )
         },
     ) { paddingValues ->
         LazyColumn(
             modifier =
-                Modifier.fillMaxSize()
+                (Modifier.fillMaxSize()
                     .imePadding()
                     .padding(horizontal = 8.dp)
-                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                    .nestedScroll(scrollBehavior.nestedScrollConnection)).uiName("MeasureIngredientScreen.LazyColumn.1", "androidx.compose.foundation.lazy.LazyColumn", uiInspectionSource, "MeasureIngredientScreen"),
             contentPadding = paddingValues.add(vertical = 8.dp).add(bottom = 80.dp + 24.dp),
         ) {
-            item { HorizontalDivider() }
+            item { HorizontalDivider( modifier = Modifier.uiName("MeasureIngredientScreen.HorizontalDivider.1", "androidx.compose.material3.HorizontalDivider", uiInspectionSource, "MeasureIngredientScreen")) }
 
             item {
                 MeasurementPicker(
                     state = measurementPickerState,
-                    modifier = Modifier.padding(vertical = 8.dp),
+                    modifier = (Modifier.padding(vertical = 8.dp)).uiName("MeasureIngredientScreen.MeasurementPicker.1", "com.maksimowiczm.foodyou.app.ui.food.component.MeasurementPicker", uiInspectionSource, "MeasureIngredientScreen"),
                 )
             }
 
-            item { HorizontalDivider() }
+            item { HorizontalDivider( modifier = Modifier.uiName("MeasureIngredientScreen.HorizontalDivider.2", "androidx.compose.material3.HorizontalDivider", uiInspectionSource, "MeasureIngredientScreen")) }
 
             item {
                 val measurement = measurementPickerState.measurement
                 val facts = portionFacts
                 if (facts == null) {
-                    Text(stringResource(Res.string.error_portion_save), color = MaterialTheme.colorScheme.error)
+                    Text(stringResource(Res.string.error_portion_save), color = MaterialTheme.colorScheme.error, modifier = Modifier.uiName("MeasureIngredientScreen.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "MeasureIngredientScreen"))
                     return@item
                 }
 
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(8.dp),
+                    modifier = (Modifier.fillMaxWidth().padding(8.dp)).uiName("MeasureIngredientScreen.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "MeasureIngredientScreen"),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Box(modifier = Modifier.size(48.dp), contentAlignment = Alignment.Center) {
+                    Box(modifier = (Modifier.size(48.dp)).uiName("MeasureIngredientScreen.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "MeasureIngredientScreen"), contentAlignment = Alignment.Center) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Outlined.ViewList,
-                            contentDescription = null,
+                            contentDescription = null, modifier = Modifier.uiName("MeasureIngredientScreen.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "MeasureIngredientScreen")
                         )
                     }
 
@@ -138,7 +142,7 @@ internal fun MeasureIngredientScreen(
                             proteins = proteins.toFloat(),
                             carbohydrates = carbohydrates.toFloat(),
                             fats = fats.toFloat(),
-                            modifier = Modifier.weight(1f),
+                            modifier = (Modifier.weight(1f)).uiName("MeasureIngredientScreen.EnergyProgressIndicator.1", "com.maksimowiczm.foodyou.app.ui.food.component.EnergyProgressIndicator", uiInspectionSource, "MeasureIngredientScreen"),
                         )
                     }
                 }
@@ -152,11 +156,11 @@ internal fun MeasureIngredientScreen(
 
                 Text(
                     text = measurementString,
-                    modifier = Modifier.padding(horizontal = 8.dp).padding(bottom = 8.dp),
+                    modifier = (Modifier.padding(horizontal = 8.dp).padding(bottom = 8.dp)).uiName("MeasureIngredientScreen.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "MeasureIngredientScreen"),
                     style = MaterialTheme.typography.labelLarge,
                 )
 
-                NutrientList(facts)
+                NutrientList(facts, modifier = Modifier.uiName("MeasureIngredientScreen.NutrientList.1", "com.maksimowiczm.foodyou.app.ui.food.shared.component.NutrientList", uiInspectionSource, "MeasureIngredientScreen"))
             }
 
             if (food is Recipe) {
@@ -169,10 +173,16 @@ internal fun MeasureIngredientScreen(
 
                     IncompleteFoodsList(
                         foods = incompleteIngredients.map { it.headline }.distinct(),
-                        modifier = Modifier.padding(8.dp),
+                        modifier = (Modifier.padding(8.dp)).uiName("MeasureIngredientScreen.IncompleteFoodsList.1", "com.maksimowiczm.foodyou.app.ui.common.component.IncompleteFoodsList", uiInspectionSource, "MeasureIngredientScreen"),
                     )
                 }
             }
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.recipe",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/MeasureIngredientScreen.kt",
+)

@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.common.compose.component
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.size
@@ -28,10 +31,10 @@ fun MultiColorProgressIndicator(
 
     Canvas(
         modifier =
-            modifier.size(
+            (modifier.size(
                 width = MultiColorProgressIndicatorDefaults.width,
                 height = MultiColorProgressIndicatorDefaults.height,
-            )
+            )).uiName("MultiColorProgressIndicator.Canvas.1", "androidx.compose.foundation.Canvas", uiInspectionSource, "MultiColorProgressIndicator")
     ) {
         var start = 0f
 
@@ -61,3 +64,9 @@ object MultiColorProgressIndicatorDefaults {
     val width = 240.dp
     val height = 4.dp
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.common.compose.component",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/compose/component/MultiColorProgressIndicator.kt",
+)

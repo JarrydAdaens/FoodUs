@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.home.meals.card
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -45,7 +48,7 @@ internal fun DiarySlotFoodListItem(
                 color = color,
                 contentColor = contentColor,
                 shape = shape,
-                modifier = modifier,
+                modifier = (modifier).uiName("DiarySlotFoodListItem.DiarySlotFoodListItem.1", "com.maksimowiczm.foodyou.app.ui.home.meals.card.DiarySlotFoodListItem", uiInspectionSource, "DiarySlotFoodListItem"),
             )
 
         is ManualDiarySlotEntryModel ->
@@ -54,7 +57,7 @@ internal fun DiarySlotFoodListItem(
                 color = color,
                 contentColor = contentColor,
                 shape = shape,
-                modifier = modifier,
+                modifier = (modifier).uiName("DiarySlotFoodListItem.DiarySlotFoodListItem.2", "com.maksimowiczm.foodyou.app.ui.home.meals.card.DiarySlotFoodListItem", uiInspectionSource, "DiarySlotFoodListItem"),
             )
     }
 }
@@ -71,12 +74,12 @@ internal fun DiarySlotFoodListItem(
         val facts=entry.capturedFacts
         if(facts==null || !facts.hasValidValues() || entry.name.isBlank() || !entry.referencePortion.validCapturedReference() ||
             !entry.measurement.rawValue.isFinite() || entry.measurement.rawValue<=0.0) {
-            FoodErrorListItem(headline=entry.name,errorMessage=stringResource(Res.string.error_measurement_error),modifier=modifier)
+            FoodErrorListItem(headline=entry.name,errorMessage=stringResource(Res.string.error_measurement_error),modifier=(modifier).uiName("DiarySlotFoodListItem.FoodErrorListItem.1", "com.maksimowiczm.foodyou.app.ui.common.component.FoodErrorListItem", uiInspectionSource, "DiarySlotFoodListItem"))
             return
         }
-        CapturedDiaryRow(entry.name,facts,entry.isRecipe,color,contentColor,shape,modifier) {
-            Text(entry.measurement.stringResourceWithWeight(entry.totalWeight,entry.servingWeight,entry.isLiquid) ?: entry.measurement.stringResource())
-            Text(entry.reportedBasis?.let { reportedBasisLabel(it) } ?: stringResource(Res.string.captured_reference_serving))
+        CapturedDiaryRow(entry.name,facts,entry.isRecipe,color,contentColor,shape,(modifier).uiName("DiarySlotFoodListItem.CapturedDiaryRow.1", "com.maksimowiczm.foodyou.app.ui.home.meals.card.CapturedDiaryRow", uiInspectionSource, "DiarySlotFoodListItem")) {
+            Text(entry.measurement.stringResourceWithWeight(entry.totalWeight,entry.servingWeight,entry.isLiquid) ?: entry.measurement.stringResource(), modifier = Modifier.uiName("DiarySlotFoodListItem.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotFoodListItem"))
+            Text(entry.reportedBasis?.let { reportedBasisLabel(it) } ?: stringResource(Res.string.captured_reference_serving), modifier = Modifier.uiName("DiarySlotFoodListItem.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotFoodListItem"))
             CapturedReferenceText(entry.referencePortion)
         }
         return
@@ -102,7 +105,7 @@ internal fun DiarySlotFoodListItem(
         FoodErrorListItem(
             headline = entry.name,
             errorMessage = stringResource(Res.string.error_measurement_error),
-            modifier = modifier,
+            modifier = (modifier).uiName("DiarySlotFoodListItem.FoodErrorListItem.2", "com.maksimowiczm.foodyou.app.ui.common.component.FoodErrorListItem", uiInspectionSource, "DiarySlotFoodListItem"),
         )
     } else if (
         proteinsString == null ||
@@ -113,22 +116,22 @@ internal fun DiarySlotFoodListItem(
         FoodErrorListItem(
             headline = entry.name,
             errorMessage = stringResource(Res.string.error_food_is_missing_required_fields),
-            modifier = modifier,
+            modifier = (modifier).uiName("DiarySlotFoodListItem.FoodErrorListItem.3", "com.maksimowiczm.foodyou.app.ui.common.component.FoodErrorListItem", uiInspectionSource, "DiarySlotFoodListItem"),
         )
     } else {
         FoodListItem(
-            name = { Text(entry.name) },
-            proteins = { Text(text = proteinsString, style = MaterialTheme.typography.bodySmall) },
+            name = { Text(entry.name, modifier = Modifier.uiName("DiarySlotFoodListItem.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotFoodListItem")) },
+            proteins = { Text(text = proteinsString, style = MaterialTheme.typography.bodySmall, modifier = Modifier.uiName("DiarySlotFoodListItem.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotFoodListItem")) },
             carbohydrates = {
-                Text(text = carbohydratesString, style = MaterialTheme.typography.bodySmall)
+                Text(text = carbohydratesString, style = MaterialTheme.typography.bodySmall, modifier = Modifier.uiName("DiarySlotFoodListItem.Text.5", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotFoodListItem"))
             },
-            fats = { Text(text = fatsString, style = MaterialTheme.typography.bodySmall) },
-            calories = { Text(text = caloriesString, style = MaterialTheme.typography.bodySmall) },
+            fats = { Text(text = fatsString, style = MaterialTheme.typography.bodySmall, modifier = Modifier.uiName("DiarySlotFoodListItem.Text.6", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotFoodListItem")) },
+            calories = { Text(text = caloriesString, style = MaterialTheme.typography.bodySmall, modifier = Modifier.uiName("DiarySlotFoodListItem.Text.7", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotFoodListItem")) },
             measurement = {
-                Text(text = measurementString, style = MaterialTheme.typography.bodySmall)
+                Text(text = measurementString, style = MaterialTheme.typography.bodySmall, modifier = Modifier.uiName("DiarySlotFoodListItem.Text.8", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotFoodListItem"))
             },
             isRecipe = entry.isRecipe,
-            modifier = modifier,
+            modifier = (modifier).uiName("DiarySlotFoodListItem.FoodListItem.1", "com.maksimowiczm.foodyou.app.ui.common.component.FoodListItem", uiInspectionSource, "DiarySlotFoodListItem"),
             containerColor = color,
             contentColor = contentColor,
             shape = shape,
@@ -150,11 +153,11 @@ internal fun DiarySlotFoodListItem(
         val valid = !entry.isPlaceholder && entry.name.isNotBlank() && captured.hasValidValues() &&
             entry.portionDescription.validCapturedReference() && entry.capturedPortion?.rawValue.let { it==null || it.isFinite() && it>0.0 }
         if (!valid) {
-            FoodErrorListItem(headline=entry.name,errorMessage=stringResource(Res.string.error_food_is_missing_required_fields),modifier=modifier)
+            FoodErrorListItem(headline=entry.name,errorMessage=stringResource(Res.string.error_food_is_missing_required_fields),modifier=(modifier).uiName("DiarySlotFoodListItem.FoodErrorListItem.4", "com.maksimowiczm.foodyou.app.ui.common.component.FoodErrorListItem", uiInspectionSource, "DiarySlotFoodListItem"))
             return
         }
-        CapturedDiaryRow(entry.name,captured,false,color,contentColor,shape,modifier) {
-            entry.capturedPortion?.let { Text(it.stringResource()) }
+        CapturedDiaryRow(entry.name,captured,false,color,contentColor,shape,(modifier).uiName("DiarySlotFoodListItem.CapturedDiaryRow.2", "com.maksimowiczm.foodyou.app.ui.home.meals.card.CapturedDiaryRow", uiInspectionSource, "DiarySlotFoodListItem")) {
+            entry.capturedPortion?.let { Text(it.stringResource(), modifier = Modifier.uiName("DiarySlotFoodListItem.Text.9", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotFoodListItem")) }
             CapturedReferenceText(entry.portionDescription)
         }
         return
@@ -178,32 +181,32 @@ internal fun DiarySlotFoodListItem(
         FoodErrorListItem(
             headline = entry.name,
             errorMessage = stringResource(Res.string.error_food_is_missing_required_fields),
-            modifier = modifier,
+            modifier = (modifier).uiName("DiarySlotFoodListItem.FoodErrorListItem.5", "com.maksimowiczm.foodyou.app.ui.common.component.FoodErrorListItem", uiInspectionSource, "DiarySlotFoodListItem"),
         )
     } else {
         FoodListItem(
             name = {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
+                    verticalAlignment = Alignment.CenterVertically, modifier = Modifier.uiName("DiarySlotFoodListItem.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "DiarySlotFoodListItem")
                 ) {
-                    Text(entry.name)
+                    Text(entry.name, modifier = Modifier.uiName("DiarySlotFoodListItem.Text.10", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotFoodListItem"))
                     Icon(
                         imageVector = Icons.Outlined.Bolt,
                         contentDescription = null,
-                        modifier = Modifier.size(18.dp),
+                        modifier = (Modifier.size(18.dp)).uiName("DiarySlotFoodListItem.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "DiarySlotFoodListItem"),
                     )
                 }
             },
-            proteins = { Text(text = proteinsString, style = MaterialTheme.typography.bodySmall) },
+            proteins = { Text(text = proteinsString, style = MaterialTheme.typography.bodySmall, modifier = Modifier.uiName("DiarySlotFoodListItem.Text.11", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotFoodListItem")) },
             carbohydrates = {
-                Text(text = carbohydratesString, style = MaterialTheme.typography.bodySmall)
+                Text(text = carbohydratesString, style = MaterialTheme.typography.bodySmall, modifier = Modifier.uiName("DiarySlotFoodListItem.Text.12", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotFoodListItem"))
             },
-            fats = { Text(text = fatsString, style = MaterialTheme.typography.bodySmall) },
-            calories = { Text(text = caloriesString, style = MaterialTheme.typography.bodySmall) },
-            measurement = { entry.capturedPortion?.let { Text(it.stringResource(), style = MaterialTheme.typography.bodySmall) } },
+            fats = { Text(text = fatsString, style = MaterialTheme.typography.bodySmall, modifier = Modifier.uiName("DiarySlotFoodListItem.Text.13", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotFoodListItem")) },
+            calories = { Text(text = caloriesString, style = MaterialTheme.typography.bodySmall, modifier = Modifier.uiName("DiarySlotFoodListItem.Text.14", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotFoodListItem")) },
+            measurement = { entry.capturedPortion?.let { Text(it.stringResource(), style = MaterialTheme.typography.bodySmall, modifier = Modifier.uiName("DiarySlotFoodListItem.Text.15", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotFoodListItem")) } },
             isRecipe = false,
-            modifier = modifier,
+            modifier = (modifier).uiName("DiarySlotFoodListItem.FoodListItem.2", "com.maksimowiczm.foodyou.app.ui.common.component.FoodListItem", uiInspectionSource, "DiarySlotFoodListItem"),
             containerColor = color,
             contentColor = contentColor,
             shape = shape,
@@ -225,8 +228,14 @@ private fun CapturedDiaryRow(name:String,facts:NutritionFacts,isRecipe:Boolean,c
     val calories=facts.energy.value?.takeIf { facts.energy.isComplete }?.let {
         if(it>Int.MAX_VALUE)it.toString()+" kcal" else LocalEnergyFormatter.current.formatEnergy(it)
     } ?: unknown
-    FoodListItem(name={Text(name)},proteins={Text(macro(facts.proteins))},carbohydrates={Text(macro(facts.carbohydrates))},
-        fats={Text(macro(facts.fats))},calories={Text(calories)},measurement={Column { context() }},isRecipe=isRecipe,
-        modifier=modifier,containerColor=color,contentColor=contentColor,shape=shape,
+    FoodListItem(name={Text(name, modifier = Modifier.uiName("CapturedDiaryRow.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "CapturedDiaryRow"))},proteins={Text(macro(facts.proteins), modifier = Modifier.uiName("CapturedDiaryRow.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "CapturedDiaryRow"))},carbohydrates={Text(macro(facts.carbohydrates), modifier = Modifier.uiName("CapturedDiaryRow.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "CapturedDiaryRow"))},
+        fats={Text(macro(facts.fats), modifier = Modifier.uiName("CapturedDiaryRow.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "CapturedDiaryRow"))},calories={Text(calories, modifier = Modifier.uiName("CapturedDiaryRow.Text.5", "androidx.compose.material3.Text", uiInspectionSource, "CapturedDiaryRow"))},measurement={Column (modifier = Modifier.uiName("CapturedDiaryRow.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "CapturedDiaryRow")) { context() }},isRecipe=isRecipe,
+        modifier=(modifier).uiName("CapturedDiaryRow.FoodListItem.1", "com.maksimowiczm.foodyou.app.ui.common.component.FoodListItem", uiInspectionSource, "CapturedDiaryRow"),containerColor=color,contentColor=contentColor,shape=shape,
         contentPadding=PaddingValues(vertical=8.dp,horizontal=16.dp))
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.home.meals.card",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotFoodListItem.kt",
+)

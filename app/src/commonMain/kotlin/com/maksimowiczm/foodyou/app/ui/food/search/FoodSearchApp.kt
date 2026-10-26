@@ -1,5 +1,9 @@
 package com.maksimowiczm.foodyou.app.ui.food.search
 
+
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -69,7 +73,7 @@ fun FoodSearchApp(
         onUpdateUsdaApiKey = onUpdateUsdaApiKey,
         onUpdateOpenFoodFactsCredentials = onUpdateOpenFoodFactsCredentials,
         initialQuery = initialQuery,
-        modifier = modifier,
+        modifier = (modifier).uiName("FoodSearchApp.FoodSearchApp.1", "com.maksimowiczm.foodyou.app.ui.food.search.FoodSearchApp", uiInspectionSource, "FoodSearchApp"),
     )
 }
 
@@ -121,7 +125,7 @@ private fun FoodSearchApp(
                 searchBarState = appState.searchBarState,
                 textFieldState = appState.searchTextFieldState,
                 onSearch = onSearch,
-                onBarcodeScanner = { appState.showBarcodeScanner = true },
+                onBarcodeScanner = { appState.showBarcodeScanner = true }, modifier = Modifier.uiName("FoodSearchApp.FoodSearchBarInputField.1", "com.maksimowiczm.foodyou.app.ui.food.search.FoodSearchBarInputField", uiInspectionSource, "FoodSearchApp")
             )
         }
 
@@ -134,15 +138,15 @@ private fun FoodSearchApp(
         inputField = searchInputField,
     )
 
-    Scaffold(modifier) { paddingValues ->
+    Scaffold((modifier).uiName("FoodSearchApp.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "FoodSearchApp")) { paddingValues ->
         // Fix for searchbar issues on Android SDK 27 and below
-        Box(Modifier.focusable().size(1.dp))
+        Box((Modifier.focusable().size(1.dp)).uiName("FoodSearchApp.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "FoodSearchApp"))
 
         var topContentHeight by remember { mutableIntStateOf(0) }
 
         Column(
             modifier =
-                Modifier.fillMaxWidth()
+                (Modifier.fillMaxWidth()
                     .zIndex(10f)
                     .windowInsetsPadding(WindowInsets.systemBars.only(WindowInsetsSides.Horizontal))
                     .windowInsetsPadding(
@@ -150,13 +154,13 @@ private fun FoodSearchApp(
                     )
                     .padding(top = paddingValues.calculateTopPadding())
                     .onSizeChanged { topContentHeight = it.height }
-                    .padding(vertical = 8.dp),
+                    .padding(vertical = 8.dp)).uiName("FoodSearchApp.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "FoodSearchApp"),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             SearchBar(
                 state = appState.searchBarState,
                 inputField = searchInputField,
-                modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth(),
+                modifier = (Modifier.padding(horizontal = 16.dp).fillMaxWidth()).uiName("FoodSearchApp.SearchBar.1", "androidx.compose.material3.SearchBar", uiInspectionSource, "FoodSearchApp"),
                 colors =
                     SearchBarDefaults.colors(
                         containerColor = MaterialTheme.colorScheme.surfaceContainerHighest
@@ -176,7 +180,7 @@ private fun FoodSearchApp(
                             coroutineScope.launch { listState.animateScrollToItem(0) }
                         }
                     },
-                    modifier = Modifier.height(32.dp + 8.dp + 32.dp).fillMaxWidth(),
+                    modifier = (Modifier.height(32.dp + 8.dp + 32.dp).fillMaxWidth()).uiName("FoodSearchApp.FoodSearchFilters.1", "com.maksimowiczm.foodyou.app.ui.food.search.FoodSearchFilters", uiInspectionSource, "FoodSearchApp"),
                 )
             }
 
@@ -191,7 +195,7 @@ private fun FoodSearchApp(
                         onUsdaApiKey = onUpdateUsdaApiKey,
                         onUpdateOpenFoodFactsCredentials = onUpdateOpenFoodFactsCredentials,
                         modifier =
-                            Modifier.fillMaxWidth().padding(top = 8.dp).padding(horizontal = 16.dp),
+                            (Modifier.fillMaxWidth().padding(top = 8.dp).padding(horizontal = 16.dp)).uiName("FoodSearchApp.FoodSearchErrorCard.1", "com.maksimowiczm.foodyou.app.ui.food.search.FoodSearchErrorCard", uiInspectionSource, "FoodSearchApp"),
                     )
             }
         }
@@ -203,26 +207,26 @@ private fun FoodSearchApp(
             )
 
         if (pages?.itemCount == 0 && pages.loadState.append !is LoadState.Loading) {
-            Box(Modifier.fillMaxSize()) {
+            Box((Modifier.fillMaxSize()).uiName("FoodSearchApp.Box.2", "androidx.compose.foundation.layout.Box", uiInspectionSource, "FoodSearchApp")) {
                 Text(
                     text = stringResource(Res.string.neutral_no_food_found),
-                    modifier = Modifier.safeContentPadding().align(Alignment.Center),
+                    modifier = (Modifier.safeContentPadding().align(Alignment.Center)).uiName("FoodSearchApp.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "FoodSearchApp"),
                 )
             }
         }
 
         if (pages?.delayedLoadingState() == true) {
-            Box(Modifier.fillMaxSize().zIndex(20f)) {
+            Box((Modifier.fillMaxSize().zIndex(20f)).uiName("FoodSearchApp.Box.3", "androidx.compose.foundation.layout.Box", uiInspectionSource, "FoodSearchApp")) {
                 ContainedLoadingIndicator(
                     modifier =
-                        Modifier.align(Alignment.TopCenter)
-                            .padding(top = paddingValues.calculateTopPadding())
+                        (Modifier.align(Alignment.TopCenter)
+                            .padding(top = paddingValues.calculateTopPadding())).uiName("FoodSearchApp.ContainedLoadingIndicator.1", "androidx.compose.material3.ContainedLoadingIndicator", uiInspectionSource, "FoodSearchApp")
                 )
             }
         }
 
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
+            modifier = (Modifier.fillMaxSize()).uiName("FoodSearchApp.LazyColumn.1", "androidx.compose.foundation.lazy.LazyColumn", uiInspectionSource, "FoodSearchApp"),
             contentPadding = paddingValues,
             state = appState.listStates.state(uiState.filter.source),
         ) {
@@ -234,13 +238,13 @@ private fun FoodSearchApp(
                     val food = pages[i]
 
                     when (food) {
-                        null -> FoodListItemSkeleton(shimmer)
+                        null -> FoodListItemSkeleton(shimmer, modifier = Modifier.uiName("FoodSearchApp.FoodListItemSkeleton.1", "com.maksimowiczm.foodyou.app.ui.common.component.FoodListItemSkeleton", uiInspectionSource, "FoodSearchApp"))
                         is NutritionalItemSearch.Product -> {
                             val measurement = food.suggestedMeasurement
                             FoodSearchListItem(
                                 food = food,
                                 measurement = measurement,
-                                onClick = { onFoodClick(food, measurement) },
+                                onClick = { onFoodClick(food, measurement) }, modifier = Modifier.uiName("FoodSearchApp.FoodSearchListItem.1", "com.maksimowiczm.foodyou.app.ui.food.search.FoodSearchListItem", uiInspectionSource, "FoodSearchApp")
                             )
                         }
 
@@ -250,19 +254,19 @@ private fun FoodSearchApp(
                                 food = food,
                                 measurement = measurement,
                                 onClick = { onFoodClick(food, measurement) },
-                                shimmer = shimmer,
+                                shimmer = shimmer, modifier = Modifier.uiName("FoodSearchApp.FoodSearchListItem.2", "com.maksimowiczm.foodyou.app.ui.food.search.FoodSearchListItem", uiInspectionSource, "FoodSearchApp")
                             )
                         }
                     }
                 }
 
                 if (pages.loadState.append is LoadState.Loading) {
-                    items(10) { FoodListItemSkeleton(shimmer) }
+                    items(10) { FoodListItemSkeleton(shimmer, modifier = Modifier.uiName("FoodSearchApp.FoodListItemSkeleton.2", "com.maksimowiczm.foodyou.app.ui.common.component.FoodListItemSkeleton", uiInspectionSource, "FoodSearchApp")) }
                 }
             }
 
             if (pages == null) {
-                items(10) { FoodListItemSkeleton(shimmer) }
+                items(10) { FoodListItemSkeleton(shimmer, modifier = Modifier.uiName("FoodSearchApp.FoodListItemSkeleton.3", "com.maksimowiczm.foodyou.app.ui.common.component.FoodListItemSkeleton", uiInspectionSource, "FoodSearchApp")) }
             }
         }
     }
@@ -277,3 +281,9 @@ private fun ListStates.state(source: FoodFilter.Source) =
         FoodFilter.Source.SwissFoodCompositionDatabase -> swiss
         FoodFilter.Source.AustralianFoodCompositionDatabase -> australian
     }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.search",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodSearchApp.kt",
+)

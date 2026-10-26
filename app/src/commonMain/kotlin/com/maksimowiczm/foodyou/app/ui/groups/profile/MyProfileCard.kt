@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.groups.profile
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -36,14 +39,14 @@ internal fun MyProfileCard(modifier: Modifier = Modifier) {
     val profile = viewModel.profile.collectAsStateWithLifecycle().value
     var showDialog by rememberSaveable { mutableStateOf(false) }
 
-    Card(modifier = modifier) {
+    Card(modifier = (modifier).uiName("MyProfileCard.Card.1", "androidx.compose.material3.Card", uiInspectionSource, "MyProfileCard")) {
         Column(
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            modifier = (Modifier.fillMaxWidth().padding(16.dp)).uiName("MyProfileCard.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "MyProfileCard"),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
                 text = stringResource(Res.string.headline_my_profile),
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleMedium, modifier = Modifier.uiName("MyProfileCard.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "MyProfileCard")
             )
 
             if (profile == null) {
@@ -66,7 +69,7 @@ internal fun MyProfileCard(modifier: Modifier = Modifier) {
             onConfirm = { username ->
                 if (profile == null) viewModel.onCreate(username) else viewModel.onRename(username)
                 showDialog = false
-            },
+            }, modifier = Modifier.uiName("MyProfileCard.ProfileEditDialog.1", "com.maksimowiczm.foodyou.app.ui.groups.profile.ProfileEditDialog", uiInspectionSource, "MyProfileCard")
         )
     }
 }
@@ -76,14 +79,14 @@ private fun EmptyProfileContent(onCreate: () -> Unit) {
     Text(
         text = stringResource(Res.string.description_no_profile),
         style = MaterialTheme.typography.bodyMedium,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.uiName("EmptyProfileContent.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "EmptyProfileContent")
     )
-    Button(onClick = onCreate) { Text(stringResource(Res.string.action_create_profile)) }
+    Button(onClick = onCreate, modifier = Modifier.uiName("EmptyProfileContent.Button.1", "androidx.compose.material3.Button", uiInspectionSource, "EmptyProfileContent")) { Text(stringResource(Res.string.action_create_profile), modifier = Modifier.uiName("EmptyProfileContent.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "EmptyProfileContent")) }
 }
 
 @Composable
 private fun ProfileContent(profile: Profile, onEdit: () -> Unit) {
-    Text(text = profile.username, style = MaterialTheme.typography.headlineSmall)
+    Text(text = profile.username, style = MaterialTheme.typography.headlineSmall, modifier = Modifier.uiName("ProfileContent.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "ProfileContent"))
 
     ProfileDateRow(
         label = stringResource(Res.string.headline_created),
@@ -96,7 +99,7 @@ private fun ProfileContent(profile: Profile, onEdit: () -> Unit) {
 
     // The friend code (Story 6) renders here, between the dates and the edit action.
 
-    TextButton(onClick = onEdit) { Text(stringResource(Res.string.action_edit)) }
+    TextButton(onClick = onEdit, modifier = Modifier.uiName("ProfileContent.TextButton.1", "androidx.compose.material3.TextButton", uiInspectionSource, "ProfileContent")) { Text(stringResource(Res.string.action_edit), modifier = Modifier.uiName("ProfileContent.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "ProfileContent")) }
 }
 
 @Composable
@@ -105,17 +108,23 @@ private fun ProfileDateRow(label: String, epochSeconds: Long) {
         Instant.fromEpochSeconds(epochSeconds).toLocalDateTime(TimeZone.currentSystemDefault()).date
 
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("ProfileDateRow.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "ProfileDateRow"),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Text(
             text = label,
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.uiName("ProfileDateRow.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "ProfileDateRow")
         )
         Text(
             text = LocalDateFormatter.current.formatDateShort(date),
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.bodyMedium, modifier = Modifier.uiName("ProfileDateRow.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "ProfileDateRow")
         )
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.groups.profile",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/groups/profile/MyProfileCard.kt",
+)

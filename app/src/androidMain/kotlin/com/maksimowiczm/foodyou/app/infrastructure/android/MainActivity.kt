@@ -1,4 +1,9 @@
 package com.maksimowiczm.foodyou.app.infrastructure.android
+import androidx.compose.ui.Modifier
+
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,7 +15,7 @@ class MainActivity : FoodYouAbstractActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            FoodYouApp(
+            UiSourceScope(uiInspectionSource.element("MainActivity.onCreate.FoodYouApp.1", "com.maksimowiczm.foodyou.app.ui.FoodYouApp", "MainActivity.onCreate")) { FoodYouApp(
                 onDatabaseBackup = {
                     val intent =
                         Intent(this, DeveloperActivity::class.java).apply {
@@ -19,7 +24,13 @@ class MainActivity : FoodYouAbstractActivity() {
 
                     startActivity(intent)
                 }
-            )
+            ) }
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.infrastructure.android",
+    "app/src/androidMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/android/MainActivity.kt",
+)

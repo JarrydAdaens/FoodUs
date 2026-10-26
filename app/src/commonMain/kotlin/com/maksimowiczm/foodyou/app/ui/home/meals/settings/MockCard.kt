@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.home.meals.settings
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,11 +23,11 @@ import androidx.compose.ui.unit.dp
 @Composable
 internal fun MockCard(modifier: Modifier = Modifier) {
     Surface(
-        modifier = modifier.size(width = 80.dp, height = 50.dp),
+        modifier = (modifier.size(width = 80.dp, height = 50.dp)).uiName("MockCard.Surface.1", "androidx.compose.material3.Surface", uiInspectionSource, "MockCard"),
         shape = MaterialTheme.shapes.medium,
         color = MaterialTheme.colorScheme.surfaceContainerHighest,
     ) {
-        Column(Modifier.padding(8.dp)) {
+        Column((Modifier.padding(8.dp)).uiName("MockCard.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "MockCard")) {
             Spacer(
                 Modifier.clip(MaterialTheme.shapes.medium)
                     .background(MaterialTheme.colorScheme.outline)
@@ -43,7 +46,7 @@ internal fun MockCard(modifier: Modifier = Modifier) {
 
             Spacer(Modifier.weight(1f))
 
-            Row(Modifier.fillMaxWidth()) {
+            Row((Modifier.fillMaxWidth()).uiName("MockCard.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "MockCard")) {
                 Spacer(
                     Modifier.clip(MaterialTheme.shapes.medium)
                         .background(MaterialTheme.colorScheme.outlineVariant)
@@ -68,3 +71,9 @@ internal fun MockCard(modifier: Modifier = Modifier) {
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.home.meals.settings",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/settings/MockCard.kt",
+)

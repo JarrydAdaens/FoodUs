@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.food.diary.search
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -111,14 +114,14 @@ fun DiaryFoodSearchScreen(
                                         )
                             )
                         } else {
-                            Text(diarySlot.name)
+                            Text(diarySlot.name, modifier = Modifier.uiName("DiaryFoodSearchScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "DiaryFoodSearchScreen"))
                         }
                     }
                 },
-                subtitle = { Text(dateFormatter.formatDate(date)) },
+                subtitle = { Text(dateFormatter.formatDate(date), modifier = Modifier.uiName("DiaryFoodSearchScreen.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "DiaryFoodSearchScreen")) },
                 titleHorizontalAlignment = Alignment.CenterHorizontally,
-                navigationIcon = { ArrowBackIconButton(onBack) },
-                scrollBehavior = scrollBehavior,
+                navigationIcon = { ArrowBackIconButton(onBack, modifier = Modifier.uiName("DiaryFoodSearchScreen.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "DiaryFoodSearchScreen")) },
+                scrollBehavior = scrollBehavior, modifier = Modifier.uiName("DiaryFoodSearchScreen.TopAppBar.1", "androidx.compose.material3.TopAppBar", uiInspectionSource, "DiaryFoodSearchScreen")
             )
         }
     val content: @Composable (PaddingValues) -> Unit =
@@ -129,13 +132,13 @@ fun DiaryFoodSearchScreen(
                 onUpdateOpenFoodFactsCredentials = onUpdateOpenFoodFactsCredentials,
                 initialQuery = initialQuery,
                 modifier =
-                    Modifier.padding(paddingValues)
+                    (Modifier.padding(paddingValues)
                         .consumeWindowInsets(paddingValues)
-                        .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        .nestedScroll(scrollBehavior.nestedScrollConnection)).uiName("DiaryFoodSearchScreen.FoodSearchApp.1", "com.maksimowiczm.foodyou.app.ui.food.search.FoodSearchApp", uiInspectionSource, "DiaryFoodSearchScreen"),
             )
         }
 
-    Box(modifier) {
+    Box((modifier).uiName("DiaryFoodSearchScreen.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "DiaryFoodSearchScreen")) {
         val fabInsets =
             WindowInsets.systemBars
                 .only(WindowInsetsSides.Bottom + WindowInsetsSides.Horizontal)
@@ -147,28 +150,34 @@ fun DiaryFoodSearchScreen(
             onCreateRecipe = onCreateRecipe,
             onCreateProduct = onCreateProduct,
             modifier =
-                Modifier.zIndex(100f)
+                (Modifier.zIndex(100f)
                     .align(Alignment.BottomEnd)
                     .windowInsetsPadding(fabInsets)
                     .consumeWindowInsets(fabInsets)
                     .animateFloatingActionButton(
                         visible = !animatedVisibilityScope.transition.isRunning,
                         alignment = Alignment.BottomEnd,
-                    ),
+                    )).uiName("DiaryFoodSearchScreen.FoodDiarySearchFloatingActionButton.1", "com.maksimowiczm.foodyou.app.ui.food.diary.search.FoodDiarySearchFloatingActionButton", uiInspectionSource, "DiaryFoodSearchScreen"),
         )
         Scrim(
             visible = fabExpanded,
             onDismiss = { fabExpanded = false },
-            modifier = Modifier.fillMaxSize().zIndex(10f),
+            modifier = (Modifier.fillMaxSize().zIndex(10f)).uiName("DiaryFoodSearchScreen.Scrim.1", "com.maksimowiczm.foodyou.common.compose.component.Scrim", uiInspectionSource, "DiaryFoodSearchScreen"),
         )
         Scaffold(
             topBar = topBar,
             contentWindowInsets = ScaffoldDefaults.contentWindowInsets.only(WindowInsetsSides.Top),
             floatingActionButton = {
-                Box(modifier = Modifier.windowInsetsPadding(fabInsets).height(56.dp))
+                Box(modifier = (Modifier.windowInsetsPadding(fabInsets).height(56.dp)).uiName("DiaryFoodSearchScreen.Box.2", "androidx.compose.foundation.layout.Box", uiInspectionSource, "DiaryFoodSearchScreen"))
             },
-            snackbarHost = { SnackbarHost(snackBarHostState) },
-            content = content,
+            snackbarHost = { SnackbarHost(snackBarHostState, modifier = Modifier.uiName("DiaryFoodSearchScreen.SnackbarHost.1", "androidx.compose.material3.SnackbarHost", uiInspectionSource, "DiaryFoodSearchScreen")) },
+            content = content, modifier = Modifier.uiName("DiaryFoodSearchScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "DiaryFoodSearchScreen")
         )
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.diary.search",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/search/DiaryFoodSearchScreen.kt",
+)

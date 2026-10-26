@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.home.meals.settings
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.clickable
@@ -28,29 +31,29 @@ internal fun LayoutPicker(
     onLayoutChange: (DiarySlotsCardsLayout) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Row(modifier = modifier, horizontalArrangement = Arrangement.SpaceEvenly) {
+    Row(modifier = (modifier).uiName("LayoutPicker.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "LayoutPicker"), horizontalArrangement = Arrangement.SpaceEvenly) {
         LayoutContainer(
             selected = layout == DiarySlotsCardsLayout.Horizontal,
             onClick = { onLayoutChange(DiarySlotsCardsLayout.Horizontal) },
-            layout = { LayoutHorizontal() },
+            layout = { LayoutHorizontal( modifier = Modifier.uiName("LayoutPicker.LayoutHorizontal.1", "com.maksimowiczm.foodyou.app.ui.home.meals.settings.LayoutHorizontal", uiInspectionSource, "LayoutPicker")) },
             label = {
                 Text(
                     text = stringResource(Res.string.headline_horizontal),
-                    style = MaterialTheme.typography.labelLarge,
+                    style = MaterialTheme.typography.labelLarge, modifier = Modifier.uiName("LayoutPicker.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "LayoutPicker")
                 )
-            },
+            }, modifier = Modifier.uiName("LayoutPicker.LayoutContainer.1", "com.maksimowiczm.foodyou.app.ui.home.meals.settings.LayoutContainer", uiInspectionSource, "LayoutPicker")
         )
 
         LayoutContainer(
             selected = layout == DiarySlotsCardsLayout.Vertical,
             onClick = { onLayoutChange(DiarySlotsCardsLayout.Vertical) },
-            layout = { LayoutVertical() },
+            layout = { LayoutVertical( modifier = Modifier.uiName("LayoutPicker.LayoutVertical.1", "com.maksimowiczm.foodyou.app.ui.home.meals.settings.LayoutVertical", uiInspectionSource, "LayoutPicker")) },
             label = {
                 Text(
                     text = stringResource(Res.string.headline_vertical),
-                    style = MaterialTheme.typography.labelLarge,
+                    style = MaterialTheme.typography.labelLarge, modifier = Modifier.uiName("LayoutPicker.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "LayoutPicker")
                 )
-            },
+            }, modifier = Modifier.uiName("LayoutPicker.LayoutContainer.2", "com.maksimowiczm.foodyou.app.ui.home.meals.settings.LayoutContainer", uiInspectionSource, "LayoutPicker")
         )
     }
 }
@@ -90,16 +93,16 @@ private fun LayoutContainer(
             animationSpec = MaterialTheme.motionScheme.fastEffectsSpec(),
         )
 
-    Box(modifier = modifier) {
+    Box(modifier = (modifier).uiName("LayoutContainer.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "LayoutContainer")) {
         Column(
             modifier =
-                Modifier.graphicsLayer {
+                (Modifier.graphicsLayer {
                         clip = true
                         shape = RoundedCornerShape(animatedCornerSize)
                     }
                     .drawBehind { drawRect(containerColor) }
                     .clickable { onClick() }
-                    .padding(16.dp),
+                    .padding(16.dp)).uiName("LayoutContainer.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "LayoutContainer"),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
@@ -110,3 +113,9 @@ private fun LayoutContainer(
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.home.meals.settings",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/settings/LayoutPicker.kt",
+)

@@ -1,5 +1,10 @@
 package com.maksimowiczm.foodyou.app.ui.database.externaldatabases
 
+
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -83,49 +88,49 @@ fun OpenFoodFactsLoginDialog(
         }
     }
 
-    AlertDialog(
+    UiSourceScope(uiInspectionSource.element("OpenFoodFactsLoginDialog.AlertDialog.1", "androidx.compose.material3.AlertDialog", "OpenFoodFactsLoginDialog")) { AlertDialog(
         onDismissRequest = onDismissRequest,
         confirmButton = {
             TextButton(
                 onClick = onSignIn,
                 shapes = ButtonDefaults.shapes(),
-                enabled = isFormValid && !requestInProgress,
+                enabled = isFormValid && !requestInProgress, modifier = Modifier.uiName("OpenFoodFactsLoginDialog.TextButton.1", "androidx.compose.material3.TextButton", uiInspectionSource, "OpenFoodFactsLoginDialog")
             ) {
-                Text(stringResource(Res.string.action_sign_in))
+                Text(stringResource(Res.string.action_sign_in), modifier = Modifier.uiName("OpenFoodFactsLoginDialog.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "OpenFoodFactsLoginDialog"))
             }
         },
-        modifier = modifier,
+        modifier = (modifier).uiName("OpenFoodFactsLoginDialog.AlertDialog.1.root", "androidx.compose.material3.AlertDialog", uiInspectionSource, "OpenFoodFactsLoginDialog"),
         dismissButton = {
-            TextButton(onClick = onDismissRequest, shapes = ButtonDefaults.shapes()) {
-                Text(stringResource(Res.string.action_cancel))
+            TextButton(onClick = onDismissRequest, shapes = ButtonDefaults.shapes(), modifier = Modifier.uiName("OpenFoodFactsLoginDialog.TextButton.2", "androidx.compose.material3.TextButton", uiInspectionSource, "OpenFoodFactsLoginDialog")) {
+                Text(stringResource(Res.string.action_cancel), modifier = Modifier.uiName("OpenFoodFactsLoginDialog.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "OpenFoodFactsLoginDialog"))
             }
         },
-        title = { Text(stringResource(Res.string.action_sign_in)) },
+        title = { Text(stringResource(Res.string.action_sign_in), modifier = Modifier.uiName("OpenFoodFactsLoginDialog.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "OpenFoodFactsLoginDialog")) },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                if (requestInProgress) LinearProgressIndicator(Modifier.fillMaxWidth())
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.uiName("OpenFoodFactsLoginDialog.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "OpenFoodFactsLoginDialog")) {
+                if (requestInProgress) LinearProgressIndicator((Modifier.fillMaxWidth()).uiName("OpenFoodFactsLoginDialog.LinearProgressIndicator.1", "androidx.compose.material3.LinearProgressIndicator", uiInspectionSource, "OpenFoodFactsLoginDialog"))
                 else Spacer(Modifier.height(4.dp))
                 Text(
                     text =
                         stringResource(Res.string.description_open_food_facts_credentials_message),
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.bodySmall, modifier = Modifier.uiName("OpenFoodFactsLoginDialog.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "OpenFoodFactsLoginDialog")
                 )
                 if (authenticationFailure) {
                     Text(
                         text =
                             stringResource(Res.string.error_open_food_facts_failed_to_authenticate),
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.error,
+                        color = MaterialTheme.colorScheme.error, modifier = Modifier.uiName("OpenFoodFactsLoginDialog.Text.5", "androidx.compose.material3.Text", uiInspectionSource, "OpenFoodFactsLoginDialog")
                     )
                 }
                 OutlinedTextField(
                     state = login,
-                    modifier = Modifier.semantics { contentType = ContentType.Username },
-                    label = { Text(stringResource(Res.string.headline_username)) },
+                    modifier = (Modifier.semantics { contentType = ContentType.Username }).uiName("OpenFoodFactsLoginDialog.OutlinedTextField.1", "androidx.compose.material3.OutlinedTextField", uiInspectionSource, "OpenFoodFactsLoginDialog"),
+                    label = { Text(stringResource(Res.string.headline_username), modifier = Modifier.uiName("OpenFoodFactsLoginDialog.Text.6", "androidx.compose.material3.Text", uiInspectionSource, "OpenFoodFactsLoginDialog")) },
                     isError = !isLoginValid,
                     supportingText = {
                         if (!isLoginValid) {
-                            Text(stringResource(Res.string.neutral_required))
+                            Text(stringResource(Res.string.neutral_required), modifier = Modifier.uiName("OpenFoodFactsLoginDialog.Text.7", "androidx.compose.material3.Text", uiInspectionSource, "OpenFoodFactsLoginDialog"))
                         }
                     },
                     lineLimits = TextFieldLineLimits.SingleLine,
@@ -133,22 +138,22 @@ fun OpenFoodFactsLoginDialog(
                 )
                 SecureTextField(
                     state = password,
-                    modifier = Modifier.semantics { contentType = ContentType.Password },
-                    label = { Text(stringResource(Res.string.headline_password)) },
+                    modifier = (Modifier.semantics { contentType = ContentType.Password }).uiName("OpenFoodFactsLoginDialog.SecureTextField.1", "androidx.compose.material3.SecureTextField", uiInspectionSource, "OpenFoodFactsLoginDialog"),
+                    label = { Text(stringResource(Res.string.headline_password), modifier = Modifier.uiName("OpenFoodFactsLoginDialog.Text.8", "androidx.compose.material3.Text", uiInspectionSource, "OpenFoodFactsLoginDialog")) },
                     trailingIcon = {
                         IconButton(
                             onClick = { hidePassword = !hidePassword },
-                            shapes = IconButtonDefaults.shapes(),
+                            shapes = IconButtonDefaults.shapes(), modifier = Modifier.uiName("OpenFoodFactsLoginDialog.IconButton.1", "androidx.compose.material3.IconButton", uiInspectionSource, "OpenFoodFactsLoginDialog")
                         ) {
                             if (hidePassword) {
                                 Icon(
                                     Icons.Outlined.Visibility,
-                                    stringResource(Res.string.action_show_password),
+                                    stringResource(Res.string.action_show_password), modifier = Modifier.uiName("OpenFoodFactsLoginDialog.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "OpenFoodFactsLoginDialog")
                                 )
                             } else {
                                 Icon(
                                     Icons.Outlined.VisibilityOff,
-                                    stringResource(Res.string.action_hide_password),
+                                    stringResource(Res.string.action_hide_password), modifier = Modifier.uiName("OpenFoodFactsLoginDialog.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "OpenFoodFactsLoginDialog")
                                 )
                             }
                         }
@@ -165,11 +170,17 @@ fun OpenFoodFactsLoginDialog(
                     isError = !isPasswordValid,
                     supportingText = {
                         if (!isPasswordValid) {
-                            Text(stringResource(Res.string.neutral_required))
+                            Text(stringResource(Res.string.neutral_required), modifier = Modifier.uiName("OpenFoodFactsLoginDialog.Text.9", "androidx.compose.material3.Text", uiInspectionSource, "OpenFoodFactsLoginDialog"))
                         }
                     },
                 )
             }
         },
-    )
+    ) }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.database.externaldatabases",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/database/externaldatabases/OpenFoodFactsLoginDialog.kt",
+)

@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.food.component
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -47,7 +50,7 @@ fun DownloadProductUsdaErrorCard(
         }
 
     Card(
-        modifier = modifier,
+        modifier = (modifier).uiName("DownloadProductUsdaErrorCard.Card.1", "androidx.compose.material3.Card", uiInspectionSource, "DownloadProductUsdaErrorCard"),
         colors =
             CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.errorContainer,
@@ -55,25 +58,25 @@ fun DownloadProductUsdaErrorCard(
             ),
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = (Modifier.padding(16.dp)).uiName("DownloadProductUsdaErrorCard.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "DownloadProductUsdaErrorCard"),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = (Modifier.fillMaxWidth()).uiName("DownloadProductUsdaErrorCard.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "DownloadProductUsdaErrorCard"),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Icon(imageVector = Icons.Outlined.ErrorOutline, contentDescription = null)
+                Icon(imageVector = Icons.Outlined.ErrorOutline, contentDescription = null, modifier = Modifier.uiName("DownloadProductUsdaErrorCard.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "DownloadProductUsdaErrorCard"))
                 Text(
                     text = stringResource(Res.string.headline_food_data_central_usda),
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleMedium, modifier = Modifier.uiName("DownloadProductUsdaErrorCard.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "DownloadProductUsdaErrorCard")
                 )
             }
 
-            Text(text = errorText, style = MaterialTheme.typography.bodyMedium)
+            Text(text = errorText, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.uiName("DownloadProductUsdaErrorCard.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "DownloadProductUsdaErrorCard"))
 
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = (Modifier.fillMaxWidth()).uiName("DownloadProductUsdaErrorCard.Row.2", "androidx.compose.foundation.layout.Row", uiInspectionSource, "DownloadProductUsdaErrorCard"),
                 horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
             ) {
                 Button(
@@ -82,9 +85,9 @@ fun DownloadProductUsdaErrorCard(
                         ButtonDefaults.buttonColors(
                             containerColor = MaterialTheme.colorScheme.onErrorContainer,
                             contentColor = MaterialTheme.colorScheme.errorContainer,
-                        ),
+                        ), modifier = Modifier.uiName("DownloadProductUsdaErrorCard.Button.1", "androidx.compose.material3.Button", uiInspectionSource, "DownloadProductUsdaErrorCard")
                 ) {
-                    Text(stringResource(Res.string.action_set_key))
+                    Text(stringResource(Res.string.action_set_key), modifier = Modifier.uiName("DownloadProductUsdaErrorCard.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "DownloadProductUsdaErrorCard"))
                 }
 
                 Button(
@@ -93,11 +96,17 @@ fun DownloadProductUsdaErrorCard(
                         ButtonDefaults.buttonColors(
                             containerColor = MaterialTheme.colorScheme.onErrorContainer,
                             contentColor = MaterialTheme.colorScheme.errorContainer,
-                        ),
+                        ), modifier = Modifier.uiName("DownloadProductUsdaErrorCard.Button.2", "androidx.compose.material3.Button", uiInspectionSource, "DownloadProductUsdaErrorCard")
                 ) {
-                    Text(stringResource(Res.string.action_obtain_key))
+                    Text(stringResource(Res.string.action_obtain_key), modifier = Modifier.uiName("DownloadProductUsdaErrorCard.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "DownloadProductUsdaErrorCard"))
                 }
             }
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.component",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/component/DownloadProductErrorCard.kt",
+)

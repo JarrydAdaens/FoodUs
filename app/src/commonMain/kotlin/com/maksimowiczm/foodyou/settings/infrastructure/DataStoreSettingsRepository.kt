@@ -34,6 +34,8 @@ internal class DataStoreSettingsRepository(dataStore: DataStore<Preferences>) :
             graphStyle = this.getGraphStyle(SettingsPreferencesKeys.graphStyle),
             weekLayout = this.getWeekLayout(SettingsPreferencesKeys.weekLayout),
             appLaunchInfo = this.getAppLaunchInfo(),
+            uiNameBarEnabled = this[SettingsPreferencesKeys.uiNameBarEnabled] ?: false,
+            uiNameBarIncludeHierarchy = this[SettingsPreferencesKeys.uiNameBarIncludeHierarchy] ?: false,
         )
 
     override fun MutablePreferences.applyUserPreferences(updated: Settings) {
@@ -49,6 +51,8 @@ internal class DataStoreSettingsRepository(dataStore: DataStore<Preferences>) :
         setGraphStyle(SettingsPreferencesKeys.graphStyle, updated.graphStyle)
         setWeekLayout(SettingsPreferencesKeys.weekLayout, updated.weekLayout)
         setAppLaunchInfo(updated.appLaunchInfo)
+        this[SettingsPreferencesKeys.uiNameBarEnabled] = updated.uiNameBarEnabled
+        this[SettingsPreferencesKeys.uiNameBarIncludeHierarchy] = updated.uiNameBarIncludeHierarchy
     }
 }
 
@@ -144,6 +148,8 @@ private fun MutablePreferences.setInstantAsEpochSeconds(
     }
 
 private object SettingsPreferencesKeys {
+    val uiNameBarEnabled = booleanPreferencesKey("settings:uiNameBarEnabled")
+    val uiNameBarIncludeHierarchy = booleanPreferencesKey("settings:uiNameBarIncludeHierarchy")
     val lastRememberedVersion = stringPreferencesKey("settings:lastRememberedVersion")
     val hidePreviewDialog = booleanPreferencesKey("settings:hidePreviewDialog")
     val showTranslationWarning = booleanPreferencesKey("settings:showTranslationWarning")

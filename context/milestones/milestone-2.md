@@ -2,7 +2,7 @@
 name: milestone-2
 description: Milestone 2 - Customisation. FoodUs identity, AI-assisted logging, ergonomics, adopted upstream bug fixes, Australian providers, expanded Quick Add, and distinct Product/Recipe/Meal/DiarySlot roles with a reusable Meals library.
 metadata:
-  version: "3.5"
+  version: "3.6"
   agentic_rails_source_version: "3.0"
   owner: "Jarryd Adaens"
   repo: "FoodUs (fork of maksimowiczm/FoodYou)"
@@ -26,6 +26,7 @@ estimated foods carry more detail and can later graduate into reusable custom pr
 Saved reusable bundles are presented as Meals, with a central place to view and edit them.
 Products, Recipes, Meals, DiarySlots, and DiaryEntries have distinct code roles and
 consistent serving/portion behavior across creation, editing, and logging.
+An opt-in developer UI name bar makes elements identifiable when discussing changes with agents.
 
 ## Why it matters
 
@@ -51,18 +52,21 @@ through the normal provider UI with locally stored, offline-first search; FoodSw
 integrated or its access blocker is documented; provider update-checks persist the last successful
 check and full refreshes never mutate history; and Quick Add supports description, fibre, serving
 count, and weight, plus promotion of new and historical entries into custom products and recipes
-without altering the original diary snapshot.
+without altering the original diary snapshot. The release-available UI name bar can identify
+visible elements and copy source-oriented locators and detailed hierarchy for agent collaboration.
 
 ## Status
 
 In Progress — reopened 2026-07-26 by the
 [owner's addendum](../dictations-tier-0/2026-07-26_addendum_ai-settings-branding-foodus.md) after
-daily use. **27 of 28 Stories Complete and 1 Blocked.** All addendum
+daily use. **28 of 29 Stories Complete and 1 Blocked.** All addendum
 Stories 21–23 landed 2026-07-27. Story 16 (FoodSwitch) remains blocked on an external
 data licence. Stories 25 (domain separation), 26 (Product terminology/portions), and 27 (Recipe
 composition/portions) passed acceptance under the [serial run](../_boss-runs/milestone-2-domain-meals-sequential/briefing.md). Story 24 (Meals library/editor) also passed acceptance.
 The original Product/Recipe/Meal batch is delivered. Story 28 adds the owner-requested
 faithful personal-library import and passed acceptance on 2026-10-26 under its adopted implementation plan.
+Story 29 delivered the owner-requested UI name bar for agent collaboration, with debug,
+minified runtime, source lookup, and coverage acceptance on 2026-10-26.
 The milestone is not yet closable:
 its Definition of Done's
 "adopted upstream bugs are fixed" clause is unmet — the Story 12 bug stories are still staged in
@@ -124,6 +128,7 @@ Definition of Done. Story 16 can resume only after its licence gate is released.
 | 26 | Complete | [Product terminology and portioned entry](#story-26) | Feature | — | — | — | [plan](../implementation-plans/milestone-2/story-26-product-terminology-portions/plan.md) |
 | 27 | Complete | [Recipe composition, yield, and diary portions](#story-27) | Feature | — | — | — | [plan](../implementation-plans/milestone-2/story-27-recipe-composition-portions/plan.md) |
 | 28 | Complete | [Structured personal-library import](#story-28) | Feature | — | — | — | [plan](../implementation-plans/milestone-2/story-28-structured-personal-import/plan.md) |
+| 29 | Complete | [Developer UI name bar for agent collaboration](#story-29) | Feature | — | — | — | [plan](../implementation-plans/milestone-2/story-29-developer-ui-name-bar/plan.md) |
 
 ---
 
@@ -1095,6 +1100,113 @@ for bound evidence and limits. No public release or commit.
 
 ---
 
+<a id="story-29"></a>
+
+### Story 29: Developer UI name bar for agent collaboration
+
+**Type:** Feature
+
+**Status:** Complete (2026-10-26; delegated implementation, independent review, debug and
+minified runtime acceptance, and blind source lookup passed).
+
+**Implementation plan:** [Developer UI name bar](../implementation-plans/milestone-2/story-29-developer-ui-name-bar/plan.md)
+— planning, implementation decisions, exact acceptance evidence, and runtime limits.
+
+**Delivery:** Settings now has an off-by-default **Developer tools: UI name bar** toggle.
+The reserved top bar shows a deep-pressed element's stable name and copies either that name
+or detailed structural XML with fully qualified composable/owner symbols, source paths,
+shared-component callers, and snapshot instance context. A three-second hold briefly outlines
+the selected target. Enabled mode owns holds; disabling restores ordinary long presses.
+Preferences persist, while captures remain session-local and contain no diary or entered values.
+App-wide naming includes additional Activity roots, shared components, scanner content, and
+app-owned modal surfaces. A registered harness detects missing surveyed names and duplicate IDs.
+
+**Acceptance evidence:** Full debug unit tests passed (208 tests, 39 suites). The final debug
+inspection/security matrix passed across the recorded 22-of-23 run and corrected four-check
+follow-up; unchanged Product/Recipe/Meals and AI-key privacy regressions also passed. Actual
+unsigned Release assembly passed with R8, and its DEX retained the source metadata. A separate
+Android/Java platform driver passed against the fully optimized, debug-signed miniDevRelease
+app on the isolated API 36 emulator: actual Settings enablement, three-second shared-icon
+selection, short/full system clipboard output, normal navigation, a dropdown selection retained
+after dismissal, hierarchy reset, and disablement. This is representative minified runtime
+evidence, not a passing 20-test minified JUnit suite; that runner failed before test discovery
+because shared dependencies had been optimized away. No feature keep rules were added to
+obtain runtime acceptance. A fresh-context agent located both minified copies' exact source
+declarations and recovered the shared caller without screenshots or an interpreter skill.
+The naming harness and its omission self-tests passed: 348 files, 2,793 surveyed call sites,
+zero missing names or duplicate identifiers. The plan records artifacts, hashes, individual
+failures/fixes, and the independent reviews.
+
+**Coverage limits:** Source coverage is lexical and runtime coverage is representative.
+Framework-generated decoration and decorative Canvas contents identify their named owning
+component; system-owned keyboard, picker, and browser windows are outside the app inventory.
+All four Activity roots are named; share/crash roots have rendered-bar/secure-window evidence
+rather than complete workflow/deep-selection runs. Hierarchy describes declared source
+structure, not the complete Compose implementation tree or a literal call stack; occurrence
+is a runtime snapshot index. Android is the acceptance target; no iOS runtime claim is made.
+
+**Problem / outcome:** The owner needs to point an agent at an exact FoodUs UI element
+while using the app, including released versions. Screenshots and visual descriptions
+can be ambiguous. Provide an opt-in developer UI name bar whose copied output lets an
+agent find the selected element's implementation in this repository and distinguish it
+from similar or repeated elements. Prioritize fidelity to source code and agent understanding;
+technical names, fully qualified symbols, and verbose nested output are desirable.
+
+**Acceptance and bounds:**
+
+- Add a developer setting, off by default, that enables the UI name bar in shipped release
+  builds as well as development builds. The bar appears at the top of the app, with most
+  of its width devoted to a selectable text field and a Copy button on the right. Reserve
+  layout space so the bar does not obscure the app's controls.
+- A deliberate deep press of about three seconds on a visible UI element selects it and
+  populates the bar with its identifier. Make the selected target unambiguous, for example
+  with a brief outline. Cover text, icons, controls, containers, repeated list items, and
+  elements in dialogs, popups, and bottom sheets, as well as ordinary screens.
+- Preserve ordinary taps, scrolling, and text entry. While the UI name bar is enabled,
+  holds are reserved for inspection and ordinary long-press actions are suppressed;
+  disabling the feature restores normal long presses. This is the owner's explicit
+  2026-10-26 decision after code inspection showed card long presses navigating away
+  before three seconds. Verify suppression/restoration on cards, text fields, and modal
+  controls; no separate Pick mode or delayed ordinary long-press action is selected.
+- Copy defaults to the selected identifier. An Include hierarchy checkbox or equivalent
+  adds detailed ancestry and source-oriented element information to the clipboard output.
+  Include stable names, fully qualified component/composable symbols, application owning
+  functions/types, repository-relative source paths, and structural instance context that
+  distinguishes repeated elements. Make framework component and application owner distinct.
+- In Compose, record the useful source-level composable/function identity rather than
+  assuming every element has a corresponding Android View subclass. Inspect what metadata
+  is available automatically in release builds and explicitly supply the missing locator
+  information. Do not promise source line numbers or depend on debug-only inspection data.
+- Perform an app-wide naming/instrumentation pass so every visible element the owner can
+  select is identifiable, including the meaningful containers needed for ancestry. Establish
+  consistent, searchable identifiers and shared-component/call-site naming rules; distinguish
+  repeated instances without deriving names from private content. Make missing coverage
+  detectable and retain useful identifiers across recomposition and language changes.
+- A structured, verbose format such as XML is acceptable. Preserve namespaces, source
+  identifiers, and hierarchy detail rather than simplifying the dump for nontechnical readers.
+  Escape/serialize it correctly. Exact schema and implementation API are planning decisions.
+  Structural export excludes credentials, private relay addresses, entered field values,
+  and diary contents; no telemetry or automatic transmission is introduced.
+- The copied output must be useful when pasted into an ordinary agent conversation with
+  repository access. Add a supplemental skill or other tooling only if investigation or
+  actual use demonstrates it is needed; a new skill is not an assumed prerequisite.
+
+**Verification required:** Test target resolution, repeated-instance context, hierarchy
+serialization, clipboard contents, and exclusion of sensitive values with synthetic data.
+Use device/emulator checks for the actual bar, selection feedback, deep-press timing and
+cancellation, gesture coexistence, scrolling, text fields, and modal surfaces. Verify the
+feature and useful source metadata in a release build, including minification. Demonstrate
+that an agent given only the copied output and repository can locate representative selected
+elements and distinguish repeated instances. Check app-wide naming coverage and normal
+behavior with the feature disabled; document any unsupported surface or failed acceptance.
+
+**Dependencies and ownership:** Independent of FoodSwitch and relay delivery. The milestone
+owns Story status. Create an implementation plan before substantial implementation to settle
+gesture handling, metadata collection, naming coverage, and verification. This Story records
+the whole requested capability; the discussion's possible work slices are not separate Stories.
+
+---
+
 ## Interdependency Order
 
 1. Story 5 (four-button rework) hosts Stories 6 and 8; build the button surface first or alongside.
@@ -1127,6 +1239,8 @@ for bound evidence and limits. No public release or commit.
     dependency cycle is selected. Common-interface/projection names and legacy Meal portion
     handling are explicit planning decisions, not external blockers. Do not infer time or
     capacity estimates from the four-Story count; implementation plans must size actual work.
+14. Story 29 is independent of the existing feature batches. Its gesture/metadata investigation
+    precedes the app-wide naming pass and final release-build acceptance within its own plan.
 
 ---
 
@@ -1151,6 +1265,10 @@ for bound evidence and limits. No public release or commit.
   Product/Recipe/Meal change. Stories 25–27 were selected directly on 2026-10-25, with
   Story 24 retained for the Meals library/editor. No unrelated backlog items were pulled
   in and no Story closed. The closed-count contribution and app version are unchanged.
+- Story 29 was requested directly by the owner on 2026-10-26 during a rails-pair-programming
+  discussion: a release-available developer UI name bar, deep-press selection, and detailed
+  source-oriented copying for agent communication. Scheduling initially changed neither
+  the closed-Story count nor app version; subsequent completion is recorded above.
 
 ---
 

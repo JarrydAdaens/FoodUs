@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.home.goals
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.size
@@ -48,7 +51,7 @@ internal fun MacroPieChart(
                 .value
         }
 
-    Canvas(modifier = modifier.size(64.dp)) {
+    Canvas(modifier = (modifier.size(64.dp)).uiName("MacroPieChart.Canvas.1", "androidx.compose.foundation.Canvas", uiInspectionSource, "MacroPieChart")) {
         val diameter = min(size.width, size.height)
         val topLeft =
             Offset(x = (size.width - diameter) / 2f, y = (size.height - diameter) / 2f)
@@ -77,3 +80,9 @@ internal fun MacroPieChart(
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.home.goals",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/goals/MacroPieChart.kt",
+)

@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.database.importlibrary
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.*
@@ -36,5 +39,11 @@ actual fun ImportLibraryScreen(onBack:()->Unit,onFinish:()->Unit,modifier:Modifi
         }
     }
     ImportLibraryContent(state,{picker.launch(arrayOf("*/*"))},viewModel::confirm,viewModel::cancel,
-        {viewModel.cancel();onBack()},onFinish,modifier)
+        {viewModel.cancel();onBack()},onFinish,(modifier).uiName("ImportLibraryScreen.ImportLibraryContent.1", "com.maksimowiczm.foodyou.app.ui.database.importlibrary.ImportLibraryContent", uiInspectionSource, "ImportLibraryScreen"))
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.database.importlibrary",
+    "app/src/androidMain/kotlin/com/maksimowiczm/foodyou/app/ui/database/importlibrary/ImportLibraryScreen.android.kt",
+)

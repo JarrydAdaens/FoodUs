@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.food.diary.add
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,18 +42,18 @@ internal fun NutrientList(
 ) {
     val facts = food.nutritionFor(measurement)
     if (facts == null) {
-        Text(stringResource(Res.string.error_portion_save), color = MaterialTheme.colorScheme.error, modifier = modifier)
+        Text(stringResource(Res.string.error_portion_save), color = MaterialTheme.colorScheme.error, modifier = (modifier).uiName("app.ui.food.diary.add.NutrientList.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "NutrientList"))
         return
     }
 
-    Column(modifier) {
+    Column((modifier).uiName("app.ui.food.diary.add.NutrientList.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "NutrientList")) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(8.dp),
+            modifier = (Modifier.fillMaxWidth().padding(8.dp)).uiName("app.ui.food.diary.add.NutrientList.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "NutrientList"),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Box(modifier = Modifier.size(48.dp), contentAlignment = Alignment.Center) {
-                Icon(imageVector = Icons.AutoMirrored.Outlined.ViewList, contentDescription = null)
+            Box(modifier = (Modifier.size(48.dp)).uiName("app.ui.food.diary.add.NutrientList.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "NutrientList"), contentAlignment = Alignment.Center) {
+                Icon(imageVector = Icons.AutoMirrored.Outlined.ViewList, contentDescription = null, modifier = Modifier.uiName("app.ui.food.diary.add.NutrientList.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "NutrientList"))
             }
 
             val proteins = facts.proteins.value
@@ -62,7 +65,7 @@ internal fun NutrientList(
                     proteins = proteins.toFloat(),
                     carbohydrates = carbohydrates.toFloat(),
                     fats = fats.toFloat(),
-                    modifier = Modifier.weight(1f),
+                    modifier = (Modifier.weight(1f)).uiName("app.ui.food.diary.add.NutrientList.EnergyProgressIndicator.1", "com.maksimowiczm.foodyou.app.ui.food.component.EnergyProgressIndicator", uiInspectionSource, "NutrientList"),
                 )
             }
         }
@@ -76,11 +79,11 @@ internal fun NutrientList(
 
         Text(
             text = measurementString,
-            modifier = Modifier.padding(horizontal = 8.dp).padding(bottom = 8.dp),
+            modifier = (Modifier.padding(horizontal = 8.dp).padding(bottom = 8.dp)).uiName("app.ui.food.diary.add.NutrientList.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "NutrientList"),
             style = MaterialTheme.typography.labelLarge,
         )
 
-        NutrientList(facts)
+        NutrientList(facts, modifier = Modifier.uiName("app.ui.food.diary.add.NutrientList.NutrientList.1", "com.maksimowiczm.foodyou.app.ui.food.diary.add.NutrientList", uiInspectionSource, "NutrientList"))
 
         if (food is RecipeModel && !food.nutritionFacts.isComplete) {
             val foods =
@@ -91,10 +94,16 @@ internal fun NutrientList(
             IncompleteFoodsList(
                 foods = foods.map { (_, name) -> name }.distinct(),
                 onFoodClick = { i -> onEditFood(foods[i].first) },
-                modifier = Modifier.padding(8.dp),
+                modifier = (Modifier.padding(8.dp)).uiName("app.ui.food.diary.add.NutrientList.IncompleteFoodsList.1", "com.maksimowiczm.foodyou.app.ui.common.component.IncompleteFoodsList", uiInspectionSource, "NutrientList"),
             )
         } else {
             Spacer(Modifier.height(8.dp))
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.diary.add",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/NutrientList.kt",
+)

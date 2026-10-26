@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.food.search
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Person
@@ -44,21 +47,21 @@ internal data class FoodFilter(val source: Source = DefaultFilter) {
                     androidx.compose.material3.Icon(
                         imageVector = Icons.Filled.History,
                         contentDescription = null,
-                        modifier = modifier,
+                        modifier = (modifier).uiName("FoodFilter.Source.Icon.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "FoodFilter.Source.Icon"),
                     )
 
                 YourFood ->
                     androidx.compose.material3.Icon(
                         imageVector = Icons.Filled.Person,
                         contentDescription = null,
-                        modifier = modifier,
+                        modifier = (modifier).uiName("FoodFilter.Source.Icon.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "FoodFilter.Source.Icon"),
                     )
 
-                OpenFoodFacts -> ProductSource.Type.OpenFoodFacts.Icon(modifier)
-                USDA -> ProductSource.Type.USDA.Icon(modifier)
-                SwissFoodCompositionDatabase -> ProductSource.Type.SwissFoodCompositionDatabase.Icon()
+                OpenFoodFacts -> ProductSource.Type.OpenFoodFacts.Icon((modifier).uiName("FoodFilter.Source.Icon.Icon.3", "com.maksimowiczm.foodyou.app.ui.food.search.FoodFilter.Source.Icon", uiInspectionSource, "FoodFilter.Source.Icon"))
+                USDA -> ProductSource.Type.USDA.Icon((modifier).uiName("FoodFilter.Source.Icon.Icon.4", "com.maksimowiczm.foodyou.app.ui.food.search.FoodFilter.Source.Icon", uiInspectionSource, "FoodFilter.Source.Icon"))
+                SwissFoodCompositionDatabase -> ProductSource.Type.SwissFoodCompositionDatabase.Icon( modifier = Modifier.uiName("FoodFilter.Source.Icon.Icon.5", "com.maksimowiczm.foodyou.app.ui.food.search.FoodFilter.Source.Icon", uiInspectionSource, "FoodFilter.Source.Icon"))
                 AustralianFoodCompositionDatabase ->
-                    ProductSource.Type.AustralianFoodCompositionDatabase.Icon()
+                    ProductSource.Type.AustralianFoodCompositionDatabase.Icon( modifier = Modifier.uiName("FoodFilter.Source.Icon.Icon.6", "com.maksimowiczm.foodyou.app.ui.food.search.FoodFilter.Source.Icon", uiInspectionSource, "FoodFilter.Source.Icon"))
             }
 
         @Composable
@@ -75,3 +78,9 @@ internal data class FoodFilter(val source: Source = DefaultFilter) {
             }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.search",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodFilter.kt",
+)

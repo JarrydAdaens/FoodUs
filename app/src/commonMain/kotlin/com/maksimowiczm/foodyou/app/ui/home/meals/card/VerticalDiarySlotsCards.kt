@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.home.meals.card
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -29,11 +32,11 @@ internal fun VerticalDiarySlotsCards(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.padding(contentPadding),
+        modifier = (modifier.padding(contentPadding)).uiName("VerticalDiarySlotsCards.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "VerticalDiarySlotsCards"),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         if (diarySlots == null) {
-            repeat(4) { DiarySlotCardSkeleton(shimmer) }
+            repeat(4) { DiarySlotCardSkeleton(shimmer, modifier = Modifier.uiName("VerticalDiarySlotsCards.DiarySlotCardSkeleton.1", "com.maksimowiczm.foodyou.app.ui.home.meals.card.DiarySlotCardSkeleton", uiInspectionSource, "VerticalDiarySlotsCards")) }
         } else {
             diarySlots.forEach { diarySlot ->
                 DiarySlotCard(
@@ -48,9 +51,15 @@ internal fun VerticalDiarySlotsCards(
                     meals = meals,
                     onSaveMeal = { name, result -> onSaveMeal(diarySlot.id, name, result) },
                     onApplyMeal = { id, result -> onApplyMeal(id, diarySlot.id, result) },
-                    onDeleteMeal = onDeleteMeal,
+                    onDeleteMeal = onDeleteMeal, modifier = Modifier.uiName("VerticalDiarySlotsCards.DiarySlotCard.1", "com.maksimowiczm.foodyou.app.ui.home.meals.card.DiarySlotCard", uiInspectionSource, "VerticalDiarySlotsCards")
                 )
             }
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.home.meals.card",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/VerticalDiarySlotsCards.kt",
+)

@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.database.exportcsvproducts
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,17 +28,17 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun SuccessScreen(count: Int, onBack: () -> Unit, modifier: Modifier = Modifier) {
-    Scaffold(modifier) { paddingValues ->
-        Box(modifier = Modifier.fillMaxSize().padding(paddingValues).padding(16.dp)) {
+    Scaffold((modifier).uiName("SuccessScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "SuccessScreen")) { paddingValues ->
+        Box(modifier = (Modifier.fillMaxSize().padding(paddingValues).padding(16.dp)).uiName("SuccessScreen.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "SuccessScreen")) {
             Column(
-                modifier = Modifier.align(Alignment.Center),
+                modifier = (Modifier.align(Alignment.Center)).uiName("SuccessScreen.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "SuccessScreen"),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Check,
                     contentDescription = null,
-                    modifier = Modifier.size(68.dp),
+                    modifier = (Modifier.size(68.dp)).uiName("SuccessScreen.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "SuccessScreen"),
                     tint = MaterialTheme.colorScheme.primary,
                 )
 
@@ -47,17 +50,23 @@ internal fun SuccessScreen(count: Int, onBack: () -> Unit, modifier: Modifier = 
                             count,
                         ),
                     style = MaterialTheme.typography.headlineSmall,
-                    color = MaterialTheme.colorScheme.primary,
+                    color = MaterialTheme.colorScheme.primary, modifier = Modifier.uiName("SuccessScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "SuccessScreen")
                 )
             }
 
             Button(
                 onClick = onBack,
-                modifier = Modifier.height(56.dp).align(Alignment.BottomCenter),
+                modifier = (Modifier.height(56.dp).align(Alignment.BottomCenter)).uiName("SuccessScreen.Button.1", "androidx.compose.material3.Button", uiInspectionSource, "SuccessScreen"),
                 shapes = ButtonDefaults.shapes(),
             ) {
-                Text(stringResource(Res.string.action_go_back))
+                Text(stringResource(Res.string.action_go_back), modifier = Modifier.uiName("SuccessScreen.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "SuccessScreen"))
             }
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.database.exportcsvproducts",
+    "app/src/androidMain/kotlin/com/maksimowiczm/foodyou/app/ui/database/exportcsvproducts/SuccessScreen.kt",
+)

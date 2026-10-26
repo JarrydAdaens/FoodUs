@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.home.meals.settings
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -56,7 +59,7 @@ fun DiarySlotsCardsSettingsScreen(
         },
         onDiarySlotsSettings = onDiarySlotSettings,
         onBack = onBack,
-        modifier = modifier,
+        modifier = (modifier).uiName("DiarySlotsCardsSettingsScreen.DiarySlotCardSettings.1", "com.maksimowiczm.foodyou.app.ui.home.meals.settings.DiarySlotCardSettings", uiInspectionSource, "DiarySlotsCardsSettingsScreen"),
     )
 }
 
@@ -79,15 +82,15 @@ internal fun DiarySlotCardSettings(
     Scaffold(
         topBar = {
             MediumFlexibleTopAppBar(
-                title = { Text(stringResource(Res.string.headline_diary_slots)) },
-                navigationIcon = { ArrowBackIconButton(onBack) },
-                scrollBehavior = scrollBehavior,
+                title = { Text(stringResource(Res.string.headline_diary_slots), modifier = Modifier.uiName("DiarySlotCardSettings.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotCardSettings")) },
+                navigationIcon = { ArrowBackIconButton(onBack, modifier = Modifier.uiName("DiarySlotCardSettings.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "DiarySlotCardSettings")) },
+                scrollBehavior = scrollBehavior, modifier = Modifier.uiName("DiarySlotCardSettings.MediumFlexibleTopAppBar.1", "androidx.compose.material3.MediumFlexibleTopAppBar", uiInspectionSource, "DiarySlotCardSettings")
             )
         },
-        modifier = modifier,
+        modifier = (modifier).uiName("DiarySlotCardSettings.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "DiarySlotCardSettings"),
     ) { paddingValues ->
         LazyColumn(
-            modifier = Modifier.fillMaxSize().nestedScroll(scrollBehavior.nestedScrollConnection),
+            modifier = (Modifier.fillMaxSize().nestedScroll(scrollBehavior.nestedScrollConnection)).uiName("DiarySlotCardSettings.LazyColumn.1", "androidx.compose.foundation.lazy.LazyColumn", uiInspectionSource, "DiarySlotCardSettings"),
             contentPadding = paddingValues.add(vertical = 8.dp),
         ) {
             item {
@@ -99,7 +102,7 @@ internal fun DiarySlotCardSettings(
                             onLayoutChange(it)
                         }
                     },
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                    modifier = (Modifier.fillMaxWidth().padding(vertical = 8.dp)).uiName("DiarySlotCardSettings.LayoutPicker.1", "com.maksimowiczm.foodyou.app.ui.home.meals.settings.LayoutPicker", uiInspectionSource, "DiarySlotCardSettings"),
                 )
             }
 
@@ -116,12 +119,12 @@ internal fun DiarySlotCardSettings(
                 },
             )
 
-            item { HorizontalDivider() }
+            item { HorizontalDivider( modifier = Modifier.uiName("DiarySlotCardSettings.HorizontalDivider.1", "androidx.compose.material3.HorizontalDivider", uiInspectionSource, "DiarySlotCardSettings")) }
 
             item {
                 ListItem(
-                    headlineContent = { Text(stringResource(Res.string.headline_diary_slots_settings)) },
-                    modifier = Modifier.clickable { onDiarySlotsSettings() },
+                    headlineContent = { Text(stringResource(Res.string.headline_diary_slots_settings), modifier = Modifier.uiName("DiarySlotCardSettings.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotCardSettings")) },
+                    modifier = (Modifier.clickable { onDiarySlotsSettings() }).uiName("DiarySlotCardSettings.ListItem.1", "androidx.compose.material3.ListItem", uiInspectionSource, "DiarySlotCardSettings"),
                 )
             }
         }
@@ -139,19 +142,19 @@ private fun LazyListScope.advancedLayoutSettings(
             text = stringResource(Res.string.headline_time_based_ordering),
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            modifier = (Modifier.padding(horizontal = 16.dp, vertical = 8.dp)).uiName("advancedLayoutSettings.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "advancedLayoutSettings"),
         )
     }
 
     item {
         ListItem(
-            headlineContent = { Text(stringResource(Res.string.action_use_time_based_ordering)) },
-            modifier = Modifier.clickable { toggleTimeBased(!useTimeBasedSorting) },
+            headlineContent = { Text(stringResource(Res.string.action_use_time_based_ordering), modifier = Modifier.uiName("advancedLayoutSettings.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "advancedLayoutSettings")) },
+            modifier = (Modifier.clickable { toggleTimeBased(!useTimeBasedSorting) }).uiName("advancedLayoutSettings.ListItem.1", "androidx.compose.material3.ListItem", uiInspectionSource, "advancedLayoutSettings"),
             supportingContent = {
-                Text(stringResource(Res.string.description_time_based_diary_slots_sorting))
+                Text(stringResource(Res.string.description_time_based_diary_slots_sorting), modifier = Modifier.uiName("advancedLayoutSettings.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "advancedLayoutSettings"))
             },
             trailingContent = {
-                Switch(checked = useTimeBasedSorting, onCheckedChange = toggleTimeBased)
+                Switch(checked = useTimeBasedSorting, onCheckedChange = toggleTimeBased, modifier = Modifier.uiName("advancedLayoutSettings.Switch.1", "androidx.compose.material3.Switch", uiInspectionSource, "advancedLayoutSettings"))
             },
         )
     }
@@ -165,19 +168,19 @@ private fun LazyListScope.advancedLayoutSettings(
             }
 
         ListItem(
-            headlineContent = { Text(stringResource(Res.string.action_ignore_all_day_diary_slots)) },
+            headlineContent = { Text(stringResource(Res.string.action_ignore_all_day_diary_slots), modifier = Modifier.uiName("advancedLayoutSettings.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "advancedLayoutSettings")) },
             modifier =
-                Modifier.clickable(enabled = useTimeBasedSorting) {
+                (Modifier.clickable(enabled = useTimeBasedSorting) {
                     toggleIgnoreAllDayDiarySlots(!ignoreAllDayDiarySlots)
-                },
+                }).uiName("advancedLayoutSettings.ListItem.2", "androidx.compose.material3.ListItem", uiInspectionSource, "advancedLayoutSettings"),
             supportingContent = {
-                Text(stringResource(Res.string.description_action_ignore_all_day_diary_slots))
+                Text(stringResource(Res.string.description_action_ignore_all_day_diary_slots), modifier = Modifier.uiName("advancedLayoutSettings.Text.5", "androidx.compose.material3.Text", uiInspectionSource, "advancedLayoutSettings"))
             },
             trailingContent = {
                 Switch(
                     checked = ignoreAllDayDiarySlots,
                     onCheckedChange = toggleIgnoreAllDayDiarySlots,
-                    enabled = useTimeBasedSorting,
+                    enabled = useTimeBasedSorting, modifier = Modifier.uiName("advancedLayoutSettings.Switch.2", "androidx.compose.material3.Switch", uiInspectionSource, "advancedLayoutSettings")
                 )
             },
             colors =
@@ -188,3 +191,9 @@ private fun LazyListScope.advancedLayoutSettings(
         )
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.home.meals.settings",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/settings/DiarySlotsCardsSettingsScreen.kt",
+)

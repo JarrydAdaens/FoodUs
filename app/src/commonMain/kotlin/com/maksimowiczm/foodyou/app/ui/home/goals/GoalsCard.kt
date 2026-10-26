@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.home.goals
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.expandVertically
@@ -61,10 +64,10 @@ internal fun GoalsCard(
     val readFailed by viewModel.readFailed.collectAsStateWithLifecycle()
 
     if (readFailed) {
-        FoodYouHomeCard(modifier = modifier, onClick = viewModel::retryRead, onLongClick = onLongClick) {
-            Column(Modifier.padding(16.dp)) {
-                Text(stringResource(Res.string.meals_diary_unavailable))
-                TextButton(onClick = viewModel::retryRead) { Text(stringResource(Res.string.meals_retry)) }
+        FoodYouHomeCard(modifier = (modifier).uiName("GoalsCard.FoodYouHomeCard.1", "com.maksimowiczm.foodyou.app.ui.home.shared.FoodYouHomeCard", uiInspectionSource, "GoalsCard"), onClick = viewModel::retryRead, onLongClick = onLongClick) {
+            Column((Modifier.padding(16.dp)).uiName("GoalsCard.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "GoalsCard")) {
+                Text(stringResource(Res.string.meals_diary_unavailable), modifier = Modifier.uiName("GoalsCard.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "GoalsCard"))
+                TextButton(onClick = viewModel::retryRead, modifier = Modifier.uiName("GoalsCard.TextButton.1", "androidx.compose.material3.TextButton", uiInspectionSource, "GoalsCard")) { Text(stringResource(Res.string.meals_retry), modifier = Modifier.uiName("GoalsCard.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "GoalsCard")) }
             }
         }
     } else if (model == null) {
@@ -73,7 +76,7 @@ internal fun GoalsCard(
             expand = expand,
             onClick = { onClick(homeState.selectedDate.toEpochDays()) },
             onLongClick = onLongClick,
-            modifier = modifier,
+            modifier = (modifier).uiName("GoalsCard.GoalsCardSkeleton.1", "com.maksimowiczm.foodyou.app.ui.home.goals.GoalsCardSkeleton", uiInspectionSource, "GoalsCard"),
         )
     } else {
         GoalsCard(
@@ -88,7 +91,7 @@ internal fun GoalsCard(
             fatsGoal = model.fatsGoal,
             onClick = { onClick(homeState.selectedDate.toEpochDays()) },
             onLongClick = onLongClick,
-            modifier = modifier,
+            modifier = (modifier).uiName("GoalsCard.GoalsCard.1", "com.maksimowiczm.foodyou.app.ui.home.goals.GoalsCard", uiInspectionSource, "GoalsCard"),
         )
     }
 }
@@ -129,8 +132,8 @@ internal fun GoalsCard(
             )
             .value
 
-    FoodYouHomeCard(modifier = modifier, onClick = onClick, onLongClick = onLongClick) {
-        Column(modifier = Modifier.padding(16.dp)) {
+    FoodYouHomeCard(modifier = (modifier).uiName("GoalsCard.FoodYouHomeCard.2", "com.maksimowiczm.foodyou.app.ui.home.shared.FoodYouHomeCard", uiInspectionSource, "GoalsCard"), onClick = onClick, onLongClick = onLongClick) {
+        Column(modifier = (Modifier.padding(16.dp)).uiName("GoalsCard.Column.2", "androidx.compose.foundation.layout.Column", uiInspectionSource, "GoalsCard")) {
             GoalsCardContent(
                 energy = energy,
                 energyGoal = energyGoal,
@@ -140,15 +143,15 @@ internal fun GoalsCard(
                 proteinsPercentage = proteinsPercentage,
                 carbsPercentage = carbsPercentage,
                 fatsPercentage = fatsPercentage,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = (Modifier.fillMaxWidth()).uiName("GoalsCard.GoalsCardContent.1", "com.maksimowiczm.foodyou.app.ui.home.goals.GoalsCardContent", uiInspectionSource, "GoalsCard"),
             )
 
             AnimatedVisibility(
                 visible = expand,
                 enter = expandVertically(),
-                exit = shrinkVertically(),
+                exit = shrinkVertically(), modifier = Modifier.uiName("GoalsCard.AnimatedVisibility.1", "androidx.compose.animation.AnimatedVisibility", uiInspectionSource, "GoalsCard")
             ) {
-                Column {
+                Column (modifier = Modifier.uiName("GoalsCard.Column.3", "androidx.compose.foundation.layout.Column", uiInspectionSource, "GoalsCard")) {
                     Spacer(Modifier.height(16.dp))
 
                     ExpandedCardContent(
@@ -158,7 +161,7 @@ internal fun GoalsCard(
                         carbohydratesGoalGrams = carbohydratesGoal,
                         fatsGrams = fats,
                         fatsGoalGrams = fatsGoal,
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = (Modifier.fillMaxWidth()).uiName("GoalsCard.ExpandedCardContent.1", "com.maksimowiczm.foodyou.app.ui.home.goals.ExpandedCardContent", uiInspectionSource, "GoalsCard"),
                     )
                 }
             }
@@ -212,33 +215,33 @@ private fun GoalsCardContent(
     val left = remember(energy, energyGoal) { energyGoal - energy }
 
     Row(
-        modifier = modifier,
+        modifier = (modifier).uiName("GoalsCardContent.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "GoalsCardContent"),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text(text = caloriesString, style = typography.headlineLargeEmphasized)
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.uiName("GoalsCardContent.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "GoalsCardContent")) {
+            Text(text = caloriesString, style = typography.headlineLargeEmphasized, modifier = Modifier.uiName("app.ui.home.goals.GoalsCardContent.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "GoalsCardContent"))
 
             when {
                 left > 0 ->
                     Text(
                         text = energyFormatter.energyLeft(left),
                         color = MaterialTheme.colorScheme.outline,
-                        style = MaterialTheme.typography.bodyMediumEmphasized,
+                        style = MaterialTheme.typography.bodyMediumEmphasized, modifier = Modifier.uiName("GoalsCardContent.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "GoalsCardContent")
                     )
 
                 left == 0 ->
                     Text(
                         text = stringResource(Res.string.positive_goal_reached),
                         color = MaterialTheme.colorScheme.outline,
-                        style = MaterialTheme.typography.bodyMediumEmphasized,
+                        style = MaterialTheme.typography.bodyMediumEmphasized, modifier = Modifier.uiName("GoalsCardContent.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "GoalsCardContent")
                     )
 
                 else ->
                     Text(
                         text = energyFormatter.energyExceeded(-left),
                         color = MaterialTheme.colorScheme.error,
-                        style = MaterialTheme.typography.bodyMediumEmphasized,
+                        style = MaterialTheme.typography.bodyMediumEmphasized, modifier = Modifier.uiName("GoalsCardContent.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "GoalsCardContent")
                     )
             }
         }
@@ -246,7 +249,7 @@ private fun GoalsCardContent(
         when (graphStyle) {
             GraphStyle.Bar ->
                 Row(
-                    modifier = Modifier.height(64.dp),
+                    modifier = (Modifier.height(64.dp)).uiName("GoalsCardContent.Row.2", "androidx.compose.foundation.layout.Row", uiInspectionSource, "GoalsCardContent"),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     nutrientsOrder.forEach { field ->
@@ -258,7 +261,7 @@ private fun GoalsCardContent(
                                         nutrientsPalette.proteinsOnSurfaceContainer.copy(
                                             alpha = .25f
                                         ),
-                                    barColor = nutrientsPalette.proteinsOnSurfaceContainer,
+                                    barColor = nutrientsPalette.proteinsOnSurfaceContainer, modifier = Modifier.uiName("GoalsCardContent.MacroBar.1", "com.maksimowiczm.foodyou.app.ui.home.goals.MacroBar", uiInspectionSource, "GoalsCardContent")
                                 )
 
                             NutrientsOrder.Fats ->
@@ -266,7 +269,7 @@ private fun GoalsCardContent(
                                     progress = fatsPercentage,
                                     containerColor =
                                         nutrientsPalette.fatsOnSurfaceContainer.copy(alpha = .25f),
-                                    barColor = nutrientsPalette.fatsOnSurfaceContainer,
+                                    barColor = nutrientsPalette.fatsOnSurfaceContainer, modifier = Modifier.uiName("GoalsCardContent.MacroBar.2", "com.maksimowiczm.foodyou.app.ui.home.goals.MacroBar", uiInspectionSource, "GoalsCardContent")
                                 )
 
                             NutrientsOrder.Carbohydrates ->
@@ -276,7 +279,7 @@ private fun GoalsCardContent(
                                         nutrientsPalette.carbohydratesOnSurfaceContainer.copy(
                                             alpha = .25f
                                         ),
-                                    barColor = nutrientsPalette.carbohydratesOnSurfaceContainer,
+                                    barColor = nutrientsPalette.carbohydratesOnSurfaceContainer, modifier = Modifier.uiName("GoalsCardContent.MacroBar.3", "com.maksimowiczm.foodyou.app.ui.home.goals.MacroBar", uiInspectionSource, "GoalsCardContent")
                                 )
 
                             NutrientsOrder.Other,
@@ -314,7 +317,7 @@ private fun GoalsCardContent(
                         }
                     }
 
-                MacroPieChart(slices = slices)
+                MacroPieChart(slices = slices, modifier = Modifier.uiName("GoalsCardContent.MacroPieChart.1", "com.maksimowiczm.foodyou.app.ui.home.goals.MacroPieChart", uiInspectionSource, "GoalsCardContent"))
             }
         }
     }
@@ -333,7 +336,7 @@ private fun MacroBar(
 
     Canvas(
         modifier =
-            modifier
+            (modifier
                 .clip(
                     RoundedCornerShape(
                         topStart = 8.dp,
@@ -343,7 +346,7 @@ private fun MacroBar(
                     )
                 )
                 .fillMaxHeight()
-                .width(24.dp)
+                .width(24.dp)).uiName("MacroBar.Canvas.1", "androidx.compose.foundation.Canvas", uiInspectionSource, "MacroBar")
     ) {
         if (overflowFraction > 0f) {
             val barHeight = 1 - overflowFraction
@@ -435,51 +438,51 @@ private fun ExpandedCardContent(
         }
     }
 
-    Column(modifier = modifier) {
+    Column(modifier = (modifier).uiName("ExpandedCardContent.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "ExpandedCardContent")) {
         nutrientsOrder.forEach {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = (Modifier.fillMaxWidth()).uiName("ExpandedCardContent.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "ExpandedCardContent"),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 when (it) {
                     NutrientsOrder.Proteins -> {
-                        RoundedSquare(LocalNutrientsPalette.current.proteinsOnSurfaceContainer)
+                        RoundedSquare(LocalNutrientsPalette.current.proteinsOnSurfaceContainer, modifier = Modifier.uiName("ExpandedCardContent.RoundedSquare.1", "com.maksimowiczm.foodyou.app.ui.home.goals.RoundedSquare", uiInspectionSource, "ExpandedCardContent"))
 
                         Text(
                             text = stringResource(Res.string.nutriment_proteins),
-                            modifier = Modifier.weight(1f),
+                            modifier = (Modifier.weight(1f)).uiName("ExpandedCardContent.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "ExpandedCardContent"),
                             style = MaterialTheme.typography.labelLarge,
                         )
 
-                        Text(text = proteinsString, style = MaterialTheme.typography.headlineSmall)
+                        Text(text = proteinsString, style = MaterialTheme.typography.headlineSmall, modifier = Modifier.uiName("ExpandedCardContent.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "ExpandedCardContent"))
                     }
 
                     NutrientsOrder.Carbohydrates -> {
-                        RoundedSquare(LocalNutrientsPalette.current.carbohydratesOnSurfaceContainer)
+                        RoundedSquare(LocalNutrientsPalette.current.carbohydratesOnSurfaceContainer, modifier = Modifier.uiName("ExpandedCardContent.RoundedSquare.2", "com.maksimowiczm.foodyou.app.ui.home.goals.RoundedSquare", uiInspectionSource, "ExpandedCardContent"))
 
                         Text(
                             text = stringResource(Res.string.nutriment_carbohydrates),
-                            modifier = Modifier.weight(1f),
+                            modifier = (Modifier.weight(1f)).uiName("ExpandedCardContent.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "ExpandedCardContent"),
                             style = MaterialTheme.typography.labelLarge,
                         )
 
                         Text(
                             text = carbohydratesString,
-                            style = MaterialTheme.typography.headlineSmall,
+                            style = MaterialTheme.typography.headlineSmall, modifier = Modifier.uiName("ExpandedCardContent.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "ExpandedCardContent")
                         )
                     }
 
                     NutrientsOrder.Fats -> {
-                        RoundedSquare(LocalNutrientsPalette.current.fatsOnSurfaceContainer)
+                        RoundedSquare(LocalNutrientsPalette.current.fatsOnSurfaceContainer, modifier = Modifier.uiName("ExpandedCardContent.RoundedSquare.3", "com.maksimowiczm.foodyou.app.ui.home.goals.RoundedSquare", uiInspectionSource, "ExpandedCardContent"))
 
                         Text(
                             text = stringResource(Res.string.nutriment_fats),
-                            modifier = Modifier.weight(1f),
+                            modifier = (Modifier.weight(1f)).uiName("ExpandedCardContent.Text.5", "androidx.compose.material3.Text", uiInspectionSource, "ExpandedCardContent"),
                             style = MaterialTheme.typography.labelLarge,
                         )
 
-                        Text(text = fatsString, style = MaterialTheme.typography.headlineSmall)
+                        Text(text = fatsString, style = MaterialTheme.typography.headlineSmall, modifier = Modifier.uiName("ExpandedCardContent.Text.6", "androidx.compose.material3.Text", uiInspectionSource, "ExpandedCardContent"))
                     }
 
                     NutrientsOrder.Other,
@@ -493,7 +496,7 @@ private fun ExpandedCardContent(
 
 @Composable
 private fun RoundedSquare(color: Color, modifier: Modifier = Modifier) {
-    Canvas(modifier = modifier.size(16.dp).clip(MaterialTheme.shapes.extraSmall)) {
+    Canvas(modifier = (modifier.size(16.dp).clip(MaterialTheme.shapes.extraSmall)).uiName("RoundedSquare.Canvas.1", "androidx.compose.foundation.Canvas", uiInspectionSource, "RoundedSquare")) {
         drawRect(color = color, size = size)
     }
 }
@@ -506,14 +509,14 @@ private fun GoalsCardSkeleton(
     onLongClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    FoodYouHomeCard(modifier = modifier, onClick = onClick, onLongClick = onLongClick) {
-        Column(Modifier.padding(16.dp)) {
+    FoodYouHomeCard(modifier = (modifier).uiName("GoalsCardSkeleton.FoodYouHomeCard.1", "com.maksimowiczm.foodyou.app.ui.home.shared.FoodYouHomeCard", uiInspectionSource, "GoalsCardSkeleton"), onClick = onClick, onLongClick = onLongClick) {
+        Column((Modifier.padding(16.dp)).uiName("GoalsCardSkeleton.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "GoalsCardSkeleton")) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = (Modifier.fillMaxWidth()).uiName("GoalsCardSkeleton.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "GoalsCardSkeleton"),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.uiName("GoalsCardSkeleton.Column.2", "androidx.compose.foundation.layout.Column", uiInspectionSource, "GoalsCardSkeleton")) {
                     Spacer(
                         Modifier.shimmer(shimmer)
                             .width(60.dp)
@@ -531,28 +534,28 @@ private fun GoalsCardSkeleton(
                 }
 
                 Row(
-                    modifier = Modifier.height(64.dp),
+                    modifier = (Modifier.height(64.dp)).uiName("GoalsCardSkeleton.Row.2", "androidx.compose.foundation.layout.Row", uiInspectionSource, "GoalsCardSkeleton"),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     MacroBar(
                         progress = 1f,
                         containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
                         barColor = MaterialTheme.colorScheme.surfaceContainerHighest,
-                        modifier = Modifier.shimmer(shimmer),
+                        modifier = (Modifier.shimmer(shimmer)).uiName("GoalsCardSkeleton.MacroBar.1", "com.maksimowiczm.foodyou.app.ui.home.goals.MacroBar", uiInspectionSource, "GoalsCardSkeleton"),
                     )
 
                     MacroBar(
                         progress = 1f,
                         containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
                         barColor = MaterialTheme.colorScheme.surfaceContainerHighest,
-                        modifier = Modifier.shimmer(shimmer),
+                        modifier = (Modifier.shimmer(shimmer)).uiName("GoalsCardSkeleton.MacroBar.2", "com.maksimowiczm.foodyou.app.ui.home.goals.MacroBar", uiInspectionSource, "GoalsCardSkeleton"),
                     )
 
                     MacroBar(
                         progress = 1f,
                         containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
                         barColor = MaterialTheme.colorScheme.surfaceContainerHighest,
-                        modifier = Modifier.shimmer(shimmer),
+                        modifier = (Modifier.shimmer(shimmer)).uiName("GoalsCardSkeleton.MacroBar.3", "com.maksimowiczm.foodyou.app.ui.home.goals.MacroBar", uiInspectionSource, "GoalsCardSkeleton"),
                     )
                 }
             }
@@ -560,19 +563,19 @@ private fun GoalsCardSkeleton(
             AnimatedVisibility(
                 visible = expand,
                 enter = expandVertically(),
-                exit = shrinkVertically(),
+                exit = shrinkVertically(), modifier = Modifier.uiName("GoalsCardSkeleton.AnimatedVisibility.1", "androidx.compose.animation.AnimatedVisibility", uiInspectionSource, "GoalsCardSkeleton")
             ) {
-                Column {
+                Column (modifier = Modifier.uiName("GoalsCardSkeleton.Column.3", "androidx.compose.foundation.layout.Column", uiInspectionSource, "GoalsCardSkeleton")) {
                     Spacer(Modifier.height(16.dp))
 
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = (Modifier.fillMaxWidth()).uiName("GoalsCardSkeleton.Row.3", "androidx.compose.foundation.layout.Row", uiInspectionSource, "GoalsCardSkeleton"),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
                         RoundedSquare(
                             color = MaterialTheme.colorScheme.surfaceContainerHighest,
-                            modifier = Modifier.shimmer(shimmer),
+                            modifier = (Modifier.shimmer(shimmer)).uiName("GoalsCardSkeleton.RoundedSquare.1", "com.maksimowiczm.foodyou.app.ui.home.goals.RoundedSquare", uiInspectionSource, "GoalsCardSkeleton"),
                         )
 
                         Spacer(
@@ -595,13 +598,13 @@ private fun GoalsCardSkeleton(
                     }
 
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = (Modifier.fillMaxWidth()).uiName("GoalsCardSkeleton.Row.4", "androidx.compose.foundation.layout.Row", uiInspectionSource, "GoalsCardSkeleton"),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
                         RoundedSquare(
                             color = MaterialTheme.colorScheme.surfaceContainerHighest,
-                            modifier = Modifier.shimmer(shimmer),
+                            modifier = (Modifier.shimmer(shimmer)).uiName("GoalsCardSkeleton.RoundedSquare.2", "com.maksimowiczm.foodyou.app.ui.home.goals.RoundedSquare", uiInspectionSource, "GoalsCardSkeleton"),
                         )
 
                         Spacer(
@@ -624,13 +627,13 @@ private fun GoalsCardSkeleton(
                     }
 
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = (Modifier.fillMaxWidth()).uiName("GoalsCardSkeleton.Row.5", "androidx.compose.foundation.layout.Row", uiInspectionSource, "GoalsCardSkeleton"),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
                         RoundedSquare(
                             color = MaterialTheme.colorScheme.surfaceContainerHighest,
-                            modifier = Modifier.shimmer(shimmer),
+                            modifier = (Modifier.shimmer(shimmer)).uiName("GoalsCardSkeleton.RoundedSquare.3", "com.maksimowiczm.foodyou.app.ui.home.goals.RoundedSquare", uiInspectionSource, "GoalsCardSkeleton"),
                         )
 
                         Spacer(
@@ -656,3 +659,9 @@ private fun GoalsCardSkeleton(
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.home.goals",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/goals/GoalsCard.kt",
+)

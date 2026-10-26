@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.home.meals.card
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -34,9 +37,9 @@ internal fun DiarySlotsCards(
     LaunchedEffect(homeState.selectedDate, viewModel) { viewModel.setDate(homeState.selectedDate) }
 
     if (readFailed) {
-        Column(modifier) {
-            Text(stringResource(Res.string.meals_unavailable))
-            TextButton(onClick = viewModel::retryRead) { Text(stringResource(Res.string.meals_retry)) }
+        Column((modifier).uiName("DiarySlotsCards.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "DiarySlotsCards")) {
+            Text(stringResource(Res.string.meals_unavailable), modifier = Modifier.uiName("DiarySlotsCards.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotsCards"))
+            TextButton(onClick = viewModel::retryRead, modifier = Modifier.uiName("DiarySlotsCards.TextButton.1", "androidx.compose.material3.TextButton", uiInspectionSource, "DiarySlotsCards")) { Text(stringResource(Res.string.meals_retry), modifier = Modifier.uiName("DiarySlotsCards.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotsCards")) }
         }
         return
     }
@@ -66,7 +69,7 @@ internal fun DiarySlotsCards(
                 onDeleteMeal = viewModel::deleteMeal,
                 shimmer = homeState.shimmer,
                 contentPadding = contentPadding,
-                modifier = modifier,
+                modifier = (modifier).uiName("DiarySlotsCards.HorizontalDiarySlotsCards.1", "com.maksimowiczm.foodyou.app.ui.home.meals.card.HorizontalDiarySlotsCards", uiInspectionSource, "DiarySlotsCards"),
             )
 
         DiarySlotsCardsLayout.Vertical ->
@@ -93,7 +96,13 @@ internal fun DiarySlotsCards(
                 onDeleteMeal = viewModel::deleteMeal,
                 shimmer = homeState.shimmer,
                 contentPadding = contentPadding,
-                modifier = modifier,
+                modifier = (modifier).uiName("DiarySlotsCards.VerticalDiarySlotsCards.1", "com.maksimowiczm.foodyou.app.ui.home.meals.card.VerticalDiarySlotsCards", uiInspectionSource, "DiarySlotsCards"),
             )
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.home.meals.card",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotsCards.kt",
+)

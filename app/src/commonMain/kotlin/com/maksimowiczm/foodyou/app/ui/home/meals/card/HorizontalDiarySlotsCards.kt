@@ -1,5 +1,10 @@
 package com.maksimowiczm.foodyou.app.ui.home.meals.card
 
+
+
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateContentSize
@@ -49,9 +54,9 @@ internal fun HorizontalDiarySlotsCards(
     HorizontalPager(
         state = pagerState,
         modifier =
-            modifier.animateContentSize(
+            (modifier.animateContentSize(
                 animationSpec = MaterialTheme.motionScheme.defaultSpatialSpec()
-            ),
+            )).uiName("HorizontalDiarySlotsCards.HorizontalPager.1", "androidx.compose.foundation.pager.HorizontalPager", uiInspectionSource, "HorizontalDiarySlotsCards"),
         verticalAlignment = Alignment.Top,
         contentPadding =
             PaddingValues(
@@ -65,7 +70,7 @@ internal fun HorizontalDiarySlotsCards(
 
         transition.Crossfade(
             contentKey = { it != null },
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 2.dp),
+            modifier = (Modifier.fillMaxWidth().padding(horizontal = 2.dp)).uiName("HorizontalDiarySlotsCards.Crossfade.1", "androidx.compose.animation.Crossfade", uiInspectionSource, "HorizontalDiarySlotsCards"),
         ) {
             if (it != null && diarySlot != null) {
                 DiarySlotCard(
@@ -80,11 +85,17 @@ internal fun HorizontalDiarySlotsCards(
                     meals = meals,
                     onSaveMeal = { name, result -> onSaveMeal(diarySlot.id, name, result) },
                     onApplyMeal = { id, result -> onApplyMeal(id, diarySlot.id, result) },
-                    onDeleteMeal = onDeleteMeal,
+                    onDeleteMeal = onDeleteMeal, modifier = Modifier.uiName("HorizontalDiarySlotsCards.DiarySlotCard.1", "com.maksimowiczm.foodyou.app.ui.home.meals.card.DiarySlotCard", uiInspectionSource, "HorizontalDiarySlotsCards")
                 )
             } else {
-                DiarySlotCardSkeleton(shimmer = shimmer)
+                DiarySlotCardSkeleton(shimmer = shimmer, modifier = Modifier.uiName("HorizontalDiarySlotsCards.DiarySlotCardSkeleton.1", "com.maksimowiczm.foodyou.app.ui.home.meals.card.DiarySlotCardSkeleton", uiInspectionSource, "HorizontalDiarySlotsCards"))
             }
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.home.meals.card",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/HorizontalDiarySlotsCards.kt",
+)

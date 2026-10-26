@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.food.search
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -34,7 +37,7 @@ internal fun FoodSearchListItem(
         return FoodErrorListItem(
             headline = food.headline,
             errorMessage = stringResource(Res.string.error_measurement_error),
-            modifier = modifier,
+            modifier = (modifier).uiName("FoodSearchListItem.FoodErrorListItem.1", "com.maksimowiczm.foodyou.app.ui.common.component.FoodErrorListItem", uiInspectionSource, "FoodSearchListItem"),
             onClick = onClick,
         )
     }
@@ -59,10 +62,10 @@ internal fun FoodSearchListItem(
         carbohydrates = carbohydrates,
         fats = fats,
         energy = energy,
-        measurement = { Text(displayMeasurement) },
+        measurement = { Text(displayMeasurement, modifier = Modifier.uiName("FoodSearchListItem.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "FoodSearchListItem")) },
         isRecipe = false,
         onClick = onClick,
-        modifier = modifier,
+        modifier = (modifier).uiName("FoodSearchListItem.FoodSearchListItem.1", "com.maksimowiczm.foodyou.app.ui.food.search.FoodSearchListItem", uiInspectionSource, "FoodSearchListItem"),
     )
 }
 
@@ -85,11 +88,11 @@ internal fun FoodSearchListItem(
             .value
 
     if (recipe == null) {
-        return FoodListItemSkeleton(shimmer)
+        return FoodListItemSkeleton(shimmer, modifier = Modifier.uiName("FoodSearchListItem.FoodListItemSkeleton.1", "com.maksimowiczm.foodyou.app.ui.common.component.FoodListItemSkeleton", uiInspectionSource, "FoodSearchListItem"))
     }
 
     val measurementFacts = recipe.nutritionFor(measurement)
-    if(measurementFacts==null)return FoodErrorListItem(headline=food.headline,modifier=modifier,onClick=onClick,
+    if(measurementFacts==null)return FoodErrorListItem(headline=food.headline,modifier=(modifier).uiName("FoodSearchListItem.FoodErrorListItem.2", "com.maksimowiczm.foodyou.app.ui.common.component.FoodErrorListItem", uiInspectionSource, "FoodSearchListItem"),onClick=onClick,
         errorMessage=stringResource(if(recipe.reportedNutrition?.needsReview==true)Res.string.captured_needs_review else Res.string.error_portion_save))
     val proteins = measurementFacts.proteins.value
     val carbohydrates = measurementFacts.carbohydrates.value
@@ -109,10 +112,10 @@ internal fun FoodSearchListItem(
         carbohydrates = carbohydrates,
         fats = fats,
         energy = energy,
-        measurement = { Text(if(recipe.isReported)measurementString+" · "+stringResource(Res.string.captured_reported)else measurementString) },
+        measurement = { Text(if(recipe.isReported)measurementString+" · "+stringResource(Res.string.captured_reported)else measurementString, modifier = Modifier.uiName("FoodSearchListItem.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "FoodSearchListItem")) },
         isRecipe = true,
         onClick = onClick,
-        modifier = modifier,
+        modifier = (modifier).uiName("FoodSearchListItem.FoodSearchListItem.2", "com.maksimowiczm.foodyou.app.ui.food.search.FoodSearchListItem", uiInspectionSource, "FoodSearchListItem"),
     )
 }
 
@@ -131,24 +134,30 @@ private fun FoodSearchListItem(
     val g = stringResource(Res.string.unit_gram_short)
 
     FoodListItem(
-        name = { Text(text = headline) },
+        name = { Text(text = headline, modifier = Modifier.uiName("FoodSearchListItem.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "FoodSearchListItem")) },
         proteins = {
-            Text(proteins?.let { it.formatClipZeros()+" "+g } ?: stringResource(Res.string.captured_unknown_value))
+            Text(proteins?.let { it.formatClipZeros()+" "+g } ?: stringResource(Res.string.captured_unknown_value), modifier = Modifier.uiName("FoodSearchListItem.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "FoodSearchListItem"))
         },
         carbohydrates = {
-            Text(carbohydrates?.let { it.formatClipZeros()+" "+g } ?: stringResource(Res.string.captured_unknown_value))
+            Text(carbohydrates?.let { it.formatClipZeros()+" "+g } ?: stringResource(Res.string.captured_unknown_value), modifier = Modifier.uiName("FoodSearchListItem.Text.5", "androidx.compose.material3.Text", uiInspectionSource, "FoodSearchListItem"))
         },
         fats = {
-            Text(fats?.let { it.formatClipZeros()+" "+g } ?: stringResource(Res.string.captured_unknown_value))
+            Text(fats?.let { it.formatClipZeros()+" "+g } ?: stringResource(Res.string.captured_unknown_value), modifier = Modifier.uiName("FoodSearchListItem.Text.6", "androidx.compose.material3.Text", uiInspectionSource, "FoodSearchListItem"))
         },
         calories = { Text(when {
             energy==null -> stringResource(Res.string.captured_unknown_value)
             energy>Int.MAX_VALUE -> energy.toString()+" kcal"
             else -> LocalEnergyFormatter.current.formatEnergy(energy.roundToInt())
-        }) },
+        }, modifier = Modifier.uiName("FoodSearchListItem.Text.7", "androidx.compose.material3.Text", uiInspectionSource, "FoodSearchListItem")) },
         measurement = measurement,
         isRecipe = isRecipe,
-        modifier = modifier,
+        modifier = (modifier).uiName("FoodSearchListItem.FoodListItem.1", "com.maksimowiczm.foodyou.app.ui.common.component.FoodListItem", uiInspectionSource, "FoodSearchListItem"),
         onClick = onClick,
     )
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.search",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodSearchListItem.kt",
+)

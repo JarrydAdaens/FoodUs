@@ -1,5 +1,9 @@
 package com.maksimowiczm.foodyou.app.ui.food.recipe
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
+
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.consumeWindowInsets
@@ -69,25 +73,25 @@ internal fun RecipeApp(
             Scaffold(
                 topBar = {
                     TopAppBar(
-                        title = { Text(topBarTitle) },
-                        navigationIcon = { ArrowBackIconButton(onBack) },
+                        title = { Text(topBarTitle, modifier = Modifier.uiName("RecipeApp.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "RecipeApp")) },
+                        navigationIcon = { ArrowBackIconButton(onBack, modifier = Modifier.uiName("RecipeApp.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "RecipeApp")) },
                         actions = {
-                            FilledIconButton(onClick = { onSave(state) }, enabled = state.isValid && !saving) {
+                            FilledIconButton(onClick = { onSave(state) }, enabled = state.isValid && !saving, modifier = Modifier.uiName("RecipeApp.FilledIconButton.1", "androidx.compose.material3.FilledIconButton", uiInspectionSource, "RecipeApp")) {
                                 Icon(
                                     imageVector = Icons.Outlined.Save,
-                                    contentDescription = stringResource(Res.string.action_save),
+                                    contentDescription = stringResource(Res.string.action_save), modifier = Modifier.uiName("RecipeApp.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "RecipeApp")
                                 )
                             }
                         },
-                        scrollBehavior = scrollBehavior,
+                        scrollBehavior = scrollBehavior, modifier = Modifier.uiName("RecipeApp.TopAppBar.1", "androidx.compose.material3.TopAppBar", uiInspectionSource, "RecipeApp")
                     )
-                }
+                }, modifier = Modifier.uiName("RecipeApp.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "RecipeApp")
             ) { paddingValues ->
                 LazyColumn(
                     modifier =
-                        Modifier.fillMaxSize()
+                        (Modifier.fillMaxSize()
                             .imePadding()
-                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                            .nestedScroll(scrollBehavior.nestedScrollConnection)).uiName("RecipeApp.LazyColumn.1", "androidx.compose.foundation.lazy.LazyColumn", uiInspectionSource, "RecipeApp"),
                     contentPadding = paddingValues,
                 ) {
                     item {
@@ -104,16 +108,16 @@ internal fun RecipeApp(
                                     launchSingleTop = true
                                 }
                             },
-                            contentPadding = PaddingValues(horizontal = 16.dp),
+                            contentPadding = PaddingValues(horizontal = 16.dp), modifier = Modifier.uiName("RecipeApp.RecipeForm.1", "com.maksimowiczm.foodyou.app.ui.food.recipe.RecipeForm", uiInspectionSource, "RecipeApp")
                         )
                     }
 
                     if (recipe != null) {
                         item {
-                            HorizontalDivider(Modifier.padding(bottom = 8.dp))
+                            HorizontalDivider((Modifier.padding(bottom = 8.dp)).uiName("RecipeApp.HorizontalDivider.1", "androidx.compose.material3.HorizontalDivider", uiInspectionSource, "RecipeApp"))
                             Text(
                                 text = stringResource(Res.string.recipe_total_nutrition),
-                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                                modifier = (Modifier.padding(horizontal = 16.dp, vertical = 8.dp)).uiName("RecipeApp.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "RecipeApp"),
                                 color = MaterialTheme.colorScheme.primary,
                                 style = MaterialTheme.typography.labelLarge,
                             )
@@ -121,11 +125,11 @@ internal fun RecipeApp(
                             val facts = recipe.totalNutrition
                             NutrientList(
                                 facts = facts,
-                                modifier = Modifier.padding(horizontal = 8.dp),
+                                modifier = (Modifier.padding(horizontal = 8.dp)).uiName("RecipeApp.NutrientList.1", "com.maksimowiczm.foodyou.app.ui.food.shared.component.NutrientList", uiInspectionSource, "RecipeApp"),
                             )
 
-                            Text(stringResource(Res.string.recipe_per_serving), modifier = Modifier.padding(horizontal = 16.dp))
-                            NutrientList(recipe.nutritionFor(Measurement.Serving(1.0)) ?: com.maksimowiczm.foodyou.common.domain.food.NutritionFacts())
+                            Text(stringResource(Res.string.recipe_per_serving), modifier = (Modifier.padding(horizontal = 16.dp)).uiName("RecipeApp.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "RecipeApp"))
+                            NutrientList(recipe.nutritionFor(Measurement.Serving(1.0)) ?: com.maksimowiczm.foodyou.common.domain.food.NutritionFacts(), modifier = Modifier.uiName("RecipeApp.NutrientList.2", "com.maksimowiczm.foodyou.app.ui.food.shared.component.NutrientList", uiInspectionSource, "RecipeApp"))
                             if (!facts.isComplete) {
                                 val foods =
                                     recipe
@@ -136,7 +140,7 @@ internal fun RecipeApp(
                                 IncompleteFoodsList(
                                     foods = foods.map { it.headline }.distinct(),
                                     modifier =
-                                        Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                                        (Modifier.padding(horizontal = 16.dp, vertical = 8.dp)).uiName("RecipeApp.IncompleteFoodsList.1", "com.maksimowiczm.foodyou.app.ui.common.component.IncompleteFoodsList", uiInspectionSource, "RecipeApp"),
                                     onFoodClick = { i -> onEditFood(foods[i].id) },
                                 )
                             }
@@ -151,17 +155,17 @@ internal fun RecipeApp(
             Scaffold(
                 topBar = {
                     TopAppBar(
-                        title = { Text(stringResource(Res.string.headline_choose_ingredient)) },
+                        title = { Text(stringResource(Res.string.headline_choose_ingredient), modifier = Modifier.uiName("RecipeApp.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "RecipeApp")) },
                         navigationIcon = {
                             ArrowBackIconButton(
-                                onClick = { navController.popBackStack<IngredientsSearch>(true) }
+                                onClick = { navController.popBackStack<IngredientsSearch>(true) }, modifier = Modifier.uiName("RecipeApp.ArrowBackIconButton.2", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "RecipeApp")
                             )
                         },
-                        scrollBehavior = scrollBehavior,
+                        scrollBehavior = scrollBehavior, modifier = Modifier.uiName("RecipeApp.TopAppBar.2", "androidx.compose.material3.TopAppBar", uiInspectionSource, "RecipeApp")
                     )
                 },
                 contentWindowInsets =
-                    ScaffoldDefaults.contentWindowInsets.only(WindowInsetsSides.Top),
+                    ScaffoldDefaults.contentWindowInsets.only(WindowInsetsSides.Top), modifier = Modifier.uiName("RecipeApp.Scaffold.2", "androidx.compose.material3.Scaffold", uiInspectionSource, "RecipeApp")
             ) { paddingValues ->
                 FoodSearchApp(
                     onFoodClick = { model, measurement ->
@@ -173,17 +177,17 @@ internal fun RecipeApp(
                     onUpdateOpenFoodFactsCredentials = onUpdateOpenFoodFactsCredentials,
                     excludedRecipe = mainRecipeId,
                     modifier =
-                        Modifier.fillMaxSize()
+                        (Modifier.fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection)
                             .padding(paddingValues)
-                            .consumeWindowInsets(paddingValues),
+                            .consumeWindowInsets(paddingValues)).uiName("RecipeApp.FoodSearchApp.1", "com.maksimowiczm.foodyou.app.ui.food.search.FoodSearchApp", uiInspectionSource, "RecipeApp"),
                 )
             }
         }
         forwardBackwardComposable<IngredientMeasurement> {
             val route = it.toRoute<IngredientMeasurement>()
 
-            MeasureIngredientScreen(
+            UiSourceScope(uiInspectionSource.element("RecipeApp.MeasureIngredientScreen.1", "com.maksimowiczm.foodyou.app.ui.food.recipe.MeasureIngredientScreen", "RecipeApp")) { MeasureIngredientScreen(
                 onBack = { navController.popBackStack<IngredientMeasurement>(true) },
                 onSave = { measurement ->
                     state.addIngredient(
@@ -194,7 +198,7 @@ internal fun RecipeApp(
                 },
                 measurement = route.measurement,
                 viewModel = koinViewModel { parametersOf(route.foodId) },
-            )
+            ) }
         }
         forwardBackwardComposable<EditIngredient> {
             val route = it.toRoute<EditIngredient>()
@@ -208,7 +212,7 @@ internal fun RecipeApp(
             }
 
             if (ingredient != null) {
-                MeasureIngredientScreen(
+                UiSourceScope(uiInspectionSource.element("RecipeApp.MeasureIngredientScreen.2", "com.maksimowiczm.foodyou.app.ui.food.recipe.MeasureIngredientScreen", "RecipeApp")) { MeasureIngredientScreen(
                     onBack = { navController.popBackStack<EditIngredient>(true) },
                     onSave = { measurement ->
                         state.updateIngredient(
@@ -219,7 +223,7 @@ internal fun RecipeApp(
                     },
                     measurement = ingredient.measurement,
                     viewModel = koinViewModel { parametersOf(ingredient.foodId) },
-                )
+                ) }
             }
         }
     }
@@ -259,3 +263,9 @@ private data class IngredientMeasurement(
     val measurement: Measurement
         get() = Measurement.from(measurementType, quantity)
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.recipe",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/RecipeApp.kt",
+)

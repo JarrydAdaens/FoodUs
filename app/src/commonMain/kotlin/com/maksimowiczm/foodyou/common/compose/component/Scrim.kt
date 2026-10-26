@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.common.compose.component
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -22,7 +25,7 @@ fun Scrim(visible: Boolean, onDismiss: () -> Unit, modifier: Modifier = Modifier
     val showScrim by remember { derivedStateOf { scrimAlpha != 0f } }
 
     if (showScrim) {
-        Box(modifier) {
+        Box((modifier).uiName("Scrim.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "Scrim")) {
             Spacer(
                 Modifier.graphicsLayer { alpha = scrimAlpha }
                     .background(MaterialTheme.colorScheme.scrim)
@@ -32,3 +35,9 @@ fun Scrim(visible: Boolean, onDismiss: () -> Unit, modifier: Modifier = Modifier
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.common.compose.component",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/compose/component/Scrim.kt",
+)

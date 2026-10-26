@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.food.diary.add
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -30,17 +33,17 @@ internal fun NutritionalItemHistory(events: List<NutritionalItemHistory>, modifi
         }
     val list = unorderedList(strings)
 
-    Column(modifier) {
+    Column((modifier).uiName("NutritionalItemHistory.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "NutritionalItemHistory")) {
         Text(
             text = stringResource(Res.string.headline_history),
             style = MaterialTheme.typography.labelLarge,
-            color = MaterialTheme.colorScheme.primary,
+            color = MaterialTheme.colorScheme.primary, modifier = Modifier.uiName("NutritionalItemHistory.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "NutritionalItemHistory")
         )
         Spacer(Modifier.Companion.height(8.dp))
         Text(
             text = list,
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.uiName("NutritionalItemHistory.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "NutritionalItemHistory")
         )
     }
 }
@@ -55,3 +58,9 @@ private fun NutritionalItemHistory.stringResource(): String =
         is NutritionalItemHistory.ImportedFromFoodYou2 ->
             stringResource(Res.string.headline_imported_from_food_you_2)
     }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.diary.add",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/FoodEvents.kt",
+)

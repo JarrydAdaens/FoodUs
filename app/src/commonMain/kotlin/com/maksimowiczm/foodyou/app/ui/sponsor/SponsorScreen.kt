@@ -1,5 +1,11 @@
 package com.maksimowiczm.foodyou.app.ui.sponsor
 
+
+
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
+
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.InfiniteRepeatableSpec
 import androidx.compose.animation.core.LinearEasing
@@ -113,7 +119,7 @@ fun SponsorScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
     if (privacyAccepted) {
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-        SponsorScreen(
+        UiSourceScope(uiInspectionSource.element("SponsorScreen.SponsorScreen.1", "com.maksimowiczm.foodyou.app.ui.sponsor.SponsorScreen", "SponsorScreen")) { SponsorScreen(
             uiState = uiState,
             onBack = onBack,
             onOrderChange = viewModel::changeMessagesOrder,
@@ -121,13 +127,13 @@ fun SponsorScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             onPreviousMonth = viewModel::previousMonth,
             onRefresh = viewModel::refresh,
             modifier = modifier,
-        )
+        ) }
     } else {
-        SponsorPrivacyScreen(
+        UiSourceScope(uiInspectionSource.element("SponsorScreen.SponsorPrivacyScreen.1", "com.maksimowiczm.foodyou.app.ui.sponsor.SponsorPrivacyScreen", "SponsorScreen")) { SponsorPrivacyScreen(
             onBack = onBack,
             onAllow = { viewModel.setPrivacyAccepted(true) },
             modifier = modifier,
-        )
+        ) }
     }
 }
 
@@ -140,56 +146,56 @@ private fun SponsorPrivacyScreen(
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     Scaffold(
-        modifier = modifier,
+        modifier = (modifier).uiName("SponsorPrivacyScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "SponsorPrivacyScreen"),
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(Res.string.headline_sponsor)) },
-                navigationIcon = { ArrowBackIconButton(onBack) },
-                scrollBehavior = scrollBehavior,
+                title = { Text(stringResource(Res.string.headline_sponsor), modifier = Modifier.uiName("SponsorPrivacyScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "SponsorPrivacyScreen")) },
+                navigationIcon = { ArrowBackIconButton(onBack, modifier = Modifier.uiName("SponsorPrivacyScreen.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "SponsorPrivacyScreen")) },
+                scrollBehavior = scrollBehavior, modifier = Modifier.uiName("SponsorPrivacyScreen.TopAppBar.1", "androidx.compose.material3.TopAppBar", uiInspectionSource, "SponsorPrivacyScreen")
             )
         },
     ) { paddingValues ->
         LazyColumn(
             modifier =
-                Modifier.fillMaxSize()
+                (Modifier.fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection)
                     .padding(paddingValues)
                     .consumeWindowInsets(paddingValues)
-                    .padding(horizontal = 16.dp),
+                    .padding(horizontal = 16.dp)).uiName("SponsorPrivacyScreen.LazyColumn.1", "androidx.compose.foundation.lazy.LazyColumn", uiInspectionSource, "SponsorPrivacyScreen"),
             verticalArrangement = Arrangement.spacedBy(24.dp),
         ) {
             item {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterVertically),
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                    horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.uiName("SponsorPrivacyScreen.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "SponsorPrivacyScreen")
                 ) {
                     Icon(
                         imageVector = Icons.Outlined.PrivacyTip,
                         contentDescription = null,
-                        modifier = Modifier.size(64.dp),
+                        modifier = (Modifier.size(64.dp)).uiName("SponsorPrivacyScreen.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "SponsorPrivacyScreen"),
                     )
                     Text(
                         text = stringResource(Res.string.description_sponsors_privacy),
-                        style = MaterialTheme.typography.bodyLarge,
+                        style = MaterialTheme.typography.bodyLarge, modifier = Modifier.uiName("SponsorPrivacyScreen.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "SponsorPrivacyScreen")
                     )
                     Button(
                         onClick = onAllow,
                         shapes = ButtonDefaults.shapesFor(ButtonDefaults.LargeContainerHeight),
-                        modifier = Modifier.height(ButtonDefaults.LargeContainerHeight),
+                        modifier = (Modifier.height(ButtonDefaults.LargeContainerHeight)).uiName("SponsorPrivacyScreen.Button.1", "androidx.compose.material3.Button", uiInspectionSource, "SponsorPrivacyScreen"),
                         contentPadding =
                             ButtonDefaults.contentPaddingFor(ButtonDefaults.LargeContainerHeight),
                     ) {
                         Text(
                             text = stringResource(Res.string.action_allow),
-                            style = ButtonDefaults.textStyleFor(ButtonDefaults.LargeContainerHeight),
+                            style = ButtonDefaults.textStyleFor(ButtonDefaults.LargeContainerHeight), modifier = Modifier.uiName("SponsorPrivacyScreen.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "SponsorPrivacyScreen")
                         )
                     }
                 }
             }
 
-            item { Methods() }
+            item { Methods( modifier = Modifier.uiName("SponsorPrivacyScreen.Methods.1", "com.maksimowiczm.foodyou.app.ui.sponsor.Methods", uiInspectionSource, "SponsorPrivacyScreen")) }
 
-            item { ContactCard() }
+            item { ContactCard( modifier = Modifier.uiName("SponsorPrivacyScreen.ContactCard.1", "com.maksimowiczm.foodyou.app.ui.sponsor.ContactCard", uiInspectionSource, "SponsorPrivacyScreen")) }
         }
     }
 }
@@ -211,7 +217,7 @@ private fun SponsorScreen(
         StatusBarProtectionDefaults.scrollConnection { scrolledOffset.value -= it.y }
 
     Scaffold(
-        modifier = modifier,
+        modifier = (modifier).uiName("SponsorScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "SponsorScreen"),
         topBar = {
             TopBar(
                 onBack = onBack,
@@ -224,13 +230,13 @@ private fun SponsorScreen(
         },
     ) { paddingValues ->
         LazyColumn(
-            modifier = Modifier.fillMaxSize().nestedScroll(nestedScrollConnection),
+            modifier = (Modifier.fillMaxSize().nestedScroll(nestedScrollConnection)).uiName("SponsorScreen.LazyColumn.1", "androidx.compose.foundation.lazy.LazyColumn", uiInspectionSource, "SponsorScreen"),
             state = lazyListState,
             contentPadding = paddingValues.add(bottom = 8.dp),
         ) {
             item {
                 if (uiState.isLoading) {
-                    LinearWavyProgressIndicator(Modifier.fillMaxWidth())
+                    LinearWavyProgressIndicator((Modifier.fillMaxWidth()).uiName("SponsorScreen.LinearWavyProgressIndicator.1", "androidx.compose.material3.LinearWavyProgressIndicator", uiInspectionSource, "SponsorScreen"))
                 } else {
                     Spacer(Modifier.height(10.dp))
                 }
@@ -244,13 +250,13 @@ private fun SponsorScreen(
                     onProgressBarClick = {
                         coroutineScope.launch { lazyListState.animateScrollToItem(6) }
                     },
-                    modifier = Modifier.padding(horizontal = 16.dp),
+                    modifier = (Modifier.padding(horizontal = 16.dp)).uiName("SponsorScreen.ThisMonth.1", "com.maksimowiczm.foodyou.app.ui.sponsor.ThisMonth", uiInspectionSource, "SponsorScreen"),
                 )
             }
 
             item { Spacer(Modifier.height(24.dp)) }
 
-            item { Methods(modifier = Modifier.padding(horizontal = 16.dp)) }
+            item { Methods(modifier = (Modifier.padding(horizontal = 16.dp)).uiName("SponsorScreen.Methods.1", "com.maksimowiczm.foodyou.app.ui.sponsor.Methods", uiInspectionSource, "SponsorScreen")) }
 
             item { Spacer(Modifier.height(24.dp)) }
 
@@ -258,7 +264,7 @@ private fun SponsorScreen(
                 Goals(
                     goals = uiState.goals,
                     remainingForNextGoal = uiState.remainingForNextGoal?.formatClipZeros("%.2f"),
-                    modifier = Modifier.padding(horizontal = 16.dp),
+                    modifier = (Modifier.padding(horizontal = 16.dp)).uiName("SponsorScreen.Goals.1", "com.maksimowiczm.foodyou.app.ui.sponsor.Goals", uiInspectionSource, "SponsorScreen"),
                 )
             }
 
@@ -273,7 +279,7 @@ private fun SponsorScreen(
 
             item { Spacer(Modifier.height(24.dp)) }
 
-            item { ContactCard(modifier = Modifier.padding(horizontal = 16.dp)) }
+            item { ContactCard(modifier = (Modifier.padding(horizontal = 16.dp)).uiName("SponsorScreen.ContactCard.1", "com.maksimowiczm.foodyou.app.ui.sponsor.ContactCard", uiInspectionSource, "SponsorScreen")) }
         }
     }
 
@@ -309,18 +315,18 @@ private fun TopBar(
                     IconButtonDefaults.filledIconButtonColors(
                         containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
                         contentColor = MaterialTheme.colorScheme.onSurface,
-                    ),
+                    ), modifier = Modifier.uiName("TopBar.FilledIconButton.1", "androidx.compose.material3.FilledIconButton", uiInspectionSource, "TopBar")
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                    contentDescription = stringResource(Res.string.action_go_back),
+                    contentDescription = stringResource(Res.string.action_go_back), modifier = Modifier.uiName("TopBar.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "TopBar")
                 )
             }
         },
         actions = {
             ButtonGroup(
                 overflowIndicator = {},
-                horizontalArrangement = Arrangement.spacedBy(2.dp),
+                horizontalArrangement = Arrangement.spacedBy(2.dp), modifier = Modifier.uiName("TopBar.ButtonGroup.1", "androidx.compose.material3.ButtonGroup", uiInspectionSource, "TopBar")
             ) {
                 if (isError) {
                     customItem(
@@ -332,11 +338,11 @@ private fun TopBar(
                                     IconButtonDefaults.filledIconButtonColors(
                                         containerColor = MaterialTheme.colorScheme.errorContainer,
                                         contentColor = MaterialTheme.colorScheme.onErrorContainer,
-                                    ),
+                                    ), modifier = Modifier.uiName("TopBar.FilledIconButton.2", "androidx.compose.material3.FilledIconButton", uiInspectionSource, "TopBar")
                             ) {
                                 Icon(
                                     imageVector = Icons.Outlined.Refresh,
-                                    contentDescription = stringResource(Res.string.action_try_again),
+                                    contentDescription = stringResource(Res.string.action_try_again), modifier = Modifier.uiName("TopBar.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "TopBar")
                                 )
                             }
                         },
@@ -354,12 +360,12 @@ private fun TopBar(
                                     containerColor =
                                         MaterialTheme.colorScheme.surfaceContainerHighest,
                                     contentColor = MaterialTheme.colorScheme.onSurface,
-                                ),
+                                ), modifier = Modifier.uiName("TopBar.FilledIconButton.3", "androidx.compose.material3.FilledIconButton", uiInspectionSource, "TopBar")
                         ) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowLeft,
                                 contentDescription =
-                                    stringResource(Res.string.action_previous_month),
+                                    stringResource(Res.string.action_previous_month), modifier = Modifier.uiName("TopBar.Icon.3", "androidx.compose.material3.Icon", uiInspectionSource, "TopBar")
                             )
                         }
                     },
@@ -376,11 +382,11 @@ private fun TopBar(
                                     containerColor =
                                         MaterialTheme.colorScheme.surfaceContainerHighest,
                                     contentColor = MaterialTheme.colorScheme.onSurface,
-                                ),
+                                ), modifier = Modifier.uiName("TopBar.FilledIconButton.4", "androidx.compose.material3.FilledIconButton", uiInspectionSource, "TopBar")
                         ) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowRight,
-                                contentDescription = stringResource(Res.string.action_next_month),
+                                contentDescription = stringResource(Res.string.action_next_month), modifier = Modifier.uiName("TopBar.Icon.4", "androidx.compose.material3.Icon", uiInspectionSource, "TopBar")
                             )
                         }
                     },
@@ -392,7 +398,7 @@ private fun TopBar(
             TopAppBarDefaults.topAppBarColors(
                 containerColor = Color.Transparent,
                 scrolledContainerColor = Color.Transparent,
-            ),
+            ), modifier = Modifier.uiName("TopBar.TopAppBar.1", "androidx.compose.material3.TopAppBar", uiInspectionSource, "TopBar")
     )
 }
 
@@ -401,28 +407,28 @@ private fun Methods(modifier: Modifier = Modifier) {
     val uriHandler = LocalUriHandler.current
     val clipboardManager = LocalClipboardManager.current
 
-    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Column(modifier = (modifier).uiName("Methods.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "Methods"), verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Text(
             text = stringResource(Res.string.headline_sponsor_methods),
-            style = sponsorTypography.title,
+            style = sponsorTypography.title, modifier = Modifier.uiName("Methods.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "Methods")
         )
 
-        Column {
+        Column (modifier = Modifier.uiName("Methods.Column.2", "androidx.compose.foundation.layout.Column", uiInspectionSource, "Methods")) {
             Text(
                 text = stringResource(Res.string.sponsor_bank_or_card).uppercase(),
-                modifier = Modifier.padding(start = 16.dp),
+                modifier = (Modifier.padding(start = 16.dp)).uiName("Methods.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "Methods"),
                 style = MaterialTheme.typography.labelLarge,
             )
 
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.uiName("Methods.Column.3", "androidx.compose.foundation.layout.Column", uiInspectionSource, "Methods")) {
                 AvailableSponsorMethod.fiat.forEach {
-                    it.SponsorCard(onClick = { uriHandler.openUri(it.url) })
+                    it.SponsorCard(onClick = { uriHandler.openUri(it.url) }, modifier = Modifier.uiName("Methods.SponsorCard.1", "com.maksimowiczm.foodyou.app.ui.sponsor.SponsorCard", uiInspectionSource, "Methods"))
                 }
             }
         }
 
         AvailableSponsorMethod.crypto.forEach {
-            it.SponsorCard(onClick = { clipboardManager.copy("address", it.address) })
+            it.SponsorCard(onClick = { clipboardManager.copy("address", it.address) }, modifier = Modifier.uiName("Methods.SponsorCard.2", "com.maksimowiczm.foodyou.app.ui.sponsor.SponsorCard", uiInspectionSource, "Methods"))
         }
     }
 }
@@ -431,10 +437,10 @@ private fun Methods(modifier: Modifier = Modifier) {
 private fun LinkSponsorMethod.SponsorCard(onClick: () -> Unit, modifier: Modifier = Modifier) {
     SponsorCard(
         label = name,
-        leadingIcon = { Icon(Modifier.width(24.dp)) },
-        trailingIcon = { Icon(imageVector = Icons.Outlined.Link, contentDescription = null) },
+        leadingIcon = { Icon((Modifier.width(24.dp)).uiName("SponsorCard.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "SponsorCard")) },
+        trailingIcon = { Icon(imageVector = Icons.Outlined.Link, contentDescription = null, modifier = Modifier.uiName("SponsorCard.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "SponsorCard")) },
         onClick = onClick,
-        modifier = modifier,
+        modifier = (modifier).uiName("SponsorCard.SponsorCard.2", "com.maksimowiczm.foodyou.app.ui.sponsor.SponsorCard", uiInspectionSource, "SponsorCard"),
     )
 }
 
@@ -449,30 +455,30 @@ private fun CryptoSponsorMethod.SponsorCard(onClick: () -> Unit, modifier: Modif
         }
     }
 
-    Column(modifier) {
+    Column((modifier).uiName("SponsorCard.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "SponsorCard")) {
         Text(
             text = name.uppercase(),
-            modifier = Modifier.padding(start = 16.dp),
+            modifier = (Modifier.padding(start = 16.dp)).uiName("SponsorCard.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "SponsorCard"),
             style = MaterialTheme.typography.labelLarge,
         )
         SponsorCard(
             label = address,
-            leadingIcon = { Icon(Modifier.height(24.dp)) },
+            leadingIcon = { Icon((Modifier.height(24.dp)).uiName("SponsorCard.Icon.3", "androidx.compose.material3.Icon", uiInspectionSource, "SponsorCard")) },
             trailingIcon = {
                 if (clicked) {
                     Icon(
                         imageVector = Icons.Outlined.Check,
                         contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary,
+                        tint = MaterialTheme.colorScheme.primary, modifier = Modifier.uiName("SponsorCard.Icon.4", "androidx.compose.material3.Icon", uiInspectionSource, "SponsorCard")
                     )
                 } else {
-                    Icon(imageVector = Icons.Outlined.ContentCopy, contentDescription = null)
+                    Icon(imageVector = Icons.Outlined.ContentCopy, contentDescription = null, modifier = Modifier.uiName("SponsorCard.Icon.5", "androidx.compose.material3.Icon", uiInspectionSource, "SponsorCard"))
                 }
             },
             onClick = {
                 clicked = true
                 onClick()
-            },
+            }, modifier = Modifier.uiName("SponsorCard.SponsorCard.4", "com.maksimowiczm.foodyou.app.ui.sponsor.SponsorCard", uiInspectionSource, "SponsorCard")
         )
     }
 }
@@ -489,20 +495,20 @@ private fun SponsorCard(
 ) {
     Surface(
         onClick = onClick,
-        modifier = modifier.fillMaxWidth().heightIn(min = 56.dp),
+        modifier = (modifier.fillMaxWidth().heightIn(min = 56.dp)).uiName("SponsorCard.Surface.1", "androidx.compose.material3.Surface", uiInspectionSource, "SponsorCard"),
         shape = MaterialTheme.shapes.medium,
         color = color,
         contentColor = contentColor,
     ) {
         Row(
-            modifier = Modifier.padding(16.dp),
+            modifier = (Modifier.padding(16.dp)).uiName("SponsorCard.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "SponsorCard"),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             leadingIcon()
             Text(
                 text = label,
-                modifier = Modifier.weight(1f),
+                modifier = (Modifier.weight(1f)).uiName("SponsorCard.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "SponsorCard"),
                 style = MaterialTheme.typography.bodyMedium,
             )
             trailingIcon()
@@ -517,7 +523,7 @@ private fun ContactCard(modifier: Modifier = Modifier) {
 
     Card(
         onClick = { uriHandler.openUri(appConfig.contactEmailUri) },
-        modifier = modifier,
+        modifier = (modifier).uiName("ContactCard.Card.1", "androidx.compose.material3.Card", uiInspectionSource, "ContactCard"),
         colors =
             CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.surfaceContainer,
@@ -525,23 +531,23 @@ private fun ContactCard(modifier: Modifier = Modifier) {
             ),
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            modifier = (Modifier.fillMaxWidth().padding(16.dp)).uiName("ContactCard.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "ContactCard"),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.uiName("ContactCard.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "ContactCard")
             ) {
-                Icon(imageVector = Icons.Outlined.Hail, contentDescription = null)
+                Icon(imageVector = Icons.Outlined.Hail, contentDescription = null, modifier = Modifier.uiName("ContactCard.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "ContactCard"))
                 Text(
                     text = stringResource(Res.string.headline_contact),
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleMedium, modifier = Modifier.uiName("ContactCard.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "ContactCard")
                 )
             }
 
             Text(
                 text = stringResource(Res.string.description_sponsor_contact),
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodyMedium, modifier = Modifier.uiName("ContactCard.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "ContactCard")
             )
         }
     }
@@ -557,8 +563,8 @@ private fun ThisMonth(
 
     val title = dateFormatter.formatMonthYear(uiState.yearMonth)
 
-    Column(modifier) {
-        Text(text = title, style = sponsorTypography.title)
+    Column((modifier).uiName("ThisMonth.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "ThisMonth")) {
+        Text(text = title, style = sponsorTypography.title, modifier = Modifier.uiName("ThisMonth.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "ThisMonth"))
         Spacer(Modifier.height(8.dp))
         Text(
             text =
@@ -566,23 +572,23 @@ private fun ThisMonth(
                     Res.string.headline_this_month_we_raised,
                     "€${uiState.amount.formatClipZeros("%.2f")}",
                 ),
-            style = MaterialTheme.typography.titleMedium,
+            style = MaterialTheme.typography.titleMedium, modifier = Modifier.uiName("ThisMonth.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "ThisMonth")
         )
         ProgressBar(
             uiState = uiState,
             modifier =
-                Modifier.fillMaxWidth()
+                (Modifier.fillMaxWidth()
                     .height(32.dp)
                     .clickable(
                         indication = null,
                         interactionSource = null,
                         onClick = onProgressBarClick,
-                    ),
+                    )).uiName("ThisMonth.ProgressBar.1", "com.maksimowiczm.foodyou.app.ui.sponsor.ProgressBar", uiInspectionSource, "ThisMonth"),
         )
         Spacer(Modifier.height(8.dp))
         Text(
             text = stringResource(Res.string.description_sponsorship_goals),
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.bodyMedium, modifier = Modifier.uiName("ThisMonth.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "ThisMonth")
         )
     }
 }
@@ -598,7 +604,7 @@ private fun ProgressBar(uiState: SponsorScreenUiState, modifier: Modifier = Modi
     val amount by animateFloatAsState(targetValue = uiState.amount.toFloat())
     val goalAmount = uiState.goals.last().amount.toDouble()
 
-    Canvas(modifier.clip(MaterialTheme.shapes.medium)) {
+    Canvas((modifier.clip(MaterialTheme.shapes.medium)).uiName("ProgressBar.Canvas.1", "androidx.compose.foundation.Canvas", uiInspectionSource, "ProgressBar")) {
         val spacer = 2.dp.toPx()
 
         val firstPart = ((uiState.goals[0].amount / goalAmount) * size.width).toFloat()
@@ -651,10 +657,10 @@ private fun Goals(
     remainingForNextGoal: String?,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier) {
+    Column((modifier).uiName("Goals.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "Goals")) {
         Text(
             text = stringResource(Res.string.headline_sponsorship_goals),
-            style = sponsorTypography.title,
+            style = sponsorTypography.title, modifier = Modifier.uiName("Goals.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "Goals")
         )
         Spacer(Modifier.height(8.dp))
 
@@ -715,7 +721,7 @@ private fun Goals(
                 shape = shape,
                 shapeColor = color,
                 animate = fulfilled,
-                modifier = Modifier.clip(containerShape),
+                modifier = (Modifier.clip(containerShape)).uiName("Goals.Goal.1", "com.maksimowiczm.foodyou.app.ui.sponsor.Goal", uiInspectionSource, "Goals"),
             )
             if (fulfilled && nextFulfilled == false) {
                 Spacer(Modifier.height(16.dp))
@@ -725,7 +731,7 @@ private fun Goals(
                             Res.string.description_x_away_from_next_goal,
                             "€$remainingForNextGoal",
                         ),
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleMedium, modifier = Modifier.uiName("Goals.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "Goals")
                 )
                 Spacer(Modifier.height(2.dp))
             } else if (i < goals.size - 1) {
@@ -766,37 +772,37 @@ private fun Goal(
                     ),
             )
 
-    Surface(modifier = modifier, color = color) {
+    Surface(modifier = (modifier).uiName("Goal.Surface.1", "androidx.compose.material3.Surface", uiInspectionSource, "Goal"), color = color) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            modifier = (Modifier.fillMaxWidth().padding(16.dp)).uiName("Goal.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "Goal"),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Box(contentAlignment = Alignment.Center) {
+            Box(contentAlignment = Alignment.Center, modifier = Modifier.uiName("Goal.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "Goal")) {
                 Canvas(
-                    Modifier.size(150.dp)
+                    (Modifier.size(150.dp)
                         .padding(16.dp)
                         .graphicsLayer { rotationZ = if (animate) rotation else 0f }
-                        .clip(shape)
+                        .clip(shape)).uiName("Goal.Canvas.1", "androidx.compose.foundation.Canvas", uiInspectionSource, "Goal")
                 ) {
                     drawRect(shapeColor)
                 }
                 Text(
                     text = "€${goal.amount}",
                     style = sponsorTypography.goal,
-                    color = contentColorFor(shapeColor),
+                    color = contentColorFor(shapeColor), modifier = Modifier.uiName("Goal.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "Goal")
                 )
             }
-            Column {
+            Column (modifier = Modifier.uiName("Goal.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "Goal")) {
                 Text(
                     text = goal.title,
                     style = MaterialTheme.typography.titleMedium,
-                    color = contentColor,
+                    color = contentColor, modifier = Modifier.uiName("Goal.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "Goal")
                 )
                 Text(
                     text = goal.description,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = contentColor,
+                    color = contentColor, modifier = Modifier.uiName("Goal.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "Goal")
                 )
             }
         }
@@ -810,19 +816,19 @@ private fun LazyListScope.sponsorsList(
     contentPadding: PaddingValues,
 ) {
     item {
-        Row(modifier = Modifier.fillMaxWidth().padding(contentPadding)) {
-            Text(stringResource(Res.string.headline_sponsors), style = sponsorTypography.title)
+        Row(modifier = (Modifier.fillMaxWidth().padding(contentPadding)).uiName("sponsorsList.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "sponsorsList")) {
+            Text(stringResource(Res.string.headline_sponsors), style = sponsorTypography.title, modifier = Modifier.uiName("sponsorsList.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "sponsorsList"))
             Spacer(Modifier.weight(1f))
             TextButton(
                 onClick = { onOrderChange(order.toggle()) },
-                modifier = Modifier.height(ButtonDefaults.ExtraSmallContainerHeight),
+                modifier = (Modifier.height(ButtonDefaults.ExtraSmallContainerHeight)).uiName("sponsorsList.TextButton.1", "androidx.compose.material3.TextButton", uiInspectionSource, "sponsorsList"),
                 contentPadding =
                     ButtonDefaults.contentPaddingFor(ButtonDefaults.ExtraSmallContainerHeight),
             ) {
                 Icon(
                     imageVector = Icons.Outlined.SwapVert,
                     contentDescription = stringResource(Res.string.action_reorder),
-                    modifier = Modifier.size(ButtonDefaults.ExtraSmallIconSize),
+                    modifier = (Modifier.size(ButtonDefaults.ExtraSmallIconSize)).uiName("sponsorsList.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "sponsorsList"),
                 )
                 Spacer(Modifier.width(ButtonDefaults.ExtraSmallIconSpacing))
                 Text(
@@ -832,7 +838,7 @@ private fun LazyListScope.sponsorsList(
                             MessagesOrder.TopFirst ->
                                 stringResource(Res.string.headline_top_sponsorships)
                         },
-                    style = ButtonDefaults.textStyleFor(ButtonDefaults.ExtraSmallContainerHeight),
+                    style = ButtonDefaults.textStyleFor(ButtonDefaults.ExtraSmallContainerHeight), modifier = Modifier.uiName("sponsorsList.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "sponsorsList")
                 )
             }
         }
@@ -841,7 +847,7 @@ private fun LazyListScope.sponsorsList(
     if (messages.isEmpty()) {
         item {
             Column(
-                modifier = Modifier.fillMaxWidth().padding(contentPadding),
+                modifier = (Modifier.fillMaxWidth().padding(contentPadding)).uiName("sponsorsList.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "sponsorsList"),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -849,12 +855,12 @@ private fun LazyListScope.sponsorsList(
                     imageVector = Icons.Outlined.MoneyOff,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.size(48.dp),
+                    modifier = (Modifier.size(48.dp)).uiName("sponsorsList.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "sponsorsList"),
                 )
                 Text(
                     text = stringResource(Res.string.description_no_sponsors_this_month),
                     style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.uiName("sponsorsList.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "sponsorsList")
                 )
             }
         }
@@ -870,7 +876,7 @@ private fun LazyListScope.sponsorsList(
             SponsorMessageCard(
                 message = message,
                 shape = shape,
-                modifier = Modifier.fillMaxWidth().animateItem().padding(contentPadding),
+                modifier = (Modifier.fillMaxWidth().animateItem().padding(contentPadding)).uiName("sponsorsList.SponsorMessageCard.1", "com.maksimowiczm.foodyou.app.ui.sponsor.SponsorMessageCard", uiInspectionSource, "sponsorsList"),
             )
 
             if (i < messages.size - 1) {
@@ -895,21 +901,21 @@ private fun SponsorMessageCard(
         }
 
     Surface(
-        modifier = modifier,
+        modifier = (modifier).uiName("SponsorMessageCard.Surface.1", "androidx.compose.material3.Surface", uiInspectionSource, "SponsorMessageCard"),
         shape = shape,
         color = MaterialTheme.colorScheme.tertiaryContainer,
         contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
     ) {
-        Column(Modifier.fillMaxWidth().padding(16.dp)) {
+        Column((Modifier.fillMaxWidth().padding(16.dp)).uiName("SponsorMessageCard.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "SponsorMessageCard")) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = (Modifier.fillMaxWidth()).uiName("SponsorMessageCard.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "SponsorMessageCard"),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 message.icon()?.let { icon ->
                     icon(Modifier.sizeIn(maxWidth = 24.dp, maxHeight = 24.dp))
                 }
-                Text(text = sponsor, style = MaterialTheme.typography.titleLargeEmphasized)
+                Text(text = sponsor, style = MaterialTheme.typography.titleLargeEmphasized, modifier = Modifier.uiName("SponsorMessageCard.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "SponsorMessageCard"))
                 Spacer(Modifier.weight(1f))
                 val color = LocalContentColor.current
                 BasicText(
@@ -921,14 +927,20 @@ private fun SponsorMessageCard(
                             maxFontSize = MaterialTheme.typography.bodyMedium.fontSize,
                         ),
                     style = LocalTextStyle.current,
-                    color = { color },
+                    color = { color }, modifier = Modifier.uiName("SponsorMessageCard.BasicText.1", "androidx.compose.foundation.text.BasicText", uiInspectionSource, "SponsorMessageCard")
                 )
             }
 
             if (!message.message.isNullOrBlank()) {
                 Spacer(Modifier.height(8.dp))
-                Text(text = message.message, style = MaterialTheme.typography.bodyMedium)
+                Text(text = message.message, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.uiName("SponsorMessageCard.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "SponsorMessageCard"))
             }
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.sponsor",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/sponsor/SponsorScreen.kt",
+)

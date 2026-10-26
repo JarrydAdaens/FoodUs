@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.food.component
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
@@ -66,6 +69,12 @@ internal fun LazyListScope.capturedNutritionFields(form:CapturedNutritionForm,pr
 
 @Composable
 internal fun CapturedTextField(value:String,onChange:(String)->Unit,label:String,tag:String,number:Boolean=false) {
-    OutlinedTextField(value,onChange,label={Text(label)},modifier=Modifier.fillMaxWidth().testTag(tag),
+    OutlinedTextField(value,onChange,label={Text(label, modifier = Modifier.uiName("CapturedTextField.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "CapturedTextField"))},modifier=(Modifier.fillMaxWidth().testTag(tag)).uiName("CapturedTextField.OutlinedTextField.1", "androidx.compose.material3.OutlinedTextField", uiInspectionSource, "CapturedTextField"),
         keyboardOptions=KeyboardOptions(keyboardType=if(number)KeyboardType.Decimal else KeyboardType.Text),singleLine=number)
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.component",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/component/CapturedNutritionForm.kt",
+)

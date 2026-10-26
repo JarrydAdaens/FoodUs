@@ -1,5 +1,9 @@
 package com.maksimowiczm.foodyou.app.ui.home.meals.card
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
+
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateDpAsState
@@ -121,19 +125,19 @@ internal fun DiarySlotCard(
         )
     }
 
-    FoodYouHomeCard(modifier = modifier, onClick = onAddFood, onLongClick = onLongClick) {
-        Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Column(modifier = Modifier.weight(1f)) {
+    FoodYouHomeCard(modifier = (modifier).uiName("DiarySlotCard.FoodYouHomeCard.1", "com.maksimowiczm.foodyou.app.ui.home.shared.FoodYouHomeCard", uiInspectionSource, "DiarySlotCard"), onClick = onAddFood, onLongClick = onLongClick) {
+        Column(modifier = (Modifier.fillMaxWidth().padding(16.dp)).uiName("app.ui.home.meals.card.DiarySlotCard.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "DiarySlotCard")) {
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.uiName("app.ui.home.meals.card.DiarySlotCard.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "DiarySlotCard")) {
+                Column(modifier = (Modifier.weight(1f)).uiName("app.ui.home.meals.card.DiarySlotCard.Column.2", "androidx.compose.foundation.layout.Column", uiInspectionSource, "DiarySlotCard")) {
                     Text(
                         text = diarySlot.name,
                         style = MaterialTheme.typography.headlineMediumEmphasized,
-                        color = MaterialTheme.colorScheme.onSurface,
+                        color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.uiName("app.ui.home.meals.card.DiarySlotCard.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotCard")
                     )
                     Text(
                         text = timeString,
                         style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.uiName("app.ui.home.meals.card.DiarySlotCard.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotCard")
                     )
                 }
 
@@ -152,9 +156,9 @@ internal fun DiarySlotCard(
                 onEditEntry = onEditEntry,
                 onDeleteEntry = onDeleteEntry,
                 modifier =
-                    Modifier.fillMaxWidth()
+                    (Modifier.fillMaxWidth()
                         .clip(MaterialTheme.shapes.medium)
-                        .animateContentSize(MaterialTheme.motionScheme.defaultSpatialSpec()),
+                        .animateContentSize(MaterialTheme.motionScheme.defaultSpatialSpec())).uiName("DiarySlotCard.FoodContainer.1", "com.maksimowiczm.foodyou.app.ui.home.meals.card.FoodContainer", uiInspectionSource, "DiarySlotCard"),
             )
 
             AnimatedVisibility(
@@ -166,20 +170,20 @@ internal fun DiarySlotCard(
                 exit =
                     shrinkVertically(
                         animationSpec = MaterialTheme.motionScheme.defaultSpatialSpec()
-                    ),
+                    ), modifier = Modifier.uiName("app.ui.home.meals.card.DiarySlotCard.AnimatedVisibility.1", "androidx.compose.animation.AnimatedVisibility", uiInspectionSource, "DiarySlotCard")
             ) {
                 Spacer(Modifier.height(16.dp))
             }
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.uiName("app.ui.home.meals.card.DiarySlotCard.Row.2", "androidx.compose.foundation.layout.Row", uiInspectionSource, "DiarySlotCard")
             ) {
                 ValueColumn(
                     label = energyFormatter.suffix(),
                     value = energyFormatter.formatEnergy(diarySlot.energy, withSuffix = false),
                     suffix = null,
-                    color = MaterialTheme.colorScheme.onSurface,
+                    color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.uiName("DiarySlotCard.ValueColumn.1", "com.maksimowiczm.foodyou.app.ui.home.meals.card.ValueColumn", uiInspectionSource, "DiarySlotCard")
                 )
 
                 nutrientsOrder.forEach { field ->
@@ -189,7 +193,7 @@ internal fun DiarySlotCard(
                                 label = stringResource(Res.string.nutriment_proteins_short),
                                 value = diarySlot.proteins.formatClipZeros("%.1f"),
                                 suffix = stringResource(Res.string.unit_gram_short),
-                                color = nutrientsPalette.proteinsOnSurfaceContainer,
+                                color = nutrientsPalette.proteinsOnSurfaceContainer, modifier = Modifier.uiName("DiarySlotCard.ValueColumn.2", "com.maksimowiczm.foodyou.app.ui.home.meals.card.ValueColumn", uiInspectionSource, "DiarySlotCard")
                             )
 
                         NutrientsOrder.Carbohydrates ->
@@ -197,7 +201,7 @@ internal fun DiarySlotCard(
                                 label = stringResource(Res.string.nutriment_carbohydrates_short),
                                 value = diarySlot.carbohydrates.formatClipZeros("%.1f"),
                                 suffix = stringResource(Res.string.unit_gram_short),
-                                color = nutrientsPalette.carbohydratesOnSurfaceContainer,
+                                color = nutrientsPalette.carbohydratesOnSurfaceContainer, modifier = Modifier.uiName("DiarySlotCard.ValueColumn.3", "com.maksimowiczm.foodyou.app.ui.home.meals.card.ValueColumn", uiInspectionSource, "DiarySlotCard")
                             )
 
                         NutrientsOrder.Fats ->
@@ -205,7 +209,7 @@ internal fun DiarySlotCard(
                                 label = stringResource(Res.string.nutriment_fats_short),
                                 value = diarySlot.fats.formatClipZeros("%.1f"),
                                 suffix = stringResource(Res.string.unit_gram_short),
-                                color = nutrientsPalette.fatsOnSurfaceContainer,
+                                color = nutrientsPalette.fatsOnSurfaceContainer, modifier = Modifier.uiName("DiarySlotCard.ValueColumn.4", "com.maksimowiczm.foodyou.app.ui.home.meals.card.ValueColumn", uiInspectionSource, "DiarySlotCard")
                             )
 
                         NutrientsOrder.Other,
@@ -219,7 +223,7 @@ internal fun DiarySlotCard(
 
             // Four self-describing add paths for this diarySlot: search, quick add, AI scan, fast text.
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = (Modifier.fillMaxWidth()).uiName("app.ui.home.meals.card.DiarySlotCard.Row.3", "androidx.compose.foundation.layout.Row", uiInspectionSource, "DiarySlotCard"),
                 horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -229,11 +233,11 @@ internal fun DiarySlotCard(
                         IconButtonDefaults.shapes(
                             MaterialTheme.shapes.medium,
                             MaterialTheme.shapes.extraSmall,
-                        ),
+                        ), modifier = Modifier.uiName("app.ui.home.meals.card.DiarySlotCard.FilledIconButton.1", "androidx.compose.material3.FilledIconButton", uiInspectionSource, "DiarySlotCard")
                 ) {
                     Icon(
                         imageVector = Icons.Outlined.Search,
-                        contentDescription = stringResource(Res.string.action_search),
+                        contentDescription = stringResource(Res.string.action_search), modifier = Modifier.uiName("app.ui.home.meals.card.DiarySlotCard.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "DiarySlotCard")
                     )
                 }
                 FilledTonalIconButton(
@@ -242,9 +246,9 @@ internal fun DiarySlotCard(
                         IconButtonDefaults.shapes(
                             MaterialTheme.shapes.medium,
                             MaterialTheme.shapes.extraSmall,
-                        ),
+                        ), modifier = Modifier.uiName("DiarySlotCard.FilledTonalIconButton.1", "androidx.compose.material3.FilledTonalIconButton", uiInspectionSource, "DiarySlotCard")
                 ) {
-                    Icon(imageVector = Icons.Outlined.Bolt, contentDescription = null)
+                    Icon(imageVector = Icons.Outlined.Bolt, contentDescription = null, modifier = Modifier.uiName("app.ui.home.meals.card.DiarySlotCard.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "DiarySlotCard"))
                 }
                 FilledTonalIconButton(
                     onClick = onAiScan,
@@ -252,11 +256,11 @@ internal fun DiarySlotCard(
                         IconButtonDefaults.shapes(
                             MaterialTheme.shapes.medium,
                             MaterialTheme.shapes.extraSmall,
-                        ),
+                        ), modifier = Modifier.uiName("DiarySlotCard.FilledTonalIconButton.2", "androidx.compose.material3.FilledTonalIconButton", uiInspectionSource, "DiarySlotCard")
                 ) {
                     Icon(
                         imageVector = Icons.Outlined.SmartToy,
-                        contentDescription = stringResource(Res.string.headline_ai_scanning),
+                        contentDescription = stringResource(Res.string.headline_ai_scanning), modifier = Modifier.uiName("app.ui.home.meals.card.DiarySlotCard.Icon.3", "androidx.compose.material3.Icon", uiInspectionSource, "DiarySlotCard")
                     )
                 }
                 FilledTonalIconButton(
@@ -265,11 +269,11 @@ internal fun DiarySlotCard(
                         IconButtonDefaults.shapes(
                             MaterialTheme.shapes.medium,
                             MaterialTheme.shapes.extraSmall,
-                        ),
+                        ), modifier = Modifier.uiName("DiarySlotCard.FilledTonalIconButton.3", "androidx.compose.material3.FilledTonalIconButton", uiInspectionSource, "DiarySlotCard")
                 ) {
                     Icon(
                         imageVector = Icons.Outlined.EditNote,
-                        contentDescription = stringResource(Res.string.headline_fast_text),
+                        contentDescription = stringResource(Res.string.headline_fast_text), modifier = Modifier.uiName("DiarySlotCard.Icon.4", "androidx.compose.material3.Icon", uiInspectionSource, "DiarySlotCard")
                     )
                 }
             }
@@ -284,7 +288,7 @@ private fun FoodContainer(
     onDeleteEntry: (DiarySlotEntryModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(2.dp)) {
+    Column(modifier = (modifier).uiName("FoodContainer.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "FoodContainer"), verticalArrangement = Arrangement.spacedBy(2.dp)) {
         foods.forEachIndexed { i, entry ->
             val key =
                 remember(entry) {
@@ -305,7 +309,7 @@ private fun FoodContainer(
                     entry = entry,
                     onEditEntry = onEditEntry,
                     onDeleteEntry = onDeleteEntry,
-                    shape = shape,
+                    shape = shape, modifier = Modifier.uiName("FoodContainer.FoodContainerItem.1", "com.maksimowiczm.foodyou.app.ui.home.meals.card.FoodContainerItem", uiInspectionSource, "FoodContainer")
                 )
             }
         }
@@ -352,7 +356,7 @@ private fun FoodContainerItem(
     if (showBottomSheet) {
         val sheetState = rememberModalBottomSheetState()
 
-        ModalBottomSheet(onDismissRequest = { showBottomSheet = false }, sheetState = sheetState) {
+        UiSourceScope(uiInspectionSource.element("FoodContainerItem.ModalBottomSheet.1", "androidx.compose.material3.ModalBottomSheet", "FoodContainerItem")) { ModalBottomSheet(onDismissRequest = { showBottomSheet = false }, sheetState = sheetState, modifier = Modifier.uiName("FoodContainerItem.ModalBottomSheet.1.root", "androidx.compose.material3.ModalBottomSheet", uiInspectionSource, "FoodContainerItem")) {
             BottomSheetContent(
                 entry = entry,
                 onEdit = {
@@ -368,9 +372,9 @@ private fun FoodContainerItem(
                         onDeleteEntry(entry)
                         showBottomSheet = false
                     }
-                },
+                }, modifier = Modifier.uiName("FoodContainerItem.BottomSheetContent.1", "com.maksimowiczm.foodyou.app.ui.home.meals.card.BottomSheetContent", uiInspectionSource, "FoodContainerItem")
             )
-        }
+        } }
     }
 
     DiarySlotFoodListItem(
@@ -378,7 +382,7 @@ private fun FoodContainerItem(
         color = MaterialTheme.colorScheme.surfaceVariant,
         contentColor = MaterialTheme.colorScheme.onSurface,
         shape = shape,
-        modifier = modifier.clickable { showBottomSheet = true },
+        modifier = (modifier.clickable { showBottomSheet = true }).uiName("FoodContainerItem.DiarySlotFoodListItem.1", "com.maksimowiczm.foodyou.app.ui.home.meals.card.DiarySlotFoodListItem", uiInspectionSource, "FoodContainerItem"),
     )
 }
 
@@ -391,7 +395,7 @@ private fun ValueColumn(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier,
+        modifier = (modifier).uiName("ValueColumn.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "ValueColumn"),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
@@ -399,7 +403,7 @@ private fun ValueColumn(
             LocalContentColor provides color,
             LocalTextStyle provides MaterialTheme.typography.labelMedium,
         ) {
-            Text(text = label, style = MaterialTheme.typography.labelMedium)
+            Text(text = label, style = MaterialTheme.typography.labelMedium, modifier = Modifier.uiName("ValueColumn.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "ValueColumn"))
 
             Text(
                 text =
@@ -407,7 +411,7 @@ private fun ValueColumn(
                         stringResource(Res.string.em_dash)
                     } else {
                         value + (suffix?.let { " $suffix" } ?: "")
-                    }
+                    }, modifier = Modifier.uiName("ValueColumn.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "ValueColumn")
             )
         }
     }
@@ -432,25 +436,25 @@ private fun BottomSheetContent(
         )
     }
 
-    Column(modifier = modifier) {
+    Column(modifier = (modifier).uiName("BottomSheetContent.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "BottomSheetContent")) {
         DiarySlotFoodListItem(
             entry = entry,
             color = Color.Transparent,
             contentColor = MaterialTheme.colorScheme.onSurface,
-            shape = RectangleShape,
+            shape = RectangleShape, modifier = Modifier.uiName("BottomSheetContent.DiarySlotFoodListItem.1", "com.maksimowiczm.foodyou.app.ui.home.meals.card.DiarySlotFoodListItem", uiInspectionSource, "BottomSheetContent")
         )
-        HorizontalDivider(Modifier.padding(horizontal = 16.dp))
+        HorizontalDivider((Modifier.padding(horizontal = 16.dp)).uiName("BottomSheetContent.HorizontalDivider.1", "androidx.compose.material3.HorizontalDivider", uiInspectionSource, "BottomSheetContent"))
         ListItem(
-            headlineContent = { Text(stringResource(Res.string.action_edit_entry)) },
-            modifier = Modifier.clickable { onEdit() },
-            leadingContent = { Icon(imageVector = Icons.Default.Edit, contentDescription = null) },
+            headlineContent = { Text(stringResource(Res.string.action_edit_entry), modifier = Modifier.uiName("BottomSheetContent.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "BottomSheetContent")) },
+            modifier = (Modifier.clickable { onEdit() }).uiName("BottomSheetContent.ListItem.1", "androidx.compose.material3.ListItem", uiInspectionSource, "BottomSheetContent"),
+            leadingContent = { Icon(imageVector = Icons.Default.Edit, contentDescription = null, modifier = Modifier.uiName("BottomSheetContent.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "BottomSheetContent")) },
             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
         )
         ListItem(
-            headlineContent = { Text(stringResource(Res.string.action_delete_entry)) },
-            modifier = Modifier.clickable { showDeleteDialog = true },
+            headlineContent = { Text(stringResource(Res.string.action_delete_entry), modifier = Modifier.uiName("BottomSheetContent.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "BottomSheetContent")) },
+            modifier = (Modifier.clickable { showDeleteDialog = true }).uiName("BottomSheetContent.ListItem.2", "androidx.compose.material3.ListItem", uiInspectionSource, "BottomSheetContent"),
             leadingContent = {
-                Icon(imageVector = Icons.Default.Delete, contentDescription = null)
+                Icon(imageVector = Icons.Default.Delete, contentDescription = null, modifier = Modifier.uiName("BottomSheetContent.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "BottomSheetContent"))
             },
             colors =
                 ListItemDefaults.colors(
@@ -464,25 +468,25 @@ private fun BottomSheetContent(
 
 @Composable
 private fun DeleteDialog(onDismissRequest: () -> Unit, onDeleteEntry: () -> Unit) {
-    AlertDialog(
+    UiSourceScope(uiInspectionSource.element("app.ui.home.meals.card.DeleteDialog.AlertDialog.1", "androidx.compose.material3.AlertDialog", "DeleteDialog")) { AlertDialog(
         onDismissRequest = onDismissRequest,
         confirmButton = {
             TextButton(
                 onClick = onDeleteEntry,
                 colors =
-                    ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error),
+                    ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error), modifier = Modifier.uiName("app.ui.home.meals.card.DeleteDialog.TextButton.1", "androidx.compose.material3.TextButton", uiInspectionSource, "DeleteDialog")
             ) {
-                Text(stringResource(Res.string.action_delete))
+                Text(stringResource(Res.string.action_delete), modifier = Modifier.uiName("app.ui.home.meals.card.DeleteDialog.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "DeleteDialog"))
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(stringResource(Res.string.action_cancel))
+            TextButton(onClick = onDismissRequest, modifier = Modifier.uiName("app.ui.home.meals.card.DeleteDialog.TextButton.2", "androidx.compose.material3.TextButton", uiInspectionSource, "DeleteDialog")) {
+                Text(stringResource(Res.string.action_cancel), modifier = Modifier.uiName("app.ui.home.meals.card.DeleteDialog.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "DeleteDialog"))
             }
         },
-        title = { Text(stringResource(Res.string.action_delete_entry)) },
-        text = { Text(stringResource(Res.string.description_delete_product_entry)) },
-    )
+        title = { Text(stringResource(Res.string.action_delete_entry), modifier = Modifier.uiName("app.ui.home.meals.card.DeleteDialog.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "DeleteDialog")) },
+        text = { Text(stringResource(Res.string.description_delete_product_entry), modifier = Modifier.uiName("app.ui.home.meals.card.DeleteDialog.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "DeleteDialog")) }, modifier = Modifier.uiName("app.ui.home.meals.card.DeleteDialog.AlertDialog.1.root", "androidx.compose.material3.AlertDialog", uiInspectionSource, "DeleteDialog")
+    ) }
 }
 
 /**
@@ -501,37 +505,37 @@ private fun MealMenu(
 
     var expanded by rememberSaveable { mutableStateOf(false) }
 
-    Box {
-        IconButton(onClick = { expanded = true }) {
+    Box (modifier = Modifier.uiName("MealMenu.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "MealMenu")) {
+        IconButton(onClick = { expanded = true }, modifier = Modifier.uiName("MealMenu.IconButton.1", "androidx.compose.material3.IconButton", uiInspectionSource, "MealMenu")) {
             Icon(
                 imageVector = Icons.Filled.MoreVert,
-                contentDescription = stringResource(Res.string.action_saved_meal_menu),
+                contentDescription = stringResource(Res.string.action_saved_meal_menu), modifier = Modifier.uiName("MealMenu.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "MealMenu")
             )
         }
-        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+        UiSourceScope(uiInspectionSource.element("MealMenu.DropdownMenu.1", "androidx.compose.material3.DropdownMenu", "MealMenu")) { DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, modifier = Modifier.uiName("MealMenu.DropdownMenu.1.root", "androidx.compose.material3.DropdownMenu", uiInspectionSource, "MealMenu")) {
             DropdownMenuItem(
-                text = { Text(stringResource(Res.string.action_save_as_meal)) },
+                text = { Text(stringResource(Res.string.action_save_as_meal), modifier = Modifier.uiName("MealMenu.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "MealMenu")) },
                 onClick = {
                     expanded = false
                     onSaveClick()
                 },
                 enabled = canSave,
                 leadingIcon = {
-                    Icon(imageVector = Icons.Outlined.BookmarkAdd, contentDescription = null)
-                },
+                    Icon(imageVector = Icons.Outlined.BookmarkAdd, contentDescription = null, modifier = Modifier.uiName("MealMenu.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "MealMenu"))
+                }, modifier = Modifier.uiName("MealMenu.DropdownMenuItem.1", "androidx.compose.material3.DropdownMenuItem", uiInspectionSource, "MealMenu")
             )
             DropdownMenuItem(
-                text = { Text(stringResource(Res.string.action_load_meal)) },
+                text = { Text(stringResource(Res.string.action_load_meal), modifier = Modifier.uiName("MealMenu.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "MealMenu")) },
                 onClick = {
                     expanded = false
                     onApplyClick()
                 },
                 enabled = canApply,
                 leadingIcon = {
-                    Icon(imageVector = Icons.Outlined.ContentCopy, contentDescription = null)
-                },
+                    Icon(imageVector = Icons.Outlined.ContentCopy, contentDescription = null, modifier = Modifier.uiName("MealMenu.Icon.3", "androidx.compose.material3.Icon", uiInspectionSource, "MealMenu"))
+                }, modifier = Modifier.uiName("MealMenu.DropdownMenuItem.2", "androidx.compose.material3.DropdownMenuItem", uiInspectionSource, "MealMenu")
             )
-        }
+        } }
     }
 }
 
@@ -543,7 +547,7 @@ private fun SaveMealDialog(
     var name by rememberSaveable { mutableStateOf("") }
     var busy by remember { mutableStateOf(false) }
     var failed by remember { mutableStateOf(false) }
-    AlertDialog(
+    UiSourceScope(uiInspectionSource.element("SaveMealDialog.AlertDialog.1", "androidx.compose.material3.AlertDialog", "SaveMealDialog")) { AlertDialog(
         onDismissRequest = { if (!busy) onDismissRequest() },
         confirmButton = {
             TextButton(onClick = {
@@ -554,21 +558,21 @@ private fun SaveMealDialog(
                         if (success) onDismissRequest() else failed = true
                     }
                 }
-            }, enabled = name.isNotBlank() && !busy) { Text(stringResource(Res.string.action_save)) }
+            }, enabled = name.isNotBlank() && !busy, modifier = Modifier.uiName("SaveMealDialog.TextButton.1", "androidx.compose.material3.TextButton", uiInspectionSource, "SaveMealDialog")) { Text(stringResource(Res.string.action_save), modifier = Modifier.uiName("SaveMealDialog.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "SaveMealDialog")) }
         },
         dismissButton = {
-            TextButton(onClick = onDismissRequest, enabled = !busy) { Text(stringResource(Res.string.action_cancel)) }
+            TextButton(onClick = onDismissRequest, enabled = !busy, modifier = Modifier.uiName("SaveMealDialog.TextButton.2", "androidx.compose.material3.TextButton", uiInspectionSource, "SaveMealDialog")) { Text(stringResource(Res.string.action_cancel), modifier = Modifier.uiName("SaveMealDialog.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "SaveMealDialog")) }
         },
-        icon = { Icon(imageVector = Icons.Outlined.BookmarkAdd, contentDescription = null) },
-        title = { Text(stringResource(Res.string.action_save_as_meal)) },
+        icon = { Icon(imageVector = Icons.Outlined.BookmarkAdd, contentDescription = null, modifier = Modifier.uiName("SaveMealDialog.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "SaveMealDialog")) },
+        title = { Text(stringResource(Res.string.action_save_as_meal), modifier = Modifier.uiName("SaveMealDialog.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "SaveMealDialog")) },
         text = {
-            Column {
+            Column (modifier = Modifier.uiName("SaveMealDialog.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "SaveMealDialog")) {
                 OutlinedTextField(value = name, onValueChange = { name = it },
-                    label = { Text(stringResource(Res.string.label_meal_name)) }, singleLine = true)
-                if (failed) Text(stringResource(Res.string.meals_save_failed), color = MaterialTheme.colorScheme.error)
+                    label = { Text(stringResource(Res.string.label_meal_name), modifier = Modifier.uiName("SaveMealDialog.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "SaveMealDialog")) }, singleLine = true, modifier = Modifier.uiName("SaveMealDialog.OutlinedTextField.1", "androidx.compose.material3.OutlinedTextField", uiInspectionSource, "SaveMealDialog"))
+                if (failed) Text(stringResource(Res.string.meals_save_failed), color = MaterialTheme.colorScheme.error, modifier = Modifier.uiName("SaveMealDialog.Text.5", "androidx.compose.material3.Text", uiInspectionSource, "SaveMealDialog"))
             }
-        },
-    )
+        }, modifier = Modifier.uiName("SaveMealDialog.AlertDialog.1.root", "androidx.compose.material3.AlertDialog", uiInspectionSource, "SaveMealDialog")
+    ) }
 }
 
 @Composable
@@ -582,25 +586,25 @@ private fun ApplyMealSheet(
     var busy by remember { mutableStateOf(false) }
     var failedDelete by remember { mutableStateOf(false) }
     var failedLoad by remember { mutableStateOf(false) }
-    ModalBottomSheet(onDismissRequest = { if (!busy) onDismissRequest() }, sheetState = sheetState) {
-        Column {
+    UiSourceScope(uiInspectionSource.element("ApplyMealSheet.ModalBottomSheet.1", "androidx.compose.material3.ModalBottomSheet", "ApplyMealSheet")) { ModalBottomSheet(onDismissRequest = { if (!busy) onDismissRequest() }, sheetState = sheetState, modifier = Modifier.uiName("ApplyMealSheet.ModalBottomSheet.1.root", "androidx.compose.material3.ModalBottomSheet", uiInspectionSource, "ApplyMealSheet")) {
+        Column (modifier = Modifier.uiName("ApplyMealSheet.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "ApplyMealSheet")) {
             Text(stringResource(Res.string.action_load_meal), style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
+                modifier = (Modifier.padding(horizontal = 16.dp, vertical = 8.dp)).uiName("ApplyMealSheet.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "ApplyMealSheet"))
             if (failedLoad || failedDelete) Text(
                 stringResource(if (failedDelete) Res.string.meals_delete_failed else Res.string.meals_load_failed),
-                color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(16.dp),
+                color = MaterialTheme.colorScheme.error, modifier = (Modifier.padding(16.dp)).uiName("ApplyMealSheet.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "ApplyMealSheet"),
             )
             meals.forEach { meal ->
                 ListItem(
-                    headlineContent = { Text(meal.name) },
-                    modifier = Modifier.clickable(enabled = !busy) {
+                    headlineContent = { Text(meal.name, modifier = Modifier.uiName("ApplyMealSheet.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "ApplyMealSheet")) },
+                    modifier = (Modifier.clickable(enabled = !busy) {
                         busy = true
                         onApply(meal.id) { success ->
                             busy = false
                             if (success) onDismissRequest() else { failedLoad = true; failedDelete = false }
                         }
-                    },
-                    supportingContent = { Text(stringResource(Res.string.neutral_meal_item_count, meal.itemCount)) },
+                    }).uiName("ApplyMealSheet.ListItem.1", "androidx.compose.material3.ListItem", uiInspectionSource, "ApplyMealSheet"),
+                    supportingContent = { Text(stringResource(Res.string.neutral_meal_item_count, meal.itemCount), modifier = Modifier.uiName("ApplyMealSheet.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "ApplyMealSheet")) },
                     trailingContent = {
                         IconButton(enabled = !busy, onClick = {
                             busy = true
@@ -608,8 +612,8 @@ private fun ApplyMealSheet(
                                 busy = false
                                 if (!success) { failedDelete = true; failedLoad = false }
                             }
-                        }) {
-                            Icon(Icons.Default.Delete, contentDescription = stringResource(Res.string.meals_delete))
+                        }, modifier = Modifier.uiName("ApplyMealSheet.IconButton.1", "androidx.compose.material3.IconButton", uiInspectionSource, "ApplyMealSheet")) {
+                            Icon(Icons.Default.Delete, contentDescription = stringResource(Res.string.meals_delete), modifier = Modifier.uiName("ApplyMealSheet.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "ApplyMealSheet"))
                         }
                     },
                     colors = ListItemDefaults.colors(containerColor = Color.Transparent),
@@ -617,5 +621,11 @@ private fun ApplyMealSheet(
             }
             Spacer(Modifier.height(8.dp))
         }
-    }
+    } }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.home.meals.card",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotCard.kt",
+)

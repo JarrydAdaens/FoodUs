@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.settings
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CloudDownload
 import androidx.compose.material3.Icon
@@ -21,13 +24,19 @@ internal fun ExternalDatabasesSettingsListItem(
     modifier: Modifier = Modifier,
 ) {
     SettingsListItem(
-        icon = { Icon(Icons.Outlined.CloudDownload, null) },
-        label = { Text(stringResource(Res.string.headline_external_databases)) },
-        supportingContent = { Text(stringResource(Res.string.description_external_databases)) },
+        icon = { Icon(Icons.Outlined.CloudDownload, null, modifier = Modifier.uiName("ExternalDatabasesSettingsListItem.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "ExternalDatabasesSettingsListItem")) },
+        label = { Text(stringResource(Res.string.headline_external_databases), modifier = Modifier.uiName("ExternalDatabasesSettingsListItem.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "ExternalDatabasesSettingsListItem")) },
+        supportingContent = { Text(stringResource(Res.string.description_external_databases), modifier = Modifier.uiName("ExternalDatabasesSettingsListItem.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "ExternalDatabasesSettingsListItem")) },
         onClick = onClick,
-        modifier = modifier,
+        modifier = (modifier).uiName("ExternalDatabasesSettingsListItem.SettingsListItem.1", "com.maksimowiczm.foodyou.app.ui.common.component.SettingsListItem", uiInspectionSource, "ExternalDatabasesSettingsListItem"),
         shape = shape,
         color = color,
         contentColor = contentColor,
     )
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.settings",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/settings/ExternalDatabasesSettingsListItem.kt",
+)

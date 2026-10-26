@@ -1,5 +1,10 @@
 package com.maksimowiczm.foodyou.app.ui.home.personalization
 
+
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
+
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -64,14 +69,14 @@ fun HomePersonalizationScreen(
 
     val order by viewModel.homeOrder.collectAsStateWithLifecycle()
 
-    HomePersonalizationScreen(
+    UiSourceScope(uiInspectionSource.element("HomePersonalizationScreen.HomePersonalizationScreen.1", "com.maksimowiczm.foodyou.app.ui.home.personalization.HomePersonalizationScreen", "HomePersonalizationScreen")) { HomePersonalizationScreen(
         order = order,
         onBack = onBack,
         onDiarySlots = onDiarySlots,
         onGoals = onGoals,
         onReorder = viewModel::updateOrder,
         modifier = modifier,
-    )
+    ) }
 }
 
 @OptIn(FlowPreview::class)
@@ -133,21 +138,21 @@ private fun HomePersonalizationScreen(
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     Scaffold(
-        modifier = modifier,
+        modifier = (modifier).uiName("HomePersonalizationScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "HomePersonalizationScreen"),
         topBar = {
             LargeFlexibleTopAppBar(
-                title = { Text(stringResource(Res.string.headline_home_settings)) },
-                subtitle = { Text(stringResource(Res.string.description_home_settings)) },
-                navigationIcon = { ArrowBackIconButton(onBack) },
-                scrollBehavior = scrollBehavior,
+                title = { Text(stringResource(Res.string.headline_home_settings), modifier = Modifier.uiName("HomePersonalizationScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "HomePersonalizationScreen")) },
+                subtitle = { Text(stringResource(Res.string.description_home_settings), modifier = Modifier.uiName("HomePersonalizationScreen.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "HomePersonalizationScreen")) },
+                navigationIcon = { ArrowBackIconButton(onBack, modifier = Modifier.uiName("HomePersonalizationScreen.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "HomePersonalizationScreen")) },
+                scrollBehavior = scrollBehavior, modifier = Modifier.uiName("HomePersonalizationScreen.LargeFlexibleTopAppBar.1", "androidx.compose.material3.LargeFlexibleTopAppBar", uiInspectionSource, "HomePersonalizationScreen")
             )
         },
     ) { paddingValues ->
         LazyColumn(
             modifier =
-                Modifier.padding(8.dp)
+                (Modifier.padding(8.dp)
                     .fillMaxSize()
-                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                    .nestedScroll(scrollBehavior.nestedScrollConnection)).uiName("HomePersonalizationScreen.LazyColumn.1", "androidx.compose.foundation.lazy.LazyColumn", uiInspectionSource, "HomePersonalizationScreen"),
             state = lazyListState,
             verticalArrangement = Arrangement.spacedBy(8.dp),
             contentPadding = paddingValues,
@@ -156,12 +161,12 @@ private fun HomePersonalizationScreen(
                 ReorderableItem(
                     state = reorderableLazyListState,
                     key = card.name,
-                    modifier = modifier,
+                    modifier = (modifier).uiName("HomePersonalizationScreen.ReorderableItem.1", "sh.calvin.reorderable.ReorderableItem", uiInspectionSource, "HomePersonalizationScreen"),
                 ) { isDragging ->
                     MyCard(
                         isDragging = isDragging,
                         modifier =
-                            Modifier.semantics {
+                            (Modifier.semantics {
                                 customActions =
                                     listOf(
                                         CustomAccessibilityAction(
@@ -173,7 +178,7 @@ private fun HomePersonalizationScreen(
                                             action = { moveDown(card) },
                                         ),
                                     )
-                            },
+                            }).uiName("HomePersonalizationScreen.MyCard.1", "com.maksimowiczm.foodyou.app.ui.home.personalization.MyCard", uiInspectionSource, "HomePersonalizationScreen"),
                     ) {
                         with(it) {
                             when (card) {
@@ -203,14 +208,14 @@ private fun ReorderableCollectionItemScope.MyCard(
         )
 
     Surface(
-        modifier = modifier,
+        modifier = (modifier).uiName("MyCard.Surface.1", "androidx.compose.material3.Surface", uiInspectionSource, "MyCard"),
         shape = MaterialTheme.shapes.medium,
         color = containerColor,
         contentColor = MaterialTheme.colorScheme.onSurface,
         shadowElevation = elevation,
         tonalElevation = elevation,
     ) {
-        Row(modifier = Modifier.padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(modifier = (Modifier.padding(8.dp)).uiName("MyCard.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "MyCard"), verticalAlignment = Alignment.CenterVertically) {
             content(this)
         }
     }
@@ -219,57 +224,63 @@ private fun ReorderableCollectionItemScope.MyCard(
 @Composable
 context(_: ReorderableCollectionItemScope)
 private fun RowScope.CalendarCardContent() {
-    Box(modifier = Modifier.size(48.dp), contentAlignment = Alignment.Center) {
-        Icon(imageVector = Icons.Outlined.CalendarMonth, contentDescription = null)
+    Box(modifier = (Modifier.size(48.dp)).uiName("CalendarCardContent.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "CalendarCardContent"), contentAlignment = Alignment.Center) {
+        Icon(imageVector = Icons.Outlined.CalendarMonth, contentDescription = null, modifier = Modifier.uiName("CalendarCardContent.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "CalendarCardContent"))
     }
     Spacer(Modifier.width(16.dp))
-    Text(stringResource(Res.string.headline_calendar))
+    Text(stringResource(Res.string.headline_calendar), modifier = Modifier.uiName("CalendarCardContent.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "CalendarCardContent"))
     Spacer(Modifier.weight(1f))
-    DragHandle(modifier = Modifier.hapticDraggableHandle())
+    DragHandle(modifier = (Modifier.hapticDraggableHandle()).uiName("CalendarCardContent.DragHandle.1", "com.maksimowiczm.foodyou.app.ui.home.personalization.DragHandle", uiInspectionSource, "CalendarCardContent"))
 }
 
 @Composable
 context(_: ReorderableCollectionItemScope)
 private fun RowScope.DiarySlotsCardContent(onMore: () -> Unit) {
-    Box(modifier = Modifier.size(48.dp), contentAlignment = Alignment.Center) {
-        Icon(imageVector = Icons.Outlined.Restaurant, contentDescription = null)
+    Box(modifier = (Modifier.size(48.dp)).uiName("DiarySlotsCardContent.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "DiarySlotsCardContent"), contentAlignment = Alignment.Center) {
+        Icon(imageVector = Icons.Outlined.Restaurant, contentDescription = null, modifier = Modifier.uiName("DiarySlotsCardContent.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "DiarySlotsCardContent"))
     }
     Spacer(Modifier.width(16.dp))
-    Text(stringResource(Res.string.headline_diary_slots))
+    Text(stringResource(Res.string.headline_diary_slots), modifier = Modifier.uiName("DiarySlotsCardContent.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotsCardContent"))
     Spacer(Modifier.weight(1f))
-    IconButton(onClick = onMore) {
+    IconButton(onClick = onMore, modifier = Modifier.uiName("DiarySlotsCardContent.IconButton.1", "androidx.compose.material3.IconButton", uiInspectionSource, "DiarySlotsCardContent")) {
         Icon(
             imageVector = Icons.Default.MoreVert,
-            contentDescription = stringResource(Res.string.action_show_more),
+            contentDescription = stringResource(Res.string.action_show_more), modifier = Modifier.uiName("DiarySlotsCardContent.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "DiarySlotsCardContent")
         )
     }
-    DragHandle(modifier = Modifier.hapticDraggableHandle())
+    DragHandle(modifier = (Modifier.hapticDraggableHandle()).uiName("DiarySlotsCardContent.DragHandle.1", "com.maksimowiczm.foodyou.app.ui.home.personalization.DragHandle", uiInspectionSource, "DiarySlotsCardContent"))
 }
 
 @Composable
 context(_: ReorderableCollectionItemScope)
 private fun RowScope.GoalsCardContent(onMore: () -> Unit) {
-    Box(modifier = Modifier.size(48.dp), contentAlignment = Alignment.Center) {
-        Icon(imageVector = Icons.Outlined.Flag, contentDescription = null)
+    Box(modifier = (Modifier.size(48.dp)).uiName("GoalsCardContent.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "GoalsCardContent"), contentAlignment = Alignment.Center) {
+        Icon(imageVector = Icons.Outlined.Flag, contentDescription = null, modifier = Modifier.uiName("GoalsCardContent.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "GoalsCardContent"))
     }
     Spacer(Modifier.width(16.dp))
-    Text(stringResource(Res.string.headline_daily_goals))
+    Text(stringResource(Res.string.headline_daily_goals), modifier = Modifier.uiName("app.ui.home.personalization.GoalsCardContent.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "GoalsCardContent"))
     Spacer(Modifier.weight(1f))
-    IconButton(onClick = onMore) {
+    IconButton(onClick = onMore, modifier = Modifier.uiName("GoalsCardContent.IconButton.1", "androidx.compose.material3.IconButton", uiInspectionSource, "GoalsCardContent")) {
         Icon(
             imageVector = Icons.Default.MoreVert,
-            contentDescription = stringResource(Res.string.action_show_more),
+            contentDescription = stringResource(Res.string.action_show_more), modifier = Modifier.uiName("GoalsCardContent.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "GoalsCardContent")
         )
     }
-    DragHandle(modifier = Modifier.hapticDraggableHandle())
+    DragHandle(modifier = (Modifier.hapticDraggableHandle()).uiName("GoalsCardContent.DragHandle.1", "com.maksimowiczm.foodyou.app.ui.home.personalization.DragHandle", uiInspectionSource, "GoalsCardContent"))
 }
 
 @Composable
 private fun DragHandle(modifier: Modifier = Modifier) {
-    IconButton(onClick = {}, modifier = Modifier.clearAndSetSemantics {}.then(modifier)) {
+    IconButton(onClick = {}, modifier = (Modifier.clearAndSetSemantics {}.then(modifier)).uiName("DragHandle.IconButton.1", "androidx.compose.material3.IconButton", uiInspectionSource, "DragHandle")) {
         Icon(
             imageVector = Icons.Default.DragHandle,
-            contentDescription = stringResource(Res.string.action_reorder),
+            contentDescription = stringResource(Res.string.action_reorder), modifier = Modifier.uiName("app.ui.home.personalization.DragHandle.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "DragHandle")
         )
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.home.personalization",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/personalization/HomePersonalizationScreen.kt",
+)

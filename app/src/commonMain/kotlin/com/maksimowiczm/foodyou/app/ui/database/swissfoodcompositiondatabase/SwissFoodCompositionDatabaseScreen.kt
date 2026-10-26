@@ -1,5 +1,9 @@
 package com.maksimowiczm.foodyou.app.ui.database.swissfoodcompositiondatabase
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
+
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
@@ -64,12 +68,12 @@ fun SwissFoodCompositionDatabaseScreen(onBack: () -> Unit, modifier: Modifier = 
     val viewModel = koinInject<SwissFoodCompositionDatabaseViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    SwissFoodCompositionDatabaseScreen(
+    UiSourceScope(uiInspectionSource.element("SwissFoodCompositionDatabaseScreen.SwissFoodCompositionDatabaseScreen.1", "com.maksimowiczm.foodyou.app.ui.database.swissfoodcompositiondatabase.SwissFoodCompositionDatabaseScreen", "SwissFoodCompositionDatabaseScreen")) { SwissFoodCompositionDatabaseScreen(
         uiState = uiState,
         onBack = onBack,
         onImport = viewModel::import,
         modifier = modifier,
-    )
+    ) }
 }
 
 @Composable
@@ -111,46 +115,46 @@ private fun SwissFoodCompositionDatabaseScreen(
     )
 
     Scaffold(
-        modifier = modifier,
+        modifier = (modifier).uiName("SwissFoodCompositionDatabaseScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "SwissFoodCompositionDatabaseScreen"),
         topBar = {
             LargeFlexibleTopAppBar(
                 title = {
-                    Text(stringResource(Res.string.headline_swiss_food_composition_database))
+                    Text(stringResource(Res.string.headline_swiss_food_composition_database), modifier = Modifier.uiName("SwissFoodCompositionDatabaseScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "SwissFoodCompositionDatabaseScreen"))
                 },
                 navigationIcon = {
                     ArrowBackIconButton(
                         onClick = onBack,
-                        enabled = uiState !is SwissFoodCompositionDatabaseUiState.Importing,
+                        enabled = uiState !is SwissFoodCompositionDatabaseUiState.Importing, modifier = Modifier.uiName("SwissFoodCompositionDatabaseScreen.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "SwissFoodCompositionDatabaseScreen")
                     )
                 },
-                scrollBehavior = scrollBehavior,
+                scrollBehavior = scrollBehavior, modifier = Modifier.uiName("SwissFoodCompositionDatabaseScreen.LargeFlexibleTopAppBar.1", "androidx.compose.material3.LargeFlexibleTopAppBar", uiInspectionSource, "SwissFoodCompositionDatabaseScreen")
             )
         },
-        snackbarHost = { SnackbarHost(snackbarHostState) },
+        snackbarHost = { SnackbarHost(snackbarHostState, modifier = Modifier.uiName("SwissFoodCompositionDatabaseScreen.SnackbarHost.1", "androidx.compose.material3.SnackbarHost", uiInspectionSource, "SwissFoodCompositionDatabaseScreen")) },
     ) { paddingValues ->
         Box(
             modifier =
-                Modifier.fillMaxSize()
+                (Modifier.fillMaxSize()
                     .padding(horizontal = 16.dp)
-                    .nestedScroll(scrollBehavior.nestedScrollConnection)
+                    .nestedScroll(scrollBehavior.nestedScrollConnection)).uiName("SwissFoodCompositionDatabaseScreen.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "SwissFoodCompositionDatabaseScreen")
         ) {
             when (uiState) {
                 SwissFoodCompositionDatabaseUiState.Finished ->
                     ImportingFinished(
-                        modifier = Modifier.align(Alignment.Center).padding(paddingValues)
+                        modifier = (Modifier.align(Alignment.Center).padding(paddingValues)).uiName("SwissFoodCompositionDatabaseScreen.ImportingFinished.1", "com.maksimowiczm.foodyou.app.ui.database.swissfoodcompositiondatabase.ImportingFinished", uiInspectionSource, "SwissFoodCompositionDatabaseScreen")
                     )
 
                 is SwissFoodCompositionDatabaseUiState.Importing ->
                     ImportingProgress(
                         progress = uiState.progress,
-                        modifier = Modifier.align(Alignment.Center).padding(paddingValues),
+                        modifier = (Modifier.align(Alignment.Center).padding(paddingValues)).uiName("SwissFoodCompositionDatabaseScreen.ImportingProgress.1", "com.maksimowiczm.foodyou.app.ui.database.swissfoodcompositiondatabase.ImportingProgress", uiInspectionSource, "SwissFoodCompositionDatabaseScreen"),
                     )
 
                 SwissFoodCompositionDatabaseUiState.LanguagePick ->
                     LazyColumn(
                         modifier =
-                            Modifier.fillMaxSize()
-                                .nestedScroll(scrollBehavior.nestedScrollConnection),
+                            (Modifier.fillMaxSize()
+                                .nestedScroll(scrollBehavior.nestedScrollConnection)).uiName("SwissFoodCompositionDatabaseScreen.LazyColumn.1", "androidx.compose.foundation.lazy.LazyColumn", uiInspectionSource, "SwissFoodCompositionDatabaseScreen"),
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                         contentPadding =
                             paddingValues
@@ -163,14 +167,14 @@ private fun SwissFoodCompositionDatabaseScreen(
                                     stringResource(
                                         Res.string.description2_swiss_food_composition_database
                                     ),
-                                style = MaterialTheme.typography.bodyMedium,
+                                style = MaterialTheme.typography.bodyMedium, modifier = Modifier.uiName("SwissFoodCompositionDatabaseScreen.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "SwissFoodCompositionDatabaseScreen")
                             )
                         }
 
-                        item { WebsiteChip(onClick = { uriHandler.openUri(websiteUri) }) }
+                        item { WebsiteChip(onClick = { uriHandler.openUri(websiteUri) }, modifier = Modifier.uiName("SwissFoodCompositionDatabaseScreen.WebsiteChip.1", "com.maksimowiczm.foodyou.app.ui.common.component.WebsiteChip", uiInspectionSource, "SwissFoodCompositionDatabaseScreen")) }
 
                         item {
-                            LanguagePicker(selected = languages, onLanguages = { languages = it })
+                            LanguagePicker(selected = languages, onLanguages = { languages = it }, modifier = Modifier.uiName("SwissFoodCompositionDatabaseScreen.LanguagePicker.1", "com.maksimowiczm.foodyou.app.ui.database.swissfoodcompositiondatabase.LanguagePicker", uiInspectionSource, "SwissFoodCompositionDatabaseScreen"))
                         }
                     }
             }
@@ -180,37 +184,37 @@ private fun SwissFoodCompositionDatabaseScreen(
                     uiState == SwissFoodCompositionDatabaseUiState.LanguagePick &&
                         languages.isNotEmpty(),
                 modifier =
-                    Modifier.zIndex(10f)
+                    (Modifier.zIndex(10f)
                         .align(Alignment.BottomCenter)
                         .padding(bottom = 8.dp)
-                        .padding(bottom = paddingValues.calculateBottomPadding()),
+                        .padding(bottom = paddingValues.calculateBottomPadding())).uiName("SwissFoodCompositionDatabaseScreen.AnimatedVisibility.1", "androidx.compose.animation.AnimatedVisibility", uiInspectionSource, "SwissFoodCompositionDatabaseScreen"),
                 enter = slideInVertically { it } + fadeIn(),
                 exit = slideOutVertically { it } + fadeOut(),
             ) {
                 Button(
                     onClick = { onImport(languages) },
                     shapes = ButtonDefaults.shapes(),
-                    modifier = Modifier.height(56.dp),
+                    modifier = (Modifier.height(56.dp)).uiName("SwissFoodCompositionDatabaseScreen.Button.1", "androidx.compose.material3.Button", uiInspectionSource, "SwissFoodCompositionDatabaseScreen"),
                 ) {
-                    Text(stringResource(Res.string.action_import))
+                    Text(stringResource(Res.string.action_import), modifier = Modifier.uiName("SwissFoodCompositionDatabaseScreen.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "SwissFoodCompositionDatabaseScreen"))
                 }
             }
 
             AnimatedVisibility(
                 visible = uiState == SwissFoodCompositionDatabaseUiState.Finished,
                 modifier =
-                    Modifier.zIndex(10f)
+                    (Modifier.zIndex(10f)
                         .align(Alignment.BottomCenter)
                         .padding(bottom = 8.dp)
-                        .padding(bottom = paddingValues.calculateBottomPadding()),
+                        .padding(bottom = paddingValues.calculateBottomPadding())).uiName("SwissFoodCompositionDatabaseScreen.AnimatedVisibility.2", "androidx.compose.animation.AnimatedVisibility", uiInspectionSource, "SwissFoodCompositionDatabaseScreen"),
                 enter = slideInVertically { it } + fadeIn(),
             ) {
                 Button(
                     onClick = onBack,
                     shapes = ButtonDefaults.shapes(),
-                    modifier = Modifier.height(56.dp),
+                    modifier = (Modifier.height(56.dp)).uiName("SwissFoodCompositionDatabaseScreen.Button.2", "androidx.compose.material3.Button", uiInspectionSource, "SwissFoodCompositionDatabaseScreen"),
                 ) {
-                    Text(stringResource(Res.string.action_done))
+                    Text(stringResource(Res.string.action_done), modifier = Modifier.uiName("SwissFoodCompositionDatabaseScreen.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "SwissFoodCompositionDatabaseScreen"))
                 }
             }
         }
@@ -223,7 +227,7 @@ private fun LanguagePicker(
     onLanguages: (Set<Language>) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    Column(modifier = (modifier).uiName("LanguagePicker.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "LanguagePicker"), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         LanguageButton(
             label = "English",
             selected = Language.ENGLISH in selected,
@@ -233,7 +237,7 @@ private fun LanguagePicker(
                 } else {
                     onLanguages(selected + Language.ENGLISH)
                 }
-            },
+            }, modifier = Modifier.uiName("LanguagePicker.LanguageButton.1", "com.maksimowiczm.foodyou.app.ui.database.swissfoodcompositiondatabase.LanguageButton", uiInspectionSource, "LanguagePicker")
         )
         LanguageButton(
             label = "Deutsch",
@@ -244,7 +248,7 @@ private fun LanguagePicker(
                 } else {
                     onLanguages(selected + Language.GERMAN)
                 }
-            },
+            }, modifier = Modifier.uiName("LanguagePicker.LanguageButton.2", "com.maksimowiczm.foodyou.app.ui.database.swissfoodcompositiondatabase.LanguageButton", uiInspectionSource, "LanguagePicker")
         )
         LanguageButton(
             label = "Français",
@@ -255,7 +259,7 @@ private fun LanguagePicker(
                 } else {
                     onLanguages(selected + Language.FRENCH)
                 }
-            },
+            }, modifier = Modifier.uiName("LanguagePicker.LanguageButton.3", "com.maksimowiczm.foodyou.app.ui.database.swissfoodcompositiondatabase.LanguageButton", uiInspectionSource, "LanguagePicker")
         )
         LanguageButton(
             label = "Italiano",
@@ -266,7 +270,7 @@ private fun LanguagePicker(
                 } else {
                     onLanguages(selected + Language.ITALIAN)
                 }
-            },
+            }, modifier = Modifier.uiName("LanguagePicker.LanguageButton.4", "com.maksimowiczm.foodyou.app.ui.database.swissfoodcompositiondatabase.LanguageButton", uiInspectionSource, "LanguagePicker")
         )
     }
 }
@@ -309,19 +313,19 @@ private fun LanguageButton(
 
     Surface(
         onClick = onClick,
-        modifier = modifier,
+        modifier = (modifier).uiName("app.ui.database.swissfoodcompositiondatabase.LanguageButton.Surface.1", "androidx.compose.material3.Surface", uiInspectionSource, "LanguageButton"),
         shape = RoundedCornerShape(cornerRadius),
         color = color,
         contentColor = contentColor,
         interactionSource = interactionSource,
     ) {
         Box(
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            modifier = (Modifier.fillMaxWidth().padding(16.dp)).uiName("app.ui.database.swissfoodcompositiondatabase.LanguageButton.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "LanguageButton"),
             contentAlignment = Alignment.Center,
         ) {
             Text(
                 text = label,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = (Modifier.fillMaxWidth()).uiName("app.ui.database.swissfoodcompositiondatabase.LanguageButton.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "LanguageButton"),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.titleLarge,
             )
@@ -337,17 +341,17 @@ private fun ImportingProgress(progress: Float, modifier: Modifier = Modifier) {
             animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec,
         )
 
-    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier = (modifier).uiName("ImportingProgress.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "ImportingProgress"), horizontalAlignment = Alignment.CenterHorizontally) {
         CircularWavyProgressIndicator(
             progress = { animatedProgress },
-            modifier = Modifier.size(68.dp),
+            modifier = (Modifier.size(68.dp)).uiName("ImportingProgress.CircularWavyProgressIndicator.1", "androidx.compose.material3.CircularWavyProgressIndicator", uiInspectionSource, "ImportingProgress"),
         )
 
         Spacer(Modifier.height(24.dp))
 
         Text(
             text = stringResource(Res.string.notification_importing_products),
-            modifier = Modifier.fillMaxWidth(),
+            modifier = (Modifier.fillMaxWidth()).uiName("ImportingProgress.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "ImportingProgress"),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.primary,
@@ -357,7 +361,7 @@ private fun ImportingProgress(progress: Float, modifier: Modifier = Modifier) {
 
         Text(
             text = stringResource(Res.string.description_please_wait_while_importing_products),
-            modifier = Modifier.fillMaxWidth(),
+            modifier = (Modifier.fillMaxWidth()).uiName("ImportingProgress.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "ImportingProgress"),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodyMedium,
         )
@@ -366,22 +370,28 @@ private fun ImportingProgress(progress: Float, modifier: Modifier = Modifier) {
 
 @Composable
 private fun ImportingFinished(modifier: Modifier = Modifier) {
-    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier = (modifier).uiName("ImportingFinished.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "ImportingFinished"), horizontalAlignment = Alignment.CenterHorizontally) {
         Icon(
             imageVector = Icons.Default.Check,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(68.dp),
+            modifier = (Modifier.size(68.dp)).uiName("ImportingFinished.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "ImportingFinished"),
         )
 
         Spacer(Modifier.height(24.dp))
 
         Text(
             text = stringResource(Res.string.notification_importing_products_success),
-            modifier = Modifier.fillMaxWidth(),
+            modifier = (Modifier.fillMaxWidth()).uiName("ImportingFinished.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "ImportingFinished"),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.primary,
         )
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.database.swissfoodcompositiondatabase",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/database/swissfoodcompositiondatabase/SwissFoodCompositionDatabaseScreen.kt",
+)

@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.onboarding
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
@@ -53,28 +56,28 @@ internal fun FoodDatabaseScreen(
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     Scaffold(
-        modifier = modifier,
+        modifier = (modifier).uiName("FoodDatabaseScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "FoodDatabaseScreen"),
         topBar = {
             LargeFlexibleTopAppBar(
-                title = { Text(stringResource(Res.string.headline_food_database)) },
-                navigationIcon = { ArrowBackIconButton(onBack) },
-                actions = { TextButton(onSkip) { Text(stringResource(Res.string.action_skip)) } },
+                title = { Text(stringResource(Res.string.headline_food_database), modifier = Modifier.uiName("FoodDatabaseScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "FoodDatabaseScreen")) },
+                navigationIcon = { ArrowBackIconButton(onBack, modifier = Modifier.uiName("FoodDatabaseScreen.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "FoodDatabaseScreen")) },
+                actions = { TextButton(onSkip, modifier = Modifier.uiName("FoodDatabaseScreen.TextButton.1", "androidx.compose.material3.TextButton", uiInspectionSource, "FoodDatabaseScreen")) { Text(stringResource(Res.string.action_skip), modifier = Modifier.uiName("FoodDatabaseScreen.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "FoodDatabaseScreen")) } },
                 colors =
                     TopAppBarDefaults.topAppBarColors(
                         scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainerHighest
                     ),
-                scrollBehavior = scrollBehavior,
+                scrollBehavior = scrollBehavior, modifier = Modifier.uiName("FoodDatabaseScreen.LargeFlexibleTopAppBar.1", "androidx.compose.material3.LargeFlexibleTopAppBar", uiInspectionSource, "FoodDatabaseScreen")
             )
         },
     ) { paddingValues ->
         Box(
             modifier =
-                Modifier.fillMaxSize()
+                (Modifier.fillMaxSize()
                     .padding(horizontal = 16.dp)
-                    .nestedScroll(scrollBehavior.nestedScrollConnection)
+                    .nestedScroll(scrollBehavior.nestedScrollConnection)).uiName("FoodDatabaseScreen.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "FoodDatabaseScreen")
         ) {
             LazyColumn(
-                modifier = Modifier.fillMaxSize(),
+                modifier = (Modifier.fillMaxSize()).uiName("FoodDatabaseScreen.LazyColumn.1", "androidx.compose.foundation.lazy.LazyColumn", uiInspectionSource, "FoodDatabaseScreen"),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 contentPadding =
                     paddingValues
@@ -84,7 +87,7 @@ internal fun FoodDatabaseScreen(
                 item {
                     Text(
                         text = stringResource(Res.string.description_food_database),
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = MaterialTheme.typography.bodyMedium, modifier = Modifier.uiName("FoodDatabaseScreen.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "FoodDatabaseScreen")
                     )
                 }
 
@@ -92,7 +95,7 @@ internal fun FoodDatabaseScreen(
                     OpenFoodFactsPrivacyCard(
                         selected = state.useOpenFoodFacts,
                         onSelectedChange = { state.useOpenFoodFacts = it },
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = (Modifier.fillMaxWidth()).uiName("FoodDatabaseScreen.OpenFoodFactsPrivacyCard.1", "com.maksimowiczm.foodyou.app.ui.common.component.OpenFoodFactsPrivacyCard", uiInspectionSource, "FoodDatabaseScreen"),
                     )
                 }
 
@@ -100,7 +103,7 @@ internal fun FoodDatabaseScreen(
                     UsdaPrivacyCard(
                         selected = state.useUsda,
                         onSelectedChange = { state.useUsda = it },
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = (Modifier.fillMaxWidth()).uiName("FoodDatabaseScreen.UsdaPrivacyCard.1", "com.maksimowiczm.foodyou.app.ui.common.component.UsdaPrivacyCard", uiInspectionSource, "FoodDatabaseScreen"),
                     )
                 }
 
@@ -108,32 +111,32 @@ internal fun FoodDatabaseScreen(
                     SwissFoodCompositionDatabase(
                         languages = state.swissLanguages,
                         onLanguageChange = { state.swissLanguages = it },
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = (Modifier.fillMaxWidth()).uiName("FoodDatabaseScreen.SwissFoodCompositionDatabase.1", "com.maksimowiczm.foodyou.app.ui.onboarding.SwissFoodCompositionDatabase", uiInspectionSource, "FoodDatabaseScreen"),
                     )
                 }
 
                 item {
                     DatabaseCard(
                         title = {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
+                            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.uiName("FoodDatabaseScreen.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "FoodDatabaseScreen")) {
                                 Text(
                                     text = stringResource(Res.string.headline_australian_food_composition_database),
                                     style = MaterialTheme.typography.titleSmall,
-                                    modifier = Modifier.weight(1f),
+                                    modifier = (Modifier.weight(1f)).uiName("FoodDatabaseScreen.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "FoodDatabaseScreen"),
                                 )
                                 Icon(
                                     imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowRight,
-                                    contentDescription = null,
+                                    contentDescription = null, modifier = Modifier.uiName("FoodDatabaseScreen.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "FoodDatabaseScreen")
                                 )
                             }
                         },
                         onClick = onAustralianFoodCompositionDatabase,
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = (Modifier.fillMaxWidth()).uiName("FoodDatabaseScreen.DatabaseCard.1", "com.maksimowiczm.foodyou.app.ui.onboarding.DatabaseCard", uiInspectionSource, "FoodDatabaseScreen"),
                     ) {
                         Text(
                             text = stringResource(Res.string.description_australian_food_composition_database_short),
                             style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.uiName("FoodDatabaseScreen.Text.5", "androidx.compose.material3.Text", uiInspectionSource, "FoodDatabaseScreen")
                         )
                     }
                 }
@@ -143,12 +146,12 @@ internal fun FoodDatabaseScreen(
                 onClick = onAgree,
                 shapes = ButtonDefaults.shapes(),
                 modifier =
-                    Modifier.align(Alignment.BottomCenter)
+                    (Modifier.align(Alignment.BottomCenter)
                         .padding(bottom = 8.dp)
                         .padding(bottom = paddingValues.calculateBottomPadding())
-                        .height(56.dp),
+                        .height(56.dp)).uiName("FoodDatabaseScreen.Button.1", "androidx.compose.material3.Button", uiInspectionSource, "FoodDatabaseScreen"),
             ) {
-                Text(stringResource(Res.string.action_agree_and_continue))
+                Text(stringResource(Res.string.action_agree_and_continue), modifier = Modifier.uiName("FoodDatabaseScreen.Text.6", "androidx.compose.material3.Text", uiInspectionSource, "FoodDatabaseScreen"))
             }
         }
     }
@@ -164,7 +167,7 @@ private fun DatabaseCard(
 ) {
     val inner =
         @Composable {
-            Column(Modifier.padding(contentPadding)) {
+            Column((Modifier.padding(contentPadding)).uiName("app.ui.onboarding.DatabaseCard.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "DatabaseCard")) {
                 title()
                 Spacer(Modifier.height(8.dp))
                 content()
@@ -173,7 +176,7 @@ private fun DatabaseCard(
 
     if (onClick == null) {
         Surface(
-            modifier = modifier,
+            modifier = (modifier).uiName("app.ui.onboarding.DatabaseCard.Surface.1", "androidx.compose.material3.Surface", uiInspectionSource, "DatabaseCard"),
             shape = MaterialTheme.shapes.medium,
             color = MaterialTheme.colorScheme.surfaceContainer,
             contentColor = MaterialTheme.colorScheme.onSurface,
@@ -182,7 +185,7 @@ private fun DatabaseCard(
     } else {
         Surface(
             onClick = onClick,
-            modifier = modifier,
+            modifier = (modifier).uiName("app.ui.onboarding.DatabaseCard.Surface.2", "androidx.compose.material3.Surface", uiInspectionSource, "DatabaseCard"),
             shape = MaterialTheme.shapes.medium,
             color = MaterialTheme.colorScheme.surfaceContainer,
             contentColor = MaterialTheme.colorScheme.onSurface,
@@ -201,16 +204,16 @@ private fun SwissFoodCompositionDatabase(
         title = {
             Text(
                 text = stringResource(Res.string.headline_swiss_food_composition_database),
-                style = MaterialTheme.typography.titleSmall,
+                style = MaterialTheme.typography.titleSmall, modifier = Modifier.uiName("app.ui.onboarding.SwissFoodCompositionDatabase.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "SwissFoodCompositionDatabase")
             )
         },
-        modifier = modifier,
+        modifier = (modifier).uiName("app.ui.onboarding.SwissFoodCompositionDatabase.DatabaseCard.1", "com.maksimowiczm.foodyou.app.ui.onboarding.DatabaseCard", uiInspectionSource, "SwissFoodCompositionDatabase"),
     ) {
-        Column {
+        Column (modifier = Modifier.uiName("SwissFoodCompositionDatabase.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "SwissFoodCompositionDatabase")) {
             Text(
                 text = stringResource(Res.string.description2_swiss_food_composition_database),
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.uiName("app.ui.onboarding.SwissFoodCompositionDatabase.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "SwissFoodCompositionDatabase")
             )
             Spacer(Modifier.height(8.dp))
             LanguageButton(
@@ -224,7 +227,7 @@ private fun SwissFoodCompositionDatabase(
                         }
                     )
                 },
-                selected = Language.ENGLISH in languages,
+                selected = Language.ENGLISH in languages, modifier = Modifier.uiName("SwissFoodCompositionDatabase.LanguageButton.1", "com.maksimowiczm.foodyou.app.ui.onboarding.LanguageButton", uiInspectionSource, "SwissFoodCompositionDatabase")
             )
             LanguageButton(
                 label = "Deutsch",
@@ -237,7 +240,7 @@ private fun SwissFoodCompositionDatabase(
                         }
                     )
                 },
-                selected = Language.GERMAN in languages,
+                selected = Language.GERMAN in languages, modifier = Modifier.uiName("SwissFoodCompositionDatabase.LanguageButton.2", "com.maksimowiczm.foodyou.app.ui.onboarding.LanguageButton", uiInspectionSource, "SwissFoodCompositionDatabase")
             )
             LanguageButton(
                 label = "Français",
@@ -250,7 +253,7 @@ private fun SwissFoodCompositionDatabase(
                         }
                     )
                 },
-                selected = Language.FRENCH in languages,
+                selected = Language.FRENCH in languages, modifier = Modifier.uiName("SwissFoodCompositionDatabase.LanguageButton.3", "com.maksimowiczm.foodyou.app.ui.onboarding.LanguageButton", uiInspectionSource, "SwissFoodCompositionDatabase")
             )
             LanguageButton(
                 label = "Italiano",
@@ -263,7 +266,7 @@ private fun SwissFoodCompositionDatabase(
                         }
                     )
                 },
-                selected = Language.ITALIAN in languages,
+                selected = Language.ITALIAN in languages, modifier = Modifier.uiName("SwissFoodCompositionDatabase.LanguageButton.4", "com.maksimowiczm.foodyou.app.ui.onboarding.LanguageButton", uiInspectionSource, "SwissFoodCompositionDatabase")
             )
         }
     }
@@ -286,7 +289,7 @@ private fun LanguageButton(
 
     Surface(
         onClick = onClick,
-        modifier = modifier,
+        modifier = (modifier).uiName("app.ui.onboarding.LanguageButton.Surface.1", "androidx.compose.material3.Surface", uiInspectionSource, "LanguageButton"),
         shape = RoundedCornerShape(cornerRadius),
         color =
             if (selected) {
@@ -302,13 +305,19 @@ private fun LanguageButton(
             },
         interactionSource = interactionSource,
     ) {
-        Box(modifier = Modifier.padding(8.dp), contentAlignment = Alignment.Center) {
+        Box(modifier = (Modifier.padding(8.dp)).uiName("app.ui.onboarding.LanguageButton.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "LanguageButton"), contentAlignment = Alignment.Center) {
             Text(
                 text = label,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = (Modifier.fillMaxWidth()).uiName("app.ui.onboarding.LanguageButton.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "LanguageButton"),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodyMedium,
             )
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.onboarding",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/onboarding/FoodDatabaseScreen.kt",
+)

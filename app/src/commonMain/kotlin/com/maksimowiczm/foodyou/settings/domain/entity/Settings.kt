@@ -15,4 +15,6 @@ data class Settings(
     val graphStyle: GraphStyle,
     val weekLayout: WeekLayout,
     val appLaunchInfo: AppLaunchInfo,
+    val uiNameBarEnabled: Boolean = false,
+    val uiNameBarIncludeHierarchy: Boolean = false,
 ) : UserPreferences

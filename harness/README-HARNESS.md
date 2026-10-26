@@ -137,4 +137,4 @@ Keep this table current; it is the harness's index.
 
 | Module | Kind | Engine | Purpose |
 | --- | --- | --- | --- |
-| _(none yet)_ | | | |
+| [ui-name-coverage](ui-name-coverage/README.md) | Verifier | Local Python / PowerShell | Source inventory and missing UI-name/surface-scope checks; runtime selection remains required |

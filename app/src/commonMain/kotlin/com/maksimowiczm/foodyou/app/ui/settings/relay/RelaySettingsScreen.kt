@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.settings.relay
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -44,32 +47,32 @@ fun RelaySettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     Scaffold(
-        modifier = modifier,
+        modifier = (modifier).uiName("RelaySettingsScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "RelaySettingsScreen"),
         topBar = {
             LargeFlexibleTopAppBar(
-                title = { Text(stringResource(Res.string.headline_relay_settings)) },
-                navigationIcon = { ArrowBackIconButton(onBack) },
+                title = { Text(stringResource(Res.string.headline_relay_settings), modifier = Modifier.uiName("RelaySettingsScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "RelaySettingsScreen")) },
+                navigationIcon = { ArrowBackIconButton(onBack, modifier = Modifier.uiName("RelaySettingsScreen.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "RelaySettingsScreen")) },
                 actions = {
-                    TextButton(onClick = viewModel::save) {
-                        Text(stringResource(Res.string.action_save))
+                    TextButton(onClick = viewModel::save, modifier = Modifier.uiName("RelaySettingsScreen.TextButton.1", "androidx.compose.material3.TextButton", uiInspectionSource, "RelaySettingsScreen")) {
+                        Text(stringResource(Res.string.action_save), modifier = Modifier.uiName("RelaySettingsScreen.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "RelaySettingsScreen"))
                     }
                 },
-                scrollBehavior = scrollBehavior,
+                scrollBehavior = scrollBehavior, modifier = Modifier.uiName("RelaySettingsScreen.LargeFlexibleTopAppBar.1", "androidx.compose.material3.LargeFlexibleTopAppBar", uiInspectionSource, "RelaySettingsScreen")
             )
         },
     ) { paddingValues ->
         LazyColumn(
             modifier =
-                Modifier.fillMaxSize()
+                (Modifier.fillMaxSize()
                     .padding(horizontal = 16.dp)
-                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                    .nestedScroll(scrollBehavior.nestedScrollConnection)).uiName("RelaySettingsScreen.LazyColumn.1", "androidx.compose.foundation.lazy.LazyColumn", uiInspectionSource, "RelaySettingsScreen"),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = paddingValues.add(vertical = 8.dp),
         ) {
             item {
                 Text(
                     text = stringResource(Res.string.description_relay_settings_screen),
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodyMedium, modifier = Modifier.uiName("RelaySettingsScreen.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "RelaySettingsScreen")
                 )
             }
 
@@ -85,15 +88,15 @@ fun RelaySettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
 
                 OutlinedTextField(
                     state = viewModel.url,
-                    modifier = Modifier.fillMaxWidth(),
-                    label = { Text(stringResource(Res.string.headline_relay_url)) },
-                    supportingText = errorText?.let { { Text(it) } },
+                    modifier = (Modifier.fillMaxWidth()).uiName("RelaySettingsScreen.OutlinedTextField.1", "androidx.compose.material3.OutlinedTextField", uiInspectionSource, "RelaySettingsScreen"),
+                    label = { Text(stringResource(Res.string.headline_relay_url), modifier = Modifier.uiName("RelaySettingsScreen.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "RelaySettingsScreen")) },
+                    supportingText = errorText?.let { { Text(it, modifier = Modifier.uiName("RelaySettingsScreen.Text.5", "androidx.compose.material3.Text", uiInspectionSource, "RelaySettingsScreen")) } },
                     isError = errorText != null,
                     lineLimits = TextFieldLineLimits.SingleLine,
                 )
             }
 
-            item { CheckRow(state = check, onCheck = viewModel::checkConnection) }
+            item { CheckRow(state = check, onCheck = viewModel::checkConnection, modifier = Modifier.uiName("RelaySettingsScreen.CheckRow.1", "com.maksimowiczm.foodyou.app.ui.settings.relay.CheckRow", uiInspectionSource, "RelaySettingsScreen")) }
         }
     }
 }
@@ -101,25 +104,25 @@ fun RelaySettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
 @Composable
 private fun CheckRow(state: RelayCheckUiState, onCheck: () -> Unit, modifier: Modifier = Modifier) {
     Row(
-        modifier = modifier.fillMaxWidth(),
+        modifier = (modifier.fillMaxWidth()).uiName("CheckRow.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "CheckRow"),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        OutlinedButton(onClick = onCheck, enabled = state != RelayCheckUiState.Checking) {
-            Text(stringResource(Res.string.action_check_relay_connection))
+        OutlinedButton(onClick = onCheck, enabled = state != RelayCheckUiState.Checking, modifier = Modifier.uiName("CheckRow.OutlinedButton.1", "androidx.compose.material3.OutlinedButton", uiInspectionSource, "CheckRow")) {
+            Text(stringResource(Res.string.action_check_relay_connection), modifier = Modifier.uiName("CheckRow.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "CheckRow"))
         }
 
         when (state) {
             RelayCheckUiState.Idle -> Unit
             RelayCheckUiState.Checking -> {
-                CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
+                CircularProgressIndicator(modifier = (Modifier.size(20.dp)).uiName("CheckRow.CircularProgressIndicator.1", "androidx.compose.material3.CircularProgressIndicator", uiInspectionSource, "CheckRow"), strokeWidth = 2.dp)
                 StatusText(stringResource(Res.string.relay_checking))
             }
             RelayCheckUiState.Success -> {
                 Icon(
                     imageVector = Icons.Outlined.Check,
                     contentDescription = null,
-                    tint = SuccessGreen,
+                    tint = SuccessGreen, modifier = Modifier.uiName("CheckRow.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "CheckRow")
                 )
                 StatusText(stringResource(Res.string.relay_check_success), color = SuccessGreen)
             }
@@ -140,9 +143,15 @@ private fun RowScope.StatusText(text: String, color: Color = Color.Unspecified) 
         text = text,
         style = MaterialTheme.typography.bodyMedium,
         color = color,
-        modifier = Modifier.weight(1f),
+        modifier = (Modifier.weight(1f)).uiName("StatusText.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "StatusText"),
     )
 }
 
 // Explicit success green for the check tick; the Material scheme has no semantic success color.
 private val SuccessGreen = Color(0xFF2E7D32)
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.settings.relay",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/settings/relay/RelaySettingsScreen.kt",
+)

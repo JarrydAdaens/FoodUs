@@ -1,5 +1,9 @@
 package com.maksimowiczm.foodyou.app.ui.database.exportcsvproducts
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
+
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
@@ -56,28 +60,34 @@ actual fun ExportCsvProductsScreen(onBack: () -> Unit, onFinish: () -> Unit, mod
 
     when (uiState) {
         is UiState.Error ->
-            SomethingWentWrongScreen(
+            UiSourceScope(uiInspectionSource.element("ExportCsvProductsScreen.SomethingWentWrongScreen.1", "com.maksimowiczm.foodyou.app.ui.common.component.SomethingWentWrongScreen", "ExportCsvProductsScreen")) { SomethingWentWrongScreen(
                 onBack = onBack,
                 message = stringResource(if (uiState.metricUnavailable) Res.string.captured_csv_unavailable else Res.string.captured_csv_failed),
                 modifier = modifier,
-            )
+            ) }
 
         is UiState.Exported ->
-            SuccessScreen(count = uiState.count, onBack = onBack, modifier = modifier)
+            UiSourceScope(uiInspectionSource.element("ExportCsvProductsScreen.SuccessScreen.1", "com.maksimowiczm.foodyou.app.ui.database.exportcsvproducts.SuccessScreen", "ExportCsvProductsScreen")) { SuccessScreen(count = uiState.count, onBack = onBack, modifier = modifier) }
 
         UiState.WaitingForFile, UiState.Preparing ->
-            Scaffold(modifier) { paddingValues ->
+            Scaffold((modifier).uiName("ExportCsvProductsScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "ExportCsvProductsScreen")) { paddingValues ->
                 Box(
                     modifier =
-                        Modifier.fillMaxSize()
+                        (Modifier.fillMaxSize()
                             .padding(paddingValues)
-                            .consumeWindowInsets(paddingValues),
+                            .consumeWindowInsets(paddingValues)).uiName("ExportCsvProductsScreen.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "ExportCsvProductsScreen"),
                     contentAlignment = Alignment.Center,
                 ) {
-                    LoadingIndicator()
+                    LoadingIndicator( modifier = Modifier.uiName("ExportCsvProductsScreen.LoadingIndicator.1", "androidx.compose.material3.LoadingIndicator", uiInspectionSource, "ExportCsvProductsScreen"))
                 }
             }
 
-        is UiState.Exporting -> ExportingProductsScreen(count = uiState.count, modifier = modifier)
+        is UiState.Exporting -> UiSourceScope(uiInspectionSource.element("ExportCsvProductsScreen.ExportingProductsScreen.1", "com.maksimowiczm.foodyou.app.ui.database.exportcsvproducts.ExportingProductsScreen", "ExportCsvProductsScreen")) { ExportingProductsScreen(count = uiState.count, modifier = modifier) }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.database.exportcsvproducts",
+    "app/src/androidMain/kotlin/com/maksimowiczm/foodyou/app/ui/database/exportcsvproducts/ExportCsvProductsScreen.android.kt",
+)

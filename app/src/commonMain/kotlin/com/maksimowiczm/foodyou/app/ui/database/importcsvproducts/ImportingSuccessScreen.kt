@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.database.importcsvproducts
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,17 +28,17 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun ImportingSuccessScreen(count: Int, onBack: () -> Unit, modifier: Modifier = Modifier) {
-    Scaffold(modifier) { paddingValues ->
-        Box(modifier = Modifier.fillMaxSize().padding(paddingValues).padding(16.dp)) {
+    Scaffold((modifier).uiName("ImportingSuccessScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "ImportingSuccessScreen")) { paddingValues ->
+        Box(modifier = (Modifier.fillMaxSize().padding(paddingValues).padding(16.dp)).uiName("ImportingSuccessScreen.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "ImportingSuccessScreen")) {
             Column(
-                modifier = Modifier.align(Alignment.Center),
+                modifier = (Modifier.align(Alignment.Center)).uiName("ImportingSuccessScreen.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "ImportingSuccessScreen"),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Check,
                     contentDescription = null,
-                    modifier = Modifier.size(68.dp),
+                    modifier = (Modifier.size(68.dp)).uiName("ImportingSuccessScreen.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "ImportingSuccessScreen"),
                     tint = MaterialTheme.colorScheme.primary,
                 )
 
@@ -47,17 +50,23 @@ internal fun ImportingSuccessScreen(count: Int, onBack: () -> Unit, modifier: Mo
                             count,
                         ),
                     style = MaterialTheme.typography.headlineSmall,
-                    color = MaterialTheme.colorScheme.primary,
+                    color = MaterialTheme.colorScheme.primary, modifier = Modifier.uiName("ImportingSuccessScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "ImportingSuccessScreen")
                 )
             }
 
             Button(
                 onClick = onBack,
-                modifier = Modifier.height(56.dp).align(Alignment.BottomCenter),
+                modifier = (Modifier.height(56.dp).align(Alignment.BottomCenter)).uiName("ImportingSuccessScreen.Button.1", "androidx.compose.material3.Button", uiInspectionSource, "ImportingSuccessScreen"),
                 shapes = ButtonDefaults.shapes(),
             ) {
-                Text(stringResource(Res.string.action_go_back))
+                Text(stringResource(Res.string.action_go_back), modifier = Modifier.uiName("ImportingSuccessScreen.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "ImportingSuccessScreen"))
             }
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.database.importcsvproducts",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/database/importcsvproducts/ImportingSuccessScreen.kt",
+)

@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.common.component
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,7 +30,7 @@ fun FoodListItemSkeleton(
 ) {
     ListItem(
         headlineContent = {
-            Column {
+            Column (modifier = Modifier.uiName("FoodListItemSkeleton.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "FoodListItemSkeleton")) {
                 Spacer(Modifier.height(2.dp))
                 Spacer(
                     Modifier.Companion.shimmer(shimmer)
@@ -39,7 +42,7 @@ fun FoodListItemSkeleton(
                 Spacer(Modifier.height(2.dp))
             }
         },
-        modifier = modifier,
+        modifier = (modifier).uiName("FoodListItemSkeleton.ListItem.1", "androidx.compose.material3.ListItem", uiInspectionSource, "FoodListItemSkeleton"),
         overlineContent = {
             Spacer(
                 Modifier.Companion.shimmer(shimmer)
@@ -51,7 +54,7 @@ fun FoodListItemSkeleton(
         },
         supportingContent = {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = (Modifier.fillMaxWidth()).uiName("FoodListItemSkeleton.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "FoodListItemSkeleton"),
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Spacer(
@@ -73,3 +76,9 @@ fun FoodListItemSkeleton(
         trailingContent = trailingContent,
     )
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.common.component",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/common/component/FoodListItemSkeleton.kt",
+)

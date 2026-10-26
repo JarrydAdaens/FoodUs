@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.database.exportcsvproducts
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -39,20 +42,20 @@ internal fun ExportingProductsScreen(count: Int, modifier: Modifier = Modifier) 
         },
     )
 
-    Scaffold(modifier = modifier, snackbarHost = { SnackbarHost(hostState = snackbarHostState) }) {
+    Scaffold(modifier = (modifier).uiName("ExportingProductsScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "ExportingProductsScreen"), snackbarHost = { SnackbarHost(hostState = snackbarHostState, modifier = Modifier.uiName("ExportingProductsScreen.SnackbarHost.1", "androidx.compose.material3.SnackbarHost", uiInspectionSource, "ExportingProductsScreen")) }) {
         paddingValues ->
         Column(
-            modifier = Modifier.fillMaxSize().padding(paddingValues),
+            modifier = (Modifier.fillMaxSize().padding(paddingValues)).uiName("ExportingProductsScreen.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "ExportingProductsScreen"),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            CircularWavyProgressIndicator(modifier = Modifier.size(68.dp))
+            CircularWavyProgressIndicator(modifier = (Modifier.size(68.dp)).uiName("ExportingProductsScreen.CircularWavyProgressIndicator.1", "androidx.compose.material3.CircularWavyProgressIndicator", uiInspectionSource, "ExportingProductsScreen"))
 
             Spacer(Modifier.height(24.dp))
 
             Text(
                 text = stringResource(Res.string.notification_exporting_products),
-                modifier = Modifier.fillMaxWidth(),
+                modifier = (Modifier.fillMaxWidth()).uiName("ExportingProductsScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "ExportingProductsScreen"),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.primary,
@@ -62,14 +65,20 @@ internal fun ExportingProductsScreen(count: Int, modifier: Modifier = Modifier) 
 
             Text(
                 text = stringResource(Res.string.description_please_wait_while_exporting_products),
-                modifier = Modifier.fillMaxWidth(),
+                modifier = (Modifier.fillMaxWidth()).uiName("ExportingProductsScreen.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "ExportingProductsScreen"),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodyMedium,
             )
 
             Spacer(Modifier.height(8.dp))
 
-            Text(text = count.toString(), style = MaterialTheme.typography.bodySmall)
+            Text(text = count.toString(), style = MaterialTheme.typography.bodySmall, modifier = Modifier.uiName("ExportingProductsScreen.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "ExportingProductsScreen"))
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.database.exportcsvproducts",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/database/exportcsvproducts/ExportingProductsScreen.kt",
+)

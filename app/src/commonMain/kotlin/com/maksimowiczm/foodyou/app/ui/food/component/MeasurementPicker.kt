@@ -1,5 +1,9 @@
 package com.maksimowiczm.foodyou.app.ui.food.component
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
+
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -65,17 +69,17 @@ fun MeasurementPicker(state: MeasurementPickerState, modifier: Modifier = Modifi
         latestState.measurement = measurement
     }
 
-    Column(modifier) {
+    Column((modifier).uiName("MeasurementPicker.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "MeasurementPicker")) {
         if (state.inputField.error != null) {
             Text(
                 text = org.jetbrains.compose.resources.stringResource(Res.string.error_portion_amount),
                 color = MaterialTheme.colorScheme.error,
-                modifier = Modifier.padding(horizontal = 16.dp),
+                modifier = (Modifier.padding(horizontal = 16.dp)).uiName("app.ui.food.component.MeasurementPicker.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "MeasurementPicker"),
             )
         }
-        Row {
-            Box(modifier = Modifier.size(48.dp), contentAlignment = Alignment.Center) {
-                Icon(painter = painterResource(Res.drawable.ic_weight), contentDescription = null)
+        Row (modifier = Modifier.uiName("app.ui.food.component.MeasurementPicker.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "MeasurementPicker")) {
+            Box(modifier = (Modifier.size(48.dp)).uiName("MeasurementPicker.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "MeasurementPicker"), contentAlignment = Alignment.Center) {
+                Icon(painter = painterResource(Res.drawable.ic_weight), contentDescription = null, modifier = Modifier.uiName("app.ui.food.component.MeasurementPicker.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "MeasurementPicker"))
             }
 
             Spacer(Modifier.width(8.dp))
@@ -85,14 +89,14 @@ fun MeasurementPicker(state: MeasurementPickerState, modifier: Modifier = Modifi
                 type = state.type,
                 types = state.possibleTypes,
                 onSelect = { state.type = it },
-                modifier = Modifier.weight(1f).padding(end = 8.dp),
+                modifier = (Modifier.weight(1f).padding(end = 8.dp)).uiName("MeasurementPicker.Input.1", "com.maksimowiczm.foodyou.app.ui.food.component.Input", uiInspectionSource, "MeasurementPicker"),
             )
         }
 
         Spacer(Modifier.height(8.dp))
 
         FlowRow(
-            modifier = Modifier.padding(horizontal = 8.dp),
+            modifier = (Modifier.padding(horizontal = 8.dp)).uiName("MeasurementPicker.FlowRow.1", "androidx.compose.foundation.layout.FlowRow", uiInspectionSource, "MeasurementPicker"),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             state.suggestions.filter { it.type in state.possibleTypes }.forEach { measurement ->
@@ -103,7 +107,7 @@ fun MeasurementPicker(state: MeasurementPickerState, modifier: Modifier = Modifi
                         )
                         state.type = measurement.type
                     },
-                    label = { Text(measurement.stringResource()) },
+                    label = { Text(measurement.stringResource(), modifier = Modifier.uiName("app.ui.food.component.MeasurementPicker.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "MeasurementPicker")) }, modifier = Modifier.uiName("MeasurementPicker.SuggestionChip.1", "androidx.compose.material3.SuggestionChip", uiInspectionSource, "MeasurementPicker")
                 )
             }
         }
@@ -140,9 +144,9 @@ private fun Input(
                 }
         )
 
-    Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+    Row(modifier = (modifier).uiName("Input.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "Input"), horizontalArrangement = Arrangement.spacedBy(2.dp)) {
         Surface(
-            modifier = Modifier.height(48.dp).width(120.dp),
+            modifier = (Modifier.height(48.dp).width(120.dp)).uiName("Input.Surface.1", "androidx.compose.material3.Surface", uiInspectionSource, "Input"),
             color = inputColor,
             contentColor = contentColor,
             shape =
@@ -155,20 +159,20 @@ private fun Input(
         ) {
             BasicTextField(
                 state = formField.textFieldState,
-                modifier = Modifier.height(48.dp).padding(horizontal = 16.dp).semantics {
+                modifier = (Modifier.height(48.dp).padding(horizontal = 16.dp).semantics {
                     contentDescription = amountLabel
-                },
+                }).uiName("Input.BasicTextField.1", "androidx.compose.foundation.text.BasicTextField", uiInspectionSource, "Input"),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                 textStyle = LocalTextStyle.current.merge(LocalContentColor.current),
                 lineLimits = TextFieldLineLimits.SingleLine,
                 cursorBrush = SolidColor(LocalContentColor.current),
-                decorator = { Box(contentAlignment = Alignment.CenterStart) { it() } },
+                decorator = { Box(contentAlignment = Alignment.CenterStart, modifier = Modifier.uiName("Input.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "Input")) { it() } },
             )
         }
 
         Surface(
             onClick = { expanded = true },
-            modifier = Modifier.heightIn(min = 48.dp).weight(1f),
+            modifier = (Modifier.heightIn(min = 48.dp).weight(1f)).uiName("Input.Surface.2", "androidx.compose.material3.Surface", uiInspectionSource, "Input"),
             color = MaterialTheme.colorScheme.primaryContainer,
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
             shape =
@@ -179,26 +183,26 @@ private fun Input(
                     bottomEnd = 16.dp,
                 ),
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.uiName("Input.Row.2", "androidx.compose.foundation.layout.Row", uiInspectionSource, "Input")) {
                 Text(
                     text = type.stringResource(),
-                    modifier = Modifier.weight(1f),
+                    modifier = (Modifier.weight(1f)).uiName("Input.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "Input"),
                     textAlign = TextAlign.Center,
                 )
-                Box(modifier = Modifier.size(48.dp), contentAlignment = Alignment.Center) {
-                    Icon(imageVector = Icons.Outlined.KeyboardArrowDown, contentDescription = null)
+                Box(modifier = (Modifier.size(48.dp)).uiName("Input.Box.2", "androidx.compose.foundation.layout.Box", uiInspectionSource, "Input"), contentAlignment = Alignment.Center) {
+                    Icon(imageVector = Icons.Outlined.KeyboardArrowDown, contentDescription = null, modifier = Modifier.uiName("Input.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "Input"))
 
-                    DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                    UiSourceScope(uiInspectionSource.element("Input.DropdownMenu.1", "androidx.compose.material3.DropdownMenu", "Input")) { DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, modifier = Modifier.uiName("Input.DropdownMenu.1.root", "androidx.compose.material3.DropdownMenu", uiInspectionSource, "Input")) {
                         types.forEach {
                             DropdownMenuItem(
-                                text = { Text(it.stringResource()) },
+                                text = { Text(it.stringResource(), modifier = Modifier.uiName("Input.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "Input")) },
                                 onClick = {
                                     onSelect(it)
                                     expanded = false
-                                },
+                                }, modifier = Modifier.uiName("Input.DropdownMenuItem.1", "androidx.compose.material3.DropdownMenuItem", uiInspectionSource, "Input")
                             )
                         }
-                    }
+                    } }
                 }
             }
         }
@@ -271,3 +275,9 @@ class MeasurementPickerState(
     var measurement by measurementState
     var type by typeState
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.component",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/component/MeasurementPicker.kt",
+)

@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.theme
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -35,7 +38,7 @@ internal fun ThemeScreenContent(
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
-        modifier = modifier,
+        modifier = (modifier).uiName("ThemeScreenContent.LazyColumn.1", "androidx.compose.foundation.lazy.LazyColumn", uiInspectionSource, "ThemeScreenContent"),
         contentPadding = contentPadding,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
@@ -44,29 +47,29 @@ internal fun ThemeScreenContent(
                 text = stringResource(Res.string.headline_theme),
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(horizontal = 16.dp),
+                modifier = (Modifier.padding(horizontal = 16.dp)).uiName("ThemeScreenContent.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "ThemeScreenContent"),
             )
         }
         item {
             ThemePicker(
                 themeOption = themeSettings.themeOption,
                 onThemeOptionChange = onUpdateThemeOption,
-                Modifier.fillMaxWidth(),
+                (Modifier.fillMaxWidth()).uiName("ThemeScreenContent.ThemePicker.1", "com.maksimowiczm.foodyou.app.ui.theme.ThemePicker", uiInspectionSource, "ThemeScreenContent"),
             )
         }
         item {
             Box(
-                modifier = Modifier.padding(32.dp).fillMaxWidth(),
+                modifier = (Modifier.padding(32.dp).fillMaxWidth()).uiName("ThemeScreenContent.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "ThemeScreenContent"),
                 contentAlignment = Alignment.Center,
             ) {
-                ThemePreviewImage(Modifier.sizeIn(maxWidth = 400.dp, maxHeight = 350.dp))
+                ThemePreviewImage((Modifier.sizeIn(maxWidth = 400.dp, maxHeight = 350.dp)).uiName("ThemeScreenContent.ThemePreviewImage.1", "com.maksimowiczm.foodyou.app.ui.theme.ThemePreviewImage", uiInspectionSource, "ThemeScreenContent"))
             }
         }
         item {
             PalettePicker(
                 isDark = themeSettings.isDark(),
                 selectedTheme = themeSettings.theme,
-                onThemeChange = onUpdateTheme,
+                onThemeChange = onUpdateTheme, modifier = Modifier.uiName("ThemeScreenContent.PalettePicker.1", "com.maksimowiczm.foodyou.app.ui.theme.PalettePicker", uiInspectionSource, "ThemeScreenContent")
             )
         }
         item {
@@ -74,7 +77,7 @@ internal fun ThemeScreenContent(
                 themeSettings = themeSettings,
                 onRandomizeTheme = onRandomizeTheme,
                 onUpdateTheme = onUpdateTheme,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = (Modifier.fillMaxWidth()).uiName("ThemeScreenContent.AdditionalSettings.1", "com.maksimowiczm.foodyou.app.ui.theme.AdditionalSettings", uiInspectionSource, "ThemeScreenContent"),
             )
         }
         item {
@@ -113,3 +116,9 @@ internal fun ThemeScreenContent(
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.theme",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/theme/ThemeScreenContent.kt",
+)

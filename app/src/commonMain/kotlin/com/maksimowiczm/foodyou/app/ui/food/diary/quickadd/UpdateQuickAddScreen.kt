@@ -1,5 +1,9 @@
 package com.maksimowiczm.foodyou.app.ui.food.diary.quickadd
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
+
 import androidx.compose.runtime.*
 import foodyou.app.generated.resources.*
 import androidx.compose.ui.Modifier
@@ -33,11 +37,11 @@ fun UpdateQuickAddScreen(
 
     val readFailed by viewModel.readFailed.collectAsStateWithLifecycle()
     if (readFailed) {
-        androidx.compose.material3.AlertDialog(
+        UiSourceScope(uiInspectionSource.element("UpdateQuickAddScreen.AlertDialog.1", "androidx.compose.material3.AlertDialog", "UpdateQuickAddScreen")) { androidx.compose.material3.AlertDialog(
             onDismissRequest = onBack,
-            text = { androidx.compose.material3.Text(org.jetbrains.compose.resources.stringResource(foodyou.app.generated.resources.Res.string.meals_unavailable)) },
-            confirmButton = { androidx.compose.material3.TextButton(onClick = viewModel::retryRead) { androidx.compose.material3.Text(org.jetbrains.compose.resources.stringResource(foodyou.app.generated.resources.Res.string.meals_retry)) } },
-        )
+            text = { androidx.compose.material3.Text(org.jetbrains.compose.resources.stringResource(foodyou.app.generated.resources.Res.string.meals_unavailable), modifier = Modifier.uiName("UpdateQuickAddScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "UpdateQuickAddScreen")) },
+            confirmButton = { androidx.compose.material3.TextButton(onClick = viewModel::retryRead, modifier = Modifier.uiName("UpdateQuickAddScreen.TextButton.1", "androidx.compose.material3.TextButton", uiInspectionSource, "UpdateQuickAddScreen")) { androidx.compose.material3.Text(org.jetbrains.compose.resources.stringResource(foodyou.app.generated.resources.Res.string.meals_retry), modifier = Modifier.uiName("UpdateQuickAddScreen.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "UpdateQuickAddScreen")) } }, modifier = Modifier.uiName("UpdateQuickAddScreen.AlertDialog.1.root", "androidx.compose.material3.AlertDialog", uiInspectionSource, "UpdateQuickAddScreen")
+        ) }
     }
     val entry = viewModel.entry.collectAsStateWithLifecycle().value
 
@@ -65,7 +69,7 @@ fun UpdateQuickAddScreen(
             },
         )
 
-    QuickAddScreen(
+    UiSourceScope(uiInspectionSource.element("UpdateQuickAddScreen.QuickAddScreen.1", "com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.QuickAddScreen", "UpdateQuickAddScreen")) { QuickAddScreen(
         onBack = onBack,
         onSave = {
             val name = formState.name.value
@@ -88,5 +92,11 @@ fun UpdateQuickAddScreen(
         onPromoteToRecipe = {
             onPromoteToRecipe(formState.toPromotionSeed(energyFormatter, entry.nutritionFacts))
         },
-    )
+    ) }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.diary.quickadd",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/UpdateQuickAddScreen.kt",
+)

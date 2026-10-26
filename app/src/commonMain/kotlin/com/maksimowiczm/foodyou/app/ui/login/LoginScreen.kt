@@ -1,5 +1,9 @@
 package com.maksimowiczm.foodyou.app.ui.login
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
+
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -66,7 +70,7 @@ fun LoginScreen(onBack: () -> Unit, onLoginSuccess: () -> Unit, modifier: Modifi
     val session by sessionRepository.observeSession().collectAsStateWithLifecycle(null)
 
     if (session != null) {
-        Text(text = session.toString(), modifier = Modifier.safeContentPadding())
+        Text(text = session.toString(), modifier = (Modifier.safeContentPadding()).uiName("LoginScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "LoginScreen"))
         return
     }
 
@@ -89,7 +93,7 @@ fun LoginScreen(onBack: () -> Unit, onLoginSuccess: () -> Unit, modifier: Modifi
             onCancel = { isLoading = false },
         )
 
-    LoginScreen(
+    UiSourceScope(uiInspectionSource.element("LoginScreen.LoginScreen.1", "com.maksimowiczm.foodyou.app.ui.login.LoginScreen", "LoginScreen")) { LoginScreen(
         isLoading = isLoading,
         isError = isError,
         onBack = onBack,
@@ -102,7 +106,7 @@ fun LoginScreen(onBack: () -> Unit, onLoginSuccess: () -> Unit, modifier: Modifi
         },
         onPrivacyPolicy = { uriHandler.openUri(appConfig.privacyPolicyUri) },
         modifier = modifier,
-    )
+    ) }
 }
 
 @Composable
@@ -144,24 +148,24 @@ private fun LoginScreen(
     val fabHeight = remember { ButtonDefaults.LargeContainerHeight }
 
     Scaffold(
-        modifier = modifier,
+        modifier = (modifier).uiName("LoginScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "LoginScreen"),
         floatingActionButtonPosition = FabPosition.Center,
         floatingActionButton = {
             Button(
                 onClick = { if (!isLoading) onLogin() },
                 enabled = !isLoading,
                 shapes = ButtonDefaults.shapesFor(fabHeight),
-                contentPadding = ButtonDefaults.contentPaddingFor(fabHeight),
+                contentPadding = ButtonDefaults.contentPaddingFor(fabHeight), modifier = Modifier.uiName("LoginScreen.Button.1", "androidx.compose.material3.Button", uiInspectionSource, "LoginScreen")
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Outlined.Login,
                     contentDescription = null,
-                    modifier = Modifier.size(ButtonDefaults.iconSizeFor(fabHeight)),
+                    modifier = (Modifier.size(ButtonDefaults.iconSizeFor(fabHeight))).uiName("LoginScreen.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "LoginScreen"),
                 )
                 Spacer(Modifier.width(ButtonDefaults.iconSpacingFor(fabHeight)))
                 Text(
                     text = stringResource(Res.string.action_sign_in),
-                    style = ButtonDefaults.textStyleFor(fabHeight),
+                    style = ButtonDefaults.textStyleFor(fabHeight), modifier = Modifier.uiName("LoginScreen.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "LoginScreen")
                 )
             }
         },
@@ -173,10 +177,10 @@ private fun LoginScreen(
 
         Box(
             modifier =
-                Modifier.windowInsetsPadding(insets)
+                (Modifier.windowInsetsPadding(insets)
                     .consumeWindowInsets(insets)
                     .padding(padding)
-                    .zIndex(100f)
+                    .zIndex(100f)).uiName("LoginScreen.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "LoginScreen")
         ) {
             FilledIconButton(
                 onClick = onBack,
@@ -184,38 +188,38 @@ private fun LoginScreen(
                     IconButtonDefaults.filledIconButtonColors(
                         containerColor = MaterialTheme.colorScheme.surfaceContainer,
                         contentColor = MaterialTheme.colorScheme.onSurface,
-                    ),
+                    ), modifier = Modifier.uiName("LoginScreen.FilledIconButton.1", "androidx.compose.material3.FilledIconButton", uiInspectionSource, "LoginScreen")
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = stringResource(Res.string.action_go_back),
+                    contentDescription = stringResource(Res.string.action_go_back), modifier = Modifier.uiName("LoginScreen.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "LoginScreen")
                 )
             }
         }
 
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
+            modifier = (Modifier.fillMaxSize()).uiName("LoginScreen.LazyColumn.1", "androidx.compose.foundation.lazy.LazyColumn", uiInspectionSource, "LoginScreen"),
             contentPadding = paddingValues.add(bottom = 16.dp + fabHeight),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            item { InteractiveLogo() }
+            item { InteractiveLogo( modifier = Modifier.uiName("LoginScreen.InteractiveLogo.1", "com.maksimowiczm.foodyou.app.ui.common.component.InteractiveLogo", uiInspectionSource, "LoginScreen")) }
 
             item {
-                Text(text = stringResource(Res.string.app_name), style = brandTypography.brandName)
+                Text(text = stringResource(Res.string.app_name), style = brandTypography.brandName, modifier = Modifier.uiName("LoginScreen.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "LoginScreen"))
             }
 
             item {
-                Column(modifier = Modifier.fillMaxWidth()) {
-                    FlowRow(Modifier.padding(horizontal = 32.dp)) {
+                Column(modifier = (Modifier.fillMaxWidth()).uiName("LoginScreen.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "LoginScreen")) {
+                    FlowRow((Modifier.padding(horizontal = 32.dp)).uiName("LoginScreen.FlowRow.1", "androidx.compose.foundation.layout.FlowRow", uiInspectionSource, "LoginScreen")) {
                         Spacer(Modifier.width(8.dp))
-                        PrivacyPolicyChip(onPrivacyPolicy)
+                        PrivacyPolicyChip(onPrivacyPolicy, modifier = Modifier.uiName("LoginScreen.PrivacyPolicyChip.1", "com.maksimowiczm.foodyou.app.ui.common.component.PrivacyPolicyChip", uiInspectionSource, "LoginScreen"))
                     }
 
                     Spacer(Modifier.height(8.dp))
 
                     if (isLoading) {
-                        LinearWavyProgressIndicator(Modifier.fillMaxWidth())
+                        LinearWavyProgressIndicator((Modifier.fillMaxWidth()).uiName("LoginScreen.LinearWavyProgressIndicator.1", "androidx.compose.material3.LinearWavyProgressIndicator", uiInspectionSource, "LoginScreen"))
                         Spacer(Modifier.height(16.dp))
                     } else {
                         Spacer(Modifier.height(26.dp))
@@ -223,32 +227,32 @@ private fun LoginScreen(
 
                     AnimatedVisibility(
                         visible = isError,
-                        modifier = Modifier.padding(horizontal = 32.dp),
+                        modifier = (Modifier.padding(horizontal = 32.dp)).uiName("LoginScreen.AnimatedVisibility.1", "androidx.compose.animation.AnimatedVisibility", uiInspectionSource, "LoginScreen"),
                     ) {
-                        Column {
+                        Column (modifier = Modifier.uiName("LoginScreen.Column.2", "androidx.compose.foundation.layout.Column", uiInspectionSource, "LoginScreen")) {
                             Spacer(Modifier.height(8.dp))
                             Card(
                                 colors =
                                     CardDefaults.cardColors(
                                         containerColor = MaterialTheme.colorScheme.errorContainer,
                                         contentColor = MaterialTheme.colorScheme.onErrorContainer,
-                                    )
+                                    ), modifier = Modifier.uiName("LoginScreen.Card.1", "androidx.compose.material3.Card", uiInspectionSource, "LoginScreen")
                             ) {
                                 Row(
-                                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                                    modifier = (Modifier.fillMaxWidth().padding(16.dp)).uiName("LoginScreen.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "LoginScreen"),
                                     verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                                 ) {
                                     Icon(
                                         imageVector = Icons.Outlined.ErrorOutline,
-                                        contentDescription = null,
+                                        contentDescription = null, modifier = Modifier.uiName("LoginScreen.Icon.3", "androidx.compose.material3.Icon", uiInspectionSource, "LoginScreen")
                                     )
                                     Text(
                                         text =
                                             stringResource(
                                                 Res.string.error_there_was_an_error_while_signing_in
                                             ),
-                                        style = MaterialTheme.typography.titleMedium,
+                                        style = MaterialTheme.typography.titleMedium, modifier = Modifier.uiName("LoginScreen.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "LoginScreen")
                                     )
                                 }
                             }
@@ -259,3 +263,9 @@ private fun LoginScreen(
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.login",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/login/LoginScreen.kt",
+)

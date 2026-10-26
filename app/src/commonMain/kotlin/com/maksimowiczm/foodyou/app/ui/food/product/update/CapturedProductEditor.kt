@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.food.product.update
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.ui.semantics.Role
@@ -63,26 +66,26 @@ internal fun CapturedProductEditor(product:Product,onBack:()->Unit,onSaved:()->U
             nutritionFacts=facts,referencePortion=portion,isLiquid=liquid,
             packageWeight=if(packageMetric.isBlank())null else positive(packageMetric),servingWeight=serving),confirmedSignature==signature())
     }
-    Scaffold(modifier=modifier,topBar={TopAppBar(title={Text(stringResource(Res.string.headline_edit_product))},navigationIcon={ArrowBackIconButton(onBack)},actions={
-        TextButton(onClick=onBack){Text(stringResource(Res.string.action_cancel))}
-        TextButton(onClick=::save,enabled=!saving,modifier=Modifier.testTag("captured-food-save")){Text(stringResource(Res.string.action_save))}
-    })}) { padding ->
-        LazyColumn(Modifier.fillMaxSize().testTag("captured-food-editor"),contentPadding=PaddingValues(16.dp,padding.calculateTopPadding()+8.dp,16.dp,padding.calculateBottomPadding()+16.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
-            if(failed)item{Text(stringResource(Res.string.captured_invalid),color=MaterialTheme.colorScheme.error)}
+    Scaffold(modifier=(modifier).uiName("CapturedProductEditor.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "CapturedProductEditor"),topBar={TopAppBar(title={Text(stringResource(Res.string.headline_edit_product), modifier = Modifier.uiName("CapturedProductEditor.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "CapturedProductEditor"))},navigationIcon={ArrowBackIconButton(onBack, modifier = Modifier.uiName("CapturedProductEditor.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "CapturedProductEditor"))},actions={
+        TextButton(onClick=onBack, modifier = Modifier.uiName("CapturedProductEditor.TextButton.1", "androidx.compose.material3.TextButton", uiInspectionSource, "CapturedProductEditor")){Text(stringResource(Res.string.action_cancel), modifier = Modifier.uiName("CapturedProductEditor.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "CapturedProductEditor"))}
+        TextButton(onClick=::save,enabled=!saving,modifier=(Modifier.testTag("captured-food-save")).uiName("CapturedProductEditor.TextButton.2", "androidx.compose.material3.TextButton", uiInspectionSource, "CapturedProductEditor")){Text(stringResource(Res.string.action_save), modifier = Modifier.uiName("CapturedProductEditor.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "CapturedProductEditor"))}
+    }, modifier = Modifier.uiName("CapturedProductEditor.TopAppBar.1", "androidx.compose.material3.TopAppBar", uiInspectionSource, "CapturedProductEditor"))}) { padding ->
+        LazyColumn((Modifier.fillMaxSize().testTag("captured-food-editor")).uiName("CapturedProductEditor.LazyColumn.1", "androidx.compose.foundation.lazy.LazyColumn", uiInspectionSource, "CapturedProductEditor"),contentPadding=PaddingValues(16.dp,padding.calculateTopPadding()+8.dp,16.dp,padding.calculateBottomPadding()+16.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
+            if(failed)item{Text(stringResource(Res.string.captured_invalid),color=MaterialTheme.colorScheme.error, modifier = Modifier.uiName("CapturedProductEditor.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "CapturedProductEditor"))}
             item{CapturedTextField(name,{name=it},stringResource(Res.string.product_name),"captured-food-name")}
             item{CapturedTextField(brand,{brand=it},stringResource(Res.string.product_brand),"captured-food-brand")}
             item{CapturedTextField(barcode,{barcode=it},stringResource(Res.string.product_barcode),"captured-food-barcode")}
             item{CapturedTextField(note,{note=it},stringResource(Res.string.headline_note),"captured-food-note")}
             item {
-                Text(stringResource(if(product.factBasis==ProductFactBasis.REFERENCE_SERVING)Res.string.captured_reference_serving else Res.string.captured_metric_100),style=MaterialTheme.typography.titleMedium)
+                Text(stringResource(if(product.factBasis==ProductFactBasis.REFERENCE_SERVING)Res.string.captured_reference_serving else Res.string.captured_metric_100),style=MaterialTheme.typography.titleMedium, modifier = Modifier.uiName("CapturedProductEditor.Text.5", "androidx.compose.material3.Text", uiInspectionSource, "CapturedProductEditor"))
                 CapturedReferenceFields(reference,"captured-food-reference-",quantityUnit?.let { listOf(null,it) } ?: listOf(null,MetricUnit.GRAM,MetricUnit.MILLILITER),product.factBasis==ProductFactBasis.METRIC_100)
                 val metricUnit=quantityUnit ?: reference.metricUnit ?: if(product.isLiquid)MetricUnit.MILLILITER else MetricUnit.GRAM
                 val unit=stringResource(if(metricUnit==MetricUnit.MILLILITER)Res.string.unit_milliliter_short else Res.string.unit_gram_short)
                 CapturedTextField(packageMetric,::updatePackage,stringResource(Res.string.product_package_weight)+" ("+unit+")","captured-food-package",true)
                 if(product.factBasis==ProductFactBasis.METRIC_100)CapturedTextField(servingMetric,::updateServing,stringResource(Res.string.product_reference_serving)+" ("+unit+")","captured-food-serving",true)
-                Row(Modifier.fillMaxWidth().toggleable(confirmedSignature==signature(),role=Role.Checkbox,onValueChange={confirmedSignature=if(it)signature()else null})) {
-                    Checkbox(confirmedSignature==signature(),null)
-                    Text(stringResource(Res.string.captured_confirm_reference),Modifier.padding(top=12.dp))
+                Row((Modifier.fillMaxWidth().toggleable(confirmedSignature==signature(),role=Role.Checkbox,onValueChange={confirmedSignature=if(it)signature()else null})).uiName("CapturedProductEditor.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "CapturedProductEditor")) {
+                    Checkbox(confirmedSignature==signature(),null, modifier = Modifier.uiName("CapturedProductEditor.Checkbox.1", "androidx.compose.material3.Checkbox", uiInspectionSource, "CapturedProductEditor"))
+                    Text(stringResource(Res.string.captured_confirm_reference),(Modifier.padding(top=12.dp)).uiName("CapturedProductEditor.Text.6", "androidx.compose.material3.Text", uiInspectionSource, "CapturedProductEditor"))
                 }
                 CapturedMetadataView(product.nutritionMetadata)
             }
@@ -90,3 +93,9 @@ internal fun CapturedProductEditor(product:Product,onBack:()->Unit,onSaved:()->U
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.product.update",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/update/CapturedProductEditor.kt",
+)

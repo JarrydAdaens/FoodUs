@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.food.diary.aiscan
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -98,10 +101,10 @@ actual fun AiScanCameraSection(
         CaptureSection(
             onCapture = ::launchCapture,
             onPickFromGallery = ::launchGallery,
-            modifier = modifier,
+            modifier = (modifier).uiName("AiScanCameraSection.CaptureSection.1", "com.maksimowiczm.foodyou.app.ui.food.diary.aiscan.CaptureSection", uiInspectionSource, "AiScanCameraSection"),
         )
     } else {
-        PhotoPreview(jpeg = jpeg, onRetake = ::launchCapture, modifier = modifier)
+        PhotoPreview(jpeg = jpeg, onRetake = ::launchCapture, modifier = (modifier).uiName("AiScanCameraSection.PhotoPreview.1", "com.maksimowiczm.foodyou.app.ui.food.diary.aiscan.PhotoPreview", uiInspectionSource, "AiScanCameraSection"))
     }
 }
 
@@ -112,49 +115,49 @@ private fun CaptureSection(
     modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = modifier.fillMaxWidth().height(220.dp),
+        modifier = (modifier.fillMaxWidth().height(220.dp)).uiName("CaptureSection.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "CaptureSection"),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Card(onClick = onCapture, modifier = Modifier.weight(1f).fillMaxHeight()) {
+        Card(onClick = onCapture, modifier = (Modifier.weight(1f).fillMaxHeight()).uiName("CaptureSection.Card.1", "androidx.compose.material3.Card", uiInspectionSource, "CaptureSection")) {
             Column(
-                modifier = Modifier.fillMaxWidth().fillMaxHeight().padding(24.dp),
+                modifier = (Modifier.fillMaxWidth().fillMaxHeight().padding(24.dp)).uiName("CaptureSection.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "CaptureSection"),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Icon(
                     imageVector = Icons.Default.PhotoCamera,
                     contentDescription = null,
-                    modifier = Modifier.height(48.dp),
+                    modifier = (Modifier.height(48.dp)).uiName("CaptureSection.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "CaptureSection"),
                 )
                 Spacer(Modifier.height(12.dp))
                 Text(
                     text = stringResource(Res.string.action_take_photo),
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleMedium, modifier = Modifier.uiName("CaptureSection.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "CaptureSection")
                 )
             }
         }
-        GalleryButton(onClick = onPickFromGallery)
+        GalleryButton(onClick = onPickFromGallery, modifier = Modifier.uiName("CaptureSection.GalleryButton.1", "com.maksimowiczm.foodyou.app.ui.food.diary.aiscan.GalleryButton", uiInspectionSource, "CaptureSection"))
     }
 }
 
 @Composable
 private fun GalleryButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
-    OutlinedCard(onClick = onClick, modifier = modifier.width(96.dp).fillMaxHeight()) {
+    OutlinedCard(onClick = onClick, modifier = (modifier.width(96.dp).fillMaxHeight()).uiName("GalleryButton.OutlinedCard.1", "androidx.compose.material3.OutlinedCard", uiInspectionSource, "GalleryButton")) {
         Column(
-            modifier = Modifier.fillMaxWidth().fillMaxHeight().padding(12.dp),
+            modifier = (Modifier.fillMaxWidth().fillMaxHeight().padding(12.dp)).uiName("GalleryButton.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "GalleryButton"),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Icon(
                 imageVector = Icons.Default.PhotoLibrary,
                 contentDescription = stringResource(Res.string.action_pick_from_gallery),
-                modifier = Modifier.height(32.dp),
+                modifier = (Modifier.height(32.dp)).uiName("GalleryButton.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "GalleryButton"),
             )
             Spacer(Modifier.height(8.dp))
             Text(
                 text = stringResource(Res.string.action_pick_from_gallery),
                 style = MaterialTheme.typography.labelSmall,
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Center, modifier = Modifier.uiName("GalleryButton.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "GalleryButton")
             )
         }
     }
@@ -171,16 +174,16 @@ private fun PhotoPreview(
 
     val retakeLabel = stringResource(Res.string.neutral_tap_photo_to_retake)
 
-    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier = (modifier).uiName("PhotoPreview.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "PhotoPreview"), horizontalAlignment = Alignment.CenterHorizontally) {
         OutlinedCard(
             onClick = onRetake,
-            modifier = Modifier.fillMaxWidth().semantics { contentDescription = retakeLabel },
+            modifier = (Modifier.fillMaxWidth().semantics { contentDescription = retakeLabel }).uiName("PhotoPreview.OutlinedCard.1", "androidx.compose.material3.OutlinedCard", uiInspectionSource, "PhotoPreview"),
         ) {
             if (imageBitmap != null) {
                 Image(
                     bitmap = imageBitmap,
                     contentDescription = null,
-                    modifier = Modifier.fillMaxWidth().aspectRatio(1f),
+                    modifier = (Modifier.fillMaxWidth().aspectRatio(1f)).uiName("PhotoPreview.Image.1", "androidx.compose.foundation.Image", uiInspectionSource, "PhotoPreview"),
                     contentScale = ContentScale.Crop,
                 )
             }
@@ -188,7 +191,7 @@ private fun PhotoPreview(
         Spacer(Modifier.height(8.dp))
         Text(
             text = retakeLabel,
-            style = MaterialTheme.typography.bodySmall,
+            style = MaterialTheme.typography.bodySmall, modifier = Modifier.uiName("PhotoPreview.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "PhotoPreview")
         )
     }
 }
@@ -239,3 +242,9 @@ private fun Bitmap.toDownscaledJpeg(): ByteArray {
 
 private const val MAX_EDGE = 1024
 private const val JPEG_QUALITY = 85
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.diary.aiscan",
+    "app/src/androidMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanCameraSection.android.kt",
+)

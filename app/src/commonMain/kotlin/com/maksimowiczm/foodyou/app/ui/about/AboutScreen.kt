@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.about
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -61,10 +64,10 @@ fun AboutScreen(onBack: () -> Unit, onSponsor: () -> Unit, modifier: Modifier = 
 
     var showChangelog by rememberSaveable { mutableStateOf(false) }
     if (showChangelog) {
-        ChangelogModalBottomSheet(onDismissRequest = { showChangelog = false })
+        ChangelogModalBottomSheet(onDismissRequest = { showChangelog = false }, modifier = Modifier.uiName("AboutScreen.ChangelogModalBottomSheet.1", "com.maksimowiczm.foodyou.app.ui.changelog.ChangelogModalBottomSheet", uiInspectionSource, "AboutScreen"))
     }
 
-    Box(modifier) {
+    Box((modifier).uiName("AboutScreen.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "AboutScreen")) {
         // Padding according to the Material Design App bars guidelines
         // https://m3.material.io/components/app-bars/specs
         val insets = TopAppBarDefaults.windowInsets
@@ -72,30 +75,30 @@ fun AboutScreen(onBack: () -> Unit, onSponsor: () -> Unit, modifier: Modifier = 
 
         Box(
             modifier =
-                Modifier.windowInsetsPadding(insets)
+                (Modifier.windowInsetsPadding(insets)
                     .consumeWindowInsets(insets)
                     .padding(padding)
-                    .zIndex(100f)
+                    .zIndex(100f)).uiName("AboutScreen.Box.2", "androidx.compose.foundation.layout.Box", uiInspectionSource, "AboutScreen")
         ) {
-            ArrowBackIconButton(onBack)
+            ArrowBackIconButton(onBack, modifier = Modifier.uiName("AboutScreen.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "AboutScreen"))
         }
 
         Column(
-            modifier = Modifier.fillMaxSize().verticalScroll(scrollState),
+            modifier = (Modifier.fillMaxSize().verticalScroll(scrollState)).uiName("AboutScreen.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "AboutScreen"),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(Modifier.windowInsetsTopHeight(WindowInsets.systemBars))
             InteractiveLogo(
-                Modifier.padding(horizontal = 32.dp)
+                (Modifier.padding(horizontal = 32.dp)
                     .widthIn(max = 350.dp)
                     .aspectRatio(1f)
-                    .fillMaxSize()
+                    .fillMaxSize()).uiName("AboutScreen.InteractiveLogo.1", "com.maksimowiczm.foodyou.app.ui.common.component.InteractiveLogo", uiInspectionSource, "AboutScreen")
             )
             Spacer(Modifier.height(16.dp))
             Text(
                 text = stringResource(Res.string.app_name),
-                modifier = Modifier.padding(horizontal = 16.dp),
+                modifier = (Modifier.padding(horizontal = 16.dp)).uiName("AboutScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "AboutScreen"),
                 textAlign = TextAlign.Center,
                 style = brandTypography.brandName,
             )
@@ -107,7 +110,7 @@ fun AboutScreen(onBack: () -> Unit, onSponsor: () -> Unit, modifier: Modifier = 
                         append(appConfig.forkVersionName)
                     },
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.uiName("AboutScreen.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "AboutScreen")
             )
             Text(
                 text =
@@ -116,27 +119,27 @@ fun AboutScreen(onBack: () -> Unit, onSponsor: () -> Unit, modifier: Modifier = 
                         appConfig.versionName,
                     ),
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.uiName("AboutScreen.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "AboutScreen")
             )
-            TextButton(onClick = { uriHandler.openUri(appConfig.upstreamAuthorUri) }) {
-                Text(text = stringResource(Res.string.action_original_creator_on_github))
+            TextButton(onClick = { uriHandler.openUri(appConfig.upstreamAuthorUri) }, modifier = Modifier.uiName("AboutScreen.TextButton.1", "androidx.compose.material3.TextButton", uiInspectionSource, "AboutScreen")) {
+                Text(text = stringResource(Res.string.action_original_creator_on_github), modifier = Modifier.uiName("AboutScreen.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "AboutScreen"))
             }
             Text(
                 text = icons8stringResource(MaterialTheme.typography.bodyMedium),
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.uiName("AboutScreen.Text.5", "androidx.compose.material3.Text", uiInspectionSource, "AboutScreen")
             )
             Spacer(Modifier.height(64.dp))
             AboutButtons(
                 onSourceCode = { uriHandler.openUri(appConfig.sourceCodeUri) },
                 onChangelog = { showChangelog = true },
                 onIdea = { uriHandler.openUri(appConfig.issueTrackerUri) },
-                onEmail = { uriHandler.openUri(appConfig.contactEmailUri) },
+                onEmail = { uriHandler.openUri(appConfig.contactEmailUri) }, modifier = Modifier.uiName("AboutScreen.AboutButtons.1", "com.maksimowiczm.foodyou.app.ui.about.AboutButtons", uiInspectionSource, "AboutScreen")
             )
             Spacer(Modifier.height(24.dp))
             SponsorButton(
                 onClick = onSponsor,
-                modifier = Modifier.padding(horizontal = 16.dp),
+                modifier = (Modifier.padding(horizontal = 16.dp)).uiName("AboutScreen.SponsorButton.1", "com.maksimowiczm.foodyou.app.ui.about.SponsorButton", uiInspectionSource, "AboutScreen"),
             )
             Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))
         }
@@ -159,56 +162,62 @@ private fun AboutButtons(
     val buttonHeight = 56.dp
 
     Row(
-        modifier = modifier,
+        modifier = (modifier).uiName("AboutButtons.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "AboutButtons"),
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
     ) {
         OutlinedButton(
             onClick = onSourceCode,
             shapes = ButtonDefaults.shapesFor(buttonHeight),
-            modifier = Modifier.height(buttonHeight),
+            modifier = (Modifier.height(buttonHeight)).uiName("AboutButtons.OutlinedButton.1", "androidx.compose.material3.OutlinedButton", uiInspectionSource, "AboutButtons"),
             contentPadding = ButtonDefaults.contentPaddingFor(buttonHeight),
         ) {
             Icon(
                 imageVector = Icons.Outlined.Code,
                 contentDescription = stringResource(Res.string.headline_source_code),
-                modifier = Modifier.size(ButtonDefaults.iconSizeFor(buttonHeight)),
+                modifier = (Modifier.size(ButtonDefaults.iconSizeFor(buttonHeight))).uiName("AboutButtons.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "AboutButtons"),
             )
         }
         OutlinedButton(
             onClick = onChangelog,
             shapes = ButtonDefaults.shapesFor(buttonHeight),
-            modifier = Modifier.height(buttonHeight),
+            modifier = (Modifier.height(buttonHeight)).uiName("AboutButtons.OutlinedButton.2", "androidx.compose.material3.OutlinedButton", uiInspectionSource, "AboutButtons"),
             contentPadding = ButtonDefaults.contentPaddingFor(buttonHeight),
         ) {
             Icon(
                 imageVector = Icons.AutoMirrored.Outlined.TrendingUp,
                 contentDescription = stringResource(Res.string.headline_changelog),
-                modifier = Modifier.size(ButtonDefaults.iconSizeFor(buttonHeight)),
+                modifier = (Modifier.size(ButtonDefaults.iconSizeFor(buttonHeight))).uiName("AboutButtons.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "AboutButtons"),
             )
         }
         OutlinedButton(
             onClick = onIdea,
             shapes = ButtonDefaults.shapesFor(buttonHeight),
-            modifier = Modifier.height(buttonHeight),
+            modifier = (Modifier.height(buttonHeight)).uiName("AboutButtons.OutlinedButton.3", "androidx.compose.material3.OutlinedButton", uiInspectionSource, "AboutButtons"),
             contentPadding = ButtonDefaults.contentPaddingFor(buttonHeight),
         ) {
             Icon(
                 imageVector = Icons.Outlined.Lightbulb,
                 contentDescription = stringResource(Res.string.action_feature_request_on_github),
-                modifier = Modifier.size(ButtonDefaults.iconSizeFor(buttonHeight)),
+                modifier = (Modifier.size(ButtonDefaults.iconSizeFor(buttonHeight))).uiName("AboutButtons.Icon.3", "androidx.compose.material3.Icon", uiInspectionSource, "AboutButtons"),
             )
         }
         OutlinedButton(
             onClick = onEmail,
             shapes = ButtonDefaults.shapesFor(buttonHeight),
-            modifier = Modifier.height(buttonHeight),
+            modifier = (Modifier.height(buttonHeight)).uiName("AboutButtons.OutlinedButton.4", "androidx.compose.material3.OutlinedButton", uiInspectionSource, "AboutButtons"),
             contentPadding = ButtonDefaults.contentPaddingFor(buttonHeight),
         ) {
             Icon(
                 imageVector = Icons.Outlined.Mail,
                 contentDescription = stringResource(Res.string.action_write_an_email),
-                modifier = Modifier.size(ButtonDefaults.iconSizeFor(buttonHeight)),
+                modifier = (Modifier.size(ButtonDefaults.iconSizeFor(buttonHeight))).uiName("AboutButtons.Icon.4", "androidx.compose.material3.Icon", uiInspectionSource, "AboutButtons"),
             )
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.about",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/about/AboutScreen.kt",
+)

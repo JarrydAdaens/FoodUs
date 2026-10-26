@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.about
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -25,7 +28,7 @@ import org.jetbrains.compose.resources.stringResource
 internal fun SponsorButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
     Button(
         onClick = onClick,
-        modifier = modifier.height(96.dp),
+        modifier = (modifier.height(96.dp)).uiName("SponsorButton.Button.1", "androidx.compose.material3.Button", uiInspectionSource, "SponsorButton"),
         shapes = ButtonDefaults.shapes(),
         colors =
             ButtonDefaults.buttonColors(
@@ -35,25 +38,31 @@ internal fun SponsorButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
         contentPadding = PaddingValues(horizontal = 48.dp),
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = (Modifier.fillMaxWidth()).uiName("SponsorButton.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "SponsorButton"),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Icon(
                 imageVector = Icons.Outlined.VolunteerActivism,
                 contentDescription = null,
-                modifier = Modifier.size(32.dp),
+                modifier = (Modifier.size(32.dp)).uiName("SponsorButton.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "SponsorButton"),
             )
-            Column {
+            Column (modifier = Modifier.uiName("SponsorButton.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "SponsorButton")) {
                 Text(
                     text = stringResource(Res.string.headline_sponsor),
-                    style = MaterialTheme.typography.headlineSmall,
+                    style = MaterialTheme.typography.headlineSmall, modifier = Modifier.uiName("SponsorButton.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "SponsorButton")
                 )
                 Text(
                     text = stringResource(Res.string.description_sponsor_short_2),
-                    style = MaterialTheme.typography.bodyLarge,
+                    style = MaterialTheme.typography.bodyLarge, modifier = Modifier.uiName("SponsorButton.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "SponsorButton")
                 )
             }
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.about",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/about/SponsorButton.kt",
+)

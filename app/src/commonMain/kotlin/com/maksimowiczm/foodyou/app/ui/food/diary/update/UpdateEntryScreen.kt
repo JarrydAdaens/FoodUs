@@ -1,5 +1,10 @@
 package com.maksimowiczm.foodyou.app.ui.food.diary.update
 
+
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
+
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -107,7 +112,7 @@ fun UpdateEntryScreen(
                 selectedMeasurement = entry.measurement,
             )
 
-        UpdateEntryScreen(
+        UiSourceScope(uiInspectionSource.element("UpdateEntryScreen.UpdateEntryScreen.1", "com.maksimowiczm.foodyou.app.ui.food.diary.update.UpdateEntryScreen", "UpdateEntryScreen")) { UpdateEntryScreen(
             onBack = onBack,
             onUnpack = {
                 val selectedDiarySlotId =
@@ -141,7 +146,7 @@ fun UpdateEntryScreen(
             entry = entry,
             animatedVisibilityScope = animatedVisibilityScope,
             modifier = modifier,
-        )
+        ) }
     }
 }
 
@@ -160,19 +165,19 @@ private fun UpdateEntryScreen(
     val topBar =
         @Composable {
             MediumTopAppBar(
-                title = { Text(entry.food.name) },
-                navigationIcon = { ArrowBackIconButton(onBack) },
-                scrollBehavior = scrollBehavior,
+                title = { Text(entry.food.name, modifier = Modifier.uiName("UpdateEntryScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "UpdateEntryScreen")) },
+                navigationIcon = { ArrowBackIconButton(onBack, modifier = Modifier.uiName("UpdateEntryScreen.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "UpdateEntryScreen")) },
+                scrollBehavior = scrollBehavior, modifier = Modifier.uiName("UpdateEntryScreen.MediumTopAppBar.1", "androidx.compose.material3.MediumTopAppBar", uiInspectionSource, "UpdateEntryScreen")
             )
         }
     val fab =
         @Composable {
             Column(
                 modifier =
-                    Modifier.animateFloatingActionButton(
+                    (Modifier.animateFloatingActionButton(
                         visible = !animatedVisibilityScope.transition.isRunning && state.isValid && entry.food.nutritionFor(state.measurementState.measurement) != null,
                         alignment = Alignment.BottomEnd,
-                    ),
+                    )).uiName("UpdateEntryScreen.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "UpdateEntryScreen"),
                 horizontalAlignment = Alignment.End,
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
@@ -186,12 +191,12 @@ private fun UpdateEntryScreen(
                         icon = {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Outlined.CallSplit,
-                                contentDescription = null,
+                                contentDescription = null, modifier = Modifier.uiName("UpdateEntryScreen.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "UpdateEntryScreen")
                             )
                         },
-                        text = { Text(stringResource(Res.string.action_unpack)) },
+                        text = { Text(stringResource(Res.string.action_unpack), modifier = Modifier.uiName("UpdateEntryScreen.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "UpdateEntryScreen")) },
                         containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onSecondaryContainer, modifier = Modifier.uiName("UpdateEntryScreen.ExtendedFloatingActionButton.1", "androidx.compose.material3.ExtendedFloatingActionButton", uiInspectionSource, "UpdateEntryScreen")
                     )
                 }
                 LargeExtendedFloatingActionButton(
@@ -204,20 +209,20 @@ private fun UpdateEntryScreen(
                         Icon(
                             imageVector = Icons.Filled.Edit,
                             contentDescription = stringResource(Res.string.action_save),
-                            modifier = Modifier.size(FloatingActionButtonDefaults.LargeIconSize),
+                            modifier = (Modifier.size(FloatingActionButtonDefaults.LargeIconSize)).uiName("UpdateEntryScreen.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "UpdateEntryScreen"),
                         )
                     },
-                    text = { Text(stringResource(Res.string.action_save)) },
+                    text = { Text(stringResource(Res.string.action_save), modifier = Modifier.uiName("UpdateEntryScreen.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "UpdateEntryScreen")) }, modifier = Modifier.uiName("UpdateEntryScreen.LargeExtendedFloatingActionButton.1", "androidx.compose.material3.LargeExtendedFloatingActionButton", uiInspectionSource, "UpdateEntryScreen")
                 )
             }
         }
 
-    Scaffold(modifier = modifier, topBar = topBar, floatingActionButton = fab) { paddingValues ->
+    Scaffold(modifier = (modifier).uiName("UpdateEntryScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "UpdateEntryScreen"), topBar = topBar, floatingActionButton = fab) { paddingValues ->
         LazyColumn(
             modifier =
-                Modifier.fillMaxSize()
+                (Modifier.fillMaxSize()
                     .imePadding()
-                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                    .nestedScroll(scrollBehavior.nestedScrollConnection)).uiName("UpdateEntryScreen.LazyColumn.1", "androidx.compose.foundation.lazy.LazyColumn", uiInspectionSource, "UpdateEntryScreen"),
             contentPadding =
                 paddingValues.add(vertical = 8.dp).let {
                     if (canUnpack) {
@@ -227,37 +232,37 @@ private fun UpdateEntryScreen(
                     }
                 },
         ) {
-            item { HorizontalDivider(Modifier.padding(horizontal = 8.dp)) }
+            item { HorizontalDivider((Modifier.padding(horizontal = 8.dp)).uiName("UpdateEntryScreen.HorizontalDivider.1", "androidx.compose.material3.HorizontalDivider", uiInspectionSource, "UpdateEntryScreen")) }
 
             item {
-                ChipsDatePicker(state = state.dateState, modifier = Modifier.padding(8.dp))
-                HorizontalDivider(Modifier.padding(horizontal = 8.dp))
-                ChipsDiarySlotPicker(state = state.diarySlotsState, modifier = Modifier.padding(8.dp))
-                HorizontalDivider(Modifier.padding(horizontal = 8.dp))
-                Text(stringResource(Res.string.portion_amount_to_log), modifier = Modifier.padding(8.dp))
-                MeasurementPicker(state = state.measurementState, modifier = Modifier.padding(8.dp))
+                ChipsDatePicker(state = state.dateState, modifier = (Modifier.padding(8.dp)).uiName("UpdateEntryScreen.ChipsDatePicker.1", "com.maksimowiczm.foodyou.app.ui.food.diary.component.ChipsDatePicker", uiInspectionSource, "UpdateEntryScreen"))
+                HorizontalDivider((Modifier.padding(horizontal = 8.dp)).uiName("UpdateEntryScreen.HorizontalDivider.2", "androidx.compose.material3.HorizontalDivider", uiInspectionSource, "UpdateEntryScreen"))
+                ChipsDiarySlotPicker(state = state.diarySlotsState, modifier = (Modifier.padding(8.dp)).uiName("UpdateEntryScreen.ChipsDiarySlotPicker.1", "com.maksimowiczm.foodyou.app.ui.food.diary.component.ChipsDiarySlotPicker", uiInspectionSource, "UpdateEntryScreen"))
+                HorizontalDivider((Modifier.padding(horizontal = 8.dp)).uiName("UpdateEntryScreen.HorizontalDivider.3", "androidx.compose.material3.HorizontalDivider", uiInspectionSource, "UpdateEntryScreen"))
+                Text(stringResource(Res.string.portion_amount_to_log), modifier = (Modifier.padding(8.dp)).uiName("UpdateEntryScreen.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "UpdateEntryScreen"))
+                MeasurementPicker(state = state.measurementState, modifier = (Modifier.padding(8.dp)).uiName("UpdateEntryScreen.MeasurementPicker.1", "com.maksimowiczm.foodyou.app.ui.food.component.MeasurementPicker", uiInspectionSource, "UpdateEntryScreen"))
             }
 
             val food = entry.food
             if(food is ProductSnapshot && food.factBasis==ProductFactBasis.REFERENCE_SERVING) {
-                item { Column(Modifier.padding(16.dp),verticalArrangement=Arrangement.spacedBy(4.dp)) {
-                    Text(stringResource(Res.string.captured_reference_serving),style=MaterialTheme.typography.titleMedium)
+                item { Column((Modifier.padding(16.dp)).uiName("UpdateEntryScreen.Column.2", "androidx.compose.foundation.layout.Column", uiInspectionSource, "UpdateEntryScreen"),verticalArrangement=Arrangement.spacedBy(4.dp)) {
+                    Text(stringResource(Res.string.captured_reference_serving),style=MaterialTheme.typography.titleMedium, modifier = Modifier.uiName("UpdateEntryScreen.Text.5", "androidx.compose.material3.Text", uiInspectionSource, "UpdateEntryScreen"))
                     CapturedReferenceText(food.referencePortion)
                     CapturedMetadataView(food.nutritionMetadata)
                 } }
             }
             if(food is RecipeSnapshot && food.reportedNutrition!=null) {
-                item { Column(Modifier.padding(16.dp),verticalArrangement=Arrangement.spacedBy(4.dp)) {
-                    Text(reportedBasisLabel(food.reportedNutrition.basis),style=MaterialTheme.typography.titleMedium)
-                    Text(stringResource(Res.string.captured_unpack_unavailable))
+                item { Column((Modifier.padding(16.dp)).uiName("UpdateEntryScreen.Column.3", "androidx.compose.foundation.layout.Column", uiInspectionSource, "UpdateEntryScreen"),verticalArrangement=Arrangement.spacedBy(4.dp)) {
+                    Text(reportedBasisLabel(food.reportedNutrition.basis),style=MaterialTheme.typography.titleMedium, modifier = Modifier.uiName("UpdateEntryScreen.Text.6", "androidx.compose.material3.Text", uiInspectionSource, "UpdateEntryScreen"))
+                    Text(stringResource(Res.string.captured_unpack_unavailable), modifier = Modifier.uiName("UpdateEntryScreen.Text.7", "androidx.compose.material3.Text", uiInspectionSource, "UpdateEntryScreen"))
                     CapturedReferenceText(food.reportedNutrition.reference)
                     var showFacts by remember(food) { mutableStateOf(false) }
-                    TextButton(onClick={showFacts=!showFacts}) { Text(stringResource(if(showFacts)Res.string.captured_hide_details else Res.string.captured_show_details)) }
+                    TextButton(onClick={showFacts=!showFacts}, modifier = Modifier.uiName("UpdateEntryScreen.TextButton.1", "androidx.compose.material3.TextButton", uiInspectionSource, "UpdateEntryScreen")) { Text(stringResource(if(showFacts)Res.string.captured_hide_details else Res.string.captured_show_details), modifier = Modifier.uiName("UpdateEntryScreen.Text.8", "androidx.compose.material3.Text", uiInspectionSource, "UpdateEntryScreen")) }
                     if(showFacts)CapturedNutritionSummary(food.reportedNutrition.facts)
                     CapturedMetadataView(food.reportedNutrition.metadata)
                     CapturedMetadataView(food.reportedNutrition.definitionMetadata,true)
                     food.reportedComponents.forEach { component ->
-                        Text(component.name);CapturedReferenceText(component.portion);CapturedMetadataView(component.metadata)
+                        Text(component.name, modifier = Modifier.uiName("UpdateEntryScreen.Text.9", "androidx.compose.material3.Text", uiInspectionSource, "UpdateEntryScreen"));CapturedReferenceText(component.portion);CapturedMetadataView(component.metadata)
                     }
                 } }
             }
@@ -266,53 +271,59 @@ private fun UpdateEntryScreen(
                     val measurement = state.measurementState.measurement
                     val ingredients = food.unpack(measurement).orEmpty()
 
-                    HorizontalDivider(Modifier.padding(horizontal = 8.dp))
+                    HorizontalDivider((Modifier.padding(horizontal = 8.dp)).uiName("UpdateEntryScreen.HorizontalDivider.4", "androidx.compose.material3.HorizontalDivider", uiInspectionSource, "UpdateEntryScreen"))
                     Ingredients(
                         ingredients = ingredients,
-                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp), modifier = Modifier.uiName("UpdateEntryScreen.Ingredients.1", "com.maksimowiczm.foodyou.app.ui.food.diary.update.Ingredients", uiInspectionSource, "UpdateEntryScreen")
                     )
                 }
             }
 
             item {
-                HorizontalDivider(Modifier.padding(horizontal = 8.dp))
+                HorizontalDivider((Modifier.padding(horizontal = 8.dp)).uiName("UpdateEntryScreen.HorizontalDivider.5", "androidx.compose.material3.HorizontalDivider", uiInspectionSource, "UpdateEntryScreen"))
                 NutrientList(
                     food = food,
                     measurement = state.measurementState.measurement,
-                    modifier = Modifier.padding(horizontal = 8.dp),
+                    modifier = (Modifier.padding(horizontal = 8.dp)).uiName("UpdateEntryScreen.NutrientList.1", "com.maksimowiczm.foodyou.app.ui.food.diary.update.NutrientList", uiInspectionSource, "UpdateEntryScreen"),
                 )
             }
 
             val note = food.note
             if (note != null) {
                 item {
-                    HorizontalDivider(Modifier.padding(horizontal = 8.dp))
-                    Column(Modifier.padding(16.dp)) {
+                    HorizontalDivider((Modifier.padding(horizontal = 8.dp)).uiName("UpdateEntryScreen.HorizontalDivider.6", "androidx.compose.material3.HorizontalDivider", uiInspectionSource, "UpdateEntryScreen"))
+                    Column((Modifier.padding(16.dp)).uiName("UpdateEntryScreen.Column.4", "androidx.compose.foundation.layout.Column", uiInspectionSource, "UpdateEntryScreen")) {
                         Text(
                             text = stringResource(Res.string.headline_note),
                             style = MaterialTheme.typography.labelLarge,
-                            color = MaterialTheme.colorScheme.primary,
+                            color = MaterialTheme.colorScheme.primary, modifier = Modifier.uiName("UpdateEntryScreen.Text.10", "androidx.compose.material3.Text", uiInspectionSource, "UpdateEntryScreen")
                         )
                         Spacer(Modifier.height(8.dp))
-                        Text(text = note, style = MaterialTheme.typography.bodyMedium)
+                        Text(text = note, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.uiName("UpdateEntryScreen.Text.11", "androidx.compose.material3.Text", uiInspectionSource, "UpdateEntryScreen"))
                     }
                 }
             }
 
             if (food is ProductSnapshot) {
                 item {
-                    HorizontalDivider(Modifier.padding(horizontal = 8.dp))
-                    Column(Modifier.padding(8.dp)) {
+                    HorizontalDivider((Modifier.padding(horizontal = 8.dp)).uiName("UpdateEntryScreen.HorizontalDivider.7", "androidx.compose.material3.HorizontalDivider", uiInspectionSource, "UpdateEntryScreen"))
+                    Column((Modifier.padding(8.dp)).uiName("UpdateEntryScreen.Column.5", "androidx.compose.foundation.layout.Column", uiInspectionSource, "UpdateEntryScreen")) {
                         Text(
                             text = stringResource(Res.string.headline_source),
                             style = MaterialTheme.typography.labelLarge,
-                            color = MaterialTheme.colorScheme.primary,
+                            color = MaterialTheme.colorScheme.primary, modifier = Modifier.uiName("UpdateEntryScreen.Text.12", "androidx.compose.material3.Text", uiInspectionSource, "UpdateEntryScreen")
                         )
                         Spacer(Modifier.height(8.dp))
-                        Source(food.source)
+                        Source(food.source, modifier = Modifier.uiName("UpdateEntryScreen.Source.1", "com.maksimowiczm.foodyou.app.ui.food.diary.component.Source", uiInspectionSource, "UpdateEntryScreen"))
                     }
                 }
             }
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.diary.update",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/UpdateEntryScreen.kt",
+)

@@ -153,6 +153,10 @@ kotlin {
 }
 
 android {
+    // Opt-in isolated-emulator verification of the shipping minified code path.
+    testBuildType = providers.gradleProperty("foodus.testBuildType").orElse("debug").get().also {
+        require(it == "debug" || it == "miniDevRelease") { "Unsupported inspection test build type" }
+    }
     namespace = "com.maksimowiczm.foodyou"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
@@ -173,7 +177,13 @@ android {
         manifestPlaceholders["applicationRoundIcon"] = "@mipmap/ic_launcher_round"
         manifestPlaceholders["applicationLabel"] = "@string/app_name"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner =
+            if (providers.gradleProperty("foodus.platformInspection").orElse("false").get().toBooleanStrict()) {
+                "com.maksimowiczm.foodyou.app.ui.developer.inspection.UiInspectionPlatformInstrumentation"
+            } else {
+                "androidx.test.runner.AndroidJUnitRunner"
+            }
+        testProguardFiles("src/androidInstrumentedTest/proguard-rules.pro")
     }
     packaging { resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" } }
     buildTypes {

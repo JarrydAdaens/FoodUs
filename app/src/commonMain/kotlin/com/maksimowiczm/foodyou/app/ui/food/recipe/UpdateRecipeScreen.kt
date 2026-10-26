@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.food.recipe
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -46,7 +49,7 @@ fun UpdateRecipeScreen(
     }
 
     if(recipe.isReported) {
-        CapturedRecipeEditor(recipe,onBack,onUpdate,modifier)
+        CapturedRecipeEditor(recipe,onBack,onUpdate,(modifier).uiName("UpdateRecipeScreen.CapturedRecipeEditor.1", "com.maksimowiczm.foodyou.app.ui.food.recipe.CapturedRecipeEditor", uiInspectionSource, "UpdateRecipeScreen"))
         return
     }
 
@@ -75,9 +78,9 @@ fun UpdateRecipeScreen(
             onDiscard = {
                 showDiscardDialog = false
                 onBack()
-            },
+            }, modifier = Modifier.uiName("UpdateRecipeScreen.DiscardDialog.1", "com.maksimowiczm.foodyou.app.ui.common.component.DiscardDialog", uiInspectionSource, "UpdateRecipeScreen")
         ) {
-            Text(stringResource(Res.string.question_discard_changes))
+            Text(stringResource(Res.string.question_discard_changes), modifier = Modifier.uiName("UpdateRecipeScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "UpdateRecipeScreen"))
         }
     }
 
@@ -98,6 +101,12 @@ fun UpdateRecipeScreen(
         topBarTitle = stringResource(Res.string.headline_edit_recipe),
         mainRecipeId = recipeId,
         recipe = asRecipe,
-        modifier = modifier,
+        modifier = (modifier).uiName("UpdateRecipeScreen.RecipeApp.1", "com.maksimowiczm.foodyou.app.ui.food.recipe.RecipeApp", uiInspectionSource, "UpdateRecipeScreen"),
     )
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.recipe",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/recipe/UpdateRecipeScreen.kt",
+)

@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.food.component
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -21,26 +24,26 @@ fun ProductSource.Type.Icon(modifier: Modifier = Modifier) {
             Icon(
                 imageVector = Icons.Filled.Person,
                 contentDescription = null,
-                modifier = modifier.size(24.dp),
+                modifier = (modifier.size(24.dp)).uiName("Icon.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "Icon"),
             )
 
         ProductSource.Type.OpenFoodFacts ->
             Image(
                 painter = painterResource(Res.drawable.openfoodfacts_logo),
                 contentDescription = null,
-                modifier = modifier.size(24.dp),
+                modifier = (modifier.size(24.dp)).uiName("app.ui.food.component.Icon.Image.1", "androidx.compose.foundation.Image", uiInspectionSource, "Icon"),
             )
 
         ProductSource.Type.USDA ->
             Image(
                 painter = painterResource(Res.drawable.usda_logo),
                 contentDescription = null,
-                modifier = modifier.size(24.dp),
+                modifier = (modifier.size(24.dp)).uiName("app.ui.food.component.Icon.Image.2", "androidx.compose.foundation.Image", uiInspectionSource, "Icon"),
             )
 
-        ProductSource.Type.SwissFoodCompositionDatabase -> Text("CH", modifier)
+        ProductSource.Type.SwissFoodCompositionDatabase -> Text("CH", (modifier).uiName("Icon.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "Icon"))
 
-        ProductSource.Type.AustralianFoodCompositionDatabase -> Text("AU", modifier)
+        ProductSource.Type.AustralianFoodCompositionDatabase -> Text("AU", (modifier).uiName("Icon.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "Icon"))
     }
 }
 
@@ -55,3 +58,9 @@ fun ProductSource.Type.stringResource(): String =
         ProductSource.Type.AustralianFoodCompositionDatabase ->
             stringResource(Res.string.headline_australian_food_composition_database)
     }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.component",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/component/ProductSource.kt",
+)

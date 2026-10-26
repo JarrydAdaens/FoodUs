@@ -1,5 +1,9 @@
 package com.maksimowiczm.foodyou.app.ui.food.diary.quickadd
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
+
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -60,7 +64,7 @@ fun CreateQuickAddScreen(
             preserveEnergy = scanEstimate != null,
         )
 
-    QuickAddScreen(
+    UiSourceScope(uiInspectionSource.element("CreateQuickAddScreen.QuickAddScreen.1", "com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.QuickAddScreen", "CreateQuickAddScreen")) { QuickAddScreen(
         onBack = { if (!viewModel.saveState.value.busy) onBack() },
         onSave = {
             val name = formState.name.value
@@ -94,5 +98,11 @@ fun CreateQuickAddScreen(
                 onPromoteToRecipe(formState.toPromotionSeed(energyFormatter, originalNutrition))
             }
         },
-    )
+    ) }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.diary.quickadd",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/CreateQuickAddScreen.kt",
+)

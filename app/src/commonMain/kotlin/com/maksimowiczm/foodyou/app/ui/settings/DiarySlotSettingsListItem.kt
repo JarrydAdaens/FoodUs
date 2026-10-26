@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.settings
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Restaurant
 import androidx.compose.material3.Icon
@@ -21,13 +24,19 @@ internal fun DiarySlotSettingsListItem(
     modifier: Modifier = Modifier,
 ) {
     SettingsListItem(
-        icon = { Icon(Icons.Outlined.Restaurant, null) },
-        label = { Text(stringResource(Res.string.headline_diary_slots)) },
-        supportingContent = { Text(stringResource(Res.string.neutral_set_your_diary_slot_schedule)) },
+        icon = { Icon(Icons.Outlined.Restaurant, null, modifier = Modifier.uiName("DiarySlotSettingsListItem.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "DiarySlotSettingsListItem")) },
+        label = { Text(stringResource(Res.string.headline_diary_slots), modifier = Modifier.uiName("DiarySlotSettingsListItem.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotSettingsListItem")) },
+        supportingContent = { Text(stringResource(Res.string.neutral_set_your_diary_slot_schedule), modifier = Modifier.uiName("DiarySlotSettingsListItem.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotSettingsListItem")) },
         onClick = onClick,
-        modifier = modifier,
+        modifier = (modifier).uiName("DiarySlotSettingsListItem.SettingsListItem.1", "com.maksimowiczm.foodyou.app.ui.common.component.SettingsListItem", uiInspectionSource, "DiarySlotSettingsListItem"),
         shape = shape,
         color = color,
         contentColor = contentColor,
     )
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.settings",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/settings/DiarySlotSettingsListItem.kt",
+)

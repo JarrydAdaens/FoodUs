@@ -1,5 +1,10 @@
 package com.maksimowiczm.foodyou.app.ui.meal
 
+
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
+
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -60,7 +65,7 @@ fun DiarySlotSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
     if (diarySlots == null) {
         // TODO loading state
     } else {
-        DiarySlotSettingsScreen(
+        UiSourceScope(uiInspectionSource.element("DiarySlotSettingsScreen.DiarySlotSettingsScreen.1", "com.maksimowiczm.foodyou.app.ui.meal.DiarySlotSettingsScreen", "DiarySlotSettingsScreen")) { DiarySlotSettingsScreen(
             onBack = onBack,
             onDelete = viewModel::deleteDiarySlot,
             onUpdate = { diarySlotId, state ->
@@ -74,7 +79,7 @@ fun DiarySlotSettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             onSaveOrder = viewModel::updateDiarySlotOrder,
             diarySlots = diarySlots,
             modifier = modifier,
-        )
+        ) }
     }
 }
 
@@ -106,11 +111,11 @@ private fun DiarySlotSettingsScreen(
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Scaffold(
-        modifier = modifier,
+        modifier = (modifier).uiName("DiarySlotSettingsScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "DiarySlotSettingsScreen"),
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(Res.string.headline_diary_slots)) },
-                navigationIcon = { ArrowBackIconButton(onBack) },
+                title = { Text(stringResource(Res.string.headline_diary_slots), modifier = Modifier.uiName("DiarySlotSettingsScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotSettingsScreen")) },
+                navigationIcon = { ArrowBackIconButton(onBack, modifier = Modifier.uiName("DiarySlotSettingsScreen.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "DiarySlotSettingsScreen")) },
                 actions = {
                     if (isReordering) {
                         IconButton(
@@ -118,79 +123,79 @@ private fun DiarySlotSettingsScreen(
                                 onSaveOrder(diarySlotsOrder)
                                 isReordering = false
                                 hapticFeedback.performHapticFeedback(HapticFeedbackType.Confirm)
-                            }
+                            }, modifier = Modifier.uiName("DiarySlotSettingsScreen.IconButton.1", "androidx.compose.material3.IconButton", uiInspectionSource, "DiarySlotSettingsScreen")
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Save,
-                                contentDescription = stringResource(Res.string.action_save),
+                                contentDescription = stringResource(Res.string.action_save), modifier = Modifier.uiName("DiarySlotSettingsScreen.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "DiarySlotSettingsScreen")
                             )
                         }
                     } else {
-                        TooltipBox(
+                        UiSourceScope(uiInspectionSource.element("DiarySlotSettingsScreen.TooltipBox.1", "androidx.compose.material3.TooltipBox", "DiarySlotSettingsScreen")) { TooltipBox(
                             positionProvider =
                                 TooltipDefaults.rememberTooltipPositionProvider(
                                     TooltipAnchorPosition.Above
                                 ),
                             tooltip = {
-                                PlainTooltip { Text(stringResource(Res.string.action_reorder)) }
+                                PlainTooltip(modifier = Modifier.uiName("DiarySlotSettingsScreen.PlainTooltip.1", "androidx.compose.material3.PlainTooltip", uiInspectionSource, "DiarySlotSettingsScreen")) { Text(stringResource(Res.string.action_reorder), modifier = Modifier.uiName("DiarySlotSettingsScreen.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotSettingsScreen")) }
                             },
-                            state = rememberTooltipState(),
+                            state = rememberTooltipState(), modifier = Modifier.uiName("DiarySlotSettingsScreen.TooltipBox.1.root", "androidx.compose.material3.TooltipBox", uiInspectionSource, "DiarySlotSettingsScreen")
                         ) {
                             IconButton(
                                 onClick = {
                                     isReordering = true
                                     hapticFeedback.performHapticFeedback(HapticFeedbackType.Confirm)
-                                }
+                                }, modifier = Modifier.uiName("DiarySlotSettingsScreen.IconButton.2", "androidx.compose.material3.IconButton", uiInspectionSource, "DiarySlotSettingsScreen")
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Reorder,
-                                    contentDescription = stringResource(Res.string.action_reorder),
+                                    contentDescription = stringResource(Res.string.action_reorder), modifier = Modifier.uiName("DiarySlotSettingsScreen.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "DiarySlotSettingsScreen")
                                 )
                             }
-                        }
+                        } }
                     }
                 },
                 colors =
                     TopAppBarDefaults.topAppBarColors(
                         scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh
                     ),
-                scrollBehavior = scrollBehavior,
+                scrollBehavior = scrollBehavior, modifier = Modifier.uiName("DiarySlotSettingsScreen.TopAppBar.1", "androidx.compose.material3.TopAppBar", uiInspectionSource, "DiarySlotSettingsScreen")
             )
         },
     ) { paddingValues ->
         LazyColumn(
             modifier =
-                Modifier.fillMaxSize()
+                (Modifier.fillMaxSize()
                     .imePadding()
-                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                    .nestedScroll(scrollBehavior.nestedScrollConnection)).uiName("DiarySlotSettingsScreen.LazyColumn.1", "androidx.compose.foundation.lazy.LazyColumn", uiInspectionSource, "DiarySlotSettingsScreen"),
             state = lazyListState,
             contentPadding = paddingValues.add(vertical = 8.dp),
         ) {
             items(items = diarySlotsOrder, key = { it.id }) { diarySlot ->
                 val state = rememberDiarySlotCardState(diarySlot)
 
-                ReorderableItem(state = reorderableLazyListState, key = diarySlot.id) { isDragging ->
+                ReorderableItem(state = reorderableLazyListState, key = diarySlot.id, modifier = Modifier.uiName("DiarySlotSettingsScreen.ReorderableItem.1", "sh.calvin.reorderable.ReorderableItem", uiInspectionSource, "DiarySlotSettingsScreen")) { isDragging ->
                     DiarySlotCard(
                         state = state,
                         isDragging = isDragging,
                         onSave = { onUpdate(diarySlot.id, state) },
                         onDelete = { onDelete(diarySlot) },
                         modifier =
-                            Modifier.fillMaxWidth()
+                            (Modifier.fillMaxWidth()
                                 .padding(horizontal = 16.dp)
-                                .padding(bottom = 8.dp),
+                                .padding(bottom = 8.dp)).uiName("DiarySlotSettingsScreen.DiarySlotCard.1", "com.maksimowiczm.foodyou.app.ui.meal.DiarySlotCard", uiInspectionSource, "DiarySlotSettingsScreen"),
                         action =
                             if (isReordering) {
                                 {
                                     IconButton(
                                         onClick = {},
                                         modifier =
-                                            Modifier.clearAndSetSemantics {}.hapticDraggableHandle(),
+                                            (Modifier.clearAndSetSemantics {}.hapticDraggableHandle()).uiName("DiarySlotSettingsScreen.IconButton.3", "androidx.compose.material3.IconButton", uiInspectionSource, "DiarySlotSettingsScreen"),
                                     ) {
                                         Icon(
                                             imageVector = Icons.Default.DragHandle,
                                             contentDescription =
-                                                stringResource(Res.string.action_reorder),
+                                                stringResource(Res.string.action_reorder), modifier = Modifier.uiName("DiarySlotSettingsScreen.Icon.3", "androidx.compose.material3.Icon", uiInspectionSource, "DiarySlotSettingsScreen")
                                         )
                                     }
                                 }
@@ -207,9 +212,9 @@ private fun DiarySlotSettingsScreen(
                     onShowFormChange = { showForm = it },
                     onSave = onCreate,
                     modifier =
-                        Modifier.fillMaxWidth()
+                        (Modifier.fillMaxWidth()
                             .padding(horizontal = 16.dp)
-                            .focusRequester(formFocusRequester),
+                            .focusRequester(formFocusRequester)).uiName("DiarySlotSettingsScreen.CreateDiarySlotCard.1", "com.maksimowiczm.foodyou.app.ui.meal.CreateDiarySlotCard", uiInspectionSource, "DiarySlotSettingsScreen"),
                 )
                 Spacer(Modifier.height(8.dp))
             }
@@ -235,12 +240,12 @@ private fun CreateDiarySlotCard(
                 onShowFormChange(false)
             },
             onDelete = { onShowFormChange(false) },
-            modifier = modifier,
+            modifier = (modifier).uiName("CreateDiarySlotCard.DiarySlotCard.1", "com.maksimowiczm.foodyou.app.ui.meal.DiarySlotCard", uiInspectionSource, "CreateDiarySlotCard"),
             action = {
                 when {
                     !state.isModified ->
-                        IconButton(onClick = { onShowFormChange(false) }) {
-                            Icon(imageVector = Icons.Default.Delete, contentDescription = null)
+                        IconButton(onClick = { onShowFormChange(false) }, modifier = Modifier.uiName("CreateDiarySlotCard.IconButton.1", "androidx.compose.material3.IconButton", uiInspectionSource, "CreateDiarySlotCard")) {
+                            Icon(imageVector = Icons.Default.Delete, contentDescription = null, modifier = Modifier.uiName("CreateDiarySlotCard.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "CreateDiarySlotCard"))
                         }
 
                     else ->
@@ -249,11 +254,11 @@ private fun CreateDiarySlotCard(
                                 onSave(state)
                                 onShowFormChange(false)
                             },
-                            enabled = state.isValid,
+                            enabled = state.isValid, modifier = Modifier.uiName("CreateDiarySlotCard.FilledIconButton.1", "androidx.compose.material3.FilledIconButton", uiInspectionSource, "CreateDiarySlotCard")
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Save,
-                                contentDescription = stringResource(Res.string.action_save),
+                                contentDescription = stringResource(Res.string.action_save), modifier = Modifier.uiName("CreateDiarySlotCard.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "CreateDiarySlotCard")
                             )
                         }
                 }
@@ -262,16 +267,22 @@ private fun CreateDiarySlotCard(
     } else {
         Surface(
             onClick = { onShowFormChange(true) },
-            modifier = modifier,
+            modifier = (modifier).uiName("CreateDiarySlotCard.Surface.1", "androidx.compose.material3.Surface", uiInspectionSource, "CreateDiarySlotCard"),
             shape = MaterialTheme.shapes.medium,
             color = MaterialTheme.colorScheme.surfaceContainer,
         ) {
-            Box(modifier = Modifier.padding(16.dp), contentAlignment = Alignment.Center) {
+            Box(modifier = (Modifier.padding(16.dp)).uiName("CreateDiarySlotCard.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "CreateDiarySlotCard"), contentAlignment = Alignment.Center) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = stringResource(Res.string.action_add_diary_slot),
+                    contentDescription = stringResource(Res.string.action_add_diary_slot), modifier = Modifier.uiName("CreateDiarySlotCard.Icon.3", "androidx.compose.material3.Icon", uiInspectionSource, "CreateDiarySlotCard")
                 )
             }
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.meal",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/DiarySlotSettingsScreen.kt",
+)

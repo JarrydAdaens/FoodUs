@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.notifications
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -46,18 +49,18 @@ internal fun NotificationsScreen(modifier: Modifier = Modifier) {
     val showHistory = viewModel.showHistory.collectAsStateWithLifecycle().value
 
     Scaffold(
-        modifier = modifier,
+        modifier = (modifier).uiName("NotificationsScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "NotificationsScreen"),
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(Res.string.tab_notifications)) },
+                title = { Text(stringResource(Res.string.tab_notifications), modifier = Modifier.uiName("NotificationsScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "NotificationsScreen")) },
                 actions = {
                     if (!showHistory && notifications.isNotEmpty()) {
                         val dismissAll = stringResource(Res.string.action_dismiss_all_notifications)
 
-                        IconButton(onClick = viewModel::onDismissAll) {
+                        IconButton(onClick = viewModel::onDismissAll, modifier = Modifier.uiName("NotificationsScreen.IconButton.1", "androidx.compose.material3.IconButton", uiInspectionSource, "NotificationsScreen")) {
                             Icon(
                                 imageVector = Icons.Filled.DoneAll,
-                                contentDescription = dismissAll,
+                                contentDescription = dismissAll, modifier = Modifier.uiName("NotificationsScreen.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "NotificationsScreen")
                             )
                         }
                     }
@@ -68,24 +71,24 @@ internal fun NotificationsScreen(modifier: Modifier = Modifier) {
                             else Res.string.action_show_notification_history
                         )
 
-                    IconButton(onClick = viewModel::onToggleHistory) {
-                        Icon(imageVector = Icons.Filled.History, contentDescription = history)
+                    IconButton(onClick = viewModel::onToggleHistory, modifier = Modifier.uiName("NotificationsScreen.IconButton.2", "androidx.compose.material3.IconButton", uiInspectionSource, "NotificationsScreen")) {
+                        Icon(imageVector = Icons.Filled.History, contentDescription = history, modifier = Modifier.uiName("NotificationsScreen.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "NotificationsScreen"))
                     }
-                },
+                }, modifier = Modifier.uiName("NotificationsScreen.TopAppBar.1", "androidx.compose.material3.TopAppBar", uiInspectionSource, "NotificationsScreen")
             )
         },
     ) { paddingValues ->
-        Box(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
+        Box(modifier = (Modifier.fillMaxSize().padding(paddingValues)).uiName("NotificationsScreen.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "NotificationsScreen")) {
             if (notifications.isEmpty()) {
                 EmptyNotifications(showHistory = showHistory)
             } else {
-                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                LazyColumn(modifier = (Modifier.fillMaxSize()).uiName("NotificationsScreen.LazyColumn.1", "androidx.compose.foundation.lazy.LazyColumn", uiInspectionSource, "NotificationsScreen")) {
                     items(items = notifications, key = { it.id }) { notification ->
                         NotificationListItem(
                             notification = notification,
                             onDismiss = { viewModel.onDismiss(notification.id) },
                         )
-                        HorizontalDivider()
+                        HorizontalDivider( modifier = Modifier.uiName("NotificationsScreen.HorizontalDivider.1", "androidx.compose.material3.HorizontalDivider", uiInspectionSource, "NotificationsScreen"))
                     }
                 }
             }
@@ -95,7 +98,7 @@ internal fun NotificationsScreen(modifier: Modifier = Modifier) {
 
 @Composable
 private fun EmptyNotifications(showHistory: Boolean) {
-    Box(modifier = Modifier.fillMaxSize().padding(32.dp), contentAlignment = Alignment.Center) {
+    Box(modifier = (Modifier.fillMaxSize().padding(32.dp)).uiName("EmptyNotifications.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "EmptyNotifications"), contentAlignment = Alignment.Center) {
         Text(
             text =
                 stringResource(
@@ -104,7 +107,7 @@ private fun EmptyNotifications(showHistory: Boolean) {
                 ),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
-            textAlign = TextAlign.Center,
+            textAlign = TextAlign.Center, modifier = Modifier.uiName("EmptyNotifications.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "EmptyNotifications")
         )
     }
 }
@@ -116,18 +119,24 @@ private fun NotificationListItem(notification: AppNotification, onDismiss: () ->
             .toLocalDateTime(TimeZone.currentSystemDefault())
 
     ListItem(
-        headlineContent = { Text(text = notification.displayText()) },
-        supportingContent = { Text(text = LocalDateFormatter.current.formatDateTime(dateTime)) },
+        headlineContent = { Text(text = notification.displayText(), modifier = Modifier.uiName("NotificationListItem.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "NotificationListItem")) },
+        supportingContent = { Text(text = LocalDateFormatter.current.formatDateTime(dateTime), modifier = Modifier.uiName("NotificationListItem.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "NotificationListItem")) },
         trailingContent = {
             // Dismissed rows are only ever visible in the history view, where there is nothing left
             // to dismiss.
             if (!notification.isDismissed) {
                 val dismiss = stringResource(Res.string.action_dismiss_notification)
 
-                IconButton(onClick = onDismiss) {
-                    Icon(imageVector = Icons.Filled.Close, contentDescription = dismiss)
+                IconButton(onClick = onDismiss, modifier = Modifier.uiName("NotificationListItem.IconButton.1", "androidx.compose.material3.IconButton", uiInspectionSource, "NotificationListItem")) {
+                    Icon(imageVector = Icons.Filled.Close, contentDescription = dismiss, modifier = Modifier.uiName("NotificationListItem.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "NotificationListItem"))
                 }
             }
-        },
+        }, modifier = Modifier.uiName("NotificationListItem.ListItem.1", "androidx.compose.material3.ListItem", uiInspectionSource, "NotificationListItem")
     )
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.notifications",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/notifications/NotificationsScreen.kt",
+)

@@ -2,7 +2,7 @@
 name: design
 description: Design specification for FoodUs - a personal, privacy-first fork of the Food You KMP/Compose food diary - covering architecture, principles, constraints, the context tier system, and the embedded milestones index.
 metadata:
-  version: "3.3"
+  version: "3.4"
   agentic_rails_source_version: "3.0"
   owner: "Jarryd Adaens"
   repo: "FoodYou (fork of maksimowiczm/FoodYou)"
@@ -92,7 +92,7 @@ The backlog (`backlog/`) is not a numbered tier. It is a staging pool — inform
 | Milestone | Document | Status | Why it matters | What it unlocks |
 | --- | --- | --- | --- | --- |
 | Milestone 1: Initialization | [milestones/milestone-1.md](milestones/milestone-1.md) | Complete | Gets the fork built, deployed, populated with the owner's recovered historical data, and in daily use, with a repeatable two-device update mechanism | A live, data-complete daily driver that Milestone 2 can safely customize |
-| Milestone 2: Customisation | [milestones/milestone-2.md](milestones/milestone-2.md) | In Progress (reopened 2026-07-26) | Makes the app the owner's own: FoodUs identity, AI-assisted logging, ergonomics fixes, adopted upstream bug fixes | An app that is faster to log with than MyFitnessPal/Lose It ever were, unmistakably this fork |
+| Milestone 2: Customisation | [milestones/milestone-2.md](milestones/milestone-2.md) | In Progress (reopened 2026-07-26) | Makes the app the owner's own: FoodUs identity, AI-assisted logging, ergonomics fixes, adopted upstream bug fixes, and a developer UI name bar | An app that is faster to log with, unmistakably this fork, with source-oriented UI identification for agent collaboration |
 | Milestone 3: Multiplayer | [milestones/milestone-3.md](milestones/milestone-3.md) | In Progress (started 2026-07-28) | Cross-diary logging for the household pair — log a shared meal once and it lands in both diaries — via profiles, friends, two-person trusted groups, and a dumb encrypted relay | A multi-user FoodUs that stays local-first: the island broken in exactly one controlled place |
 | Milestone B: Bugs (supplementary) | [milestones/milestone-b.md](milestones/milestone-b.md) | Complete (2026-10-25) | Ten reported bugs and UX improvements covering onboarding, AI scanning, Quick Add, release history, and API-key masking | A dependable scan-to-diary workflow and clearer daily-use controls; closed B Stories add to the current numbered milestone's version count |
 
@@ -601,6 +601,18 @@ No analytics or crash reporting by design. Debugging is standard Android tooling
 UI tooling in debug builds, and adb against a device/emulator. The only server-side component is
 the planned Milestone 3 relay; its operational needs (health checks, sweep verification,
 monitoring) are owned by the foodus-relay repository.
+
+[Milestone 2 Story 29](milestones/milestone-2.md#story-29) adds an off-by-default developer
+UI name bar available in released builds. A roughly three-second deep press identifies a
+visible element; Copy exports its identifier, optionally with detailed hierarchy, fully
+qualified component/composable and owning symbols, and repository source locators. The output
+prioritizes agent comprehension and finding the implementation; verbose structured text such
+as XML is acceptable. While enabled, holds are reserved for inspection; disabling the bar
+restores normal long presses, per the owner's 2026-10-26 interaction decision. The naming pass
+and runtime proof of suppression/restoration belong to that Story.
+Export describes UI structure without credentials, private relay addresses, or diary/field
+contents, and introduces no automatic transmission. Supplemental agent tooling is conditional
+on demonstrated need.
 
 ---
 

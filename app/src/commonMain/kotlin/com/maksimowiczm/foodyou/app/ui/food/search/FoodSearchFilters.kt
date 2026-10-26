@@ -1,5 +1,10 @@
 package com.maksimowiczm.foodyou.app.ui.food.search
 
+
+
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.size
@@ -30,7 +35,7 @@ internal fun FoodSearchFilters(
 
     LazyHorizontalStaggeredGrid(
         rows = StaggeredGridCells.Fixed(2),
-        modifier = modifier,
+        modifier = (modifier).uiName("FoodSearchFilters.LazyHorizontalStaggeredGrid.1", "androidx.compose.foundation.lazy.staggeredgrid.LazyHorizontalStaggeredGrid", uiInspectionSource, "FoodSearchFilters"),
         contentPadding = contentPadding,
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalItemSpacing = 8.dp,
@@ -73,26 +78,26 @@ internal fun FoodSearchFilters(
             FilterChip(
                 selected = selected,
                 onClick = { onSource(source) },
-                label = { Text(source.stringResource()) },
-                modifier = Modifier.animateItem(),
-                leadingIcon = { source.Icon(Modifier.size(FilterChipDefaults.IconSize)) },
+                label = { Text(source.stringResource(), modifier = Modifier.uiName("FoodSearchFilters.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "FoodSearchFilters")) },
+                modifier = (Modifier.animateItem()).uiName("FoodSearchFilters.FilterChip.1", "androidx.compose.material3.FilterChip", uiInspectionSource, "FoodSearchFilters"),
+                leadingIcon = { source.Icon((Modifier.size(FilterChipDefaults.IconSize)).uiName("app.ui.food.search.FoodSearchFilters.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "FoodSearchFilters")) },
                 trailingIcon = {
                     if (hasError) {
                         Icon(
                             imageVector = Icons.Outlined.Warning,
                             contentDescription = null,
-                            modifier = Modifier.size(FilterChipDefaults.IconSize),
+                            modifier = (Modifier.size(FilterChipDefaults.IconSize)).uiName("app.ui.food.search.FoodSearchFilters.Icon.1.declaration2", "androidx.compose.material3.Icon", uiInspectionSource, "FoodSearchFilters"),
                         )
                     } else {
                         if (state.remoteEnabled != RemoteStatus.LocalOnly && isLoading) {
                             CircularProgressIndicator(
-                                modifier = Modifier.size(FilterChipDefaults.IconSize),
+                                modifier = (Modifier.size(FilterChipDefaults.IconSize)).uiName("FoodSearchFilters.CircularProgressIndicator.1", "androidx.compose.material3.CircularProgressIndicator", uiInspectionSource, "FoodSearchFilters"),
                                 strokeWidth = 2.dp,
                             )
                         } else {
                             Text(
                                 text = state.count.toString(),
-                                style = MaterialTheme.typography.bodySmall,
+                                style = MaterialTheme.typography.bodySmall, modifier = Modifier.uiName("FoodSearchFilters.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "FoodSearchFilters")
                             )
                         }
                     }
@@ -103,3 +108,9 @@ internal fun FoodSearchFilters(
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.search",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodSearchFilters.kt",
+)
