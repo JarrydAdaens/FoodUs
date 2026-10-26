@@ -5,7 +5,7 @@ import com.maksimowiczm.foodyou.common.log.logAndReturnFailure
 import com.maksimowiczm.foodyou.common.result.Ok
 import com.maksimowiczm.foodyou.common.result.Result
 import com.maksimowiczm.foodyou.common.result.fold
-import com.maksimowiczm.foodyou.food.domain.entity.RemoteFoodException
+import com.maksimowiczm.foodyou.food.domain.entity.RemoteProductException
 import com.maksimowiczm.foodyou.food.domain.entity.RemoteProduct
 import com.maksimowiczm.foodyou.food.domain.repository.RemoteProductRequestFactory
 
@@ -15,7 +15,7 @@ sealed interface DownloadProductError {
 
     data object UrlNotSupported : DownloadProductError
 
-    data class RemoteFoodError(val exception: RemoteFoodException) : DownloadProductError
+    data class RemoteFoodError(val exception: RemoteProductException) : DownloadProductError
 }
 
 class DownloadProductUseCase(

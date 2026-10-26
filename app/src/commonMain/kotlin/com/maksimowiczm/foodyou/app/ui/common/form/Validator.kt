@@ -20,7 +20,7 @@ fun <E> nonNegativeFloatValidator(
 ): (Float?) -> E? = {
     when {
         it == null -> onNull()
-        it < 0f -> onNegative()
+        !it.isFinite() || it < 0f -> onNegative()
         else -> null
     }
 }
@@ -31,7 +31,7 @@ fun <E> positiveFloatValidator(
 ): (Float?) -> E? = {
     when {
         it == null -> onNull()
-        it <= 0f -> onNotPositive()
+        !it.isFinite() || it <= 0f -> onNotPositive()
         else -> null
     }
 }
@@ -66,7 +66,7 @@ fun <E> nonNegativeDoubleValidator(
 ): (Double?) -> E? = {
     when {
         it == null -> onNull()
-        it < 0.0 -> onNegative()
+        !it.isFinite() || it < 0.0 -> onNegative()
         else -> null
     }
 }
@@ -77,7 +77,7 @@ fun <E> positiveDoubleValidator(
 ): (Double?) -> E? = {
     when {
         it == null -> onNull()
-        it <= 0.0 -> onNotPositive()
+        !it.isFinite() || it <= 0.0 -> onNotPositive()
         else -> null
     }
 }

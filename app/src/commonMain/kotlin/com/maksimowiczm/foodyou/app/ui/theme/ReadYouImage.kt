@@ -14,6 +14,9 @@
  */
 package com.maksimowiczm.foodyou.app.ui.theme
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.material3.MaterialTheme
@@ -52,7 +55,7 @@ internal fun ReadYouImage(modifier: Modifier = Modifier) {
     val tertiary40 = remember(tertiaryTonal) { Color(tertiaryTonal.tone(40)) }
     val onSurface = colorScheme.onSurface
 
-    Canvas(modifier.aspectRatio(348f / 266f)) {
+    Canvas((modifier.aspectRatio(348f / 266f)).uiName("ReadYouImage.Canvas.1", "androidx.compose.foundation.Canvas", uiInspectionSource, "ReadYouImage")) {
         val canvasWidth = size.width
         val canvasHeight = size.height
         val scaleX = canvasWidth / 348f
@@ -360,3 +363,9 @@ internal fun ReadYouImage(modifier: Modifier = Modifier) {
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.theme",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/theme/ReadYouImage.kt",
+)

@@ -1,5 +1,9 @@
 package com.maksimowiczm.foodyou.app.ui.database.externaldatabases
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
+
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.OutlinedTextField
@@ -33,7 +37,7 @@ fun UpdateUsdaApiKeyDialog(
 
     val textFieldState = rememberTextFieldState(foodSearchPreferences.usda.apiKey ?: "")
 
-    AlertDialog(
+    UiSourceScope(uiInspectionSource.element("UpdateUsdaApiKeyDialog.AlertDialog.1", "androidx.compose.material3.AlertDialog", "UpdateUsdaApiKeyDialog")) { AlertDialog(
         onDismissRequest = onDismissRequest,
         confirmButton = {
             TextButton(
@@ -45,21 +49,27 @@ fun UpdateUsdaApiKeyDialog(
                         }
                         onSave()
                     }
-                }
+                }, modifier = Modifier.uiName("UpdateUsdaApiKeyDialog.TextButton.1", "androidx.compose.material3.TextButton", uiInspectionSource, "UpdateUsdaApiKeyDialog")
             ) {
-                Text(stringResource(Res.string.action_save))
+                Text(stringResource(Res.string.action_save), modifier = Modifier.uiName("UpdateUsdaApiKeyDialog.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "UpdateUsdaApiKeyDialog"))
             }
         },
-        modifier = modifier,
+        modifier = (modifier).uiName("UpdateUsdaApiKeyDialog.AlertDialog.1.root", "androidx.compose.material3.AlertDialog", uiInspectionSource, "UpdateUsdaApiKeyDialog"),
         dismissButton = {
-            TextButton(onDismissRequest) { Text(stringResource(Res.string.action_cancel)) }
+            TextButton(onDismissRequest, modifier = Modifier.uiName("UpdateUsdaApiKeyDialog.TextButton.2", "androidx.compose.material3.TextButton", uiInspectionSource, "UpdateUsdaApiKeyDialog")) { Text(stringResource(Res.string.action_cancel), modifier = Modifier.uiName("UpdateUsdaApiKeyDialog.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "UpdateUsdaApiKeyDialog")) }
         },
-        title = { Text(stringResource(Res.string.action_set_key)) },
+        title = { Text(stringResource(Res.string.action_set_key), modifier = Modifier.uiName("UpdateUsdaApiKeyDialog.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "UpdateUsdaApiKeyDialog")) },
         text = {
             OutlinedTextField(
                 state = textFieldState,
-                placeholder = { Text(stringResource(Res.string.headline_api_key)) },
+                placeholder = { Text(stringResource(Res.string.headline_api_key), modifier = Modifier.uiName("UpdateUsdaApiKeyDialog.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "UpdateUsdaApiKeyDialog")) }, modifier = Modifier.uiName("UpdateUsdaApiKeyDialog.OutlinedTextField.1", "androidx.compose.material3.OutlinedTextField", uiInspectionSource, "UpdateUsdaApiKeyDialog")
             )
         },
-    )
+    ) }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.database.externaldatabases",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/database/externaldatabases/UpdateUsdaApiKeyDialog.kt",
+)

@@ -6,7 +6,7 @@
     <string name="headline_daily_goals">Günlük hedefler</string>
     <string name="headline_general">Genel</string>
     <string name="headline_macronutrients">Makro besinler</string>
-    <string name="headline_meals">Öğünler</string>
+    <string name="headline_diary_slots">Öğünler</string>
     <string name="headline_delete_food">Besini sil</string>
     <string name="headline_edit_product">Ürünü düzenle</string>
     <string name="headline_permission_required">İzin gerekiyor</string>
@@ -30,7 +30,7 @@
     <string name="headline_home" description="Home screen">Ana sayfa</string>
     <string name="headline_home_settings" description="Home screen settings">Ana sayfa ayarları</string>
     <string name="headline_calendar">Takvim</string>
-    <string name="headline_meals_settings">Öğün ayarları</string>
+    <string name="headline_diary_slots_settings">Öğün ayarları</string>
     <string name="headline_horizontal">Yatay</string>
     <string name="headline_vertical">Dikey</string>
     <string name="headline_values_per">Değer ölçüsü</string>
@@ -124,7 +124,7 @@
     <string name="action_save">Kaydet</string>
     <string name="action_delete">Sil</string>
     <string name="action_confirm">Onayla</string>
-    <string name="action_add_meal">Öğün ekle</string>
+    <string name="action_add_diary_slot">Öğün ekle</string>
     <string name="action_edit">Düzenle</string>
     <string name="action_insert_suggested_search">Önerilen aramayı ekle</string>
     <string name="action_edit_entry">Kaydı düzenle</string>
@@ -142,7 +142,7 @@
     <string name="action_move_up" description="reorder list item up">Yukarı taşı</string>
     <string name="action_move_down" description="reorder list item down">Aşağı taşı</string>
     <string name="action_use_time_based_ordering">Zamana dayalı sıralama kullan</string>
-    <string name="action_ignore_all_day_meals">Tüm gün süren öğünleri yoksay</string>
+    <string name="action_ignore_all_day_diary_slots">Tüm gün süren öğünleri yoksay</string>
     <string name="action_add_ingredient" description="Add ingredient to the recipe">Malzeme ekle</string>
     <string name="action_delete_ingredient">Malzemeyi sil</string>
     <string name="action_download">İndir</string>
@@ -172,9 +172,9 @@
         <item quantity="other">%1$d kilojul kaldı</item>
     </plurals>
     <string name="neutral_set_your_daily_goals">Günlük beslenme hedeflerinizi belirleyin</string>
-    <string name="neutral_set_your_meal_schedule">Öğün programınızı belirleyin</string>
-    <string name="neutral_permanently_delete_meal">Öğün kalıcı olarak silinsin mi?</string>
-    <string name="neutral_meal_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">Öğün kalıcı olarak silinecek. Bu öğünle ilgili tüm veriler kaybolacak.</string>
+    <string name="neutral_set_your_diary_slot_schedule">Öğün programınızı belirleyin</string>
+    <string name="neutral_permanently_delete_diary_slot">Öğün kalıcı olarak silinsin mi?</string>
+    <string name="neutral_diary_slot_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">Öğün kalıcı olarak silinecek. Bu öğünle ilgili tüm veriler kaybolacak.</string>
     <string name="neutral_required">Gerekli</string>
     <string name="neutral_help_translating_the_app">Uygulamayı çevirmeye yardım et</string>
     <string name="neutral_copied">Bilgi panoya kopyalandı</string>
@@ -207,8 +207,8 @@
     <string name="description_delete_food">Besin kalıcı olarak silinecek</string>
     <string name="description_delete_product_entry" description="Tell user that this entry will be deleted only from diary and won't affect the product itself. Product won't be deleted from the database.">Bu kayıt günlüğünüzden silinecek. İstediğiniz zaman tekrar ekleyebilirsiniz.</string>
     <string name="description_about_setting">Uygulama hakkında daha fazla bilgi edinin</string>
-    <string name="description_time_based_meals_sorting">Etkinleştirildiğinde, o anki saate uygun olan öğünler ilk sırada gösterilir</string>
-    <string name="description_action_ignore_all_day_meals">Tüm gün süren öğünler listenin sonunda gösterilir</string>
+    <string name="description_time_based_diary_slots_sorting">Etkinleştirildiğinde, o anki saate uygun olan öğünler ilk sırada gösterilir</string>
+    <string name="description_action_ignore_all_day_diary_slots">Tüm gün süren öğünler listenin sonunda gösterilir</string>
     <string name="description_incomplete_nutrition_data">Kullanılan bazı ürünlerde bu değer eksik; bu nedenle gösterilen değer doğru olmayabilir</string>
     <string name="description_translation_warning">Çeviriler gönüllüler tarafından yapılmaktadır. Kusursuz olmayabilirler ve bazı çeviriler eksik olabilir. Herhangi bir hata fark ederseniz düzeltilmesine yardımcı olmaktan çekinmeyin.</string>
     <string name="description_home_settings">Ana sayfanızı özelleştirin</string>

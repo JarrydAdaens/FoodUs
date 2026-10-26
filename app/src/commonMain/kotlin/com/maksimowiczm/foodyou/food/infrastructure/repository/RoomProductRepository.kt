@@ -1,12 +1,13 @@
 package com.maksimowiczm.foodyou.food.infrastructure.repository
 
-import com.maksimowiczm.foodyou.common.domain.food.FoodSource
+import com.maksimowiczm.foodyou.common.domain.food.ProductSource
 import com.maksimowiczm.foodyou.common.domain.food.NutritionFacts
 import com.maksimowiczm.foodyou.common.infrastructure.room.toDomain
 import com.maksimowiczm.foodyou.common.infrastructure.room.toEntity
 import com.maksimowiczm.foodyou.common.infrastructure.room.toEntityNutrients
+import com.maksimowiczm.foodyou.common.infrastructure.room.toValidatedEntityNutrients
 import com.maksimowiczm.foodyou.common.infrastructure.room.toNutritionFacts
-import com.maksimowiczm.foodyou.food.domain.entity.FoodId
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
 import com.maksimowiczm.foodyou.food.domain.entity.Product
 import com.maksimowiczm.foodyou.food.domain.repository.ProductRepository
 import com.maksimowiczm.foodyou.food.infrastructure.room.ProductDao
@@ -18,7 +19,7 @@ internal class RoomProductRepository(private val productDao: ProductDao) : Produ
     override fun observeProducts(limit: Int, offset: Int): Flow<List<Product>> =
         productDao.observeProducts(limit, offset).map { list -> list.map { it.toModel() } }
 
-    override fun observeProduct(id: FoodId.Product): Flow<Product?> =
+    override fun observeProduct(id: NutritionalItemId.Product): Flow<Product?> =
         productDao.observeProduct(id.id).map { it?.toModel() }
 
     override suspend fun deleteProduct(product: Product) {
@@ -34,13 +35,13 @@ internal class RoomProductRepository(private val productDao: ProductDao) : Produ
         isLiquid: Boolean,
         packageWeight: Double?,
         servingWeight: Double?,
-        source: FoodSource,
+        source: ProductSource,
         nutritionFacts: NutritionFacts,
         sourceRecordId: String?,
-    ): FoodId.Product {
+    ): NutritionalItemId.Product {
         val product =
             Product(
-                id = FoodId.Product(0), // Temporary ID, will be replaced upon insertion
+                id = NutritionalItemId.Product(0), // Temporary ID, will be replaced upon insertion
                 name = name,
                 brand = brand,
                 barcode = barcode,
@@ -53,7 +54,7 @@ internal class RoomProductRepository(private val productDao: ProductDao) : Produ
             )
         val entity = product.toEntity().copy(sourceRecordId = sourceRecordId)
         val id = productDao.insertProduct(entity)
-        return FoodId.Product(id)
+        return NutritionalItemId.Product(id)
     }
 
     override suspend fun insertUniqueProduct(
@@ -64,13 +65,13 @@ internal class RoomProductRepository(private val productDao: ProductDao) : Produ
         isLiquid: Boolean,
         packageWeight: Double?,
         servingWeight: Double?,
-        source: FoodSource,
+        source: ProductSource,
         nutritionFacts: NutritionFacts,
         sourceRecordId: String?,
-    ): FoodId.Product? {
+    ): NutritionalItemId.Product? {
         val product =
             Product(
-                id = FoodId.Product(0), // Temporary ID, will be replaced upon insertion
+                id = NutritionalItemId.Product(0), // Temporary ID, will be replaced upon insertion
                 name = name,
                 brand = brand,
                 barcode = barcode,
@@ -83,15 +84,18 @@ internal class RoomProductRepository(private val productDao: ProductDao) : Produ
             )
         return productDao
             .insertUniqueProduct(product.toEntity().copy(sourceRecordId = sourceRecordId))
-            ?.let(FoodId::Product)
+            ?.let(NutritionalItemId::Product)
     }
 
     override suspend fun updateProduct(product: Product) {
-        productDao.updateProduct(product.toEntity())
+        productDao.updateProduct(product.toEntity(validateNutrition=product.factBasis==com.maksimowiczm.foodyou.common.domain.food.ProductFactBasis.REFERENCE_SERVING || product.nutritionMetadata?.reference!=null))
     }
 
-    override suspend fun deleteProductsBySource(source: FoodSource.Type) {
-        require(source != FoodSource.Type.User) {
+    override suspend fun insertProduct(product: Product): NutritionalItemId.Product =
+        NutritionalItemId.Product(productDao.insertProduct(product.toEntity(validateNutrition = true).copy(id = 0)))
+
+    override suspend fun deleteProductsBySource(source: ProductSource.Type) {
+        require(source != ProductSource.Type.User) {
             "Refusing to bulk-delete user products; delete-by-source is only for downloaded providers"
         }
         productDao.deleteProductsBySource(source.toEntity())
@@ -100,7 +104,7 @@ internal class RoomProductRepository(private val productDao: ProductDao) : Produ
 
 private fun ProductEntity.toModel(): Product =
     Product(
-        id = FoodId.Product(this.id),
+        id = NutritionalItemId.Product(this.id),
         name = this.name,
         brand = this.brand,
         barcode = this.barcode,
@@ -108,15 +112,18 @@ private fun ProductEntity.toModel(): Product =
         isLiquid = this.isLiquid,
         packageWeight = this.packageWeight,
         servingWeight = this.servingWeight,
-        source = FoodSource(type = this.sourceType.toDomain(), url = this.sourceUrl),
+        source = ProductSource(type = this.sourceType.toDomain(), url = this.sourceUrl),
         nutritionFacts = this.toNutritionFacts(),
+        factBasis = this.factBasis,
+        referencePortion = this.referencePortion,
+        nutritionMetadata = this.nutritionMetadata,
     )
 
 private fun ProductEntity.toNutritionFacts(): NutritionFacts =
     toNutritionFacts(nutrients, vitamins, minerals)
 
-private fun Product.toEntity(): ProductEntity {
-    val (nutrients, vitamins, minerals) = toEntityNutrients(nutritionFacts)
+private fun Product.toEntity(validateNutrition: Boolean = false): ProductEntity {
+    val (nutrients, vitamins, minerals) = if (validateNutrition) toValidatedEntityNutrients(nutritionFacts) else toEntityNutrients(nutritionFacts)
 
     return ProductEntity(
         id = id.id,
@@ -132,5 +139,8 @@ private fun Product.toEntity(): ProductEntity {
         sourceType = source.type.toEntity(),
         sourceUrl = source.url,
         isLiquid = isLiquid,
+        factBasis = factBasis,
+        referencePortion = referencePortion,
+        nutritionMetadata = nutritionMetadata,
     )
 }

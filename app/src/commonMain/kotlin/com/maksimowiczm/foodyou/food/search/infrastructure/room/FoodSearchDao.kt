@@ -5,7 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.maksimowiczm.foodyou.common.infrastructure.room.FoodSourceType
+import com.maksimowiczm.foodyou.common.infrastructure.room.ProductSourceType
 import com.maksimowiczm.foodyou.common.infrastructure.room.FoodSourceTypeSQLConstants
 import kotlinx.coroutines.flow.Flow
 
@@ -54,7 +54,7 @@ interface FoodSearchDao {
         ORDER BY headline COLLATE NOCASE ASC
         """
     )
-    fun observeFood(source: FoodSourceType?, excludedRecipeId: Long?): PagingSource<Int, FoodSearch>
+    fun observeFood(source: ProductSourceType?, excludedRecipeId: Long?): PagingSource<Int, NutritionalItemSearch>
 
     @Query(
         """
@@ -80,7 +80,7 @@ interface FoodSearchDao {
         SELECT (SELECT COUNT(*) FROM ProductsSearch) + (SELECT COUNT(*) FROM RecipesSearch) 
         """
     )
-    fun observeFoodCount(source: FoodSourceType?, excludedRecipeId: Long?): Flow<Int>
+    fun observeFoodCount(source: ProductSourceType?, excludedRecipeId: Long?): Flow<Int>
 
     @Query(
         """
@@ -115,9 +115,9 @@ interface FoodSearchDao {
     )
     fun observeFoodByQuery(
         query: String,
-        source: FoodSourceType?,
+        source: ProductSourceType?,
         excludedRecipeId: Long?,
-    ): PagingSource<Int, FoodSearch>
+    ): PagingSource<Int, NutritionalItemSearch>
 
     @Query(
         """
@@ -147,7 +147,7 @@ interface FoodSearchDao {
     )
     fun observeFoodCountByQuery(
         query: String,
-        source: FoodSourceType?,
+        source: ProductSourceType?,
         excludedRecipeId: Long?,
     ): Flow<Int>
 
@@ -163,8 +163,8 @@ interface FoodSearchDao {
     )
     fun observeFoodByBarcode(
         barcode: String,
-        source: FoodSourceType?,
-    ): PagingSource<Int, FoodSearch>
+        source: ProductSourceType?,
+    ): PagingSource<Int, NutritionalItemSearch>
 
     @Query(
         """
@@ -175,7 +175,7 @@ interface FoodSearchDao {
             (:source IS NULL OR p.sourceType = :source)
         """
     )
-    fun observeFoodCountByBarcode(barcode: String, source: FoodSourceType?): Flow<Int>
+    fun observeFoodCountByBarcode(barcode: String, source: ProductSourceType?): Flow<Int>
 
     @Query(
         """
@@ -222,7 +222,7 @@ interface FoodSearchDao {
         query: String,
         nowEpochSeconds: Long,
         excludedRecipeId: Long? = null,
-    ): PagingSource<Int, FoodSearch>
+    ): PagingSource<Int, NutritionalItemSearch>
 
     @Query(
         """
@@ -300,7 +300,7 @@ interface FoodSearchDao {
     fun observeRecentFood(
         nowEpochSeconds: Long,
         excludedRecipeId: Long? = null,
-    ): PagingSource<Int, FoodSearch>
+    ): PagingSource<Int, NutritionalItemSearch>
 
     @Query(
         """
@@ -344,7 +344,7 @@ interface FoodSearchDao {
     fun observeRecentFoodByBarcode(
         barcode: String,
         nowEpochSeconds: Long,
-    ): PagingSource<Int, FoodSearch>
+    ): PagingSource<Int, NutritionalItemSearch>
 
     @Query(
         """
@@ -413,7 +413,11 @@ p.seleniumMicro,
 p.iodineMicro,
 p.chromiumMicro,
 p.packageWeight as totalWeight,
-p.servingWeight as servingWeight
+p.servingWeight as servingWeight,
+p.factBasis AS factBasis,
+p.referencePortion AS referencePortion,
+NULL AS reportedNutrition,
+NULL AS recipeYield
 """
 
 private const val RECIPE_FOOD_SEARCH_SQL_SELECT =
@@ -466,7 +470,11 @@ NULL AS seleniumMicro,
 NULL AS iodineMicro,
 NULL AS chromiumMicro,
 NULL AS totalWeight,
-NULL AS servingWeight
+NULL AS servingWeight,
+NULL AS factBasis,
+NULL AS referencePortion,
+r.reportedNutrition AS reportedNutrition,
+r.servings AS recipeYield
 """
 
 private const val FOOD_SEARCH_SQL_SELECT =
@@ -520,6 +528,10 @@ iodineMicro,
 chromiumMicro,
 totalWeight,
 servingWeight,
+factBasis,
+referencePortion,
+reportedNutrition,
+recipeYield,
 measurementType,
 measurementValue
 """

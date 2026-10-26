@@ -1,4 +1,9 @@
 package com.maksimowiczm.foodyou.app.ui
+import androidx.compose.ui.Modifier
+
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
 
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
@@ -29,16 +34,16 @@ fun FoodYouApp(onDatabaseBackup: () -> Unit) {
             GraphStyleProvider(graphStyle) {
                 WeekLayoutProvider(weekLayout) {
                     FoodYouTheme {
-                        PreviewReleaseDialog()
-                        TranslationWarningStartupDialog()
+                        PreviewReleaseDialog( modifier = Modifier.uiName("FoodYouApp.PreviewReleaseDialog.1", "com.maksimowiczm.foodyou.app.ui.changelog.PreviewReleaseDialog", uiInspectionSource, "FoodYouApp"))
+                        TranslationWarningStartupDialog( modifier = Modifier.uiName("FoodYouApp.TranslationWarningStartupDialog.1", "com.maksimowiczm.foodyou.app.ui.language.TranslationWarningStartupDialog", uiInspectionSource, "FoodYouApp"))
 
                         if (onboardingFinished) {
-                            Surface {
-                                FoodUsAppShell(onDatabaseBackup)
-                                AppUpdateChangelogModalBottomSheet()
+                            Surface (modifier = Modifier.uiName("FoodYouApp.Surface.1", "androidx.compose.material3.Surface", uiInspectionSource, "FoodYouApp")) {
+                                UiSourceScope(uiInspectionSource.element("FoodYouApp.FoodUsAppShell.1", "com.maksimowiczm.foodyou.app.ui.shell.FoodUsAppShell", "FoodYouApp")) { FoodUsAppShell(onDatabaseBackup) }
+                                AppUpdateChangelogModalBottomSheet( modifier = Modifier.uiName("FoodYouApp.AppUpdateChangelogModalBottomSheet.1", "com.maksimowiczm.foodyou.app.ui.changelog.AppUpdateChangelogModalBottomSheet", uiInspectionSource, "FoodYouApp"))
                             }
                         } else {
-                            Onboarding(onFinish = viewModel::finishOnboarding)
+                            UiSourceScope(uiInspectionSource.element("FoodYouApp.Onboarding.1", "com.maksimowiczm.foodyou.app.ui.onboarding.Onboarding", "FoodYouApp")) { Onboarding(onFinish = viewModel::finishOnboarding) }
                         }
                     }
                 }
@@ -46,3 +51,9 @@ fun FoodYouApp(onDatabaseBackup: () -> Unit) {
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/FoodYouApp.kt",
+)

@@ -2,39 +2,21 @@ package com.maksimowiczm.foodyou.food.search.infrastructure.room
 
 import androidx.room.DatabaseView
 
-@DatabaseView(
-    """
-    WITH RECURSIVE recipeIngredients AS (
-        -- Base case: Direct ingredients of all recipes
-        SELECT 
-            ri.recipeId AS targetRecipeId,
-            ri.recipeId AS parentRecipeId,
-            ri.ingredientProductId AS productId,
-            ri.ingredientRecipeId AS recipeId,
-            ri.measurement,
-            ri.quantity,
-            1 AS depthLevel
-        FROM RecipeIngredient ri
-        
-        UNION ALL
-        
-        -- Recursive case: Ingredients of sub-recipes
-        SELECT 
-            prev.targetRecipeId,
-            subRi.recipeId AS parentRecipeId,
-            subRi.ingredientProductId AS productId,
-            subRi.ingredientRecipeId AS recipeId,
-            subRi.measurement,
-            subRi.quantity,
-            prev.depthLevel + 1 AS depthLevel
-        FROM RecipeIngredient subRi
-        INNER JOIN recipeIngredients prev ON subRi.recipeId = prev.recipeId
-        WHERE prev.recipeId IS NOT NULL
+/** Shared by Room schema export and migration so ancestry semantics cannot drift. */
+internal const val RECIPE_ANCESTRY_SQL = """
+    WITH RECURSIVE recipeIngredients(targetRecipeId, ingredientId) AS (
+        SELECT recipeId, ingredientRecipeId
+        FROM RecipeIngredient
+        WHERE ingredientRecipeId IS NOT NULL
+        UNION
+        SELECT previous.targetRecipeId, child.ingredientRecipeId
+        FROM RecipeIngredient child
+        INNER JOIN recipeIngredients previous ON child.recipeId = previous.ingredientId
+        WHERE child.ingredientRecipeId IS NOT NULL
     )
-    SELECT DISTINCT
-        targetRecipeId,
-        COALESCE(productId, recipeId) AS ingredientId
-    FROM recipeIngredients
-    """
-)
+    SELECT targetRecipeId, ingredientId FROM recipeIngredients
+"""
+
+/** Recipe-only reachability. Distinct edges terminate even for malformed legacy cycles. */
+@DatabaseView(value = RECIPE_ANCESTRY_SQL)
 data class RecipeAllIngredientsView(val targetRecipeId: Long, val ingredientId: Long)

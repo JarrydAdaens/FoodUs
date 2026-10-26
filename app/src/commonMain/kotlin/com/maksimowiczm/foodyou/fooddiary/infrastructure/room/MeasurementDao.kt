@@ -11,10 +11,44 @@ import kotlinx.coroutines.flow.first
 
 @Dao
 abstract class MeasurementDao {
+    @Query("SELECT * FROM Measurement WHERE mealId = :slot AND epochDay = :day")
+    abstract suspend fun entries(slot: Long, day: Long): List<MeasurementEntity>
+    @Query("SELECT * FROM DiaryProduct WHERE id = :id")
+    abstract suspend fun product(id: Long): DiaryProductEntity?
+    @Query("SELECT * FROM DiaryRecipe WHERE id = :id")
+    abstract suspend fun recipe(id: Long): DiaryRecipeEntity?
+    @Query("SELECT * FROM DiaryRecipeIngredient WHERE recipeId = :id ORDER BY id")
+    abstract suspend fun ingredients(id: Long): List<DiaryRecipeIngredientEntity>
+    @Query("SELECT * FROM DiaryReportedRecipeComponent WHERE recipeId = :id ORDER BY position")
+    abstract suspend fun components(id: Long): List<DiaryReportedRecipeComponentEntity>
+    @Query("SELECT COUNT(*) FROM Measurement WHERE productId = :id")
+    abstract suspend fun productEntries(id: Long): Int
+    @Query("SELECT COUNT(*) FROM DiaryRecipeIngredient WHERE ingredientProductId = :id")
+    abstract suspend fun productIngredients(id: Long): Int
+    @Query("SELECT COUNT(*) FROM Measurement WHERE recipeId = :id")
+    abstract suspend fun recipeEntries(id: Long): Int
+    @Query("SELECT COUNT(*) FROM DiaryRecipeIngredient WHERE ingredientRecipeId = :id")
+    abstract suspend fun recipeIngredients(id: Long): Int
+    @Query("DELETE FROM Measurement WHERE id = :id")
+    abstract suspend fun deleteEntry(id: Long)
 
-    @Insert abstract suspend fun insertMeasurement(measurement: MeasurementEntity): Long
 
-    @Insert abstract suspend fun insertMeasurements(measurements: List<MeasurementEntity>)
+    @Insert protected abstract suspend fun insertMeasurementRaw(measurement: MeasurementEntity): Long
+
+    @Query("SELECT MAX(sortOrder) FROM (SELECT sortOrder FROM Measurement WHERE mealId = :slot AND epochDay = :day UNION ALL SELECT sortOrder FROM ManualDiaryEntry WHERE mealId = :slot AND dateEpochDay = :day)")
+    protected abstract suspend fun lastOrder(slot: Long, day: Long): Long?
+
+    suspend fun nextOrder(slot: Long, day: Long): Long? = lastOrder(slot, day)?.plus(1)
+
+    @Transaction
+    open suspend fun insertMeasurement(measurement: MeasurementEntity): Long =
+        insertMeasurementRaw(if (measurement.sortOrder != null) measurement else
+            measurement.copy(sortOrder = lastOrder(measurement.diarySlotId, measurement.epochDay)?.plus(1)))
+
+    @Transaction
+    open suspend fun insertMeasurements(measurements: List<MeasurementEntity>) {
+        measurements.forEach { insertMeasurement(it) }
+    }
 
     @Transaction
     open suspend fun replaceMeasurement(
@@ -55,11 +89,11 @@ abstract class MeasurementDao {
         SELECT * 
         FROM Measurement
         WHERE 
-            mealId = :mealId 
+            mealId = :diarySlotId
             AND epochDay = :epochDay 
         """
     )
-    abstract fun observeMeasurements(mealId: Long, epochDay: Long): Flow<List<MeasurementEntity>>
+    abstract fun observeMeasurements(diarySlotId: Long, epochDay: Long): Flow<List<MeasurementEntity>>
 
     @Query(
         """
@@ -79,6 +113,11 @@ abstract class MeasurementDao {
 
     @Insert abstract suspend fun insertDiaryRecipe(diaryRecipe: DiaryRecipeEntity): Long
 
+    @Insert abstract suspend fun insertReportedComponents(components: List<DiaryReportedRecipeComponentEntity>)
+
+    @Query("SELECT * FROM DiaryReportedRecipeComponent WHERE recipeId = :recipeId ORDER BY position")
+    abstract fun observeReportedComponents(recipeId: Long): Flow<List<DiaryReportedRecipeComponentEntity>>
+
     @Query(
         """
         SELECT *
@@ -92,7 +131,7 @@ abstract class MeasurementDao {
         """
         SELECT *
         FROM DiaryRecipeIngredient
-        WHERE recipeId = :id
+        WHERE recipeId = :id ORDER BY id
         """
     )
     abstract fun observeDiaryRecipeIngredients(id: Long): Flow<List<DiaryRecipeIngredientEntity>>

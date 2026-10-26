@@ -1,5 +1,9 @@
 package com.maksimowiczm.foodyou.app.ui.theme
 
+
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -67,31 +71,31 @@ fun PalettePicker(
                 onThemeChange(it)
                 showCustomColorDialog = false
             },
-            onDismiss = { showCustomColorDialog = false },
+            onDismiss = { showCustomColorDialog = false }, modifier = Modifier.uiName("PalettePicker.CustomThemePickerDialog.1", "com.maksimowiczm.foodyou.app.ui.theme.CustomThemePickerDialog", uiInspectionSource, "PalettePicker")
         )
     }
 
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier,
+        modifier = (modifier).uiName("PalettePicker.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "PalettePicker"),
     ) {
-        HorizontalPager(state = pagerState) { page ->
+        HorizontalPager(state = pagerState, modifier = Modifier.uiName("PalettePicker.HorizontalPager.1", "androidx.compose.foundation.pager.HorizontalPager", uiInspectionSource, "PalettePicker")) { page ->
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                modifier = (Modifier.fillMaxWidth().padding(horizontal = 16.dp)).uiName("PalettePicker.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "PalettePicker"),
             ) {
                 chunks[page].forEach { theme ->
                     if (theme == null) {
                         PalettePickerItem(
                             selected = !isPresetSelected,
-                            onSelect = { showCustomColorDialog = true },
+                            onSelect = { showCustomColorDialog = true }, modifier = Modifier.uiName("PalettePicker.PalettePickerItem.1", "com.maksimowiczm.foodyou.app.ui.theme.PalettePickerItem", uiInspectionSource, "PalettePicker")
                         )
                     } else {
                         PalettePickerItem(
                             colorScheme = theme.rememberColorScheme(isDark),
                             selected = theme == selectedTheme,
-                            onSelect = { onThemeChange(theme) },
+                            onSelect = { onThemeChange(theme) }, modifier = Modifier.uiName("PalettePicker.PalettePickerItem.2", "com.maksimowiczm.foodyou.app.ui.theme.PalettePickerItem", uiInspectionSource, "PalettePicker")
                         )
                     }
                 }
@@ -102,7 +106,7 @@ fun PalettePicker(
             pageCount = chunks.size,
             onRequestPage = { page ->
                 coroutineScope.launch { pagerState.animateScrollToPage(page) }
-            },
+            }, modifier = Modifier.uiName("PalettePicker.PagerIndicator.1", "com.maksimowiczm.foodyou.app.ui.theme.PagerIndicator", uiInspectionSource, "PalettePicker")
         )
     }
 }
@@ -116,7 +120,7 @@ private fun PalettePickerItem(
     ToggleButton(
         checked = selected,
         onCheckedChange = { onSelect() },
-        modifier = modifier.size(56.dp).semantics { role = Role.RadioButton },
+        modifier = (modifier.size(56.dp).semantics { role = Role.RadioButton }).uiName("PalettePickerItem.ToggleButton.1", "androidx.compose.material3.ToggleButton", uiInspectionSource, "PalettePickerItem"),
         shapes = ToggleButtonDefaults.shapesFor(56.dp),
         colors =
             ToggleButtonDefaults.toggleButtonColors(
@@ -126,11 +130,11 @@ private fun PalettePickerItem(
             ),
         contentPadding = PaddingValues(0.dp),
     ) {
-        Box(contentAlignment = Alignment.Center) {
+        Box(contentAlignment = Alignment.Center, modifier = Modifier.uiName("PalettePickerItem.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "PalettePickerItem")) {
             Icon(
                 imageVector = Icons.Outlined.Colorize,
                 contentDescription = null,
-                modifier = Modifier.size(20.dp),
+                modifier = (Modifier.size(20.dp)).uiName("PalettePickerItem.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "PalettePickerItem"),
             )
         }
     }
@@ -146,7 +150,7 @@ private fun PalettePickerItem(
     ToggleButton(
         checked = selected,
         onCheckedChange = { onSelect() },
-        modifier = modifier.size(56.dp).semantics { role = Role.RadioButton },
+        modifier = (modifier.size(56.dp).semantics { role = Role.RadioButton }).uiName("PalettePickerItem.ToggleButton.2", "androidx.compose.material3.ToggleButton", uiInspectionSource, "PalettePickerItem"),
         shapes = ToggleButtonDefaults.shapesFor(56.dp),
         colors =
             ToggleButtonDefaults.toggleButtonColors(
@@ -155,21 +159,21 @@ private fun PalettePickerItem(
             ),
         contentPadding = PaddingValues(0.dp),
     ) {
-        Box(contentAlignment = Alignment.Center) {
+        Box(contentAlignment = Alignment.Center, modifier = Modifier.uiName("PalettePickerItem.Box.2", "androidx.compose.foundation.layout.Box", uiInspectionSource, "PalettePickerItem")) {
             PaletteColors(
                 colorScheme = colorScheme,
-                modifier = Modifier.size(40.dp).clip(CircleShape),
+                modifier = (Modifier.size(40.dp).clip(CircleShape)).uiName("PalettePickerItem.PaletteColors.1", "com.maksimowiczm.foodyou.app.ui.theme.PaletteColors", uiInspectionSource, "PalettePickerItem"),
             )
             if (selected) {
                 Surface(
                     color = MaterialTheme.colorScheme.inversePrimary,
                     contentColor = MaterialTheme.colorScheme.primary,
-                    shape = CircleShape,
+                    shape = CircleShape, modifier = Modifier.uiName("PalettePickerItem.Surface.1", "androidx.compose.material3.Surface", uiInspectionSource, "PalettePickerItem")
                 ) {
                     Icon(
                         imageVector = Icons.Outlined.Check,
                         contentDescription = null,
-                        modifier = Modifier.size(20.dp),
+                        modifier = (Modifier.size(20.dp)).uiName("PalettePickerItem.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "PalettePickerItem"),
                     )
                 }
             }
@@ -186,13 +190,13 @@ private fun PagerIndicator(
 ) {
     val colorScheme = MaterialTheme.colorScheme
 
-    Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
+    Row(modifier = (modifier).uiName("PagerIndicator.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "PagerIndicator"), verticalAlignment = Alignment.CenterVertically) {
         repeat(pageCount) { page ->
             val progress = 1f - (currentPage - page).coerceIn(-1f, 1f).absoluteValue
 
             Box(
                 modifier =
-                    Modifier.padding(3.dp)
+                    (Modifier.padding(3.dp)
                         .clickable { onRequestPage(page) }
                         .graphicsLayer {
                             val scale = 1f + progress * 0.25f
@@ -205,7 +209,7 @@ private fun PagerIndicator(
                             drawCircle(color = color)
                         }
                         .size(6.dp)
-                        .clip(CircleShape)
+                        .clip(CircleShape)).uiName("PagerIndicator.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "PagerIndicator")
             )
         }
     }
@@ -213,7 +217,7 @@ private fun PagerIndicator(
 
 @Composable
 private fun PaletteColors(colorScheme: ColorScheme, modifier: Modifier = Modifier.Companion) {
-    Canvas(modifier) {
+    Canvas((modifier).uiName("PaletteColors.Canvas.1", "androidx.compose.foundation.Canvas", uiInspectionSource, "PaletteColors")) {
         // Convert to integer pixels to avoid sub-pixel gaps
         val fullWidth = size.width.toInt()
         val fullHeight = size.height.toInt()
@@ -237,3 +241,9 @@ private fun PaletteColors(colorScheme: ColorScheme, modifier: Modifier = Modifie
         )
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.theme",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/theme/PalettePicker.kt",
+)

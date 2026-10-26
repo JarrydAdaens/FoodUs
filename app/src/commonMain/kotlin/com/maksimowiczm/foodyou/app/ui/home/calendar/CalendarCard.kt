@@ -1,5 +1,10 @@
 package com.maksimowiczm.foodyou.app.ui.home.calendar
 
+
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
+
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
@@ -86,7 +91,7 @@ internal fun CalendarCard(homeState: HomeState, modifier: Modifier = Modifier) {
         }
     }
 
-    CalendarCard(calendarState = calendarState, modifier = modifier)
+    CalendarCard(calendarState = calendarState, modifier = (modifier).uiName("CalendarCard.CalendarCard.1", "com.maksimowiczm.foodyou.app.ui.home.calendar.CalendarCard", uiInspectionSource, "CalendarCard"))
 }
 
 @Composable
@@ -105,10 +110,10 @@ private fun CalendarCard(
         )
     }
 
-    FoodYouHomeCard(onClick = { showDatePicker = true }, modifier = modifier) {
-        Column(modifier = Modifier.fillMaxWidth().padding(top = 16.dp, bottom = 8.dp)) {
+    FoodYouHomeCard(onClick = { showDatePicker = true }, modifier = (modifier).uiName("CalendarCard.FoodYouHomeCard.1", "com.maksimowiczm.foodyou.app.ui.home.shared.FoodYouHomeCard", uiInspectionSource, "CalendarCard")) {
+        Column(modifier = (Modifier.fillMaxWidth().padding(top = 16.dp, bottom = 8.dp)).uiName("CalendarCard.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "CalendarCard")) {
             Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                modifier = (Modifier.fillMaxWidth().padding(horizontal = 16.dp)).uiName("CalendarCard.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "CalendarCard"),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
@@ -116,17 +121,17 @@ private fun CalendarCard(
                     text =
                         dateFormatter.formatMonthYear(
                             calendarState.firstVisibleDate ?: calendarState.selectedDate
-                        )
+                        ), modifier = Modifier.uiName("CalendarCard.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "CalendarCard")
                 )
 
                 Icon(
                     imageVector = Icons.Default.CalendarMonth,
-                    contentDescription = stringResource(Res.string.action_show_calendar),
+                    contentDescription = stringResource(Res.string.action_show_calendar), modifier = Modifier.uiName("CalendarCard.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "CalendarCard")
                 )
             }
             Spacer(Modifier.height(8.dp))
-            Box(modifier = Modifier.fillMaxWidth()) {
-                CalendarCardDatePicker(calendarState = calendarState, colors = colors)
+            Box(modifier = (Modifier.fillMaxWidth()).uiName("CalendarCard.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "CalendarCard")) {
+                CalendarCardDatePicker(calendarState = calendarState, colors = colors, modifier = Modifier.uiName("CalendarCard.CalendarCardDatePicker.1", "com.maksimowiczm.foodyou.app.ui.home.calendar.CalendarCardDatePicker", uiInspectionSource, "CalendarCard"))
             }
         }
     }
@@ -139,7 +144,7 @@ private fun CalendarCardDatePickerDialog(
 ) {
     val state = calendarState.rememberDatePickerState()
 
-    DatePickerDialog(
+    UiSourceScope(uiInspectionSource.element("app.ui.home.calendar.CalendarCardDatePickerDialog.DatePickerDialog.1", "androidx.compose.material3.DatePickerDialog", "CalendarCardDatePickerDialog")) { DatePickerDialog(
         onDismissRequest = onDismissRequest,
         confirmButton = {
             TextButton(
@@ -154,27 +159,28 @@ private fun CalendarCardDatePickerDialog(
                         )
                     }
                     onDismissRequest()
-                }
+                }, modifier = Modifier.uiName("app.ui.home.calendar.CalendarCardDatePickerDialog.TextButton.1", "androidx.compose.material3.TextButton", uiInspectionSource, "CalendarCardDatePickerDialog")
             ) {
-                Text(text = stringResource(Res.string.positive_ok))
+                Text(text = stringResource(Res.string.positive_ok), modifier = Modifier.uiName("app.ui.home.calendar.CalendarCardDatePickerDialog.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "CalendarCardDatePickerDialog"))
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(text = stringResource(Res.string.action_cancel))
+            TextButton(onClick = onDismissRequest, modifier = Modifier.uiName("app.ui.home.calendar.CalendarCardDatePickerDialog.TextButton.2", "androidx.compose.material3.TextButton", uiInspectionSource, "CalendarCardDatePickerDialog")) {
+                Text(text = stringResource(Res.string.action_cancel), modifier = Modifier.uiName("app.ui.home.calendar.CalendarCardDatePickerDialog.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "CalendarCardDatePickerDialog"))
             }
-        },
+        }, modifier = Modifier.uiName("app.ui.home.calendar.CalendarCardDatePickerDialog.DatePickerDialog.1.root", "androidx.compose.material3.DatePickerDialog", uiInspectionSource, "CalendarCardDatePickerDialog")
     ) {
         DatePicker(
             state = state,
             title = {
                 Row(
                     modifier =
-                        Modifier.fillMaxWidth().padding(start = 24.dp, end = 12.dp, top = 16.dp),
+                        (Modifier.fillMaxWidth().padding(start = 24.dp, end = 12.dp, top = 16.dp)).uiName("app.ui.home.calendar.CalendarCardDatePickerDialog.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "CalendarCardDatePickerDialog"),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
-                    DatePickerDefaults.DatePickerTitle(displayMode = state.displayMode)
+                    DatePickerDefaults.DatePickerTitle(displayMode = state.displayMode,
+                        modifier = Modifier.uiName("app.ui.home.calendar.CalendarCardDatePickerDialog.DatePickerTitle.1", "androidx.compose.material3.DatePickerDefaults.DatePickerTitle", uiInspectionSource, "CalendarCardDatePickerDialog"))
 
                     TextButton(
                         onClick = {
@@ -183,16 +189,16 @@ private fun CalendarCardDatePickerDialog(
                                 scroll = true,
                             )
                             onDismissRequest()
-                        }
+                        }, modifier = Modifier.uiName("app.ui.home.calendar.CalendarCardDatePickerDialog.TextButton.3", "androidx.compose.material3.TextButton", uiInspectionSource, "CalendarCardDatePickerDialog")
                     ) {
-                        Text(stringResource(Res.string.action_go_to_today))
+                        Text(stringResource(Res.string.action_go_to_today), modifier = Modifier.uiName("app.ui.home.calendar.CalendarCardDatePickerDialog.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "CalendarCardDatePickerDialog"))
                     }
                 }
             },
             // It won't fit on small screens, so we need to scroll
-            modifier = Modifier.verticalScroll(rememberScrollState()),
+            modifier = (Modifier.verticalScroll(rememberScrollState())).uiName("app.ui.home.calendar.CalendarCardDatePickerDialog.DatePicker.1", "androidx.compose.material3.DatePicker", uiInspectionSource, "CalendarCardDatePickerDialog"),
         )
-    }
+    } }
 }
 
 @Composable
@@ -204,7 +210,7 @@ private fun CalendarCardDatePicker(
     // Fork overlay (Story 2.11): the fixed layout pins a Monday-first week strip that swipes in
     // whole-week increments, as an additive alternative to the original day-by-day scroller.
     if (LocalWeekLayout.current == WeekLayout.Fixed) {
-        FixedWeekStrip(calendarState = calendarState, colors = colors, modifier = modifier)
+        FixedWeekStrip(calendarState = calendarState, colors = colors, modifier = (modifier).uiName("CalendarCardDatePicker.FixedWeekStrip.1", "com.maksimowiczm.foodyou.app.ui.home.calendar.FixedWeekStrip", uiInspectionSource, "CalendarCardDatePicker"))
         return
     }
 
@@ -224,7 +230,7 @@ private fun CalendarCardDatePicker(
             }
     }
 
-    LazyRow(modifier = modifier, state = calendarState.lazyListState) {
+    LazyRow(modifier = (modifier).uiName("CalendarCardDatePicker.LazyRow.1", "androidx.compose.foundation.lazy.LazyRow", uiInspectionSource, "CalendarCardDatePicker"), state = calendarState.lazyListState) {
         items(calendarState.lazyListCount) {
             val date = calendarState.zeroDate.plus(it.toLong(), DateTimeUnit.DAY)
             DatePickerRowItem(
@@ -234,7 +240,7 @@ private fun CalendarCardDatePicker(
                 onClick = {
                     calendarState.onDateSelect(date = date, scroll = false)
                     hapticFeedback.performHapticFeedback(HapticFeedbackType.Confirm)
-                },
+                }, modifier = Modifier.uiName("CalendarCardDatePicker.DatePickerRowItem.1", "com.maksimowiczm.foodyou.app.ui.home.calendar.DatePickerRowItem", uiInspectionSource, "CalendarCardDatePicker")
             )
         }
     }
@@ -269,9 +275,9 @@ private fun FixedWeekStrip(
         }
     }
 
-    HorizontalPager(state = pagerState, modifier = modifier) { page ->
+    HorizontalPager(state = pagerState, modifier = (modifier).uiName("FixedWeekStrip.HorizontalPager.1", "androidx.compose.foundation.pager.HorizontalPager", uiInspectionSource, "FixedWeekStrip")) { page ->
         val weekMonday = anchorMonday.plus((page - WEEK_PAGER_ANCHOR).toLong(), DateTimeUnit.WEEK)
-        Row(modifier = Modifier.fillMaxWidth()) {
+        Row(modifier = (Modifier.fillMaxWidth()).uiName("FixedWeekStrip.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "FixedWeekStrip")) {
             repeat(7) { dayOffset ->
                 val date = weekMonday.plus(dayOffset.toLong(), DateTimeUnit.DAY)
                 DatePickerRowItem(
@@ -282,7 +288,7 @@ private fun FixedWeekStrip(
                         calendarState.onDateSelect(date = date, scroll = false)
                         hapticFeedback.performHapticFeedback(HapticFeedbackType.Confirm)
                     },
-                    modifier = Modifier.weight(1f),
+                    modifier = (Modifier.weight(1f)).uiName("FixedWeekStrip.DatePickerRowItem.1", "com.maksimowiczm.foodyou.app.ui.home.calendar.DatePickerRowItem", uiInspectionSource, "FixedWeekStrip"),
                 )
             }
         }
@@ -327,17 +333,17 @@ private fun DatePickerRowItem(
 
     Box(
         modifier =
-            modifier
+            (modifier
                 .height(IntrinsicSize.Min)
                 .padding(4.dp)
                 .clip(MaterialTheme.shapes.medium)
                 .clickable { onClick() }
                 .drawBehind { drawRect(backgroundColor) }
-                .padding(4.dp),
+                .padding(4.dp)).uiName("DatePickerRowItem.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "DatePickerRowItem"),
         contentAlignment = Alignment.Center,
     ) {
         Column(
-            modifier = Modifier.aspectRatio(1f),
+            modifier = (Modifier.aspectRatio(1f)).uiName("DatePickerRowItem.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "DatePickerRowItem"),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
@@ -350,13 +356,13 @@ private fun DatePickerRowItem(
                         maxFontSize = MaterialTheme.typography.bodyMedium.fontSize,
                     ),
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
+                overflow = TextOverflow.Ellipsis, modifier = Modifier.uiName("DatePickerRowItem.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "DatePickerRowItem")
             )
             Text(
                 text = date.day.toString(),
                 style = MaterialTheme.typography.bodyMedium,
                 color = color,
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Center, modifier = Modifier.uiName("DatePickerRowItem.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "DatePickerRowItem")
             )
         }
     }
@@ -391,3 +397,9 @@ private object CalendarCardDefaults {
             referenceDateContentColor = referenceDateContentColor,
         )
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.home.calendar",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/calendar/CalendarCard.kt",
+)

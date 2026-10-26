@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.home.goals
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -35,7 +38,7 @@ fun GoalsCardSettings(
         expand = expand,
         onShowDetailsChange = viewModel::setExpandGoalsCard,
         onGoalsSettings = onGoalsSettings,
-        modifier = modifier,
+        modifier = (modifier).uiName("GoalsCardSettings.GoalsCardSettings.1", "com.maksimowiczm.foodyou.app.ui.home.goals.GoalsCardSettings", uiInspectionSource, "GoalsCardSettings"),
     )
 }
 
@@ -50,17 +53,17 @@ private fun GoalsCardSettings(
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     Scaffold(
-        modifier = modifier,
+        modifier = (modifier).uiName("GoalsCardSettings.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "GoalsCardSettings"),
         topBar = {
             MediumFlexibleTopAppBar(
-                title = { Text(stringResource(Res.string.headline_daily_goals)) },
-                navigationIcon = { ArrowBackIconButton(onBack) },
-                scrollBehavior = scrollBehavior,
+                title = { Text(stringResource(Res.string.headline_daily_goals), modifier = Modifier.uiName("GoalsCardSettings.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "GoalsCardSettings")) },
+                navigationIcon = { ArrowBackIconButton(onBack, modifier = Modifier.uiName("GoalsCardSettings.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "GoalsCardSettings")) },
+                scrollBehavior = scrollBehavior, modifier = Modifier.uiName("GoalsCardSettings.MediumFlexibleTopAppBar.1", "androidx.compose.material3.MediumFlexibleTopAppBar", uiInspectionSource, "GoalsCardSettings")
             )
         },
     ) { paddingValues ->
         LazyColumn(
-            modifier = Modifier.fillMaxSize().nestedScroll(scrollBehavior.nestedScrollConnection),
+            modifier = (Modifier.fillMaxSize().nestedScroll(scrollBehavior.nestedScrollConnection)).uiName("GoalsCardSettings.LazyColumn.1", "androidx.compose.foundation.lazy.LazyColumn", uiInspectionSource, "GoalsCardSettings"),
             contentPadding = paddingValues,
         ) {
             stickyHeader {
@@ -76,35 +79,41 @@ private fun GoalsCardSettings(
                     fatsGoal = 90,
                     onClick = {},
                     onLongClick = {},
-                    modifier = Modifier.padding(16.dp),
+                    modifier = (Modifier.padding(16.dp)).uiName("GoalsCardSettings.GoalsCard.1", "com.maksimowiczm.foodyou.app.ui.home.goals.GoalsCard", uiInspectionSource, "GoalsCardSettings"),
                 )
             }
 
-            item { HorizontalDivider() }
+            item { HorizontalDivider( modifier = Modifier.uiName("GoalsCardSettings.HorizontalDivider.1", "androidx.compose.material3.HorizontalDivider", uiInspectionSource, "GoalsCardSettings")) }
 
             item {
                 ListItem(
-                    headlineContent = { Text(stringResource(Res.string.action_show_details)) },
-                    modifier = Modifier.clickable { onShowDetailsChange(!expand) },
+                    headlineContent = { Text(stringResource(Res.string.action_show_details), modifier = Modifier.uiName("GoalsCardSettings.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "GoalsCardSettings")) },
+                    modifier = (Modifier.clickable { onShowDetailsChange(!expand) }).uiName("GoalsCardSettings.ListItem.1", "androidx.compose.material3.ListItem", uiInspectionSource, "GoalsCardSettings"),
                     supportingContent = {
-                        Text(stringResource(Res.string.description_show_macronutrients_goals))
+                        Text(stringResource(Res.string.description_show_macronutrients_goals), modifier = Modifier.uiName("GoalsCardSettings.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "GoalsCardSettings"))
                     },
                     trailingContent = {
-                        Switch(checked = expand, onCheckedChange = onShowDetailsChange)
+                        Switch(checked = expand, onCheckedChange = onShowDetailsChange, modifier = Modifier.uiName("GoalsCardSettings.Switch.1", "androidx.compose.material3.Switch", uiInspectionSource, "GoalsCardSettings"))
                     },
                 )
             }
 
-            item { HorizontalDivider() }
+            item { HorizontalDivider( modifier = Modifier.uiName("GoalsCardSettings.HorizontalDivider.2", "androidx.compose.material3.HorizontalDivider", uiInspectionSource, "GoalsCardSettings")) }
 
             item {
                 ListItem(
                     headlineContent = {
-                        Text(stringResource(Res.string.headline_daily_goals_settings))
+                        Text(stringResource(Res.string.headline_daily_goals_settings), modifier = Modifier.uiName("GoalsCardSettings.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "GoalsCardSettings"))
                     },
-                    modifier = Modifier.clickable { onGoalsSettings() },
+                    modifier = (Modifier.clickable { onGoalsSettings() }).uiName("GoalsCardSettings.ListItem.2", "androidx.compose.material3.ListItem", uiInspectionSource, "GoalsCardSettings"),
                 )
             }
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.home.goals",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/goals/GoalsCardSettings.kt",
+)

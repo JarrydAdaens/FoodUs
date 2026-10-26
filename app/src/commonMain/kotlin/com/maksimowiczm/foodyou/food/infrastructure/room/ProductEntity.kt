@@ -3,7 +3,11 @@ package com.maksimowiczm.foodyou.food.infrastructure.room
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.maksimowiczm.foodyou.common.infrastructure.room.FoodSourceType
+import androidx.room.ColumnInfo
+import com.maksimowiczm.foodyou.common.domain.food.ProductFactBasis
+import com.maksimowiczm.foodyou.common.domain.food.PortionDescription
+import com.maksimowiczm.foodyou.common.domain.food.NutritionMetadata
+import com.maksimowiczm.foodyou.common.infrastructure.room.ProductSourceType
 import com.maksimowiczm.foodyou.common.infrastructure.room.Minerals
 import com.maksimowiczm.foodyou.common.infrastructure.room.Nutrients
 import com.maksimowiczm.foodyou.common.infrastructure.room.Vitamins
@@ -20,7 +24,7 @@ data class ProductEntity(
     val packageWeight: Double?,
     val servingWeight: Double?,
     val note: String?,
-    val sourceType: FoodSourceType,
+    val sourceType: ProductSourceType,
     val sourceUrl: String? = null,
     val isLiquid: Boolean,
     /**
@@ -29,4 +33,7 @@ data class ProductEntity(
      * deterministic, inspectable per-provider dataset replacement.
      */
     val sourceRecordId: String? = null,
+    @ColumnInfo(defaultValue = "'METRIC_100'") val factBasis: ProductFactBasis = ProductFactBasis.METRIC_100,
+    @ColumnInfo(defaultValue = "NULL") val referencePortion: PortionDescription? = null,
+    @ColumnInfo(defaultValue = "NULL") val nutritionMetadata: NutritionMetadata? = null,
 )

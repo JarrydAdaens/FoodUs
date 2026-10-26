@@ -6,7 +6,8 @@ interface AppConfig {
     val versionName: String
 
     /**
-     * FoodUs fork version name in the <milestone>.<story>.<build> scheme (e.g. "2.19.1").
+     * FoodUs fork version from the shared catalog under context/versioning-policy.md,
+     * including its transition from legacy three-part releases to the four-part policy.
      * This is the app's real shipped version; [versionName] is the upstream Food You
      * version it derives from, kept as metadata.
      */

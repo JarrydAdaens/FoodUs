@@ -20,4 +20,4 @@ internal actual fun Scope.database(): FoodYouDatabase =
                 openHelperFactory(RequerySQLiteOpenHelperFactory())
             }
         }
-        .buildDatabase(mealsCallback = get())
+        .buildDatabase(diarySlotsCallback = get())

@@ -41,6 +41,7 @@ jobs:
         with:
           accept-android-sdk-licenses: true
           log-accepted-android-sdk-licenses: false
+          packages: platform-tools
 
       - name: Compile
         run: ./gradlew --no-daemon :app:assembleDebug

@@ -1,3 +1,4 @@
+import com.android.build.gradle.api.ApkVariantOutput
 import java.util.Properties
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -152,6 +153,10 @@ kotlin {
 }
 
 android {
+    // Opt-in isolated-emulator verification of the shipping minified code path.
+    testBuildType = providers.gradleProperty("foodus.testBuildType").orElse("debug").get().also {
+        require(it == "debug" || it == "miniDevRelease") { "Unsupported inspection test build type" }
+    }
     namespace = "com.maksimowiczm.foodyou"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
@@ -163,7 +168,7 @@ android {
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = libs.versions.android.versionCode.get().toInt()
-        // The shipped Android versionName is the fork's own <milestone>.<story>.<build> version so
+        // The shipped Android versionName follows context/versioning-policy.md and its legacy transition so
         // installed-version checks (Obtainium) line up with the fork's v* release tags. The
         // upstream Food You version stays available as BuildConfig.VERSION_NAME metadata.
         versionName = libs.versions.fork.version.name.get()
@@ -172,7 +177,13 @@ android {
         manifestPlaceholders["applicationRoundIcon"] = "@mipmap/ic_launcher_round"
         manifestPlaceholders["applicationLabel"] = "@string/app_name"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner =
+            if (providers.gradleProperty("foodus.platformInspection").orElse("false").get().toBooleanStrict()) {
+                "com.maksimowiczm.foodyou.app.ui.developer.inspection.UiInspectionPlatformInstrumentation"
+            } else {
+                "androidx.test.runner.AndroidJUnitRunner"
+            }
+        testProguardFiles("src/androidInstrumentedTest/proguard-rules.pro")
     }
     packaging { resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" } }
     buildTypes {
@@ -209,6 +220,20 @@ android {
             versionNameSuffix = "-preview"
             manifestPlaceholders["applicationIcon"] = "@mipmap/ic_launcher_preview"
             manifestPlaceholders["applicationRoundIcon"] = "@mipmap/ic_launcher_round_preview"
+        }
+    }
+    // Set the packaging output name so AGP's install metadata points at the same APK.
+    // Filenames do not change the application ID, embedded version, or signing key.
+    applicationVariants.all {
+        val fileVersion = libs.versions.fork.version.name.get().replace('.', '_')
+        val channel = when (buildType.name) {
+            "debug" -> "-dev"
+            "release" -> ""
+            else -> "-${buildType.name.lowercase()}"
+        }
+        val unsigned = if (signingConfig == null) "-unsigned" else ""
+        outputs.all {
+            (this as ApkVariantOutput).outputFileName = "foodus$channel-$fileVersion$unsigned.apk"
         }
     }
     compileOptions {

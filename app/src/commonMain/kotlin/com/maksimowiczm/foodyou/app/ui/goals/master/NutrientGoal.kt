@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.goals.master
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -45,7 +48,7 @@ internal fun NutrientGoal(
             ),
         color = color,
         state = rememberNutrientGoalState(value, target),
-        modifier = modifier,
+        modifier = (modifier).uiName("NutrientGoal.NutrientGoal.1", "com.maksimowiczm.foodyou.app.ui.goals.master.NutrientGoal", uiInspectionSource, "NutrientGoal"),
     )
 }
 
@@ -61,12 +64,12 @@ internal fun NutrientGoal(
         label = {
             val color = if (state.isExceeded) MaterialTheme.colorScheme.error else color
 
-            Text(text = label, style = LocalTextStyle.current.copy(color = color))
+            Text(text = label, style = LocalTextStyle.current.copy(color = color), modifier = Modifier.uiName("NutrientGoal.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "NutrientGoal"))
         },
-        value = { Text(target) },
+        value = { Text(target, modifier = Modifier.uiName("NutrientGoal.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "NutrientGoal")) },
         progressColor = color.copy(alpha = .9f),
         state = state,
-        modifier = modifier,
+        modifier = (modifier).uiName("NutrientGoal.NutrientGoal.2", "com.maksimowiczm.foodyou.app.ui.goals.master.NutrientGoal", uiInspectionSource, "NutrientGoal"),
     )
 }
 
@@ -93,14 +96,14 @@ internal fun NutrientGoal(
             else progressColor.copy(alpha = 0.25f)
         )
 
-    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+    Column(modifier = (modifier).uiName("NutrientGoal.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "NutrientGoal"), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Row(modifier = (Modifier.fillMaxWidth()).uiName("NutrientGoal.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "NutrientGoal"), horizontalArrangement = Arrangement.SpaceBetween) {
             label()
             value()
         }
         LinearProgressIndicator(
             progress = { progress },
-            modifier = Modifier.fillMaxWidth().height(8.dp),
+            modifier = (Modifier.fillMaxWidth().height(8.dp)).uiName("NutrientGoal.LinearProgressIndicator.1", "androidx.compose.material3.LinearProgressIndicator", uiInspectionSource, "NutrientGoal"),
             color = progressBarColor,
             trackColor = trackColor,
             drawStopIndicator = {},
@@ -193,3 +196,9 @@ internal object NutrientGoalDefaults {
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.goals.master",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/goals/master/NutrientGoal.kt",
+)

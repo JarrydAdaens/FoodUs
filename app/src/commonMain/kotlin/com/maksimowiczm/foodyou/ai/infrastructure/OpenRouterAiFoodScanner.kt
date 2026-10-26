@@ -1,6 +1,6 @@
 package com.maksimowiczm.foodyou.ai.infrastructure
 
-import com.maksimowiczm.foodyou.ai.domain.AiFoodEstimateParser
+import com.maksimowiczm.foodyou.ai.domain.AiFoodEstimateCollectionParser
 import com.maksimowiczm.foodyou.ai.domain.AiFoodScanner
 import com.maksimowiczm.foodyou.ai.domain.AiRuntimeConfig
 import com.maksimowiczm.foodyou.ai.domain.AiScanPrompt
@@ -84,7 +84,7 @@ internal class OpenRouterAiFoodScanner(
                 response.body<ChatCompletionResponse>().choices.firstOrNull()?.message?.content
                     ?: return AiScanResult.Failure("The AI returned an empty response.")
 
-            AiFoodEstimateParser.parse(content)?.let(AiScanResult::Success)
+            AiFoodEstimateCollectionParser.parse(content)
                 ?: AiScanResult.Failure("Could not understand the AI response.")
         } catch (e: CancellationException) {
             throw e

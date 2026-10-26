@@ -1,5 +1,9 @@
 package com.maksimowiczm.foodyou.app.ui.database.australianfoodcompositiondatabase
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -40,14 +44,14 @@ fun AustralianFoodCompositionDatabaseScreen(onBack: () -> Unit, modifier: Modifi
     val viewModel: AustralianFoodCompositionDatabaseViewModel = koinViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    AustralianFoodCompositionDatabaseScreen(
+    UiSourceScope(uiInspectionSource.element("AustralianFoodCompositionDatabaseScreen.AustralianFoodCompositionDatabaseScreen.1", "com.maksimowiczm.foodyou.app.ui.database.australianfoodcompositiondatabase.AustralianFoodCompositionDatabaseScreen", "AustralianFoodCompositionDatabaseScreen")) { AustralianFoodCompositionDatabaseScreen(
         uiState = uiState,
         onBack = onBack,
         onEnabledChange = viewModel::setEnabled,
         onCheckForUpdates = viewModel::checkForUpdates,
         onImport = viewModel::import,
         modifier = modifier,
-    )
+    ) }
 }
 
 @Composable
@@ -65,22 +69,22 @@ private fun AustralianFoodCompositionDatabaseScreen(
     val websiteUri = LocalAppConfig.current.australianFoodCompositionDatabaseWebsiteUri
 
     Scaffold(
-        modifier = modifier,
+        modifier = (modifier).uiName("AustralianFoodCompositionDatabaseScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "AustralianFoodCompositionDatabaseScreen"),
         topBar = {
             LargeFlexibleTopAppBar(
                 title = {
-                    Text(stringResource(Res.string.headline_australian_food_composition_database))
+                    Text(stringResource(Res.string.headline_australian_food_composition_database), modifier = Modifier.uiName("AustralianFoodCompositionDatabaseScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "AustralianFoodCompositionDatabaseScreen"))
                 },
-                navigationIcon = { ArrowBackIconButton(onClick = onBack, enabled = !busy) },
-                scrollBehavior = scrollBehavior,
+                navigationIcon = { ArrowBackIconButton(onClick = onBack, enabled = !busy, modifier = Modifier.uiName("AustralianFoodCompositionDatabaseScreen.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "AustralianFoodCompositionDatabaseScreen")) },
+                scrollBehavior = scrollBehavior, modifier = Modifier.uiName("AustralianFoodCompositionDatabaseScreen.LargeFlexibleTopAppBar.1", "androidx.compose.material3.LargeFlexibleTopAppBar", uiInspectionSource, "AustralianFoodCompositionDatabaseScreen")
             )
         },
     ) { paddingValues ->
         LazyColumn(
             modifier =
-                Modifier.fillMaxSize()
+                (Modifier.fillMaxSize()
                     .padding(horizontal = 16.dp)
-                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                    .nestedScroll(scrollBehavior.nestedScrollConnection)).uiName("AustralianFoodCompositionDatabaseScreen.LazyColumn.1", "androidx.compose.foundation.lazy.LazyColumn", uiInspectionSource, "AustralianFoodCompositionDatabaseScreen"),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = paddingValues.add(vertical = 8.dp),
         ) {
@@ -90,14 +94,14 @@ private fun AustralianFoodCompositionDatabaseScreen(
                         stringResource(
                             Res.string.description_australian_food_composition_database
                         ),
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodyMedium, modifier = Modifier.uiName("AustralianFoodCompositionDatabaseScreen.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "AustralianFoodCompositionDatabaseScreen")
                 )
             }
 
-            item { WebsiteChip(onClick = { uriHandler.openUri(websiteUri) }) }
+            item { WebsiteChip(onClick = { uriHandler.openUri(websiteUri) }, modifier = Modifier.uiName("AustralianFoodCompositionDatabaseScreen.WebsiteChip.1", "com.maksimowiczm.foodyou.app.ui.common.component.WebsiteChip", uiInspectionSource, "AustralianFoodCompositionDatabaseScreen")) }
 
             item {
-                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp), modifier = Modifier.uiName("AustralianFoodCompositionDatabaseScreen.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "AustralianFoodCompositionDatabaseScreen")) {
                     LabelledSwitch(
                         label = stringResource(Res.string.action_enable_provider_search),
                         checked = uiState.enabled,
@@ -107,7 +111,7 @@ private fun AustralianFoodCompositionDatabaseScreen(
                 }
             }
 
-            item { HorizontalDivider() }
+            item { HorizontalDivider( modifier = Modifier.uiName("AustralianFoodCompositionDatabaseScreen.HorizontalDivider.1", "androidx.compose.material3.HorizontalDivider", uiInspectionSource, "AustralianFoodCompositionDatabaseScreen")) }
 
             item { StateSection(uiState) }
 
@@ -129,11 +133,11 @@ private fun AustralianFoodCompositionDatabaseScreen(
                         (uiState.phase as? AustralianFoodCompositionDatabaseUiState.Phase.Importing)
                             ?.fraction
                     if (fraction == null) {
-                        LinearWavyProgressIndicator(modifier = Modifier.fillMaxWidth())
+                        LinearWavyProgressIndicator(modifier = (Modifier.fillMaxWidth()).uiName("AustralianFoodCompositionDatabaseScreen.LinearWavyProgressIndicator.1", "androidx.compose.material3.LinearWavyProgressIndicator", uiInspectionSource, "AustralianFoodCompositionDatabaseScreen"))
                     } else {
                         LinearWavyProgressIndicator(
                             progress = { fraction },
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = (Modifier.fillMaxWidth()).uiName("AustralianFoodCompositionDatabaseScreen.LinearWavyProgressIndicator.2", "androidx.compose.material3.LinearWavyProgressIndicator", uiInspectionSource, "AustralianFoodCompositionDatabaseScreen"),
                         )
                     }
                 }
@@ -143,7 +147,7 @@ private fun AustralianFoodCompositionDatabaseScreen(
                 Text(
                     text = AustralianFoodCompositionDatabaseConfig.ATTRIBUTION,
                     style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.uiName("AustralianFoodCompositionDatabaseScreen.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "AustralianFoodCompositionDatabaseScreen")
                 )
             }
         }
@@ -152,7 +156,7 @@ private fun AustralianFoodCompositionDatabaseScreen(
 
 @Composable
 private fun StateSection(uiState: AustralianFoodCompositionDatabaseUiState) {
-    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp), modifier = Modifier.uiName("StateSection.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "StateSection")) {
         val metadata = uiState.metadata
 
         InfoRow(
@@ -211,7 +215,7 @@ private fun UpdateOutcome(phase: AustralianFoodCompositionDatabaseUiState.Phase)
             else -> return
         }
 
-    Text(text = text, style = MaterialTheme.typography.bodyMedium, color = color)
+    Text(text = text, style = MaterialTheme.typography.bodyMedium, color = color, modifier = Modifier.uiName("UpdateOutcome.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "UpdateOutcome"))
 }
 
 /** The check / download-and-replace controls. Before anything is installed only the import action is
@@ -230,9 +234,9 @@ private fun ActionButtons(
             onClick = onImport,
             enabled = !busy,
             shapes = ButtonDefaults.shapes(),
-            modifier = Modifier.fillMaxWidth(),
+            modifier = (Modifier.fillMaxWidth()).uiName("ActionButtons.Button.1", "androidx.compose.material3.Button", uiInspectionSource, "ActionButtons"),
         ) {
-            Text(stringResource(Res.string.action_import))
+            Text(stringResource(Res.string.action_import), modifier = Modifier.uiName("ActionButtons.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "ActionButtons"))
         }
         return
     }
@@ -240,32 +244,32 @@ private fun ActionButtons(
     val updateAvailable =
         uiState.phase is AustralianFoodCompositionDatabaseUiState.Phase.UpdateAvailable
 
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.uiName("ActionButtons.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "ActionButtons")) {
         if (updateAvailable) {
             Button(
                 onClick = onImport,
                 enabled = !busy,
                 shapes = ButtonDefaults.shapes(),
-                modifier = Modifier.fillMaxWidth(),
+                modifier = (Modifier.fillMaxWidth()).uiName("ActionButtons.Button.2", "androidx.compose.material3.Button", uiInspectionSource, "ActionButtons"),
             ) {
-                Text(stringResource(Res.string.action_download_and_replace))
+                Text(stringResource(Res.string.action_download_and_replace), modifier = Modifier.uiName("ActionButtons.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "ActionButtons"))
             }
             OutlinedButton(
                 onClick = onCheckForUpdates,
                 enabled = !busy,
                 shapes = ButtonDefaults.shapes(),
-                modifier = Modifier.fillMaxWidth(),
+                modifier = (Modifier.fillMaxWidth()).uiName("ActionButtons.OutlinedButton.1", "androidx.compose.material3.OutlinedButton", uiInspectionSource, "ActionButtons"),
             ) {
-                Text(stringResource(Res.string.action_update_dataset))
+                Text(stringResource(Res.string.action_update_dataset), modifier = Modifier.uiName("ActionButtons.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "ActionButtons"))
             }
         } else {
             Button(
                 onClick = onCheckForUpdates,
                 enabled = !busy,
                 shapes = ButtonDefaults.shapes(),
-                modifier = Modifier.fillMaxWidth(),
+                modifier = (Modifier.fillMaxWidth()).uiName("ActionButtons.Button.3", "androidx.compose.material3.Button", uiInspectionSource, "ActionButtons"),
             ) {
-                Text(stringResource(Res.string.action_update_dataset))
+                Text(stringResource(Res.string.action_update_dataset), modifier = Modifier.uiName("ActionButtons.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "ActionButtons"))
             }
         }
     }
@@ -277,9 +281,9 @@ private fun InfoRow(
     value: String,
     valueColor: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.onSurfaceVariant,
 ) {
-    Column {
-        Text(text = label, style = MaterialTheme.typography.labelLarge)
-        Text(text = value, style = MaterialTheme.typography.bodyMedium, color = valueColor)
+    Column (modifier = Modifier.uiName("InfoRow.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "InfoRow")) {
+        Text(text = label, style = MaterialTheme.typography.labelLarge, modifier = Modifier.uiName("InfoRow.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "InfoRow"))
+        Text(text = value, style = MaterialTheme.typography.bodyMedium, color = valueColor, modifier = Modifier.uiName("InfoRow.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "InfoRow"))
     }
 }
 
@@ -291,12 +295,12 @@ private fun LabelledSwitch(
     onCheckedChange: (Boolean) -> Unit,
 ) {
     androidx.compose.foundation.layout.Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("LabelledSwitch.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "LabelledSwitch"),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
     ) {
-        Text(text = label, style = MaterialTheme.typography.titleSmall)
-        Switch(checked = checked, onCheckedChange = onCheckedChange, enabled = enabled)
+        Text(text = label, style = MaterialTheme.typography.titleSmall, modifier = Modifier.uiName("LabelledSwitch.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "LabelledSwitch"))
+        Switch(checked = checked, onCheckedChange = onCheckedChange, enabled = enabled, modifier = Modifier.uiName("LabelledSwitch.Switch.1", "androidx.compose.material3.Switch", uiInspectionSource, "LabelledSwitch"))
     }
 }
 
@@ -310,3 +314,9 @@ private fun Long?.toDateLabel(): String =
             .date
             .toString()
     }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.database.australianfoodcompositiondatabase",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/database/australianfoodcompositiondatabase/AustralianFoodCompositionDatabaseScreen.kt",
+)

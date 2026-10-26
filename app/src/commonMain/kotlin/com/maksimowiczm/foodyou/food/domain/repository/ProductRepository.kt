@@ -1,13 +1,13 @@
 package com.maksimowiczm.foodyou.food.domain.repository
 
-import com.maksimowiczm.foodyou.common.domain.food.FoodSource
+import com.maksimowiczm.foodyou.common.domain.food.ProductSource
 import com.maksimowiczm.foodyou.common.domain.food.NutritionFacts
-import com.maksimowiczm.foodyou.food.domain.entity.FoodId
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
 import com.maksimowiczm.foodyou.food.domain.entity.Product
 import kotlinx.coroutines.flow.Flow
 
 interface ProductRepository {
-    fun observeProduct(id: FoodId.Product): Flow<Product?>
+    fun observeProduct(id: NutritionalItemId.Product): Flow<Product?>
 
     fun observeProducts(limit: Int, offset: Int): Flow<List<Product>>
 
@@ -32,10 +32,10 @@ interface ProductRepository {
         isLiquid: Boolean,
         packageWeight: Double?,
         servingWeight: Double?,
-        source: FoodSource,
+        source: ProductSource,
         nutritionFacts: NutritionFacts,
         sourceRecordId: String? = null,
-    ): FoodId.Product
+    ): NutritionalItemId.Product
 
     /**
      * Creates a new product only if a product with the same name, brand, and barcode does not
@@ -51,12 +51,15 @@ interface ProductRepository {
         isLiquid: Boolean,
         packageWeight: Double?,
         servingWeight: Double?,
-        source: FoodSource,
+        source: ProductSource,
         nutritionFacts: NutritionFacts,
         sourceRecordId: String? = null,
-    ): FoodId.Product?
+    ): NutritionalItemId.Product?
 
     suspend fun updateProduct(product: Product)
+
+    /** Complete definitions retain an explicit nonmetric nutrition reference. */
+    suspend fun insertProduct(product: Product): NutritionalItemId.Product = error("Complete Product insertion unavailable")
 
     suspend fun deleteProduct(product: Product)
 
@@ -65,5 +68,5 @@ interface ProductRepository {
      * downloaded provider's dataset. Passing [FoodSource.Type.User] is rejected so custom foods can
      * never be purged by a provider refresh.
      */
-    suspend fun deleteProductsBySource(source: FoodSource.Type)
+    suspend fun deleteProductsBySource(source: ProductSource.Type)
 }

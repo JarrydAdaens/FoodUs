@@ -7,7 +7,7 @@ import org.koin.dsl.bind
 
 fun Module.foodSearchDomainModule() {
     factory {
-            FoodSearchUseCase(
+            NutritionalItemSearchUseCase(
                 foodSearchRepository = get(),
                 foodSearchPreferencesRepository = userPreferencesRepository(),
                 foodRemoteMediatorFactoryAggregate = get(),
@@ -15,7 +15,7 @@ fun Module.foodSearchDomainModule() {
                 eventBus = get(),
             )
         }
-        .bind<FoodSearchUseCase>()
+        .bind<NutritionalItemSearchUseCase>()
 
-    eventHandlerOf(::FoodSearchEventHandler)
+    eventHandlerOf(::NutritionalItemSearchEventHandler)
 }

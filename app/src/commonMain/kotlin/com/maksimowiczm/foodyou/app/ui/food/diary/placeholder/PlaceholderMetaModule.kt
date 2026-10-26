@@ -8,7 +8,7 @@ fun Module.foodDiaryPlaceholder() {
         PlaceholderMetaViewModel(
             manualEntryId = manualEntryId,
             manualDiaryEntryRepository = get(),
-            mealRepository = get(),
+            diarySlotRepository = get(),
             aiSearchQueryGenerator = get(),
             observeAiConfigured = get(),
         )

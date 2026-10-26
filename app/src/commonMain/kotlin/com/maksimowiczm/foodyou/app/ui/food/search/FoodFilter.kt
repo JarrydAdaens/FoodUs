@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.food.search
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Person
@@ -7,7 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.maksimowiczm.foodyou.app.ui.food.component.Icon
 import com.maksimowiczm.foodyou.app.ui.food.component.stringResource
-import com.maksimowiczm.foodyou.common.domain.food.FoodSource
+import com.maksimowiczm.foodyou.common.domain.food.ProductSource
 import foodyou.app.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 
@@ -44,21 +47,21 @@ internal data class FoodFilter(val source: Source = DefaultFilter) {
                     androidx.compose.material3.Icon(
                         imageVector = Icons.Filled.History,
                         contentDescription = null,
-                        modifier = modifier,
+                        modifier = (modifier).uiName("FoodFilter.Source.Icon.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "FoodFilter.Source.Icon"),
                     )
 
                 YourFood ->
                     androidx.compose.material3.Icon(
                         imageVector = Icons.Filled.Person,
                         contentDescription = null,
-                        modifier = modifier,
+                        modifier = (modifier).uiName("FoodFilter.Source.Icon.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "FoodFilter.Source.Icon"),
                     )
 
-                OpenFoodFacts -> FoodSource.Type.OpenFoodFacts.Icon(modifier)
-                USDA -> FoodSource.Type.USDA.Icon(modifier)
-                SwissFoodCompositionDatabase -> FoodSource.Type.SwissFoodCompositionDatabase.Icon()
+                OpenFoodFacts -> ProductSource.Type.OpenFoodFacts.Icon((modifier).uiName("FoodFilter.Source.Icon.Icon.3", "com.maksimowiczm.foodyou.app.ui.food.search.FoodFilter.Source.Icon", uiInspectionSource, "FoodFilter.Source.Icon"))
+                USDA -> ProductSource.Type.USDA.Icon((modifier).uiName("FoodFilter.Source.Icon.Icon.4", "com.maksimowiczm.foodyou.app.ui.food.search.FoodFilter.Source.Icon", uiInspectionSource, "FoodFilter.Source.Icon"))
+                SwissFoodCompositionDatabase -> ProductSource.Type.SwissFoodCompositionDatabase.Icon( modifier = Modifier.uiName("FoodFilter.Source.Icon.Icon.5", "com.maksimowiczm.foodyou.app.ui.food.search.FoodFilter.Source.Icon", uiInspectionSource, "FoodFilter.Source.Icon"))
                 AustralianFoodCompositionDatabase ->
-                    FoodSource.Type.AustralianFoodCompositionDatabase.Icon()
+                    ProductSource.Type.AustralianFoodCompositionDatabase.Icon( modifier = Modifier.uiName("FoodFilter.Source.Icon.Icon.6", "com.maksimowiczm.foodyou.app.ui.food.search.FoodFilter.Source.Icon", uiInspectionSource, "FoodFilter.Source.Icon"))
             }
 
         @Composable
@@ -66,8 +69,8 @@ internal data class FoodFilter(val source: Source = DefaultFilter) {
             when (this) {
                 Recent -> stringResource(Res.string.headline_recent)
                 YourFood -> stringResource(Res.string.headline_your_food)
-                OpenFoodFacts -> FoodSource.Type.OpenFoodFacts.stringResource()
-                USDA -> FoodSource.Type.USDA.stringResource()
+                OpenFoodFacts -> ProductSource.Type.OpenFoodFacts.stringResource()
+                USDA -> ProductSource.Type.USDA.stringResource()
                 SwissFoodCompositionDatabase ->
                     stringResource(Res.string.headline_swiss_food_composition_database)
                 AustralianFoodCompositionDatabase ->
@@ -75,3 +78,9 @@ internal data class FoodFilter(val source: Source = DefaultFilter) {
             }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.search",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodFilter.kt",
+)

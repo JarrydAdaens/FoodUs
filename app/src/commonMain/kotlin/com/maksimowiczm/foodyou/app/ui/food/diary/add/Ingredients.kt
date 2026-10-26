@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.food.diary.add
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -11,13 +14,14 @@ import androidx.compose.ui.unit.dp
 import com.maksimowiczm.foodyou.app.ui.common.component.FoodErrorListItem
 import com.maksimowiczm.foodyou.app.ui.common.component.FoodListItem
 import com.maksimowiczm.foodyou.app.ui.common.utility.LocalEnergyFormatter
+import com.maksimowiczm.foodyou.app.ui.common.utility.stringResource
 import com.maksimowiczm.foodyou.app.ui.common.utility.stringResourceWithWeight
 import com.maksimowiczm.foodyou.common.compose.extension.add
 import com.maksimowiczm.foodyou.common.compose.extension.horizontal
 import com.maksimowiczm.foodyou.common.compose.extension.vertical
 import com.maksimowiczm.foodyou.common.compose.utility.formatClipZeros
 import com.maksimowiczm.foodyou.common.domain.measurement.Measurement
-import com.maksimowiczm.foodyou.food.domain.entity.FoodId
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
 import foodyou.app.generated.resources.*
 import kotlin.math.roundToInt
 import org.jetbrains.compose.resources.stringResource
@@ -25,7 +29,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 internal fun Ingredients(
     ingredients: List<IngredientModel>,
-    onIngredient: (FoodId, Measurement) -> Unit,
+    onIngredient: (NutritionalItemId, Measurement) -> Unit,
     contentPadding: PaddingValues,
     modifier: Modifier = Modifier,
 ) {
@@ -34,10 +38,10 @@ internal fun Ingredients(
     val verticalPadding = contentPadding.vertical()
     val horizontal = contentPadding.horizontal()
 
-    Column(modifier.padding(verticalPadding)) {
+    Column((modifier.padding(verticalPadding)).uiName("app.ui.food.diary.add.Ingredients.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "Ingredients")) {
         Text(
             text = stringResource(Res.string.headline_ingredients),
-            modifier = Modifier.padding(horizontal),
+            modifier = (Modifier.padding(horizontal)).uiName("app.ui.food.diary.add.Ingredients.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "Ingredients"),
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.primary,
         )
@@ -52,44 +56,44 @@ internal fun Ingredients(
                     totalWeight = ingredient.totalWeight,
                     servingWeight = ingredient.servingWeight,
                     isLiquid = ingredient.isLiquid,
-                )
+                ) ?: ingredient.measurement.stringResource()
 
-            if (measurementString == null) {
-                FoodErrorListItem(
-                    headline = ingredient.name,
-                    errorMessage = stringResource(Res.string.error_measurement_error),
-                    contentPadding = horizontal.add(vertical = 8.dp),
-                )
-            } else if (proteins == null || carbs == null || fats == null || energy == null) {
+            if (proteins == null || carbs == null || fats == null || energy == null) {
                 FoodErrorListItem(
                     headline = ingredient.name,
                     errorMessage = stringResource(Res.string.error_food_is_missing_required_fields),
-                    contentPadding = horizontal.add(vertical = 8.dp),
+                    contentPadding = horizontal.add(vertical = 8.dp), modifier = Modifier.uiName("app.ui.food.diary.add.Ingredients.FoodErrorListItem.1", "com.maksimowiczm.foodyou.app.ui.common.component.FoodErrorListItem", uiInspectionSource, "Ingredients")
                 )
             } else {
                 FoodListItem(
-                    name = { Text(ingredient.name) },
+                    name = { Text(ingredient.name, modifier = Modifier.uiName("app.ui.food.diary.add.Ingredients.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "Ingredients")) },
                     proteins = {
                         val text = proteins.formatClipZeros() + " $g"
-                        Text(text)
+                        Text(text, modifier = Modifier.uiName("app.ui.food.diary.add.Ingredients.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "Ingredients"))
                     },
                     carbohydrates = {
                         val text = carbs.formatClipZeros() + " $g"
-                        Text(text)
+                        Text(text, modifier = Modifier.uiName("app.ui.food.diary.add.Ingredients.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "Ingredients"))
                     },
                     fats = {
                         val text = fats.formatClipZeros() + " $g"
-                        Text(text)
+                        Text(text, modifier = Modifier.uiName("app.ui.food.diary.add.Ingredients.Text.5", "androidx.compose.material3.Text", uiInspectionSource, "Ingredients"))
                     },
                     calories = {
-                        Text(LocalEnergyFormatter.current.formatEnergy(energy.roundToInt()))
+                        Text(LocalEnergyFormatter.current.formatEnergy(energy.roundToInt()), modifier = Modifier.uiName("app.ui.food.diary.add.Ingredients.Text.6", "androidx.compose.material3.Text", uiInspectionSource, "Ingredients"))
                     },
-                    measurement = { Text(measurementString) },
+                    measurement = { Text(measurementString, modifier = Modifier.uiName("app.ui.food.diary.add.Ingredients.Text.7", "androidx.compose.material3.Text", uiInspectionSource, "Ingredients")) },
                     contentPadding = horizontal.add(vertical = 8.dp),
                     isRecipe = ingredient.isRecipe,
-                    onClick = { onIngredient(ingredient.foodId, ingredient.measurement) },
+                    onClick = { onIngredient(ingredient.foodId, ingredient.measurement) }, modifier = Modifier.uiName("app.ui.food.diary.add.Ingredients.FoodListItem.1", "com.maksimowiczm.foodyou.app.ui.common.component.FoodListItem", uiInspectionSource, "Ingredients")
                 )
             }
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.diary.add",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/Ingredients.kt",
+)

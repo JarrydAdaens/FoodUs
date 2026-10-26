@@ -1,5 +1,9 @@
 package com.maksimowiczm.foodyou.app.ui.food.diary.component
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.FlowRow
@@ -41,7 +45,7 @@ fun ChipsDatePicker(state: ChipsDatePickerState, modifier: Modifier = Modifier) 
     if (showDatePicker) {
         val datePickerState = rememberDatePickerState()
 
-        DatePickerDialog(
+        UiSourceScope(uiInspectionSource.element("ChipsDatePicker.DatePickerDialog.1", "androidx.compose.material3.DatePickerDialog", "ChipsDatePicker")) { DatePickerDialog(
             onDismissRequest = { showDatePicker = false },
             confirmButton = {
                 TextButton(
@@ -53,41 +57,41 @@ fun ChipsDatePicker(state: ChipsDatePickerState, modifier: Modifier = Modifier) 
                             ?.let(state::addAndSelect)
 
                         showDatePicker = false
-                    }
+                    }, modifier = Modifier.uiName("ChipsDatePicker.TextButton.1", "androidx.compose.material3.TextButton", uiInspectionSource, "ChipsDatePicker")
                 ) {
-                    Text(stringResource(Res.string.positive_ok))
+                    Text(stringResource(Res.string.positive_ok), modifier = Modifier.uiName("ChipsDatePicker.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "ChipsDatePicker"))
                 }
             },
             dismissButton = {
-                TextButton(onClick = { showDatePicker = false }) {
-                    Text(stringResource(Res.string.action_cancel))
+                TextButton(onClick = { showDatePicker = false }, modifier = Modifier.uiName("ChipsDatePicker.TextButton.2", "androidx.compose.material3.TextButton", uiInspectionSource, "ChipsDatePicker")) {
+                    Text(stringResource(Res.string.action_cancel), modifier = Modifier.uiName("ChipsDatePicker.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "ChipsDatePicker"))
                 }
-            },
+            }, modifier = Modifier.uiName("ChipsDatePicker.DatePickerDialog.1.root", "androidx.compose.material3.DatePickerDialog", uiInspectionSource, "ChipsDatePicker")
         ) {
-            DatePicker(state = datePickerState)
-        }
+            DatePicker(state = datePickerState, modifier = Modifier.uiName("ChipsDatePicker.DatePicker.1", "androidx.compose.material3.DatePicker", uiInspectionSource, "ChipsDatePicker"))
+        } }
     }
 
-    Row(modifier) {
-        Box(modifier = Modifier.size(48.dp), contentAlignment = Alignment.Center) {
-            Icon(imageVector = Icons.Default.CalendarMonth, contentDescription = null)
+    Row((modifier).uiName("ChipsDatePicker.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "ChipsDatePicker")) {
+        Box(modifier = (Modifier.size(48.dp)).uiName("ChipsDatePicker.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "ChipsDatePicker"), contentAlignment = Alignment.Center) {
+            Icon(imageVector = Icons.Default.CalendarMonth, contentDescription = null, modifier = Modifier.uiName("ChipsDatePicker.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "ChipsDatePicker"))
         }
 
         Spacer(Modifier.width(8.dp))
 
-        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.uiName("ChipsDatePicker.FlowRow.1", "androidx.compose.foundation.layout.FlowRow", uiInspectionSource, "ChipsDatePicker")) {
             state.dates.forEach { date ->
                 InputChip(
                     selected = state.selectedDate == date,
                     onClick = { state.selectDate(date) },
-                    label = { Text(date.stringResource(state.today)) },
+                    label = { Text(date.stringResource(state.today), modifier = Modifier.uiName("ChipsDatePicker.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "ChipsDatePicker")) }, modifier = Modifier.uiName("ChipsDatePicker.InputChip.1", "androidx.compose.material3.InputChip", uiInspectionSource, "ChipsDatePicker")
                 )
             }
 
             InputChip(
                 selected = false,
                 onClick = { showDatePicker = true },
-                label = { Text(stringResource(Res.string.action_choose_other_date)) },
+                label = { Text(stringResource(Res.string.action_choose_other_date), modifier = Modifier.uiName("ChipsDatePicker.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "ChipsDatePicker")) }, modifier = Modifier.uiName("ChipsDatePicker.InputChip.2", "androidx.compose.material3.InputChip", uiInspectionSource, "ChipsDatePicker")
             )
         }
     }
@@ -158,8 +162,8 @@ class ChipsDatePickerState(
                     mutableList
                 },
                 restore = {
-                    val selectedDate = it.firstOrNull()?.let(LocalDate::fromEpochDays)
-                    val today = it.getOrNull(1)?.let(LocalDate::fromEpochDays) ?: LocalDate.now()
+                    val today = it.firstOrNull()?.let(LocalDate::fromEpochDays) ?: LocalDate.now()
+                    val selectedDate = it.getOrNull(1)?.let(LocalDate::fromEpochDays)
                     val dates = it.drop(2).map(LocalDate::fromEpochDays)
 
                     ChipsDatePickerState(
@@ -171,3 +175,9 @@ class ChipsDatePickerState(
             )
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.diary.component",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/component/ChipsDatePicker.kt",
+)

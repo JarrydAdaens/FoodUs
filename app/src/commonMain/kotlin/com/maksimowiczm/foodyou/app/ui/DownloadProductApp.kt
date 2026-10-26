@@ -1,4 +1,9 @@
 package com.maksimowiczm.foodyou.app.ui
+import androidx.compose.ui.Modifier
+
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
 
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
@@ -14,12 +19,18 @@ fun DownloadProductApp(onBack: () -> Unit, onCreate: () -> Unit, url: String) {
     val onboardingFinished by viewModel.onboardingFinished.collectAsStateWithLifecycle()
 
     FoodYouTheme {
-        Surface {
+        Surface (modifier = Modifier.uiName("DownloadProductApp.Surface.1", "androidx.compose.material3.Surface", uiInspectionSource, "DownloadProductApp")) {
             if (!onboardingFinished) {
-                Onboarding(onFinish = viewModel::finishOnboarding)
+                UiSourceScope(uiInspectionSource.element("DownloadProductApp.Onboarding.1", "com.maksimowiczm.foodyou.app.ui.onboarding.Onboarding", "DownloadProductApp")) { Onboarding(onFinish = viewModel::finishOnboarding) }
             } else {
-                DownloadProductAppNavHost(onBack = onBack, onCreate = onCreate, url = url)
+                DownloadProductAppNavHost(onBack = onBack, onCreate = onCreate, url = url, modifier = Modifier.uiName("DownloadProductApp.DownloadProductAppNavHost.1", "com.maksimowiczm.foodyou.app.navigation.DownloadProductAppNavHost", uiInspectionSource, "DownloadProductApp"))
             }
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/DownloadProductApp.kt",
+)

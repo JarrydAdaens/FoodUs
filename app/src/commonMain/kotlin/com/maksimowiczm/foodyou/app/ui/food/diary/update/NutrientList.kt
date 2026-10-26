@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.food.diary.update
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,31 +22,38 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.maksimowiczm.foodyou.app.ui.common.component.IncompleteFoodsList
+import com.maksimowiczm.foodyou.app.ui.common.utility.stringResource
 import com.maksimowiczm.foodyou.app.ui.common.utility.stringResourceWithWeight
 import com.maksimowiczm.foodyou.app.ui.food.component.EnergyProgressIndicator
 import com.maksimowiczm.foodyou.app.ui.food.shared.component.NutrientList
 import com.maksimowiczm.foodyou.common.domain.food.isComplete
 import com.maksimowiczm.foodyou.common.domain.measurement.Measurement
-import com.maksimowiczm.foodyou.fooddiary.domain.entity.DiaryFood
-import com.maksimowiczm.foodyou.fooddiary.domain.entity.DiaryFoodRecipe
+import com.maksimowiczm.foodyou.common.domain.measurement.MeasurementResolver
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.NutritionalItemSnapshot
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.RecipeSnapshot
+import foodyou.app.generated.resources.*
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun NutrientList(
-    food: DiaryFood,
+    food: NutritionalItemSnapshot,
     measurement: Measurement,
     modifier: Modifier = Modifier,
 ) {
-    val weight = remember(food, measurement) { food.weight(measurement) }
-    val facts = remember(food, weight) { food.nutritionFacts * (weight / 100) }
+    val facts = food.nutritionFor(measurement)
+    if (facts == null) {
+        Text(stringResource(Res.string.error_portion_save), color = MaterialTheme.colorScheme.error, modifier = (modifier).uiName("app.ui.food.diary.update.NutrientList.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "NutrientList"))
+        return
+    }
 
-    Column(modifier) {
+    Column((modifier).uiName("app.ui.food.diary.update.NutrientList.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "NutrientList")) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(8.dp),
+            modifier = (Modifier.fillMaxWidth().padding(8.dp)).uiName("app.ui.food.diary.update.NutrientList.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "NutrientList"),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Box(modifier = Modifier.size(48.dp), contentAlignment = Alignment.Center) {
-                Icon(imageVector = Icons.AutoMirrored.Outlined.ViewList, contentDescription = null)
+            Box(modifier = (Modifier.size(48.dp)).uiName("app.ui.food.diary.update.NutrientList.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "NutrientList"), contentAlignment = Alignment.Center) {
+                Icon(imageVector = Icons.AutoMirrored.Outlined.ViewList, contentDescription = null, modifier = Modifier.uiName("app.ui.food.diary.update.NutrientList.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "NutrientList"))
             }
 
             val proteins = facts.proteins.value
@@ -55,7 +65,7 @@ internal fun NutrientList(
                     proteins = proteins.toFloat(),
                     carbohydrates = carbohydrates.toFloat(),
                     fats = fats.toFloat(),
-                    modifier = Modifier.weight(1f),
+                    modifier = (Modifier.weight(1f)).uiName("app.ui.food.diary.update.NutrientList.EnergyProgressIndicator.1", "com.maksimowiczm.foodyou.app.ui.food.component.EnergyProgressIndicator", uiInspectionSource, "NutrientList"),
                 )
             }
         }
@@ -65,17 +75,17 @@ internal fun NutrientList(
                 totalWeight = food.totalWeight,
                 servingWeight = food.servingWeight,
                 isLiquid = food.isLiquid,
-            ) ?: error("Invalid measurement: $measurement for ${food.name}")
+            ) ?: measurement.stringResource()
 
         Text(
             text = measurementString,
-            modifier = Modifier.padding(horizontal = 8.dp).padding(bottom = 8.dp),
+            modifier = (Modifier.padding(horizontal = 8.dp).padding(bottom = 8.dp)).uiName("app.ui.food.diary.update.NutrientList.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "NutrientList"),
             style = MaterialTheme.typography.labelLarge,
         )
 
-        NutrientList(facts)
+        NutrientList(facts, modifier = Modifier.uiName("app.ui.food.diary.update.NutrientList.NutrientList.1", "com.maksimowiczm.foodyou.app.ui.food.diary.update.NutrientList", uiInspectionSource, "NutrientList"))
 
-        if (food is DiaryFoodRecipe && !food.nutritionFacts.isComplete) {
+        if (food is RecipeSnapshot && !food.nutritionFacts.isComplete) {
             val foods =
                 remember(food) {
                     food
@@ -84,9 +94,15 @@ internal fun NutrientList(
                         .map { it.name }
                 }
 
-            IncompleteFoodsList(foods = foods, modifier = Modifier.padding(8.dp))
+            IncompleteFoodsList(foods = foods, modifier = (Modifier.padding(8.dp)).uiName("app.ui.food.diary.update.NutrientList.IncompleteFoodsList.1", "com.maksimowiczm.foodyou.app.ui.common.component.IncompleteFoodsList", uiInspectionSource, "NutrientList"))
         } else {
             Spacer(Modifier.height(8.dp))
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.diary.update",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/NutrientList.kt",
+)

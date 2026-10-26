@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.language
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -16,7 +19,13 @@ fun TranslationWarningStartupDialog(modifier: Modifier = Modifier) {
         LanguageWarningDialog(
             onDismissRequest = {},
             onConfirm = viewModel::hideTranslationWarning,
-            modifier = modifier,
+            modifier = (modifier).uiName("TranslationWarningStartupDialog.LanguageWarningDialog.1", "com.maksimowiczm.foodyou.app.ui.language.LanguageWarningDialog", uiInspectionSource, "TranslationWarningStartupDialog"),
         )
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.language",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/language/TranslationWarningStartupDialog.kt",
+)

@@ -1,5 +1,9 @@
 package com.maksimowiczm.foodyou.app.infrastructure.android
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
+
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
@@ -67,12 +71,12 @@ class DeveloperActivity : FoodYouAbstractActivity() {
 
         setContent {
             FoodYouTheme {
-                DeveloperScreen(
+                UiSourceScope(uiInspectionSource.element("DeveloperActivity.onCreate.DeveloperScreen.1", "com.maksimowiczm.foodyou.app.infrastructure.android.DeveloperScreen", "DeveloperActivity.onCreate")) { DeveloperScreen(
                     onReplaced = {
                         finish()
                         Process.killProcess(processId)
                     }
-                )
+                ) }
             }
         }
     }
@@ -83,19 +87,19 @@ private fun Activity.DeveloperScreen(onReplaced: () -> Unit) {
     var isReplacingDatabase by rememberSaveable { mutableStateOf(false) }
 
     if (isReplacingDatabase) {
-        Scaffold { paddingValues ->
+        Scaffold (modifier = Modifier.uiName("DeveloperScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "DeveloperScreen")) { paddingValues ->
             Column(
                 modifier =
-                    Modifier.padding(paddingValues)
+                    (Modifier.padding(paddingValues)
                         .consumeWindowInsets(paddingValues)
                         .safeContentPadding()
-                        .fillMaxSize(),
+                        .fillMaxSize()).uiName("DeveloperScreen.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "DeveloperScreen"),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                CircularWavyProgressIndicator()
+                CircularWavyProgressIndicator( modifier = Modifier.uiName("DeveloperScreen.CircularWavyProgressIndicator.1", "androidx.compose.material3.CircularWavyProgressIndicator", uiInspectionSource, "DeveloperScreen"))
                 Spacer(Modifier.height(16.dp))
-                Text(stringResource(Res.string.description_replacing_database))
+                Text(stringResource(Res.string.description_replacing_database), modifier = Modifier.uiName("DeveloperScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "DeveloperScreen"))
             }
         }
     } else {
@@ -104,15 +108,15 @@ private fun Activity.DeveloperScreen(onReplaced: () -> Unit) {
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text(stringResource(Res.string.headline_database_backup)) },
-                    navigationIcon = { ArrowBackIconButton(onClick = { finish() }) },
-                    scrollBehavior = scrollBehavior,
+                    title = { Text(stringResource(Res.string.headline_database_backup), modifier = Modifier.uiName("DeveloperScreen.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "DeveloperScreen")) },
+                    navigationIcon = { ArrowBackIconButton(onClick = { finish() }, modifier = Modifier.uiName("DeveloperScreen.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "DeveloperScreen")) },
+                    scrollBehavior = scrollBehavior, modifier = Modifier.uiName("DeveloperScreen.TopAppBar.1", "androidx.compose.material3.TopAppBar", uiInspectionSource, "DeveloperScreen")
                 )
-            }
+            }, modifier = Modifier.uiName("DeveloperScreen.Scaffold.2", "androidx.compose.material3.Scaffold", uiInspectionSource, "DeveloperScreen")
         ) { paddingValues ->
             LazyColumn(
                 modifier =
-                    Modifier.fillMaxSize().nestedScroll(scrollBehavior.nestedScrollConnection),
+                    (Modifier.fillMaxSize().nestedScroll(scrollBehavior.nestedScrollConnection)).uiName("DeveloperScreen.LazyColumn.1", "androidx.compose.foundation.lazy.LazyColumn", uiInspectionSource, "DeveloperScreen"),
                 contentPadding = paddingValues,
             ) {
                 item {
@@ -122,29 +126,29 @@ private fun Activity.DeveloperScreen(onReplaced: () -> Unit) {
 
                     Surface(
                         onClick = { clipboard.copy("text", text) },
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                        modifier = (Modifier.padding(horizontal = 16.dp, vertical = 8.dp)).uiName("DeveloperScreen.Surface.1", "androidx.compose.material3.Surface", uiInspectionSource, "DeveloperScreen"),
                         shape = MaterialTheme.shapes.medium,
                         color = MaterialTheme.colorScheme.primaryContainer,
                         contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                     ) {
                         Column(
-                            modifier = Modifier.fillMaxSize().padding(16.dp),
+                            modifier = (Modifier.fillMaxSize().padding(16.dp)).uiName("DeveloperScreen.Column.2", "androidx.compose.foundation.layout.Column", uiInspectionSource, "DeveloperScreen"),
                             verticalArrangement = Arrangement.spacedBy(8.dp),
                         ) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
+                            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.uiName("DeveloperScreen.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "DeveloperScreen")) {
                                 Icon(
                                     imageVector = Icons.Outlined.Science,
-                                    contentDescription = null,
+                                    contentDescription = null, modifier = Modifier.uiName("DeveloperScreen.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "DeveloperScreen")
                                 )
                                 Spacer(Modifier.width(8.dp))
                                 Text(
                                     text = stringResource(Res.string.headline_experimental),
-                                    style = MaterialTheme.typography.titleMedium,
+                                    style = MaterialTheme.typography.titleMedium, modifier = Modifier.uiName("DeveloperScreen.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "DeveloperScreen")
                                 )
                             }
                             // Don't translate it because if something changes in the future,
                             // translations may be misleading.
-                            Text(text = text, style = MaterialTheme.typography.bodyMedium)
+                            Text(text = text, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.uiName("DeveloperScreen.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "DeveloperScreen"))
                         }
                     }
                 }
@@ -182,13 +186,13 @@ private fun Context.SaveDatabaseListItem() {
         }
 
     ListItem(
-        headlineContent = { Text(stringResource(Res.string.headline_save_database)) },
-        supportingContent = { Text(stringResource(Res.string.description_save_database)) },
+        headlineContent = { Text(stringResource(Res.string.headline_save_database), modifier = Modifier.uiName("SaveDatabaseListItem.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "SaveDatabaseListItem")) },
+        supportingContent = { Text(stringResource(Res.string.description_save_database), modifier = Modifier.uiName("SaveDatabaseListItem.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "SaveDatabaseListItem")) },
         modifier =
-            Modifier.clickable {
+            (Modifier.clickable {
                 val date = LocalDateTime.now()
                 launcher.launch("foodyou-database-$date.db")
-            },
+            }).uiName("SaveDatabaseListItem.ListItem.1", "androidx.compose.material3.ListItem", uiInspectionSource, "SaveDatabaseListItem"),
     )
 }
 
@@ -224,9 +228,9 @@ private fun Context.ReplaceDatabaseListItem(onLock: () -> Unit, onFinish: () -> 
             }
         }
 
-        AlertDialog(
+        UiSourceScope(uiInspectionSource.element("ReplaceDatabaseListItem.AlertDialog.1", "androidx.compose.material3.AlertDialog", "ReplaceDatabaseListItem")) { AlertDialog(
             onDismissRequest = { showReplaceDatabaseDialog = false },
-            title = { Text(stringResource(Res.string.headline_replace_database)) },
+            title = { Text(stringResource(Res.string.headline_replace_database), modifier = Modifier.uiName("ReplaceDatabaseListItem.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "ReplaceDatabaseListItem")) },
             text = {
                 val str = stringResource(Res.string.warning_replace_database)
                 val words = remember(str) { str.customSplit() }
@@ -249,7 +253,7 @@ private fun Context.ReplaceDatabaseListItem(onLock: () -> Unit, onFinish: () -> 
                         }
                     }
 
-                Text(text = annotated, style = typography.bodyMedium)
+                Text(text = annotated, style = typography.bodyMedium, modifier = Modifier.uiName("ReplaceDatabaseListItem.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "ReplaceDatabaseListItem"))
             },
             confirmButton = {
                 TextButton(
@@ -257,7 +261,7 @@ private fun Context.ReplaceDatabaseListItem(onLock: () -> Unit, onFinish: () -> 
                         launcher.launch(arrayOf("application/vnd.sqlite3", "*/*"))
                         showReplaceDatabaseDialog = false
                     },
-                    enabled = timeout == 0,
+                    enabled = timeout == 0, modifier = Modifier.uiName("ReplaceDatabaseListItem.TextButton.1", "androidx.compose.material3.TextButton", uiInspectionSource, "ReplaceDatabaseListItem")
                 ) {
                     Text(
                         text =
@@ -266,22 +270,22 @@ private fun Context.ReplaceDatabaseListItem(onLock: () -> Unit, onFinish: () -> 
                                 if (timeout > 0) {
                                     append(" ($timeout)")
                                 }
-                            }
+                            }, modifier = Modifier.uiName("ReplaceDatabaseListItem.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "ReplaceDatabaseListItem")
                     )
                 }
             },
             dismissButton = {
-                TextButton(onClick = { showReplaceDatabaseDialog = false }) {
-                    Text(stringResource(Res.string.action_cancel))
+                TextButton(onClick = { showReplaceDatabaseDialog = false }, modifier = Modifier.uiName("ReplaceDatabaseListItem.TextButton.2", "androidx.compose.material3.TextButton", uiInspectionSource, "ReplaceDatabaseListItem")) {
+                    Text(stringResource(Res.string.action_cancel), modifier = Modifier.uiName("ReplaceDatabaseListItem.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "ReplaceDatabaseListItem"))
                 }
-            },
-        )
+            }, modifier = Modifier.uiName("ReplaceDatabaseListItem.AlertDialog.1.root", "androidx.compose.material3.AlertDialog", uiInspectionSource, "ReplaceDatabaseListItem")
+        ) }
     }
 
     ListItem(
-        headlineContent = { Text(stringResource(Res.string.headline_replace_database)) },
-        supportingContent = { Text(stringResource(Res.string.description_replace_database)) },
-        modifier = Modifier.clickable { showReplaceDatabaseDialog = true },
+        headlineContent = { Text(stringResource(Res.string.headline_replace_database), modifier = Modifier.uiName("ReplaceDatabaseListItem.Text.5", "androidx.compose.material3.Text", uiInspectionSource, "ReplaceDatabaseListItem")) },
+        supportingContent = { Text(stringResource(Res.string.description_replace_database), modifier = Modifier.uiName("ReplaceDatabaseListItem.Text.6", "androidx.compose.material3.Text", uiInspectionSource, "ReplaceDatabaseListItem")) },
+        modifier = (Modifier.clickable { showReplaceDatabaseDialog = true }).uiName("ReplaceDatabaseListItem.ListItem.1", "androidx.compose.material3.ListItem", uiInspectionSource, "ReplaceDatabaseListItem"),
     )
 }
 
@@ -350,3 +354,9 @@ private fun String.customSplit(): List<String> {
 
     return words
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.infrastructure.android",
+    "app/src/androidMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/android/DeveloperActivity.kt",
+)

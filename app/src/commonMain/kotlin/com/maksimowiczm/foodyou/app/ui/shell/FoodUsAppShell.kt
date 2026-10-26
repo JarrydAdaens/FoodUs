@@ -1,5 +1,9 @@
 package com.maksimowiczm.foodyou.app.ui.shell
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
+
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
@@ -49,20 +53,20 @@ fun FoodUsAppShell(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifier) 
     }
 
     Scaffold(
-        modifier = modifier,
+        modifier = (modifier).uiName("FoodUsAppShell.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "FoodUsAppShell"),
         // The tab content owns its own Scaffolds and window insets; the shell only reserves room
         // for the bottom bar and lets the inner Scaffolds handle the rest.
         contentWindowInsets = WindowInsets(0),
         bottomBar = {
-            NavigationBar {
+            NavigationBar (modifier = Modifier.uiName("FoodUsAppShell.NavigationBar.1", "androidx.compose.material3.NavigationBar", uiInspectionSource, "FoodUsAppShell")) {
                 ShellTab.entries.forEach { tab ->
                     val label = tab.label()
 
                     NavigationBarItem(
                         selected = tab == selectedTab,
                         onClick = { selectedTabOrdinal = tab.ordinal },
-                        icon = { Icon(imageVector = tab.icon, contentDescription = label) },
-                        label = { Text(text = label) },
+                        icon = { Icon(imageVector = tab.icon, contentDescription = label, modifier = Modifier.uiName("FoodUsAppShell.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "FoodUsAppShell")) },
+                        label = { Text(text = label, modifier = Modifier.uiName("FoodUsAppShell.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "FoodUsAppShell")) }, modifier = Modifier.uiName("FoodUsAppShell.NavigationBarItem.1", "androidx.compose.material3.NavigationBarItem", uiInspectionSource, "FoodUsAppShell")
                     )
                 }
             }
@@ -70,15 +74,15 @@ fun FoodUsAppShell(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifier) 
     ) { paddingValues ->
         Box(
             modifier =
-                Modifier.fillMaxSize()
+                (Modifier.fillMaxSize()
                     .padding(bottom = paddingValues.calculateBottomPadding())
-                    .consumeWindowInsets(paddingValues)
+                    .consumeWindowInsets(paddingValues)).uiName("FoodUsAppShell.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "FoodUsAppShell")
         ) {
             stateHolder.SaveableStateProvider(selectedTab.name) {
                 when (selectedTab) {
-                    ShellTab.Groups -> GroupsScreen()
-                    ShellTab.Log -> FoodYouAppNavHost(onDatabaseBackup)
-                    ShellTab.Notifications -> NotificationsScreen()
+                    ShellTab.Groups -> UiSourceScope(uiInspectionSource.element("FoodUsAppShell.GroupsScreen.1", "com.maksimowiczm.foodyou.app.ui.groups.GroupsScreen", "FoodUsAppShell")) { GroupsScreen() }
+                    ShellTab.Log -> FoodYouAppNavHost(onDatabaseBackup, modifier = Modifier.uiName("FoodUsAppShell.FoodYouAppNavHost.1", "com.maksimowiczm.foodyou.app.navigation.FoodYouAppNavHost", uiInspectionSource, "FoodUsAppShell"))
+                    ShellTab.Notifications -> UiSourceScope(uiInspectionSource.element("FoodUsAppShell.NotificationsScreen.1", "com.maksimowiczm.foodyou.app.ui.notifications.NotificationsScreen", "FoodUsAppShell")) { NotificationsScreen() }
                 }
             }
         }
@@ -100,3 +104,9 @@ private fun ShellTab.label(): String =
         ShellTab.Log -> stringResource(Res.string.tab_log)
         ShellTab.Notifications -> stringResource(Res.string.tab_notifications)
     }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.shell",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/shell/FoodUsAppShell.kt",
+)

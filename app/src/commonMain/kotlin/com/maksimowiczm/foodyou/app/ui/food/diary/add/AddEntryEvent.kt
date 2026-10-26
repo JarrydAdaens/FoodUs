@@ -4,4 +4,5 @@ internal sealed interface AddEntryEvent {
     data object FoodDeleted : AddEntryEvent
 
     data object EntryAdded : AddEntryEvent
+    data object SaveFailed : AddEntryEvent
 }

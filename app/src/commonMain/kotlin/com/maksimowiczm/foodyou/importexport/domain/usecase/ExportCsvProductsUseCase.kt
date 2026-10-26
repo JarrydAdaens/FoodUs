@@ -1,6 +1,8 @@
 package com.maksimowiczm.foodyou.importexport.domain.usecase
 
 import com.maksimowiczm.foodyou.common.domain.database.TransactionProvider
+import com.maksimowiczm.foodyou.common.domain.food.ProductFactBasis
+import com.maksimowiczm.foodyou.common.domain.food.hasValidValues
 import com.maksimowiczm.foodyou.food.domain.entity.Product
 import com.maksimowiczm.foodyou.food.domain.repository.ProductRepository
 import com.maksimowiczm.foodyou.importexport.domain.entity.ProductField
@@ -19,6 +21,9 @@ fun interface ExportCsvProductsUseCase {
     suspend fun export(fields: List<ProductField>): Flow<String>
 }
 
+/** No row can truthfully express this definition in the legacy per-100 metric format. */
+class CsvMetricBasisUnavailableException : IllegalStateException("CSV metric reference unavailable")
+
 internal class ExportCsvProductsUseCaseImpl(
     private val productRepository: ProductRepository,
     private val transactionProvider: TransactionProvider,
@@ -30,15 +35,24 @@ internal class ExportCsvProductsUseCaseImpl(
             fields
                 .map(ProductField::csvHeader)
                 .joinToString(",", transform = csvWriter::writeString)
-        send(header)
-
         transactionProvider.withTransaction {
+            // Check the complete consistent view before emitting even the header. Consumers can
+            // stage this stream before opening a destination document.
+            var checked = 0
+            while (true) {
+                val products = productRepository.observeProducts(PAGE_SIZE, checked).first()
+                if (products.isEmpty()) break
+                products.forEach { it.forMetricCsv() }
+                checked += PAGE_SIZE
+            }
+            send(header)
             var offset = 0
             while (true) {
                 val products = productRepository.observeProducts(PAGE_SIZE, offset).first()
                 if (products.isEmpty()) break
 
-                for (product in products) {
+                for (original in products) {
+                    val product = original.forMetricCsv()
                     val csvLine =
                         fields.joinToString(separator = ",") { field ->
                             csvWriter.write(product.field(field))
@@ -57,8 +71,15 @@ internal class ExportCsvProductsUseCaseImpl(
     }
 }
 
+private fun Product.forMetricCsv(): Product {
+    if (factBasis == ProductFactBasis.METRIC_100) return this
+    val metric = referencePortion?.metric(isLiquid) ?: throw CsvMetricBasisUnavailableException()
+    val facts = metricNutrition()?.takeIf { it.hasValidValues() } ?: throw CsvMetricBasisUnavailableException()
+    return copy(nutritionFacts = facts, servingWeight = metric)
+}
+
 private class CsvWriter {
-    fun writeString(value: String): String = "\"$value\""
+    fun writeString(value: String): String = "\"${value.replace("\"", "\"\"")}\""
 
     fun writeDouble(value: Double): String = value.toString()
 

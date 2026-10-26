@@ -6,7 +6,7 @@
     <string name="headline_daily_goals">Päivittäiset tavoitteesi</string>
     <string name="headline_general">Yleiset</string>
     <string name="headline_macronutrients">Makroravinteet</string>
-    <string name="headline_meals">Ateriat</string>
+    <string name="headline_diary_slots">Ateriat</string>
     <string name="headline_delete_food">Poista ruoka</string>
     <string name="headline_edit_product">Muokkaa tuotetta</string>
     <string name="headline_permission_required">Lupaa vaaditaan</string>
@@ -30,7 +30,7 @@
     <string name="headline_home" description="Home screen">Etusivu</string>
     <string name="headline_home_settings" description="Home screen settings">Etusivun asetukset</string>
     <string name="headline_calendar">Kalenteri</string>
-    <string name="headline_meals_settings">Aterioiden asetukset</string>
+    <string name="headline_diary_slots_settings">Aterioiden asetukset</string>
     <string name="headline_horizontal">Vaakasuuntainen</string>
     <string name="headline_vertical">Pystysuuntainen</string>
     <string name="headline_values_per">Arvot per</string>
@@ -124,7 +124,7 @@
     <string name="action_save">Tallenna</string>
     <string name="action_delete">Poista</string>
     <string name="action_confirm">Vahvista</string>
-    <string name="action_add_meal">Lisää ateria</string>
+    <string name="action_add_diary_slot">Lisää ateria</string>
     <string name="action_edit">Muokkaa</string>
     <string name="action_insert_suggested_search">Aseta ehdotettu haku</string>
     <string name="action_edit_entry">Muokkaa kohdetta</string>
@@ -142,7 +142,7 @@
     <string name="action_move_up" description="reorder list item up">Siirrä ylös</string>
     <string name="action_move_down" description="reorder list item down">Siirrä alas</string>
     <string name="action_use_time_based_ordering">Käyttöaikaperusteinen järjestys</string>
-    <string name="action_ignore_all_day_meals">Sivuuta koko päivän ateriat</string>
+    <string name="action_ignore_all_day_diary_slots">Sivuuta koko päivän ateriat</string>
     <string name="action_add_ingredient" description="Add ingredient to the recipe">Lisää ainesosa</string>
     <string name="action_delete_ingredient">Poista ainesosa</string>
     <string name="action_download">Lataa</string>
@@ -172,9 +172,9 @@
         <item quantity="other">%1$d kilojoulea jäljellä</item>
     </plurals>
     <string name="neutral_set_your_daily_goals">Aseta päivittäiset ravitsemustavoitteesi</string>
-    <string name="neutral_set_your_meal_schedule">Aseta ateria-aikataulusi</string>
-    <string name="neutral_permanently_delete_meal">Poistetaanko ateria pysyvästi?</string>
-    <string name="neutral_meal_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">Ateria poistetaan pysyvästi. Kaikki tähän ateriaan liittyvät tiedot menetetään.</string>
+    <string name="neutral_set_your_diary_slot_schedule">Aseta ateria-aikataulusi</string>
+    <string name="neutral_permanently_delete_diary_slot">Poistetaanko ateria pysyvästi?</string>
+    <string name="neutral_diary_slot_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">Ateria poistetaan pysyvästi. Kaikki tähän ateriaan liittyvät tiedot menetetään.</string>
     <string name="neutral_required">Pakollinen</string>
     <string name="neutral_help_translating_the_app">Auta sovelluksen kääntämisessä</string>
     <string name="neutral_copied">Tiedot kopioitu leikepöydälle</string>
@@ -207,8 +207,8 @@
     <string name="description_delete_food">Ruoka poistetaan pysyvästi</string>
     <string name="description_delete_product_entry" description="Tell user that this entry will be deleted only from diary and won't affect the product itself. Product won't be deleted from the database.">Tämä kohde poistetaan päiväkirjastasi. Voit lisätä sen uudelleen koska tahansa.</string>
     <string name="description_about_setting">Lue lisää sovelluksesta</string>
-    <string name="description_time_based_meals_sorting">Kun käytössä, tällä hetkellä tapahtuvat ateriat näytetään ensin</string>
-    <string name="description_action_ignore_all_day_meals">Koko päivän ateriat näytetään luettelon lopussa</string>
+    <string name="description_time_based_diary_slots_sorting">Kun käytössä, tällä hetkellä tapahtuvat ateriat näytetään ensin</string>
+    <string name="description_action_ignore_all_day_diary_slots">Koko päivän ateriat näytetään luettelon lopussa</string>
     <string name="description_incomplete_nutrition_data">Joillakin käytetyillä tuotteilla ei ole tätä arvoa, joten näytettävä arvo ei ehkä ole tarkka</string>
     <string name="description_translation_warning">Käännökset ovat vapaaehtoisten luomia. Ne eivät ehkä ole täydellisiä ja joitakin käännöksiä saattaa puuttua. Jos huomaat virheitä, voit auttaa niiden korjaamisessa.</string>
     <string name="description_home_settings">Muokkaa etusivuasi</string>

@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.food.component
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.material3.MaterialTheme
@@ -60,9 +63,9 @@ fun EnergyProgressIndicator(
                 }
             },
         modifier =
-            modifier
+            (modifier
                 .defaultMinSize(minWidth = 0.dp, minHeight = 16.dp)
-                .clip(MaterialTheme.shapes.small),
+                .clip(MaterialTheme.shapes.small)).uiName("EnergyProgressIndicator.MultiColorProgressIndicator.1", "com.maksimowiczm.foodyou.common.compose.component.MultiColorProgressIndicator", uiInspectionSource, "EnergyProgressIndicator"),
     )
 }
 
@@ -108,8 +111,14 @@ fun EnergyProgressIndicator(
     MultiColorProgressIndicator(
         items = items,
         modifier =
-            modifier
+            (modifier
                 .defaultMinSize(minWidth = 0.dp, minHeight = 16.dp)
-                .clip(MaterialTheme.shapes.small),
+                .clip(MaterialTheme.shapes.small)).uiName("EnergyProgressIndicator.MultiColorProgressIndicator.2", "com.maksimowiczm.foodyou.common.compose.component.MultiColorProgressIndicator", uiInspectionSource, "EnergyProgressIndicator"),
     )
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.component",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/component/EnergyProgressIndicator.kt",
+)

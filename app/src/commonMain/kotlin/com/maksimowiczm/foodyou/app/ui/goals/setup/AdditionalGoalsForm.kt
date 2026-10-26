@@ -1,5 +1,9 @@
 package com.maksimowiczm.foodyou.app.ui.goals.setup
 
+
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -31,7 +35,7 @@ import org.jetbrains.compose.resources.stringResource
 internal fun AdditionalGoalsForm(state: AdditionalGoalsFormState, modifier: Modifier = Modifier) {
     val nutrientsOrder = LocalNutrientsOrder.current
 
-    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    Column(modifier = (modifier).uiName("AdditionalGoalsForm.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "AdditionalGoalsForm"), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         nutrientsOrder.forEach {
             when (it) {
                 NutrientsOrder.Proteins -> Unit
@@ -49,33 +53,33 @@ internal fun AdditionalGoalsForm(state: AdditionalGoalsFormState, modifier: Modi
 private fun ColumnScope.Fats(state: AdditionalGoalsFormState) {
     Text(
         text = stringResource(Res.string.nutriment_fats),
-        modifier = Modifier.padding(top = 8.dp),
+        modifier = (Modifier.padding(top = 8.dp)).uiName("app.ui.goals.setup.Fats.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "Fats"),
         style = MaterialTheme.typography.labelLarge,
         color = MaterialTheme.colorScheme.primary,
     )
     state.saturatedFats.TextField(
         label = stringResource(Res.string.nutriment_saturated_fats),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Fats.TextField.1", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Fats"),
     )
     state.transFats.TextField(
         label = stringResource(Res.string.nutriment_trans_fats),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Fats.TextField.2", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Fats"),
     )
     state.monounsaturatedFats.TextField(
         label = stringResource(Res.string.nutriment_monounsaturated_fats),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Fats.TextField.3", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Fats"),
     )
     state.polyunsaturatedFats.TextField(
         label = stringResource(Res.string.nutriment_polyunsaturated_fats),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Fats.TextField.4", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Fats"),
     )
     state.omega3.TextField(
         label = stringResource(Res.string.nutriment_omega_3),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Fats.TextField.5", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Fats"),
     )
     state.omega6.TextField(
         label = stringResource(Res.string.nutriment_omega_6),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Fats.TextField.6", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Fats"),
     )
 }
 
@@ -83,30 +87,30 @@ private fun ColumnScope.Fats(state: AdditionalGoalsFormState) {
 private fun ColumnScope.Carbohydrates(state: AdditionalGoalsFormState) {
     Text(
         text = stringResource(Res.string.nutriment_carbohydrates),
-        modifier = Modifier.padding(top = 8.dp),
+        modifier = (Modifier.padding(top = 8.dp)).uiName("app.ui.goals.setup.Carbohydrates.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "Carbohydrates"),
         style = MaterialTheme.typography.labelLarge,
         color = MaterialTheme.colorScheme.primary,
     )
 
     state.sugars.TextField(
         label = stringResource(Res.string.nutriment_sugars),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Carbohydrates.TextField.1", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Carbohydrates"),
     )
     state.addedSugars.TextField(
         label = stringResource(Res.string.nutriment_added_sugars),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Carbohydrates.TextField.2", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Carbohydrates"),
     )
     state.dietaryFiber.TextField(
         label = stringResource(Res.string.nutriment_fiber),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Carbohydrates.TextField.3", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Carbohydrates"),
     )
     state.solubleFiber.TextField(
         label = stringResource(Res.string.nutriment_soluble_fiber),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Carbohydrates.TextField.4", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Carbohydrates"),
     )
     state.insolubleFiber.TextField(
         label = stringResource(Res.string.nutriment_insoluble_fiber),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Carbohydrates.TextField.5", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Carbohydrates"),
     )
 }
 
@@ -114,22 +118,22 @@ private fun ColumnScope.Carbohydrates(state: AdditionalGoalsFormState) {
 private fun ColumnScope.Other(state: AdditionalGoalsFormState) {
     Text(
         text = stringResource(Res.string.headline_other),
-        modifier = Modifier.padding(top = 8.dp),
+        modifier = (Modifier.padding(top = 8.dp)).uiName("app.ui.goals.setup.Other.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "Other"),
         style = MaterialTheme.typography.labelLarge,
         color = MaterialTheme.colorScheme.primary,
     )
     state.salt.TextField(
         label = stringResource(Res.string.nutriment_salt),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Other.TextField.1", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Other"),
     )
     state.cholesterolMilli.TextField(
         label = stringResource(Res.string.nutriment_cholesterol),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Other.TextField.2", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Other"),
         suffix = stringResource(Res.string.unit_milligram_short),
     )
     state.caffeineMilli.TextField(
         label = stringResource(Res.string.nutriment_caffeine),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Other.TextField.3", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Other"),
         suffix = stringResource(Res.string.unit_milligram_short),
     )
 }
@@ -138,73 +142,73 @@ private fun ColumnScope.Other(state: AdditionalGoalsFormState) {
 private fun ColumnScope.Vitamins(state: AdditionalGoalsFormState) {
     Text(
         text = stringResource(Res.string.headline_vitamins),
-        modifier = Modifier.padding(top = 8.dp),
+        modifier = (Modifier.padding(top = 8.dp)).uiName("app.ui.goals.setup.Vitamins.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "Vitamins"),
         style = MaterialTheme.typography.labelLarge,
         color = MaterialTheme.colorScheme.primary,
     )
     state.vitaminAMicro.TextField(
         label = stringResource(Res.string.vitamin_a),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Vitamins.TextField.1", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Vitamins"),
         suffix = stringResource(Res.string.unit_microgram_short),
     )
     state.vitaminB1Milli.TextField(
         label = stringResource(Res.string.vitamin_b1),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Vitamins.TextField.2", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Vitamins"),
         suffix = stringResource(Res.string.unit_milligram_short),
     )
     state.vitaminB2Milli.TextField(
         label = stringResource(Res.string.vitamin_b2),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Vitamins.TextField.3", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Vitamins"),
         suffix = stringResource(Res.string.unit_milligram_short),
     )
     state.vitaminB3Milli.TextField(
         label = stringResource(Res.string.vitamin_b3),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Vitamins.TextField.4", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Vitamins"),
         suffix = stringResource(Res.string.unit_milligram_short),
     )
     state.vitaminB5Milli.TextField(
         label = stringResource(Res.string.vitamin_b5),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Vitamins.TextField.5", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Vitamins"),
         suffix = stringResource(Res.string.unit_milligram_short),
     )
     state.vitaminB6Milli.TextField(
         label = stringResource(Res.string.vitamin_b6),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Vitamins.TextField.6", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Vitamins"),
         suffix = stringResource(Res.string.unit_milligram_short),
     )
     state.vitaminB7Micro.TextField(
         label = stringResource(Res.string.vitamin_b7),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Vitamins.TextField.7", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Vitamins"),
         suffix = stringResource(Res.string.unit_microgram_short),
     )
     state.vitaminB9Micro.TextField(
         label = stringResource(Res.string.vitamin_b9),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Vitamins.TextField.8", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Vitamins"),
         suffix = stringResource(Res.string.unit_microgram_short),
     )
     state.vitaminB12Micro.TextField(
         label = stringResource(Res.string.vitamin_b12),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Vitamins.TextField.9", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Vitamins"),
         suffix = stringResource(Res.string.unit_microgram_short),
     )
     state.vitaminCMilli.TextField(
         label = stringResource(Res.string.vitamin_c),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Vitamins.TextField.10", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Vitamins"),
         suffix = stringResource(Res.string.unit_milligram_short),
     )
     state.vitaminDMicro.TextField(
         label = stringResource(Res.string.vitamin_d),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Vitamins.TextField.11", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Vitamins"),
         suffix = stringResource(Res.string.unit_microgram_short),
     )
     state.vitaminEMilli.TextField(
         label = stringResource(Res.string.vitamin_e),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Vitamins.TextField.12", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Vitamins"),
         suffix = stringResource(Res.string.unit_milligram_short),
     )
     state.vitaminKMicro.TextField(
         label = stringResource(Res.string.vitamin_k),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Vitamins.TextField.13", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Vitamins"),
         suffix = stringResource(Res.string.unit_microgram_short),
     )
 }
@@ -213,68 +217,68 @@ private fun ColumnScope.Vitamins(state: AdditionalGoalsFormState) {
 private fun ColumnScope.Minerals(state: AdditionalGoalsFormState) {
     Text(
         text = stringResource(Res.string.headline_minerals),
-        modifier = Modifier.padding(top = 8.dp),
+        modifier = (Modifier.padding(top = 8.dp)).uiName("app.ui.goals.setup.Minerals.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "Minerals"),
         style = MaterialTheme.typography.labelLarge,
         color = MaterialTheme.colorScheme.primary,
     )
     state.manganeseMilli.TextField(
         label = stringResource(Res.string.mineral_manganese),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Minerals.TextField.1", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Minerals"),
         suffix = stringResource(Res.string.unit_milligram_short),
     )
     state.magnesiumMilli.TextField(
         label = stringResource(Res.string.mineral_magnesium),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Minerals.TextField.2", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Minerals"),
         suffix = stringResource(Res.string.unit_milligram_short),
     )
     state.potassiumMilli.TextField(
         label = stringResource(Res.string.mineral_potassium),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Minerals.TextField.3", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Minerals"),
         suffix = stringResource(Res.string.unit_milligram_short),
     )
     state.calciumMilli.TextField(
         label = stringResource(Res.string.mineral_calcium),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Minerals.TextField.4", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Minerals"),
         suffix = stringResource(Res.string.unit_milligram_short),
     )
     state.copperMilli.TextField(
         label = stringResource(Res.string.mineral_copper),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Minerals.TextField.5", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Minerals"),
         suffix = stringResource(Res.string.unit_milligram_short),
     )
     state.zincMilli.TextField(
         label = stringResource(Res.string.mineral_zinc),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Minerals.TextField.6", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Minerals"),
         suffix = stringResource(Res.string.unit_milligram_short),
     )
     state.sodiumMilli.TextField(
         label = stringResource(Res.string.mineral_sodium),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Minerals.TextField.7", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Minerals"),
         suffix = stringResource(Res.string.unit_milligram_short),
     )
     state.ironMilli.TextField(
         label = stringResource(Res.string.mineral_iron),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Minerals.TextField.8", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Minerals"),
         suffix = stringResource(Res.string.unit_milligram_short),
     )
     state.phosphorusMilli.TextField(
         label = stringResource(Res.string.mineral_phosphorus),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Minerals.TextField.9", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Minerals"),
         suffix = stringResource(Res.string.unit_milligram_short),
     )
     state.seleniumMicro.TextField(
         label = stringResource(Res.string.mineral_selenium),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Minerals.TextField.10", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Minerals"),
         suffix = stringResource(Res.string.unit_microgram_short),
     )
     state.iodineMicro.TextField(
         label = stringResource(Res.string.mineral_iodine),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Minerals.TextField.11", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Minerals"),
         suffix = stringResource(Res.string.unit_microgram_short),
     )
     state.chromiumMicro.TextField(
         label = stringResource(Res.string.mineral_chromium),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = (Modifier.fillMaxWidth()).uiName("app.ui.goals.setup.Minerals.TextField.12", "com.maksimowiczm.foodyou.app.ui.goals.setup.TextField", uiInspectionSource, "Minerals"),
         suffix = stringResource(Res.string.unit_microgram_short),
     )
 }
@@ -288,9 +292,9 @@ private fun FormField<Double, DailyGoalsFormError>.TextField(
 ) {
     OutlinedTextField(
         state = textFieldState,
-        modifier = modifier,
-        label = { Text(label) },
-        suffix = { Text(suffix) },
+        modifier = (modifier).uiName("app.ui.goals.setup.TextField.OutlinedTextField.1", "androidx.compose.material3.OutlinedTextField", uiInspectionSource, "TextField"),
+        label = { Text(label, modifier = Modifier.uiName("app.ui.goals.setup.TextField.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "TextField")) },
+        suffix = { Text(suffix, modifier = Modifier.uiName("app.ui.goals.setup.TextField.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "TextField")) },
         keyboardOptions =
             KeyboardOptions(keyboardType = KeyboardType.Decimal, imeAction = imeAction),
         isError = error != null,
@@ -577,3 +581,9 @@ internal class AdditionalGoalsFormState(
 
     val isModified: Boolean by isModifiedState
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.goals.setup",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/goals/setup/AdditionalGoalsForm.kt",
+)

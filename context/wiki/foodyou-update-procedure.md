@@ -67,22 +67,67 @@ any future candidate keystore be confirmed as the right one):
 
 ## 2. Per Release: Bump versionCode and Fork Version
 
-Edit `gradle/libs.versions.toml`:
+Follow the [FoodUs Versioning Policy](../versioning-policy.md) and edit the current values in
+`gradle/libs.versions.toml`. Increase `android-versionCode` above every installed or shipped
+code. The owner-authorized draft transition has adopted
+`Generation.Milestone.StoriesClosed.ReleaseCount`, using the owner-selected delivery
+milestone in Design plus Milestone B's closed Stories. Original Food You is Generation 1,
+the FoodUs fork is Generation 2, and the owner has advanced development to Generation 3
+for multiplayer while retaining Milestone 2 as the delivery milestone. This does not
+close the multiplayer or server-deployment gates.
 
-```toml
-android-versionCode = "124"    # bump to at least installed + 1 for every shipped build
-fork-version-name = "2.19.1"   # <milestone>.<story>.<build> — must match the v* release tag
-```
+Keep development versions synchronized when selected tracked state changes. ReleaseCount
+is the lifetime number of published FoodUs releases, including legacy releases; it never
+resets when earlier components change. Development retains the published total. For an
+authorized publication, use the next unused cumulative count after checking the complete
+release ledger. Local builds and tags alone do not increment it. Read the catalog for
+present values; the policy's first-publication migration checks still apply.
 
 `fork-version-name` is the app's shipped Android versionName; the `v*` tag that triggers the
 release workflow must be `v<fork-version-name>` so Obtainium's installed-vs-latest comparison
-works without workarounds.
+has matching identifiers. Before the first four-part release, preflight Obtainium selection
+using an isolated test source with representative old/new releases (separate publication
+authorization required), and prove a signed-candidate update on a test device or emulator.
+The adopted generation sorts above the published legacy tags, but installed development
+versions and Obtainium's four-part comparison and selection settings still need checking.
+Android install ordering comes from versionCode.
+After authorized publication, verify actual Obtainium discovery and update on the first
+phone before rolling out to the second. Keep the same-signature sideload fallback in §4.
+Record the canonical version, tag, cumulative ReleaseCount, versionCode, and source revision in the GitHub release
+notes as the release ledger. Never rewrite an existing tag or release to migrate the scheme.
 
 - Simple scheme (plan Q4): before each shipped build, set it to `installed + 1`.
 - On upstream merges: take `max(upstream, ours) + 1` if shipping. This single line is the one
   recurring upstream-file conflict this fork accepts; resolve it with that rule.
 
 ## 3. Per Release: Build and Sign
+
+### Source branch and release tag
+
+Develop on `jarryd/develop`. Once the candidate is checked, merge it into the default
+`jarryd/main` branch with a merge commit and put an **annotated** `v<fork-version-name>`
+tag on that merge, following the legacy release history. Include completed follow-up
+Stories in the tracker-derived version; the StoriesClosed component is a count, not
+the Story number printed in the latest commit title. A temporary release branch or
+manually dispatched workflow artifact does not constitute a published release.
+
+Before tagging, confirm the catalog version/code, release ledger, and required migration
+checks above. Never use a development snapshot tag as a publication marker. After tagging,
+fast-forward develop to the release merge so both branches share the accepted baseline.
+
+An ordinary branch push does not include tags by default. The owner can push both branches
+and their reachable annotated release tag in one operation:
+
+```powershell
+git push origin jarryd/main jarryd/develop --follow-tags
+```
+
+In a Git GUI, include both branches and the release tag. This repository's local
+`push.followTags=true` setting also includes reachable annotated tags on normal Git pushes;
+check the GUI's outgoing refs if it implements its own push controls. The tag push triggers
+the signed release workflow. Agents must leave this push to the owner under AGENTS.md.
+
+### Local build and signing
 
 From the repo root (`D:\forked-projects\FoodYou`), with `JAVA_HOME` at the JDK 21 install:
 
@@ -91,7 +136,8 @@ $env:JAVA_HOME = 'C:\Java\jdk-21.0.12+8'
 .\gradlew.bat :app:assembleRelease
 ```
 
-Output: `app\build\outputs\apk\release\app-release-unsigned.apk` (R8-minified `release` build
+Output: `app\build\outputs\apk\release\foodus-<version>-unsigned.apk`, where `<version>` is
+the catalog fork version with dots replaced by underscores (R8-minified `release` build
 type — the same configuration upstream ships; plan Q3). The build takes several minutes.
 
 Then sign with the helper script (wraps zipalign + apksigner, same pattern as
@@ -106,15 +152,23 @@ $env:FOODUS_KEYSTORE_PASSWORD = '<from password manager — never typed into fil
 
 The script refuses to run if the keystore is inside the repository, and finishes with
 `apksigner verify --print-certs` — check the SHA-256 digest matches the one recorded in §1.
-Output: `app\build\outputs\apk\release\app-release-signed.apk`.
+Output: `app\build\outputs\apk\release\foodus-<version>.apk`. The GitHub workflow uses
+the same signed filename for both release assets and manually dispatched build artifacts.
 
-Manual equivalent (what the script does), using build-tools 36.0.0 at
-`C:\Users\Jarry\AppData\Local\Android\Sdk\build-tools\36.0.0`:
+Debug builds (`:app:assembleDebug`) produce
+`app\build\outputs\apk\debug\foodus-dev-<version>.apk`. The embedded version retains
+its dots and `-dev` suffix, and the application ID retains `.dev` for side-by-side installs.
+These filenames do not change update identity or reset app data. Preserve the signing
+key for subsequent builds of each application ID, including the debug key for Dev updates.
+
+Manual equivalent (what the script does), using SDK build-tools 36.0.0. The helper
+locates the SDK through `ANDROID_HOME`, then `ANDROID_SDK_ROOT`, then the default
+`%LOCALAPPDATA%\Android\Sdk` location:
 
 ```powershell
-zipalign -f -p 4 app-release-unsigned.apk aligned.apk
-apksigner sign --alignment-preserved --ks <SECURE-PATH>\foodus.jks --ks-key-alias foodus --out app-release-signed.apk aligned.apk
-apksigner verify --print-certs app-release-signed.apk
+zipalign -f -p 4 foodus-<version>-unsigned.apk aligned.apk
+apksigner sign --alignment-preserved --ks <SECURE-PATH>\foodus.jks --ks-key-alias foodus --out foodus-<version>.apk aligned.apk
+apksigner verify --print-certs foodus-<version>.apk
 ```
 
 (apksigner prompts for the password when `--ks-pass` is omitted — preferable to putting it on a

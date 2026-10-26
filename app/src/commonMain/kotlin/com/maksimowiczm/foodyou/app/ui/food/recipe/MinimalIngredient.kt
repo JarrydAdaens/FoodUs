@@ -4,14 +4,14 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.Saver
 import com.maksimowiczm.foodyou.app.ui.common.utility.Saver
 import com.maksimowiczm.foodyou.common.domain.measurement.Measurement
-import com.maksimowiczm.foodyou.food.domain.entity.FoodId
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
 import com.maksimowiczm.foodyou.food.domain.entity.RecipeIngredient
 
 /** Represents a minimal data structure for an ingredient. Easy to save and restore in the state. */
 @Immutable
-internal data class MinimalIngredient(val foodId: FoodId, val measurement: Measurement) {
+internal data class MinimalIngredient(val foodId: NutritionalItemId, val measurement: Measurement) {
 
-    fun intoPair(): Pair<FoodId, Measurement> = foodId to measurement
+    fun intoPair(): Pair<NutritionalItemId, Measurement> = foodId to measurement
 
     companion object {
         val ListSaver
@@ -45,18 +45,18 @@ internal data class MinimalIngredient(val foodId: FoodId, val measurement: Measu
                         },
                 )
 
-        private val foodIdSaver: Saver<FoodId, ArrayList<Any>> =
+        private val foodIdSaver: Saver<NutritionalItemId, ArrayList<Any>> =
             Saver(
                 save = {
                     when (it) {
-                        is FoodId.Product -> arrayListOf(0, it.id)
-                        is FoodId.Recipe -> arrayListOf(1, it.id)
+                        is NutritionalItemId.Product -> arrayListOf(0, it.id)
+                        is NutritionalItemId.Recipe -> arrayListOf(1, it.id)
                     }
                 },
                 restore = {
                     when (it[0] as Int) {
-                        0 -> FoodId.Product(it[1] as Long)
-                        1 -> FoodId.Recipe(it[1] as Long)
+                        0 -> NutritionalItemId.Product(it[1] as Long)
+                        1 -> NutritionalItemId.Recipe(it[1] as Long)
                         else -> error("Invalid foodId type")
                     }
                 },

@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.common.component
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -53,14 +56,14 @@ fun FoodListItem(
             ) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
+                    verticalAlignment = Alignment.CenterVertically, modifier = Modifier.uiName("FoodListItem.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "FoodListItem")
                 ) {
                     name()
                     if (isRecipe) {
                         Icon(
                             painter = painterResource(Res.drawable.ic_skillet_filled),
                             contentDescription = stringResource(Res.string.headline_recipe),
-                            modifier = Modifier.size(18.dp),
+                            modifier = (Modifier.size(18.dp)).uiName("FoodListItem.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "FoodListItem"),
                         )
                     }
                 }
@@ -70,9 +73,9 @@ fun FoodListItem(
     val supportingContent =
         @Composable {
             CompositionLocalProvider(LocalTextStyle provides MaterialTheme.typography.bodyMedium) {
-                Column(modifier = Modifier.fillMaxWidth()) {
+                Column(modifier = (Modifier.fillMaxWidth()).uiName("FoodListItem.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "FoodListItem")) {
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = (Modifier.fillMaxWidth()).uiName("FoodListItem.Row.2", "androidx.compose.foundation.layout.Row", uiInspectionSource, "FoodListItem"),
                         horizontalArrangement = Arrangement.spacedBy(16.dp),
                     ) {
                         CompositionLocalProvider(
@@ -126,11 +129,11 @@ fun FoodListItem(
     val content =
         @Composable {
             Row(
-                modifier = Modifier.padding(contentPadding),
+                modifier = (Modifier.padding(contentPadding)).uiName("FoodListItem.Row.3", "androidx.compose.foundation.layout.Row", uiInspectionSource, "FoodListItem"),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 Column(
-                    modifier = Modifier.weight(1f),
+                    modifier = (Modifier.weight(1f)).uiName("FoodListItem.Column.2", "androidx.compose.foundation.layout.Column", uiInspectionSource, "FoodListItem"),
                     verticalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
                     headlineContent()
@@ -144,7 +147,7 @@ fun FoodListItem(
     if (onClick != null) {
         Surface(
             onClick = onClick,
-            modifier = modifier,
+            modifier = (modifier).uiName("FoodListItem.Surface.1", "androidx.compose.material3.Surface", uiInspectionSource, "FoodListItem"),
             color = containerColor,
             contentColor = contentColor,
             shape = shape,
@@ -152,7 +155,7 @@ fun FoodListItem(
         )
     } else {
         Surface(
-            modifier = modifier,
+            modifier = (modifier).uiName("FoodListItem.Surface.2", "androidx.compose.material3.Surface", uiInspectionSource, "FoodListItem"),
             color = containerColor,
             contentColor = contentColor,
             shape = shape,
@@ -160,3 +163,9 @@ fun FoodListItem(
         )
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.common.component",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/common/component/FoodListItem.kt",
+)

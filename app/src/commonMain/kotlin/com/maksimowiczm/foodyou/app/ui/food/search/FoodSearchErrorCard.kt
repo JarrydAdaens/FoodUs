@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.food.search
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,53 +24,53 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.maksimowiczm.foodyou.app.ui.food.component.DownloadProductOpenFoodFactsUnavailableErrorCard
 import com.maksimowiczm.foodyou.app.ui.food.component.DownloadProductUsdaErrorCard
-import com.maksimowiczm.foodyou.food.domain.entity.RemoteFoodException
+import com.maksimowiczm.foodyou.food.domain.entity.RemoteProductException
 import foodyou.app.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun FoodSearchErrorCard(
-    error: RemoteFoodException,
+    error: RemoteProductException,
     onRetry: () -> Unit,
     onUsdaApiKey: () -> Unit,
     onUpdateOpenFoodFactsCredentials: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     when (error) {
-        is RemoteFoodException.Unknown ->
+        is RemoteProductException.Unknown ->
             FoodSearchErrorCard(
                 message = null,
                 detailedMessage = error.message,
                 onRetry = onRetry,
-                modifier = modifier,
+                modifier = (modifier).uiName("FoodSearchErrorCard.FoodSearchErrorCard.1", "com.maksimowiczm.foodyou.app.ui.food.search.FoodSearchErrorCard", uiInspectionSource, "FoodSearchErrorCard"),
             )
 
-        is RemoteFoodException.OpenFoodFacts.ServiceUnavailable ->
+        is RemoteProductException.OpenFoodFacts.ServiceUnavailable ->
             DownloadProductOpenFoodFactsUnavailableErrorCard(
                 onUpdateCredentials = onUpdateOpenFoodFactsCredentials,
-                modifier = modifier,
+                modifier = (modifier).uiName("FoodSearchErrorCard.DownloadProductOpenFoodFactsUnavailableErrorCard.1", "com.maksimowiczm.foodyou.app.ui.food.component.DownloadProductOpenFoodFactsUnavailableErrorCard", uiInspectionSource, "FoodSearchErrorCard"),
             )
 
-        is RemoteFoodException.OpenFoodFacts.RateLimit ->
+        is RemoteProductException.OpenFoodFacts.RateLimit ->
             FoodSearchErrorCard(
                 message = stringResource(Res.string.error_open_food_facts_timeout),
                 detailedMessage = null,
                 onRetry = onRetry,
-                modifier = modifier,
+                modifier = (modifier).uiName("FoodSearchErrorCard.FoodSearchErrorCard.2", "com.maksimowiczm.foodyou.app.ui.food.search.FoodSearchErrorCard", uiInspectionSource, "FoodSearchErrorCard"),
             )
 
-        is RemoteFoodException.ProductNotFoundException -> Unit
+        is RemoteProductException.ProductNotFoundException -> Unit
 
-        is RemoteFoodException.USDA.ApiKeyDisabledException,
-        is RemoteFoodException.USDA.ApiKeyInvalidException,
-        is RemoteFoodException.USDA.ApiKeyIsMissingException,
-        is RemoteFoodException.USDA.ApiKeyUnauthorizedException,
-        is RemoteFoodException.USDA.ApiKeyUnverifiedException,
-        is RemoteFoodException.USDA.RateLimitException ->
+        is RemoteProductException.USDA.ApiKeyDisabledException,
+        is RemoteProductException.USDA.ApiKeyInvalidException,
+        is RemoteProductException.USDA.ApiKeyIsMissingException,
+        is RemoteProductException.USDA.ApiKeyUnauthorizedException,
+        is RemoteProductException.USDA.ApiKeyUnverifiedException,
+        is RemoteProductException.USDA.RateLimitException ->
             DownloadProductUsdaErrorCard(
                 error = error,
                 onUpdateApiKey = onUsdaApiKey,
-                modifier = modifier,
+                modifier = (modifier).uiName("FoodSearchErrorCard.DownloadProductUsdaErrorCard.1", "com.maksimowiczm.foodyou.app.ui.food.component.DownloadProductUsdaErrorCard", uiInspectionSource, "FoodSearchErrorCard"),
             )
     }
 }
@@ -82,28 +85,28 @@ private fun FoodSearchErrorCard(
     var showDetails by rememberSaveable { mutableStateOf(false) }
 
     Surface(
-        modifier = modifier,
+        modifier = (modifier).uiName("FoodSearchErrorCard.Surface.1", "androidx.compose.material3.Surface", uiInspectionSource, "FoodSearchErrorCard"),
         color = MaterialTheme.colorScheme.errorContainer,
         contentColor = MaterialTheme.colorScheme.onErrorContainer,
         shape = MaterialTheme.shapes.medium,
         shadowElevation = 2.dp,
     ) {
-        Column(modifier = Modifier.padding(horizontal = 16.dp).padding(top = 16.dp)) {
+        Column(modifier = (Modifier.padding(horizontal = 16.dp).padding(top = 16.dp)).uiName("FoodSearchErrorCard.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "FoodSearchErrorCard")) {
             Text(
                 text = stringResource(Res.string.neutral_an_error_occurred),
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleMedium, modifier = Modifier.uiName("FoodSearchErrorCard.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "FoodSearchErrorCard")
             )
             Spacer(Modifier.height(8.dp))
             Text(
                 text = message ?: stringResource(Res.string.neutral_remote_database_error),
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodyMedium, modifier = Modifier.uiName("FoodSearchErrorCard.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "FoodSearchErrorCard")
             )
             if (detailedMessage == null) {
                 Spacer(Modifier.height(16.dp))
             } else {
                 Spacer(Modifier.height(8.dp))
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = (Modifier.fillMaxWidth()).uiName("FoodSearchErrorCard.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "FoodSearchErrorCard"),
                     horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
                 ) {
                     TextButton(
@@ -111,9 +114,9 @@ private fun FoodSearchErrorCard(
                         colors =
                             ButtonDefaults.textButtonColors(
                                 contentColor = MaterialTheme.colorScheme.onErrorContainer
-                            ),
+                            ), modifier = Modifier.uiName("FoodSearchErrorCard.TextButton.1", "androidx.compose.material3.TextButton", uiInspectionSource, "FoodSearchErrorCard")
                     ) {
-                        Text(stringResource(Res.string.action_show_details))
+                        Text(stringResource(Res.string.action_show_details), modifier = Modifier.uiName("FoodSearchErrorCard.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "FoodSearchErrorCard"))
                     }
 
                     FilledTonalButton(
@@ -122,20 +125,26 @@ private fun FoodSearchErrorCard(
                             ButtonDefaults.filledTonalButtonColors(
                                 contentColor = MaterialTheme.colorScheme.errorContainer,
                                 containerColor = MaterialTheme.colorScheme.onErrorContainer,
-                            ),
+                            ), modifier = Modifier.uiName("FoodSearchErrorCard.FilledTonalButton.1", "androidx.compose.material3.FilledTonalButton", uiInspectionSource, "FoodSearchErrorCard")
                     ) {
-                        Text(stringResource(Res.string.action_retry))
+                        Text(stringResource(Res.string.action_retry), modifier = Modifier.uiName("FoodSearchErrorCard.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "FoodSearchErrorCard"))
                     }
                 }
                 Spacer(Modifier.height(8.dp))
-                AnimatedVisibility(showDetails) {
+                AnimatedVisibility(showDetails, modifier = Modifier.uiName("FoodSearchErrorCard.AnimatedVisibility.1", "androidx.compose.animation.AnimatedVisibility", uiInspectionSource, "FoodSearchErrorCard")) {
                     Text(
                         text = detailedMessage,
                         style = MaterialTheme.typography.bodySmall,
-                        modifier = Modifier.padding(bottom = 8.dp),
+                        modifier = (Modifier.padding(bottom = 8.dp)).uiName("FoodSearchErrorCard.Text.5", "androidx.compose.material3.Text", uiInspectionSource, "FoodSearchErrorCard"),
                     )
                 }
             }
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.search",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/search/FoodSearchErrorCard.kt",
+)

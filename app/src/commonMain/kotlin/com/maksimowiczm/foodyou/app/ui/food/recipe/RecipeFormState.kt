@@ -30,7 +30,7 @@ internal enum class RecipeFormFieldError {
 @Composable
 internal fun rememberRecipeFormState(
     initialName: String,
-    initialServings: Int,
+    initialServings: Int?,
     initialNote: String?,
     initialIsLiquid: Boolean,
     initialIngredients: List<MinimalIngredient>,
@@ -44,15 +44,15 @@ internal fun rememberRecipeFormState(
         )
 
     val servings =
-        rememberFormField(
+        rememberFormField<Int?, RecipeFormFieldError>(
             initialValue = initialServings,
-            parser =
-                intParser(
-                    onNotANumber = { RecipeFormFieldError.NotAInteger },
-                    onBlank = { RecipeFormFieldError.Required },
-                ),
-            validator = positiveIntValidator(onNotPositive = { RecipeFormFieldError.NotPositive }),
-            textFieldState = rememberTextFieldState(initialServings.toString()),
+            parser = { input ->
+                if (input.isBlank()) com.maksimowiczm.foodyou.app.ui.common.form.ParseResult.Failure(RecipeFormFieldError.Required)
+                else input.toIntOrNull()?.let { com.maksimowiczm.foodyou.app.ui.common.form.ParseResult.Success(it) }
+                    ?: com.maksimowiczm.foodyou.app.ui.common.form.ParseResult.Failure(RecipeFormFieldError.NotAInteger)
+            },
+            validator = positiveIntValidator(onNotPositive = { RecipeFormFieldError.NotPositive }, onNull = { RecipeFormFieldError.Required }),
+            textFieldState = rememberTextFieldState(initialServings?.toString() ?: ""),
         )
 
     val note =
@@ -101,14 +101,14 @@ internal fun rememberRecipeFormState(
 @Stable
 internal class RecipeFormState(
     val name: FormField<String, RecipeFormFieldError>,
-    val servings: FormField<Int, RecipeFormFieldError>,
+    val servings: FormField<Int?, RecipeFormFieldError>,
     val note: FormField<String?, RecipeFormFieldError>,
     isLiquidState: MutableState<Boolean>,
     ingredientsState: MutableState<List<MinimalIngredient>>,
     isModifiedState: State<Boolean>,
 ) {
     val isValid by derivedStateOf {
-        name.error == null && servings.error == null && ingredients.isNotEmpty()
+        name.error == null && servings.error == null && servings.value != null && ingredients.isNotEmpty()
     }
 
     var isLiquid by isLiquidState
@@ -132,3 +132,10 @@ internal class RecipeFormState(
 
     val isModified by isModifiedState
 }
+
+internal data class RecipeDraft(
+    val name: String, val servings: Int?, val note: String?, val isLiquid: Boolean,
+    val ingredients: List<MinimalIngredient>,
+)
+
+internal fun RecipeFormState.draft() = RecipeDraft(name.value, servings.value, note.value, isLiquid, ingredients.toList())

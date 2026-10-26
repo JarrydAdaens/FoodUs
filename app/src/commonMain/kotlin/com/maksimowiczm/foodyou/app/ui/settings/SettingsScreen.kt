@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.settings
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -19,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton
 import com.maksimowiczm.foodyou.app.ui.common.component.SettingsListItem
 import com.maksimowiczm.foodyou.app.ui.common.utility.LocalAppConfig
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiNameBarSettingsListItem
 import com.maksimowiczm.foodyou.common.compose.extension.add
 import foodyou.app.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
@@ -27,11 +31,12 @@ import org.jetbrains.compose.resources.stringResource
 fun SettingsScreen(
     onBack: () -> Unit,
     onAbout: () -> Unit,
-    onMeals: () -> Unit,
+    onDiarySlots: () -> Unit,
     onLanguage: () -> Unit,
     onGoals: () -> Unit,
     onPersonalization: () -> Unit,
     onDatabase: () -> Unit,
+    onExternalDatabases: () -> Unit,
     onAiSettings: () -> Unit,
     onRelaySettings: () -> Unit,
     modifier: Modifier = Modifier,
@@ -43,17 +48,17 @@ fun SettingsScreen(
     val shape = RectangleShape
 
     Scaffold(
-        modifier = modifier,
+        modifier = (modifier).uiName("SettingsScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "SettingsScreen"),
         topBar = {
             LargeFlexibleTopAppBar(
-                title = { Text(stringResource(Res.string.headline_settings)) },
-                navigationIcon = { ArrowBackIconButton(onBack) },
-                scrollBehavior = scrollBehavior,
+                title = { Text(stringResource(Res.string.headline_settings), modifier = Modifier.uiName("SettingsScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "SettingsScreen")) },
+                navigationIcon = { ArrowBackIconButton(onBack, modifier = Modifier.uiName("SettingsScreen.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "SettingsScreen")) },
+                scrollBehavior = scrollBehavior, modifier = Modifier.uiName("SettingsScreen.LargeFlexibleTopAppBar.1", "androidx.compose.material3.LargeFlexibleTopAppBar", uiInspectionSource, "SettingsScreen")
             )
         },
     ) { paddingValues ->
         LazyColumn(
-            modifier = Modifier.fillMaxSize().nestedScroll(scrollBehavior.nestedScrollConnection),
+            modifier = (Modifier.fillMaxSize().nestedScroll(scrollBehavior.nestedScrollConnection)).uiName("SettingsScreen.LazyColumn.1", "androidx.compose.foundation.lazy.LazyColumn", uiInspectionSource, "SettingsScreen"),
             contentPadding = paddingValues.add(vertical = 8.dp),
         ) {
             item {
@@ -61,16 +66,16 @@ fun SettingsScreen(
                     onClick = onPersonalization,
                     shape = shape,
                     color = color,
-                    contentColor = contentColor,
+                    contentColor = contentColor, modifier = Modifier.uiName("SettingsScreen.PersonalizationSettingsListItem.1", "com.maksimowiczm.foodyou.app.ui.settings.PersonalizationSettingsListItem", uiInspectionSource, "SettingsScreen")
                 )
             }
 
             item {
-                MealSettingsListItem(
-                    onClick = onMeals,
+                DiarySlotSettingsListItem(
+                    onClick = onDiarySlots,
                     shape = shape,
                     color = color,
-                    contentColor = contentColor,
+                    contentColor = contentColor, modifier = Modifier.uiName("SettingsScreen.DiarySlotSettingsListItem.1", "com.maksimowiczm.foodyou.app.ui.settings.DiarySlotSettingsListItem", uiInspectionSource, "SettingsScreen")
                 )
             }
 
@@ -79,7 +84,16 @@ fun SettingsScreen(
                     onClick = onGoals,
                     shape = shape,
                     color = color,
-                    contentColor = contentColor,
+                    contentColor = contentColor, modifier = Modifier.uiName("SettingsScreen.GoalsSettingsListItem.1", "com.maksimowiczm.foodyou.app.ui.settings.GoalsSettingsListItem", uiInspectionSource, "SettingsScreen")
+                )
+            }
+
+            item {
+                ExternalDatabasesSettingsListItem(
+                    onClick = onExternalDatabases,
+                    shape = shape,
+                    color = color,
+                    contentColor = contentColor, modifier = Modifier.uiName("SettingsScreen.ExternalDatabasesSettingsListItem.1", "com.maksimowiczm.foodyou.app.ui.settings.ExternalDatabasesSettingsListItem", uiInspectionSource, "SettingsScreen")
                 )
             }
 
@@ -88,7 +102,7 @@ fun SettingsScreen(
                     onClick = onDatabase,
                     shape = shape,
                     color = color,
-                    contentColor = contentColor,
+                    contentColor = contentColor, modifier = Modifier.uiName("SettingsScreen.DatabaseSettingsListItem.1", "com.maksimowiczm.foodyou.app.ui.settings.DatabaseSettingsListItem", uiInspectionSource, "SettingsScreen")
                 )
             }
 
@@ -97,7 +111,7 @@ fun SettingsScreen(
                     onClick = onAiSettings,
                     shape = shape,
                     color = color,
-                    contentColor = contentColor,
+                    contentColor = contentColor, modifier = Modifier.uiName("SettingsScreen.AiSettingsListItem.1", "com.maksimowiczm.foodyou.app.ui.settings.AiSettingsListItem", uiInspectionSource, "SettingsScreen")
                 )
             }
 
@@ -106,7 +120,7 @@ fun SettingsScreen(
                     onClick = onRelaySettings,
                     shape = shape,
                     color = color,
-                    contentColor = contentColor,
+                    contentColor = contentColor, modifier = Modifier.uiName("SettingsScreen.RelaySettingsListItem.1", "com.maksimowiczm.foodyou.app.ui.settings.RelaySettingsListItem", uiInspectionSource, "SettingsScreen")
                 )
             }
 
@@ -115,7 +129,7 @@ fun SettingsScreen(
                     onClick = onLanguage,
                     shape = shape,
                     color = color,
-                    contentColor = contentColor,
+                    contentColor = contentColor, modifier = Modifier.uiName("SettingsScreen.LanguageSettingsListItem.1", "com.maksimowiczm.foodyou.app.ui.settings.LanguageSettingsListItem", uiInspectionSource, "SettingsScreen")
                 )
             }
 
@@ -123,15 +137,15 @@ fun SettingsScreen(
                 val uriHandle = LocalUriHandler.current
                 val appConfig = LocalAppConfig.current
                 SettingsListItem(
-                    icon = { Icon(Icons.Outlined.PrivacyTip, null) },
-                    label = { Text(stringResource(Res.string.headline_privacy_policy)) },
+                    icon = { Icon(Icons.Outlined.PrivacyTip, null, modifier = Modifier.uiName("SettingsScreen.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "SettingsScreen")) },
+                    label = { Text(stringResource(Res.string.headline_privacy_policy), modifier = Modifier.uiName("SettingsScreen.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "SettingsScreen")) },
                     supportingContent = {
-                        Text(stringResource(Res.string.description_privacy_policy))
+                        Text(stringResource(Res.string.description_privacy_policy), modifier = Modifier.uiName("SettingsScreen.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "SettingsScreen"))
                     },
                     onClick = { uriHandle.openUri(appConfig.privacyPolicyUri) },
                     shape = shape,
                     color = color,
-                    contentColor = contentColor,
+                    contentColor = contentColor, modifier = Modifier.uiName("SettingsScreen.SettingsListItem.1", "com.maksimowiczm.foodyou.app.ui.common.component.SettingsListItem", uiInspectionSource, "SettingsScreen")
                 )
             }
 
@@ -140,9 +154,16 @@ fun SettingsScreen(
                     onClick = onAbout,
                     shape = shape,
                     color = color,
-                    contentColor = contentColor,
+                    contentColor = contentColor, modifier = Modifier.uiName("SettingsScreen.AboutSettingsListItem.1", "com.maksimowiczm.foodyou.app.ui.settings.AboutSettingsListItem", uiInspectionSource, "SettingsScreen")
                 )
             }
+            item { UiNameBarSettingsListItem() }
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.settings",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/settings/SettingsScreen.kt",
+)

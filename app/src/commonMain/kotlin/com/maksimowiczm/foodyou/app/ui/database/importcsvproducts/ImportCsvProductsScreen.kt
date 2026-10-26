@@ -1,5 +1,9 @@
 package com.maksimowiczm.foodyou.app.ui.database.importcsvproducts
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
@@ -85,53 +89,53 @@ internal fun ImportCsvProductsScreen(
     )
 
     if (showDiscardDialog) {
-        DiscardDialog(onDiscard = onBack, onDismissRequest = { showDiscardDialog = false }) {
-            Text(stringResource(Res.string.question_discard_changes))
+        DiscardDialog(onDiscard = onBack, onDismissRequest = { showDiscardDialog = false }, modifier = Modifier.uiName("ImportCsvProductsScreen.DiscardDialog.1", "com.maksimowiczm.foodyou.app.ui.common.component.DiscardDialog", uiInspectionSource, "ImportCsvProductsScreen")) {
+            Text(stringResource(Res.string.question_discard_changes), modifier = Modifier.uiName("ImportCsvProductsScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "ImportCsvProductsScreen"))
         }
     }
 
     Scaffold(
-        modifier = modifier,
+        modifier = (modifier).uiName("app.ui.database.importcsvproducts.ImportCsvProductsScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "ImportCsvProductsScreen"),
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(Res.string.action_import_csv_food_products)) },
-                navigationIcon = { ArrowBackIconButton(onBack) },
+                title = { Text(stringResource(Res.string.action_import_csv_food_products), modifier = Modifier.uiName("ImportCsvProductsScreen.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "ImportCsvProductsScreen")) },
+                navigationIcon = { ArrowBackIconButton(onBack, modifier = Modifier.uiName("ImportCsvProductsScreen.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "ImportCsvProductsScreen")) },
                 actions = {
                     FilledIconButton(
                         onClick = { onImport(fieldsMap) },
-                        enabled = fieldsMap.keys.containsAll(required),
+                        enabled = fieldsMap.keys.containsAll(required), modifier = Modifier.uiName("ImportCsvProductsScreen.FilledIconButton.1", "androidx.compose.material3.FilledIconButton", uiInspectionSource, "ImportCsvProductsScreen")
                     ) {
-                        Icon(painterResource(Res.drawable.ic_database_upload), null)
+                        Icon(painterResource(Res.drawable.ic_database_upload), null, modifier = Modifier.uiName("ImportCsvProductsScreen.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "ImportCsvProductsScreen"))
                     }
                 },
-                scrollBehavior = scrollBehavior,
+                scrollBehavior = scrollBehavior, modifier = Modifier.uiName("ImportCsvProductsScreen.TopAppBar.1", "androidx.compose.material3.TopAppBar", uiInspectionSource, "ImportCsvProductsScreen")
             )
         },
     ) { paddingValues ->
         LazyColumn(
             modifier =
-                Modifier.fillMaxSize()
+                (Modifier.fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection)
-                    .padding(horizontal = 16.dp),
+                    .padding(horizontal = 16.dp)).uiName("ImportCsvProductsScreen.LazyColumn.1", "androidx.compose.foundation.lazy.LazyColumn", uiInspectionSource, "ImportCsvProductsScreen"),
             contentPadding = paddingValues,
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             item {
-                Column(modifier = Modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Column(modifier = (Modifier).uiName("ImportCsvProductsScreen.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "ImportCsvProductsScreen"), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
                         text = stringResource(Res.string.description_import_csv_food_products_hint),
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = MaterialTheme.typography.bodyMedium, modifier = Modifier.uiName("ImportCsvProductsScreen.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "ImportCsvProductsScreen")
                     )
                     Text(
                         text =
                             stringResource(Res.string.description_import_csv_food_products_hint_2),
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = MaterialTheme.typography.bodyMedium, modifier = Modifier.uiName("ImportCsvProductsScreen.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "ImportCsvProductsScreen")
                     )
                 }
             }
 
             item {
-                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.uiName("ImportCsvProductsScreen.Column.2", "androidx.compose.foundation.layout.Column", uiInspectionSource, "ImportCsvProductsScreen")) {
                     order.forEach { field ->
                         ProductFieldSelector(
                             field = field,
@@ -146,7 +150,7 @@ internal fun ImportCsvProductsScreen(
                             },
                             header = header,
                             required = field in required,
-                            modifier = Modifier.fillMaxSize(),
+                            modifier = (Modifier.fillMaxSize()).uiName("ImportCsvProductsScreen.ProductFieldSelector.1", "com.maksimowiczm.foodyou.app.ui.database.importcsvproducts.ProductFieldSelector", uiInspectionSource, "ImportCsvProductsScreen"),
                         )
                     }
                 }
@@ -253,39 +257,45 @@ private fun ProductFieldSelector(
         value = value,
         onValueChange = {},
         modifier =
-            modifier.clickable(
+            (modifier.clickable(
                 indication = null,
                 interactionSource = null,
                 onClick = { expanded = !expanded },
-            ),
+            )).uiName("ProductFieldSelector.OutlinedTextField.1", "androidx.compose.material3.OutlinedTextField", uiInspectionSource, "ProductFieldSelector"),
         isError = required && selected == null,
         readOnly = true,
-        label = { Text(field.stringResource()) },
+        label = { Text(field.stringResource(), modifier = Modifier.uiName("ProductFieldSelector.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "ProductFieldSelector")) },
         trailingIcon = {
             if (selected != null) {
-                IconButton(onClick = { onFieldSelected(field, null) }) {
-                    Icon(Icons.Outlined.Clear, null)
+                IconButton(onClick = { onFieldSelected(field, null) }, modifier = Modifier.uiName("ProductFieldSelector.IconButton.1", "androidx.compose.material3.IconButton", uiInspectionSource, "ProductFieldSelector")) {
+                    Icon(Icons.Outlined.Clear, null, modifier = Modifier.uiName("ProductFieldSelector.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "ProductFieldSelector"))
                 }
             } else {
-                IconButton(onClick = { expanded = !expanded }) {
-                    Icon(Icons.Outlined.ArrowDropDown, null)
+                IconButton(onClick = { expanded = !expanded }, modifier = Modifier.uiName("ProductFieldSelector.IconButton.2", "androidx.compose.material3.IconButton", uiInspectionSource, "ProductFieldSelector")) {
+                    Icon(Icons.Outlined.ArrowDropDown, null, modifier = Modifier.uiName("ProductFieldSelector.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "ProductFieldSelector"))
                 }
-                DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                UiSourceScope(uiInspectionSource.element("ProductFieldSelector.DropdownMenu.1", "androidx.compose.material3.DropdownMenu", "ProductFieldSelector")) { DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, modifier = Modifier.uiName("ProductFieldSelector.DropdownMenu.1.root", "androidx.compose.material3.DropdownMenu", uiInspectionSource, "ProductFieldSelector")) {
                     header.forEachIndexed { index, columnName ->
                         DropdownMenuItem(
-                            text = { Text(columnName) },
+                            text = { Text(columnName, modifier = Modifier.uiName("ProductFieldSelector.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "ProductFieldSelector")) },
                             onClick = {
                                 expanded = false
                                 onFieldSelected(field, columnName)
-                            },
+                            }, modifier = Modifier.uiName("ProductFieldSelector.DropdownMenuItem.1", "androidx.compose.material3.DropdownMenuItem", uiInspectionSource, "ProductFieldSelector")
                         )
                         if (index != header.lastIndex) {
-                            HorizontalDivider()
+                            HorizontalDivider( modifier = Modifier.uiName("ProductFieldSelector.HorizontalDivider.1", "androidx.compose.material3.HorizontalDivider", uiInspectionSource, "ProductFieldSelector"))
                         }
                     }
-                }
+                } }
             }
         },
         interactionSource = interactionSource,
     )
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.database.importcsvproducts",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/database/importcsvproducts/ImportCsvProductsScreen.kt",
+)

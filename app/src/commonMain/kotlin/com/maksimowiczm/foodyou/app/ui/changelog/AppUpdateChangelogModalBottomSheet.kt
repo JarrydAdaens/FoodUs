@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.changelog
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -18,7 +21,7 @@ fun AppUpdateChangelogModalBottomSheet(modifier: Modifier = Modifier) {
         koinInject(named(Settings::class.qualifiedName!!))
     val appConfig = LocalAppConfig.current
 
-    val currentVersion = remember(appConfig) { appConfig.versionName }
+    val currentVersion = remember(appConfig) { appConfig.forkVersionName }
     val settings = settingsRepository.observe().collectAsStateWithLifecycle(null).value
 
     if (settings != null && currentVersion != settings.lastRememberedVersion) {
@@ -28,7 +31,13 @@ fun AppUpdateChangelogModalBottomSheet(modifier: Modifier = Modifier) {
                     settingsRepository.update { copy(lastRememberedVersion = currentVersion) }
                 }
             },
-            modifier = modifier,
+            modifier = (modifier).uiName("AppUpdateChangelogModalBottomSheet.ChangelogModalBottomSheet.1", "com.maksimowiczm.foodyou.app.ui.changelog.ChangelogModalBottomSheet", uiInspectionSource, "AppUpdateChangelogModalBottomSheet"),
         )
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.changelog",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/changelog/AppUpdateChangelogModalBottomSheet.kt",
+)

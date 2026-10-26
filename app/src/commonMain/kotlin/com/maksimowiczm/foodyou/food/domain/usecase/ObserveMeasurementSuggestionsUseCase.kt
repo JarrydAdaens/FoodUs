@@ -1,21 +1,22 @@
 package com.maksimowiczm.foodyou.food.domain.usecase
 
 import com.maksimowiczm.foodyou.common.domain.measurement.Measurement
+import com.maksimowiczm.foodyou.common.domain.measurement.MeasurementResolver
 import com.maksimowiczm.foodyou.common.domain.measurement.MeasurementType
 import com.maksimowiczm.foodyou.common.domain.measurement.type
-import com.maksimowiczm.foodyou.food.domain.entity.Food
-import com.maksimowiczm.foodyou.food.domain.entity.FoodId
-import com.maksimowiczm.foodyou.food.domain.repository.FoodMeasurementSuggestionRepository
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItem
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
+import com.maksimowiczm.foodyou.food.domain.repository.NutritionalItemMeasurementSuggestionRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 
 class ObserveMeasurementSuggestionsUseCase(
-    private val observeFoodUseCase: ObserveFoodUseCase,
-    private val repository: FoodMeasurementSuggestionRepository,
+    private val observeFoodUseCase: ObserveNutritionalItemUseCase,
+    private val repository: NutritionalItemMeasurementSuggestionRepository,
 ) {
-    fun observe(foodId: FoodId, limit: Int): Flow<List<Measurement>> =
+    fun observe(foodId: NutritionalItemId, limit: Int): Flow<List<Measurement>> =
         observeFoodUseCase.observe(foodId).flatMapLatest { food ->
             if (food == null) {
                 flowOf(emptyList())
@@ -27,14 +28,14 @@ class ObserveMeasurementSuggestionsUseCase(
         }
 }
 
-private fun List<Measurement>.fillMissingMeasurements(food: Food): List<Measurement> {
+private fun List<Measurement>.fillMissingMeasurements(food: NutritionalItem): List<Measurement> {
     val mutable = toMutableList()
 
-    if (food.servingWeight != null) {
+    if (food.nutritionFor(Measurement.Serving(1.0)) != null) {
         mutable.add(Measurement.Serving(Measurement.Serving.DEFAULT))
     }
 
-    if (food.totalWeight != null) {
+    if (food.nutritionFor(Measurement.Package(1.0)) != null) {
         mutable.add(Measurement.Package(Measurement.Package.DEFAULT))
     }
 
@@ -46,10 +47,12 @@ private fun List<Measurement>.fillMissingMeasurements(food: Food): List<Measurem
         mutable.add(Measurement.Ounce(Measurement.Ounce.DEFAULT))
     }
 
-    return mutable.distinct().filter { it.type in food.possibleMeasurementTypes }
+    return mutable.distinct().filter {
+        food.nutritionFor(it) != null
+    }
 }
 
-private val Food.possibleMeasurementTypes: List<MeasurementType>
+private val NutritionalItem.possibleMeasurementTypes: List<MeasurementType>
     get() =
         MeasurementType.entries.filter { type ->
             when (type) {

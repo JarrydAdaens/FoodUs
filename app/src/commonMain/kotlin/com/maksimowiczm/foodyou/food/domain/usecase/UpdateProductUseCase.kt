@@ -1,20 +1,24 @@
 package com.maksimowiczm.foodyou.food.domain.usecase
 
 import com.maksimowiczm.foodyou.common.domain.database.TransactionProvider
-import com.maksimowiczm.foodyou.common.domain.food.FoodSource
+import com.maksimowiczm.foodyou.common.domain.food.ProductSource
+import com.maksimowiczm.foodyou.common.domain.food.hasValidValues
+import com.maksimowiczm.foodyou.common.domain.measurement.MeasurementResolver
 import com.maksimowiczm.foodyou.common.domain.food.NutritionFacts
 import com.maksimowiczm.foodyou.common.log.Logger
 import com.maksimowiczm.foodyou.common.log.logAndReturnFailure
 import com.maksimowiczm.foodyou.common.result.Ok
 import com.maksimowiczm.foodyou.common.result.Result
-import com.maksimowiczm.foodyou.food.domain.entity.FoodId
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
 import com.maksimowiczm.foodyou.food.domain.repository.ProductRepository
 import kotlinx.coroutines.flow.first
 
 sealed interface UpdateProductError {
+    data object InvalidValues : UpdateProductError
+
     data object NameEmpty : UpdateProductError
 
-    data class ProductNotFound(val id: FoodId.Product) : UpdateProductError
+    data class ProductNotFound(val id: NutritionalItemId.Product) : UpdateProductError
 }
 
 class UpdateProductUseCase(
@@ -23,7 +27,7 @@ class UpdateProductUseCase(
     private val logger: Logger,
 ) {
     suspend fun update(
-        id: FoodId.Product,
+        id: NutritionalItemId.Product,
         name: String,
         brand: String?,
         nutritionFacts: NutritionFacts,
@@ -31,7 +35,7 @@ class UpdateProductUseCase(
         packageWeight: Double?,
         servingWeight: Double?,
         note: String?,
-        source: FoodSource,
+        source: ProductSource,
         isLiquid: Boolean,
     ): Result<Unit, UpdateProductError> {
         if (name.isBlank()) {
@@ -40,6 +44,16 @@ class UpdateProductUseCase(
                 throwable = null,
                 error = UpdateProductError.NameEmpty,
                 message = { "Product name cannot be empty." },
+            )
+        }
+
+        if ((packageWeight != null && !MeasurementResolver.isKnownBasis(packageWeight)) ||
+            (servingWeight != null && !MeasurementResolver.isKnownBasis(servingWeight)) ||
+            !nutritionFacts.hasValidValues()) {
+            return logger.logAndReturnFailure(
+                tag = TAG,
+                error = UpdateProductError.InvalidValues,
+                message = { "Product nutrition and reference quantities must be valid finite values." },
             )
         }
 

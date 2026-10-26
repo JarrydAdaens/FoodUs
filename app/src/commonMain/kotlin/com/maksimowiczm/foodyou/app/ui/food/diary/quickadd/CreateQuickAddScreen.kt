@@ -1,7 +1,15 @@
 package com.maksimowiczm.foodyou.app.ui.food.diary.quickadd
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
+
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.maksimowiczm.foodyou.ai.domain.AiFoodEstimate
+import com.maksimowiczm.foodyou.ai.domain.toNutritionFacts
+import com.maksimowiczm.foodyou.common.domain.food.NutritionFacts
 import com.maksimowiczm.foodyou.app.ui.common.utility.LocalEnergyFormatter
 import com.maksimowiczm.foodyou.common.compose.extension.LaunchedCollectWithLifecycle
 import kotlinx.datetime.LocalDate
@@ -12,7 +20,7 @@ import org.koin.core.parameter.parametersOf
 fun CreateQuickAddScreen(
     onBack: () -> Unit,
     onSave: () -> Unit,
-    mealId: Long,
+    diarySlotId: Long,
     date: LocalDate,
     modifier: Modifier = Modifier,
     // Story 19 promotion. Opens the product/recipe editor prefilled from the current form values
@@ -27,9 +35,12 @@ fun CreateQuickAddScreen(
     prefillProteins: Double? = null,
     prefillCarbohydrates: Double? = null,
     prefillFats: Double? = null,
+    scanEstimate: AiFoodEstimate? = null,
 ) {
-    val viewModel: CreateQuickAddViewModel = koinViewModel { parametersOf(date, mealId) }
+    val viewModel: CreateQuickAddViewModel = koinViewModel { parametersOf(date, diarySlotId) }
     val energyFormatter = LocalEnergyFormatter.current
+    val saveState by viewModel.saveState.collectAsStateWithLifecycle()
+    val originalNutrition = scanEstimate?.toNutritionFacts() ?: NutritionFacts()
 
     val latestOnSave by rememberUpdatedState(onSave)
     LaunchedCollectWithLifecycle(viewModel.uiEvents) {
@@ -40,37 +51,58 @@ fun CreateQuickAddScreen(
 
     val formState =
         rememberQuickAddFormState(
-            name = prefillName ?: "",
-            proteins = prefillProteins,
-            carbohydrates = prefillCarbohydrates,
-            fats = prefillFats,
-            energy = prefillEnergyKcal,
+            name = scanEstimate?.name ?: prefillName ?: "",
+            proteins = scanEstimate?.protein ?: prefillProteins,
+            carbohydrates = scanEstimate?.carbohydrates ?: prefillCarbohydrates,
+            fats = scanEstimate?.fat ?: prefillFats,
+            energy = scanEstimate?.calories ?: prefillEnergyKcal,
+            description = scanEstimate?.description,
+            fibre = scanEstimate?.fibre,
+            sugar = scanEstimate?.sugar,
+            servingCount = if (scanEstimate != null) scanEstimate.servingCount else 1.0,
+            weightGrams = scanEstimate?.weightGrams,
+            preserveEnergy = scanEstimate != null,
         )
 
-    QuickAddScreen(
-        onBack = onBack,
+    UiSourceScope(uiInspectionSource.element("CreateQuickAddScreen.QuickAddScreen.1", "com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.QuickAddScreen", "CreateQuickAddScreen")) { QuickAddScreen(
+        onBack = { if (!viewModel.saveState.value.busy) onBack() },
         onSave = {
             val name = formState.name.value
-            val energy = formState.energy.value?.let(energyFormatter::toKcal) ?: 0.0
-            val proteins = formState.proteins.value ?: 0.0
-            val carbohydrates = formState.carbohydrates.value ?: 0.0
-            val fats = formState.fats.value ?: 0.0
 
             viewModel.addEntry(
                 name = name,
-                energy = energy,
-                proteins = proteins,
-                carbohydrates = carbohydrates,
-                fats = fats,
+                nutritionFacts = formState.toNutritionFacts(
+                    formatter = energyFormatter,
+                    original = originalNutrition,
+                    preserveUnknown = scanEstimate != null,
+                ),
                 description = formState.description.value,
-                fibre = formState.fibre.value,
                 servingCount = formState.servingCount.value,
                 weightGrams = formState.weightGrams.value,
             )
         },
         modifier = modifier,
         state = formState,
-        onPromoteToProduct = { onPromoteToProduct(formState.toPromotionSeed(energyFormatter)) },
-        onPromoteToRecipe = { onPromoteToRecipe(formState.toPromotionSeed(energyFormatter)) },
-    )
+        busy = saveState.busy,
+        saveFailed = saveState.failed,
+        nutritionDetails = scanEstimate?.let {
+            formState.toNutritionFacts(energyFormatter, originalNutrition)
+        },
+        onPromoteToProduct = {
+            if (!viewModel.saveState.value.busy) {
+                onPromoteToProduct(formState.toPromotionSeed(energyFormatter, originalNutrition))
+            }
+        },
+        onPromoteToRecipe = {
+            if (!viewModel.saveState.value.busy) {
+                onPromoteToRecipe(formState.toPromotionSeed(energyFormatter, originalNutrition))
+            }
+        },
+    ) }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.diary.quickadd",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/CreateQuickAddScreen.kt",
+)

@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.food.product.update
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
@@ -49,6 +52,10 @@ internal fun UpdateProductScreen(
         // TODO loading state
         return
     } else {
+        if(product.factBasis==com.maksimowiczm.foodyou.common.domain.food.ProductFactBasis.REFERENCE_SERVING || product.nutritionMetadata?.reference!=null) {
+            CapturedProductEditor(product,onBack,onUpdate,(modifier).uiName("UpdateProductScreen.CapturedProductEditor.1", "com.maksimowiczm.foodyou.app.ui.food.product.update.CapturedProductEditor", uiInspectionSource, "UpdateProductScreen"))
+            return
+        }
         val productForm = rememberProductFormState(product)
         val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
@@ -71,44 +78,50 @@ internal fun UpdateProductScreen(
                 onDiscard = {
                     showDiscardDialog = false
                     onBack()
-                },
+                }, modifier = Modifier.uiName("UpdateProductScreen.DiscardDialog.1", "com.maksimowiczm.foodyou.app.ui.common.component.DiscardDialog", uiInspectionSource, "UpdateProductScreen")
             ) {
-                Text(stringResource(Res.string.question_discard_changes))
+                Text(stringResource(Res.string.question_discard_changes), modifier = Modifier.uiName("UpdateProductScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "UpdateProductScreen"))
             }
         }
 
         Scaffold(
-            modifier = modifier,
+            modifier = (modifier).uiName("UpdateProductScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "UpdateProductScreen"),
             topBar = {
                 TopAppBar(
-                    title = { Text(stringResource(Res.string.headline_edit_product)) },
-                    navigationIcon = { ArrowBackIconButton(handleBack) },
+                    title = { Text(stringResource(Res.string.headline_edit_product), modifier = Modifier.uiName("UpdateProductScreen.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "UpdateProductScreen")) },
+                    navigationIcon = { ArrowBackIconButton(handleBack, modifier = Modifier.uiName("UpdateProductScreen.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "UpdateProductScreen")) },
                     actions = {
                         FilledIconButton(
                             onClick = { viewModel.updateProduct(productForm) },
-                            enabled = productForm.isValid,
+                            enabled = productForm.isValid, modifier = Modifier.uiName("UpdateProductScreen.FilledIconButton.1", "androidx.compose.material3.FilledIconButton", uiInspectionSource, "UpdateProductScreen")
                         ) {
-                            Icon(imageVector = Icons.Outlined.Save, contentDescription = null)
+                            Icon(imageVector = Icons.Outlined.Save, contentDescription = stringResource(Res.string.action_save), modifier = Modifier.uiName("UpdateProductScreen.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "UpdateProductScreen"))
                         }
                     },
-                    scrollBehavior = scrollBehavior,
+                    scrollBehavior = scrollBehavior, modifier = Modifier.uiName("UpdateProductScreen.TopAppBar.1", "androidx.compose.material3.TopAppBar", uiInspectionSource, "UpdateProductScreen")
                 )
             },
         ) { paddingValues ->
             LazyColumn(
                 modifier =
-                    Modifier.fillMaxSize()
+                    (Modifier.fillMaxSize()
                         .imePadding()
-                        .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        .nestedScroll(scrollBehavior.nestedScrollConnection)).uiName("UpdateProductScreen.LazyColumn.1", "androidx.compose.foundation.lazy.LazyColumn", uiInspectionSource, "UpdateProductScreen"),
                 contentPadding = paddingValues,
             ) {
                 item {
                     ProductForm(
                         state = productForm,
-                        contentPadding = PaddingValues(horizontal = 16.dp),
+                        contentPadding = PaddingValues(horizontal = 16.dp), modifier = Modifier.uiName("UpdateProductScreen.ProductForm.1", "com.maksimowiczm.foodyou.app.ui.food.product.ProductForm", uiInspectionSource, "UpdateProductScreen")
                     )
                 }
             }
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.product.update",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/update/UpdateProductScreen.kt",
+)

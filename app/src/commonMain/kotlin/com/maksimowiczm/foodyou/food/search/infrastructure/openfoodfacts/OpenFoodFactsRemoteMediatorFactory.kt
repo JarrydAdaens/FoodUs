@@ -6,7 +6,7 @@ import com.maksimowiczm.foodyou.common.domain.database.TransactionProvider
 import com.maksimowiczm.foodyou.common.domain.date.DateProvider
 import com.maksimowiczm.foodyou.common.domain.search.SearchQuery
 import com.maksimowiczm.foodyou.common.log.Logger
-import com.maksimowiczm.foodyou.food.domain.repository.FoodHistoryRepository
+import com.maksimowiczm.foodyou.food.domain.repository.NutritionalItemHistoryRepository
 import com.maksimowiczm.foodyou.food.domain.repository.ProductRepository
 import com.maksimowiczm.foodyou.food.infrastructure.network.RemoteProductMapper
 import com.maksimowiczm.foodyou.food.infrastructure.openfoodfacts.OpenFoodFactsProductMapper
@@ -18,7 +18,7 @@ import com.maksimowiczm.foodyou.food.search.infrastructure.room.OpenFoodFactsPag
 internal class OpenFoodFactsRemoteMediatorFactory(
     private val transactionProvider: TransactionProvider,
     private val productRepository: ProductRepository,
-    private val foodHistoryRepository: FoodHistoryRepository,
+    private val foodHistoryRepository: NutritionalItemHistoryRepository,
     private val remoteDataSource: OpenFoodFactsRemoteDataSource,
     private val pagingKeyDao: OpenFoodFactsPagingKeyDao,
     private val offMapper: OpenFoodFactsProductMapper,

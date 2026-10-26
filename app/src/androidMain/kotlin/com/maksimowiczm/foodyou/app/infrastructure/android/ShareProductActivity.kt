@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.infrastructure.android
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import android.app.ComponentCaller
 import android.content.Intent
 import android.os.Bundle
@@ -67,7 +70,7 @@ class ShareProductActivity : FoodYouAbstractActivity() {
 @Composable
 private fun ShareProductApp(text: String?, onBack: () -> Unit, onCreate: () -> Unit) {
     FoodYouTheme {
-        Surface {
+        Surface (modifier = Modifier.uiName("ShareProductApp.Surface.1", "androidx.compose.material3.Surface", uiInspectionSource, "ShareProductApp")) {
             if (text == null) {
                 Spacer(Modifier.fillMaxSize())
             } else {
@@ -76,3 +79,9 @@ private fun ShareProductApp(text: String?, onBack: () -> Unit, onCreate: () -> U
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.infrastructure.android",
+    "app/src/androidMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/android/ShareProductActivity.kt",
+)

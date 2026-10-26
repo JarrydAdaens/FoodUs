@@ -1,0 +1,69 @@
+package com.maksimowiczm.foodyou.app.ui.home.meals.card
+
+import androidx.compose.runtime.*
+import com.maksimowiczm.foodyou.common.domain.measurement.Measurement
+import com.maksimowiczm.foodyou.common.domain.food.NutritionFacts
+import com.maksimowiczm.foodyou.common.domain.food.PortionDescription
+import com.maksimowiczm.foodyou.common.domain.food.ReportedBasis
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.NutritionalItemDiaryEntryId
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.ManualDiaryEntryId
+import kotlinx.datetime.LocalTime
+
+@Immutable
+internal data class DiarySlotModel(
+    val id: Long,
+    val name: String,
+    val from: LocalTime,
+    val to: LocalTime,
+    val isAllDay: Boolean,
+    val foods: List<DiarySlotEntryModel>,
+    val energy: Int,
+    val proteins: Double,
+    val carbohydrates: Double,
+    val fats: Double,
+)
+
+@Immutable
+internal sealed interface DiarySlotEntryModel {
+    val name: String
+    val energy: Int?
+    val proteins: Double?
+    val carbohydrates: Double?
+    val fats: Double?
+}
+
+@Immutable
+internal data class FoodDiarySlotEntryModel(
+    val id: NutritionalItemDiaryEntryId,
+    override val name: String,
+    override val energy: Int?,
+    override val proteins: Double?,
+    override val carbohydrates: Double?,
+    override val fats: Double?,
+    val measurement: Measurement,
+    val weight: Double?,
+    val isLiquid: Boolean,
+    val isRecipe: Boolean,
+    val servingWeight: Double?,
+    val totalWeight: Double?,
+    val isCapturedContext: Boolean = false,
+    val capturedFacts: NutritionFacts? = null,
+    val referencePortion: PortionDescription? = null,
+    val reportedBasis: ReportedBasis? = null,
+) : DiarySlotEntryModel
+
+@Immutable
+internal data class ManualDiarySlotEntryModel(
+    val id: ManualDiaryEntryId,
+    override val name: String,
+    override val energy: Int?,
+    override val proteins: Double?,
+    override val carbohydrates: Double?,
+    override val fats: Double?,
+    // Fast-text placeholders (Milestone 2, Story 8) route to the meta screen instead of the editor.
+    val isPlaceholder: Boolean,
+    val capturedPortion: Measurement? = null,
+    /** Present only for the new captured context; legacy row fallback stays unchanged. */
+    val capturedFacts: NutritionFacts? = null,
+    val portionDescription: PortionDescription? = null,
+) : DiarySlotEntryModel

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ui_name_bar_title">UI name bar</string>
+    <string name="ui_name_bar_copy">Copy UI locator</string>
+    <string name="ui_name_bar_hierarchy">Include hierarchy and source metadata</string>
+    <string name="ui_name_bar_setting">Developer tools: UI name bar</string>
+    <string name="ui_name_bar_description">Hold an element for 3 seconds to identify its source. While enabled, holds inspect; turn off to restore normal long presses.</string>
+</resources>

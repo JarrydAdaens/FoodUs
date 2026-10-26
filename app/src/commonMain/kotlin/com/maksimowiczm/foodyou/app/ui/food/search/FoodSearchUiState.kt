@@ -3,7 +3,7 @@ package com.maksimowiczm.foodyou.app.ui.food.search
 import androidx.compose.runtime.*
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.maksimowiczm.foodyou.food.search.domain.FoodSearch
+import com.maksimowiczm.foodyou.food.search.domain.NutritionalItemSearch
 import kotlinx.coroutines.flow.Flow
 
 @Immutable
@@ -40,7 +40,7 @@ internal enum class RemoteStatus {
 @Immutable
 internal data class FoodSourceUiState(
     val remoteEnabled: RemoteStatus,
-    val pages: Flow<PagingData<FoodSearch>>,
+    val pages: Flow<PagingData<NutritionalItemSearch>>,
     val count: Int,
     private val alwaysShowFilter: Boolean = false,
 ) {

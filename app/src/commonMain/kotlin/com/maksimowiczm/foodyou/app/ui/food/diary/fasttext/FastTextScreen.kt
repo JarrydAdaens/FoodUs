@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.food.diary.fasttext
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -39,17 +42,17 @@ import org.koin.core.parameter.parametersOf
 /**
  * Fast-text placeholder capture (Milestone 2, Story 8). The fastest logging path: type a name (and,
  * optionally, a description) and save with one tap. Saving records a zero-nutrition placeholder in
- * the diary via [FastTextViewModel]. [date] and [mealId] identify the diary meal being logged into.
+ * the diary via [FastTextViewModel]. [date] and [diarySlotId] identify the diary diarySlot being logged into.
  */
 @Composable
 fun FastTextScreen(
     date: LocalDate,
-    mealId: Long,
+    diarySlotId: Long,
     onBack: () -> Unit,
     onSave: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val viewModel: FastTextViewModel = koinViewModel { parametersOf(date, mealId) }
+    val viewModel: FastTextViewModel = koinViewModel { parametersOf(date, diarySlotId) }
 
     val latestOnSave by rememberUpdatedState(onSave)
     LaunchedCollectWithLifecycle(viewModel.events) {
@@ -69,11 +72,11 @@ fun FastTextScreen(
     }
 
     Scaffold(
-        modifier = modifier,
+        modifier = (modifier).uiName("FastTextScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "FastTextScreen"),
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(Res.string.headline_fast_text)) },
-                navigationIcon = { ArrowBackIconButton(onBack) },
+                title = { Text(stringResource(Res.string.headline_fast_text), modifier = Modifier.uiName("FastTextScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "FastTextScreen")) },
+                navigationIcon = { ArrowBackIconButton(onBack, modifier = Modifier.uiName("FastTextScreen.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "FastTextScreen")) },
                 actions = {
                     FilledIconButton(
                         onClick = {
@@ -84,37 +87,37 @@ fun FastTextScreen(
                                 )
                             }
                         },
-                        enabled = canSave,
+                        enabled = canSave, modifier = Modifier.uiName("FastTextScreen.FilledIconButton.1", "androidx.compose.material3.FilledIconButton", uiInspectionSource, "FastTextScreen")
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Save,
-                            contentDescription = stringResource(Res.string.action_save),
+                            contentDescription = stringResource(Res.string.action_save), modifier = Modifier.uiName("FastTextScreen.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "FastTextScreen")
                         )
                     }
-                },
+                }, modifier = Modifier.uiName("FastTextScreen.TopAppBar.1", "androidx.compose.material3.TopAppBar", uiInspectionSource, "FastTextScreen")
             )
         },
     ) { paddingValues ->
         Column(
             modifier =
-                Modifier.fillMaxSize()
+                (Modifier.fillMaxSize()
                     .padding(paddingValues)
                     .imePadding()
                     .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .padding(horizontal = 16.dp, vertical = 8.dp)).uiName("FastTextScreen.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "FastTextScreen")
         ) {
             Text(
                 text = stringResource(Res.string.description_fast_text),
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodyMedium, modifier = Modifier.uiName("FastTextScreen.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "FastTextScreen")
             )
 
             Spacer(Modifier.height(16.dp))
 
             OutlinedTextField(
                 state = nameState,
-                modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
-                label = { Text(stringResource(Res.string.product_name)) },
-                supportingText = { Text(stringResource(Res.string.neutral_required)) },
+                modifier = (Modifier.fillMaxWidth().focusRequester(focusRequester)).uiName("FastTextScreen.OutlinedTextField.1", "androidx.compose.material3.OutlinedTextField", uiInspectionSource, "FastTextScreen"),
+                label = { Text(stringResource(Res.string.product_name), modifier = Modifier.uiName("FastTextScreen.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "FastTextScreen")) },
+                supportingText = { Text(stringResource(Res.string.neutral_required), modifier = Modifier.uiName("FastTextScreen.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "FastTextScreen")) },
                 lineLimits = TextFieldLineLimits.SingleLine,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             )
@@ -123,10 +126,16 @@ fun FastTextScreen(
 
             OutlinedTextField(
                 state = descriptionState,
-                modifier = Modifier.fillMaxWidth(),
-                label = { Text(stringResource(Res.string.label_description)) },
-                supportingText = { Text(stringResource(Res.string.neutral_optional)) },
+                modifier = (Modifier.fillMaxWidth()).uiName("FastTextScreen.OutlinedTextField.2", "androidx.compose.material3.OutlinedTextField", uiInspectionSource, "FastTextScreen"),
+                label = { Text(stringResource(Res.string.label_description), modifier = Modifier.uiName("FastTextScreen.Text.5", "androidx.compose.material3.Text", uiInspectionSource, "FastTextScreen")) },
+                supportingText = { Text(stringResource(Res.string.neutral_optional), modifier = Modifier.uiName("FastTextScreen.Text.6", "androidx.compose.material3.Text", uiInspectionSource, "FastTextScreen")) },
             )
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.diary.fasttext",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/fasttext/FastTextScreen.kt",
+)

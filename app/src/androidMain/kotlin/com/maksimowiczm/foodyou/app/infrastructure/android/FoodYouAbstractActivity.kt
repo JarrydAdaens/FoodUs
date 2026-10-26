@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.*
 import androidx.lifecycle.lifecycleScope
 import com.maksimowiczm.foodyou.app.ui.common.utility.AppConfigProvider
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiInspectionHost
 import com.maksimowiczm.foodyou.common.compose.utility.AndroidClipboardManager
 import com.maksimowiczm.foodyou.common.compose.utility.AndroidDateFormatter
 import com.maksimowiczm.foodyou.common.compose.utility.ClipboardManagerProvider
@@ -43,7 +44,11 @@ abstract class FoodYouAbstractActivity : AppCompatActivity() {
         with<AppCompatActivity, Unit>(this) {
             setContent {
                 ClipboardManagerProvider(clipboardManager) {
-                    DateFormatterProvider(dateFormatter) { AppConfigProvider(get()) { content() } }
+                    DateFormatterProvider(dateFormatter) {
+                        AppConfigProvider(get()) {
+                            UiInspectionHost(settingsRepository) { content() }
+                        }
+                    }
                 }
             }
         }

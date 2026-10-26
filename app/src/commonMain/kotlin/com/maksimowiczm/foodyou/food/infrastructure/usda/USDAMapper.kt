@@ -1,6 +1,6 @@
 package com.maksimowiczm.foodyou.food.infrastructure.usda
 
-import com.maksimowiczm.foodyou.common.domain.food.FoodSource
+import com.maksimowiczm.foodyou.common.domain.food.ProductSource
 import com.maksimowiczm.foodyou.common.domain.food.NutrientsHelper
 import com.maksimowiczm.foodyou.food.domain.entity.RemoteNutritionFacts
 import com.maksimowiczm.foodyou.food.domain.entity.RemoteProduct
@@ -37,8 +37,8 @@ internal class USDAMapper {
                     }
 
             val source =
-                FoodSource(
-                    type = FoodSource.Type.USDA,
+                ProductSource(
+                    type = ProductSource.Type.USDA,
                     url = "https://fdc.nal.usda.gov/food-details/$fdcId/nutrients",
                 )
 
@@ -86,8 +86,8 @@ internal class USDAMapper {
             val isLiquid = liquidServingUnits.contains(servingSizeUnit)
 
             val source =
-                FoodSource(
-                    type = FoodSource.Type.USDA,
+                ProductSource(
+                    type = ProductSource.Type.USDA,
                     url = "https://fdc.nal.usda.gov/food-details/$fdcId/nutrients",
                 )
 

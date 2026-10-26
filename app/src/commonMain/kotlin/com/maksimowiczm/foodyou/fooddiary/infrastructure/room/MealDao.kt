@@ -1,80 +1,33 @@
 package com.maksimowiczm.foodyou.fooddiary.infrastructure.room
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 
 @Dao
-abstract class MealDao {
-
-    @Query("SELECT * FROM meal WHERE id = :mealId")
-    abstract fun observeMealById(mealId: Long): Flow<MealEntity?>
-
-    @Query("SELECT * FROM meal ORDER BY rank ASC")
-    abstract fun observeMeals(): Flow<List<MealEntity>>
-
-    @Delete protected abstract suspend fun deleteMeal(meal: MealEntity)
+interface MealDao {
 
     @Transaction
-    open suspend fun delete(mealId: Long) {
-        val meal = observeMealById(mealId).first() ?: return
-        deleteMeal(meal)
-    }
-
-    @Update protected abstract suspend fun updateMeal(meal: MealEntity)
-
-    @Query(
-        """
-        UPDATE meal
-        SET name = :name,
-            fromHour = :fromHour,
-            fromMinute = :fromMinute,
-            toHour = :toHour,
-            toMinute = :toMinute
-        WHERE id = :id
-        """
-    )
-    abstract suspend fun updateMealIgnoreRank(
-        id: Long,
-        name: String,
-        fromHour: Int,
-        fromMinute: Int,
-        toHour: Int,
-        toMinute: Int,
-    )
+    @Query("SELECT * FROM MealTemplate ORDER BY createdEpochSeconds DESC")
+    fun observeAll(): Flow<List<MealWithItems>>
 
     @Transaction
-    open suspend fun updateMealsRanks(map: Map<Long, Int>) {
-        val meals = observeMeals().first()
+    @Query("SELECT * FROM MealTemplate WHERE id = :id")
+    suspend fun getById(id: Long): MealWithItems?
 
-        meals.forEach {
-            val updated = it.copy(rank = map[it.id] ?: it.rank)
+    @Insert suspend fun insertMeal(meal: MealEntity): Long
 
-            updateMeal(updated)
-        }
-    }
+    @Insert suspend fun insertItems(items: List<MealItemEntity>)
 
-    @Insert protected abstract fun insertMeal(meal: MealEntity)
+    @Update suspend fun updateMeal(meal: MealEntity)
 
-    @Query(
-        """
-        SELECT COALESCE(MAX(rank), -1) + 1 
-        FROM meal
-        ORDER BY rank DESC
-        LIMIT 1
-        """
-    )
-    protected abstract suspend fun getLastMealRank(): Int
+    @Update suspend fun updateItems(items: List<MealItemEntity>)
 
-    @Transaction
-    open suspend fun insertWithLastRank(meal: MealEntity) {
-        val lastRank = getLastMealRank()
-        val mealWithRank = meal.copy(rank = lastRank + 1)
-        insertMeal(mealWithRank)
-    }
+    @Query("DELETE FROM MealTemplateItem WHERE id IN (:ids)")
+    suspend fun deleteItems(ids: List<Long>)
+
+    @Query("DELETE FROM MealTemplate WHERE id = :id") suspend fun delete(id: Long)
 }

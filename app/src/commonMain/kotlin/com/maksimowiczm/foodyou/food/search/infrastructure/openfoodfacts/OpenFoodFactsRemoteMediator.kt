@@ -7,10 +7,10 @@ import androidx.paging.RemoteMediator
 import com.maksimowiczm.foodyou.common.domain.database.TransactionProvider
 import com.maksimowiczm.foodyou.common.domain.date.DateProvider
 import com.maksimowiczm.foodyou.common.log.Logger
-import com.maksimowiczm.foodyou.food.domain.entity.FoodHistory
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemHistory
 import com.maksimowiczm.foodyou.food.domain.entity.Product
-import com.maksimowiczm.foodyou.food.domain.entity.RemoteFoodException
-import com.maksimowiczm.foodyou.food.domain.repository.FoodHistoryRepository
+import com.maksimowiczm.foodyou.food.domain.entity.RemoteProductException
+import com.maksimowiczm.foodyou.food.domain.repository.NutritionalItemHistoryRepository
 import com.maksimowiczm.foodyou.food.domain.repository.ProductRepository
 import com.maksimowiczm.foodyou.food.infrastructure.network.RemoteProductMapper
 import com.maksimowiczm.foodyou.food.infrastructure.openfoodfacts.OpenFoodFactsProductMapper
@@ -27,7 +27,7 @@ internal class OpenFoodFactsRemoteMediator<K : Any, T : Any>(
     private val isBarcode: Boolean,
     private val transactionProvider: TransactionProvider,
     private val productRepository: ProductRepository,
-    private val foodHistoryRepository: FoodHistoryRepository,
+    private val foodHistoryRepository: NutritionalItemHistoryRepository,
     private val remoteDataSource: OpenFoodFactsRemoteDataSource,
     private val pagingKeyDao: OpenFoodFactsPagingKeyDao,
     private val offMapper: OpenFoodFactsProductMapper,
@@ -58,7 +58,7 @@ internal class OpenFoodFactsRemoteMediator<K : Any, T : Any>(
                             remoteDataSource
                                 .getProduct(barcode = query, countries = country)
                                 .getOrElse {
-                                    return if (it is RemoteFoodException.ProductNotFoundException) {
+                                    return if (it is RemoteProductException.ProductNotFoundException) {
                                         MediatorResult.Success(endOfPaginationReached = true)
                                     } else {
                                         MediatorResult.Error(it)
@@ -169,7 +169,7 @@ internal class OpenFoodFactsRemoteMediator<K : Any, T : Any>(
         if (id != null) {
             foodHistoryRepository.insert(
                 foodId = id,
-                history = FoodHistory.Downloaded(timestamp = now, url = this.source.url),
+                history = NutritionalItemHistory.Downloaded(timestamp = now, url = this.source.url),
             )
         }
     }

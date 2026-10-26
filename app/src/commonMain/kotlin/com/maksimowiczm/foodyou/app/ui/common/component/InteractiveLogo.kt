@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.common.component
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.AnimationVector1D
@@ -134,12 +137,12 @@ fun InteractiveLogo(
 
     val iconPainter = painterResource(Res.drawable.ic_sushi)
 
-    Box(modifier = modifier, contentAlignment = Alignment.Center) {
+    Box(modifier = (modifier).uiName("InteractiveLogo.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "InteractiveLogo"), contentAlignment = Alignment.Center) {
         // This is hacky way to clip the canvas to a morphing shape because it can't be done
         // directly in draw scope because of ripple effect. Instead we use graphicsLayer to clip and
         // rotate the whole canvas. To keep the icon upright we rotate it back in the draw scope.
         Canvas(
-            Modifier.fillMaxSize(.95f)
+            (Modifier.fillMaxSize(.95f)
                 .graphicsLayer {
                     clip = true
                     shape = GenericShape { size, _ ->
@@ -154,7 +157,7 @@ fun InteractiveLogo(
                 }
                 .clickable(interactionSource = null, indication = ripple(bounded = true)) {
                     coroutineScope.launch { progress.increment(motionScheme.slowSpatialSpec()) }
-                }
+                }).uiName("InteractiveLogo.Canvas.1", "androidx.compose.foundation.Canvas", uiInspectionSource, "InteractiveLogo")
         ) {
             val brush =
                 object : ShaderBrush() {
@@ -216,3 +219,9 @@ private fun rememberWrapAroundCounter(
 
     return counter
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.common.component",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/common/component/InteractiveLogo.kt",
+)

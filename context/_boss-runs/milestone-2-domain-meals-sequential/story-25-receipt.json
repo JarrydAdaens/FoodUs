@@ -1,0 +1,2130 @@
+{
+  "checked": {
+    "artifact_identity": "17110a9c9af13b7e8e080117a9d5b8979c1d2cb0e3ee3c1e5040649a839aec39",
+    "base": "8b698162ff7b3de0e7338f3ca2d68790edacb752",
+    "diff_identity": "29525918eb6b991b75169bf02ca86c6022c648882ba12161464e63b3e24351eb",
+    "files": {
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/MultiFoodScanTest.kt": {
+        "kind": "file",
+        "sha256": "79c45d92b49d4df93cca27e517991a82182598ad4855d1e2cb3ae69807f93c7d"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddConversionTest.kt": {
+        "kind": "file",
+        "sha256": "7fbd3b6ebe1eb8ec5cd9db69d063b25fdc075c8dc02528aca93004bf4d244d73"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/ScanDataPreservationTest.kt": {
+        "kind": "file",
+        "sha256": "62798b9c0c5ff57297d9b632a297c1a7da4901c84a9d4f76926a1950c0fd0f87"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/settings/ExternalDatabasesNavigationTest.kt": {
+        "kind": "file",
+        "sha256": "7391ca06fa06d1a2daf4bd7cae517a403b84ce830caf2e83d2446efcd1e892d5"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/fooddiary/DiarySlotMealPersistenceTest.kt": {
+        "kind": "file",
+        "sha256": "63a1570bcd4fe36e73be1cb18503301a90afc1f871771e20c187ca446cffca90"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/fooddiary/LegacyDiarySlotMealFixtureTest.kt": {
+        "kind": "file",
+        "sha256": "1111cbeb4400608a68af82f106fb33aaa7223c6f4594de543eb84b7eca4170fa"
+      },
+      "app/src/androidMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/room/RoomModule.android.kt": {
+        "kind": "file",
+        "sha256": "6b19b9d14e7fba50bf8a41e300740077f83ba504eab9f472173c504b668c65a1"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/ai/domain/AiSearchQueryGenerator.kt": {
+        "kind": "file",
+        "sha256": "82815c53fa7b920baaf14e43388b6c0c17e1ed49161442ca397659c750fdb377"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/ai/domain/AiSearchQueryPrompt.kt": {
+        "kind": "file",
+        "sha256": "182cdbff387dedebbfd2d58144fb833d2032ca07a7bed2465fbfde8d6860dd1f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/ai/infrastructure/OpenRouterAiSearchQueryGenerator.kt": {
+        "kind": "file",
+        "sha256": "2cc20502b5968fc44383b0c6d1e6e01b45cbb1e7079be84ca07c4de92a540142"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/room/FoodYouDatabase.kt": {
+        "kind": "file",
+        "sha256": "73f68dd4d586ef627e0f8cc5f615421ddd19a3723c34ca72a28944a6cc55f91a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/navigation/FoodYouAppNavHost.kt": {
+        "kind": "file",
+        "sha256": "4c2d1e8891a477a8333662d8022ebf63a53aecfb07b465fa561373ff2aa04098"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/navigation/ScanQuickAddHandoff.kt": {
+        "kind": "file",
+        "sha256": "afd6503f0c4b1e28f29234805d899d170201a9880054c2864e2edd3f05260541"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/UiModule.kt": {
+        "kind": "file",
+        "sha256": "9e572425113a0809cb128a5fd607c36c90709c0670127d5ed4b1ef466bb883c3"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/AddEntryScreen.kt": {
+        "kind": "file",
+        "sha256": "90cade6c8fa06a92528f0a41f85d807794a50711073c78af438b5e0a4d6018f9"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/AddEntryViewModel.kt": {
+        "kind": "file",
+        "sha256": "69f46491ca1ae61af3458ede2857d1bffea3596fd7ebd22d861cea5218d5e7ea"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/component/ChipsDiarySlotPicker.kt": {
+        "kind": "file",
+        "sha256": "b675425d73869b3a8cd32a3b73001f413979de09751ad43fe4b0b6bab2a61da2"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/component/ChipsMealPicker.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/component/FoodMeasurementFormState.kt": {
+        "kind": "file",
+        "sha256": "f403a3ff04430be730119433565f59419af7b7c027bc5fbdca4be55c9291a655"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/fasttext/FastTextModule.kt": {
+        "kind": "file",
+        "sha256": "a5c9f68b0505d078352a6f113410877fcb81622a37ccae7f066532dc31a23a86"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/fasttext/FastTextScreen.kt": {
+        "kind": "file",
+        "sha256": "0830649155b613f0a716ef02e9a47f6239a08b9b49eddd73ac7826d184f4ff4f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/fasttext/FastTextViewModel.kt": {
+        "kind": "file",
+        "sha256": "774f32c1a2c816b1728cfd0e93f1f060802cd76e9885e3ca9ec2ad96b7156d85"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/placeholder/PlaceholderMetaEvent.kt": {
+        "kind": "file",
+        "sha256": "faa544349961daf835be9720980d3d778de1a223f44e8da67aca70c4874b3fad"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/placeholder/PlaceholderMetaModule.kt": {
+        "kind": "file",
+        "sha256": "b9a6cbe3607e08deb1816b0617c1d68679e7e6547670b1527e595326f4ee432d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/placeholder/PlaceholderMetaScreen.kt": {
+        "kind": "file",
+        "sha256": "ecae9e335ceb9af69b3e707e6d761ee9ee218206ccd1fdc20252da58df2d9ca3"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/placeholder/PlaceholderMetaUiState.kt": {
+        "kind": "file",
+        "sha256": "3d369b91bb4b3f34343e5babec2f5ccdbb51033be3bd37f3a4913ae617ddbe2e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/placeholder/PlaceholderMetaViewModel.kt": {
+        "kind": "file",
+        "sha256": "ba39fbf6b70c9782385144ca4831930c8ef26c1daa5b8b06a7246f3830ba1c69"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/CreateQuickAddScreen.kt": {
+        "kind": "file",
+        "sha256": "213ba15a6a3df41f2683edf3e64df7cfaa8c673c3c30152e7b9bc2c2fd1db397"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/CreateQuickAddViewModel.kt": {
+        "kind": "file",
+        "sha256": "5de7aa82896df3693498dfe2498b4da69e65321134f3adc9300ffb6f38c51e11"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/FoodDiaryQuickAddModule.kt": {
+        "kind": "file",
+        "sha256": "294abba3d8bd76b439a3246ab4041d4c63ff1566b13de951888707400aae9ff0"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/search/DiaryFoodSearchScreen.kt": {
+        "kind": "file",
+        "sha256": "836b600bdaa70e6a80633e04be45240f351b9e93a20e0e7183cf30a3f5e4b84a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/search/DiaryFoodSearchViewModel.kt": {
+        "kind": "file",
+        "sha256": "2682b3bb5cc2e52ce97a73548f1e8baebae1aae14f65a0a9bc015ef56d107c5d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/search/DiarySlotModel.kt": {
+        "kind": "file",
+        "sha256": "ff15d8a59677cc3d020da3c5b0583c8dc734c2d1806efc926e1ff3335eba659c"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/search/MealModel.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/UpdateEntryScreen.kt": {
+        "kind": "file",
+        "sha256": "bb25e1dfd8d4556b3b396625d44bdbb2130fc3ee9ad89c6871fedbd98e5c8f50"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/UpdateFoodDiaryEntryViewModel.kt": {
+        "kind": "file",
+        "sha256": "9056ab9538bd8a7a215aaba507b523c6d62f70de76f22e9c5d273c4b0ffde450"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/goals/master/DiarySlotModel.kt": {
+        "kind": "file",
+        "sha256": "48cc7ccb447b3e5e0d77ab94c2c34af0a088c5d58a2d00303a9c1f64a0c27e3a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/goals/master/GoalsScreen.kt": {
+        "kind": "file",
+        "sha256": "7dba736e918ec800d96f51d6c4dafb39a366707b2440605ee675b20f34a685ec"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/goals/master/GoalsScreenUiState.kt": {
+        "kind": "file",
+        "sha256": "20fba39d0fc35d674e25921f60ac370fde5947b9f84f29c76c9c7d577f3ca4cf"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/goals/master/GoalsViewModel.kt": {
+        "kind": "file",
+        "sha256": "3be7dc0186233a7323aee9a31e3f7da5a7d6e086e02ee42edeff6d6fdab92ca0"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/goals/master/MealModel.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/HomeModule.kt": {
+        "kind": "file",
+        "sha256": "02b9dcfd4e18857f2ec85fdb2c944b907752c159beda54d75bec3cffb4e110fb"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/goals/GoalsViewModel.kt": {
+        "kind": "file",
+        "sha256": "ed6a28dcea3eb6a2b855e9be53958498206d1ecf5c92edabe20d7973726f2c0c"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/master/HomeScreen.kt": {
+        "kind": "file",
+        "sha256": "6076c8e49f91ad71bbd77fcaf403877083b2b73496997fa3ccd04282a8c6459b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotCard.kt": {
+        "kind": "file",
+        "sha256": "68310089f7f21881c7696d80cd8589c687094eed2f3821463dc943e8ea4dd018"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotCardSkeleton.kt": {
+        "kind": "file",
+        "sha256": "037d8119abbcacb1c181077f27144ca442ea77fc2d063942403054d691e10635"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotFoodListItem.kt": {
+        "kind": "file",
+        "sha256": "1b72cf80e6ff41cfdfee3427d078ec0b558a73c9c12e9c384cc2a3f2f8a12578"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotModel.kt": {
+        "kind": "file",
+        "sha256": "ae17112dd61acd3fbce02ad9d22a561660d2b35d9feb01249c137ccabd155d01"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotsCards.kt": {
+        "kind": "file",
+        "sha256": "bfb8b26f4b39b070b36fe078438e1b7db9b82e2c86ba44a7c2bbc073f8e1e6e5"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotsCardsViewModel.kt": {
+        "kind": "file",
+        "sha256": "9edc4f59a81ce891bb4e3675edbcb9b590354f95a36c02ab631aabc55085b006"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/HorizontalDiarySlotsCards.kt": {
+        "kind": "file",
+        "sha256": "31e56c0725fdd8aa459c86cefc3b68e3f801f0b5f562d5dcb0de40ff3a06bede"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/HorizontalMealsCards.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/MealCard.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/MealCardSkeleton.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/MealFoodListItem.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/MealModel.kt": {
+        "kind": "file",
+        "sha256": "ac5cdec41705ce985fbefbe09b49aa2947b62cdb8e93fc430d47070d6ce7efb3"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/MealTemplateModel.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/MealsCards.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/MealsCardsViewModel.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/VerticalDiarySlotsCards.kt": {
+        "kind": "file",
+        "sha256": "d3966a11d4703592d6c32ba7d74218b57bbce6517fcbb357e6e4f4b6b0820187"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/VerticalMealsCards.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/settings/DiarySlotsCardsSettingsScreen.kt": {
+        "kind": "file",
+        "sha256": "274eb5cfeb507e427d33af2e81e29760ab44b5085167ba01c9cf39d875ebe23a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/settings/DiarySlotsCardsSettingsViewModel.kt": {
+        "kind": "file",
+        "sha256": "f3512cf0ab9609db2fbfc2296a9e28116262e046536d92b18d0c5d39f690f4c3"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/settings/LayoutPicker.kt": {
+        "kind": "file",
+        "sha256": "b5a2a687b5f9f4a10c345eeb1cb47b51dc61afbd654bdb308bba0c2c2d011d8d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/settings/MealsCardsSettingsScreen.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/settings/MealsCardsSettingsViewModel.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/personalization/HomePersonalizationScreen.kt": {
+        "kind": "file",
+        "sha256": "a08c622a7656edc39e7d3a11009a1656a4c9cd2255a0df0982dbd9b4fb74a578"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/DiarySlotCard.kt": {
+        "kind": "file",
+        "sha256": "01d93beedf5ca18d53f7552ec7fab2ba30562f488e31995105d83460b9ffaace"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/DiarySlotCardState.kt": {
+        "kind": "file",
+        "sha256": "5bb6717aae737547d893a4dd3162c1d1bf134e781449661d3fca60bc6942abba"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/DiarySlotModel.kt": {
+        "kind": "file",
+        "sha256": "09934c21b11b8ff05bd03101fcb8f0ddf22104a958c7efc04972fc9387f077ae"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/DiarySlotModule.kt": {
+        "kind": "file",
+        "sha256": "06224200f8a0a1632be0b63da9c319ec5cf6b15268b75c07fa23329f24a39cbe"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/DiarySlotSettingsScreen.kt": {
+        "kind": "file",
+        "sha256": "455df84fb1c6b5f0040b06f95d1aa92fbf6c49999fdb5052d6e8fb4b6336dba1"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/DiarySlotSettingsViewModel.kt": {
+        "kind": "file",
+        "sha256": "a806e00822388340c2b585fd22fbcf14f2ca0f71e0eb2e56b5195a99b115caac"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/MealCard.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/MealCardState.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/MealModel.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/MealModule.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/MealSettingsScreen.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/MealSettingsViewModel.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/settings/DiarySlotSettingsListItem.kt": {
+        "kind": "file",
+        "sha256": "efaf847c6f43bc2e08029b59e03ec57ecb88369da42788dba236a3ed81a7492e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/settings/MealSettingsListItem.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/settings/SettingsScreen.kt": {
+        "kind": "file",
+        "sha256": "7f0fb045967a9b65a608b040ecb55ba41ea5d2e39e87085e41f4dc721361ba20"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/FoodDiaryDomainModule.kt": {
+        "kind": "file",
+        "sha256": "319f50cc7091e3e5c5b3b91793652657ca5d5b8099ec6d6d1a6368f49ffd1a84"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiaryEntry.kt": {
+        "kind": "file",
+        "sha256": "3b979e93fc145c532f29aeb587c59fecd947aa0fe771431ad2deb5c7a26a7fb3"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiaryMeal.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiarySlot.kt": {
+        "kind": "file",
+        "sha256": "e949e50127e2b3315c072b76e3b5872a2db2f4fba203dd11b980b6d3180e4261"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiarySlotEntries.kt": {
+        "kind": "file",
+        "sha256": "ed98350f20bd0da30ad4e211a5356a81408790d27a83ab32c4796c3becf8098f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiarySlotsCardsLayout.kt": {
+        "kind": "file",
+        "sha256": "76529b76136454bec4ef32edaefd1726021fd01b81901fc881518969e3bc43a8"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiarySlotsPreferences.kt": {
+        "kind": "file",
+        "sha256": "8200e78fc9d8a2bb5d49150b60065f292d15d532ef4ff7a98faaf4a5da141c0a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/FoodDiaryEntry.kt": {
+        "kind": "file",
+        "sha256": "c1dd49ad64c68c13973e3a73046dff4229cf6dc5742266755227cce976fb73f4"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/ManualDiaryEntry.kt": {
+        "kind": "file",
+        "sha256": "f0172d7ca2d5704ccacbfc133fcb46f2462c1266540d3122cfc23e1a5ca09744"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/Meal.kt": {
+        "kind": "file",
+        "sha256": "06f6bf83000c6ada78fc6e1572114673c5d2041797805a254e8b86067eb3d6f5"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/MealItem.kt": {
+        "kind": "file",
+        "sha256": "ec6caab85d9577498b10de5ac15738d0012bc2768c6cb6e2616d91a0305952d8"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/MealTemplate.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/MealTemplateItem.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/MealsCardsLayout.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/MealsPreferences.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/repository/DiarySlotRepository.kt": {
+        "kind": "file",
+        "sha256": "e751de6e49dd848da184d139baa5c9dba8a3ed6aaa46d2ea30fd8ff20f201bc0"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/repository/FoodDiaryEntryRepository.kt": {
+        "kind": "file",
+        "sha256": "3002c2f0a9006c957941dc9edf9c94531daaa9b6c4235a3e54feb0945aba2478"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/repository/ManualDiaryEntryRepository.kt": {
+        "kind": "file",
+        "sha256": "8a221915bf356d8474bc8c4465f34b6cf3af52ef982d869699dbae512d23b9a1"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/repository/MealRepository.kt": {
+        "kind": "file",
+        "sha256": "6a6422f9d159176d3e2b16fd27e638102017b3b8c50c3e805d497fb966f80ac5"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/repository/MealTemplateRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/service/LocalizedDiarySlotsProvider.kt": {
+        "kind": "file",
+        "sha256": "3dadf9ce54b23e11f9b2a5f5fe5c17143af1717a932cc5d0631758ae4934563f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/service/LocalizedMealsProvider.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/ApplyMealTemplateUseCase.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/ApplyMealUseCase.kt": {
+        "kind": "file",
+        "sha256": "544f015f225f6176e16eb23cce144b346c8e4d6c5ebab59cfd931e66c5b1a45a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/CreateFoodDiaryEntryUseCase.kt": {
+        "kind": "file",
+        "sha256": "c461bf39e39768c028863092172af035d75753243971fade56c6ae716a34aae5"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/ObserveDiaryMealsUseCase.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/ObserveDiarySlotEntriesUseCase.kt": {
+        "kind": "file",
+        "sha256": "7a7ce9a13b92eeeb9707f53094e6ae671eb9d5bbd22777b60a04a1f8ed192695"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/SaveMealTemplateUseCase.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/SaveMealUseCase.kt": {
+        "kind": "file",
+        "sha256": "670e0bf6f0d57a46243b5553b66244c595abf4574d2effd4aa411ab606bf1c73"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/UnpackFoodDiaryEntryUseCase.kt": {
+        "kind": "file",
+        "sha256": "f620ebf4ae95e8abba6a4fec9fb004d41b1fb3ad87e6df87414d06f1855f0a35"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/UpdateFoodDiaryEntryUseCase.kt": {
+        "kind": "file",
+        "sha256": "cc345fba2d29e975aaf416425311a7c5fb84a4f504f5fdbe11fabc38730105a3"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/FoodDiaryInfrastructureModule.kt": {
+        "kind": "file",
+        "sha256": "b9bb309371d8112e699eb8d08a6de5fc35cb9ba79becc689df207acc8232fae2"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/compose/ComposeLocalizedDiarySlotsProvider.kt": {
+        "kind": "file",
+        "sha256": "a41afb4215244a6dd6170827b01e0fae634b3b21ecc64209e0eeb986f9c60f36"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/compose/ComposeLocalizedMealsProvider.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/DataStoreDiarySlotsPreferencesRepository.kt": {
+        "kind": "file",
+        "sha256": "ebf05ad0ed9a12fe36122d0e2225625bf3bee03c575d816ce4893a177ef72fc2"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/DataStoreMealsPreferencesRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/RoomDiarySlotRepository.kt": {
+        "kind": "file",
+        "sha256": "d8880bb2dbaf80e80ee6f70ef6a5975bceba312ef3740e3764c2bc5e7af02470"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/RoomFoodDiaryEntryRepository.kt": {
+        "kind": "file",
+        "sha256": "f13b3b5ae8c57730b95a2cb70173b09854400a82ef9a05a4c0c7b126d6c213d2"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/RoomManualDiaryEntryRepository.kt": {
+        "kind": "file",
+        "sha256": "1b2f6893ce5dac86b577c20eac9914312d6dcd489a8b09396da507edb354f5bb"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/RoomMealRepository.kt": {
+        "kind": "file",
+        "sha256": "fb5bce368677d18f155737b0f650ed9371af7f35fe596fb71dd80769f3b4fa7c"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/RoomMealTemplateRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/DiarySlotDao.kt": {
+        "kind": "file",
+        "sha256": "4c442ab0991041c9fdaacc37b025495ff387c56c2b98abf9282ef615eb7097f7"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/DiarySlotEntity.kt": {
+        "kind": "file",
+        "sha256": "365612201fa104e1d3b9d14402ffa64bd6fcaa702221ac570ace5a1cba3f1f5b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/FoodDiaryDatabase.kt": {
+        "kind": "file",
+        "sha256": "14fceee3984b63e695998868f8cedb2e5664349267faa133456448ba7264024f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/InitializeDiarySlotsCallback.kt": {
+        "kind": "file",
+        "sha256": "d91d86e96113ec29d2b65790a69c7db2943f1e929a727ddfc605e96572e5d98b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/InitializeMealsCallback.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/ManualDiaryEntryDao.kt": {
+        "kind": "file",
+        "sha256": "f109997d4a442ebec4f94712003c3c248bbeda6cf434758fdc4d6c77a3153c0d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/ManualDiaryEntryEntity.kt": {
+        "kind": "file",
+        "sha256": "f8240bba3b605bd0d4ef4d1f33b25e0127eb994a39c933af53a845a98bbeae0b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MealDao.kt": {
+        "kind": "file",
+        "sha256": "c2879a20d3375fa79107502c7e6d4192215c01923f7cc5a436d12c36b5bc2d3b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MealEntity.kt": {
+        "kind": "file",
+        "sha256": "3917dddea6b59b16692dccbb575ea3b98fd525d4e4026b14f3ed6c5a8721205b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MealItemEntity.kt": {
+        "kind": "file",
+        "sha256": "18a80ecfffa12d68e51a25575ae84ed3846cc24dc2ce87f16aaf607fd22b6d32"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MealTemplateDao.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MealTemplateEntity.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MealTemplateItemEntity.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MealTemplateWithItems.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MealWithItems.kt": {
+        "kind": "file",
+        "sha256": "cdcfdfcbe98f73852e710d62f3fb754eee44764827d4cca989615f5b353916b9"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MeasurementDao.kt": {
+        "kind": "file",
+        "sha256": "0c548a14523a0523dd853a9f4d438db56c7e56d00a4cdf279c8f00dc989cbfa2"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MeasurementEntity.kt": {
+        "kind": "file",
+        "sha256": "36eac772218fbe5147d98695c2b599c0d8dd57bd35bd0846befd1c52b65fe365"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/settings/domain/entity/HomeCard.kt": {
+        "kind": "file",
+        "sha256": "6c9ea100b3d807bafb4c77b0c72de0d6d453e10a10e3d67f9a33cf5556160ce9"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/ai/domain/AiSearchQueryTest.kt": {
+        "kind": "file",
+        "sha256": "5ac6c6aef50cb190995fe7c38648407af4a3454169faaa83dad438038364ad2a"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/app/navigation/DiarySlotRouteCompatibilityTest.kt": {
+        "kind": "file",
+        "sha256": "878ec15f71dc5bfbe6e264b9660314a17a8f8553d1b8b27e5294c4c02b0c3c09"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/MealTemplateUseCasesTest.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/MealUseCasesTest.kt": {
+        "kind": "file",
+        "sha256": "fd6e76a395ccd94f16553a58552e29ab770200ab93b03b486b4912b30fc806c4"
+      },
+      "context/implementation-plans/milestone-2/story-25-diary-slot-meal-separation/plan.md": {
+        "kind": "file",
+        "sha256": "57c6c8e66e862190c1348c017f99a54e997379f7c83d83d0715ab754ddd5f401"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "643bd5a94c44dd92fd916d785a7f7dbfcfb00e4933163d0024003551504fa5cf"
+      },
+      "shared/resources/src/commonMain/composeResources/values-ar-rSA/strings.xml": {
+        "kind": "file",
+        "sha256": "23b4988472f794dd7b43334e6468b6f36ccfbca137676f17c7e6bea5b0dd31b8"
+      },
+      "shared/resources/src/commonMain/composeResources/values-ca-rES/strings.xml": {
+        "kind": "file",
+        "sha256": "6dc4d865d9f74483efd135765962b0221e5ebeed425b1abf0d13e2aa8aec458d"
+      },
+      "shared/resources/src/commonMain/composeResources/values-cs-rCZ/strings.xml": {
+        "kind": "file",
+        "sha256": "c6fc020d64d48120c8a75a03776039608bf6d75e5bf2d3ce827939a31436bb2f"
+      },
+      "shared/resources/src/commonMain/composeResources/values-da-rDK/strings.xml": {
+        "kind": "file",
+        "sha256": "b571993b2ef1facf8d856499ee7b0fb4fd9f453419645f8ec8edd146e7a48069"
+      },
+      "shared/resources/src/commonMain/composeResources/values-de-rDE/strings.xml": {
+        "kind": "file",
+        "sha256": "3baa605fcf8e8177065718a4e977fb3f6f3c2cbbdc43315c839893334feba5a0"
+      },
+      "shared/resources/src/commonMain/composeResources/values-es-rES/strings.xml": {
+        "kind": "file",
+        "sha256": "fcaa038fa48de90a3570e0b1b752fb9446ea644cb8792ba728ca966d072507b1"
+      },
+      "shared/resources/src/commonMain/composeResources/values-fi-rFI/strings.xml": {
+        "kind": "file",
+        "sha256": "646f42372c86b52a8b2c05f5da2ece054ae2602b409be5664c3adda9b2c38c48"
+      },
+      "shared/resources/src/commonMain/composeResources/values-fr-rFR/strings.xml": {
+        "kind": "file",
+        "sha256": "f80012a02b90db59c26f2492ede6d428444d5b5cee557c75635bb7886be49bba"
+      },
+      "shared/resources/src/commonMain/composeResources/values-hu-rHU/strings.xml": {
+        "kind": "file",
+        "sha256": "1f8b6344e8cdfb2a352e4bd701043a94cc2b9c29b7ac059dae01e2960197ac20"
+      },
+      "shared/resources/src/commonMain/composeResources/values-id-rID/strings.xml": {
+        "kind": "file",
+        "sha256": "50591c6d1919d907da47b8cdcb462e74431edaa23257678281f6a9f9d957277e"
+      },
+      "shared/resources/src/commonMain/composeResources/values-it-rIT/strings.xml": {
+        "kind": "file",
+        "sha256": "c7a2b0e367e2de4a6febd75d72dd77b01a199dc75f9a32a4257fdd903e4eed5e"
+      },
+      "shared/resources/src/commonMain/composeResources/values-nl-rNL/strings.xml": {
+        "kind": "file",
+        "sha256": "ec0476329d66301ab31194e7ec9a4434dac703105be076a00956fb39a27c3fe9"
+      },
+      "shared/resources/src/commonMain/composeResources/values-pl-rPL/strings.xml": {
+        "kind": "file",
+        "sha256": "26865987fcde00ea8ab16df4926a57155fc27d3d3fa4a5c001f4c80ade0e1dc7"
+      },
+      "shared/resources/src/commonMain/composeResources/values-pt-rBR/strings.xml": {
+        "kind": "file",
+        "sha256": "e667c00d58ea415677a86ac9086b9baf25550ad01b62b172afb9c2c2a68cccba"
+      },
+      "shared/resources/src/commonMain/composeResources/values-pt-rPT/strings.xml": {
+        "kind": "file",
+        "sha256": "330aaed86510baddff208ef7669cd3e58888cfc894c0e8d9f15ecb184e825e94"
+      },
+      "shared/resources/src/commonMain/composeResources/values-ru-rRU/strings.xml": {
+        "kind": "file",
+        "sha256": "e83d7627870b602d62806ec6e8f7f2e5ae3ffe7684376fcc42ac0276b305f8c2"
+      },
+      "shared/resources/src/commonMain/composeResources/values-sl-rSI/strings.xml": {
+        "kind": "file",
+        "sha256": "908eba56f767cf62faa6f9d5e462ab196e54cc3bd78a8abce46d328da5e94553"
+      },
+      "shared/resources/src/commonMain/composeResources/values-tr-rTR/strings.xml": {
+        "kind": "file",
+        "sha256": "58f98fc6f6a8821423c4973d22a73ce8360bbeeb44adb0e14805c1e79bc52de4"
+      },
+      "shared/resources/src/commonMain/composeResources/values-uk-rUA/strings.xml": {
+        "kind": "file",
+        "sha256": "3bcfb552881aac0e294ef0c0f63f6ea37e745cc7f10e2ebccbdc29321de158f5"
+      },
+      "shared/resources/src/commonMain/composeResources/values-zh-rCN/strings.xml": {
+        "kind": "file",
+        "sha256": "7eec3a37015205d42572f1704043e8dd59d85bdfc8b0140933824a617f2a2d93"
+      },
+      "shared/resources/src/commonMain/composeResources/values/strings.xml": {
+        "kind": "file",
+        "sha256": "b61870151c555ca53ae9f28c32ecf5ee2d504e496205bb6ee22aa8c4b124460a"
+      }
+    },
+    "head": "8b698162ff7b3de0e7338f3ca2d68790edacb752"
+  },
+  "commit_authority": null,
+  "commit_policy": "none",
+  "decisions": [
+    "Story25 only;DiarySlot destination,Meal saved bundle,DiarySlotEntries projection.",
+    "Retain schema39 identity b247898737d2ed1a830346124daeb1e8,legacy table/column/navigation/DataStore contracts;separate identity even numeric overlap.",
+    "No commit,public release,owner phone or real diary use. Candidate3.2.33.3/code129;ReleaseCount3 unchanged.",
+    "Per-story frozen checkpoints are superseded by later dependency work and consolidated final batch receipt;immutable earlier evidence remains dated."
+  ],
+  "delivery": {
+    "artifact_identity": "e0934d36ea1c4ac52636ed56337be05b2bed7031bfd20edd5fb0a763353b2cb2",
+    "base": "8b698162ff7b3de0e7338f3ca2d68790edacb752",
+    "committed_files": {
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/MultiFoodScanTest.kt": {
+        "git_blob": "a75c722be5e45201cc10fb8778ca555856e7a798",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddConversionTest.kt": {
+        "git_blob": "c39d3e6065c9a42c24df27f02e0b46baf030a560",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/ScanDataPreservationTest.kt": {
+        "git_blob": "6b83af81959fbc9ef42375bc0cf01a7e5a5392d6",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/settings/ExternalDatabasesNavigationTest.kt": {
+        "git_blob": "0bec1dca54817004b5f5020caea224f3dd399530",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/fooddiary/DiarySlotMealPersistenceTest.kt": {
+        "git_blob": "07d6df41d86e62faa2d5621da9024534e9cc032f",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/fooddiary/LegacyDiarySlotMealFixtureTest.kt": {
+        "git_blob": "fc6e6f564deb0d86552532a5cb6d0299283dcb03",
+        "kind": "file"
+      },
+      "app/src/androidMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/room/RoomModule.android.kt": {
+        "git_blob": "aa9b2fb9bba2dea653807e8c4f8d9cdfb222c029",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/ai/domain/AiSearchQueryGenerator.kt": {
+        "git_blob": "b2b6c4b5c13c609c0ef5db4d5fd1448762a3fea3",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/ai/domain/AiSearchQueryPrompt.kt": {
+        "git_blob": "91294bd2a4f1ed1fd64419267343dd05dd82cda5",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/ai/infrastructure/OpenRouterAiSearchQueryGenerator.kt": {
+        "git_blob": "a663048f98ffc4e7d5e2e30a681d8617c7023440",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/room/FoodYouDatabase.kt": {
+        "git_blob": "9d311986a91237031c95db311b6814efaefe5bb2",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/navigation/FoodYouAppNavHost.kt": {
+        "git_blob": "827f04fa7799d5f3c900a0f94a032d95b932d6cb",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/navigation/ScanQuickAddHandoff.kt": {
+        "git_blob": "cc92cd2526df975d6f88c456b4826e6409ee7cd0",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/UiModule.kt": {
+        "git_blob": "10bffcb835cfa56a928e24f8ff0d0044023034b0",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/AddEntryScreen.kt": {
+        "git_blob": "6cdfafacc3191cee8e4aa1f709e5d3d647e43107",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/AddEntryViewModel.kt": {
+        "git_blob": "354adc00e6a3bae0dce3e465c807071d193253e2",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/component/ChipsDiarySlotPicker.kt": {
+        "git_blob": "c3df1c646001b3579c47999f13c5ba8248a9aed6",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/component/ChipsMealPicker.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/component/FoodMeasurementFormState.kt": {
+        "git_blob": "73b432de2b21a3f50107e93c94f7ed928586a962",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/fasttext/FastTextModule.kt": {
+        "git_blob": "349083958e5db64d6307983d6ab697f5fd68837d",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/fasttext/FastTextScreen.kt": {
+        "git_blob": "d6d0a13b44f28f579474d485570c60d51c166c36",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/fasttext/FastTextViewModel.kt": {
+        "git_blob": "81d41762aa377935e8ca612bd30ca91598bd2485",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/placeholder/PlaceholderMetaEvent.kt": {
+        "git_blob": "0a71262003682f205deb4c8bce5d2ecb49a121be",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/placeholder/PlaceholderMetaModule.kt": {
+        "git_blob": "04aa390e11da3ad7ccf967ca03c1d8e1e56a1c1c",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/placeholder/PlaceholderMetaScreen.kt": {
+        "git_blob": "9d8003200c473a760b7302859d9ca35be9265960",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/placeholder/PlaceholderMetaUiState.kt": {
+        "git_blob": "6401e4390c14f083f533991ad1517353f4719624",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/placeholder/PlaceholderMetaViewModel.kt": {
+        "git_blob": "c3ffe6f48ea520732733920473d266a66f82c9d5",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/CreateQuickAddScreen.kt": {
+        "git_blob": "5a7ab344820e89c546b371911af27c55ed3b0332",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/CreateQuickAddViewModel.kt": {
+        "git_blob": "dfe33426bdacb516a889d2e0ac6e57d1701888d0",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/FoodDiaryQuickAddModule.kt": {
+        "git_blob": "93f5ab08f99886823f3b385d32a65970b751f6c8",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/search/DiaryFoodSearchScreen.kt": {
+        "git_blob": "3e6856824e7b65a869e97693f894fb89020f9c75",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/search/DiaryFoodSearchViewModel.kt": {
+        "git_blob": "e7cb568b281ec0fca67be895bc9df08f8a8e6e59",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/search/DiarySlotModel.kt": {
+        "git_blob": "a4bf3e9d9a8269de61a2ca5c6d40f8228b0ce6cf",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/search/MealModel.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/UpdateEntryScreen.kt": {
+        "git_blob": "330167d964b718ebe0ada17197aa70cc928c96c4",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/UpdateFoodDiaryEntryViewModel.kt": {
+        "git_blob": "bc97638a9ed0ea25a96610c8199339f792b699b7",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/goals/master/DiarySlotModel.kt": {
+        "git_blob": "493f47df968abc0ff37437958b9ce195468fabfb",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/goals/master/GoalsScreen.kt": {
+        "git_blob": "66f7cc8b209eb2e818a3ac1993abd25701ecb6ee",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/goals/master/GoalsScreenUiState.kt": {
+        "git_blob": "a6a001626677f33c42ed21b6f729b7372f1ec005",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/goals/master/GoalsViewModel.kt": {
+        "git_blob": "056e6713a2c4285735105a25742e2d33a52f6e71",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/goals/master/MealModel.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/HomeModule.kt": {
+        "git_blob": "87344705a64ced758275818c27e36f24bd520d67",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/goals/GoalsViewModel.kt": {
+        "git_blob": "43020b4d88359a68c3c934b55bb180c32160c9cc",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/master/HomeScreen.kt": {
+        "git_blob": "42c24e111a7accb981210438be81734fe9a22e12",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotCard.kt": {
+        "git_blob": "4e5dab5cca98f860a9d11a2de42da1d9f6222f5b",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotCardSkeleton.kt": {
+        "git_blob": "4748a7b86a300554612c9b13343f5a9d58ef03e2",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotFoodListItem.kt": {
+        "git_blob": "3307dfb1f92953816a418aaf2d63964154b5438b",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotModel.kt": {
+        "git_blob": "1c193aae8b9036afc5c887dae949c8143f3d771c",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotsCards.kt": {
+        "git_blob": "22217a1caba9e1b45f2a6bdc5273947e351f3ed6",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotsCardsViewModel.kt": {
+        "git_blob": "33ebfe914caf9a745bb2b0d39b21756354d34d0a",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/HorizontalDiarySlotsCards.kt": {
+        "git_blob": "d2e17cef087fa125c1ec65996464f8dc495e1adf",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/HorizontalMealsCards.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/MealCard.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/MealCardSkeleton.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/MealFoodListItem.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/MealModel.kt": {
+        "git_blob": "18e59b3ac4942421e7a42685a78886ee8d4e0afa",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/MealTemplateModel.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/MealsCards.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/MealsCardsViewModel.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/VerticalDiarySlotsCards.kt": {
+        "git_blob": "8a9eb00dcf993fcea5678d21a561d26da8c70cb3",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/VerticalMealsCards.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/settings/DiarySlotsCardsSettingsScreen.kt": {
+        "git_blob": "50d00bb294b0b75026b337cf52f43193dd9c5976",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/settings/DiarySlotsCardsSettingsViewModel.kt": {
+        "git_blob": "31488c302253e7d01aa4205ac4646ae663d843ef",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/settings/LayoutPicker.kt": {
+        "git_blob": "12e9b6bf2c827b43b72eb00b68ba9c467b90eeb0",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/settings/MealsCardsSettingsScreen.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/settings/MealsCardsSettingsViewModel.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/personalization/HomePersonalizationScreen.kt": {
+        "git_blob": "ef086865d462249d46f84ee86d9c5dea000c28f2",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/DiarySlotCard.kt": {
+        "git_blob": "1da61bee922b87dd8e1d9a253d4501c0e12f3b34",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/DiarySlotCardState.kt": {
+        "git_blob": "9e2b6057a2d05e92c604708df3c069637515209b",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/DiarySlotModel.kt": {
+        "git_blob": "e0f67fa936533f17fa55dd905890460e9185be4b",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/DiarySlotModule.kt": {
+        "git_blob": "1edcb019a93eb184ad08177ce628c1c5d7cc27a4",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/DiarySlotSettingsScreen.kt": {
+        "git_blob": "8f181b0f7ed74426562d5d2ca239634060de9f31",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/DiarySlotSettingsViewModel.kt": {
+        "git_blob": "6fffa4b32b5334be90ff7223a934375a3f42a17d",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/MealCard.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/MealCardState.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/MealModel.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/MealModule.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/MealSettingsScreen.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/MealSettingsViewModel.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/settings/DiarySlotSettingsListItem.kt": {
+        "git_blob": "023d030fff86335d21173c6ca75c7a0ad1d06ab6",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/settings/MealSettingsListItem.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/settings/SettingsScreen.kt": {
+        "git_blob": "b095e7bae0a9b667f5874a853b59c190b68203a9",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/FoodDiaryDomainModule.kt": {
+        "git_blob": "d94624d375e67ece74d3de31625a2314304cc30f",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiaryEntry.kt": {
+        "git_blob": "93c91d027d96c4709dc77abfb6a4a4cadb6133df",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiaryMeal.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiarySlot.kt": {
+        "git_blob": "47df0a2a55c17259218b41cc294304c435f1312a",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiarySlotEntries.kt": {
+        "git_blob": "57c1078147cd8246ff05821ba2f72e9c0b25e031",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiarySlotsCardsLayout.kt": {
+        "git_blob": "c4d1da034f2e0dba8b5f9de6776fadf2ac264ad0",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiarySlotsPreferences.kt": {
+        "git_blob": "2552e696523f19fb03f385fbf122a732d389339f",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/FoodDiaryEntry.kt": {
+        "git_blob": "cfd4f08211f4c0fc2d7716cb141aded844bcff49",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/ManualDiaryEntry.kt": {
+        "git_blob": "d9b7db6fbf01f9966b605ab8b1862cbc15e27d5c",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/Meal.kt": {
+        "git_blob": "2c8494a30ddd78ceefd7e4eb4ebd98141730003a",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/MealItem.kt": {
+        "git_blob": "b8068cb3c0a845f29480dbc31711f6f2c5c3f098",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/MealTemplate.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/MealTemplateItem.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/MealsCardsLayout.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/MealsPreferences.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/repository/DiarySlotRepository.kt": {
+        "git_blob": "7baafece489ea8ba64c4d28914e8ba062829933a",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/repository/FoodDiaryEntryRepository.kt": {
+        "git_blob": "615ed26f806f557d02ff7596df1b39c0867a201e",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/repository/ManualDiaryEntryRepository.kt": {
+        "git_blob": "b7f77c83f501c5c0ee3cea550a593d81afefad81",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/repository/MealRepository.kt": {
+        "git_blob": "1c32262e4c42b5df2ad2a9a31c931a09199dc302",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/repository/MealTemplateRepository.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/service/LocalizedDiarySlotsProvider.kt": {
+        "git_blob": "3eec10c91ac54e96b8f484a938f11cc53205d8e4",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/service/LocalizedMealsProvider.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/ApplyMealTemplateUseCase.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/ApplyMealUseCase.kt": {
+        "git_blob": "a2d74638262ac4c611f63f58181dfd5734f1643f",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/CreateFoodDiaryEntryUseCase.kt": {
+        "git_blob": "2f00da0ff5eb8d5fb32232311c0cea31739899ac",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/ObserveDiaryMealsUseCase.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/ObserveDiarySlotEntriesUseCase.kt": {
+        "git_blob": "a8333cee3ef0c93cd5c28041c4993e3374c918bc",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/SaveMealTemplateUseCase.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/SaveMealUseCase.kt": {
+        "git_blob": "5f56eb80f03a7483e2287212a1d4a549a4b6cb83",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/UnpackFoodDiaryEntryUseCase.kt": {
+        "git_blob": "f1193c9527e5e367360411f1ced6d00048138b9f",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/UpdateFoodDiaryEntryUseCase.kt": {
+        "git_blob": "25368320b3999f11f3ea71b766ab869318aea7e5",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/FoodDiaryInfrastructureModule.kt": {
+        "git_blob": "f8243a5263cf2c5052d0ecec81651b26a9fe72d5",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/compose/ComposeLocalizedDiarySlotsProvider.kt": {
+        "git_blob": "ff26e10330c0c7b510682800e88c2506026b28a2",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/compose/ComposeLocalizedMealsProvider.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/DataStoreDiarySlotsPreferencesRepository.kt": {
+        "git_blob": "fd13f980219e8ddc94f48a082a228f57fcddd856",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/DataStoreMealsPreferencesRepository.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/RoomDiarySlotRepository.kt": {
+        "git_blob": "d3672b70689c991a7eaab63c1157eabd808e28c7",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/RoomFoodDiaryEntryRepository.kt": {
+        "git_blob": "816b0d5622126ad35ee48301bb6a9ffe0f8b2b5f",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/RoomManualDiaryEntryRepository.kt": {
+        "git_blob": "0651c38e5927d5e13de5e11ae24dca42f82ba188",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/RoomMealRepository.kt": {
+        "git_blob": "10d31f7b86384bdd1c9e2fb441bb219bbfd6098b",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/RoomMealTemplateRepository.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/DiarySlotDao.kt": {
+        "git_blob": "37efb90778ef19b3e756fc76c4434dd926b3eac3",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/DiarySlotEntity.kt": {
+        "git_blob": "320aff92ec0c884f31e06b018e205ba6299feb19",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/FoodDiaryDatabase.kt": {
+        "git_blob": "49b173355d029eeabfc3af2ebde74d571f48d7bf",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/InitializeDiarySlotsCallback.kt": {
+        "git_blob": "153d7fd8e0d261c917e48a6c6f58c4c42d269fb2",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/InitializeMealsCallback.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/ManualDiaryEntryDao.kt": {
+        "git_blob": "52f7b2f9f1647ae226dafc1ead5e2195cd22ccab",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/ManualDiaryEntryEntity.kt": {
+        "git_blob": "4104eb18afd93d476cdf074fb38e97796e3a4bf7",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MealDao.kt": {
+        "git_blob": "a10df863ad7e29c3b0f54fe4c4c890835db1664c",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MealEntity.kt": {
+        "git_blob": "fc83760da090f926d5141110affbfbe1b9918ec0",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MealItemEntity.kt": {
+        "git_blob": "98e075fa411403570fd96809dbe9e57070749e32",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MealTemplateDao.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MealTemplateEntity.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MealTemplateItemEntity.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MealTemplateWithItems.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MealWithItems.kt": {
+        "git_blob": "0b275b5bad6bca8ae9ce77efff7b0567d2e5f2ae",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MeasurementDao.kt": {
+        "git_blob": "516de1362d7634f7b3934b98aaa7e1418208bf19",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MeasurementEntity.kt": {
+        "git_blob": "dc979ae5b7fd51ce073a1f7c547b986a62c2989e",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/settings/domain/entity/HomeCard.kt": {
+        "git_blob": "5da32dd4c0ee5d806f94ae5b05b0f5b6a0f6f061",
+        "kind": "file"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/ai/domain/AiSearchQueryTest.kt": {
+        "git_blob": "86646d5869c8bf37c6f08bcf0706d7a484e8e2a8",
+        "kind": "file"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/app/navigation/DiarySlotRouteCompatibilityTest.kt": {
+        "git_blob": "3d06a5eefe00daa95014b31207638af074a27ab3",
+        "kind": "file"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/MealTemplateUseCasesTest.kt": {
+        "git_blob": null,
+        "kind": "absent"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/MealUseCasesTest.kt": {
+        "git_blob": "40cfccb13bb0152054a37743a52005eb36df9d25",
+        "kind": "file"
+      },
+      "context/_boss-runs/milestone-2-domain-meals-sequential/briefing.md": {
+        "git_blob": "3c51e4c57c30b216225b30df251c1bd18deff68d",
+        "kind": "file"
+      },
+      "context/design.md": {
+        "git_blob": "4f0b6eeb0a5a4469c9f60945dde3c324007c396b",
+        "kind": "file"
+      },
+      "context/implementation-plans/milestone-2/story-25-diary-slot-meal-separation/plan.md": {
+        "git_blob": "122d546ee4e3d6088df10a73b3d0c4d3b72cd114",
+        "kind": "file"
+      },
+      "context/milestones/milestone-2.md": {
+        "git_blob": "72a385bee4e939b08352822ac080896605173a61",
+        "kind": "file"
+      },
+      "gradle/libs.versions.toml": {
+        "git_blob": "9fbcd142ab665b4818020ca7d56aa322cc544cda",
+        "kind": "file"
+      },
+      "shared/resources/src/commonMain/composeResources/values-ar-rSA/strings.xml": {
+        "git_blob": "0da2d82e7a8e1a66e2e479ecf6de3ca5137d77d2",
+        "kind": "file"
+      },
+      "shared/resources/src/commonMain/composeResources/values-ca-rES/strings.xml": {
+        "git_blob": "8783ff8302a7ebb117a115039454cc591c8f6a4b",
+        "kind": "file"
+      },
+      "shared/resources/src/commonMain/composeResources/values-cs-rCZ/strings.xml": {
+        "git_blob": "842e690cb10397da746a2900ff51e6276e7d437d",
+        "kind": "file"
+      },
+      "shared/resources/src/commonMain/composeResources/values-da-rDK/strings.xml": {
+        "git_blob": "e590be5841a15ea923e0a47ec83ecf966e62397a",
+        "kind": "file"
+      },
+      "shared/resources/src/commonMain/composeResources/values-de-rDE/strings.xml": {
+        "git_blob": "6741e45cfe2a5c2ea0f656368a414a91a5de8d73",
+        "kind": "file"
+      },
+      "shared/resources/src/commonMain/composeResources/values-es-rES/strings.xml": {
+        "git_blob": "ff8420a7eacf1416f0036c76f9a736fe84a42ba2",
+        "kind": "file"
+      },
+      "shared/resources/src/commonMain/composeResources/values-fi-rFI/strings.xml": {
+        "git_blob": "8eca42cdb60076d2d79282e6530174abbe251b02",
+        "kind": "file"
+      },
+      "shared/resources/src/commonMain/composeResources/values-fr-rFR/strings.xml": {
+        "git_blob": "2d0fe6ac36f06670daa8592286ead3d9958d52cf",
+        "kind": "file"
+      },
+      "shared/resources/src/commonMain/composeResources/values-hu-rHU/strings.xml": {
+        "git_blob": "0c3797d6cb886dc62444f8a9a169c42dd1cfc790",
+        "kind": "file"
+      },
+      "shared/resources/src/commonMain/composeResources/values-id-rID/strings.xml": {
+        "git_blob": "70fc865f34f21f6b14179cfd414c72e31091362c",
+        "kind": "file"
+      },
+      "shared/resources/src/commonMain/composeResources/values-it-rIT/strings.xml": {
+        "git_blob": "533d94e451ba47e215ef0e5133b5f11198199e2c",
+        "kind": "file"
+      },
+      "shared/resources/src/commonMain/composeResources/values-nl-rNL/strings.xml": {
+        "git_blob": "91862165bf581f972a1cc0d9932269ecaada7ffd",
+        "kind": "file"
+      },
+      "shared/resources/src/commonMain/composeResources/values-pl-rPL/strings.xml": {
+        "git_blob": "99f62096d7776c4a6f74ff33258559a87fd54710",
+        "kind": "file"
+      },
+      "shared/resources/src/commonMain/composeResources/values-pt-rBR/strings.xml": {
+        "git_blob": "1ac0afc092c99c53832de0f0da26062a65b10e9f",
+        "kind": "file"
+      },
+      "shared/resources/src/commonMain/composeResources/values-pt-rPT/strings.xml": {
+        "git_blob": "63f1e37577ad307675984fffa4dadf83c9afc2fb",
+        "kind": "file"
+      },
+      "shared/resources/src/commonMain/composeResources/values-ru-rRU/strings.xml": {
+        "git_blob": "41d01ee58a329ea79a4b2bc773d48231e202dc49",
+        "kind": "file"
+      },
+      "shared/resources/src/commonMain/composeResources/values-sl-rSI/strings.xml": {
+        "git_blob": "b7b5871046d5d63046de1d3a6bfe8e6775295a2e",
+        "kind": "file"
+      },
+      "shared/resources/src/commonMain/composeResources/values-tr-rTR/strings.xml": {
+        "git_blob": "c4dc7c8cde9ba6f3cfa5e0597edcfab4c2b76efc",
+        "kind": "file"
+      },
+      "shared/resources/src/commonMain/composeResources/values-uk-rUA/strings.xml": {
+        "git_blob": "97fe9b3e79b1826c44fd3a0cabce7ec3ae94fbe4",
+        "kind": "file"
+      },
+      "shared/resources/src/commonMain/composeResources/values-zh-rCN/strings.xml": {
+        "git_blob": "ed3beee988855ecffda18f1a91870e946b1162b4",
+        "kind": "file"
+      },
+      "shared/resources/src/commonMain/composeResources/values/strings.xml": {
+        "git_blob": "aee415391835da5ed40f1254b7ff625cd5e611a4",
+        "kind": "file"
+      }
+    },
+    "diff_identity": "2286d9241314ec4addd972217a58351892a8b2300ab94da0d167c58a3f9253cc",
+    "files": {
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/MultiFoodScanTest.kt": {
+        "kind": "file",
+        "sha256": "79c45d92b49d4df93cca27e517991a82182598ad4855d1e2cb3ae69807f93c7d"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/QuickAddConversionTest.kt": {
+        "kind": "file",
+        "sha256": "7fbd3b6ebe1eb8ec5cd9db69d063b25fdc075c8dc02528aca93004bf4d244d73"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/ScanDataPreservationTest.kt": {
+        "kind": "file",
+        "sha256": "62798b9c0c5ff57297d9b632a297c1a7da4901c84a9d4f76926a1950c0fd0f87"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/settings/ExternalDatabasesNavigationTest.kt": {
+        "kind": "file",
+        "sha256": "7391ca06fa06d1a2daf4bd7cae517a403b84ce830caf2e83d2446efcd1e892d5"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/fooddiary/DiarySlotMealPersistenceTest.kt": {
+        "kind": "file",
+        "sha256": "63a1570bcd4fe36e73be1cb18503301a90afc1f871771e20c187ca446cffca90"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/fooddiary/LegacyDiarySlotMealFixtureTest.kt": {
+        "kind": "file",
+        "sha256": "1111cbeb4400608a68af82f106fb33aaa7223c6f4594de543eb84b7eca4170fa"
+      },
+      "app/src/androidMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/room/RoomModule.android.kt": {
+        "kind": "file",
+        "sha256": "6b19b9d14e7fba50bf8a41e300740077f83ba504eab9f472173c504b668c65a1"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/ai/domain/AiSearchQueryGenerator.kt": {
+        "kind": "file",
+        "sha256": "82815c53fa7b920baaf14e43388b6c0c17e1ed49161442ca397659c750fdb377"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/ai/domain/AiSearchQueryPrompt.kt": {
+        "kind": "file",
+        "sha256": "182cdbff387dedebbfd2d58144fb833d2032ca07a7bed2465fbfde8d6860dd1f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/ai/infrastructure/OpenRouterAiSearchQueryGenerator.kt": {
+        "kind": "file",
+        "sha256": "2cc20502b5968fc44383b0c6d1e6e01b45cbb1e7079be84ca07c4de92a540142"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/infrastructure/room/FoodYouDatabase.kt": {
+        "kind": "file",
+        "sha256": "73f68dd4d586ef627e0f8cc5f615421ddd19a3723c34ca72a28944a6cc55f91a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/navigation/FoodYouAppNavHost.kt": {
+        "kind": "file",
+        "sha256": "4c2d1e8891a477a8333662d8022ebf63a53aecfb07b465fa561373ff2aa04098"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/navigation/ScanQuickAddHandoff.kt": {
+        "kind": "file",
+        "sha256": "afd6503f0c4b1e28f29234805d899d170201a9880054c2864e2edd3f05260541"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/UiModule.kt": {
+        "kind": "file",
+        "sha256": "9e572425113a0809cb128a5fd607c36c90709c0670127d5ed4b1ef466bb883c3"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/AddEntryScreen.kt": {
+        "kind": "file",
+        "sha256": "90cade6c8fa06a92528f0a41f85d807794a50711073c78af438b5e0a4d6018f9"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/add/AddEntryViewModel.kt": {
+        "kind": "file",
+        "sha256": "69f46491ca1ae61af3458ede2857d1bffea3596fd7ebd22d861cea5218d5e7ea"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/component/ChipsDiarySlotPicker.kt": {
+        "kind": "file",
+        "sha256": "b675425d73869b3a8cd32a3b73001f413979de09751ad43fe4b0b6bab2a61da2"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/component/ChipsMealPicker.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/component/FoodMeasurementFormState.kt": {
+        "kind": "file",
+        "sha256": "f403a3ff04430be730119433565f59419af7b7c027bc5fbdca4be55c9291a655"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/fasttext/FastTextModule.kt": {
+        "kind": "file",
+        "sha256": "a5c9f68b0505d078352a6f113410877fcb81622a37ccae7f066532dc31a23a86"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/fasttext/FastTextScreen.kt": {
+        "kind": "file",
+        "sha256": "0830649155b613f0a716ef02e9a47f6239a08b9b49eddd73ac7826d184f4ff4f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/fasttext/FastTextViewModel.kt": {
+        "kind": "file",
+        "sha256": "774f32c1a2c816b1728cfd0e93f1f060802cd76e9885e3ca9ec2ad96b7156d85"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/placeholder/PlaceholderMetaEvent.kt": {
+        "kind": "file",
+        "sha256": "faa544349961daf835be9720980d3d778de1a223f44e8da67aca70c4874b3fad"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/placeholder/PlaceholderMetaModule.kt": {
+        "kind": "file",
+        "sha256": "b9a6cbe3607e08deb1816b0617c1d68679e7e6547670b1527e595326f4ee432d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/placeholder/PlaceholderMetaScreen.kt": {
+        "kind": "file",
+        "sha256": "ecae9e335ceb9af69b3e707e6d761ee9ee218206ccd1fdc20252da58df2d9ca3"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/placeholder/PlaceholderMetaUiState.kt": {
+        "kind": "file",
+        "sha256": "3d369b91bb4b3f34343e5babec2f5ccdbb51033be3bd37f3a4913ae617ddbe2e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/placeholder/PlaceholderMetaViewModel.kt": {
+        "kind": "file",
+        "sha256": "ba39fbf6b70c9782385144ca4831930c8ef26c1daa5b8b06a7246f3830ba1c69"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/CreateQuickAddScreen.kt": {
+        "kind": "file",
+        "sha256": "213ba15a6a3df41f2683edf3e64df7cfaa8c673c3c30152e7b9bc2c2fd1db397"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/CreateQuickAddViewModel.kt": {
+        "kind": "file",
+        "sha256": "5de7aa82896df3693498dfe2498b4da69e65321134f3adc9300ffb6f38c51e11"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/FoodDiaryQuickAddModule.kt": {
+        "kind": "file",
+        "sha256": "294abba3d8bd76b439a3246ab4041d4c63ff1566b13de951888707400aae9ff0"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/search/DiaryFoodSearchScreen.kt": {
+        "kind": "file",
+        "sha256": "836b600bdaa70e6a80633e04be45240f351b9e93a20e0e7183cf30a3f5e4b84a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/search/DiaryFoodSearchViewModel.kt": {
+        "kind": "file",
+        "sha256": "2682b3bb5cc2e52ce97a73548f1e8baebae1aae14f65a0a9bc015ef56d107c5d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/search/DiarySlotModel.kt": {
+        "kind": "file",
+        "sha256": "ff15d8a59677cc3d020da3c5b0583c8dc734c2d1806efc926e1ff3335eba659c"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/search/MealModel.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/UpdateEntryScreen.kt": {
+        "kind": "file",
+        "sha256": "bb25e1dfd8d4556b3b396625d44bdbb2130fc3ee9ad89c6871fedbd98e5c8f50"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/update/UpdateFoodDiaryEntryViewModel.kt": {
+        "kind": "file",
+        "sha256": "9056ab9538bd8a7a215aaba507b523c6d62f70de76f22e9c5d273c4b0ffde450"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/goals/master/DiarySlotModel.kt": {
+        "kind": "file",
+        "sha256": "48cc7ccb447b3e5e0d77ab94c2c34af0a088c5d58a2d00303a9c1f64a0c27e3a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/goals/master/GoalsScreen.kt": {
+        "kind": "file",
+        "sha256": "7dba736e918ec800d96f51d6c4dafb39a366707b2440605ee675b20f34a685ec"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/goals/master/GoalsScreenUiState.kt": {
+        "kind": "file",
+        "sha256": "20fba39d0fc35d674e25921f60ac370fde5947b9f84f29c76c9c7d577f3ca4cf"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/goals/master/GoalsViewModel.kt": {
+        "kind": "file",
+        "sha256": "3be7dc0186233a7323aee9a31e3f7da5a7d6e086e02ee42edeff6d6fdab92ca0"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/goals/master/MealModel.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/HomeModule.kt": {
+        "kind": "file",
+        "sha256": "02b9dcfd4e18857f2ec85fdb2c944b907752c159beda54d75bec3cffb4e110fb"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/goals/GoalsViewModel.kt": {
+        "kind": "file",
+        "sha256": "ed6a28dcea3eb6a2b855e9be53958498206d1ecf5c92edabe20d7973726f2c0c"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/master/HomeScreen.kt": {
+        "kind": "file",
+        "sha256": "6076c8e49f91ad71bbd77fcaf403877083b2b73496997fa3ccd04282a8c6459b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotCard.kt": {
+        "kind": "file",
+        "sha256": "68310089f7f21881c7696d80cd8589c687094eed2f3821463dc943e8ea4dd018"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotCardSkeleton.kt": {
+        "kind": "file",
+        "sha256": "037d8119abbcacb1c181077f27144ca442ea77fc2d063942403054d691e10635"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotFoodListItem.kt": {
+        "kind": "file",
+        "sha256": "1b72cf80e6ff41cfdfee3427d078ec0b558a73c9c12e9c384cc2a3f2f8a12578"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotModel.kt": {
+        "kind": "file",
+        "sha256": "ae17112dd61acd3fbce02ad9d22a561660d2b35d9feb01249c137ccabd155d01"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotsCards.kt": {
+        "kind": "file",
+        "sha256": "bfb8b26f4b39b070b36fe078438e1b7db9b82e2c86ba44a7c2bbc073f8e1e6e5"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/DiarySlotsCardsViewModel.kt": {
+        "kind": "file",
+        "sha256": "9edc4f59a81ce891bb4e3675edbcb9b590354f95a36c02ab631aabc55085b006"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/HorizontalDiarySlotsCards.kt": {
+        "kind": "file",
+        "sha256": "31e56c0725fdd8aa459c86cefc3b68e3f801f0b5f562d5dcb0de40ff3a06bede"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/HorizontalMealsCards.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/MealCard.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/MealCardSkeleton.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/MealFoodListItem.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/MealModel.kt": {
+        "kind": "file",
+        "sha256": "ac5cdec41705ce985fbefbe09b49aa2947b62cdb8e93fc430d47070d6ce7efb3"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/MealTemplateModel.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/MealsCards.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/MealsCardsViewModel.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/VerticalDiarySlotsCards.kt": {
+        "kind": "file",
+        "sha256": "d3966a11d4703592d6c32ba7d74218b57bbce6517fcbb357e6e4f4b6b0820187"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/card/VerticalMealsCards.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/settings/DiarySlotsCardsSettingsScreen.kt": {
+        "kind": "file",
+        "sha256": "274eb5cfeb507e427d33af2e81e29760ab44b5085167ba01c9cf39d875ebe23a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/settings/DiarySlotsCardsSettingsViewModel.kt": {
+        "kind": "file",
+        "sha256": "f3512cf0ab9609db2fbfc2296a9e28116262e046536d92b18d0c5d39f690f4c3"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/settings/LayoutPicker.kt": {
+        "kind": "file",
+        "sha256": "b5a2a687b5f9f4a10c345eeb1cb47b51dc61afbd654bdb308bba0c2c2d011d8d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/settings/MealsCardsSettingsScreen.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/meals/settings/MealsCardsSettingsViewModel.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/home/personalization/HomePersonalizationScreen.kt": {
+        "kind": "file",
+        "sha256": "a08c622a7656edc39e7d3a11009a1656a4c9cd2255a0df0982dbd9b4fb74a578"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/DiarySlotCard.kt": {
+        "kind": "file",
+        "sha256": "01d93beedf5ca18d53f7552ec7fab2ba30562f488e31995105d83460b9ffaace"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/DiarySlotCardState.kt": {
+        "kind": "file",
+        "sha256": "5bb6717aae737547d893a4dd3162c1d1bf134e781449661d3fca60bc6942abba"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/DiarySlotModel.kt": {
+        "kind": "file",
+        "sha256": "09934c21b11b8ff05bd03101fcb8f0ddf22104a958c7efc04972fc9387f077ae"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/DiarySlotModule.kt": {
+        "kind": "file",
+        "sha256": "06224200f8a0a1632be0b63da9c319ec5cf6b15268b75c07fa23329f24a39cbe"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/DiarySlotSettingsScreen.kt": {
+        "kind": "file",
+        "sha256": "455df84fb1c6b5f0040b06f95d1aa92fbf6c49999fdb5052d6e8fb4b6336dba1"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/DiarySlotSettingsViewModel.kt": {
+        "kind": "file",
+        "sha256": "a806e00822388340c2b585fd22fbcf14f2ca0f71e0eb2e56b5195a99b115caac"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/MealCard.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/MealCardState.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/MealModel.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/MealModule.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/MealSettingsScreen.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/meal/MealSettingsViewModel.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/settings/DiarySlotSettingsListItem.kt": {
+        "kind": "file",
+        "sha256": "efaf847c6f43bc2e08029b59e03ec57ecb88369da42788dba236a3ed81a7492e"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/settings/MealSettingsListItem.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/settings/SettingsScreen.kt": {
+        "kind": "file",
+        "sha256": "7f0fb045967a9b65a608b040ecb55ba41ea5d2e39e87085e41f4dc721361ba20"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/FoodDiaryDomainModule.kt": {
+        "kind": "file",
+        "sha256": "319f50cc7091e3e5c5b3b91793652657ca5d5b8099ec6d6d1a6368f49ffd1a84"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiaryEntry.kt": {
+        "kind": "file",
+        "sha256": "3b979e93fc145c532f29aeb587c59fecd947aa0fe771431ad2deb5c7a26a7fb3"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiaryMeal.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiarySlot.kt": {
+        "kind": "file",
+        "sha256": "e949e50127e2b3315c072b76e3b5872a2db2f4fba203dd11b980b6d3180e4261"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiarySlotEntries.kt": {
+        "kind": "file",
+        "sha256": "ed98350f20bd0da30ad4e211a5356a81408790d27a83ab32c4796c3becf8098f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiarySlotsCardsLayout.kt": {
+        "kind": "file",
+        "sha256": "76529b76136454bec4ef32edaefd1726021fd01b81901fc881518969e3bc43a8"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/DiarySlotsPreferences.kt": {
+        "kind": "file",
+        "sha256": "8200e78fc9d8a2bb5d49150b60065f292d15d532ef4ff7a98faaf4a5da141c0a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/FoodDiaryEntry.kt": {
+        "kind": "file",
+        "sha256": "c1dd49ad64c68c13973e3a73046dff4229cf6dc5742266755227cce976fb73f4"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/ManualDiaryEntry.kt": {
+        "kind": "file",
+        "sha256": "f0172d7ca2d5704ccacbfc133fcb46f2462c1266540d3122cfc23e1a5ca09744"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/Meal.kt": {
+        "kind": "file",
+        "sha256": "06f6bf83000c6ada78fc6e1572114673c5d2041797805a254e8b86067eb3d6f5"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/MealItem.kt": {
+        "kind": "file",
+        "sha256": "ec6caab85d9577498b10de5ac15738d0012bc2768c6cb6e2616d91a0305952d8"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/MealTemplate.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/MealTemplateItem.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/MealsCardsLayout.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/entity/MealsPreferences.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/repository/DiarySlotRepository.kt": {
+        "kind": "file",
+        "sha256": "e751de6e49dd848da184d139baa5c9dba8a3ed6aaa46d2ea30fd8ff20f201bc0"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/repository/FoodDiaryEntryRepository.kt": {
+        "kind": "file",
+        "sha256": "3002c2f0a9006c957941dc9edf9c94531daaa9b6c4235a3e54feb0945aba2478"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/repository/ManualDiaryEntryRepository.kt": {
+        "kind": "file",
+        "sha256": "8a221915bf356d8474bc8c4465f34b6cf3af52ef982d869699dbae512d23b9a1"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/repository/MealRepository.kt": {
+        "kind": "file",
+        "sha256": "6a6422f9d159176d3e2b16fd27e638102017b3b8c50c3e805d497fb966f80ac5"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/repository/MealTemplateRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/service/LocalizedDiarySlotsProvider.kt": {
+        "kind": "file",
+        "sha256": "3dadf9ce54b23e11f9b2a5f5fe5c17143af1717a932cc5d0631758ae4934563f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/service/LocalizedMealsProvider.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/ApplyMealTemplateUseCase.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/ApplyMealUseCase.kt": {
+        "kind": "file",
+        "sha256": "544f015f225f6176e16eb23cce144b346c8e4d6c5ebab59cfd931e66c5b1a45a"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/CreateFoodDiaryEntryUseCase.kt": {
+        "kind": "file",
+        "sha256": "c461bf39e39768c028863092172af035d75753243971fade56c6ae716a34aae5"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/ObserveDiaryMealsUseCase.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/ObserveDiarySlotEntriesUseCase.kt": {
+        "kind": "file",
+        "sha256": "7a7ce9a13b92eeeb9707f53094e6ae671eb9d5bbd22777b60a04a1f8ed192695"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/SaveMealTemplateUseCase.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/SaveMealUseCase.kt": {
+        "kind": "file",
+        "sha256": "670e0bf6f0d57a46243b5553b66244c595abf4574d2effd4aa411ab606bf1c73"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/UnpackFoodDiaryEntryUseCase.kt": {
+        "kind": "file",
+        "sha256": "f620ebf4ae95e8abba6a4fec9fb004d41b1fb3ad87e6df87414d06f1855f0a35"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/UpdateFoodDiaryEntryUseCase.kt": {
+        "kind": "file",
+        "sha256": "cc345fba2d29e975aaf416425311a7c5fb84a4f504f5fdbe11fabc38730105a3"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/FoodDiaryInfrastructureModule.kt": {
+        "kind": "file",
+        "sha256": "b9bb309371d8112e699eb8d08a6de5fc35cb9ba79becc689df207acc8232fae2"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/compose/ComposeLocalizedDiarySlotsProvider.kt": {
+        "kind": "file",
+        "sha256": "a41afb4215244a6dd6170827b01e0fae634b3b21ecc64209e0eeb986f9c60f36"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/compose/ComposeLocalizedMealsProvider.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/DataStoreDiarySlotsPreferencesRepository.kt": {
+        "kind": "file",
+        "sha256": "ebf05ad0ed9a12fe36122d0e2225625bf3bee03c575d816ce4893a177ef72fc2"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/DataStoreMealsPreferencesRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/RoomDiarySlotRepository.kt": {
+        "kind": "file",
+        "sha256": "d8880bb2dbaf80e80ee6f70ef6a5975bceba312ef3740e3764c2bc5e7af02470"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/RoomFoodDiaryEntryRepository.kt": {
+        "kind": "file",
+        "sha256": "f13b3b5ae8c57730b95a2cb70173b09854400a82ef9a05a4c0c7b126d6c213d2"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/RoomManualDiaryEntryRepository.kt": {
+        "kind": "file",
+        "sha256": "1b2f6893ce5dac86b577c20eac9914312d6dcd489a8b09396da507edb354f5bb"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/RoomMealRepository.kt": {
+        "kind": "file",
+        "sha256": "fb5bce368677d18f155737b0f650ed9371af7f35fe596fb71dd80769f3b4fa7c"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/repository/RoomMealTemplateRepository.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/DiarySlotDao.kt": {
+        "kind": "file",
+        "sha256": "4c442ab0991041c9fdaacc37b025495ff387c56c2b98abf9282ef615eb7097f7"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/DiarySlotEntity.kt": {
+        "kind": "file",
+        "sha256": "365612201fa104e1d3b9d14402ffa64bd6fcaa702221ac570ace5a1cba3f1f5b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/FoodDiaryDatabase.kt": {
+        "kind": "file",
+        "sha256": "14fceee3984b63e695998868f8cedb2e5664349267faa133456448ba7264024f"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/InitializeDiarySlotsCallback.kt": {
+        "kind": "file",
+        "sha256": "d91d86e96113ec29d2b65790a69c7db2943f1e929a727ddfc605e96572e5d98b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/InitializeMealsCallback.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/ManualDiaryEntryDao.kt": {
+        "kind": "file",
+        "sha256": "f109997d4a442ebec4f94712003c3c248bbeda6cf434758fdc4d6c77a3153c0d"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/ManualDiaryEntryEntity.kt": {
+        "kind": "file",
+        "sha256": "f8240bba3b605bd0d4ef4d1f33b25e0127eb994a39c933af53a845a98bbeae0b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MealDao.kt": {
+        "kind": "file",
+        "sha256": "c2879a20d3375fa79107502c7e6d4192215c01923f7cc5a436d12c36b5bc2d3b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MealEntity.kt": {
+        "kind": "file",
+        "sha256": "3917dddea6b59b16692dccbb575ea3b98fd525d4e4026b14f3ed6c5a8721205b"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MealItemEntity.kt": {
+        "kind": "file",
+        "sha256": "18a80ecfffa12d68e51a25575ae84ed3846cc24dc2ce87f16aaf607fd22b6d32"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MealTemplateDao.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MealTemplateEntity.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MealTemplateItemEntity.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MealTemplateWithItems.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MealWithItems.kt": {
+        "kind": "file",
+        "sha256": "cdcfdfcbe98f73852e710d62f3fb754eee44764827d4cca989615f5b353916b9"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MeasurementDao.kt": {
+        "kind": "file",
+        "sha256": "0c548a14523a0523dd853a9f4d438db56c7e56d00a4cdf279c8f00dc989cbfa2"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/fooddiary/infrastructure/room/MeasurementEntity.kt": {
+        "kind": "file",
+        "sha256": "36eac772218fbe5147d98695c2b599c0d8dd57bd35bd0846befd1c52b65fe365"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/settings/domain/entity/HomeCard.kt": {
+        "kind": "file",
+        "sha256": "6c9ea100b3d807bafb4c77b0c72de0d6d453e10a10e3d67f9a33cf5556160ce9"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/ai/domain/AiSearchQueryTest.kt": {
+        "kind": "file",
+        "sha256": "5ac6c6aef50cb190995fe7c38648407af4a3454169faaa83dad438038364ad2a"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/app/navigation/DiarySlotRouteCompatibilityTest.kt": {
+        "kind": "file",
+        "sha256": "878ec15f71dc5bfbe6e264b9660314a17a8f8553d1b8b27e5294c4c02b0c3c09"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/MealTemplateUseCasesTest.kt": {
+        "kind": "absent",
+        "sha256": null
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/fooddiary/domain/usecase/MealUseCasesTest.kt": {
+        "kind": "file",
+        "sha256": "fd6e76a395ccd94f16553a58552e29ab770200ab93b03b486b4912b30fc806c4"
+      },
+      "context/_boss-runs/milestone-2-domain-meals-sequential/briefing.md": {
+        "kind": "file",
+        "sha256": "43364761060babdd8a4b6214a1eaee161d8b7b7e5849ff1501f6530c07744a58"
+      },
+      "context/design.md": {
+        "kind": "file",
+        "sha256": "0a77774d037fec480c8844e2ff68b5d0fac98a78a40192a4e4d585efb6b125f1"
+      },
+      "context/implementation-plans/milestone-2/story-25-diary-slot-meal-separation/plan.md": {
+        "kind": "file",
+        "sha256": "57c6c8e66e862190c1348c017f99a54e997379f7c83d83d0715ab754ddd5f401"
+      },
+      "context/milestones/milestone-2.md": {
+        "kind": "file",
+        "sha256": "5a147514d6e54b87437be725cf3a34481fdf288b23ca1695e5d77da1fb66324d"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "643bd5a94c44dd92fd916d785a7f7dbfcfb00e4933163d0024003551504fa5cf"
+      },
+      "shared/resources/src/commonMain/composeResources/values-ar-rSA/strings.xml": {
+        "kind": "file",
+        "sha256": "23b4988472f794dd7b43334e6468b6f36ccfbca137676f17c7e6bea5b0dd31b8"
+      },
+      "shared/resources/src/commonMain/composeResources/values-ca-rES/strings.xml": {
+        "kind": "file",
+        "sha256": "6dc4d865d9f74483efd135765962b0221e5ebeed425b1abf0d13e2aa8aec458d"
+      },
+      "shared/resources/src/commonMain/composeResources/values-cs-rCZ/strings.xml": {
+        "kind": "file",
+        "sha256": "c6fc020d64d48120c8a75a03776039608bf6d75e5bf2d3ce827939a31436bb2f"
+      },
+      "shared/resources/src/commonMain/composeResources/values-da-rDK/strings.xml": {
+        "kind": "file",
+        "sha256": "b571993b2ef1facf8d856499ee7b0fb4fd9f453419645f8ec8edd146e7a48069"
+      },
+      "shared/resources/src/commonMain/composeResources/values-de-rDE/strings.xml": {
+        "kind": "file",
+        "sha256": "3baa605fcf8e8177065718a4e977fb3f6f3c2cbbdc43315c839893334feba5a0"
+      },
+      "shared/resources/src/commonMain/composeResources/values-es-rES/strings.xml": {
+        "kind": "file",
+        "sha256": "fcaa038fa48de90a3570e0b1b752fb9446ea644cb8792ba728ca966d072507b1"
+      },
+      "shared/resources/src/commonMain/composeResources/values-fi-rFI/strings.xml": {
+        "kind": "file",
+        "sha256": "646f42372c86b52a8b2c05f5da2ece054ae2602b409be5664c3adda9b2c38c48"
+      },
+      "shared/resources/src/commonMain/composeResources/values-fr-rFR/strings.xml": {
+        "kind": "file",
+        "sha256": "f80012a02b90db59c26f2492ede6d428444d5b5cee557c75635bb7886be49bba"
+      },
+      "shared/resources/src/commonMain/composeResources/values-hu-rHU/strings.xml": {
+        "kind": "file",
+        "sha256": "1f8b6344e8cdfb2a352e4bd701043a94cc2b9c29b7ac059dae01e2960197ac20"
+      },
+      "shared/resources/src/commonMain/composeResources/values-id-rID/strings.xml": {
+        "kind": "file",
+        "sha256": "50591c6d1919d907da47b8cdcb462e74431edaa23257678281f6a9f9d957277e"
+      },
+      "shared/resources/src/commonMain/composeResources/values-it-rIT/strings.xml": {
+        "kind": "file",
+        "sha256": "c7a2b0e367e2de4a6febd75d72dd77b01a199dc75f9a32a4257fdd903e4eed5e"
+      },
+      "shared/resources/src/commonMain/composeResources/values-nl-rNL/strings.xml": {
+        "kind": "file",
+        "sha256": "ec0476329d66301ab31194e7ec9a4434dac703105be076a00956fb39a27c3fe9"
+      },
+      "shared/resources/src/commonMain/composeResources/values-pl-rPL/strings.xml": {
+        "kind": "file",
+        "sha256": "26865987fcde00ea8ab16df4926a57155fc27d3d3fa4a5c001f4c80ade0e1dc7"
+      },
+      "shared/resources/src/commonMain/composeResources/values-pt-rBR/strings.xml": {
+        "kind": "file",
+        "sha256": "e667c00d58ea415677a86ac9086b9baf25550ad01b62b172afb9c2c2a68cccba"
+      },
+      "shared/resources/src/commonMain/composeResources/values-pt-rPT/strings.xml": {
+        "kind": "file",
+        "sha256": "330aaed86510baddff208ef7669cd3e58888cfc894c0e8d9f15ecb184e825e94"
+      },
+      "shared/resources/src/commonMain/composeResources/values-ru-rRU/strings.xml": {
+        "kind": "file",
+        "sha256": "e83d7627870b602d62806ec6e8f7f2e5ae3ffe7684376fcc42ac0276b305f8c2"
+      },
+      "shared/resources/src/commonMain/composeResources/values-sl-rSI/strings.xml": {
+        "kind": "file",
+        "sha256": "908eba56f767cf62faa6f9d5e462ab196e54cc3bd78a8abce46d328da5e94553"
+      },
+      "shared/resources/src/commonMain/composeResources/values-tr-rTR/strings.xml": {
+        "kind": "file",
+        "sha256": "58f98fc6f6a8821423c4973d22a73ce8360bbeeb44adb0e14805c1e79bc52de4"
+      },
+      "shared/resources/src/commonMain/composeResources/values-uk-rUA/strings.xml": {
+        "kind": "file",
+        "sha256": "3bcfb552881aac0e294ef0c0f63f6ea37e745cc7f10e2ebccbdc29321de158f5"
+      },
+      "shared/resources/src/commonMain/composeResources/values-zh-rCN/strings.xml": {
+        "kind": "file",
+        "sha256": "7eec3a37015205d42572f1704043e8dd59d85bdfc8b0140933824a617f2a2d93"
+      },
+      "shared/resources/src/commonMain/composeResources/values/strings.xml": {
+        "kind": "file",
+        "sha256": "b61870151c555ca53ae9f28c32ecf5ee2d504e496205bb6ee22aa8c4b124460a"
+      }
+    },
+    "head": "8b698162ff7b3de0e7338f3ca2d68790edacb752"
+  },
+  "evidence": {
+    "checks": [
+      {
+        "artifact_identity": "17110a9c9af13b7e8e080117a9d5b8979c1d2cb0e3ee3c1e5040649a839aec39",
+        "command": ".\\gradlew.bat --no-daemon :app:testDebugUnitTest :app:assembleDebug :app:assembleDebugAndroidTest",
+        "details": "Final frozen source: gradle-final-clean.log,149 tests32 suites,0 failures/errors/skips;debug/test APK builds passed.",
+        "outcome": "PASS"
+      },
+      {
+        "apkSha256": "56fafc5b6beaaf6df0ce8ac830f4f651a2b74acc76408904c6048663c1efe967",
+        "artifact_identity": "17110a9c9af13b7e8e080117a9d5b8979c1d2cb0e3ee3c1e5040649a839aec39",
+        "command": "adb -s emulator-5580 shell am instrument -w -e class LegacyDiarySlotMealFixtureTest#verifyCanonicalDatabaseAfterUpgrade; DiarySlotMealPersistenceTest#legacyDataBackupAndMealOperationsPreserveIndependentIdentitiesAndSnapshots",
+        "details": "Preserved baseline code128 seeded first;candidate code129 installed in place. Both individual fixture methods passed. Canonical JSON identical;backup copy reopened;save/repeated apply/delete/slot edit/reorder preserved snapshots.",
+        "outcome": "PASS",
+        "syntheticFixtureSha256": "496dac9591af7ac6569d014dab94facd7d1b6aa8f6bfef9abd8ace57b9dc0659"
+      },
+      {
+        "artifact_identity": "17110a9c9af13b7e8e080117a9d5b8979c1d2cb0e3ee3c1e5040649a839aec39",
+        "command": "python app/build/m2-domain-meals/story25/check-navigation.py",
+        "details": "Isolated emulator synthetic configured slot appears in entry/search destination with selected date retained; final command must succeed before receipt begin.",
+        "outcome": "PASS"
+      },
+      {
+        "artifact_identity": "17110a9c9af13b7e8e080117a9d5b8979c1d2cb0e3ee3c1e5040649a839aec39",
+        "command": "git -c core.safecrlf=false diff --check",
+        "outcome": "PASS"
+      }
+    ],
+    "decisions": [
+      "Story25 only;DiarySlot destination,Meal saved bundle,DiarySlotEntries projection.",
+      "Retain schema39 identity b247898737d2ed1a830346124daeb1e8,legacy table/column/navigation/DataStore contracts;separate identity even numeric overlap.",
+      "No commit,public release,owner phone or real diary use. Candidate3.2.33.3/code129;ReleaseCount3 unchanged.",
+      "Per-story frozen checkpoints are superseded by later dependency work and consolidated final batch receipt;immutable earlier evidence remains dated."
+    ],
+    "review": {
+      "artifact_identity": "17110a9c9af13b7e8e080117a9d5b8979c1d2cb0e3ee3c1e5040649a839aec39",
+      "details": "All168 checked paths verified;independent source/config review,Unicode repair and final1-characterSQL whitespace delta accepted,no outstanding findings.",
+      "outcome": "PASS",
+      "reviewer": "/root/review_story25"
+    },
+    "review_required": true
+  },
+  "metadata_before": {
+    "context/_boss-runs/milestone-2-domain-meals-sequential/briefing.md": {
+      "kind": "file",
+      "sha256": "83d7656049d7689a852cbe4e3d99e6b6e6ca4bf3171edde50a52974a77aa83fc"
+    },
+    "context/design.md": {
+      "kind": "file",
+      "sha256": "640c5f07f1bcd5d32c9dfd5adb8d14e677aa23d1aa5432d7be9250d7449efc9f"
+    },
+    "context/milestones/milestone-2.md": {
+      "kind": "file",
+      "sha256": "7e5bda8ecfea125a34438d20ccb1e2d3dd0995240e81fc99675b0289f029d531"
+    }
+  },
+  "phase": "VERIFIED_UNCOMMITTED",
+  "record": "context/_boss-runs/milestone-2-domain-meals-sequential/story-25-receipt.json",
+  "repo": "D:\\forked-projects\\FoodYou",
+  "schema_version": 1,
+  "status_owner": "context/milestones/milestone-2.md#story-25",
+  "transaction_id": "19b6297e142f46d8af52d23060bb83d3"
+}

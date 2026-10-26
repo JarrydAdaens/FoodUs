@@ -2,8 +2,8 @@ package com.maksimowiczm.foodyou.app.ui.home
 
 import com.maksimowiczm.foodyou.app.ui.home.goals.GoalsViewModel
 import com.maksimowiczm.foodyou.app.ui.home.master.HomeViewModel
-import com.maksimowiczm.foodyou.app.ui.home.meals.card.MealsCardsViewModel
-import com.maksimowiczm.foodyou.app.ui.home.meals.settings.MealsCardsSettingsViewModel
+import com.maksimowiczm.foodyou.app.ui.home.meals.card.DiarySlotsCardsViewModel
+import com.maksimowiczm.foodyou.app.ui.home.meals.settings.DiarySlotsCardsSettingsViewModel
 import com.maksimowiczm.foodyou.app.ui.home.personalization.HomePersonalizationViewModel
 import com.maksimowiczm.foodyou.app.ui.home.poll.PollsViewModel
 import com.maksimowiczm.foodyou.common.infrastructure.koin.userPreferencesRepository
@@ -13,23 +13,24 @@ import org.koin.core.module.dsl.viewModel
 fun Module.home() {
     viewModel { HomeViewModel(settingsRepository = userPreferencesRepository()) }
     viewModel {
-        MealsCardsViewModel(
-            observeDiaryMealsUseCase = get(),
+        DiarySlotsCardsViewModel(
+            observeDiarySlotEntriesUseCase = get(),
             foodEntryRepository = get(),
             manualEntryRepository = get(),
-            saveMealTemplateUseCase = get(),
-            applyMealTemplateUseCase = get(),
-            mealTemplateRepository = get(),
-            mealsPreferencesRepository = userPreferencesRepository(),
+            saveMealUseCase = get(),
+            applyMealUseCase = get(),
+            mealRepository = get(),
+            bulkRepository = get(),
+            diarySlotsPreferencesRepository = userPreferencesRepository(),
         )
     }
     viewModel {
-        MealsCardsSettingsViewModel(mealsPreferencesRepository = userPreferencesRepository())
+        DiarySlotsCardsSettingsViewModel(diarySlotsPreferencesRepository = userPreferencesRepository())
     }
     viewModel {
         GoalsViewModel(
             settingsRepository = userPreferencesRepository(),
-            observeDiaryMealsUseCase = get(),
+            observeDiarySlotEntriesUseCase = get(),
             goalsRepository = get(),
         )
     }

@@ -1,7 +1,7 @@
 package com.maksimowiczm.foodyou.importexport.australianfoodcompositiondatabase.domain
 
 import com.maksimowiczm.foodyou.common.domain.date.DateProvider
-import com.maksimowiczm.foodyou.common.domain.food.FoodSource
+import com.maksimowiczm.foodyou.common.domain.food.ProductSource
 import com.maksimowiczm.foodyou.importexport.providermetadata.domain.DatasetComparison
 import com.maksimowiczm.foodyou.importexport.providermetadata.domain.DatasetVersion
 import com.maksimowiczm.foodyou.importexport.providermetadata.domain.ProviderMetadata
@@ -43,7 +43,7 @@ internal class CheckAustralianFoodCompositionDatabaseUpdateUseCaseImpl(
     private val dateProvider: DateProvider,
 ) : CheckAustralianFoodCompositionDatabaseUpdateUseCase {
 
-    private val source = FoodSource.Type.AustralianFoodCompositionDatabase
+    private val source = ProductSource.Type.AustralianFoodCompositionDatabase
 
     override suspend fun check(): AfcdUpdateCheckOutcome {
         val previous = metadataRepository.observe(source).first()

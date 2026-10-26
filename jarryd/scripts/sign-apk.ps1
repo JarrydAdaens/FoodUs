@@ -17,10 +17,12 @@ Environment variables (all optional; prompted for when missing and the session i
   FOODUS_KEY_PASSWORD       Key password, only if it differs from the keystore password.
 
 .PARAMETER InputApk
-Path to the unsigned APK (default: app\build\outputs\apk\release\app-release-unsigned.apk).
+Path to the unsigned APK (default: app\build\outputs\apk\release\foodus-<version>-unsigned.apk,
+with the catalog version's dots replaced by underscores).
 
 .PARAMETER OutputApk
-Path for the signed APK (default: <input directory>\app-release-signed.apk).
+Path for the signed APK (default: beside the input, removing its -unsigned suffix;
+an input without that suffix gets -signed appended).
 
 .EXAMPLE
 $env:FOODUS_KEYSTORE = 'C:\secure\foodus.jks'
@@ -36,7 +38,14 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-$buildTools = 'C:\Users\Jarry\AppData\Local\Android\Sdk\build-tools\36.0.0'
+$sdkRoot = if ($env:ANDROID_HOME) {
+    $env:ANDROID_HOME
+} elseif ($env:ANDROID_SDK_ROOT) {
+    $env:ANDROID_SDK_ROOT
+} else {
+    Join-Path $env:LOCALAPPDATA 'Android\Sdk'
+}
+$buildTools = Join-Path $sdkRoot 'build-tools\36.0.0'
 $zipalign = Join-Path $buildTools 'zipalign.exe'
 $apksigner = Join-Path $buildTools 'apksigner.bat'
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
@@ -46,13 +55,25 @@ foreach ($tool in @($zipalign, $apksigner)) {
 }
 
 if (-not $InputApk) {
-    $InputApk = Join-Path $repoRoot 'app\build\outputs\apk\release\app-release-unsigned.apk'
+    $catalogPath = Join-Path $repoRoot 'gradle\libs.versions.toml'
+    $versionMatches = @(Select-String -LiteralPath $catalogPath -Pattern '^fork-version-name = "([0-9]+(?:\.[0-9]+){3})"$')
+    if ($versionMatches.Count -ne 1) {
+        throw 'Expected exactly one canonical four-part fork-version-name in the version catalog.'
+    }
+    $fileVersion = $versionMatches[0].Matches[0].Groups[1].Value.Replace('.', '_')
+    $InputApk = Join-Path $repoRoot "app\build\outputs\apk\release\foodus-$fileVersion-unsigned.apk"
 }
 if (-not (Test-Path $InputApk)) {
     throw "Input APK not found: $InputApk (run .\gradlew.bat :app:assembleRelease first)"
 }
 if (-not $OutputApk) {
-    $OutputApk = Join-Path (Split-Path $InputApk -Parent) 'app-release-signed.apk'
+    $inputName = [System.IO.Path]::GetFileNameWithoutExtension($InputApk)
+    $signedName = if ($inputName.EndsWith('-unsigned')) {
+        $inputName.Substring(0, $inputName.Length - '-unsigned'.Length)
+    } else {
+        "$inputName-signed"
+    }
+    $OutputApk = Join-Path (Split-Path $InputApk -Parent) "$signedName.apk"
 }
 
 function Get-RequiredValue([string]$EnvName, [string]$PromptText, [switch]$Secret) {

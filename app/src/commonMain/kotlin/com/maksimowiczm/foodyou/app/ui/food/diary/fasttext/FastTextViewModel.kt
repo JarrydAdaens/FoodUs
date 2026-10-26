@@ -18,7 +18,7 @@ import kotlinx.datetime.LocalDate
  * deletes like any other entry while adding nothing to the day's nutrition totals.
  */
 internal class FastTextViewModel(
-    private val mealId: Long,
+    private val diarySlotId: Long,
     private val date: LocalDate,
     private val manualDiaryEntryRepository: ManualDiaryEntryRepository,
     private val dateProvider: DateProvider,
@@ -31,7 +31,7 @@ internal class FastTextViewModel(
         viewModelScope.launch {
             manualDiaryEntryRepository.insert(
                 name = name.trim(),
-                mealId = mealId,
+                diarySlotId = diarySlotId,
                 date = date,
                 // Zero-calorie marker: energy and macros are explicitly zero so the entry renders
                 // "0 kcal" like a normal entry without contributing to daily totals.

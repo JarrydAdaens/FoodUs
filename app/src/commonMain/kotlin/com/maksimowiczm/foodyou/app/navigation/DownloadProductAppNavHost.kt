@@ -1,5 +1,9 @@
 package com.maksimowiczm.foodyou.app.navigation
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
+
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -31,19 +35,19 @@ fun DownloadProductAppNavHost(
         dialog<UsdaApiKey> {
             UpdateUsdaApiKeyDialog(
                 onDismissRequest = { navController.popBackStackInclusive<UsdaApiKey>() },
-                onSave = { navController.popBackStackInclusive<UsdaApiKey>() },
+                onSave = { navController.popBackStackInclusive<UsdaApiKey>() }, modifier = Modifier.uiName("DownloadProductAppNavHost.UpdateUsdaApiKeyDialog.1", "com.maksimowiczm.foodyou.app.ui.database.externaldatabases.UpdateUsdaApiKeyDialog", uiInspectionSource, "DownloadProductAppNavHost")
             )
         }
         dialog<OpenFoodFactsLogin> {
             OpenFoodFactsLoginDialog(
                 onDismissRequest = { navController.popBackStackInclusive<OpenFoodFactsLogin>() },
-                onSave = { navController.popBackStackInclusive<OpenFoodFactsLogin>() },
+                onSave = { navController.popBackStackInclusive<OpenFoodFactsLogin>() }, modifier = Modifier.uiName("DownloadProductAppNavHost.OpenFoodFactsLoginDialog.1", "com.maksimowiczm.foodyou.app.ui.database.externaldatabases.OpenFoodFactsLoginDialog", uiInspectionSource, "DownloadProductAppNavHost")
             )
         }
         forwardBackwardComposable<CreateProduct> {
             val (url) = it.toRoute<CreateProduct>()
 
-            CreateProductScreen(
+            UiSourceScope(uiInspectionSource.element("DownloadProductAppNavHost.CreateProductScreen.1", "com.maksimowiczm.foodyou.app.ui.food.product.CreateProductScreen", "DownloadProductAppNavHost")) { CreateProductScreen(
                 onBack = onBack,
                 onCreate = { onCreate() },
                 onUpdateUsdaApiKey = { navController.navigateSingleTop(UsdaApiKey) },
@@ -51,7 +55,7 @@ fun DownloadProductAppNavHost(
                     navController.navigateSingleTop(OpenFoodFactsLogin)
                 },
                 url = url,
-            )
+            ) }
         }
     }
 }
@@ -63,3 +67,9 @@ private object DownloadProductAppNavHost {
 
     @Serializable object OpenFoodFactsLogin
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.navigation",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/navigation/DownloadProductAppNavHost.kt",
+)

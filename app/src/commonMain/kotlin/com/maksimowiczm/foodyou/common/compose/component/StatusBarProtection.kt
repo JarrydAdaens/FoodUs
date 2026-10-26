@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.common.compose.component
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,7 +23,7 @@ fun StatusBarProtection(
     progress: () -> Float = { 1f },
 ) {
     val height = WindowInsets.Companion.statusBars.getTop(LocalDensity.current)
-    Canvas(Modifier.Companion.fillMaxSize()) {
+    Canvas((Modifier.Companion.fillMaxSize()).uiName("StatusBarProtection.Canvas.1", "androidx.compose.foundation.Canvas", uiInspectionSource, "StatusBarProtection")) {
         drawRect(
             color = color,
             size = Size(size.width, height.toFloat()),
@@ -47,3 +50,9 @@ object StatusBarProtectionDefaults {
             }
         }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.common.compose.component",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/common/compose/component/StatusBarProtection.kt",
+)

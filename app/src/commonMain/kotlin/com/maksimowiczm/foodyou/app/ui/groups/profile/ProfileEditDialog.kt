@@ -1,5 +1,9 @@
 package com.maksimowiczm.foodyou.app.ui.groups.profile
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
+
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.AlertDialog
@@ -26,24 +30,30 @@ internal fun ProfileEditDialog(
     val textFieldState = rememberTextFieldState(initialUsername)
     val username = textFieldState.text.toString()
 
-    AlertDialog(
+    UiSourceScope(uiInspectionSource.element("ProfileEditDialog.AlertDialog.1", "androidx.compose.material3.AlertDialog", "ProfileEditDialog")) { AlertDialog(
         onDismissRequest = onDismissRequest,
         confirmButton = {
-            TextButton(onClick = { onConfirm(username) }, enabled = username.isNotBlank()) {
-                Text(stringResource(Res.string.action_save))
+            TextButton(onClick = { onConfirm(username) }, enabled = username.isNotBlank(), modifier = Modifier.uiName("ProfileEditDialog.TextButton.1", "androidx.compose.material3.TextButton", uiInspectionSource, "ProfileEditDialog")) {
+                Text(stringResource(Res.string.action_save), modifier = Modifier.uiName("ProfileEditDialog.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "ProfileEditDialog"))
             }
         },
-        modifier = modifier,
+        modifier = (modifier).uiName("ProfileEditDialog.AlertDialog.1.root", "androidx.compose.material3.AlertDialog", uiInspectionSource, "ProfileEditDialog"),
         dismissButton = {
-            TextButton(onDismissRequest) { Text(stringResource(Res.string.action_cancel)) }
+            TextButton(onDismissRequest, modifier = Modifier.uiName("ProfileEditDialog.TextButton.2", "androidx.compose.material3.TextButton", uiInspectionSource, "ProfileEditDialog")) { Text(stringResource(Res.string.action_cancel), modifier = Modifier.uiName("ProfileEditDialog.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "ProfileEditDialog")) }
         },
-        title = { Text(title) },
+        title = { Text(title, modifier = Modifier.uiName("ProfileEditDialog.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "ProfileEditDialog")) },
         text = {
             OutlinedTextField(
                 state = textFieldState,
-                label = { Text(stringResource(Res.string.headline_username)) },
-                lineLimits = TextFieldLineLimits.SingleLine,
+                label = { Text(stringResource(Res.string.headline_username), modifier = Modifier.uiName("ProfileEditDialog.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "ProfileEditDialog")) },
+                lineLimits = TextFieldLineLimits.SingleLine, modifier = Modifier.uiName("ProfileEditDialog.OutlinedTextField.1", "androidx.compose.material3.OutlinedTextField", uiInspectionSource, "ProfileEditDialog")
             )
         },
-    )
+    ) }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.groups.profile",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/groups/profile/ProfileEditDialog.kt",
+)

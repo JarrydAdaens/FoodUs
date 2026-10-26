@@ -1,0 +1,170 @@
+{
+  "checked": {
+    "artifact_identity": "5822666d2932c5d7142a083e676816c0fd5d1200cc07d4e9ff25d51006977e4e",
+    "base": "4151d6a4bf9f90077987cb8309d858e248a7133f",
+    "diff_identity": "d993b07bccbb8861b49d48b18d5589dab5e3ed432766b54b2b5959aae5d30b36",
+    "files": {
+      "app/build.gradle.kts": {
+        "kind": "file",
+        "sha256": "04857b8d16e79fdc8e6e5ef0e332c6ab39b7e11feda385df098800495d3639d7"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/onboarding/OnboardingAfcdTest.kt": {
+        "kind": "file",
+        "sha256": "53c6044a650291b5245bdead844edb0a5caa4eb9fa1104c2cd8e84ee53d8f130"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/onboarding/FoodDatabaseScreen.kt": {
+        "kind": "file",
+        "sha256": "93126d3f467082cf0c91e0b025821eba206b02790227c6b9ae8d93c8315c73b1"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/onboarding/Onboarding.kt": {
+        "kind": "file",
+        "sha256": "1d56f5a829f1c5bd9269ac238273c3c3d265ef1e1584b710a6a84dc355d16b55"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "fc4fb4d3739d361e22c9c4c006af11c210e5fb7bce9e934ce32ba2ad322bad6a"
+      }
+    },
+    "head": "4151d6a4bf9f90077987cb8309d858e248a7133f"
+  },
+  "commit_authority": "User requested commit-log --commit after Samsung test for each Story",
+  "commit_policy": "single",
+  "decisions": [
+    "Existing AFCD screen reused without alternate import path.",
+    "Preserve installed debug data; fake repositories in private Koin context.",
+    "Legacy app version retained under versioning-policy release transition."
+  ],
+  "delivery": {
+    "artifact_identity": "123749a2bc74677dd6bd2c56ee26a0ff47c7b8c5a56988ce458c3f3c763066a0",
+    "base": "4151d6a4bf9f90077987cb8309d858e248a7133f",
+    "committed_files": {
+      "app/build.gradle.kts": {
+        "git_blob": "a596aa518dc6c95940e92243ef30eef40a0cc4d4",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/onboarding/OnboardingAfcdTest.kt": {
+        "git_blob": "1368f070800b393b44c032f5fb888fe504b2ec59",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/onboarding/FoodDatabaseScreen.kt": {
+        "git_blob": "f3f14a7646e149f5d8b261432c28b0be2da8afc8",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/onboarding/Onboarding.kt": {
+        "git_blob": "556d4078b096fe3828d7d8a353388deffe743258",
+        "kind": "file"
+      },
+      "context/_boss-runs/milestone-b-sequential/briefing.md": {
+        "git_blob": "c4adb88de2c4ff3eb043439ec96422c77ff571c7",
+        "kind": "file"
+      },
+      "context/design.md": {
+        "git_blob": "36db7b9e2bcb977161570f543c95c04ce8815531",
+        "kind": "file"
+      },
+      "context/implementation-plans/milestone-b/foodus-001/plan.md": {
+        "git_blob": "c70d6af91367bbc7b0fb878930bd03465a726144",
+        "kind": "file"
+      },
+      "context/milestones/milestone-b.md": {
+        "git_blob": "9c692d5612805fad83eb1e2c71d638834c64a6a4",
+        "kind": "file"
+      },
+      "gradle/libs.versions.toml": {
+        "git_blob": "6dcdb5e97c35db4c4aad9e94864faaa8be7a75a7",
+        "kind": "file"
+      }
+    },
+    "diff_identity": "8088cd9d0ca39c57ac4be537139e1955545cfac77c529bec2ff51568e9ceb647",
+    "files": {
+      "app/build.gradle.kts": {
+        "kind": "file",
+        "sha256": "04857b8d16e79fdc8e6e5ef0e332c6ab39b7e11feda385df098800495d3639d7"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/onboarding/OnboardingAfcdTest.kt": {
+        "kind": "file",
+        "sha256": "53c6044a650291b5245bdead844edb0a5caa4eb9fa1104c2cd8e84ee53d8f130"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/onboarding/FoodDatabaseScreen.kt": {
+        "kind": "file",
+        "sha256": "93126d3f467082cf0c91e0b025821eba206b02790227c6b9ae8d93c8315c73b1"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/onboarding/Onboarding.kt": {
+        "kind": "file",
+        "sha256": "1d56f5a829f1c5bd9269ac238273c3c3d265ef1e1584b710a6a84dc355d16b55"
+      },
+      "context/_boss-runs/milestone-b-sequential/briefing.md": {
+        "kind": "file",
+        "sha256": "e4486619dc1a996c36b3a5e7230c3fb641c1ab2f6237efa90843821367c36531"
+      },
+      "context/design.md": {
+        "kind": "file",
+        "sha256": "37571a5cdbf6b22d9fa5b20c2c7b4e1616466bcc6dd4027d91555ab6e72195ef"
+      },
+      "context/implementation-plans/milestone-b/foodus-001/plan.md": {
+        "kind": "file",
+        "sha256": "e5204bf12ea10800397691193b44d7af59d77bed259bbb8020629f444f7454e4"
+      },
+      "context/milestones/milestone-b.md": {
+        "kind": "file",
+        "sha256": "bf4c75298ee95c22e48c1de3e90a25cc3363dd04dcd92f04a6256226e1bb5e3f"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "fc4fb4d3739d361e22c9c4c006af11c210e5fb7bce9e934ce32ba2ad322bad6a"
+      }
+    },
+    "head": "4151d6a4bf9f90077987cb8309d858e248a7133f"
+  },
+  "evidence": {
+    "checks": [
+      {
+        "artifact_identity": "5822666d2932c5d7142a083e676816c0fd5d1200cc07d4e9ff25d51006977e4e",
+        "command": ".\\gradlew.bat --no-daemon :app:testDebugUnitTest",
+        "outcome": "PASS",
+        "result": "120 tests, zero failures; JDK21. Production unchanged after test run."
+      },
+      {
+        "artifact_identity": "5822666d2932c5d7142a083e676816c0fd5d1200cc07d4e9ff25d51006977e4e",
+        "command": ".\\gradlew.bat --no-daemon :app:assembleDebug :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.maksimowiczm.foodyou.app.ui.onboarding.OnboardingAfcdTest",
+        "outcome": "PASS",
+        "result": "Debug APK assembled. Final corrected test rerun: connectedDebugAndroidTest, 2/2 pass on Samsung SM-A057F Android15; synthetic in-memory fixtures, no real AFCD network/import claimed."
+      },
+      {
+        "artifact_identity": "5822666d2932c5d7142a083e676816c0fd5d1200cc07d4e9ff25d51006977e4e",
+        "command": "git diff --check",
+        "outcome": "PASS"
+      }
+    ],
+    "decisions": [
+      "Existing AFCD screen reused without alternate import path.",
+      "Preserve installed debug data; fake repositories in private Koin context.",
+      "Legacy app version retained under versioning-policy release transition."
+    ],
+    "review_required": false
+  },
+  "metadata_before": {
+    "context/_boss-runs/milestone-b-sequential/briefing.md": {
+      "kind": "file",
+      "sha256": "f1d0ab5e8ffbcba1a4d6def1acaf193d6e24bdb71baae885c07a7535101e6ee6"
+    },
+    "context/design.md": {
+      "kind": "file",
+      "sha256": "37571a5cdbf6b22d9fa5b20c2c7b4e1616466bcc6dd4027d91555ab6e72195ef"
+    },
+    "context/implementation-plans/milestone-b/foodus-001/plan.md": {
+      "kind": "file",
+      "sha256": "e56222cec1d180d96a9a7332a2e1af12a7e92160d333abeff02ff34f2eebd976"
+    },
+    "context/milestones/milestone-b.md": {
+      "kind": "file",
+      "sha256": "5710cc80a1e1bdd1e70cc27a954b61135413a9f8fedddb92ff19a0871daf25f4"
+    }
+  },
+  "phase": "READY",
+  "record": "context/_boss-runs/milestone-b-sequential/foodus-001-receipt.json",
+  "repo": "D:\\forked-projects\\FoodYou",
+  "schema_version": 1,
+  "status_owner": "context/milestones/milestone-b.md#foodus-001",
+  "transaction_id": "98250ce39f2f43bab75c791d58eea08d"
+}

@@ -2,7 +2,7 @@ package com.maksimowiczm.foodyou.food.infrastructure.openfoodfacts
 
 import com.maksimowiczm.foodyou.common.config.NetworkConfig
 import com.maksimowiczm.foodyou.common.log.Logger
-import com.maksimowiczm.foodyou.food.domain.entity.RemoteFoodException
+import com.maksimowiczm.foodyou.food.domain.entity.RemoteProductException
 import com.maksimowiczm.foodyou.food.infrastructure.openfoodfacts.model.OpenFoodFactsProduct
 import com.maksimowiczm.foodyou.food.infrastructure.openfoodfacts.model.OpenFoodPageResponse
 import com.maksimowiczm.foodyou.food.infrastructure.openfoodfacts.model.v1.OpenFoodFactsPageResponseV1
@@ -41,7 +41,7 @@ internal class OpenFoodFactsRemoteDataSource(
 
             if (!rateLimiter.canMakeProductRequest()) {
                 logger.d(TAG) { "Rate limit exceeded for OpenFoodFacts API" }
-                return Result.failure(RemoteFoodException.OpenFoodFacts.RateLimit())
+                return Result.failure(RemoteProductException.OpenFoodFacts.RateLimit())
             }
 
             rateLimiter.recordProductRequest()
@@ -60,7 +60,7 @@ internal class OpenFoodFactsRemoteDataSource(
 
             if (response.status == HttpStatusCode.NotFound) {
                 logger.d(TAG) { "Product not found for code: $barcode" }
-                return Result.failure(RemoteFoodException.ProductNotFoundException())
+                return Result.failure(RemoteProductException.ProductNotFoundException())
             }
 
             val product = response.body<OpenFoodFactsProductResponseV2>()
@@ -69,8 +69,8 @@ internal class OpenFoodFactsRemoteDataSource(
         } catch (e: Exception) {
             currentCoroutineContext().ensureActive()
             return when (e) {
-                is RemoteFoodException -> Result.failure(e)
-                else -> Result.failure(RemoteFoodException.Unknown(e.message))
+                is RemoteProductException -> Result.failure(e)
+                else -> Result.failure(RemoteProductException.Unknown(e.message))
             }
         }
     }
@@ -118,7 +118,7 @@ internal class OpenFoodFactsRemoteDataSource(
         try {
             if (!rateLimiter.canMakeSearchRequest()) {
                 logger.d(TAG) { "Rate limit exceeded for OpenFoodFacts API" }
-                throw RemoteFoodException.OpenFoodFacts.RateLimit()
+                throw RemoteProductException.OpenFoodFacts.RateLimit()
             }
 
             rateLimiter.recordSearchRequest()
@@ -126,7 +126,7 @@ internal class OpenFoodFactsRemoteDataSource(
             if (shouldLogin) {
                 val credentials =
                     credentialsRepository.loadCredentials()
-                        ?: throw RemoteFoodException.OpenFoodFacts.ServiceUnavailable()
+                        ?: throw RemoteProductException.OpenFoodFacts.ServiceUnavailable()
 
                 login(credentials.first, credentials.second)
             }
@@ -157,7 +157,7 @@ internal class OpenFoodFactsRemoteDataSource(
                         pageSize = pageSize,
                     )
                 } else {
-                    throw RemoteFoodException.OpenFoodFacts.ServiceUnavailable()
+                    throw RemoteProductException.OpenFoodFacts.ServiceUnavailable()
                 }
             } else {
                 response.body<OpenFoodFactsPageResponseV1>()
@@ -165,8 +165,8 @@ internal class OpenFoodFactsRemoteDataSource(
         } catch (e: Exception) {
             when (e) {
                 is CancellationException -> throw e
-                is RemoteFoodException -> throw e
-                else -> throw RemoteFoodException.Unknown(e.message)
+                is RemoteProductException -> throw e
+                else -> throw RemoteProductException.Unknown(e.message)
             }
         }
 

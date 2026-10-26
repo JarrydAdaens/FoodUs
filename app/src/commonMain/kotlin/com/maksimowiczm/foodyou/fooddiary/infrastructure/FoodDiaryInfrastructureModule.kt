@@ -1,39 +1,42 @@
 package com.maksimowiczm.foodyou.fooddiary.infrastructure
 
 import com.maksimowiczm.foodyou.common.infrastructure.koin.userPreferencesRepositoryOf
-import com.maksimowiczm.foodyou.fooddiary.domain.repository.FoodDiaryEntryRepository
+import com.maksimowiczm.foodyou.fooddiary.domain.repository.DiarySlotRepository
+import com.maksimowiczm.foodyou.fooddiary.domain.repository.NutritionalItemDiaryEntryRepository
 import com.maksimowiczm.foodyou.fooddiary.domain.repository.ManualDiaryEntryRepository
 import com.maksimowiczm.foodyou.fooddiary.domain.repository.MealRepository
-import com.maksimowiczm.foodyou.fooddiary.domain.repository.MealTemplateRepository
-import com.maksimowiczm.foodyou.fooddiary.domain.service.LocalizedMealsProvider
-import com.maksimowiczm.foodyou.fooddiary.infrastructure.compose.ComposeLocalizedMealsProvider
-import com.maksimowiczm.foodyou.fooddiary.infrastructure.repository.DataStoreMealsPreferencesRepository
-import com.maksimowiczm.foodyou.fooddiary.infrastructure.repository.RoomFoodDiaryEntryRepository
+import com.maksimowiczm.foodyou.fooddiary.domain.service.LocalizedDiarySlotsProvider
+import com.maksimowiczm.foodyou.fooddiary.infrastructure.compose.ComposeLocalizedDiarySlotsProvider
+import com.maksimowiczm.foodyou.fooddiary.infrastructure.repository.DataStoreDiarySlotsPreferencesRepository
+import com.maksimowiczm.foodyou.fooddiary.infrastructure.repository.RoomDiarySlotRepository
+import com.maksimowiczm.foodyou.fooddiary.infrastructure.repository.RoomNutritionalItemDiaryEntryRepository
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.repository.RoomManualDiaryEntryRepository
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.repository.RoomMealRepository
-import com.maksimowiczm.foodyou.fooddiary.infrastructure.repository.RoomMealTemplateRepository
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.FoodDiaryDatabase
-import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.InitializeMealsCallback
+import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.InitializeDiarySlotsCallback
+import com.maksimowiczm.foodyou.fooddiary.domain.repository.DiaryBulkRepository
+import com.maksimowiczm.foodyou.fooddiary.infrastructure.repository.RoomDiaryBulkRepository
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.scope.Scope
 import org.koin.dsl.bind
 
 internal fun Module.foodDiaryInfrastructureModule() {
-    factoryOf(::ComposeLocalizedMealsProvider).bind<LocalizedMealsProvider>()
+    factoryOf(::ComposeLocalizedDiarySlotsProvider).bind<LocalizedDiarySlotsProvider>()
 
-    userPreferencesRepositoryOf(::DataStoreMealsPreferencesRepository)
-    factoryOf(::RoomFoodDiaryEntryRepository).bind<FoodDiaryEntryRepository>()
+    userPreferencesRepositoryOf(::DataStoreDiarySlotsPreferencesRepository)
+    factoryOf(::RoomNutritionalItemDiaryEntryRepository).bind<NutritionalItemDiaryEntryRepository>()
     factoryOf(::RoomManualDiaryEntryRepository).bind<ManualDiaryEntryRepository>()
+    factoryOf(::RoomDiarySlotRepository).bind<DiarySlotRepository>()
+    factoryOf(::RoomDiaryBulkRepository).bind<DiaryBulkRepository>()
     factoryOf(::RoomMealRepository).bind<MealRepository>()
-    factoryOf(::RoomMealTemplateRepository).bind<MealTemplateRepository>()
 
-    factoryOf(::InitializeMealsCallback)
+    factoryOf(::InitializeDiarySlotsCallback)
 
-    factory { database.mealDao }
+    factory { database.diarySlotDao }
     factory { database.manualDiaryEntryDao }
     factory { database.measurementDao }
-    factory { database.mealTemplateDao }
+    factory { database.mealDao }
 }
 
 private val Scope.database: FoodDiaryDatabase

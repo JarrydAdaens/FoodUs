@@ -1,18 +1,112 @@
 package com.maksimowiczm.foodyou.ai.domain
 
-/**
- * Structured food identification returned by the AI vision model (Milestone 2, Story 6).
- *
- * Every nutritional value is optional: the model may omit or be unable to estimate any of them, and
- * downstream flows must tolerate missing data. Energy is in kilocalories; macros are in grams.
+import com.maksimowiczm.foodyou.common.domain.food.NutrientValue.Companion.toNutrientValue
+import com.maksimowiczm.foodyou.common.domain.food.NutritionFacts
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonNames
+
+/** Absolute nutrition totals for the pictured portion. Energy is kcal; all masses are grams.
+ * Null means unknown, including portion metadata; a supplied zero nutrient remains a real zero.
+ * Serving count and total weight describe the portion and never multiply its nutrition.
  */
+@OptIn(ExperimentalSerializationApi::class)
+@Serializable
 data class AiFoodEstimate(
     val name: String,
-    /** Model confidence in the range 0..1, or null when not provided. */
-    val certainty: Double?,
-    val calories: Double?,
-    val protein: Double?,
-    val fat: Double?,
-    val fibre: Double?,
-    val sugar: Double?,
+    val certainty: Double? = null,
+    @JsonNames("kcal", "energy") val calories: Double? = null,
+    @JsonNames("proteins") val protein: Double? = null,
+    @JsonNames("fats") val fat: Double? = null,
+    @JsonNames("fiber", "dietaryFiber") val fibre: Double? = null,
+    @JsonNames("sugars") val sugar: Double? = null,
+    val description: String? = null,
+    val servingCount: Double? = null,
+    val weightGrams: Double? = null,
+    @JsonNames("carbs") val carbohydrates: Double? = null,
+    val saturatedFats: Double? = null,
+    val transFats: Double? = null,
+    val monounsaturatedFats: Double? = null,
+    val polyunsaturatedFats: Double? = null,
+    val omega3: Double? = null,
+    val omega6: Double? = null,
+    val addedSugars: Double? = null,
+    val solubleFiber: Double? = null,
+    val insolubleFiber: Double? = null,
+    val salt: Double? = null,
+    val cholesterol: Double? = null,
+    val caffeine: Double? = null,
+    val vitaminA: Double? = null,
+    val vitaminB1: Double? = null,
+    val vitaminB2: Double? = null,
+    val vitaminB3: Double? = null,
+    val vitaminB5: Double? = null,
+    val vitaminB6: Double? = null,
+    val vitaminB7: Double? = null,
+    val vitaminB9: Double? = null,
+    val vitaminB12: Double? = null,
+    val vitaminC: Double? = null,
+    val vitaminD: Double? = null,
+    val vitaminE: Double? = null,
+    val vitaminK: Double? = null,
+    val manganese: Double? = null,
+    val magnesium: Double? = null,
+    val potassium: Double? = null,
+    val calcium: Double? = null,
+    val copper: Double? = null,
+    val zinc: Double? = null,
+    val sodium: Double? = null,
+    val iron: Double? = null,
+    val phosphorus: Double? = null,
+    val selenium: Double? = null,
+    val iodine: Double? = null,
+    val chromium: Double? = null,
 )
+
+/** Uses existing nullable diary nutrient columns without inventing absent values. */
+fun AiFoodEstimate.toNutritionFacts(): NutritionFacts =
+    NutritionFacts(
+        energy = calories.toNutrientValue(),
+        proteins = protein.toNutrientValue(),
+        fats = fat.toNutrientValue(),
+        dietaryFiber = fibre.toNutrientValue(),
+        sugars = sugar.toNutrientValue(),
+        carbohydrates = carbohydrates.toNutrientValue(),
+        saturatedFats = saturatedFats.toNutrientValue(),
+        transFats = transFats.toNutrientValue(),
+        monounsaturatedFats = monounsaturatedFats.toNutrientValue(),
+        polyunsaturatedFats = polyunsaturatedFats.toNutrientValue(),
+        omega3 = omega3.toNutrientValue(),
+        omega6 = omega6.toNutrientValue(),
+        addedSugars = addedSugars.toNutrientValue(),
+        solubleFiber = solubleFiber.toNutrientValue(),
+        insolubleFiber = insolubleFiber.toNutrientValue(),
+        salt = salt.toNutrientValue(),
+        cholesterol = cholesterol.toNutrientValue(),
+        caffeine = caffeine.toNutrientValue(),
+        vitaminA = vitaminA.toNutrientValue(),
+        vitaminB1 = vitaminB1.toNutrientValue(),
+        vitaminB2 = vitaminB2.toNutrientValue(),
+        vitaminB3 = vitaminB3.toNutrientValue(),
+        vitaminB5 = vitaminB5.toNutrientValue(),
+        vitaminB6 = vitaminB6.toNutrientValue(),
+        vitaminB7 = vitaminB7.toNutrientValue(),
+        vitaminB9 = vitaminB9.toNutrientValue(),
+        vitaminB12 = vitaminB12.toNutrientValue(),
+        vitaminC = vitaminC.toNutrientValue(),
+        vitaminD = vitaminD.toNutrientValue(),
+        vitaminE = vitaminE.toNutrientValue(),
+        vitaminK = vitaminK.toNutrientValue(),
+        manganese = manganese.toNutrientValue(),
+        magnesium = magnesium.toNutrientValue(),
+        potassium = potassium.toNutrientValue(),
+        calcium = calcium.toNutrientValue(),
+        copper = copper.toNutrientValue(),
+        zinc = zinc.toNutrientValue(),
+        sodium = sodium.toNutrientValue(),
+        iron = iron.toNutrientValue(),
+        phosphorus = phosphorus.toNutrientValue(),
+        selenium = selenium.toNutrientValue(),
+        iodine = iodine.toNutrientValue(),
+        chromium = chromium.toNutrientValue(),
+    )

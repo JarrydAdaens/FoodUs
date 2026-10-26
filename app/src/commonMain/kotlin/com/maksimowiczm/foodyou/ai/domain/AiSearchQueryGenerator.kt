@@ -2,7 +2,7 @@ package com.maksimowiczm.foodyou.ai.domain
 
 /** Outcome of an AI search-query generation request (Milestone 2, Story 9). */
 sealed interface AiQueryResult {
-    /** [query] is a food-search query describing the placeholder meal. */
+    /** [query] is a food-search query describing the placeholder diarySlot. */
     data class Success(val query: String) : AiQueryResult
 
     /** No API key is configured (user settings and developer fallback are blank); no request was made. */
@@ -21,8 +21,8 @@ sealed interface AiQueryResult {
  */
 interface AiSearchQueryGenerator {
     /**
-     * @param mealName the meal being logged into (e.g. "Lunch"), or null when unknown.
+     * @param diarySlotName the diarySlot being logged into (e.g. "Lunch"), or null when unknown.
      * @param note the placeholder's name and optional description, as typed by the user.
      */
-    suspend fun generateQuery(mealName: String?, note: String): AiQueryResult
+    suspend fun generateQuery(diarySlotName: String?, note: String): AiQueryResult
 }

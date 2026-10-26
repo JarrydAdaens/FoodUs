@@ -1,5 +1,9 @@
 package com.maksimowiczm.foodyou.app.ui.food.product.create
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceScope
+
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
 import androidx.compose.runtime.*
@@ -49,18 +53,18 @@ internal fun CreateProductApp(
                 val state =
                     when {
                         product != null -> rememberProductFormState(product)
-                        prefillProduct != null -> rememberProductFormState(prefillProduct)
+                        prefillProduct != null -> rememberProductFormState(prefillProduct, preserveEnergy = true)
                         else -> rememberProductFormState()
                     }
 
-                CreateProductScreen(
+                UiSourceScope(uiInspectionSource.element("CreateProductApp.CreateProductScreen.1", "com.maksimowiczm.foodyou.app.ui.food.product.create.CreateProductScreen", "CreateProductApp")) { CreateProductScreen(
                     state = state,
                     onBack = onBack,
                     onCreate = onCreate,
                     onDownload = {
                         navController.navigate(Download(null)) { launchSingleTop = true }
                     },
-                )
+                ) }
             }
             forwardBackwardComposable<Download> {
                 val (url) = it.toRoute<Download>()
@@ -90,7 +94,7 @@ internal fun CreateProductApp(
                 val openFoodFactsUrl = stringResource(Res.string.link_open_food_facts)
                 val usdaUrl = stringResource(Res.string.link_usda)
 
-                DownloadProductScreen(
+                UiSourceScope(uiInspectionSource.element("CreateProductApp.DownloadProductScreen.1", "com.maksimowiczm.foodyou.app.ui.food.product.download.DownloadProductScreen", "CreateProductApp")) { DownloadProductScreen(
                     isDownloading = isDownloading,
                     error = error,
                     textFieldState = textFieldState,
@@ -106,7 +110,7 @@ internal fun CreateProductApp(
                     onUsda = { uriHandler.openUri(usdaUrl) },
                     onUpdateUsdaApiKey = onUpdateUsdaApiKey,
                     onUpdateOpenFoodFactsCredentials = onUpdateOpenFoodFactsCredentials,
-                )
+                ) }
             }
         }
     }
@@ -114,3 +118,9 @@ internal fun CreateProductApp(
 @Serializable private data object Create
 
 @Serializable private data class Download(val url: String?)
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.food.product.create",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/product/create/CreateProductApp.kt",
+)

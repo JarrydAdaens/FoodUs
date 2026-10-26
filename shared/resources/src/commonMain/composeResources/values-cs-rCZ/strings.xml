@@ -6,7 +6,7 @@
     <string name="headline_daily_goals">Denní cíle</string>
     <string name="headline_general">Obecné</string>
     <string name="headline_macronutrients">Makroživiny</string>
-    <string name="headline_meals">Jídla</string>
+    <string name="headline_diary_slots">Jídla</string>
     <string name="headline_delete_food">Odstranit jídlo</string>
     <string name="headline_edit_product">Upravit produkt</string>
     <string name="headline_permission_required">Vyžadováno oprávnění</string>
@@ -30,7 +30,7 @@
     <string name="headline_home" description="Home screen">Domů</string>
     <string name="headline_home_settings" description="Home screen settings">Nastavení domovské stránky</string>
     <string name="headline_calendar">Kalendář</string>
-    <string name="headline_meals_settings">Nastavení jídel</string>
+    <string name="headline_diary_slots_settings">Nastavení jídel</string>
     <string name="headline_horizontal">Na šířku</string>
     <string name="headline_vertical">Na výšku</string>
     <string name="headline_values_per">Hodnoty na</string>
@@ -128,7 +128,7 @@
     <string name="action_save">Uložit</string>
     <string name="action_delete">Smazat</string>
     <string name="action_confirm">Potvrdit</string>
-    <string name="action_add_meal">Přidat jídlo</string>
+    <string name="action_add_diary_slot">Přidat jídlo</string>
     <string name="action_edit">Upravit</string>
     <string name="action_insert_suggested_search">Vložit navrhovaný výsledek</string>
     <string name="action_edit_entry">Upravit položku</string>
@@ -146,7 +146,7 @@
     <string name="action_move_up" description="reorder list item up">Přesunout nahoru</string>
     <string name="action_move_down" description="reorder list item down">Posunout dolů</string>
     <string name="action_use_time_based_ordering">Řadit dle času</string>
-    <string name="action_ignore_all_day_meals">Ignorovat jídla celého dne</string>
+    <string name="action_ignore_all_day_diary_slots">Ignorovat jídla celého dne</string>
     <string name="action_add_ingredient" description="Add ingredient to the recipe">Přidat přísadu</string>
     <string name="action_delete_ingredient">Odebrat přísadu</string>
     <string name="action_download">Stáhnout</string>
@@ -180,9 +180,9 @@
         <item quantity="other">Zbývá %1$d kilojoulů</item>
     </plurals>
     <string name="neutral_set_your_daily_goals">Nastavte denní výživový cíl</string>
-    <string name="neutral_set_your_meal_schedule">Nastavte výživový plán</string>
-    <string name="neutral_permanently_delete_meal">Trvale odstranit jídlo?</string>
-    <string name="neutral_meal_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">Jídlo bude trvale odstraněno. Všechny záznamy s ním spojené budou ztraceny.</string>
+    <string name="neutral_set_your_diary_slot_schedule">Nastavte výživový plán</string>
+    <string name="neutral_permanently_delete_diary_slot">Trvale odstranit jídlo?</string>
+    <string name="neutral_diary_slot_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">Jídlo bude trvale odstraněno. Všechny záznamy s ním spojené budou ztraceny.</string>
     <string name="neutral_required">Povinné</string>
     <string name="neutral_help_translating_the_app">Pomoci s překladem aplikace</string>
     <string name="neutral_copied">Informace zkopírovány do schránky</string>
@@ -219,8 +219,8 @@
     <string name="description_delete_food">Jídlo bude trvale odstraněno</string>
     <string name="description_delete_product_entry" description="Tell user that this entry will be deleted only from diary and won't affect the product itself. Product won't be deleted from the database.">Tato položka bude z vašeho deníku odstraněna. Kdykoliv ji však můžete přidat znovu.</string>
     <string name="description_about_setting">Více informací o aplikaci</string>
-    <string name="description_time_based_meals_sorting">Pokud zapnuto, aktuálně probíhající jídla budou zobrazena první</string>
-    <string name="description_action_ignore_all_day_meals">Celodenní jídla budou zobrazena na konci seznamu</string>
+    <string name="description_time_based_diary_slots_sorting">Pokud zapnuto, aktuálně probíhající jídla budou zobrazena první</string>
+    <string name="description_action_ignore_all_day_diary_slots">Celodenní jídla budou zobrazena na konci seznamu</string>
     <string name="description_incomplete_nutrition_data">Některým z produktům tato hodnota chybí, proto mohou být zobrazené hodnoty méně přesné</string>
     <string name="description_translation_warning">Překlady jsou vytvářeny dobrovolníky. Mohou být nedokonalé nebo chybějící. Pokud si všimnete chyb, nebojte se je zlepšit.</string>
     <string name="description_home_settings">Přizpůsobit domovskou stránku</string>

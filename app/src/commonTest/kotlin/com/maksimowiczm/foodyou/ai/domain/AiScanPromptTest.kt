@@ -10,11 +10,14 @@ class AiScanPromptTest {
     fun promptKeepsTheJsonSchemaMachinery() {
         val prompt = AiScanPrompt.PROMPT
 
-        // The parser depends on exactly these seven keys and the JSON-only instruction.
-        listOf("name", "certainty", "calories", "protein", "fat", "fibre", "sugar").forEach { key ->
+        // Original keys stay supported alongside optional portion and nutrient keys.
+        listOf("name", "certainty", "calories", "protein", "fat", "fibre", "sugar", "carbohydrates", "description", "servingCount", "weightGrams").forEach { key ->
             assertTrue(prompt.contains("\"$key\""), "prompt should demand the \"$key\" JSON key")
         }
         assertTrue(prompt.contains("ONLY a JSON object"), "prompt should demand JSON-only output")
+        assertTrue(prompt.contains("absolute totals"))
+        assertTrue(prompt.contains("null for unknown"))
+        assertTrue(prompt.contains("all in grams"))
     }
 
     @Test

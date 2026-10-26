@@ -137,4 +137,15 @@ Keep this table current; it is the harness's index.
 
 | Module | Kind | Engine | Purpose |
 | --- | --- | --- | --- |
-| _(none yet)_ | | | |
+| [ui-name-coverage](ui-name-coverage/README.md) | Verifier | Local Python / PowerShell | Source inventory and missing UI-name/surface-scope checks; runtime selection remains required |
+
+## Selected, not yet installed
+
+[Milestone 2 Stories 36–37](../context/milestones/milestone-2.md#story-36) select a local
+`nutrition-eval` module for AI/OCR execution, grading and comparison. Its machinery/config/
+self-test stay under `harness/nutrition-eval/`. The owner's OCR design explicitly retains
+`harness/eval-data/` for controlled case inputs and `harness/eval-results/` for timestamped
+model/OCR/pipeline output. These two roots are an intentional data/output-layout exception
+to module-local truth/runs, owned and documented by that one module. Result-root ignore rules
+must exclude runtime output; secrets come from environment variables. Register the module's
+contract and standing trigger when it is implemented, not as an installed module during planning.

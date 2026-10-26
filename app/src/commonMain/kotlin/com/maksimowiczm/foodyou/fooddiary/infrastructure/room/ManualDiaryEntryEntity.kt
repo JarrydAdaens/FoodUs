@@ -1,5 +1,6 @@
 package com.maksimowiczm.foodyou.fooddiary.infrastructure.room
 
+import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.ForeignKey
@@ -14,7 +15,7 @@ import com.maksimowiczm.foodyou.common.infrastructure.room.Vitamins
     foreignKeys =
         [
             ForeignKey(
-                entity = MealEntity::class,
+                entity = DiarySlotEntity::class,
                 parentColumns = ["id"],
                 childColumns = ["mealId"],
                 onDelete = ForeignKey.CASCADE,
@@ -24,7 +25,7 @@ import com.maksimowiczm.foodyou.common.infrastructure.room.Vitamins
 )
 data class ManualDiaryEntryEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    val mealId: Long,
+    @ColumnInfo(name = "mealId") val diarySlotId: Long,
     val dateEpochDay: Long,
     val name: String,
     @Embedded val nutrients: Nutrients,
@@ -44,4 +45,10 @@ data class ManualDiaryEntryEntity(
     // are never scaled by these values. Null on entries created before Story 18.
     val servingCount: Double? = null,
     val weightGrams: Double? = null,
+    @ColumnInfo(defaultValue = "NULL") val capturedPortionType: com.maksimowiczm.foodyou.common.domain.measurement.MeasurementType? = null,
+    @ColumnInfo(defaultValue = "NULL") val capturedPortionValue: Double? = null,
+    @ColumnInfo(defaultValue = "NULL") val portionDescription: com.maksimowiczm.foodyou.common.domain.food.PortionDescription? = null,
+    @ColumnInfo(defaultValue = "NULL") val nutritionMetadata: com.maksimowiczm.foodyou.common.domain.food.NutritionMetadata? = null,
+    /** Null preserves legacy alphabetical order until this collection is explicitly ordered. */
+    @ColumnInfo(defaultValue = "NULL") val sortOrder: Long? = null,
 )

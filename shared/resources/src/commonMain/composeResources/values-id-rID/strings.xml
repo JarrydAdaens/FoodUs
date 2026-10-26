@@ -6,7 +6,7 @@
     <string name="headline_daily_goals">Target harian</string>
     <string name="headline_general">Umum</string>
     <string name="headline_macronutrients">Makronutrien</string>
-    <string name="headline_meals">Makanan</string>
+    <string name="headline_diary_slots">Makanan</string>
     <string name="headline_delete_food">Hapus makanan</string>
     <string name="headline_edit_product">Edit produk</string>
     <string name="headline_permission_required">Izin diperlukan</string>
@@ -30,7 +30,7 @@
     <string name="headline_home" description="Home screen">Beranda</string>
     <string name="headline_home_settings" description="Home screen settings">Pengaturan beranda</string>
     <string name="headline_calendar">Kalender</string>
-    <string name="headline_meals_settings">Pengaturan makanan</string>
+    <string name="headline_diary_slots_settings">Pengaturan makanan</string>
     <string name="headline_horizontal">Horizontal</string>
     <string name="headline_vertical">Vertikal</string>
     <string name="headline_values_per">Nilai per</string>
@@ -122,7 +122,7 @@
     <string name="action_save">Simpan</string>
     <string name="action_delete">Hapus</string>
     <string name="action_confirm">Konfirmasi</string>
-    <string name="action_add_meal">Tambah makanan</string>
+    <string name="action_add_diary_slot">Tambah makanan</string>
     <string name="action_edit">Edit</string>
     <string name="action_insert_suggested_search">Masukkan saran pencarian</string>
     <string name="action_edit_entry">Edit entri</string>
@@ -140,7 +140,7 @@
     <string name="action_move_up" description="reorder list item up">Pindah ke atas</string>
     <string name="action_move_down" description="reorder list item down">Pindah ke bawah</string>
     <string name="action_use_time_based_ordering">Gunakan urutan berdasar waktu</string>
-    <string name="action_ignore_all_day_meals">Abaikan semua makanan sepanjang hari</string>
+    <string name="action_ignore_all_day_diary_slots">Abaikan semua makanan sepanjang hari</string>
     <string name="action_add_ingredient" description="Add ingredient to the recipe">Tambah bahan</string>
     <string name="action_delete_ingredient">Hapus bahan</string>
     <string name="action_download">Unduh</string>
@@ -167,9 +167,9 @@
         <item quantity="other">%1$d kilojoule tersisa</item>
     </plurals>
     <string name="neutral_set_your_daily_goals">Atur tujuan nutrisi harian Anda</string>
-    <string name="neutral_set_your_meal_schedule">Atur jadwal makan Anda</string>
-    <string name="neutral_permanently_delete_meal">Hapus permanen menu?</string>
-    <string name="neutral_meal_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">Makanan akan dihapus secara permanen. Semua data yang terkait dengan makanan ini akan hilang.</string>
+    <string name="neutral_set_your_diary_slot_schedule">Atur jadwal makan Anda</string>
+    <string name="neutral_permanently_delete_diary_slot">Hapus permanen menu?</string>
+    <string name="neutral_diary_slot_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">Makanan akan dihapus secara permanen. Semua data yang terkait dengan makanan ini akan hilang.</string>
     <string name="neutral_required">Diperlukan</string>
     <string name="neutral_help_translating_the_app">Bantu terjemahkan aplikasi</string>
     <string name="neutral_copied">Informasi telah disalin ke clipboard</string>
@@ -200,8 +200,8 @@
     <string name="description_delete_food">Makanan akan dihapus secara permanen</string>
     <string name="description_delete_product_entry" description="Tell user that this entry will be deleted only from diary and won't affect the product itself. Product won't be deleted from the database.">Entri ini akan dihapus dari catatan Anda. Anda dapat menambahkannya lagi kapan saja.</string>
     <string name="description_about_setting">Pelajari lebih lanjut tentang aplikasi</string>
-    <string name="description_time_based_meals_sorting">Saat diaktifkan, makanan yang sedang berlangsung akan ditampilkan terlebih dahulu</string>
-    <string name="description_action_ignore_all_day_meals">Makanan sepanjang hari akan ditampilkan di akhir daftar</string>
+    <string name="description_time_based_diary_slots_sorting">Saat diaktifkan, makanan yang sedang berlangsung akan ditampilkan terlebih dahulu</string>
+    <string name="description_action_ignore_all_day_diary_slots">Makanan sepanjang hari akan ditampilkan di akhir daftar</string>
     <string name="description_incomplete_nutrition_data">Beberapa produk yang digunakan tidak memiliki nilai ini; oleh karena itu, nilai yang ditampilkan mungkin tidak akurat</string>
     <string name="description_translation_warning">Terjemahan dibuat oleh para relawan. Mungkin tidak selalu sempurna dan beberapa terjemahan bisa saja belum tersedia. Jika Anda menemukan kesalahan, jangan ragu untuk membantu memperbaikinya.</string>
     <string name="description_home_settings">Kustomisasi halaman utama Anda</string>

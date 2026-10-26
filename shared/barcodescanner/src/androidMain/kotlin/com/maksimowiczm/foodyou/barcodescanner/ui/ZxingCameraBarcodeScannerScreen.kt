@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.barcodescanner.ui
 
+import com.maksimowiczm.foodyou.barcodescanner.ui.BarcodeUiSourceFile as UiSourceFile
+import com.maksimowiczm.foodyou.barcodescanner.ui.barcodeUiName as uiName
+
 import android.view.View
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -97,17 +100,17 @@ fun ZxingCameraBarcodeScannerScreen(
         }
     LaunchedEffect(resetFocus) { resetFocus() }
 
-    Box(modifier) {
+    Box((modifier).uiName("ZxingCameraBarcodeScannerScreen.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "ZxingCameraBarcodeScannerScreen")) {
         AndroidView(
             factory = { context -> View.inflate(context, R.layout.camera_barcode_layout, null) },
             update = { view ->
                 val binding = CameraBarcodeLayoutBinding.bind(view)
                 barcodeView = binding.barcodeView
-            },
+            }, modifier = Modifier.uiName("ZxingCameraBarcodeScannerScreen.AndroidView.1", "androidx.compose.ui.viewinterop.AndroidView", uiInspectionSource, "ZxingCameraBarcodeScannerScreen")
         )
 
         Column(
-            modifier = Modifier.safeGesturesPadding().align(Alignment.BottomCenter).zIndex(1f),
+            modifier = (Modifier.safeGesturesPadding().align(Alignment.BottomCenter).zIndex(1f)).uiName("ZxingCameraBarcodeScannerScreen.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "ZxingCameraBarcodeScannerScreen"),
             horizontalAlignment = Alignment.End,
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
@@ -119,16 +122,16 @@ fun ZxingCameraBarcodeScannerScreen(
                     } else {
                         barcodeView?.setTorchOn()
                     }
-                },
+                }, modifier = Modifier.uiName("ZxingCameraBarcodeScannerScreen.FlashlightButton.1", "com.maksimowiczm.foodyou.barcodescanner.ui.FlashlightButton", uiInspectionSource, "ZxingCameraBarcodeScannerScreen")
             )
             Surface(
                 color = MaterialTheme.colorScheme.scrim,
-                modifier = Modifier.navigationBarsPadding().alpha(.5f),
+                modifier = (Modifier.navigationBarsPadding().alpha(.5f)).uiName("ZxingCameraBarcodeScannerScreen.Surface.1", "androidx.compose.material3.Surface", uiInspectionSource, "ZxingCameraBarcodeScannerScreen"),
                 shape = MaterialTheme.shapes.medium,
             ) {
                 Text(
                     text = androidStringResource(zxingR.string.zxing_msg_default_status),
-                    modifier = Modifier.padding(8.dp),
+                    modifier = (Modifier.padding(8.dp)).uiName("ZxingCameraBarcodeScannerScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "ZxingCameraBarcodeScannerScreen"),
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color.White,
                     textAlign = TextAlign.Center,
@@ -154,7 +157,7 @@ private fun FlashlightButton(enabled: Boolean, onClick: () -> Unit, modifier: Mo
     FilledIconButton(
         onClick = onClick,
         shapes = IconButtonDefaults.shapes(),
-        modifier = modifier,
+        modifier = (modifier).uiName("FlashlightButton.FilledIconButton.1", "androidx.compose.material3.FilledIconButton", uiInspectionSource, "FlashlightButton"),
         colors =
             IconButtonDefaults.filledIconButtonColors(
                 containerColor = background,
@@ -165,7 +168,13 @@ private fun FlashlightButton(enabled: Boolean, onClick: () -> Unit, modifier: Mo
             imageVector = if (enabled) Icons.Default.FlashOn else Icons.Default.FlashOff,
             contentDescription =
                 if (enabled) stringResource(Res.string.action_disable_camera_flash)
-                else stringResource(Res.string.action_enable_camera_flash),
+                else stringResource(Res.string.action_enable_camera_flash), modifier = Modifier.uiName("FlashlightButton.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "FlashlightButton")
         )
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.barcodescanner.ui",
+    "shared/barcodescanner/src/androidMain/kotlin/com/maksimowiczm/foodyou/barcodescanner/ui/ZxingCameraBarcodeScannerScreen.kt",
+)

@@ -6,7 +6,7 @@
     <string name="headline_daily_goals">每日目标</string>
     <string name="headline_general">常规</string>
     <string name="headline_macronutrients">宏量营养素</string>
-    <string name="headline_meals">餐食</string>
+    <string name="headline_diary_slots">餐食</string>
     <string name="headline_delete_food">删除食品</string>
     <string name="headline_edit_product">编辑产品</string>
     <string name="headline_permission_required">需要权限</string>
@@ -30,7 +30,7 @@
     <string name="headline_home" description="Home screen">主页</string>
     <string name="headline_home_settings" description="Home screen settings">主页设置</string>
     <string name="headline_calendar">日历</string>
-    <string name="headline_meals_settings">餐食设置</string>
+    <string name="headline_diary_slots_settings">餐食设置</string>
     <string name="headline_horizontal">水平</string>
     <string name="headline_vertical">垂直</string>
     <string name="headline_values_per">每个</string>
@@ -122,7 +122,7 @@
     <string name="action_save">保存</string>
     <string name="action_delete">删除</string>
     <string name="action_confirm">确认</string>
-    <string name="action_add_meal">添加食物</string>
+    <string name="action_add_diary_slot">添加食物</string>
     <string name="action_edit">编辑</string>
     <string name="action_insert_suggested_search">插入建议的搜索</string>
     <string name="action_edit_entry">编辑条目</string>
@@ -140,7 +140,7 @@
     <string name="action_move_up" description="reorder list item up">上移</string>
     <string name="action_move_down" description="reorder list item down">下移</string>
     <string name="action_use_time_based_ordering">按时间排序</string>
-    <string name="action_ignore_all_day_meals">忽略全天用餐</string>
+    <string name="action_ignore_all_day_diary_slots">忽略全天用餐</string>
     <string name="action_add_ingredient" description="Add ingredient to the recipe">添加成分</string>
     <string name="action_delete_ingredient">删除成分</string>
     <string name="action_download">下载</string>
@@ -167,9 +167,9 @@
         <item quantity="other">剩余 %1$d 千焦</item>
     </plurals>
     <string name="neutral_set_your_daily_goals">设置您的每日营养目标</string>
-    <string name="neutral_set_your_meal_schedule">设置您的用餐时间表</string>
-    <string name="neutral_permanently_delete_meal">永久删除餐食？</string>
-    <string name="neutral_meal_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">餐食将被永久删除。与此餐食相关的所有数据都将丢失。</string>
+    <string name="neutral_set_your_diary_slot_schedule">设置您的用餐时间表</string>
+    <string name="neutral_permanently_delete_diary_slot">永久删除餐食？</string>
+    <string name="neutral_diary_slot_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">餐食将被永久删除。与此餐食相关的所有数据都将丢失。</string>
     <string name="neutral_required">必填</string>
     <string name="neutral_help_translating_the_app">帮助我们翻译这款应用</string>
     <string name="neutral_copied">信息已复制到剪贴板</string>
@@ -200,8 +200,8 @@
     <string name="description_delete_food">食品将被永久删除</string>
     <string name="description_delete_product_entry" description="Tell user that this entry will be deleted only from diary and won't affect the product itself. Product won't be deleted from the database.">此条目将从您的日记中删除。您可以随时再次添加它。</string>
     <string name="description_about_setting">了解有关该应用程序的更多信息</string>
-    <string name="description_time_based_meals_sorting">启用后，将首先显示当前正在进行的用餐</string>
-    <string name="description_action_ignore_all_day_meals">全天餐点将显示在列表末尾</string>
+    <string name="description_time_based_diary_slots_sorting">启用后，将首先显示当前正在进行的用餐</string>
+    <string name="description_action_ignore_all_day_diary_slots">全天餐点将显示在列表末尾</string>
     <string name="description_incomplete_nutrition_data">一些二手产品缺乏这种价值，因此，显示的值可能不准确</string>
     <string name="description_translation_warning">翻译由志愿者贡献，可能存在疏漏或不足之处。如发现错误，欢迎随时协助改进。</string>
     <string name="description_home_settings">自定义您的主页</string>

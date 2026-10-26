@@ -12,8 +12,8 @@ fun rememberFoodMeasurementFormState(
     today: LocalDate,
     possibleDates: List<LocalDate>,
     selectedDate: LocalDate,
-    meals: List<String>,
-    selectedMeal: String?,
+    diarySlots: List<String>,
+    selectedDiarySlot: String?,
     suggestions: List<Measurement>,
     possibleTypes: List<MeasurementType>,
     selectedMeasurement: Measurement,
@@ -24,7 +24,7 @@ fun rememberFoodMeasurementFormState(
             initialDates = possibleDates,
             selectedDate = selectedDate,
         )
-    val mealsState = rememberChipsMealPickerState(meals = meals, selectedMeal = selectedMeal)
+    val diarySlotsState = rememberChipsDiarySlotPickerState(diarySlots = diarySlots, selectedDiarySlot = selectedDiarySlot)
 
     val measurementState =
         rememberMeasurementPickerState(
@@ -33,18 +33,18 @@ fun rememberFoodMeasurementFormState(
             selectedMeasurement = selectedMeasurement,
         )
 
-    return remember(dateState, mealsState, measurementState) {
-        FoodMeasurementFormState(dateState, mealsState, measurementState)
+    return remember(dateState, diarySlotsState, measurementState) {
+        FoodMeasurementFormState(dateState, diarySlotsState, measurementState)
     }
 }
 
 @Stable
 class FoodMeasurementFormState(
     val dateState: ChipsDatePickerState,
-    val mealsState: ChipsMealPickerState,
+    val diarySlotsState: ChipsDiarySlotPickerState,
     val measurementState: MeasurementPickerState,
 ) {
     val isValid by derivedStateOf {
-        measurementState.inputField.error == null && mealsState.selectedMeal != null
+        measurementState.inputField.error == null && diarySlotsState.selectedDiarySlot != null
     }
 }

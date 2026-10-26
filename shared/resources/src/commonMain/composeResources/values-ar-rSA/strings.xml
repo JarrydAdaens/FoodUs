@@ -6,7 +6,7 @@
     <string name="headline_daily_goals">الأهداف اليومية</string>
     <string name="headline_general">عام</string>
     <string name="headline_macronutrients">المغذيات الكبرى</string>
-    <string name="headline_meals">الوجبات</string>
+    <string name="headline_diary_slots">الوجبات</string>
     <string name="headline_delete_food">حذف الطعام</string>
     <string name="headline_edit_product">تعديل منتج</string>
     <string name="headline_permission_required">الإذن مطلوب</string>
@@ -30,7 +30,7 @@
     <string name="headline_home" description="Home screen">الصفحة الرئيسة</string>
     <string name="headline_home_settings" description="Home screen settings">إعدادات الصفحة الرئيسة</string>
     <string name="headline_calendar">التقويم</string>
-    <string name="headline_meals_settings">إعدادات الوجبات</string>
+    <string name="headline_diary_slots_settings">إعدادات الوجبات</string>
     <string name="headline_horizontal">أفقي</string>
     <string name="headline_vertical">عمودي</string>
     <string name="headline_values_per">القِيَم لكل</string>
@@ -125,7 +125,7 @@
     <string name="action_save">حفظ</string>
     <string name="action_delete">حذف</string>
     <string name="action_confirm">تأكيد</string>
-    <string name="action_add_meal">إضافة وجبة</string>
+    <string name="action_add_diary_slot">إضافة وجبة</string>
     <string name="action_edit">تعديل</string>
     <string name="action_insert_suggested_search">إدراج البحث المقترح</string>
     <string name="action_edit_entry">تعديل المدخل</string>
@@ -155,9 +155,9 @@
         <item quantity="many">%1$d calories left</item>
         <item quantity="other">%1$d سعرة متبقية</item>
     </plurals>
-    <string name="neutral_set_your_meal_schedule">حدد موعد وجبتك</string>
-    <string name="neutral_permanently_delete_meal">حذف الوجبة نهائيًا؟</string>
-    <string name="neutral_meal_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">سُتحذف الوجبة نهائيًا. ستُفقد جميع البيانات المتعلقة بها.</string>
+    <string name="neutral_set_your_diary_slot_schedule">حدد موعد وجبتك</string>
+    <string name="neutral_permanently_delete_diary_slot">حذف الوجبة نهائيًا؟</string>
+    <string name="neutral_diary_slot_will_be_deleted_permanently" description="Warning message when deleting a meal. User must know that this action is irreversible and will delete all data related to the meal.">سُتحذف الوجبة نهائيًا. ستُفقد جميع البيانات المتعلقة بها.</string>
     <string name="neutral_required">مطلوب</string>
     <string name="neutral_help_translating_the_app">المساعدة في ترجمة التطبيق</string>
     <string name="question_discard_product">تجاهل المنتج؟</string>
@@ -178,7 +178,7 @@
     </plurals>
     <string name="description_delete_product_entry" description="Tell user that this entry will be deleted only from diary and won't affect the product itself. Product won't be deleted from the database."> ستُحذف هذه المُدخلة من سجلك اليومي. يُمكنك إضافتها مُجددًا في أي وقت.</string>
     <string name="description_about_setting">اعرف المزيد حول التطبيق</string>
-    <string name="description_time_based_meals_sorting">عند تفعيلها، ستُعرض الوجبات التي تتناولها حاليًا أولاً</string>
+    <string name="description_time_based_diary_slots_sorting">عند تفعيلها، ستُعرض الوجبات التي تتناولها حاليًا أولاً</string>
     <string name="description_incomplete_nutrition_data">بعض المنتجات المستعملة تنقصها هذه القيمة؛ لذا، قد لا تكون القيمة المعروضة دقيقة</string>
     <string name="description_translation_warning">الترجمات من إنشاء المتطوعين. قد لا تكون مثالية، وقد تكون بعض الترجمات ناقصة. إذا لاحظت أي أخطاء، لا تتردد في المساهمة في تحسينها.</string>
     <string name="headline_launcher_icon_by_icons8">أيقونة المشغل من Icons8</string>

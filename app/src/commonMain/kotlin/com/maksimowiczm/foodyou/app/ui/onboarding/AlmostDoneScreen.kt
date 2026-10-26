@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.onboarding
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -44,29 +47,29 @@ internal fun AlmostDoneScreen(modifier: Modifier = Modifier) {
     )
 
     Scaffold(
-        modifier = modifier,
+        modifier = (modifier).uiName("AlmostDoneScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "AlmostDoneScreen"),
         topBar = {
             TopAppBar(
                 title = {
                     Text(
                         text = stringResource(Res.string.headline_almost_done),
-                        style = MaterialTheme.typography.displaySmall,
+                        style = MaterialTheme.typography.displaySmall, modifier = Modifier.uiName("AlmostDoneScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "AlmostDoneScreen")
                     )
-                }
+                }, modifier = Modifier.uiName("AlmostDoneScreen.TopAppBar.1", "androidx.compose.material3.TopAppBar", uiInspectionSource, "AlmostDoneScreen")
             )
         },
-        snackbarHost = { SnackbarHost(snackbarHostState) },
+        snackbarHost = { SnackbarHost(snackbarHostState, modifier = Modifier.uiName("AlmostDoneScreen.SnackbarHost.1", "androidx.compose.material3.SnackbarHost", uiInspectionSource, "AlmostDoneScreen")) },
     ) { paddingValues ->
         Column(
-            modifier = Modifier.fillMaxSize().padding(paddingValues),
+            modifier = (Modifier.fillMaxSize().padding(paddingValues)).uiName("AlmostDoneScreen.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "AlmostDoneScreen"),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
             CircularWavyProgressIndicator(
                 modifier =
-                    Modifier.sizeIn(maxWidth = 100.dp, maxHeight = 100.dp)
+                    (Modifier.sizeIn(maxWidth = 100.dp, maxHeight = 100.dp)
                         .fillMaxSize()
-                        .aspectRatio(1f),
+                        .aspectRatio(1f)).uiName("AlmostDoneScreen.CircularWavyProgressIndicator.1", "androidx.compose.material3.CircularWavyProgressIndicator", uiInspectionSource, "AlmostDoneScreen"),
                 trackStroke =
                     Stroke(
                         width = with(LocalDensity.current) { 12.dp.toPx() },
@@ -84,14 +87,20 @@ internal fun AlmostDoneScreen(modifier: Modifier = Modifier) {
                 text = stringResource(Res.string.headline_preparing_your_food_diary),
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.primary,
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Center, modifier = Modifier.uiName("AlmostDoneScreen.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "AlmostDoneScreen")
             )
             Text(
                 text = stringResource(Res.string.headline_please_wait),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Center, modifier = Modifier.uiName("AlmostDoneScreen.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "AlmostDoneScreen")
             )
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.onboarding",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/onboarding/AlmostDoneScreen.kt",
+)

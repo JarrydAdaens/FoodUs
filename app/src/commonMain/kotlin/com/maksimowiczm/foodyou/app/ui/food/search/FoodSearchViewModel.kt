@@ -5,15 +5,15 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.maksimowiczm.foodyou.app.ui.food.search.RemoteStatus.Companion.toRemoteStatus
 import com.maksimowiczm.foodyou.common.domain.date.DateProvider
-import com.maksimowiczm.foodyou.common.domain.food.FoodSource
+import com.maksimowiczm.foodyou.common.domain.food.ProductSource
 import com.maksimowiczm.foodyou.common.domain.search.searchQuery
 import com.maksimowiczm.foodyou.common.domain.userpreferences.UserPreferencesRepository
 import com.maksimowiczm.foodyou.common.extension.combine
-import com.maksimowiczm.foodyou.food.domain.entity.FoodId
-import com.maksimowiczm.foodyou.food.domain.repository.FoodSearchHistoryRepository
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
+import com.maksimowiczm.foodyou.food.domain.repository.NutritionalItemSearchHistoryRepository
 import com.maksimowiczm.foodyou.food.search.domain.FoodSearchPreferences
-import com.maksimowiczm.foodyou.food.search.domain.FoodSearchRepository
-import com.maksimowiczm.foodyou.food.search.domain.FoodSearchUseCase
+import com.maksimowiczm.foodyou.food.search.domain.NutritionalItemSearchRepository
+import com.maksimowiczm.foodyou.food.search.domain.NutritionalItemSearchUseCase
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 import kotlin.time.Clock
@@ -33,11 +33,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 internal class FoodSearchViewModel(
-    private val excludedRecipeId: FoodId.Recipe?,
+    private val excludedRecipeId: NutritionalItemId.Recipe?,
     private val foodSearchPreferencesRepository: UserPreferencesRepository<FoodSearchPreferences>,
-    searchHistoryRepository: FoodSearchHistoryRepository,
-    private val foodSearchRepository: FoodSearchRepository,
-    private val foodSearchUseCase: FoodSearchUseCase,
+    searchHistoryRepository: NutritionalItemSearchHistoryRepository,
+    private val foodSearchRepository: NutritionalItemSearchRepository,
+    private val foodSearchUseCase: NutritionalItemSearchUseCase,
     private val dateProvider: DateProvider,
 ) : ViewModel() {
 
@@ -86,9 +86,9 @@ internal class FoodSearchViewModel(
                 )
             }
 
-    private val yourFoodPages = observeFoodPages(FoodSource.Type.User).cachedIn(viewModelScope)
+    private val yourFoodPages = observeFoodPages(ProductSource.Type.User).cachedIn(viewModelScope)
     private val yourFoodState =
-        observeFoodCount(FoodSource.Type.User).map { count ->
+        observeFoodCount(ProductSource.Type.User).map { count ->
             FoodSourceUiState(
                 remoteEnabled = RemoteStatus.LocalOnly,
                 pages = yourFoodPages,
@@ -98,9 +98,9 @@ internal class FoodSearchViewModel(
         }
 
     private val openFoodFactsPages =
-        observeFoodPages(FoodSource.Type.OpenFoodFacts).cachedIn(viewModelScope)
+        observeFoodPages(ProductSource.Type.OpenFoodFacts).cachedIn(viewModelScope)
     private val openFoodFactsState =
-        combine(observeFoodCount(FoodSource.Type.OpenFoodFacts), foodPreferences) { count, prefs ->
+        combine(observeFoodCount(ProductSource.Type.OpenFoodFacts), foodPreferences) { count, prefs ->
             FoodSourceUiState(
                 remoteEnabled = prefs.isOpenFoodFactsEnabled.toRemoteStatus(),
                 pages = openFoodFactsPages,
@@ -108,9 +108,9 @@ internal class FoodSearchViewModel(
             )
         }
 
-    private val usdaPages = observeFoodPages(FoodSource.Type.USDA).cachedIn(viewModelScope)
+    private val usdaPages = observeFoodPages(ProductSource.Type.USDA).cachedIn(viewModelScope)
     private val usdaState =
-        combine(observeFoodCount(FoodSource.Type.USDA), foodPreferences) { count, prefs ->
+        combine(observeFoodCount(ProductSource.Type.USDA), foodPreferences) { count, prefs ->
             FoodSourceUiState(
                 remoteEnabled = prefs.isUsdaEnabled.toRemoteStatus(),
                 pages = usdaPages,
@@ -119,9 +119,9 @@ internal class FoodSearchViewModel(
         }
 
     private val swissPages =
-        observeFoodPages(FoodSource.Type.SwissFoodCompositionDatabase).cachedIn(viewModelScope)
+        observeFoodPages(ProductSource.Type.SwissFoodCompositionDatabase).cachedIn(viewModelScope)
     private val swissState =
-        observeFoodCount(FoodSource.Type.SwissFoodCompositionDatabase).map { count ->
+        observeFoodCount(ProductSource.Type.SwissFoodCompositionDatabase).map { count ->
             FoodSourceUiState(
                 remoteEnabled = RemoteStatus.LocalOnly,
                 pages = swissPages,
@@ -130,13 +130,13 @@ internal class FoodSearchViewModel(
         }
 
     private val afcdPages =
-        observeFoodPages(FoodSource.Type.AustralianFoodCompositionDatabase).cachedIn(viewModelScope)
+        observeFoodPages(ProductSource.Type.AustralianFoodCompositionDatabase).cachedIn(viewModelScope)
 
     // Null while the provider is disabled, so its rows are excluded from search without being
     // deleted; re-enabling brings them straight back.
     private val afcdState =
         combine(
-            observeFoodCount(FoodSource.Type.AustralianFoodCompositionDatabase),
+            observeFoodCount(ProductSource.Type.AustralianFoodCompositionDatabase),
             foodPreferences,
         ) { count, prefs ->
             if (prefs.isAustralianFoodCompositionDatabaseEnabled) {
@@ -153,7 +153,7 @@ internal class FoodSearchViewModel(
     private val swissAndAfcdState =
         combine(swissState, afcdState) { swiss, afcd -> swiss to afcd }
 
-    private fun observeFoodCount(source: FoodSource.Type) =
+    private fun observeFoodCount(source: ProductSource.Type) =
         searchQuery.flatMapLatest { query ->
             foodSearchRepository.searchFoodCount(
                 query = searchQuery(query),
@@ -162,7 +162,7 @@ internal class FoodSearchViewModel(
             )
         }
 
-    private fun observeFoodPages(source: FoodSource.Type) =
+    private fun observeFoodPages(source: ProductSource.Type) =
         searchQuery.flatMapLatest { query ->
             foodSearchUseCase.search(query, source, excludedRecipeId)
         }

@@ -40,14 +40,14 @@ internal class OpenRouterAiSearchQueryGenerator(
     private val aiSettingsRepository: UserPreferencesRepository<AiSettings>,
 ) : AiSearchQueryGenerator {
 
-    override suspend fun generateQuery(mealName: String?, note: String): AiQueryResult {
+    override suspend fun generateQuery(diarySlotName: String?, note: String): AiQueryResult {
         val settings = aiSettingsRepository.observe().first()
         val config = AiRuntimeConfig.resolve(settings, appConfig)
         if (!config.isConfigured) return AiQueryResult.NotConfigured
         if (note.isBlank()) return AiQueryResult.Failure("Nothing to search for.")
 
         return try {
-            val prompt = AiSearchQueryPrompt.build(mealName, note)
+            val prompt = AiSearchQueryPrompt.build(diarySlotName, note)
             val userMessage = ChatMessage(role = "user", content = listOf(TextContent(prompt)))
             val request =
                 ChatCompletionRequest(

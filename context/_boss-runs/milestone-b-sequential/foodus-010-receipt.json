@@ -1,0 +1,177 @@
+{
+  "checked": {
+    "artifact_identity": "aa7bc77f9cb8fdea5d3e19824111c22fa69fe3824b095c37287d4fe7475010d8",
+    "base": "958da852506a94bbf4d63ce2f70f4d1ddd65e32b",
+    "diff_identity": "ef4c96ddfd33dd9773e430ef1ea27c215684e94c9e9c260be29c6a54656c3bea",
+    "files": {
+      "app/build.gradle.kts": {
+        "kind": "file",
+        "sha256": "04857b8d16e79fdc8e6e5ef0e332c6ab39b7e11feda385df098800495d3639d7"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/settings/ai/AiSettingsKeyPrivacyTest.kt": {
+        "kind": "file",
+        "sha256": "ce295292e195bd499e9a5fd583979baf58ad0fe6455f6bb2ab209a6a987f6790"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/settings/ai/AiSettingsScreen.kt": {
+        "kind": "file",
+        "sha256": "81f6144cb25b62320b4993f1d34ddf13aa6df997dd9a6ccf54ed72b4647ce7d3"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "fc4fb4d3739d361e22c9c4c006af11c210e5fb7bce9e934ce32ba2ad322bad6a"
+      }
+    },
+    "head": "958da852506a94bbf4d63ce2f70f4d1ddd65e32b"
+  },
+  "commit_authority": "User requested commit-log --commit after Samsung test for each Story",
+  "commit_policy": "single",
+  "decisions": [
+    "API key uses native state-based outlined secure field, Hidden until explicit Visible; same VM TextFieldState and existing localized reveal/hide controls. Generic fields, VM, storage/provider precedence unchanged.",
+    "Reveal flag is screen-local remember only, never saveable or persisted; pause/stop resets it for retained navigation/background and new compositions/recreation begin masked.",
+    "Actual screen/VM tests use synthetic repository/validator and private modern/legacy clipboard locals. Real activity saved-state restoration proved by nonsecret sentinel and canonical navigation restoration; retained ViewModel draft verified.",
+    "No owner clipboard reads/writes or native clipboard escape; dummy keys only, no credential screenshots/logs or live validation network. Existing host secureScreen boolean observation qualified; no diary/AI credential/photo access or owner settings writes.",
+    "This closes last B Story; milestone/Design terminal metadata included in same authorized commit. Legacy catalog3.5.0/code126 retained per transition; no release/tag/publication/version/dependency/schema changes.",
+    "Exact resolved Compose1.11.0-alpha05 uses raw output EditableText for native accessibility and separately transforms visual codepoints in Hidden mode. Raw UiAutomation.text is not rendered glyph proof. Tests retain native password/action/draft assertions and required visual capture inspection rather than demand unsupported raw-text redaction."
+  ],
+  "delivery": {
+    "artifact_identity": "610f64ce9de4c052d93e225e5b6823ccb8f0d55c8ee713249508ef3b226c6f36",
+    "base": "958da852506a94bbf4d63ce2f70f4d1ddd65e32b",
+    "committed_files": {
+      "app/build.gradle.kts": {
+        "git_blob": "a596aa518dc6c95940e92243ef30eef40a0cc4d4",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/settings/ai/AiSettingsKeyPrivacyTest.kt": {
+        "git_blob": "c4dff451bd5c94ac736430f8fb7a9d0cc87298bc",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/settings/ai/AiSettingsScreen.kt": {
+        "git_blob": "4952000d4fb10d377718d18def0c6c3bd254c224",
+        "kind": "file"
+      },
+      "context/_boss-runs/milestone-b-sequential/briefing.md": {
+        "git_blob": "28255b8e680b5d796060515ef8c78d2888b89674",
+        "kind": "file"
+      },
+      "context/design.md": {
+        "git_blob": "a509f71160e44727ba4c4fbfdadb9fd238397389",
+        "kind": "file"
+      },
+      "context/implementation-plans/milestone-b/foodus-010/plan.md": {
+        "git_blob": "2fda52d1da95fac3cef0b6425627e50a49ef9b19",
+        "kind": "file"
+      },
+      "context/milestones/milestone-b.md": {
+        "git_blob": "9b0d1e1683755ac0f0d4f37670aff0c2a6d75a39",
+        "kind": "file"
+      },
+      "gradle/libs.versions.toml": {
+        "git_blob": "6dcdb5e97c35db4c4aad9e94864faaa8be7a75a7",
+        "kind": "file"
+      }
+    },
+    "diff_identity": "3e790260e555ff5f248f41df441514c4647ae81f438dbb995d9cbd0ab983411d",
+    "files": {
+      "app/build.gradle.kts": {
+        "kind": "file",
+        "sha256": "04857b8d16e79fdc8e6e5ef0e332c6ab39b7e11feda385df098800495d3639d7"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/settings/ai/AiSettingsKeyPrivacyTest.kt": {
+        "kind": "file",
+        "sha256": "ce295292e195bd499e9a5fd583979baf58ad0fe6455f6bb2ab209a6a987f6790"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/settings/ai/AiSettingsScreen.kt": {
+        "kind": "file",
+        "sha256": "81f6144cb25b62320b4993f1d34ddf13aa6df997dd9a6ccf54ed72b4647ce7d3"
+      },
+      "context/_boss-runs/milestone-b-sequential/briefing.md": {
+        "kind": "file",
+        "sha256": "cfd89c97badcec90c8d167f0e893c1696b6105b295543d42efc0ede2ed405bee"
+      },
+      "context/design.md": {
+        "kind": "file",
+        "sha256": "74deef5b42e7a9f88f647c8c5667a5474eae481036afab78e349bcd1da63f5f1"
+      },
+      "context/implementation-plans/milestone-b/foodus-010/plan.md": {
+        "kind": "file",
+        "sha256": "6246611f7c2ada20e988dc47120ab933a2eef95b0000950d32caf7cb2eb2fa8c"
+      },
+      "context/milestones/milestone-b.md": {
+        "kind": "file",
+        "sha256": "7bb087ada5ce4020571389f533377b76baa94915a899ab35903b507f9d83fd37"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "fc4fb4d3739d361e22c9c4c006af11c210e5fb7bce9e934ce32ba2ad322bad6a"
+      }
+    },
+    "head": "958da852506a94bbf4d63ce2f70f4d1ddd65e32b"
+  },
+  "evidence": {
+    "checks": [
+      {
+        "artifact_identity": "aa7bc77f9cb8fdea5d3e19824111c22fa69fe3824b095c37287d4fe7475010d8",
+        "command": ".\\gradlew.bat --offline --no-daemon --console=plain -q :app:testDebugUnitTest :app:assembleDebug :app:assembleDebugAndroidTest",
+        "outcome": "PASS",
+        "result": "145 unit tests, zero failures/errors; debug/test APK builds. Final fixture-only native accessibility/visual distinction correction rebuilt with :app:assembleDebugAndroidTest; production unchanged."
+      },
+      {
+        "artifact_identity": "aa7bc77f9cb8fdea5d3e19824111c22fa69fe3824b095c37287d4fe7475010d8",
+        "command": "Invoke-FoodUsStoryDeviceChecks foodus-010 com.maksimowiczm.foodyou.app.ui.settings.ai.AiSettingsKeyPrivacyTest com.maksimowiczm.foodyou.app.ui.settings.ai.AiSettingsKeyPrivacyTest",
+        "outcome": "PASS",
+        "result": "Samsung SM-A057F Android15 physical1080x2400 and compact900x1600, three tests each: native password masking, explicit eye, retained/fresh navigation, genuine saved-state recreation with sentinel and retained draft, background, private clipboard ACTION_PASTE, edits/selection, isolated validation/save. Overrides restored."
+      },
+      {
+        "artifact_identity": "aa7bc77f9cb8fdea5d3e19824111c22fa69fe3824b095c37287d4fe7475010d8",
+        "command": "Inspect every synthetic key-field PixelCopy PNG in app/build/foodus-010-images after both final device runs",
+        "outcome": "PASS",
+        "result": "22 unique field-region captures:14 hidden bullet fields and8 legibly revealed dummy fields, including retained/fresh navigation, genuine recreation, background/edit/paste and post-save. No blank/black/incomplete image accepted. Image manifest aggregate 26d6ee2c539835d3c7361d073519c3752a2d24a37e4c70c8b503a4e6a2f51e5a."
+      },
+      {
+        "artifact_identity": "aa7bc77f9cb8fdea5d3e19824111c22fa69fe3824b095c37287d4fe7475010d8",
+        "command": "git diff --check",
+        "outcome": "PASS"
+      }
+    ],
+    "decisions": [
+      "API key uses native state-based outlined secure field, Hidden until explicit Visible; same VM TextFieldState and existing localized reveal/hide controls. Generic fields, VM, storage/provider precedence unchanged.",
+      "Reveal flag is screen-local remember only, never saveable or persisted; pause/stop resets it for retained navigation/background and new compositions/recreation begin masked.",
+      "Actual screen/VM tests use synthetic repository/validator and private modern/legacy clipboard locals. Real activity saved-state restoration proved by nonsecret sentinel and canonical navigation restoration; retained ViewModel draft verified.",
+      "No owner clipboard reads/writes or native clipboard escape; dummy keys only, no credential screenshots/logs or live validation network. Existing host secureScreen boolean observation qualified; no diary/AI credential/photo access or owner settings writes.",
+      "This closes last B Story; milestone/Design terminal metadata included in same authorized commit. Legacy catalog3.5.0/code126 retained per transition; no release/tag/publication/version/dependency/schema changes.",
+      "Exact resolved Compose1.11.0-alpha05 uses raw output EditableText for native accessibility and separately transforms visual codepoints in Hidden mode. Raw UiAutomation.text is not rendered glyph proof. Tests retain native password/action/draft assertions and required visual capture inspection rather than demand unsupported raw-text redaction."
+    ],
+    "review": {
+      "artifact_identity": "aa7bc77f9cb8fdea5d3e19824111c22fa69fe3824b095c37287d4fe7475010d8",
+      "outcome": "PASS",
+      "reviewer": "/root/review_foodus_010",
+      "scope": "Independent frozen secure-field/accessibility/local reveal lifecycle/privacy/draft/paste/validation/save and fixture integrity review. Static PASS WITH NOTES: no findings; notes are separately required coordinator runtime gates and accepted inherited secureScreen read, not waivers.",
+      "source_aggregate": "4183936ba69efd75d4c110f1f1bd507efe6b6c6c6c113d946ffea1efb37a8178"
+    },
+    "review_required": true
+  },
+  "metadata_before": {
+    "context/_boss-runs/milestone-b-sequential/briefing.md": {
+      "kind": "file",
+      "sha256": "80f121263f0f52f4e5225b2203e99aee93cd21feafcb3ce569280fec78167d3f"
+    },
+    "context/design.md": {
+      "kind": "file",
+      "sha256": "37571a5cdbf6b22d9fa5b20c2c7b4e1616466bcc6dd4027d91555ab6e72195ef"
+    },
+    "context/implementation-plans/milestone-b/foodus-010/plan.md": {
+      "kind": "file",
+      "sha256": "04e185c8c140f7c7838f288ba5c1b96bc16cc7237ecfe716bca611b524d653bc"
+    },
+    "context/milestones/milestone-b.md": {
+      "kind": "file",
+      "sha256": "93e9f9779f5eddfa8bd5946dcf8935da3389940c6cb05cd3157f7b61930423b8"
+    }
+  },
+  "phase": "READY",
+  "record": "context/_boss-runs/milestone-b-sequential/foodus-010-receipt.json",
+  "repo": "D:\\forked-projects\\FoodYou",
+  "schema_version": 1,
+  "status_owner": "context/milestones/milestone-b.md#foodus-010",
+  "transaction_id": "113c6648ae4b46748b83292cbe85ab96"
+}

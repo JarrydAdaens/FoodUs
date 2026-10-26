@@ -1,7 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.food.recipe
 
-import com.maksimowiczm.foodyou.food.domain.entity.FoodId
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
 
 internal sealed interface CreateRecipeEvent {
-    data class Created(val recipeId: FoodId.Recipe) : CreateRecipeEvent
+    data object SaveFailed : CreateRecipeEvent
+    data class Created(val recipeId: NutritionalItemId.Recipe) : CreateRecipeEvent
 }

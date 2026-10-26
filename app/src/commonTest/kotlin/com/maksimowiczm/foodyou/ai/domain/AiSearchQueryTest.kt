@@ -9,14 +9,14 @@ import kotlin.test.assertTrue
 class AiSearchQueryTest {
 
     @Test
-    fun promptEmbedsMealAndNoteWithoutPersonalData() {
+    fun promptEmbedsDiarySlotAndNoteWithoutPersonalData() {
         val prompt =
             AiSearchQueryPrompt.build(
-                mealName = "Dinner",
+                diarySlotName = "Dinner",
                 note = "roast dinner",
             )
 
-        // Meal name is lowercased into the sentence "eaten for dinner".
+        // DiarySlot name is lowercased into the sentence "eaten for dinner".
         assertTrue(prompt.contains("eaten for dinner"), "prompt should embed the meal context")
         assertTrue(prompt.contains("roast dinner"), "prompt should embed the note")
         // Layer 1 is pure machinery: no locale, nationality, or region baked in (Story 21).
@@ -26,8 +26,8 @@ class AiSearchQueryTest {
     }
 
     @Test
-    fun promptFallsBackWhenMealNameMissing() {
-        val prompt = AiSearchQueryPrompt.build(mealName = null, note = "two sausage rolls")
+    fun promptFallsBackWhenDiarySlotNameMissing() {
+        val prompt = AiSearchQueryPrompt.build(diarySlotName = null, note = "two sausage rolls")
 
         assertTrue(prompt.contains("eaten for a meal"), "blank meal should fall back to 'a meal'")
         assertTrue(prompt.contains("two sausage rolls"))

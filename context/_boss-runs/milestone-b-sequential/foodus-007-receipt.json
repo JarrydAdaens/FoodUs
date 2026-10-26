@@ -1,0 +1,203 @@
+{
+  "checked": {
+    "artifact_identity": "6b581e95cf29e0b206a08718cc8d41607d000ba0c5f182aff8af83ba980a37a9",
+    "base": "0b3f3e5cb0ae9c313c20a5ddf697ac596ca1d6db",
+    "diff_identity": "aba8e2206d6adf31184b0d4127208291424b66c60351562eab39d168464d7c2c",
+    "files": {
+      "app/build.gradle.kts": {
+        "kind": "file",
+        "sha256": "04857b8d16e79fdc8e6e5ef0e332c6ab39b7e11feda385df098800495d3639d7"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/MultiFoodScanTest.kt": {
+        "kind": "file",
+        "sha256": "5bbd62c8c1f0a9595d8af00bd2d4fd55801e4d4f5b7f656423aea91458e981ea"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/navigation/FoodYouAppNavHost.kt": {
+        "kind": "file",
+        "sha256": "567bd3a7e2617aaeedb1a0310bbfd9e3b462fccaa3b9804ed8108af585a1da70"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/navigation/ScanQuickAddHandoff.kt": {
+        "kind": "file",
+        "sha256": "7354a70ac3490f445a7de1446969c0b16cf1c78e478f6cd23620f612432f77ad"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanScreen.kt": {
+        "kind": "file",
+        "sha256": "fbd2f257426caf34919a11f48282cd0c81903fb6d6d8dc5ef63ab152f236b325"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanViewModel.kt": {
+        "kind": "file",
+        "sha256": "8724dabf0219725da682fd119185b6ae06f1ce5183a7ceb323c702c2b9d87e1e"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanReviewSessionTest.kt": {
+        "kind": "file",
+        "sha256": "512dbfb40512e7957a00da273e53fbc4fb726987fc1df5eac12414fa51e3eece"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "fc4fb4d3739d361e22c9c4c006af11c210e5fb7bce9e934ce32ba2ad322bad6a"
+      }
+    },
+    "head": "0b3f3e5cb0ae9c313c20a5ddf697ac596ca1d6db"
+  },
+  "commit_authority": "User requested commit-log --commit after Samsung test for each Story",
+  "commit_policy": "single",
+  "decisions": [
+    "Successful insertion precedes acknowledgement. Only newly accepted current-generation queue head advances or completes; stale/duplicate acknowledgements are consumed as inert.",
+    "Intermediate save continues remaining selected queue. Final selected success pops to existing canonical Home, removing completed scanner/form Back entries. Unselected foods remain unsaved.",
+    "Pending or failed insertion leaves form editable; failure feedback, edits and retry persist without duplication. Cancel returns review; direct Quick Add retains form-only predecessor navigation.",
+    "Production form/storage/conversion unchanged; no dependencies, schema, version or release. Synthetic generated JPEG and isolated Room/Koin only, no owner diary/settings writes, live AI, private photos, keys or data clearing."
+  ],
+  "delivery": {
+    "artifact_identity": "ed76062015dee2f5c8c19a9b86850c4d661a192f8809f387fdbdb13ce21e16c3",
+    "base": "0b3f3e5cb0ae9c313c20a5ddf697ac596ca1d6db",
+    "committed_files": {
+      "app/build.gradle.kts": {
+        "git_blob": "a596aa518dc6c95940e92243ef30eef40a0cc4d4",
+        "kind": "file"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/MultiFoodScanTest.kt": {
+        "git_blob": "e5b3667d942b0947791c0d577fc91fef293c31bb",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/navigation/FoodYouAppNavHost.kt": {
+        "git_blob": "c9983a9dc25adf51dd3b2084e8378c4f0a3f6dc9",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/navigation/ScanQuickAddHandoff.kt": {
+        "git_blob": "73070d7aaafdf22fff4bc53dc003d3cbc1e47b88",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanScreen.kt": {
+        "git_blob": "71476d5bb917ccc15e729bbcd79bbfcfd103000c",
+        "kind": "file"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanViewModel.kt": {
+        "git_blob": "b62bbf99baecaa8108264d7e9efff286c5722df0",
+        "kind": "file"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanReviewSessionTest.kt": {
+        "git_blob": "1caa42e074344d2451236f41eee697aa5c51ac3c",
+        "kind": "file"
+      },
+      "context/_boss-runs/milestone-b-sequential/briefing.md": {
+        "git_blob": "28af45767447eea99f3dcf9734f7efd333980373",
+        "kind": "file"
+      },
+      "context/implementation-plans/milestone-b/foodus-007/plan.md": {
+        "git_blob": "ad68dd34eff266408620ba2c850b78297095d47e",
+        "kind": "file"
+      },
+      "context/milestones/milestone-b.md": {
+        "git_blob": "b35fa7d04e019039e1dba310616a56eb68b8f776",
+        "kind": "file"
+      },
+      "gradle/libs.versions.toml": {
+        "git_blob": "6dcdb5e97c35db4c4aad9e94864faaa8be7a75a7",
+        "kind": "file"
+      }
+    },
+    "diff_identity": "0083704438b92ce679abde69ea6d559438922099074988469d178c40bea21d70",
+    "files": {
+      "app/build.gradle.kts": {
+        "kind": "file",
+        "sha256": "04857b8d16e79fdc8e6e5ef0e332c6ab39b7e11feda385df098800495d3639d7"
+      },
+      "app/src/androidInstrumentedTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/quickadd/MultiFoodScanTest.kt": {
+        "kind": "file",
+        "sha256": "5bbd62c8c1f0a9595d8af00bd2d4fd55801e4d4f5b7f656423aea91458e981ea"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/navigation/FoodYouAppNavHost.kt": {
+        "kind": "file",
+        "sha256": "567bd3a7e2617aaeedb1a0310bbfd9e3b462fccaa3b9804ed8108af585a1da70"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/navigation/ScanQuickAddHandoff.kt": {
+        "kind": "file",
+        "sha256": "7354a70ac3490f445a7de1446969c0b16cf1c78e478f6cd23620f612432f77ad"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanScreen.kt": {
+        "kind": "file",
+        "sha256": "fbd2f257426caf34919a11f48282cd0c81903fb6d6d8dc5ef63ab152f236b325"
+      },
+      "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanViewModel.kt": {
+        "kind": "file",
+        "sha256": "8724dabf0219725da682fd119185b6ae06f1ce5183a7ceb323c702c2b9d87e1e"
+      },
+      "app/src/commonTest/kotlin/com/maksimowiczm/foodyou/app/ui/food/diary/aiscan/AiScanReviewSessionTest.kt": {
+        "kind": "file",
+        "sha256": "512dbfb40512e7957a00da273e53fbc4fb726987fc1df5eac12414fa51e3eece"
+      },
+      "context/_boss-runs/milestone-b-sequential/briefing.md": {
+        "kind": "file",
+        "sha256": "273a7f424a6eb674a41436ff96b9f517858fc44f07d12522e1fdc66d9ea9cc64"
+      },
+      "context/implementation-plans/milestone-b/foodus-007/plan.md": {
+        "kind": "file",
+        "sha256": "88e3711c79eba5149f9d528b8c12a656c725287296ebe3bc54e15ed80915857a"
+      },
+      "context/milestones/milestone-b.md": {
+        "kind": "file",
+        "sha256": "87ce8b9c90482f4b4ea26ba3251da01bc9e55fcd45d780aa6495c07f5e7d53cf"
+      },
+      "gradle/libs.versions.toml": {
+        "kind": "file",
+        "sha256": "fc4fb4d3739d361e22c9c4c006af11c210e5fb7bce9e934ce32ba2ad322bad6a"
+      }
+    },
+    "head": "0b3f3e5cb0ae9c313c20a5ddf697ac596ca1d6db"
+  },
+  "evidence": {
+    "checks": [
+      {
+        "artifact_identity": "6b581e95cf29e0b206a08718cc8d41607d000ba0c5f182aff8af83ba980a37a9",
+        "command": ".\\gradlew.bat --offline --no-daemon --console=plain -q :app:testDebugUnitTest :app:assembleDebug :app:assembleDebugAndroidTest",
+        "outcome": "PASS",
+        "result": "141 unit tests, zero failures/errors, debug and instrumentation APK builds."
+      },
+      {
+        "artifact_identity": "6b581e95cf29e0b206a08718cc8d41607d000ba0c5f182aff8af83ba980a37a9",
+        "command": "adb -s R7AY205BVXL shell am instrument -w -r -e class com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.MultiFoodScanTest,com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.ScanDataPreservationTest io.github.jarrydadaens.foodus.dev.test/androidx.test.runner.AndroidJUnitRunner",
+        "outcome": "PASS",
+        "result": "Samsung SM-A057F Android15 physical1080x2400: six queue/completion/failure/direct/back cases plus four data-preservation regressions. Actual production helper and canonical Home route, private Koin and real in-memory Room."
+      },
+      {
+        "artifact_identity": "6b581e95cf29e0b206a08718cc8d41607d000ba0c5f182aff8af83ba980a37a9",
+        "command": "git diff --check",
+        "outcome": "PASS"
+      }
+    ],
+    "decisions": [
+      "Successful insertion precedes acknowledgement. Only newly accepted current-generation queue head advances or completes; stale/duplicate acknowledgements are consumed as inert.",
+      "Intermediate save continues remaining selected queue. Final selected success pops to existing canonical Home, removing completed scanner/form Back entries. Unselected foods remain unsaved.",
+      "Pending or failed insertion leaves form editable; failure feedback, edits and retry persist without duplication. Cancel returns review; direct Quick Add retains form-only predecessor navigation.",
+      "Production form/storage/conversion unchanged; no dependencies, schema, version or release. Synthetic generated JPEG and isolated Room/Koin only, no owner diary/settings writes, live AI, private photos, keys or data clearing."
+    ],
+    "review": {
+      "artifact_identity": "6b581e95cf29e0b206a08718cc8d41607d000ba0c5f182aff8af83ba980a37a9",
+      "outcome": "PASS",
+      "reviewer": "/root/review_foodus_007",
+      "scope": "Independent final frozen navigation/queue/persistence-order/privacy/regression review; no findings. Focused compile-only assertion/import correction re-review passed; production unchanged.",
+      "source_aggregate": "14aaadf020753dd72e72d4252e0083eb40778d0fe54b8fda89c1b5e0f042aea1"
+    },
+    "review_required": true
+  },
+  "metadata_before": {
+    "context/_boss-runs/milestone-b-sequential/briefing.md": {
+      "kind": "file",
+      "sha256": "d081b74ae8d305e7f825a8b0d156ba7eb4ae3c55ee4e966fffcca512916ac97e"
+    },
+    "context/implementation-plans/milestone-b/foodus-007/plan.md": {
+      "kind": "file",
+      "sha256": "3795d84b8b49aebd28935cda7928e79f7181961be5ca5ab97435414a8f996839"
+    },
+    "context/milestones/milestone-b.md": {
+      "kind": "file",
+      "sha256": "024e101fbfccdab40765a60322c7bf1f4fd6f98b2dc259799beb36452453f307"
+    }
+  },
+  "phase": "READY",
+  "record": "context/_boss-runs/milestone-b-sequential/foodus-007-receipt.json",
+  "repo": "D:\\forked-projects\\FoodYou",
+  "schema_version": 1,
+  "status_owner": "context/milestones/milestone-b.md#foodus-007",
+  "transaction_id": "b4eabefdd37645d2b1ce8a72a9f6853b"
+}

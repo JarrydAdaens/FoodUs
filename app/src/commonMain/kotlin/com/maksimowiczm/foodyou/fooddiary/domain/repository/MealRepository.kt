@@ -1,19 +1,29 @@
 package com.maksimowiczm.foodyou.fooddiary.domain.repository
 
 import com.maksimowiczm.foodyou.fooddiary.domain.entity.Meal
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.MealId
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.MealItem
 import kotlinx.coroutines.flow.Flow
-import kotlinx.datetime.LocalTime
 
+/** Persistence boundary for reusable diarySlot Meals (Milestone 2, Story 13). */
 interface MealRepository {
-    fun observeMeal(mealId: Long): Flow<Meal?>
+    /** Observes every saved Meal, each with its snapshotted items, newest first. */
+    fun observeAll(): Flow<List<Meal>>
 
-    fun observeMeals(): Flow<List<Meal>>
+    /** Reads a single Meal with its items, or `null` if it no longer exists. */
+    suspend fun getMeal(id: MealId): Meal?
 
-    suspend fun insertMealWithLastRank(name: String, from: LocalTime, to: LocalTime)
+    /** Saves a new named Meal from the given item snapshots and returns its id. */
+    suspend fun save(name: String, items: List<MealItem>): MealId
 
-    suspend fun deleteMeal(mealId: Long)
+    suspend fun save(meal: Meal): MealId {
+        check(meal.reportedNutrition == null && meal.metadata == null) { "Reported Meal insertion unavailable" }
+        return save(meal.name, meal.items)
+    }
 
-    suspend fun updateMeal(id: Long, name: String, from: LocalTime, to: LocalTime)
+    /** Atomically updates an existing aggregate, retaining owned item IDs; false if stale. */
+    suspend fun update(id: MealId, name: String, items: List<MealItem>): Boolean
 
-    suspend fun reorderMeals(order: List<Long>)
+    /** Permanently deletes a Meal. Already-applied diary entries are unaffected. */
+    suspend fun delete(id: MealId)
 }

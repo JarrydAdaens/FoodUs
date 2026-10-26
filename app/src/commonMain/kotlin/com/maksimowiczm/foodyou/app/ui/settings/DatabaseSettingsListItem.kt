@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.settings
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -20,13 +23,19 @@ internal fun DatabaseSettingsListItem(
     modifier: Modifier = Modifier,
 ) {
     SettingsListItem(
-        icon = { Icon(painterResource(Res.drawable.ic_database), null) },
-        label = { Text(stringResource(Res.string.headline_data_backup_and_export)) },
-        supportingContent = { Text(stringResource(Res.string.description_manage_database)) },
+        icon = { Icon(painterResource(Res.drawable.ic_database), null, modifier = Modifier.uiName("DatabaseSettingsListItem.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "DatabaseSettingsListItem")) },
+        label = { Text(stringResource(Res.string.headline_data_backup_and_export), modifier = Modifier.uiName("DatabaseSettingsListItem.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "DatabaseSettingsListItem")) },
+        supportingContent = { Text(stringResource(Res.string.description_manage_database), modifier = Modifier.uiName("DatabaseSettingsListItem.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "DatabaseSettingsListItem")) },
         onClick = onClick,
-        modifier = modifier,
+        modifier = (modifier).uiName("DatabaseSettingsListItem.SettingsListItem.1", "com.maksimowiczm.foodyou.app.ui.common.component.SettingsListItem", uiInspectionSource, "DatabaseSettingsListItem"),
         shape = shape,
         color = color,
         contentColor = contentColor,
     )
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.settings",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/settings/DatabaseSettingsListItem.kt",
+)

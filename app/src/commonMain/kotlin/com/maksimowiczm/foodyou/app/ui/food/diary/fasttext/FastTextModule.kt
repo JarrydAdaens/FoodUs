@@ -5,9 +5,9 @@ import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
 
 fun Module.foodDiaryFastText() {
-    viewModel { (date: LocalDate, mealId: Long) ->
+    viewModel { (date: LocalDate, diarySlotId: Long) ->
         FastTextViewModel(
-            mealId = mealId,
+            diarySlotId = diarySlotId,
             date = date,
             manualDiaryEntryRepository = get(),
             dateProvider = get(),

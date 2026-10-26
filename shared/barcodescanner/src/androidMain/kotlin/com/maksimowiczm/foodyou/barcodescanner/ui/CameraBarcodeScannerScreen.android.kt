@@ -1,5 +1,9 @@
 package com.maksimowiczm.foodyou.barcodescanner.ui
 
+import com.maksimowiczm.foodyou.barcodescanner.ui.BarcodeUiSourceFile as UiSourceFile
+import com.maksimowiczm.foodyou.barcodescanner.ui.barcodeUiName as uiName
+import com.maksimowiczm.foodyou.barcodescanner.ui.BarcodeUiSourceScope as UiSourceScope
+
 import android.Manifest
 import android.content.Context
 import android.content.Intent
@@ -80,35 +84,35 @@ actual fun CameraBarcodeScannerScreen(
             onConfirm = {
                 redirectToSettings(context)
                 requestInSettings = false
-            },
+            }, modifier = Modifier.uiName("CameraBarcodeScannerScreen.RedirectToSettingsAlertDialog.1", "com.maksimowiczm.foodyou.barcodescanner.ui.RedirectToSettingsAlertDialog", uiInspectionSource, "CameraBarcodeScannerScreen")
         )
     }
 
     val hapticFeedback = LocalHapticFeedback.current
 
-    Box(modifier = modifier) {
-        Box(modifier = Modifier.safeGesturesPadding().align(Alignment.TopEnd).zIndex(1f)) {
-            FilledIconButton(onClick = onClose, shapes = IconButtonDefaults.shapes()) {
+    Box(modifier = (modifier).uiName("CameraBarcodeScannerScreen.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "CameraBarcodeScannerScreen")) {
+        Box(modifier = (Modifier.safeGesturesPadding().align(Alignment.TopEnd).zIndex(1f)).uiName("CameraBarcodeScannerScreen.Box.2", "androidx.compose.foundation.layout.Box", uiInspectionSource, "CameraBarcodeScannerScreen")) {
+            FilledIconButton(onClick = onClose, shapes = IconButtonDefaults.shapes(), modifier = Modifier.uiName("CameraBarcodeScannerScreen.FilledIconButton.1", "androidx.compose.material3.FilledIconButton", uiInspectionSource, "CameraBarcodeScannerScreen")) {
                 Icon(
                     imageVector = Icons.Default.Close,
-                    contentDescription = stringResource(Res.string.action_close),
+                    contentDescription = stringResource(Res.string.action_close), modifier = Modifier.uiName("CameraBarcodeScannerScreen.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "CameraBarcodeScannerScreen")
                 )
             }
         }
 
         if (permissionState.status.isGranted) {
-            ZxingCameraBarcodeScannerScreen(
+            UiSourceScope(uiInspectionSource.element("CameraBarcodeScannerScreen.ZxingCameraBarcodeScannerScreen.1", "com.maksimowiczm.foodyou.barcodescanner.ui.ZxingCameraBarcodeScannerScreen", "CameraBarcodeScannerScreen")) { ZxingCameraBarcodeScannerScreen(
                 onBarcodeScan = {
                     hapticFeedback.performHapticFeedback(HapticFeedbackType.Confirm)
                     onBarcodeScan(it)
                 },
                 modifier = Modifier,
-            )
+            ) }
         } else {
-            RequestCameraPermissionScreen(
+            UiSourceScope(uiInspectionSource.element("CameraBarcodeScannerScreen.RequestCameraPermissionScreen.1", "com.maksimowiczm.foodyou.barcodescanner.ui.RequestCameraPermissionScreen", "CameraBarcodeScannerScreen")) { RequestCameraPermissionScreen(
                 onRequest = { permissionLauncher.launch(Manifest.permission.CAMERA) },
                 shouldShowRationale = permissionState.status.shouldShowRationale,
-            )
+            ) }
         }
     }
 }
@@ -126,22 +130,22 @@ private fun RequestCameraPermissionScreen(
             stringResource(Res.string.neutral_barcode_scanner_camera_request)
         }
 
-    Surface(modifier = modifier, onClick = onRequest) {
+    Surface(modifier = (modifier).uiName("RequestCameraPermissionScreen.Surface.1", "androidx.compose.material3.Surface", uiInspectionSource, "RequestCameraPermissionScreen"), onClick = onRequest) {
         Column(
-            modifier = Modifier.fillMaxSize().safeContentPadding(),
+            modifier = (Modifier.fillMaxSize().safeContentPadding()).uiName("RequestCameraPermissionScreen.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "RequestCameraPermissionScreen"),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 text = text,
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.bodyLarge, modifier = Modifier.uiName("RequestCameraPermissionScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "RequestCameraPermissionScreen")
             )
             Spacer(Modifier.height(16.dp))
             Text(
                 text = stringResource(Res.string.action_tap_to_allow_access),
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.labelMedium,
+                style = MaterialTheme.typography.labelMedium, modifier = Modifier.uiName("RequestCameraPermissionScreen.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "RequestCameraPermissionScreen")
             )
         }
     }
@@ -153,28 +157,28 @@ private fun RedirectToSettingsAlertDialog(
     onConfirm: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    AlertDialog(
+    UiSourceScope(uiInspectionSource.element("RedirectToSettingsAlertDialog.AlertDialog.1", "androidx.compose.material3.AlertDialog", "RedirectToSettingsAlertDialog")) { AlertDialog(
         onDismissRequest = onDismissRequest,
         confirmButton = {
-            TextButton(onClick = onConfirm) {
-                Text(stringResource(Res.string.action_go_to_settings))
+            TextButton(onClick = onConfirm, modifier = Modifier.uiName("RedirectToSettingsAlertDialog.TextButton.1", "androidx.compose.material3.TextButton", uiInspectionSource, "RedirectToSettingsAlertDialog")) {
+                Text(stringResource(Res.string.action_go_to_settings), modifier = Modifier.uiName("RedirectToSettingsAlertDialog.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "RedirectToSettingsAlertDialog"))
             }
         },
-        modifier = modifier,
+        modifier = (modifier).uiName("RedirectToSettingsAlertDialog.AlertDialog.1.root", "androidx.compose.material3.AlertDialog", uiInspectionSource, "RedirectToSettingsAlertDialog"),
         dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(stringResource(Res.string.action_cancel))
+            TextButton(onClick = onDismissRequest, modifier = Modifier.uiName("RedirectToSettingsAlertDialog.TextButton.2", "androidx.compose.material3.TextButton", uiInspectionSource, "RedirectToSettingsAlertDialog")) {
+                Text(stringResource(Res.string.action_cancel), modifier = Modifier.uiName("RedirectToSettingsAlertDialog.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "RedirectToSettingsAlertDialog"))
             }
         },
-        title = { Text(stringResource(Res.string.headline_permission_required)) },
+        title = { Text(stringResource(Res.string.headline_permission_required), modifier = Modifier.uiName("RedirectToSettingsAlertDialog.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "RedirectToSettingsAlertDialog")) },
         text = {
             Text(
                 stringResource(
                     Res.string.neutral_barcode_scanner_camera_request_redirect_to_settings
-                )
+                ), modifier = Modifier.uiName("RedirectToSettingsAlertDialog.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "RedirectToSettingsAlertDialog")
             )
         },
-    )
+    ) }
 }
 
 private fun redirectToSettings(context: Context) {
@@ -184,3 +188,9 @@ private fun redirectToSettings(context: Context) {
         }
     context.startActivity(intent)
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.barcodescanner.ui",
+    "shared/barcodescanner/src/androidMain/kotlin/com/maksimowiczm/foodyou/barcodescanner/ui/CameraBarcodeScannerScreen.android.kt",
+)

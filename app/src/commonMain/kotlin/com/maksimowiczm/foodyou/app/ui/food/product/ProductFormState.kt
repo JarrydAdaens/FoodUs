@@ -17,12 +17,13 @@ import com.maksimowiczm.foodyou.app.ui.common.utility.EnergyFormatter
 import com.maksimowiczm.foodyou.app.ui.common.utility.LocalEnergyFormatter
 import com.maksimowiczm.foodyou.app.ui.common.utility.Saver
 import com.maksimowiczm.foodyou.common.compose.utility.formatClipZeros
-import com.maksimowiczm.foodyou.common.domain.food.FoodSource
+import com.maksimowiczm.foodyou.common.domain.food.ProductSource
 import com.maksimowiczm.foodyou.common.domain.food.NutrientValue.Companion.toNutrientValue
 import com.maksimowiczm.foodyou.common.domain.food.NutrientsHelper
 import com.maksimowiczm.foodyou.common.domain.food.NutritionFacts
 import com.maksimowiczm.foodyou.common.domain.measurement.Measurement
 import com.maksimowiczm.foodyou.food.domain.entity.Product
+import com.maksimowiczm.foodyou.food.domain.entity.ProductNutritionBasis
 import com.maksimowiczm.foodyou.food.domain.entity.RemoteProduct
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
@@ -33,7 +34,11 @@ import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
 
 @Composable
-internal fun rememberProductFormState(product: Product? = null): ProductFormState {
+internal fun rememberProductFormState(
+    product: Product? = null,
+    // Quick Add promotion carries authoritative totals, including explicit or unknown energy.
+    preserveEnergy: Boolean = false,
+): ProductFormState {
     val name =
         rememberFormField(
             initialValue = product?.name ?: "",
@@ -143,8 +148,10 @@ internal fun rememberProductFormState(product: Product? = null): ProductFormStat
         )
 
     val autoCalculateEnergyState =
-        rememberSaveable(product) {
-            if (product == null) {
+        rememberSaveable(product, preserveEnergy) {
+            if (preserveEnergy) {
+                mutableStateOf(false)
+            } else if (product == null) {
                 mutableStateOf(true)
             } else {
                 val energy = product.nutritionFacts.energy.value
@@ -307,7 +314,7 @@ internal fun rememberProductFormState(product: Product? = null): ProductFormStat
         rememberNotRequiredFormField(product?.nutritionFacts?.chromium?.times(1_000_000.0)?.value)
 
     val sourceType =
-        rememberSaveable(product) { mutableStateOf(product?.source?.type ?: FoodSource.Type.User) }
+        rememberSaveable(product) { mutableStateOf(product?.source?.type ?: ProductSource.Type.User) }
     val sourceUrl =
         rememberFormField<String?, Nothing>(
             initialValue = product?.source?.url,
@@ -415,7 +422,7 @@ internal fun rememberProductFormState(product: Product? = null): ProductFormStat
                         brand.value != null ||
                         barcode.value != null ||
                         note.value != null ||
-                        sourceType.value != FoodSource.Type.User ||
+                        sourceType.value != ProductSource.Type.User ||
                         sourceUrl.value != null ||
                         isLiquid.value ||
                         packageWeight.value != null ||
@@ -1070,7 +1077,7 @@ internal class ProductFormState(
     val brand: FormField<String?, Nothing>,
     val barcode: FormField<String?, Nothing>,
     val note: FormField<String?, Nothing>,
-    sourceTypeState: MutableState<FoodSource.Type>,
+    sourceTypeState: MutableState<ProductSource.Type>,
     val sourceUrl: FormField<String?, Nothing>,
     isLiquidState: MutableState<Boolean>,
     // Weight
@@ -1132,6 +1139,55 @@ internal class ProductFormState(
     isModifiedState: State<Boolean>,
     autoCalculateEnergyState: MutableState<Boolean>,
 ) {
+    var saveFailed by mutableStateOf(false)
+    var basisUnavailable by mutableStateOf(false)
+
+    fun selectNutritionBasis(next: Measurement) {
+        if (measurement == next) return
+        // An explicit liquid-status edit relabels the canonical per-100 basis; it is not a
+        // physical mass/volume portion conversion and does not assume a density.
+        val previous = measurement
+        if ((previous is Measurement.Gram && next is Measurement.Milliliter && previous.value == next.value) ||
+            (previous is Measurement.Milliliter && next is Measurement.Gram && previous.value == next.value)) {
+            measurement = next
+            basisUnavailable = false
+            return
+        }
+        val multiplier = ProductNutritionBasis.displayMultiplier(
+            measurement, next, isLiquid, packageWeight.value?.toDouble(), servingWeight.value?.toDouble(),
+        )
+        val fields = nutrientFields
+        if (multiplier == null || fields.any {
+                (it.error != null && it.textFieldState.text.isNotBlank()) ||
+                    it.value?.let { value ->
+                        val scaled = (value * multiplier).toFloat()
+                        !scaled.isFinite() || value < 0f || (value > 0f && scaled == 0f)
+                    } == true
+            }) {
+            basisUnavailable = true
+            return
+        }
+        fields.forEach { field ->
+            field.value?.let { value ->
+                field.textFieldState.setTextAndPlaceCursorAtEnd(
+                    (value * multiplier).toFloat().toString().removeSuffix(".0")
+                )
+            }
+        }
+        measurement = next
+        basisUnavailable = false
+    }
+
+    private val nutrientFields: List<FormField<Float?, ProductFormFieldError>>
+        get() = listOf(energy, proteins, carbohydrates, fats, saturatedFats, transFats,
+            monounsaturatedFats, polyunsaturatedFats, omega3, omega6, sugars, addedSugars,
+            dietaryFiber, solubleFiber, insolubleFiber, salt, cholesterolMilli, caffeineMilli,
+            vitaminAMicro, vitaminB1Milli, vitaminB2Milli, vitaminB3Milli, vitaminB5Milli,
+            vitaminB6Milli, vitaminB7Micro, vitaminB9Micro, vitaminB12Micro, vitaminCMilli, vitaminDMicro,
+            vitaminEMilli, vitaminKMicro, manganeseMilli, magnesiumMilli, potassiumMilli,
+            calciumMilli, copperMilli, zincMilli, sodiumMilli, ironMilli, phosphorusMilli,
+            seleniumMicro, iodineMicro, chromiumMicro)
+
     val isValid: Boolean
         get() =
             name.error == null &&
@@ -1181,14 +1237,14 @@ internal class ProductFormState(
                 iodineMicro.error == null &&
                 chromiumMicro.error == null
 
-    var sourceType: FoodSource.Type by sourceTypeState
+    var sourceType: ProductSource.Type by sourceTypeState
     var isLiquid: Boolean by isLiquidState
     var measurement: Measurement by measurementState
     val isModified: Boolean by isModifiedState
     var autoCalculateEnergy: Boolean by autoCalculateEnergyState
 }
 
-internal fun ProductFormState.nutritionFacts(multiplier: Float) =
+internal fun ProductFormState.nutritionFacts(multiplier: Double) =
     NutritionFacts(
         proteins = proteins.value.applyMultiplier(multiplier).toNutrientValue(),
         carbohydrates = carbohydrates.value.applyMultiplier(multiplier).toNutrientValue(),
@@ -1250,4 +1306,4 @@ internal fun ProductFormState.nutritionFacts(multiplier: Float) =
         chromium = chromiumMicro.value.applyMultiplier(multiplier)?.div(1_000_000).toNutrientValue(),
     )
 
-private fun Float?.applyMultiplier(multiplier: Float): Float? = this?.let { it * multiplier }
+private fun Float?.applyMultiplier(multiplier: Double): Double? = this?.let { it * multiplier }

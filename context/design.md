@@ -2,7 +2,7 @@
 name: design
 description: Design specification for FoodUs - a personal, privacy-first fork of the Food You KMP/Compose food diary - covering architecture, principles, constraints, the context tier system, and the embedded milestones index.
 metadata:
-  version: "3.1"
+  version: "3.7"
   agentic_rails_source_version: "3.0"
   owner: "Jarryd Adaens"
   repo: "FoodYou (fork of maksimowiczm/FoodYou)"
@@ -92,10 +92,24 @@ The backlog (`backlog/`) is not a numbered tier. It is a staging pool — inform
 | Milestone | Document | Status | Why it matters | What it unlocks |
 | --- | --- | --- | --- | --- |
 | Milestone 1: Initialization | [milestones/milestone-1.md](milestones/milestone-1.md) | Complete | Gets the fork built, deployed, populated with the owner's recovered historical data, and in daily use, with a repeatable two-device update mechanism | A live, data-complete daily driver that Milestone 2 can safely customize |
-| Milestone 2: Customisation | [milestones/milestone-2.md](milestones/milestone-2.md) | In Progress (reopened 2026-07-26) | Makes the app the owner's own: FoodUs identity, AI-assisted logging, ergonomics fixes, adopted upstream bug fixes | An app that is faster to log with than MyFitnessPal/Lose It ever were, unmistakably this fork |
+| Milestone 2: Customisation | [milestones/milestone-2.md](milestones/milestone-2.md) | In Progress (reopened 2026-07-26) | FoodUs identity, AI-assisted logging, OCR-assisted nutrition labels and evaluation, a unified personal library in Settings, diary-slot bulk actions, ergonomics, adopted fixes, and a developer UI name bar | Faster logging with faithful label capture, reusable food management, measurable AI/OCR quality, and source-oriented UI identification |
 | Milestone 3: Multiplayer | [milestones/milestone-3.md](milestones/milestone-3.md) | In Progress (started 2026-07-28) | Cross-diary logging for the household pair — log a shared meal once and it lands in both diaries — via profiles, friends, two-person trusted groups, and a dumb encrypted relay | A multi-user FoodUs that stays local-first: the island broken in exactly one controlled place |
+| Milestone B: Bugs (supplementary) | [milestones/milestone-b.md](milestones/milestone-b.md) | Complete (2026-10-25) | Ten reported bugs and UX improvements covering onboarding, AI scanning, Quick Add, release history, and API-key masking | A dependable scan-to-diary workflow and clearer daily-use controls; closed B Stories add to the current numbered milestone's version count |
 
 Keep this index in sync as milestones are added, completed, reordered, or reclassified. When a backlog Story is too large for one coherent work unit, promote it into this index as a new milestone.
+
+### Product generation and delivery milestone
+
+The owner's 2026-10-25 versioning decision identifies original Food You as Generation 1,
+this FoodUs fork as Generation 2, and the multiplayer FoodUs direction with foodus-relay
+as Generation 3. Current development advances to Generation 3 now; this does not assert
+that multiplayer is complete or the relay is deployed. Those Milestone 3 gates remain open.
+
+For product version derivation, the owner selects **Milestone 2** as the current delivery
+milestone while its remaining Stories are open. Its closed Stories and Milestone B's closed
+Stories contribute under the [versioning policy](versioning-policy.md). Milestone 3 work
+can remain In Progress without changing that selection. Advancing the delivery milestone
+requires an explicit owner decision recorded here; generation and milestone are independent.
 
 ---
 
@@ -108,8 +122,9 @@ build but Android is primary. Current upstream version: 3.4.9 (GPL-3.0).
 
 **Creator.** The upstream project is created and maintained by Mateusz Maksimowicz
 ([maksimowiczm](https://github.com/maksimowiczm) on GitHub). This repository is Jarryd Adaens's fork
-of it — FoodUs — which will carry its own identity, versioning (starting at 1.0, layered on
-top of the upstream version), and upstream attribution once Milestone 2's identity story lands.
+of it — FoodUs — with its own shipped identity and upstream attribution. The
+[versioning policy](versioning-policy.md) defines its adopted four-part product version
+and the transition from historical three-part releases; upstream versioning remains attribution.
 
 **Who it is for.** People who want to log what they eat and track calories, macros, and
 micronutrients without accounts, ads, subscriptions, or upsells.
@@ -149,18 +164,214 @@ approachable despite living mostly in one Gradle module.
 
 ### Domain Model (shared vocabulary)
 
-These concepts underpin the Milestone 1 data-recovery work and the Milestone 2 UI work:
+The owner accepted this vocabulary on 2026-10-25. This section owns the target domain
+language; source identifiers that still use earlier names are implementation debt.
 
-| Concept | Definition |
+| Domain/code concept | User-facing wording | Definition |
+| --- | --- | --- |
+| **Product** | Food | An individual nutritional item, including ordinary ingredients and packaged products. Nutrition is defined directly; brand, barcode, package weight, serving weight, and notes are optional metadata. Legacy metric facts use per 100 g/mL; Story 28 also supports explicit reference-serving facts without inventing metric quantities. |
+| **Recipe** | Recipe | Ingredients and their amounts combined into a new composite item with a serving yield. Its nutrition is derived from its ingredients. Ordinary logging creates one portioned diary entry for the Recipe. |
+| **Meal** | Meal / Meals | A named, saved, reusable bundle. Loading it appends each constituent as a separate diary entry; it does not merge the bundle into a new Recipe. A constituent may represent a Product, a portion of a Recipe, or a captured Quick Add entry. |
+| **DiarySlot** | The configured name, such as Breakfast or Lunch | A named diary category with its time window and display order. It is a destination for entries, independent of a reusable Meal definition. |
+| **DiaryEntry** | Entry, usually displayed by its item name | A dated record assigned to a DiarySlot, carrying a nutritional snapshot of the amount logged. It is distinct from the reusable definition and must preserve historical nutrition when definitions change. |
+
+**Food** is friendly user-facing vocabulary, not a fourth domain entity. **Template**
+is not a separate product concept. The accepted reusable-bundle type is now **Meal**,
+superseding the earlier `MealTemplate` target name. Product, Recipe, and Meal remain
+distinct concepts when presented together in the selected shared library. The owner
+selected **Products** as that library's atomic-item tab label in Story 38; friendly
+Food wording elsewhere remains valid.
+
+For example, a Meal named "Usual breakfast" may contain an omelette Recipe and toast
+from a Product. Loading it into tomorrow's Breakfast DiarySlot creates two DiaryEntries;
+the omelette's ingredients remain combined inside its Recipe entry. Viewing or editing
+a saved definition is separate from logging it.
+
+#### Serving, portion, and quantity
+
+A **serving** is a reference quantity: one serving of a Recipe or a defined unit of a
+Product. A **portion** is the amount actually used or eaten, such as two servings or
+150 g. Quantity and unit must be explicit where known. Recipe yield is how many
+servings the complete Recipe makes; a diary portion is how much was logged.
+
+These are semantic decisions, not authorization to introduce a new Portion class or
+change numeric storage automatically. Existing `Measurement` types already represent
+amounts in weight, volume, servings, or packages. Preserve unknown weights and units;
+never invent a gram basis for a saved entry. Quick Add stores absolute nutrition totals;
+its optional serving count and weight are descriptive metadata and must not silently
+rescale those totals. A placeholder is an unresolved DiaryEntry, not another reusable
+catalogue type.
+
+#### Accepted Recipe calculation and editing contract
+
+Story 27's [plan](implementation-plans/milestone-2/story-27-recipe-composition-portions/plan.md)
+selects ingredient totals as the starting point. A Recipe portion of q reference
+servings scales those totals by q / yield; a whole-Recipe/package fraction scales
+its complete totals directly. Do not require a fabricated gram/mL basis as an
+intermediate for serving nutrition. Nested Recipe serving portions use the same
+rule, once at each composition boundary. Existing positive integer yield storage
+remains; portions and ingredient measurements can be fractional.
+
+A Recipe's aggregate metric basis is known only when all constituent amounts have
+a complete compatible mass/volume basis. Never sum grams and millilitres or infer
+density. Metric portions and per-100 Recipe facts require that known basis; mixed
+ingredient Recipes can still use serving fractions when their ingredient totals
+resolve. Unknown nutrient fields remain incomplete, not a partial sum or invented
+zero. Legacy unavailable compositions stay readable as unavailable data. New
+save/log/unpack operations reject invalid or unresolvable required amounts before
+writes, with recoverable feedback.
+
+The complete editor draft drives previews. Save validates candidate graph edges
+and metadata/ingredients atomically, rejecting self/indirect cycles while retaining
+valid shared branches; Cancel and failed saves preserve the prior definition.
+Ordinary logging remains one captured Recipe entry. Explicit unpack validates and
+atomically appends/replaces direct constituents using the Recipe portion fraction;
+nested Recipes remain single constituents until explicitly unpacked themselves.
+Historical Recipe snapshots require an internal calculation-contract discriminator.
+Concrete baseline inspection showed that a mixed 100 g / 100 mL Recipe logged as
+100 g displayed 150 energy units under the old calculation, while strict new basis
+rules would make it unavailable. Unknown-nutrient aggregation also changes results.
+The persisted composition and measurement alone cannot identify the intended rule.
+
+Story 27 therefore owns an additive schema 39 → 40 migration adding a DiaryRecipe
+snapshot calculation contract: existing rows default to legacy 0, fresh captures
+from live definitions use current 1, and copying existing snapshots retains their
+contract. Preserve recorded legacy nutrition through its frozen legacy calculation;
+apply strict total-first/compatible-basis rules to new captures. Do not silently
+reinterpret old contracts during reads, copy or unpack. New density/unit models,
+live diary references and external relay/CSV/wire changes remain outside scope.
+Keep schema 39 intact, verify all existing columns/IDs and new default 0 through
+real migration/reopen tests. Story 24's separate nullable amount-metadata migration
+will follow the accepted predecessor schema, expected 40 → 41.
+The same migration also corrects the proven Recipe dependency-view defect: traversal
+follows typed Recipe IDs, terminates on cycles, and cannot confuse a same-number
+Product with a Recipe. Preserve the view identity/output contract and stored rows;
+verify actual DAO queries and all consumers against the corrected ancestry meaning.
+Implementation/acceptance remains owned by Story 27.
+
+#### Current source names and implementation transition
+
+| Existing identifier/role | Accepted target or planning requirement |
 | --- | --- |
-| **Custom food** | A food built from scratch by specifying its fundamentals — macros, minerals, fats, proteins, etc. — and given a name. |
-| **Recipe** | A collection of distinct ingredient foods making up one final food item. When used, it stays **collapsed** into a single diary entry (e.g. "birthday cake"). |
-| **Meal** | Also built from components, but when inserted into the diary it **expands**: each sub-item is added as its own entry (e.g. "chicken sandwich" inserts bread + mayonnaise + 100 g chicken + 50 g cheese). |
-| **Diary entry** | A reference to a food that was eaten — not the definition of the food. Links to a food and gives it a portion size. |
-| **Placeholder entry** | (Planned, Milestone 2.) A zero-calorie diary entry holding only a name and description — a marker that something was eaten, resolved into real data later. |
+| `Product` and `Recipe` | Keep their distinct roles and existing creation/editing foundations. |
+| `MealTemplate` and its related item, ID, repository, use-case, and UI names | Adopt the `Meal` family for reusable bundles, including `MealItem` and related names. Remove template terminology from this feature's UI. |
+| Former diary-category `Meal` and category `mealId` references | Adopt `DiarySlot` and corresponding slot identifiers. Free the `Meal` name for the reusable bundle without confusing the two identities. |
+| `DiaryMeal`, the category-and-entries aggregate | Story 25's plan selects `DiarySlotEntries` for this diary grouping/projection. It is not the saved reusable Meal. |
+| Shared `Food` interface and related polymorphic APIs | Story 26 implements `NutritionalItem` / `NutritionalItemId` for the sealed Product-or-Recipe definition and typed identity. Product and Recipe remain distinct variants; synthetic Product/identity/snapshot acceptance is recorded in Story 26. |
 
-Recipes and meals overlap conceptually; the difference is collapse-vs-expand behavior at insertion
-time.
+Story 26's [plan](implementation-plans/milestone-2/story-26-product-terminology-portions/plan.md)
+selects **NutritionalItem** as a shared reusable-definition role, not a fourth user
+concept. It owns typed identity, display headline, canonical nutrition, liquid status,
+optional known reference/total basis and supported portion resolution. Captured
+definitions use **NutritionalItemSnapshot**, **ProductSnapshot**, **RecipeSnapshot**,
+and **RecipeIngredientSnapshot** without live catalogue IDs. A dated, portioned
+snapshot uses **NutritionalItemDiaryEntry**, distinct from generic DiaryEntry and
+ManualDiaryEntry. Product-only provenance and remote errors use Product names.
+Shared search/history/suggestion APIs use the selected role; UI Food wording,
+upstream namespaces, legacy storage/serialized identities and external names remain.
+
+[Story 25](milestones/milestone-2.md#story-25) delivers the DiarySlot/Meal separation and
+DiarySlotEntries projection, with legacy persistence/serialization preserved and
+synthetic upgrade/backup/navigation acceptance.
+[Story 26](milestones/milestone-2.md#story-26) delivers the shared typed/snapshot
+terminology and Product serving/basis/portion reconciliation with unit, real-Room,
+actual-screen and historical-data acceptance.
+[Story 27](milestones/milestone-2.md#story-27) delivers Recipe composition/yield, ordinary
+snapshot logging and explicit unpack, with historical calculation preservation and
+synthetic unit, Room, actual-screen and upgrade acceptance. [Story 24](milestones/milestone-2.md#story-24) delivers the selected Meals library/editor
+and captured-portion model, with atomic save/update/load, preserved legacy data,
+actual-screen workflows and production process-restart acceptance recorded in the
+[batch completion record](_boss-runs/milestone-2-domain-meals-sequential/domain-meals-batch-receipt.json).
+Implementation must handle the existing name collision coherently, update relevant
+APIs/state/navigation/resources/tests, and preserve stable identities and serialized
+meaning. Kotlin type renames must not implicitly rename Room tables or columns, break
+backups, reassign entries to different slots, or lose saved bundles. Keep explicit
+legacy storage mappings or use a tested data-preserving migration where needed.
+Historical Story evidence, paths, and upstream source namespaces retain their identities.
+
+A central Meals library/editor is selected in
+[Milestone 2 Story 24](milestones/milestone-2.md#story-24), extending Story 13's delivered
+save/apply/delete flow. It must share one saved collection with diary actions, support
+rename and constituent editing with explicit Save/Cancel, and preserve existing diary
+snapshots when saved Meals change. The [accepted implementation plan](implementation-plans/milestone-2/story-24-meals-library-editor/plan.md)
+delivered an always-visible Meals action beside Settings in Home, a private Save/Cancel
+draft, and one shared saved collection. MealItem stores absolute captured totals.
+Retained item IDs/order and aggregate creation time survive atomic updates. Loading
+validates one committed Meal and its destination, then appends each constituent as a
+separate manual snapshot in one transaction, guarded against duplicate submissions.
+
+Story 24 adds six nullable quantity-context columns in schema 40 → 41: MealTemplateItem
+gets capturedPortionType/value plus descriptive servingCount/weightGrams;
+ManualDiaryEntry gets capturedPortionType/value. Existing rows remain null. Known
+portions use the existing Measurement types; legacy original amounts stay unknown.
+A same-unit amount edit or explicit whole-portion scale changes captured totals once;
+direct descriptive count/weight edits leave nutrition unchanged and clear a conflicting
+known captured portion with explanation. Name/nutrient edits and no-op context edits
+preserve quantity metadata. No density, missing basis, live source link or amount is
+invented. New captures normalize incomplete nutrient fields to unknown before preview
+and flat persistence, across all 43 fields; existing saved numeric values and Recipe
+historical contracts remain unchanged. Schema 39 and accepted 40 exports are immutable.
+
+The owner's 2026-10-26 decision selects a combined **Recipes, Meals & Products** library
+in [Milestone 2 Story 38](milestones/milestone-2.md#story-38), currently Not Started.
+It replaces the Home Meals shortcut with a Settings row immediately below Daily goals.
+The destination has search, Recipes / Meals / Products tabs, compact rows with nutrition
+summaries and explicit reference quantities, and a bottom creation action for the active
+tab. Products lists personal/custom items, including personal imports; existing provider
+search remains separate. Definition creation/editing from Settings requires no diary
+destination, while loading a Meal explicitly selects a day and DiarySlot. Existing
+repositories, captured nutrition, Save/Cancel behavior and diary snapshot isolation remain
+binding. This extends Story 24 without reopening it. The shared abstraction and diary-group
+projection are selected above; the editor's unknown-portion contract is selected in its plan.
+No third-party studies or extracted reference material belong in this context.
+
+The owner also selected diary-slot bulk actions in
+[Milestone 2 Story 39](milestones/milestone-2.md#story-39), Complete on 2026-10-26.
+The DiarySlot ellipsis menu provides Delete All, Move to..., Copy to... and Copy From...
+for all entries in the selected slot on the displayed diary day. Source/destination
+selection allows a different day, slot or both. Copies append independent snapshots;
+moves transfer the entries atomically; Delete All confirms and removes only that day's
+entries in that slot. Existing destination entries, saved definitions, recorded nutrition
+and unrelated history are preserved. Copy From also works into an empty slot. Same
+source/destination selection is rejected, and existing Save Meal/Load Meal remain available.
+
+The owner selected implementation in Milestone 2, ordered
+[25: DiarySlot/Meal separation](milestones/milestone-2.md#story-25) →
+[26: Product terminology and portions](milestones/milestone-2.md#story-26) →
+[27: Recipe composition and portions](milestones/milestone-2.md#story-27) →
+[24: Meals library/editor](milestones/milestone-2.md#story-24). Story 25 owns the existing
+diary-group projection's naming decision, Story 26 the shared interface's naming and
+Product portion contract, Story 27 Recipe yield/composition, and Story 24 legacy saved-
+Meal editing semantics. The milestone owns each Story's acceptance and current status.
+This selection records implementation work without changing the app version or closing
+Stories. A combined catalogue hub and additional import/sharing features remain outside
+this batch.
+
+
+After the original batch and private APK delivery, the owner authorized
+[Story 28](milestones/milestone-2.md#story-28) for faithful structured personal-library
+import because the existing CSV path flattens Products/Recipes/Meals. The planned
+extension must preserve declared nonmetric serving references, reported Recipe
+nutrition independently of ingredient-derived facts, unknown yields and ordered inline
+components, and Meal absolute snapshots/portion text. It remains local and additive;
+existing diary/settings and legacy definitions/snapshots retain their meaning. A
+FoodUs-owned format and synthetic fixtures belong in source; account-specific adapters,
+raw records and derived personal packages remain private outside the checkout.
+The [adopted plan](implementation-plans/milestone-2/story-28-structured-personal-import/plan.md)
+selects explicit legacy-metric/reference-serving Product bases captured in snapshots;
+separate reported Recipe panels and ordered inline components with nullable yields;
+preserved calculation 0/1 plus an explicit reported snapshot mode; independent Meal
+reported panels and immutable descriptive provenance; and a typed source-identity ledger
+with atomic conflict rejection. Reported composition/reference edits require nutrition
+review; ordinary derived behavior remains unchanged. Reported unpack is unavailable
+in v1, snapshots never depend on live catalogue foreign keys, and CSV export cannot
+mislabel unsupported serving-only facts as metric facts. The source uses a versioned
+FoodUs-owned format, separate from private account adapters. Story28 passed Android
+acceptance on 2026-10-26 with schema42 and private APK delivery. Original schema39–41
+exports and historical calculation contracts remain unchanged. The package imports
+the library, not diary history. Reported Unpack/structured export remain unavailable;
+metric CSV rejects unsupported reference facts, and full native backup retains them.
+See the adopted plan and final receipt for evidence and remaining platform/identity limits.
 
 ---
 
@@ -196,6 +407,11 @@ Kotlin targets: `androidTarget` (JVM 21), `iosArm64`, `iosSimulatorArm64`.
   (2026-07-26 addendum; supersedes the original baked-into-private-builds key design), for
   photo-based food identification and search-query generation. See "Security and Privacy" for
   the boundary this creates.
+- OCR provider (Milestone 2, selected but not implemented) — a separate optional nutrition-label
+  extraction capability, initially OCR.space, with its own on-device endpoint/key settings.
+  It receives label images only after the configured vision model routes them to OCR.
+  The same existing AI endpoint/model subsequently parses recognised text; no classifier-model
+  setting or second generic AI configuration is introduced. See the OCR pipeline below.
 - FoodUs relay (Milestone 3, planned) — a self-hosted, deliberately dumb store-and-forward
   message relay ("post office") that ferries sealed, end-to-end-encrypted envelopes between
   household devices for cross-diary logging. It holds only GUIDs, public keys, friend codes,
@@ -243,6 +459,98 @@ FoodYou/
 2. Import: CSV parsed and merged into the local Room database.
 3. No cloud sync exists; a device's database is the single copy.
 
+### OCR-assisted nutrition capture
+
+The owner selected the [25 October OCR addendum](dictations-tier-0/2026-10-25_milestone-2_ocr-assisted-nutrition-capture.md)
+for Milestone 2 on 2026-10-26. [Stories 30–37](milestones/milestone-2.md#ocr-delivery-order)
+own implementation and acceptance; this section owns the maintained design. The original
+attachment remains exact intake evidence. This is scheduled work, not a claim of delivered OCR.
+
+| Configuration / image | External work for one successful submission | Result |
+| --- | --- | --- |
+| OCR enabled and configured; ordinary food | One vision request: classify and estimate together | Existing multi-food review results; no OCR request |
+| OCR enabled and configured; nutrition panel | Vision classification → OCR image extraction → text-only AI parsing | Validated label facts enter the existing review/ingestion flow |
+| OCR off or unconfigured | Existing AI-only image request from the start | Existing AI behavior stays available; disclose OCR availability before submission |
+
+The unavailable-OCR row resolves the addendum's compatibility requirement: do not classify a
+label into a null result and then silently issue another AI call. OCR is off by default and
+never a prerequisite for the existing AI feature. Once an enabled label pipeline begins, an
+OCR/parser failure is a recoverable stage-specific error, not an automatic vision fallback.
+An explicit future fallback action is outside this selection.
+
+**Routing and shared contracts.** The first enabled vision request distinguishes
+`nutrition_label` (no nutrition payload; proceed to OCR) from `food_estimate` (the existing
+food collection in the same response). Incidental text/branding is not a label. Mixed images
+with a real readable nutrition panel prefer the label route. Reject unknown modes, contradictory
+payloads, malformed JSON and unusable results before proceeding. Keep the accepted multi-food
+selection/partial-rejection behavior; do not replace it with a single-item-only schema.
+Text search and barcode lookup remain separate.
+
+`NutritionResult` in the intake is conceptual: the actual scan boundary is `AiFoodScanner`,
+`AiScanResult.Success(estimates)` and `AiFoodEstimate` under `ai/domain`. Those estimates are
+absolute totals for the pictured portion; serving count/weight are descriptive, not multipliers.
+`NutritionFacts` and the Story 28 `ReportedNutrition`, `PortionDescription`, `MetricUnit` and
+reference-serving Product contracts already represent other useful nutrition/reference concepts.
+Story 30 must settle and test their mapping before adapter/orchestration implementation.
+Use the existing nutrient vocabulary and a common review contract, with additive source/basis
+metadata if necessary; do not introduce a parallel OCR nutrient schema or blindly put per-100
+numbers into absolute scan totals.
+
+Preserve per-serving, per-100 g, per-100 mL and other explicit references, units and column
+association. Convert only through explicit compatible quantities using deterministic existing
+code; never infer density, serving size, grams, food identity or missing nutrients. Unknown
+stays null/unknown; a printed zero stays zero. Required display fields without printed values
+need a clearly neutral presentation or review requirement, not an invented label fact.
+Unresolved basis/quantity must be visible in review and cannot silently become loggable totals.
+Historical diary snapshots and Product/Recipe/Meal calculation contracts remain unchanged.
+
+**OCR boundary.** Define a provider-neutral image/config → recognised-text/result boundary in
+the existing domain/infrastructure pattern. Provider DTOs stay inside the adapter. OCR.space
+is the initial implementation: HTTPS POST multipart file, `apikey` header, suitable language
+default, no word-coordinate overlay/searchable PDF. Read `ParsedResults[].ParsedText` only
+after checking both provider and file parse status. Partial/empty results must not masquerade
+as a complete label. Distinguish transport, provider/API, parse, unusable-text and usable-text
+outcomes; preserve bounded processing metadata. No provider price/upload quota becomes a
+core domain constant. Provider-specific compression, image validation and current limits
+belong to the adapter; reuse existing image preparation unless controlled evaluation shows
+it loses readable label detail. Bound image, response and recognised-text sizes.
+
+The [official API documentation](https://ocr.space/ocrapi), checked 2026-10-26, confirms this
+POST/header/text/error contract. Engine/language options and operational limits must be
+rechecked when the adapter is implemented; this design does not fix a subscription tier,
+quota, price or OCR engine in perpetuity.
+
+**Text parsing and prompts.** The label parser calls the existing configured AI endpoint/model
+with recognised text and the authoritative output contract, without an image. Map supported
+facts; do not estimate, repair by guessing, transpose columns or invent serving sizes. Keep
+source text delimited as untrusted data, not instructions. Retain the existing personal-data-free
+machine prompt, user-system-context and per-scan-hint separation; user context cannot turn
+label parsing into estimation or override schema/basis constraints. Validate output and
+explicit unit conversions before any review item or history write. Wrong-basis errors are
+critical regression cases. Do not claim prompts alone prove factual accuracy.
+
+**Orchestration and recovery.** Resolve a coherent configuration for each submission so both
+AI steps use the same selected endpoint/model. Initial AI failure/invalid routing triggers no
+OCR. OCR failure or insufficient text triggers no parser request; parser/schema failure stays
+distinct from extraction success. Cancellation stops later stages, and stale/duplicate results
+must not create review items or diary entries. Retain the captured image for retry/retake and
+preserve existing multi-food review, selection, Quick Add editing, Save/Cancel, and successful
+single-save navigation. Explain label-derived versus estimated results and OCR availability
+without exposing implementation detail that does not help the user.
+
+**Settings.** Add a dedicated OCR sub-page beside AI, with enablement, provider (initially only
+OCR.space), editable default endpoint `https://api.ocr.space/parse/image`, masked API key with
+the existing reveal-eye behavior, and an explicit configuration test. Distinguish disabled,
+incomplete, valid and failed configuration. Validate endpoint/provider inputs; blank/clear and
+restart/reactive behavior follow existing preferences patterns. Configuration testing uses
+local validation and, where practical, an explicitly disclosed tiny synthetic request; never
+upload the current user photo merely to test settings. Report what was actually checked, not
+an unwarranted guarantee of OCR accuracy. Internal provider knobs stay out of the settings UI.
+
+The evaluation harness is specified under [Testing Policy](#aiocr-evaluation-harness).
+Receipt/menu/general-document OCR, barcode redesign, automatic OCR for all images, another
+AI endpoint/model setting, enterprise deployment, queues and throughput tuning are out of scope.
+
 ### Historical Data Recovery (Milestone 1)
 
 The owner's years of MyFitnessPal and Lose It data are recovered into a **master JSON format** —
@@ -259,10 +567,10 @@ JSON remains the canonical source; app-specific formats are generated exports.
 ### Primary Configuration
 
 - `gradle/libs.versions.toml` — version catalog: fork version (`fork-version-name`,
-  `<milestone>.<story>.<build>`, the shipped versionName), upstream version-name kept as
+  the shipped versionName under the adopted policy and its legacy transition), upstream version-name kept as
   derived-from metadata, versionCode, SDK levels
   (min 28, compile/target 36), and every dependency version. Change dependencies here, not in
-  build files.
+  build files. [FoodUs Versioning Policy](versioning-policy.md) owns the release version rules.
 - `app/build.gradle.kts` — KMP targets, build types (`release` minified, `devRelease`,
   `miniDevRelease`, `preview` with `.preview` app-id suffix), Room schema dir, BuildConfig.
 - `gradle.properties` — JVM memory, configuration cache, build cache.
@@ -284,6 +592,11 @@ None in the repository. Credentials in the system:
   and dissolves its open secret-injection question — no AI credential ever exists in the
   repository, CI, or any build. The build-time `foodus.ai.*` BuildConfig fallbacks remain for
   developer convenience only and must stay blank in anything public.
+- The OCR provider key: user-entered only in the OCR settings page, off by default and stored
+  with the existing AI-key preferences/protection pattern. That pattern is DataStore-backed;
+  do not describe it as encrypted storage without implementation evidence. No OCR key ships
+  in source, builds or CI. Evaluation keys come from environment variables; config contains
+  variable names only. There is no OCR BuildConfig credential fallback selected.
 - The relay endpoint URL (Milestone 3): **user-entered in settings and stored on-device**, in
   the same spirit as the AI endpoint configuration. Not a credential, but deliberately private:
   the owner's relay address is never published in code, repo, docs, or builds (2026-07-27 relay
@@ -330,8 +643,9 @@ Activity/entry points, permissions, camera/barcode integration, platform SQLite 
   below.)
 - Remote food databases are opt-in, disclosed at onboarding with their own terms, and used
   read-only over HTTPS.
-- Secrets are limited to the user's optional USDA API key and the user-entered AI endpoint key,
-  both stored on-device (see Configuration; the baked-key design was superseded 2026-07-26).
+- Secrets include the optional USDA API key, user-entered AI endpoint key, and selected optional
+  OCR provider key, all stored on-device (see Configuration; the baked-key design was superseded
+  2026-07-26). FoodUs introduces no account/login system for OCR.
 - **AI boundary (Milestone 2).** The AI logging features send data off-device by design:
   downscaled food photos and short meal descriptions go to the user-configured model endpoint
   under the user's own API key. Prompting is three-layered (2026-07-26 addendum): a baked
@@ -339,9 +653,21 @@ Activity/entry points, permissions, camera/barcode integration, platform SQLite 
   optional user-authored system prompt holding all personal context (stored on-device), and an
   optional per-scan hint. This is a deliberate, owner-chosen exception to the local-only stance,
   acceptable because the key is the user's own and both users are informed household members. No
-  other data leaves the device, and nothing is sent without an explicit user action (Ask AI /
+  other data leaves the device through that feature, and nothing is sent without an explicit user action (Ask AI /
   AI search / Submit). (Milestone 3 adds a second explicit-action send path: Save to Group
   transmits sealed food entries via the relay — see "The Multiplayer Exception" below.)
+- **OCR boundary (Milestone 2, selected).** Enabling/configuring OCR discloses that a submitted
+  label image goes to the chosen OCR provider after AI classification; recognised text then
+  goes to the configured AI endpoint. This is a second recipient within the explicit Submit
+  action, not diary sync or background transmission. Use HTTPS, scope credentials to the
+  selected endpoint and prevent redirect/header leakage. Keys, auth-bearing URLs, photos,
+  raw OCR text and provider bodies must not leak into production logs, exceptions, UI-name
+  dumps, context, evaluation configs or reports. Settings masks/reveal resets follow AI-key
+  privacy behavior; errors expose safe stages/categories, not raw provider messages.
+  The [provider privacy policy](https://ocr.space/privacypolicy), checked 2026-10-26, states
+  uploaded API documents are removed after processing and access IPs are retained for a
+  month. Treat these as provider statements, not FoodUs guarantees; disclose the external
+  boundary and link current terms. No searchable-PDF output or FoodUs-hosted backend is selected.
 - **The Multiplayer Exception (Milestone 3).** The app's "island" stance — fully local, no
   external services of its own — is broken in exactly one controlled place: a self-hosted,
   deliberately dumb **store-and-forward relay** that ferries messages between household devices
@@ -408,9 +734,31 @@ Activity/entry points, permissions, camera/barcode integration, platform SQLite 
 ## Observability
 
 No analytics or crash reporting by design. Debugging is standard Android tooling: logcat, Compose
-UI tooling in debug builds, and adb against a device/emulator. The only server-side component is
+UI tooling in debug builds, and adb against a device/emulator. The only FoodUs-owned server-side component is
 the planned Milestone 3 relay; its operational needs (health checks, sweep verification,
 monitoring) are owned by the foodus-relay repository.
+
+The selected OCR pipeline adds local, content-free per-step measurements: step/provider/model,
+start timestamp, duration, success/failure stage, available prompt/completion/total tokens,
+estimated AI and OCR cost components with explicit currency and price/plan provenance, provider
+processing time and image bytes supplied to each image step. A documented free component may
+be zero; missing usage/pricing/timing stays unavailable/null. Combined cost is incomplete or
+unavailable when a component is unknown, never an AI subtotal presented as the full pipeline
+cost. Do not fabricate zero cost or OCR token counts. No analytics transport or persistent capture history
+is introduced. Raw images/OCR text are transient in production. Controlled evaluation may
+retain its fixture outputs locally; that exception does not cover private diary images.
+
+[Milestone 2 Story 29](milestones/milestone-2.md#story-29) adds an off-by-default developer
+UI name bar available in released builds. A roughly three-second deep press identifies a
+visible element; Copy exports its identifier, optionally with detailed hierarchy, fully
+qualified component/composable and owning symbols, and repository source locators. The output
+prioritizes agent comprehension and finding the implementation; verbose structured text such
+as XML is acceptable. While enabled, holds are reserved for inspection; disabling the bar
+restores normal long presses, per the owner's 2026-10-26 interaction decision. The naming pass
+and runtime proof of suppression/restoration belong to that Story.
+Export describes UI structure without credentials, private relay addresses, or diary/field
+contents, and introduces no automatic transmission. Supplemental agent tooling is conditional
+on demonstrated need.
 
 ---
 
@@ -424,6 +772,72 @@ Follows the repository's unit-testing limits rule: tests serve the change, not c
   runtime.
 - Bug fixes should carry a reproducing test when practical; UI/visual behavior is validated
   manually on emulator or device.
+
+### AI/OCR evaluation harness
+
+Stories 36–37 deliver one project-specific `harness/nutrition-eval/` module with README,
+config, PowerShell entry points, offline self-test and documented stable exit codes. Register
+the module and its trigger only when implemented. Keep the owner's explicit data paths:
+`harness/eval-data/<case>/{image.jpg,expected.json}` and
+`harness/eval-results/{models,ocr,pipelines}/<safe-subject>/<unique-timestamp>/`.
+This selected shared data/output layout is the documented exception to module-local truth/runs;
+machinery remains in the module, and result-root ignore rules keep all runtime output out of git.
+Do not create loose root scripts merely because the intake lists illustrative script names.
+
+Start with approximately five real label photos and five ordinary food photos. Use controlled,
+lawfully reusable, non-sensitive fixtures with provenance, immutable image hashes, and manually
+checked expected facts. This request supplies no images or credentials. Corpus collection and
+live provider evaluation are explicit delivery prerequisites, not results that can be invented.
+Expected truth includes route, nutrient units, explicit basis/reference and scoring metadata;
+meal cases test semantics/schema or declared broad tolerances, never pretend exact nutrition.
+Private household material and third-party app studies stay outside the public checkout,
+including ignored directories. No expected file changes during execution or grading.
+
+| Lane | Work | Evidence |
+| --- | --- | --- |
+| A: vision | Configured vision classification + direct food estimate | Route accuracy, schema validity, latency, available tokens/cost |
+| B: OCR | Label images → provider text only | Printed-fact recovery, numeric/unit/basis corruption, missing facts, repeated-run stability |
+| C: OCR + parser | Label image → OCR → text-only AI parse | Structured accuracy, separate OCR/parser and total latency, tokens/cost, critical errors |
+| D: vision-only label baseline | Known label image → direct vision nutrition result | Comparable accuracy, basis safety, latency/cost; evaluation-only, not a silent production fallback |
+
+All lanes reuse the production schema/prompts/adapter behavior through a maintained shared
+execution seam or prove parity; do not benchmark an unrelated reimplementation. A and C use
+one configured AI model per candidate; no hidden classifier model. Lane C measures extraction
+and parsing separately; its trace must state whether routing is included so comparisons do not
+hide classifier overhead. Wrong routes remain failures and cannot simply disappear from averages.
+
+With a config argument, run noninteractively. Without one, a small Windows WinForms launcher
+selects lane, AI endpoint/model slug, OCR provider/endpoint, cases and repeat count, then calls
+the same execution code. Config includes threshold and explicit cost metadata; secret values
+come only from referenced environment variables. Validate paths, filters, counts, URLs and
+required secrets before network work; fail clearly on invalid/missing setup. Operator-started
+live runs are bounded and explicit; deterministic mock/self-test operation needs no paid service.
+
+Separate run from grade. A raw run saves a redacted `run-config.json`, per-case `actual.json`,
+`trace.json`, and label-lane `ocr.txt`. Record each actual external call, including purpose,
+provider/model, start/duration/status, available usage, separate AI/OCR estimated cost components,
+OCR processing time and image bytes. Cost includes explicit currency and price/plan provenance.
+Track end-to-end duration, schema/prompt/fixture versions and any operational settings affecting
+comparability. Preserve raw outputs immutably so grading changes require no new API calls.
+Results may contain controlled fixture text, never keys, headers or unredacted secret-bearing URLs.
+
+Offline grading produces per-case `grade.json` and `summary.json` with 0–100 scores, configured
+threshold, mean/minimum, pass rate and visible field-level reasons. Score route exactly. For
+label nutrition distinguish correct, missing, wrong value, wrong unit and wrong basis; assign
+wrong-basis errors a substantially larger penalty than optional omissions and surface critical
+counts independently of the mean. Prefer existing deterministic conversions. OCR-only grading
+recovers facts rather than comparing exact whitespace, punctuation or line order. Score meals
+against their stated semantic/tolerance contract, not imaginary exact calorie truth.
+
+Repeat N calls to the same OCR fixture and report text identity, fact recovery on every repeat,
+score variance and latency variance. Summaries include case/pass counts, failures by stage,
+total/mean latency, AI usage, separate AI/OCR costs and combined cost completeness, OCR call
+count/mean latency, critical errors and repeat stability. OCR-only token/AI-cost fields are
+absent/null; OCR monetary cost may be known, documented free or unavailable. Treat
+unavailable/incomparable measurements explicitly. Compare saved summaries/grades offline,
+including per-case and critical errors; never call providers from grade/compare or hide sample,
+prompt, price or fixture differences behind a global leaderboard. Candidate choice is evidence
+from FoodUs's representative corpus; OCR superiority is to be measured, not assumed.
 
 ---
 

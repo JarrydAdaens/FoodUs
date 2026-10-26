@@ -1,5 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.common.component
 
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,22 +34,22 @@ fun SettingsListItem(
 ) {
     Surface(
         onClick = onClick,
-        modifier = modifier,
+        modifier = (modifier).uiName("SettingsListItem.Surface.1", "androidx.compose.material3.Surface", uiInspectionSource, "SettingsListItem"),
         shape = shape,
         color = color,
         contentColor = contentColor,
     ) {
         Row(
             modifier =
-                Modifier.heightIn(min = 56.dp)
+                (Modifier.heightIn(min = 56.dp)
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                    .padding(horizontal = 16.dp, vertical = 12.dp)).uiName("SettingsListItem.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "SettingsListItem"),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             icon?.invoke()
 
-            Column(Modifier.weight(1f)) {
+            Column((Modifier.weight(1f)).uiName("SettingsListItem.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "SettingsListItem")) {
                 CompositionLocalProvider(
                     LocalTextStyle provides MaterialTheme.typography.bodyLarge
                 ) {
@@ -64,3 +67,9 @@ fun SettingsListItem(
         }
     }
 }
+
+
+private val uiInspectionSource = UiSourceFile(
+    "com.maksimowiczm.foodyou.app.ui.common.component",
+    "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/ui/common/component/SettingsListItem.kt",
+)

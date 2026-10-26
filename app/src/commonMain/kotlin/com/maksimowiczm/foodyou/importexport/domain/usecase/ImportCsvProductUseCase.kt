@@ -3,13 +3,13 @@ package com.maksimowiczm.foodyou.importexport.domain.usecase
 import com.maksimowiczm.foodyou.common.csv.CsvParser
 import com.maksimowiczm.foodyou.common.domain.database.TransactionProvider
 import com.maksimowiczm.foodyou.common.domain.date.DateProvider
-import com.maksimowiczm.foodyou.common.domain.food.FoodSource
+import com.maksimowiczm.foodyou.common.domain.food.ProductSource
 import com.maksimowiczm.foodyou.common.domain.food.NutrientValue.Companion.toNutrientValue
 import com.maksimowiczm.foodyou.common.domain.food.NutritionFacts
-import com.maksimowiczm.foodyou.food.domain.entity.FoodHistory
-import com.maksimowiczm.foodyou.food.domain.entity.FoodId
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemHistory
+import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
 import com.maksimowiczm.foodyou.food.domain.entity.Product
-import com.maksimowiczm.foodyou.food.domain.repository.FoodHistoryRepository
+import com.maksimowiczm.foodyou.food.domain.repository.NutritionalItemHistoryRepository
 import com.maksimowiczm.foodyou.food.domain.repository.ProductRepository
 import com.maksimowiczm.foodyou.importexport.domain.entity.ProductField
 import kotlinx.coroutines.flow.Flow
@@ -30,7 +30,7 @@ fun interface ImportCsvProductUseCase {
     suspend fun import(
         mapper: List<ProductField?>,
         stream: Flow<Byte>,
-        source: FoodSource.Type,
+        source: ProductSource.Type,
         skipHeader: Boolean,
     ): Flow<Int>
 }
@@ -38,7 +38,7 @@ fun interface ImportCsvProductUseCase {
 internal class ImportCsvProductUseCaseImpl(
     private val transactionProvider: TransactionProvider,
     private val productRepository: ProductRepository,
-    private val historyRepository: FoodHistoryRepository,
+    private val historyRepository: NutritionalItemHistoryRepository,
     private val dateProvider: DateProvider,
     private val csvParser: CsvParser,
 ) : ImportCsvProductUseCase {
@@ -46,7 +46,7 @@ internal class ImportCsvProductUseCaseImpl(
     override suspend fun import(
         mapper: List<ProductField?>,
         stream: Flow<Byte>,
-        source: FoodSource.Type,
+        source: ProductSource.Type,
         skipHeader: Boolean,
     ): Flow<Int> = channelFlow {
         var count = 1
@@ -66,7 +66,7 @@ internal class ImportCsvProductUseCaseImpl(
 
     private suspend fun processLine(
         mapper: List<ProductField?>,
-        source: FoodSource.Type,
+        source: ProductSource.Type,
         line: List<String?>,
     ) {
         if (line.size != mapper.size) {
@@ -77,7 +77,7 @@ internal class ImportCsvProductUseCaseImpl(
 
         val product =
             Product(
-                id = FoodId.Product(0),
+                id = NutritionalItemId.Product(0),
                 name = productData[ProductField.Name] ?: error("Name is required"),
                 brand = productData[ProductField.Brand],
                 barcode = productData[ProductField.Barcode],
@@ -94,7 +94,7 @@ internal class ImportCsvProductUseCaseImpl(
                     },
                 packageWeight = productData[ProductField.PackageWeight]?.toDouble(),
                 servingWeight = productData[ProductField.ServingWeight]?.toDouble(),
-                source = FoodSource(type = source, url = productData[ProductField.SourceUrl]),
+                source = ProductSource(type = source, url = productData[ProductField.SourceUrl]),
                 nutritionFacts =
                     NutritionFacts.requireAll(
                         proteins = productData[ProductField.Proteins]?.toDouble().toNutrientValue(),
@@ -185,7 +185,7 @@ internal class ImportCsvProductUseCaseImpl(
         if (id != null) {
             historyRepository.insert(
                 id,
-                FoodHistory.Imported(timestamp = dateProvider.nowInstant()),
+                NutritionalItemHistory.Imported(timestamp = dateProvider.nowInstant()),
             )
         }
     }

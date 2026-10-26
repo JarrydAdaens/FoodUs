@@ -1,6 +1,6 @@
 package com.maksimowiczm.foodyou.importexport.providermetadata.infrastructure
 
-import com.maksimowiczm.foodyou.common.domain.food.FoodSource
+import com.maksimowiczm.foodyou.common.domain.food.ProductSource
 import com.maksimowiczm.foodyou.common.infrastructure.room.toDomain
 import com.maksimowiczm.foodyou.common.infrastructure.room.toEntity
 import com.maksimowiczm.foodyou.importexport.providermetadata.domain.ProviderMetadata
@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.map
 
 internal class RoomProviderMetadataRepository(private val dao: ProviderMetadataDao) :
     ProviderMetadataRepository {
-    override fun observe(source: FoodSource.Type): Flow<ProviderMetadata?> =
+    override fun observe(source: ProductSource.Type): Flow<ProviderMetadata?> =
         dao.observe(source.toEntity()).map { it?.toDomain() }
 
     override suspend fun put(metadata: ProviderMetadata) {

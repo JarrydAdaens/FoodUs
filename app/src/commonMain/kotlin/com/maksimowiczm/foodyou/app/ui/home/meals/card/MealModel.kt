@@ -1,58 +1,12 @@
 package com.maksimowiczm.foodyou.app.ui.home.meals.card
 
-import androidx.compose.runtime.*
-import com.maksimowiczm.foodyou.common.domain.measurement.Measurement
-import com.maksimowiczm.foodyou.fooddiary.domain.entity.FoodDiaryEntryId
-import com.maksimowiczm.foodyou.fooddiary.domain.entity.ManualDiaryEntryId
-import kotlinx.datetime.LocalTime
+import androidx.compose.runtime.Immutable
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.MealId
 
+/** Lightweight view model for a saved diarySlot Meal shown in the apply-Meal list. */
 @Immutable
 internal data class MealModel(
-    val id: Long,
+    val id: MealId,
     val name: String,
-    val from: LocalTime,
-    val to: LocalTime,
-    val isAllDay: Boolean,
-    val foods: List<MealEntryModel>,
-    val energy: Int,
-    val proteins: Double,
-    val carbohydrates: Double,
-    val fats: Double,
+    val itemCount: Int,
 )
-
-@Immutable
-internal sealed interface MealEntryModel {
-    val name: String
-    val energy: Int?
-    val proteins: Double?
-    val carbohydrates: Double?
-    val fats: Double?
-}
-
-@Immutable
-internal data class FoodMealEntryModel(
-    val id: FoodDiaryEntryId,
-    override val name: String,
-    override val energy: Int?,
-    override val proteins: Double?,
-    override val carbohydrates: Double?,
-    override val fats: Double?,
-    val measurement: Measurement,
-    val weight: Double?,
-    val isLiquid: Boolean,
-    val isRecipe: Boolean,
-    val servingWeight: Double?,
-    val totalWeight: Double?,
-) : MealEntryModel
-
-@Immutable
-internal data class ManualMealEntryModel(
-    val id: ManualDiaryEntryId,
-    override val name: String,
-    override val energy: Int?,
-    override val proteins: Double?,
-    override val carbohydrates: Double?,
-    override val fats: Double?,
-    // Fast-text placeholders (Milestone 2, Story 8) route to the meta screen instead of the editor.
-    val isPlaceholder: Boolean,
-) : MealEntryModel

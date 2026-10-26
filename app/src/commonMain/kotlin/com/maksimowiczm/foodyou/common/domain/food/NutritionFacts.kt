@@ -1,6 +1,7 @@
 package com.maksimowiczm.foodyou.common.domain.food
 
 /** Represents the nutritional facts of a food product. All values are in grams. */
+@kotlinx.serialization.Serializable
 data class NutritionFacts(
     val proteins: NutrientValue = NutrientValue.Incomplete(null),
     val carbohydrates: NutrientValue = NutrientValue.Incomplete(null),
