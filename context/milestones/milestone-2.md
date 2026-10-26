@@ -157,7 +157,7 @@ Definition of Done. Story 16 can resume only after its licence gate is released.
 | 35 | Not Started | [OCR-assisted capture, review and recovery](#story-35) | Feature | — | — | — | — |
 | 36 | Not Started | [Controlled AI/OCR corpus and evaluation runner](#story-36) | Tooling | — | — | — | — |
 | 37 | Not Started | [Nutrition grading, stability and offline comparisons](#story-37) | Tooling | — | — | — | — |
-| 38 | Not Started | [Recipes, Meals & Products library in Settings](#story-38) | Feature | — | — | — | — |
+| 38 | Not Started | [Recipes, Meals & Products library in Settings](#story-38) | Feature | — | — | — | [plan](../implementation-plans/milestone-2/story-38-recipes-meals-products-library/plan.md) |
 | 39 | Complete | [Diary-slot bulk delete, move and copy actions](#story-39) | Feature | — | — | — | [plan](../implementation-plans/milestone-2/story-39-diary-slot-bulk-actions/plan.md) |
 
 ---
@@ -1625,8 +1625,14 @@ the implementation plan rather than claiming visual acceptance from source alone
 inspection contract. Likely seams are `HomeScreen.kt`, `SettingsScreen.kt`,
 `FoodYouAppNavHost.kt`, `food/meals/MealsScreen.kt`, the Product/Recipe editor entry
 points, library state/projections, and localized resources. No OCR, FoodSwitch licence,
-or relay prerequisite. Create one implementation plan when this Story is taken up;
-this scheduling change does not reopen Story 24 or begin implementation.
+or relay prerequisite. The implementation plan is linked below; this Story does not
+reopen Story 24, and planning does not begin application implementation.
+
+**Planning:** [Implementation plan](../implementation-plans/milestone-2/story-38-recipes-meals-products-library/plan.md)
+prepared 2026-10-27 after the owner-authorized private reference review and repository
+inspection. It covers destination-free creation, personal collection separation,
+truthful nutrition projections, retained navigation state and synthetic runtime acceptance.
+Story status remains Not Started; application implementation is not begun by this plan.
 
 **Source:** Owner's direct 2026-10-26 request and supplied UI selections. Requirements
 are expressed in FoodUs terms; third-party screenshots, studies and extracted material
