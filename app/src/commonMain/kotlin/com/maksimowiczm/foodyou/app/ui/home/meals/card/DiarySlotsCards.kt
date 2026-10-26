@@ -44,7 +44,15 @@ internal fun DiarySlotsCards(
         return
     }
 
-    when (layout) {
+    val bulkSession = viewModel.bulk.session.collectAsStateWithLifecycle().value
+    bulkSession?.let { session ->
+        DiaryBulkDialog(session, diarySlotEntries.orEmpty(),
+            onSelect = { viewModel.bulk.select(it) }, onRefresh = { viewModel.bulk.refresh() },
+            onSubmit = { viewModel.bulk.submit() }, onDismiss = { viewModel.bulk.dismiss() },
+            modifier = Modifier.uiName("DiarySlotsCards.DiaryBulkDialog.1", "com.maksimowiczm.foodyou.app.ui.home.meals.card.DiaryBulkDialog", uiInspectionSource, "DiarySlotsCards"))
+    }
+
+    key(homeState.selectedDate) { when (layout) {
         DiarySlotsCardsLayout.Horizontal ->
             HorizontalDiarySlotsCards(
                 diarySlots = diarySlotEntries,
@@ -63,6 +71,8 @@ internal fun DiarySlotsCards(
                 },
                 onDeleteEntry = viewModel::onDeleteEntry,
                 onLongClick = onLongClick,
+                onBulk = { slot, intent -> viewModel.bulk.open(intent,
+                    com.maksimowiczm.foodyou.fooddiary.domain.repository.DiaryEndpoint(homeState.selectedDate, slot)) },
                 meals = meals,
                 onSaveMeal = viewModel::saveAsMeal,
                 onApplyMeal = viewModel::applyMeal,
@@ -90,6 +100,8 @@ internal fun DiarySlotsCards(
                 },
                 onDeleteEntry = viewModel::onDeleteEntry,
                 onLongClick = onLongClick,
+                onBulk = { slot, intent -> viewModel.bulk.open(intent,
+                    com.maksimowiczm.foodyou.fooddiary.domain.repository.DiaryEndpoint(homeState.selectedDate, slot)) },
                 meals = meals,
                 onSaveMeal = viewModel::saveAsMeal,
                 onApplyMeal = viewModel::applyMeal,
@@ -98,7 +110,7 @@ internal fun DiarySlotsCards(
                 contentPadding = contentPadding,
                 modifier = (modifier).uiName("DiarySlotsCards.VerticalDiarySlotsCards.1", "com.maksimowiczm.foodyou.app.ui.home.meals.card.VerticalDiarySlotsCards", uiInspectionSource, "DiarySlotsCards"),
             )
-    }
+    } }
 }
 
 

@@ -363,7 +363,7 @@ class MealPersistenceTest {
             val goodManual = db.manualDiaryEntryDao.observe(manualId.value).first()!!
             db.manualDiaryEntryDao.update(goodManual.copy(capturedPortionValue = Double.NaN))
             val home = DiarySlotsCardsViewModel(ObserveDiarySlotEntriesUseCase(slots, prefs, entries, manual, ProductTestClock), entries, manual,
-                SaveMealUseCase(entries, manual, meals, db), ApplyMealUseCase(meals, manual, slots, db, ProductTestClock), meals, prefs)
+                SaveMealUseCase(entries, manual, meals, db), ApplyMealUseCase(meals, manual, slots, db, ProductTestClock), meals, prefs, RoomDiaryBulkRepository(db, db.measurementDao, db.manualDiaryEntryDao, db.diarySlotDao))
             home.setDate(LocalDate(2026, 10, 25))
             val homeCollector = launch { home.diarySlotEntries.collect() }
             withTimeout(10_000) { home.readFailed.first { it } }

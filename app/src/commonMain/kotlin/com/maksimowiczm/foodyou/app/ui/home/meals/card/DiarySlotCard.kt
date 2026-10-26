@@ -85,6 +85,7 @@ internal fun DiarySlotCard(
     onSaveMeal: (name: String, onResult: (Boolean) -> Unit) -> Unit,
     onApplyMeal: (MealId, onResult: (Boolean) -> Unit) -> Unit,
     onDeleteMeal: (MealId, onResult: (Boolean) -> Unit) -> Unit,
+    onBulk: (DiaryBulkIntent) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     val nutrientsPalette = LocalNutrientsPalette.current
@@ -142,6 +143,7 @@ internal fun DiarySlotCard(
                 }
 
                 MealMenu(
+                    onBulk = onBulk,
                     canSave = diarySlot.foods.isNotEmpty(),
                     canApply = meals.isNotEmpty(),
                     onSaveClick = { showSaveMealDialog = true },
@@ -293,8 +295,8 @@ private fun FoodContainer(
             val key =
                 remember(entry) {
                     when (entry) {
-                        is FoodDiarySlotEntryModel -> entry.id.toString()
-                        is ManualDiarySlotEntryModel -> entry.id.toString()
+                        is FoodDiarySlotEntryModel -> "food:${entry.id.value}"
+                        is ManualDiarySlotEntryModel -> "manual:${entry.id.value}"
                     }
                 }
 
@@ -490,9 +492,8 @@ private fun DeleteDialog(onDismissRequest: () -> Unit, onDeleteEntry: () -> Unit
 }
 
 /**
- * Overflow menu hosting the reusable-Meal actions (Milestone 2, Story 13). Hidden entirely when
- * there is nothing to do — no entries to save and no Meals to apply — so the card never shows a
- * dead control.
+ * Diary-slot actions, including reusable Meals and bulk entry operations.
+ * Empty slots keep the menu available for Copy From.
  */
 @Composable
 private fun MealMenu(
@@ -500,8 +501,8 @@ private fun MealMenu(
     canApply: Boolean,
     onSaveClick: () -> Unit,
     onApplyClick: () -> Unit,
+    onBulk: (DiaryBulkIntent) -> Unit,
 ) {
-    if (!canSave && !canApply) return
 
     var expanded by rememberSaveable { mutableStateOf(false) }
 
@@ -513,6 +514,14 @@ private fun MealMenu(
             )
         }
         UiSourceScope(uiInspectionSource.element("MealMenu.DropdownMenu.1", "androidx.compose.material3.DropdownMenu", "MealMenu")) { DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, modifier = Modifier.uiName("MealMenu.DropdownMenu.1.root", "androidx.compose.material3.DropdownMenu", uiInspectionSource, "MealMenu")) {
+            DiaryBulkIntent.entries.forEach { intent ->
+                DropdownMenuItem(
+                    text = { Text(stringResource(intent.labelResource()), modifier = Modifier.uiName("MealMenu.BulkText.1", "androidx.compose.material3.Text", uiInspectionSource, "MealMenu")) },
+                    onClick = { expanded = false; onBulk(intent) },
+                    enabled = canSave || intent == DiaryBulkIntent.CopyFrom,
+                    modifier = Modifier.uiName("MealMenu.BulkItem.1", "androidx.compose.material3.DropdownMenuItem", uiInspectionSource, "MealMenu"),
+                )
+            }
             DropdownMenuItem(
                 text = { Text(stringResource(Res.string.action_save_as_meal), modifier = Modifier.uiName("MealMenu.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "MealMenu")) },
                 onClick = {

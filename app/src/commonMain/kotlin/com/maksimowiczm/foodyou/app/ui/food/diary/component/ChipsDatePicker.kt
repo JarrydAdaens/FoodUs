@@ -162,8 +162,8 @@ class ChipsDatePickerState(
                     mutableList
                 },
                 restore = {
-                    val selectedDate = it.firstOrNull()?.let(LocalDate::fromEpochDays)
-                    val today = it.getOrNull(1)?.let(LocalDate::fromEpochDays) ?: LocalDate.now()
+                    val today = it.firstOrNull()?.let(LocalDate::fromEpochDays) ?: LocalDate.now()
+                    val selectedDate = it.getOrNull(1)?.let(LocalDate::fromEpochDays)
                     val dates = it.drop(2).map(LocalDate::fromEpochDays)
 
                     ChipsDatePickerState(

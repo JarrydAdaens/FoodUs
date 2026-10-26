@@ -49,4 +49,6 @@ data class ManualDiaryEntryEntity(
     @ColumnInfo(defaultValue = "NULL") val capturedPortionValue: Double? = null,
     @ColumnInfo(defaultValue = "NULL") val portionDescription: com.maksimowiczm.foodyou.common.domain.food.PortionDescription? = null,
     @ColumnInfo(defaultValue = "NULL") val nutritionMetadata: com.maksimowiczm.foodyou.common.domain.food.NutritionMetadata? = null,
+    /** Null preserves legacy alphabetical order until this collection is explicitly ordered. */
+    @ColumnInfo(defaultValue = "NULL") val sortOrder: Long? = null,
 )

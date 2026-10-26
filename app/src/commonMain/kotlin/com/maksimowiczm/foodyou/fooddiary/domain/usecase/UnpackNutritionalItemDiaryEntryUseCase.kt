@@ -50,10 +50,11 @@ class UnpackNutritionalItemDiaryEntryUseCase(
                 return@withTransaction Err(UnpackNutritionalItemDiaryEntryError.DiarySlotNotFound)
             // No expected validation failures remain after the first write. Any exception/cancellation rolls back all writes.
             val createdAt = original?.createdAt ?: dateProvider.now()
-            if (id != null) entryRepository.delete(id)
             constituents.forEach {
                 entryRepository.insert(it.measurement, diarySlotId, date, it.food, createdAt)
             }
+            // Keep the original ordering anchor until all replacements have appended.
+            if (id != null) entryRepository.delete(id)
             Ok(Unit)
         }
     } catch (cancelled: CancellationException) {

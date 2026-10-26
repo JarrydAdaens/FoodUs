@@ -99,7 +99,7 @@ class StructuredLibraryPersistenceTest {
             // Force the generated Room open/migrate/validate path on a real schema41 file.
             assertNotNull(db.recipeDao.observeRecipe(2801).first())
             AndroidSQLiteDriver().open(productionFile.path).use { connection ->
-                connection.prepare("PRAGMA user_version").use { assertTrue(it.step()); assertEquals(42L,it.getLong(0)) }
+                connection.prepare("PRAGMA user_version").use { assertTrue(it.step()); assertEquals(FoodYouDatabase.VERSION.toLong(),it.getLong(0)) }
                 assertEquals("Registered production Room migration preserves old columns",before,projection(connection,columns))
                 connection.prepare("PRAGMA foreign_key_check").use { assertFalse(it.step()) }
             }

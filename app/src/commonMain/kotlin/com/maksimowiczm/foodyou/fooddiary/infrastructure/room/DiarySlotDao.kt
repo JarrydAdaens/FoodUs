@@ -11,6 +11,9 @@ import kotlinx.coroutines.flow.first
 
 @Dao
 abstract class DiarySlotDao {
+    @Query("SELECT EXISTS(SELECT 1 FROM meal WHERE id = :id)")
+    abstract suspend fun exists(id: Long): Boolean
+
 
     @Query("SELECT * FROM meal WHERE id = :diarySlotId")
     abstract fun observeDiarySlotById(diarySlotId: Long): Flow<DiarySlotEntity?>

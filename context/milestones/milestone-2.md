@@ -2,7 +2,7 @@
 name: milestone-2
 description: Milestone 2 - Customisation. FoodUs identity, AI-assisted logging, ergonomics, adopted upstream bug fixes, Australian providers, expanded Quick Add, and distinct Product/Recipe/Meal/DiarySlot roles with a reusable Meals library.
 metadata:
-  version: "3.7"
+  version: "3.8"
   agentic_rails_source_version: "3.0"
   owner: "Jarryd Adaens"
   repo: "FoodUs (fork of maksimowiczm/FoodYou)"
@@ -28,6 +28,7 @@ Settings hosts a unified Recipes, Meals & Products library directly below Daily 
 with searchable tabs, nutrition summaries, and creation actions.
 Products, Recipes, Meals, DiarySlots, and DiaryEntries have distinct code roles and
 consistent serving/portion behavior across creation, editing, and logging.
+Diary-slot menus support bulk deletion, moving and copying entries across days and slots.
 An opt-in developer UI name bar makes elements identifiable when discussing changes with agents.
 
 ## Why it matters
@@ -51,7 +52,9 @@ Recipes, Meals & Products library in Settings supports searching, creating and e
 saved items through distinct tabs, replacing the Home Meals shortcut while retaining
 bundle management and the accepted domain vocabulary,
 Products and Recipes retain their distinct entry/portion semantics, and adopted
-upstream bugs are fixed. In addition, the Australian Food Composition Database provider works
+upstream bugs are fixed. Diary-slot menus can delete all entries, move or copy them to
+another day/slot, and copy entries from another day/slot into the current one.
+In addition, the Australian Food Composition Database provider works
 through the normal provider UI with locally stored, offline-first search; FoodSwitch is either
 integrated or its access blocker is documented; provider update-checks persist the last successful
 check and full refreshes never mutate history; and Quick Add supports description, fibre, serving
@@ -63,7 +66,7 @@ visible elements and copy source-oriented locators and detailed hierarchy for ag
 
 In Progress — reopened 2026-07-26 by the
 [owner's addendum](../dictations-tier-0/2026-07-26_addendum_ai-settings-branding-foodus.md) after
-daily use. **28 of 30 Stories Complete, 1 Blocked, and 1 Not Started.** All addendum
+daily use. **29 of 31 Stories Complete, 1 Blocked, and 1 Not Started.** All addendum
 Stories 21–23 landed 2026-07-27. Story 16 (FoodSwitch) remains blocked on an external
 data licence. Stories 25 (domain separation), 26 (Product terminology/portions), and 27 (Recipe
 composition/portions) passed acceptance under the [serial run](../_boss-runs/milestone-2-domain-meals-sequential/briefing.md). Story 24 (Meals library/editor) also passed acceptance.
@@ -73,6 +76,7 @@ Story 29 delivered the owner-requested UI name bar for agent collaboration, with
 minified runtime, source lookup, and coverage acceptance on 2026-10-26.
 Story 38 schedules the owner's 2026-10-26 request to move library access into Settings
 and replace the basic Meals list with a unified Recipes, Meals & Products library.
+Story 39 adds the owner's diary-slot bulk menu actions. Status: Complete (2026-10-26; 213 unit tests, 26 executed emulator checks, schema 43 migration, both layouts, snapshot/rollback and process-restart acceptance passed).
 The milestone is not yet closable:
 the unified-library acceptance is outstanding, and its Definition of Done's
 "adopted upstream bugs are fixed" clause is unmet — the Story 12 bug stories are still staged in
@@ -136,6 +140,7 @@ Definition of Done. Story 16 can resume only after its licence gate is released.
 | 28 | Complete | [Structured personal-library import](#story-28) | Feature | — | — | — | [plan](../implementation-plans/milestone-2/story-28-structured-personal-import/plan.md) |
 | 29 | Complete | [Developer UI name bar for agent collaboration](#story-29) | Feature | — | — | — | [plan](../implementation-plans/milestone-2/story-29-developer-ui-name-bar/plan.md) |
 | 38 | Not Started | [Recipes, Meals & Products library in Settings](#story-38) | Feature | — | — | — | — |
+| 39 | Complete | [Diary-slot bulk delete, move and copy actions](#story-39) | Feature | — | — | — | [plan](../implementation-plans/milestone-2/story-39-diary-slot-bulk-actions/plan.md) |
 
 ---
 
@@ -1287,6 +1292,79 @@ must remain outside the repository.
 
 ---
 
+<a id="story-39"></a>
+
+### Story 39: Diary-slot bulk delete, move and copy actions
+
+**Type:** Feature
+
+**Status:** Complete (2026-10-26; 213 unit tests, 26 executed emulator checks, schema 43 migration, both layouts, snapshot/rollback and process-restart acceptance passed).
+
+**Implementation plan:** [Diary-slot bulk actions](../implementation-plans/milestone-2/story-39-diary-slot-bulk-actions/plan.md) — Complete; records atomic snapshot handling, persisted append order, stale-source validation, and regression/runtime acceptance.
+
+**Outcome:** From Diary → a meal slot → ellipsis menu, manage all entries in that
+slot on the displayed diary day with **Delete All**, **Move to...**, **Copy to...**
+and **Copy From...**. A source or destination is a day plus a DiarySlot, so either
+coordinate or both can change independently.
+
+**Acceptance:**
+
+- Add the four actions to the existing slot context menu, retaining Save Meal and
+  Load Meal. Scope every action to the menu's DiarySlot and displayed diary date,
+  including when viewing a historical or future day, rather than assuming today.
+- **Delete All:** Confirm with the slot name, date and affected entry count, then
+  delete every DiaryEntry in that slot on that day. Preserve the configured DiarySlot,
+  other slots/days, and saved Product, Recipe and Meal definitions. Cancel changes nothing.
+- **Move to...:** Let the user choose a destination day and slot. Transfer all source
+  entries there, appending after existing destination entries in source order. After
+  success the source is empty; a failed transfer leaves both collections unchanged.
+- **Copy to...:** Let the user choose a destination day and slot. Append independent
+  copies of all current source entries there, preserving their order and the source.
+- **Copy From...:** Let the user choose a source day and slot, then append independent
+  copies of all entries there into the slot whose menu was opened. Preserve the selected
+  source and every entry already in the current destination. This action is available
+  when the current slot is empty.
+- The selector exposes both date and slot, initially using the menu's day/slot, and
+  allows same-day/different-slot, different-day/same-slot, or different-day/different-slot
+  selection. Show the source, destination and entry count before submission. Disable
+  submission when source and destination are identical or no source entries exist;
+  Delete All, Move to and Copy to are disabled for an empty current slot. Dismissing
+  a selector or cancelling an action changes nothing.
+- Include all supported DiaryEntry kinds: Product and Recipe snapshots, Quick Add,
+  and unresolved placeholders. Preserve recorded nutrition, quantities, units, notes,
+  unknown values, captured context and unresolved state. Copy assigns new entry identities
+  so subsequent edits/deletions are independent; Move retains the entry's recorded facts
+  while changing its diary placement. Never recalculate historical nutrition from current
+  library definitions or silently rescale amounts. Recompute affected diary summaries.
+- Each bulk operation commits atomically, with protection against duplicate submission.
+  On failure, show a recoverable error and leave source/destination data intact. Revalidate
+  selected slots and source entries at submission; stale selections must not act on an
+  unintended collection. Preserve unrelated diary data and dependent snapshot integrity.
+- Give the menu, selectors, confirmation and errors accessible labels and developer
+  inspection names consistent with the existing UI contract.
+
+**Verification:** Add regression tests for all entry kinds, the three combinations of
+day/slot changes, append order and existing destination contents, independent copied
+identities, recorded nutrition/unknowns, placeholder state, empty sources, same-source
+selection, cancellation, duplicate submission, stale data and transaction rollback.
+Verify Delete All affects only the selected day/slot, and library definitions and unrelated
+history remain unchanged. On a device/emulator exercise each menu action from populated
+and empty slots and a non-today diary date; check totals and data after restart. Run
+relevant unit/database tests, the Android debug build, UI-name coverage and runtime
+inspection of new surfaces. Record any unavailable runtime evidence in the implementation plan.
+
+**Dependencies / seams:** Uses the delivered DiarySlot/DiaryEntry separation and snapshot
+contracts from Stories 25–28, plus Story 29 inspection naming. Likely seams include
+`ui/home/meals/card/DiarySlotCard.kt` (`MealMenu`), Home state/callbacks, diary domain
+use cases, repository transactions/DAOs, date/slot selectors and localized resources.
+Independent of Story 38's library redesign, OCR and relay delivery. Create an implementation
+plan when taken up, including transaction and recovery checks for these data mutations.
+
+**Source:** Owner's direct 2026-10-26 request and supplied `MealMenu.DropdownMenu.1`
+selection. This schedules work; no existing Story is reopened or implementation begun.
+
+---
+
 ## Interdependency Order
 
 1. Story 5 (four-button rework) hosts Stories 6 and 8; build the button surface first or alongside.
@@ -1326,6 +1404,10 @@ must remain outside the repository.
     It can proceed independently of the OCR batch and changes the library's navigation
     and presentation without reopening the delivered domain Stories.
 
+16. Story 39 uses the delivered diary and snapshot contracts from Stories 25–28 and
+    Story 29's naming contract. It does not depend on Story 38; coordinate edits to
+    shared Home/menu code if those Stories are later executed together.
+
 ---
 
 ## Backlog Sources
@@ -1357,6 +1439,9 @@ must remain outside the repository.
   entry below Daily goals in Settings and expand it into a Recipes, Meals & Products
   library. This schedules new work without reopening delivered Stories or changing
   the closed-Story count or app version.
+- Story 39 was requested directly by the owner on 2026-10-26 for Delete All, Move to,
+  Copy to and Copy From in the diary-slot ellipsis menu, across days and/or slots.
+  Scheduling it changes neither closed-Story counts nor the app version.
 
 ---
 

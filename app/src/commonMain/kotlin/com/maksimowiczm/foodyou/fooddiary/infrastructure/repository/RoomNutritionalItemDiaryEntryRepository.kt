@@ -57,6 +57,7 @@ internal class RoomNutritionalItemDiaryEntryRepository(
 
                 NutritionalItemDiaryEntry(
                     id = entity.id.toFoodDiaryEntryId(),
+                    sortOrder = entity.sortOrder,
                     diarySlotId = entity.diarySlotId,
                     date = LocalDate.fromEpochDays(entity.epochDay),
                     measurement = Measurement.from(entity.measurement, entity.quantity),
@@ -88,6 +89,7 @@ internal class RoomNutritionalItemDiaryEntryRepository(
                         foodFlow.map {
                             NutritionalItemDiaryEntry(
                                 id = entity.id.toFoodDiaryEntryId(),
+                    sortOrder = entity.sortOrder,
                                 diarySlotId = entity.diarySlotId,
                                 date = LocalDate.fromEpochDays(entity.epochDay),
                                 measurement = Measurement.from(entity.measurement, entity.quantity),
@@ -185,6 +187,8 @@ internal class RoomNutritionalItemDiaryEntryRepository(
                 entity.copy(
                     diarySlotId = entry.diarySlotId,
                     epochDay = entry.date.toEpochDays(),
+                    sortOrder = if (entity.diarySlotId == entry.diarySlotId && entity.epochDay == entry.date.toEpochDays())
+                        entity.sortOrder else dao.nextOrder(entry.diarySlotId, entry.date.toEpochDays()),
                     productId = newProductId,
                     recipeId = newRecipeId,
                     measurement = entry.measurement.type,

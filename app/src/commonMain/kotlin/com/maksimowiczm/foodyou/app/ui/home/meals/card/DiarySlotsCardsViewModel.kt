@@ -41,7 +41,9 @@ internal class DiarySlotsCardsViewModel(
     private val applyMealUseCase: ApplyMealUseCase,
     private val mealRepository: MealRepository,
     diarySlotsPreferencesRepository: UserPreferencesRepository<DiarySlotsPreferences>,
+    bulkRepository: com.maksimowiczm.foodyou.fooddiary.domain.repository.DiaryBulkRepository,
 ) : ViewModel() {
+    val bulk = DiaryBulkController(bulkRepository, viewModelScope)
     private val dateState = MutableStateFlow<LocalDate?>(null)
     private val refresh = MutableStateFlow(0)
     val readFailed = MutableStateFlow(false)

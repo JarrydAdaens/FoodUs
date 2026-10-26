@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.orderedDiaryEntries
 
 class ObserveDiarySlotEntriesUseCase(
     private val diarySlotRepository: DiarySlotRepository,
@@ -50,7 +51,7 @@ class ObserveDiarySlotEntriesUseCase(
                             manualEntryRepository.observeAll(diarySlotId = diarySlot.id, date = date),
                             foodEntryRepository.observeAll(diarySlotId = diarySlot.id, date = date),
                         ) { manualEntries, foodEntries ->
-                            (manualEntries + foodEntries).sortedBy { it.name }
+                            (manualEntries + foodEntries).orderedDiaryEntries()
                         }
                     }
 

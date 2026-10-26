@@ -433,7 +433,7 @@ class MealsWorkflowTest {
             viewModel { requireNotNull(homeSummary) }
             viewModel { HomeViewModel(settings) }
             viewModel { PollsViewModel(ObserveActivePollUseCase(settings, pollPrefs, pollRepo, ProductTestClock), pollPrefs) }
-            viewModel { DiarySlotsCardsViewModel(observation, foods, manual, save, apply, meals, slotPrefs) }
+            viewModel { DiarySlotsCardsViewModel(observation, foods, manual, save, apply, meals, slotPrefs, RoomDiaryBulkRepository(db, db.measurementDao, db.manualDiaryEntryDao, db.diarySlotDao)) }
             viewModel { MealsViewModel(meals, UpdateMealUseCase(saving), apply, slots, observe) }
             viewModel { (id: ManualDiaryEntryId) -> UpdateQuickAddViewModel(id, manual, ProductTestClock) }
             viewModel { (id: NutritionalItemId) -> MeasureIngredientViewModel(id, observe, suggestions) }

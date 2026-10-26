@@ -43,4 +43,5 @@ data class ManualDiaryEntry(
     val capturedPortion: com.maksimowiczm.foodyou.common.domain.measurement.Measurement? = null,
     val portionDescription: com.maksimowiczm.foodyou.common.domain.food.PortionDescription? = null,
     val nutritionMetadata: com.maksimowiczm.foodyou.common.domain.food.NutritionMetadata? = null,
+    override val sortOrder: Long? = null,
 ) : DiaryEntry

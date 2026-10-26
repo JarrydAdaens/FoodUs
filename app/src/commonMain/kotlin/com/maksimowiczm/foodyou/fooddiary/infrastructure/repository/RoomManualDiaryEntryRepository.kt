@@ -61,10 +61,10 @@ internal class RoomManualDiaryEntryRepository(private val dao: ManualDiaryEntryD
         return ManualDiaryEntryId(id)
     }
 
-    override suspend fun update(entry: ManualDiaryEntry) = dao.update(entry.toEntity())
+    override suspend fun update(entry: ManualDiaryEntry) = dao.updatePreservingOrder(entry.toEntity())
 
     override suspend fun insert(entry: ManualDiaryEntry): ManualDiaryEntryId =
-        ManualDiaryEntryId(dao.insert(entry.toEntity().copy(id = 0)))
+        ManualDiaryEntryId(dao.insert(entry.toEntity().copy(id = 0, sortOrder = null)))
 
     override suspend fun delete(id: ManualDiaryEntryId) = dao.delete(id.value)
 }
@@ -72,6 +72,7 @@ internal class RoomManualDiaryEntryRepository(private val dao: ManualDiaryEntryD
 private fun ManualDiaryEntryEntity.toModel(): ManualDiaryEntry =
     ManualDiaryEntry(
         id = ManualDiaryEntryId(id),
+        sortOrder = sortOrder,
         diarySlotId = diarySlotId,
         date = LocalDate.fromEpochDays(dateEpochDay.toInt()),
         name = name,
@@ -97,6 +98,7 @@ private fun ManualDiaryEntry.toEntity(): ManualDiaryEntryEntity {
 
     return ManualDiaryEntryEntity(
         id = id.value,
+        sortOrder = sortOrder,
         diarySlotId = diarySlotId,
         dateEpochDay = date.toEpochDays(),
         name = name,

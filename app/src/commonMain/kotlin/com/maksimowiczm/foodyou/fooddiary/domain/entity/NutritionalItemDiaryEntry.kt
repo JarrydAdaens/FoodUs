@@ -27,6 +27,7 @@ data class NutritionalItemDiaryEntry(
     val food: NutritionalItemSnapshot,
     override val createdAt: LocalDateTime,
     override val updatedAt: LocalDateTime,
+    override val sortOrder: Long? = null,
 ) : DiaryEntry {
     override val name: String = food.name
 

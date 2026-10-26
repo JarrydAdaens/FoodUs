@@ -14,6 +14,8 @@ import com.maksimowiczm.foodyou.fooddiary.infrastructure.repository.RoomManualDi
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.repository.RoomMealRepository
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.FoodDiaryDatabase
 import com.maksimowiczm.foodyou.fooddiary.infrastructure.room.InitializeDiarySlotsCallback
+import com.maksimowiczm.foodyou.fooddiary.domain.repository.DiaryBulkRepository
+import com.maksimowiczm.foodyou.fooddiary.infrastructure.repository.RoomDiaryBulkRepository
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.scope.Scope
@@ -26,6 +28,7 @@ internal fun Module.foodDiaryInfrastructureModule() {
     factoryOf(::RoomNutritionalItemDiaryEntryRepository).bind<NutritionalItemDiaryEntryRepository>()
     factoryOf(::RoomManualDiaryEntryRepository).bind<ManualDiaryEntryRepository>()
     factoryOf(::RoomDiarySlotRepository).bind<DiarySlotRepository>()
+    factoryOf(::RoomDiaryBulkRepository).bind<DiaryBulkRepository>()
     factoryOf(::RoomMealRepository).bind<MealRepository>()
 
     factoryOf(::InitializeDiarySlotsCallback)

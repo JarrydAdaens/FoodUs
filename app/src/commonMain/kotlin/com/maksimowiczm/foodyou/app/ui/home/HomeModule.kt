@@ -20,6 +20,7 @@ fun Module.home() {
             saveMealUseCase = get(),
             applyMealUseCase = get(),
             mealRepository = get(),
+            bulkRepository = get(),
             diarySlotsPreferencesRepository = userPreferencesRepository(),
         )
     }

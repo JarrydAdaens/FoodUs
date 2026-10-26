@@ -27,7 +27,7 @@
     <string name="label_number_of_servings">Number of servings</string>
 
     <!-- Reusable saved Meals (Milestone 2, Story 13). -->
-    <string name="action_saved_meal_menu">Meal options</string>
+    <string name="action_saved_meal_menu">Diary slot actions</string>
     <string name="action_save_as_meal">Save as Meal</string>
     <string name="action_load_meal">Load Meal</string>
     <string name="label_meal_name">Meal name</string>
@@ -799,4 +799,22 @@
     <string name="library_added_recipes">Recipes added: %1$d</string>
     <string name="library_added_meals">Meals added: %1$d</string>
     <string name="captured_incomplete_value">%1$s (incomplete)</string>
+
+    <string name="diary_bulk_delete">Delete All</string>
+    <string name="diary_bulk_move">Move to...</string>
+    <string name="diary_bulk_copy_to">Copy to...</string>
+    <string name="diary_bulk_copy_from">Copy From...</string>
+    <string name="diary_bulk_source">From: %1$s · %2$s</string>
+    <string name="diary_bulk_destination">To: %1$s · %2$s</string>
+    <string name="diary_bulk_count">%1$d items</string>
+    <string name="diary_bulk_delete_help">Delete every item in this dated slot? Saved foods, Recipes and Meals stay in your library.</string>
+    <string name="diary_bulk_append_help">Items will be appended after existing destination items.</string>
+    <string name="diary_bulk_same">Choose a different day, slot, or both.</string>
+    <string name="diary_bulk_empty">The source slot has no items.</string>
+    <string name="diary_bulk_stale">The source has changed. Refresh and review the items count before confirming.</string>
+    <string name="diary_bulk_slot_deleted">A selected slot no longer exists. Choose an available slot.</string>
+    <string name="diary_bulk_failed">The change could not be saved. Your diary is unchanged. Refresh to try again.</string>
+    <string name="diary_bulk_loading">Reading source items…</string>
+    <string name="diary_bulk_confirm">Confirm</string>
+    <string name="diary_bulk_refresh">Refresh</string>
 </resources>

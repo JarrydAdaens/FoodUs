@@ -2,7 +2,7 @@
 name: design
 description: Design specification for FoodUs - a personal, privacy-first fork of the Food You KMP/Compose food diary - covering architecture, principles, constraints, the context tier system, and the embedded milestones index.
 metadata:
-  version: "3.5"
+  version: "3.6"
   agentic_rails_source_version: "3.0"
   owner: "Jarryd Adaens"
   repo: "FoodYou (fork of maksimowiczm/FoodYou)"
@@ -92,7 +92,7 @@ The backlog (`backlog/`) is not a numbered tier. It is a staging pool — inform
 | Milestone | Document | Status | Why it matters | What it unlocks |
 | --- | --- | --- | --- | --- |
 | Milestone 1: Initialization | [milestones/milestone-1.md](milestones/milestone-1.md) | Complete | Gets the fork built, deployed, populated with the owner's recovered historical data, and in daily use, with a repeatable two-device update mechanism | A live, data-complete daily driver that Milestone 2 can safely customize |
-| Milestone 2: Customisation | [milestones/milestone-2.md](milestones/milestone-2.md) | In Progress (reopened 2026-07-26) | Makes the app the owner's own: FoodUs identity, AI-assisted logging, ergonomics fixes, adopted upstream bug fixes, a unified personal library in Settings, and a developer UI name bar | An app that is faster to log with, unmistakably this fork, with source-oriented UI identification for agent collaboration |
+| Milestone 2: Customisation | [milestones/milestone-2.md](milestones/milestone-2.md) | In Progress (reopened 2026-07-26) | Makes the app the owner's own: FoodUs identity, AI-assisted logging, ergonomics fixes, adopted upstream bug fixes, a unified personal library in Settings, diary-slot bulk actions, and a developer UI name bar | An app that is faster to log with, unmistakably this fork, with source-oriented UI identification for agent collaboration |
 | Milestone 3: Multiplayer | [milestones/milestone-3.md](milestones/milestone-3.md) | In Progress (started 2026-07-28) | Cross-diary logging for the household pair — log a shared meal once and it lands in both diaries — via profiles, friends, two-person trusted groups, and a dumb encrypted relay | A multi-user FoodUs that stays local-first: the island broken in exactly one controlled place |
 | Milestone B: Bugs (supplementary) | [milestones/milestone-b.md](milestones/milestone-b.md) | Complete (2026-10-25) | Ten reported bugs and UX improvements covering onboarding, AI scanning, Quick Add, release history, and API-key masking | A dependable scan-to-diary workflow and clearer daily-use controls; closed B Stories add to the current numbered milestone's version count |
 
@@ -324,6 +324,16 @@ repositories, captured nutrition, Save/Cancel behavior and diary snapshot isolat
 binding. This extends Story 24 without reopening it. The shared abstraction and diary-group
 projection are selected above; the editor's unknown-portion contract is selected in its plan.
 No third-party studies or extracted reference material belong in this context.
+
+The owner also selected diary-slot bulk actions in
+[Milestone 2 Story 39](milestones/milestone-2.md#story-39), Complete on 2026-10-26.
+The DiarySlot ellipsis menu provides Delete All, Move to..., Copy to... and Copy From...
+for all entries in the selected slot on the displayed diary day. Source/destination
+selection allows a different day, slot or both. Copies append independent snapshots;
+moves transfer the entries atomically; Delete All confirms and removes only that day's
+entries in that slot. Existing destination entries, saved definitions, recorded nutrition
+and unrelated history are preserved. Copy From also works into an empty slot. Same
+source/destination selection is rejected, and existing Save Meal/Load Meal remain available.
 
 The owner selected implementation in Milestone 2, ordered
 [25: DiarySlot/Meal separation](milestones/milestone-2.md#story-25) →

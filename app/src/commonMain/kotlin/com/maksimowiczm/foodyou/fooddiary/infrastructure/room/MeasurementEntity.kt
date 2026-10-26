@@ -35,4 +35,6 @@ data class MeasurementEntity(
     val createdAt: Long,
     /** Epoch seconds */
     val updatedAt: Long,
+    /** Null preserves legacy alphabetical order until this collection is explicitly ordered. */
+    @ColumnInfo(defaultValue = "NULL") val sortOrder: Long? = null,
 )

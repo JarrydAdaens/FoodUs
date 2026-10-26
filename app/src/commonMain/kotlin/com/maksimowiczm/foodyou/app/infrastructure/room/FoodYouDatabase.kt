@@ -145,6 +145,7 @@ import com.maksimowiczm.foodyou.sponsorship.infrastructure.room.SponsorshipEntit
             /**
              * @see [FoodSearchFtsCyrillicMigration] Add Cyrillic tokenizer support to FTS tables
              */
+            AutoMigration(from = 42, to = 43), // Persist cross-kind diary append order
             AutoMigration(from = 38, to = 39), // Add NotificationEntity
         ],
 )
@@ -176,7 +177,7 @@ abstract class FoodYouDatabase :
         }
 
     companion object {
-        const val VERSION = 42
+        const val VERSION = 43
 
         private val migrations: List<Migration> =
             listOf(

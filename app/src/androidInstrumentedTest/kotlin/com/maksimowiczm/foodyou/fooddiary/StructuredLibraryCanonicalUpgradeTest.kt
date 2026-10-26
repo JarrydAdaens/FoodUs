@@ -2,6 +2,7 @@ package com.maksimowiczm.foodyou.fooddiary
 
 import android.database.sqlite.SQLiteDatabase
 import android.os.Build
+import com.maksimowiczm.foodyou.app.infrastructure.room.FoodYouDatabase
 import androidx.test.platform.app.InstrumentationRegistry
 import java.io.File
 import java.security.MessageDigest
@@ -25,13 +26,13 @@ class StructuredLibraryCanonicalUpgradeTest {
         val before = JSONObject(original)
         assertEquals(39, before.getInt("version"))
         val projection = JSONObject().put("version", 39)
-        val after = JSONObject().put("version", 42)
+        val after = JSONObject().put("version", FoodYouDatabase.VERSION)
         SQLiteDatabase.openDatabase(
             context.getDatabasePath("open_source_database.db").path,
             null,
             SQLiteDatabase.OPEN_READONLY,
         ).use { db ->
-            assertEquals("Production open performed the registered upgrade", 42, db.version)
+            assertEquals("Production open performed the registered upgrade", FoodYouDatabase.VERSION, db.version)
             db.rawQuery("PRAGMA foreign_key_check", null).use { assertEquals(0, it.count) }
             for (table in TABLES) {
                 val expected = before.getJSONArray(table)
