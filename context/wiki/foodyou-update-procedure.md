@@ -102,6 +102,33 @@ notes as the release ledger. Never rewrite an existing tag or release to migrate
 
 ## 3. Per Release: Build and Sign
 
+### Source branch and release tag
+
+Develop on `jarryd/develop`. Once the candidate is checked, merge it into the default
+`jarryd/main` branch with a merge commit and put an **annotated** `v<fork-version-name>`
+tag on that merge, following the legacy release history. Include completed follow-up
+Stories in the tracker-derived version; the StoriesClosed component is a count, not
+the Story number printed in the latest commit title. A temporary release branch or
+manually dispatched workflow artifact does not constitute a published release.
+
+Before tagging, confirm the catalog version/code, release ledger, and required migration
+checks above. Never use a development snapshot tag as a publication marker. After tagging,
+fast-forward develop to the release merge so both branches share the accepted baseline.
+
+An ordinary branch push does not include tags by default. The owner can push both branches
+and their reachable annotated release tag in one operation:
+
+```powershell
+git push origin jarryd/main jarryd/develop --follow-tags
+```
+
+In a Git GUI, include both branches and the release tag. This repository's local
+`push.followTags=true` setting also includes reachable annotated tags on normal Git pushes;
+check the GUI's outgoing refs if it implements its own push controls. The tag push triggers
+the signed release workflow. Agents must leave this push to the owner under AGENTS.md.
+
+### Local build and signing
+
 From the repo root (`D:\forked-projects\FoodYou`), with `JAVA_HOME` at the JDK 21 install:
 
 ```powershell

@@ -49,6 +49,7 @@ jobs:
         with:
           accept-android-sdk-licenses: true
           log-accepted-android-sdk-licenses: false
+          packages: platform-tools
 
       - name: Setup Android SDK build tools
         run: |
@@ -96,8 +97,22 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           SIGNED_APK: ${{ steps.apk.outputs.signed }}
         run: |
+          FORK_VERSION=$(sed -n 's/^fork-version-name = "\(.*\)"/\1/p' gradle/libs.versions.toml)
+          VERSION_CODE=$(sed -n 's/^android-versionCode = "\(.*\)"/\1/p' gradle/libs.versions.toml)
+          SOURCE_REVISION=$(git rev-parse HEAD)
+          cat > "$RUNNER_TEMP/release-notes.md" <<EOF
+          FoodUs ${FORK_VERSION}
+
+          - Tag: ${GITHUB_REF_NAME}
+          - Cumulative ReleaseCount: ${FORK_VERSION##*.}
+          - Android versionCode: ${VERSION_CODE}
+          - Source revision: ${SOURCE_REVISION}
+          EOF
           gh release create "$GITHUB_REF_NAME" \
             "$SIGNED_APK" \
+            --verify-tag \
+            --title "FoodUs ${FORK_VERSION}" \
+            --notes-file "$RUNNER_TEMP/release-notes.md" \
             --generate-notes
 
       - name: Upload signed APK
