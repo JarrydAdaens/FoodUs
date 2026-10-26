@@ -2,7 +2,7 @@
 name: milestone-2
 description: Milestone 2 - Customisation. FoodUs identity, AI-assisted logging, ergonomics, adopted upstream bug fixes, Australian providers, expanded Quick Add, and distinct Product/Recipe/Meal/DiarySlot roles with a reusable Meals library.
 metadata:
-  version: "3.6"
+  version: "3.7"
   agentic_rails_source_version: "3.0"
   owner: "Jarryd Adaens"
   repo: "FoodUs (fork of maksimowiczm/FoodYou)"
@@ -24,6 +24,8 @@ adding the fork's own identity and AI integrations. It also broadens the app's f
 first-class Australian providers stored locally for offline-first search — and expands Quick Add so
 estimated foods carry more detail and can later graduate into reusable custom products or recipes.
 Saved reusable bundles are presented as Meals, with a central place to view and edit them.
+Settings hosts a unified Recipes, Meals & Products library directly below Daily goals,
+with searchable tabs, nutrition summaries, and creation actions.
 Products, Recipes, Meals, DiarySlots, and DiaryEntries have distinct code roles and
 consistent serving/portion behavior across creation, editing, and logging.
 An opt-in developer UI name bar makes elements identifiable when discussing changes with agents.
@@ -45,7 +47,9 @@ The app carries the FoodUs identity (with upstream attribution and layered versi
 four-button per-meal logging surface (search, quick add, AI scan, fast placeholder) works end to
 end including placeholder resolution, the settings ergonomics options (graphs, week layout) ship,
 reusable Meals let a day's entries be saved and re-applied on other days, a central
-Meals library supports editing those bundles using the accepted domain vocabulary,
+Recipes, Meals & Products library in Settings supports searching, creating and editing
+saved items through distinct tabs, replacing the Home Meals shortcut while retaining
+bundle management and the accepted domain vocabulary,
 Products and Recipes retain their distinct entry/portion semantics, and adopted
 upstream bugs are fixed. In addition, the Australian Food Composition Database provider works
 through the normal provider UI with locally stored, offline-first search; FoodSwitch is either
@@ -59,7 +63,7 @@ visible elements and copy source-oriented locators and detailed hierarchy for ag
 
 In Progress — reopened 2026-07-26 by the
 [owner's addendum](../dictations-tier-0/2026-07-26_addendum_ai-settings-branding-foodus.md) after
-daily use. **28 of 29 Stories Complete and 1 Blocked.** All addendum
+daily use. **28 of 30 Stories Complete, 1 Blocked, and 1 Not Started.** All addendum
 Stories 21–23 landed 2026-07-27. Story 16 (FoodSwitch) remains blocked on an external
 data licence. Stories 25 (domain separation), 26 (Product terminology/portions), and 27 (Recipe
 composition/portions) passed acceptance under the [serial run](../_boss-runs/milestone-2-domain-meals-sequential/briefing.md). Story 24 (Meals library/editor) also passed acceptance.
@@ -67,8 +71,10 @@ The original Product/Recipe/Meal batch is delivered. Story 28 adds the owner-req
 faithful personal-library import and passed acceptance on 2026-10-26 under its adopted implementation plan.
 Story 29 delivered the owner-requested UI name bar for agent collaboration, with debug,
 minified runtime, source lookup, and coverage acceptance on 2026-10-26.
+Story 38 schedules the owner's 2026-10-26 request to move library access into Settings
+and replace the basic Meals list with a unified Recipes, Meals & Products library.
 The milestone is not yet closable:
-its Definition of Done's
+the unified-library acceptance is outstanding, and its Definition of Done's
 "adopted upstream bugs are fixed" clause is unmet — the Story 12 bug stories are still staged in
 `../backlog/backlog-1.md` and were never pulled into this milestone's story list. Closing requires
 the owner to either schedule those fixes or revise that DoD clause. The original 19-story run
@@ -129,6 +135,7 @@ Definition of Done. Story 16 can resume only after its licence gate is released.
 | 27 | Complete | [Recipe composition, yield, and diary portions](#story-27) | Feature | — | — | — | [plan](../implementation-plans/milestone-2/story-27-recipe-composition-portions/plan.md) |
 | 28 | Complete | [Structured personal-library import](#story-28) | Feature | — | — | — | [plan](../implementation-plans/milestone-2/story-28-structured-personal-import/plan.md) |
 | 29 | Complete | [Developer UI name bar for agent collaboration](#story-29) | Feature | — | — | — | [plan](../implementation-plans/milestone-2/story-29-developer-ui-name-bar/plan.md) |
+| 38 | Not Started | [Recipes, Meals & Products library in Settings](#story-38) | Feature | — | — | — | — |
 
 ---
 
@@ -1207,6 +1214,79 @@ the whole requested capability; the discussion's possible work slices are not se
 
 ---
 
+<a id="story-38"></a>
+
+### Story 38: Recipes, Meals & Products library in Settings
+
+**Type:** Feature
+
+**Status:** Not Started
+
+**Outcome:** Replace the basic Meals-only management page with a polished, searchable
+personal library for Recipes, Meals and Products. Move its entry from the Home top bar
+to Settings, immediately below Daily goals.
+
+**Why / value:** Reusable food definitions belong together in one management destination.
+Compact rows with nutrition summaries make saved items easier to recognise and maintain.
+
+**Acceptance:**
+
+- Remove the Home top-bar Meals button. Add a Settings list item labelled
+  **Recipes, Meals & Products** immediately below **Daily goals**, matching adjacent
+  Settings rows. It opens the library even when the diary or library is empty; Back
+  returns to Settings. Preserve diary-specific Save Meal and Load Meal actions.
+- Give the library a title and Back action, a search field below the title, and tabs
+  ordered **Recipes**, **Meals**, **Products**, with a clear selected-tab indicator.
+  Use Products for this library's atomic-item tab, as requested by the owner; this does
+  not rename the domain or require a global replacement of friendly Food wording.
+- Search filters the active tab's saved items by name without requiring a network
+  request. Retain the selected tab, query and list position when returning from an
+  editor. Products covers the personal/custom collection, including imported personal
+  items; provider catalogue discovery remains in the existing food-search flow.
+- Present items as compact, consistently spaced rows: a leading thumbnail or FoodUs
+  fallback icon, item name, carbohydrate/fat/protein summary, and trailing energy.
+  Show energy units and an explicit nutrition basis: the saved bundle for Meals,
+  one serving for Recipes, and the defined reference quantity for Products. Preserve
+  unknown values and missing serving weights; never display unknown as zero or invent
+  conversions. Keep captured/reported Meal nutrition distinct from calculated totals.
+- Anchor a prominent full-width creation action at the bottom, labelled for the active
+  tab: **Create Recipe**, **Create Meal**, or **Create Product**. It remains reachable
+  while scrolling and above navigation/keyboard insets without obscuring the last row.
+  Creation opens the corresponding editor without requiring a diary date or DiarySlot;
+  saving returns to the library and cancelling creates nothing.
+- Selecting a row opens its appropriate editor/detail flow. Preserve explicit Save/Cancel,
+  rename, constituent/portion editing and confirmed deletion where supported. Retain
+  Meal loading with an explicit destination day and DiarySlot; entering from Settings
+  must not silently choose a diary destination or log food when viewing/saving a definition.
+- Provide loading, empty-collection, no-search-results and recoverable error states.
+  Use FoodUs typography, theme colours and accessible controls across light/dark themes
+  and larger text. New or changed UI surfaces retain developer inspection names.
+- Reuse existing Product, Recipe and Meal repositories and editors. Existing IDs,
+  imported records, captured amounts, nutrition provenance, and saved Meals survive.
+  Editing library definitions continues to leave historical DiaryEntry snapshots intact.
+
+**Verification:** Add meaningful regression coverage for collection separation, search,
+nutrition bases/unknowns, create/save/cancel and Settings-origin navigation without a
+diary destination. Exercise Settings → library → each tab → create/edit → return on a
+device/emulator, including search, empty/no-results states, scrolling, Back, Meal loading,
+and diary-history preservation. Check light/dark themes and enlarged text. Run the
+UI-name coverage gate and inspect the changed surfaces at runtime, alongside the
+relevant unit tests and Android debug build. Record any unavailable device checks in
+the implementation plan rather than claiming visual acceptance from source alone.
+
+**Dependencies / seams:** Builds on completed Stories 24–28 and retains Story 29's
+inspection contract. Likely seams are `HomeScreen.kt`, `SettingsScreen.kt`,
+`FoodYouAppNavHost.kt`, `food/meals/MealsScreen.kt`, the Product/Recipe editor entry
+points, library state/projections, and localized resources. No OCR, FoodSwitch licence,
+or relay prerequisite. Create one implementation plan when this Story is taken up;
+this scheduling change does not reopen Story 24 or begin implementation.
+
+**Source:** Owner's direct 2026-10-26 request and supplied UI selections. Requirements
+are expressed in FoodUs terms; third-party screenshots, studies and extracted material
+must remain outside the repository.
+
+---
+
 ## Interdependency Order
 
 1. Story 5 (four-button rework) hosts Stories 6 and 8; build the button surface first or alongside.
@@ -1242,6 +1322,10 @@ the whole requested capability; the discussion's possible work slices are not se
 14. Story 29 is independent of the existing feature batches. Its gesture/metadata investigation
     precedes the app-wide naming pass and final release-build acceptance within its own plan.
 
+15. Story 38 follows completed Stories 24–28 and preserves Story 29's naming contract.
+    It can proceed independently of the OCR batch and changes the library's navigation
+    and presentation without reopening the delivered domain Stories.
+
 ---
 
 ## Backlog Sources
@@ -1269,6 +1353,10 @@ the whole requested capability; the discussion's possible work slices are not se
   discussion: a release-available developer UI name bar, deep-press selection, and detailed
   source-oriented copying for agent communication. Scheduling initially changed neither
   the closed-Story count nor app version; subsequent completion is recorded above.
+- Story 38 was requested directly by the owner on 2026-10-26: relocate Home's Meals
+  entry below Daily goals in Settings and expand it into a Recipes, Meals & Products
+  library. This schedules new work without reopening delivered Stories or changing
+  the closed-Story count or app version.
 
 ---
 

@@ -2,7 +2,7 @@
 name: design
 description: Design specification for FoodUs - a personal, privacy-first fork of the Food You KMP/Compose food diary - covering architecture, principles, constraints, the context tier system, and the embedded milestones index.
 metadata:
-  version: "3.4"
+  version: "3.5"
   agentic_rails_source_version: "3.0"
   owner: "Jarryd Adaens"
   repo: "FoodYou (fork of maksimowiczm/FoodYou)"
@@ -92,7 +92,7 @@ The backlog (`backlog/`) is not a numbered tier. It is a staging pool — inform
 | Milestone | Document | Status | Why it matters | What it unlocks |
 | --- | --- | --- | --- | --- |
 | Milestone 1: Initialization | [milestones/milestone-1.md](milestones/milestone-1.md) | Complete | Gets the fork built, deployed, populated with the owner's recovered historical data, and in daily use, with a repeatable two-device update mechanism | A live, data-complete daily driver that Milestone 2 can safely customize |
-| Milestone 2: Customisation | [milestones/milestone-2.md](milestones/milestone-2.md) | In Progress (reopened 2026-07-26) | Makes the app the owner's own: FoodUs identity, AI-assisted logging, ergonomics fixes, adopted upstream bug fixes, and a developer UI name bar | An app that is faster to log with, unmistakably this fork, with source-oriented UI identification for agent collaboration |
+| Milestone 2: Customisation | [milestones/milestone-2.md](milestones/milestone-2.md) | In Progress (reopened 2026-07-26) | Makes the app the owner's own: FoodUs identity, AI-assisted logging, ergonomics fixes, adopted upstream bug fixes, a unified personal library in Settings, and a developer UI name bar | An app that is faster to log with, unmistakably this fork, with source-oriented UI identification for agent collaboration |
 | Milestone 3: Multiplayer | [milestones/milestone-3.md](milestones/milestone-3.md) | In Progress (started 2026-07-28) | Cross-diary logging for the household pair — log a shared meal once and it lands in both diaries — via profiles, friends, two-person trusted groups, and a dumb encrypted relay | A multi-user FoodUs that stays local-first: the island broken in exactly one controlled place |
 | Milestone B: Bugs (supplementary) | [milestones/milestone-b.md](milestones/milestone-b.md) | Complete (2026-10-25) | Ten reported bugs and UX improvements covering onboarding, AI scanning, Quick Add, release history, and API-key masking | A dependable scan-to-diary workflow and clearer daily-use controls; closed B Stories add to the current numbered milestone's version count |
 
@@ -178,7 +178,9 @@ language; source identifiers that still use earlier names are implementation deb
 **Food** is friendly user-facing vocabulary, not a fourth domain entity. **Template**
 is not a separate product concept. The accepted reusable-bundle type is now **Meal**,
 superseding the earlier `MealTemplate` target name. Product, Recipe, and Meal remain
-distinct concepts even if a shared library eventually presents them together.
+distinct concepts when presented together in the selected shared library. The owner
+selected **Products** as that library's atomic-item tab label in Story 38; friendly
+Food wording elsewhere remains valid.
 
 For example, a Meal named "Usual breakfast" may contain an omelette Recipe and toast
 from a Product. Loading it into tomorrow's Breakfast DiarySlot creates two DiaryEntries;
@@ -292,7 +294,7 @@ A central Meals library/editor is selected in
 save/apply/delete flow. It must share one saved collection with diary actions, support
 rename and constituent editing with explicit Save/Cancel, and preserve existing diary
 snapshots when saved Meals change. The [accepted implementation plan](implementation-plans/milestone-2/story-24-meals-library-editor/plan.md)
-selects an always-visible Meals action beside Settings in Home, a private Save/Cancel
+delivered an always-visible Meals action beside Settings in Home, a private Save/Cancel
 draft, and one shared saved collection. MealItem stores absolute captured totals.
 Retained item IDs/order and aggregate creation time survive atomic updates. Loading
 validates one committed Meal and its destination, then appends each constituent as a
@@ -310,9 +312,18 @@ invented. New captures normalize incomplete nutrient fields to unknown before pr
 and flat persistence, across all 43 fields; existing saved numeric values and Recipe
 historical contracts remain unchanged. Schema 39 and accepted 40 exports are immutable.
 
-A combined Foods/Recipes/Meals management destination remains a future design choice;
-it is not an additional accepted feature in Story 24. The shared abstraction and diary-group projection are selected above;
-the editor's unknown-portion contract is selected in its plan. No third-party studies or extracted reference material belong in this context.
+The owner's 2026-10-26 decision selects a combined **Recipes, Meals & Products** library
+in [Milestone 2 Story 38](milestones/milestone-2.md#story-38), currently Not Started.
+It replaces the Home Meals shortcut with a Settings row immediately below Daily goals.
+The destination has search, Recipes / Meals / Products tabs, compact rows with nutrition
+summaries and explicit reference quantities, and a bottom creation action for the active
+tab. Products lists personal/custom items, including personal imports; existing provider
+search remains separate. Definition creation/editing from Settings requires no diary
+destination, while loading a Meal explicitly selects a day and DiarySlot. Existing
+repositories, captured nutrition, Save/Cancel behavior and diary snapshot isolation remain
+binding. This extends Story 24 without reopening it. The shared abstraction and diary-group
+projection are selected above; the editor's unknown-portion contract is selected in its plan.
+No third-party studies or extracted reference material belong in this context.
 
 The owner selected implementation in Milestone 2, ordered
 [25: DiarySlot/Meal separation](milestones/milestone-2.md#story-25) →
