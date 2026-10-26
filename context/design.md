@@ -2,7 +2,7 @@
 name: design
 description: Design specification for FoodUs - a personal, privacy-first fork of the Food You KMP/Compose food diary - covering architecture, principles, constraints, the context tier system, and the embedded milestones index.
 metadata:
-  version: "3.6"
+  version: "3.7"
   agentic_rails_source_version: "3.0"
   owner: "Jarryd Adaens"
   repo: "FoodYou (fork of maksimowiczm/FoodYou)"
@@ -92,7 +92,7 @@ The backlog (`backlog/`) is not a numbered tier. It is a staging pool — inform
 | Milestone | Document | Status | Why it matters | What it unlocks |
 | --- | --- | --- | --- | --- |
 | Milestone 1: Initialization | [milestones/milestone-1.md](milestones/milestone-1.md) | Complete | Gets the fork built, deployed, populated with the owner's recovered historical data, and in daily use, with a repeatable two-device update mechanism | A live, data-complete daily driver that Milestone 2 can safely customize |
-| Milestone 2: Customisation | [milestones/milestone-2.md](milestones/milestone-2.md) | In Progress (reopened 2026-07-26) | Makes the app the owner's own: FoodUs identity, AI-assisted logging, ergonomics fixes, adopted upstream bug fixes, a unified personal library in Settings, diary-slot bulk actions, and a developer UI name bar | An app that is faster to log with, unmistakably this fork, with source-oriented UI identification for agent collaboration |
+| Milestone 2: Customisation | [milestones/milestone-2.md](milestones/milestone-2.md) | In Progress (reopened 2026-07-26) | FoodUs identity, AI-assisted logging, OCR-assisted nutrition labels and evaluation, a unified personal library in Settings, diary-slot bulk actions, ergonomics, adopted fixes, and a developer UI name bar | Faster logging with faithful label capture, reusable food management, measurable AI/OCR quality, and source-oriented UI identification |
 | Milestone 3: Multiplayer | [milestones/milestone-3.md](milestones/milestone-3.md) | In Progress (started 2026-07-28) | Cross-diary logging for the household pair — log a shared meal once and it lands in both diaries — via profiles, friends, two-person trusted groups, and a dumb encrypted relay | A multi-user FoodUs that stays local-first: the island broken in exactly one controlled place |
 | Milestone B: Bugs (supplementary) | [milestones/milestone-b.md](milestones/milestone-b.md) | Complete (2026-10-25) | Ten reported bugs and UX improvements covering onboarding, AI scanning, Quick Add, release history, and API-key masking | A dependable scan-to-diary workflow and clearer daily-use controls; closed B Stories add to the current numbered milestone's version count |
 
@@ -169,7 +169,7 @@ language; source identifiers that still use earlier names are implementation deb
 
 | Domain/code concept | User-facing wording | Definition |
 | --- | --- | --- |
-| **Product** | Food | An individual nutritional item, including ordinary ingredients and packaged products. Nutrition is defined directly; brand, barcode, package weight, serving weight, and notes are optional metadata. Existing storage uses nutrition per 100 g or 100 mL. |
+| **Product** | Food | An individual nutritional item, including ordinary ingredients and packaged products. Nutrition is defined directly; brand, barcode, package weight, serving weight, and notes are optional metadata. Legacy metric facts use per 100 g/mL; Story 28 also supports explicit reference-serving facts without inventing metric quantities. |
 | **Recipe** | Recipe | Ingredients and their amounts combined into a new composite item with a serving yield. Its nutrition is derived from its ingredients. Ordinary logging creates one portioned diary entry for the Recipe. |
 | **Meal** | Meal / Meals | A named, saved, reusable bundle. Loading it appends each constituent as a separate diary entry; it does not merge the bundle into a new Recipe. A constituent may represent a Product, a portion of a Recipe, or a captured Quick Add entry. |
 | **DiarySlot** | The configured name, such as Breakfast or Lunch | A named diary category with its time window and display order. It is a destination for entries, independent of a reusable Meal definition. |
@@ -407,6 +407,11 @@ Kotlin targets: `androidTarget` (JVM 21), `iosArm64`, `iosSimulatorArm64`.
   (2026-07-26 addendum; supersedes the original baked-into-private-builds key design), for
   photo-based food identification and search-query generation. See "Security and Privacy" for
   the boundary this creates.
+- OCR provider (Milestone 2, selected but not implemented) — a separate optional nutrition-label
+  extraction capability, initially OCR.space, with its own on-device endpoint/key settings.
+  It receives label images only after the configured vision model routes them to OCR.
+  The same existing AI endpoint/model subsequently parses recognised text; no classifier-model
+  setting or second generic AI configuration is introduced. See the OCR pipeline below.
 - FoodUs relay (Milestone 3, planned) — a self-hosted, deliberately dumb store-and-forward
   message relay ("post office") that ferries sealed, end-to-end-encrypted envelopes between
   household devices for cross-diary logging. It holds only GUIDs, public keys, friend codes,
@@ -454,6 +459,98 @@ FoodYou/
 2. Import: CSV parsed and merged into the local Room database.
 3. No cloud sync exists; a device's database is the single copy.
 
+### OCR-assisted nutrition capture
+
+The owner selected the [25 October OCR addendum](dictations-tier-0/2026-10-25_milestone-2_ocr-assisted-nutrition-capture.md)
+for Milestone 2 on 2026-10-26. [Stories 30–37](milestones/milestone-2.md#ocr-delivery-order)
+own implementation and acceptance; this section owns the maintained design. The original
+attachment remains exact intake evidence. This is scheduled work, not a claim of delivered OCR.
+
+| Configuration / image | External work for one successful submission | Result |
+| --- | --- | --- |
+| OCR enabled and configured; ordinary food | One vision request: classify and estimate together | Existing multi-food review results; no OCR request |
+| OCR enabled and configured; nutrition panel | Vision classification → OCR image extraction → text-only AI parsing | Validated label facts enter the existing review/ingestion flow |
+| OCR off or unconfigured | Existing AI-only image request from the start | Existing AI behavior stays available; disclose OCR availability before submission |
+
+The unavailable-OCR row resolves the addendum's compatibility requirement: do not classify a
+label into a null result and then silently issue another AI call. OCR is off by default and
+never a prerequisite for the existing AI feature. Once an enabled label pipeline begins, an
+OCR/parser failure is a recoverable stage-specific error, not an automatic vision fallback.
+An explicit future fallback action is outside this selection.
+
+**Routing and shared contracts.** The first enabled vision request distinguishes
+`nutrition_label` (no nutrition payload; proceed to OCR) from `food_estimate` (the existing
+food collection in the same response). Incidental text/branding is not a label. Mixed images
+with a real readable nutrition panel prefer the label route. Reject unknown modes, contradictory
+payloads, malformed JSON and unusable results before proceeding. Keep the accepted multi-food
+selection/partial-rejection behavior; do not replace it with a single-item-only schema.
+Text search and barcode lookup remain separate.
+
+`NutritionResult` in the intake is conceptual: the actual scan boundary is `AiFoodScanner`,
+`AiScanResult.Success(estimates)` and `AiFoodEstimate` under `ai/domain`. Those estimates are
+absolute totals for the pictured portion; serving count/weight are descriptive, not multipliers.
+`NutritionFacts` and the Story 28 `ReportedNutrition`, `PortionDescription`, `MetricUnit` and
+reference-serving Product contracts already represent other useful nutrition/reference concepts.
+Story 30 must settle and test their mapping before adapter/orchestration implementation.
+Use the existing nutrient vocabulary and a common review contract, with additive source/basis
+metadata if necessary; do not introduce a parallel OCR nutrient schema or blindly put per-100
+numbers into absolute scan totals.
+
+Preserve per-serving, per-100 g, per-100 mL and other explicit references, units and column
+association. Convert only through explicit compatible quantities using deterministic existing
+code; never infer density, serving size, grams, food identity or missing nutrients. Unknown
+stays null/unknown; a printed zero stays zero. Required display fields without printed values
+need a clearly neutral presentation or review requirement, not an invented label fact.
+Unresolved basis/quantity must be visible in review and cannot silently become loggable totals.
+Historical diary snapshots and Product/Recipe/Meal calculation contracts remain unchanged.
+
+**OCR boundary.** Define a provider-neutral image/config → recognised-text/result boundary in
+the existing domain/infrastructure pattern. Provider DTOs stay inside the adapter. OCR.space
+is the initial implementation: HTTPS POST multipart file, `apikey` header, suitable language
+default, no word-coordinate overlay/searchable PDF. Read `ParsedResults[].ParsedText` only
+after checking both provider and file parse status. Partial/empty results must not masquerade
+as a complete label. Distinguish transport, provider/API, parse, unusable-text and usable-text
+outcomes; preserve bounded processing metadata. No provider price/upload quota becomes a
+core domain constant. Provider-specific compression, image validation and current limits
+belong to the adapter; reuse existing image preparation unless controlled evaluation shows
+it loses readable label detail. Bound image, response and recognised-text sizes.
+
+The [official API documentation](https://ocr.space/ocrapi), checked 2026-10-26, confirms this
+POST/header/text/error contract. Engine/language options and operational limits must be
+rechecked when the adapter is implemented; this design does not fix a subscription tier,
+quota, price or OCR engine in perpetuity.
+
+**Text parsing and prompts.** The label parser calls the existing configured AI endpoint/model
+with recognised text and the authoritative output contract, without an image. Map supported
+facts; do not estimate, repair by guessing, transpose columns or invent serving sizes. Keep
+source text delimited as untrusted data, not instructions. Retain the existing personal-data-free
+machine prompt, user-system-context and per-scan-hint separation; user context cannot turn
+label parsing into estimation or override schema/basis constraints. Validate output and
+explicit unit conversions before any review item or history write. Wrong-basis errors are
+critical regression cases. Do not claim prompts alone prove factual accuracy.
+
+**Orchestration and recovery.** Resolve a coherent configuration for each submission so both
+AI steps use the same selected endpoint/model. Initial AI failure/invalid routing triggers no
+OCR. OCR failure or insufficient text triggers no parser request; parser/schema failure stays
+distinct from extraction success. Cancellation stops later stages, and stale/duplicate results
+must not create review items or diary entries. Retain the captured image for retry/retake and
+preserve existing multi-food review, selection, Quick Add editing, Save/Cancel, and successful
+single-save navigation. Explain label-derived versus estimated results and OCR availability
+without exposing implementation detail that does not help the user.
+
+**Settings.** Add a dedicated OCR sub-page beside AI, with enablement, provider (initially only
+OCR.space), editable default endpoint `https://api.ocr.space/parse/image`, masked API key with
+the existing reveal-eye behavior, and an explicit configuration test. Distinguish disabled,
+incomplete, valid and failed configuration. Validate endpoint/provider inputs; blank/clear and
+restart/reactive behavior follow existing preferences patterns. Configuration testing uses
+local validation and, where practical, an explicitly disclosed tiny synthetic request; never
+upload the current user photo merely to test settings. Report what was actually checked, not
+an unwarranted guarantee of OCR accuracy. Internal provider knobs stay out of the settings UI.
+
+The evaluation harness is specified under [Testing Policy](#aiocr-evaluation-harness).
+Receipt/menu/general-document OCR, barcode redesign, automatic OCR for all images, another
+AI endpoint/model setting, enterprise deployment, queues and throughput tuning are out of scope.
+
 ### Historical Data Recovery (Milestone 1)
 
 The owner's years of MyFitnessPal and Lose It data are recovered into a **master JSON format** —
@@ -495,6 +592,11 @@ None in the repository. Credentials in the system:
   and dissolves its open secret-injection question — no AI credential ever exists in the
   repository, CI, or any build. The build-time `foodus.ai.*` BuildConfig fallbacks remain for
   developer convenience only and must stay blank in anything public.
+- The OCR provider key: user-entered only in the OCR settings page, off by default and stored
+  with the existing AI-key preferences/protection pattern. That pattern is DataStore-backed;
+  do not describe it as encrypted storage without implementation evidence. No OCR key ships
+  in source, builds or CI. Evaluation keys come from environment variables; config contains
+  variable names only. There is no OCR BuildConfig credential fallback selected.
 - The relay endpoint URL (Milestone 3): **user-entered in settings and stored on-device**, in
   the same spirit as the AI endpoint configuration. Not a credential, but deliberately private:
   the owner's relay address is never published in code, repo, docs, or builds (2026-07-27 relay
@@ -541,8 +643,9 @@ Activity/entry points, permissions, camera/barcode integration, platform SQLite 
   below.)
 - Remote food databases are opt-in, disclosed at onboarding with their own terms, and used
   read-only over HTTPS.
-- Secrets are limited to the user's optional USDA API key and the user-entered AI endpoint key,
-  both stored on-device (see Configuration; the baked-key design was superseded 2026-07-26).
+- Secrets include the optional USDA API key, user-entered AI endpoint key, and selected optional
+  OCR provider key, all stored on-device (see Configuration; the baked-key design was superseded
+  2026-07-26). FoodUs introduces no account/login system for OCR.
 - **AI boundary (Milestone 2).** The AI logging features send data off-device by design:
   downscaled food photos and short meal descriptions go to the user-configured model endpoint
   under the user's own API key. Prompting is three-layered (2026-07-26 addendum): a baked
@@ -550,9 +653,21 @@ Activity/entry points, permissions, camera/barcode integration, platform SQLite 
   optional user-authored system prompt holding all personal context (stored on-device), and an
   optional per-scan hint. This is a deliberate, owner-chosen exception to the local-only stance,
   acceptable because the key is the user's own and both users are informed household members. No
-  other data leaves the device, and nothing is sent without an explicit user action (Ask AI /
+  other data leaves the device through that feature, and nothing is sent without an explicit user action (Ask AI /
   AI search / Submit). (Milestone 3 adds a second explicit-action send path: Save to Group
   transmits sealed food entries via the relay — see "The Multiplayer Exception" below.)
+- **OCR boundary (Milestone 2, selected).** Enabling/configuring OCR discloses that a submitted
+  label image goes to the chosen OCR provider after AI classification; recognised text then
+  goes to the configured AI endpoint. This is a second recipient within the explicit Submit
+  action, not diary sync or background transmission. Use HTTPS, scope credentials to the
+  selected endpoint and prevent redirect/header leakage. Keys, auth-bearing URLs, photos,
+  raw OCR text and provider bodies must not leak into production logs, exceptions, UI-name
+  dumps, context, evaluation configs or reports. Settings masks/reveal resets follow AI-key
+  privacy behavior; errors expose safe stages/categories, not raw provider messages.
+  The [provider privacy policy](https://ocr.space/privacypolicy), checked 2026-10-26, states
+  uploaded API documents are removed after processing and access IPs are retained for a
+  month. Treat these as provider statements, not FoodUs guarantees; disclose the external
+  boundary and link current terms. No searchable-PDF output or FoodUs-hosted backend is selected.
 - **The Multiplayer Exception (Milestone 3).** The app's "island" stance — fully local, no
   external services of its own — is broken in exactly one controlled place: a self-hosted,
   deliberately dumb **store-and-forward relay** that ferries messages between household devices
@@ -619,9 +734,19 @@ Activity/entry points, permissions, camera/barcode integration, platform SQLite 
 ## Observability
 
 No analytics or crash reporting by design. Debugging is standard Android tooling: logcat, Compose
-UI tooling in debug builds, and adb against a device/emulator. The only server-side component is
+UI tooling in debug builds, and adb against a device/emulator. The only FoodUs-owned server-side component is
 the planned Milestone 3 relay; its operational needs (health checks, sweep verification,
 monitoring) are owned by the foodus-relay repository.
+
+The selected OCR pipeline adds local, content-free per-step measurements: step/provider/model,
+start timestamp, duration, success/failure stage, available prompt/completion/total tokens,
+estimated AI and OCR cost components with explicit currency and price/plan provenance, provider
+processing time and image bytes supplied to each image step. A documented free component may
+be zero; missing usage/pricing/timing stays unavailable/null. Combined cost is incomplete or
+unavailable when a component is unknown, never an AI subtotal presented as the full pipeline
+cost. Do not fabricate zero cost or OCR token counts. No analytics transport or persistent capture history
+is introduced. Raw images/OCR text are transient in production. Controlled evaluation may
+retain its fixture outputs locally; that exception does not cover private diary images.
 
 [Milestone 2 Story 29](milestones/milestone-2.md#story-29) adds an off-by-default developer
 UI name bar available in released builds. A roughly three-second deep press identifies a
@@ -647,6 +772,72 @@ Follows the repository's unit-testing limits rule: tests serve the change, not c
   runtime.
 - Bug fixes should carry a reproducing test when practical; UI/visual behavior is validated
   manually on emulator or device.
+
+### AI/OCR evaluation harness
+
+Stories 36–37 deliver one project-specific `harness/nutrition-eval/` module with README,
+config, PowerShell entry points, offline self-test and documented stable exit codes. Register
+the module and its trigger only when implemented. Keep the owner's explicit data paths:
+`harness/eval-data/<case>/{image.jpg,expected.json}` and
+`harness/eval-results/{models,ocr,pipelines}/<safe-subject>/<unique-timestamp>/`.
+This selected shared data/output layout is the documented exception to module-local truth/runs;
+machinery remains in the module, and result-root ignore rules keep all runtime output out of git.
+Do not create loose root scripts merely because the intake lists illustrative script names.
+
+Start with approximately five real label photos and five ordinary food photos. Use controlled,
+lawfully reusable, non-sensitive fixtures with provenance, immutable image hashes, and manually
+checked expected facts. This request supplies no images or credentials. Corpus collection and
+live provider evaluation are explicit delivery prerequisites, not results that can be invented.
+Expected truth includes route, nutrient units, explicit basis/reference and scoring metadata;
+meal cases test semantics/schema or declared broad tolerances, never pretend exact nutrition.
+Private household material and third-party app studies stay outside the public checkout,
+including ignored directories. No expected file changes during execution or grading.
+
+| Lane | Work | Evidence |
+| --- | --- | --- |
+| A: vision | Configured vision classification + direct food estimate | Route accuracy, schema validity, latency, available tokens/cost |
+| B: OCR | Label images → provider text only | Printed-fact recovery, numeric/unit/basis corruption, missing facts, repeated-run stability |
+| C: OCR + parser | Label image → OCR → text-only AI parse | Structured accuracy, separate OCR/parser and total latency, tokens/cost, critical errors |
+| D: vision-only label baseline | Known label image → direct vision nutrition result | Comparable accuracy, basis safety, latency/cost; evaluation-only, not a silent production fallback |
+
+All lanes reuse the production schema/prompts/adapter behavior through a maintained shared
+execution seam or prove parity; do not benchmark an unrelated reimplementation. A and C use
+one configured AI model per candidate; no hidden classifier model. Lane C measures extraction
+and parsing separately; its trace must state whether routing is included so comparisons do not
+hide classifier overhead. Wrong routes remain failures and cannot simply disappear from averages.
+
+With a config argument, run noninteractively. Without one, a small Windows WinForms launcher
+selects lane, AI endpoint/model slug, OCR provider/endpoint, cases and repeat count, then calls
+the same execution code. Config includes threshold and explicit cost metadata; secret values
+come only from referenced environment variables. Validate paths, filters, counts, URLs and
+required secrets before network work; fail clearly on invalid/missing setup. Operator-started
+live runs are bounded and explicit; deterministic mock/self-test operation needs no paid service.
+
+Separate run from grade. A raw run saves a redacted `run-config.json`, per-case `actual.json`,
+`trace.json`, and label-lane `ocr.txt`. Record each actual external call, including purpose,
+provider/model, start/duration/status, available usage, separate AI/OCR estimated cost components,
+OCR processing time and image bytes. Cost includes explicit currency and price/plan provenance.
+Track end-to-end duration, schema/prompt/fixture versions and any operational settings affecting
+comparability. Preserve raw outputs immutably so grading changes require no new API calls.
+Results may contain controlled fixture text, never keys, headers or unredacted secret-bearing URLs.
+
+Offline grading produces per-case `grade.json` and `summary.json` with 0–100 scores, configured
+threshold, mean/minimum, pass rate and visible field-level reasons. Score route exactly. For
+label nutrition distinguish correct, missing, wrong value, wrong unit and wrong basis; assign
+wrong-basis errors a substantially larger penalty than optional omissions and surface critical
+counts independently of the mean. Prefer existing deterministic conversions. OCR-only grading
+recovers facts rather than comparing exact whitespace, punctuation or line order. Score meals
+against their stated semantic/tolerance contract, not imaginary exact calorie truth.
+
+Repeat N calls to the same OCR fixture and report text identity, fact recovery on every repeat,
+score variance and latency variance. Summaries include case/pass counts, failures by stage,
+total/mean latency, AI usage, separate AI/OCR costs and combined cost completeness, OCR call
+count/mean latency, critical errors and repeat stability. OCR-only token/AI-cost fields are
+absent/null; OCR monetary cost may be known, documented free or unavailable. Treat
+unavailable/incomparable measurements explicitly. Compare saved summaries/grades offline,
+including per-case and critical errors; never call providers from grade/compare or hide sample,
+prompt, price or fixture differences behind a global leaderboard. Candidate choice is evidence
+from FoodUs's representative corpus; OCR superiority is to be measured, not assumed.
 
 ---
 

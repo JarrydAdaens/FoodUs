@@ -1,8 +1,8 @@
 ---
 name: milestone-2
-description: Milestone 2 - Customisation. FoodUs identity, AI-assisted logging, ergonomics, adopted upstream bug fixes, Australian providers, expanded Quick Add, and distinct Product/Recipe/Meal/DiarySlot roles with a reusable Meals library.
+description: Milestone 2 - Customisation. FoodUs identity, AI-assisted logging, OCR-assisted label capture and evaluation, ergonomics, providers, expanded Quick Add, and distinct Product/Recipe/Meal/DiarySlot roles.
 metadata:
-  version: "3.8"
+  version: "3.9"
   agentic_rails_source_version: "3.0"
   owner: "Jarryd Adaens"
   repo: "FoodUs (fork of maksimowiczm/FoodYou)"
@@ -30,6 +30,8 @@ Products, Recipes, Meals, DiarySlots, and DiaryEntries have distinct code roles 
 consistent serving/portion behavior across creation, editing, and logging.
 Diary-slot menus support bulk deletion, moving and copying entries across days and slots.
 An opt-in developer UI name bar makes elements identifiable when discussing changes with agents.
+OCR-assisted nutrition-label capture preserves printed facts, with a repeatable local evaluation
+harness for comparing vision models, OCR providers and combined pipelines.
 
 ## Why it matters
 
@@ -61,12 +63,17 @@ check and full refreshes never mutate history; and Quick Add supports descriptio
 count, and weight, plus promotion of new and historical entries into custom products and recipes
 without altering the original diary snapshot. The release-available UI name bar can identify
 visible elements and copy source-oriented locators and detailed hierarchy for agent collaboration.
+OCR adds an optional label path through classification, provider-neutral extraction and strict
+text-to-nutrition parsing, with correct units/reference bases, explicit stage failures, protected
+settings and existing review/diary semantics. Ordinary food photos remain one AI call. A controlled
+approximately ten-case corpus, config/WinForms runner, independent grading, stability metrics
+and offline comparisons must make accuracy, cost and latency measurable without exposing keys.
 
 ## Status
 
 In Progress — reopened 2026-07-26 by the
 [owner's addendum](../dictations-tier-0/2026-07-26_addendum_ai-settings-branding-foodus.md) after
-daily use. **29 of 31 Stories Complete, 1 Blocked, and 1 Not Started.** All addendum
+daily use. **29 of 39 Stories Complete, 1 Blocked, and 9 Not Started.** All addendum
 Stories 21–23 landed 2026-07-27. Story 16 (FoodSwitch) remains blocked on an external
 data licence. Stories 25 (domain separation), 26 (Product terminology/portions), and 27 (Recipe
 composition/portions) passed acceptance under the [serial run](../_boss-runs/milestone-2-domain-meals-sequential/briefing.md). Story 24 (Meals library/editor) also passed acceptance.
@@ -74,11 +81,14 @@ The original Product/Recipe/Meal batch is delivered. Story 28 adds the owner-req
 faithful personal-library import and passed acceptance on 2026-10-26 under its adopted implementation plan.
 Story 29 delivered the owner-requested UI name bar for agent collaboration, with debug,
 minified runtime, source lookup, and coverage acceptance on 2026-10-26.
+Stories 30–37 schedule the owner's OCR nutrition-label and evaluation addendum on 2026-10-26.
+They are Not Started; this context work authorizes neither their implementation nor paid/live
+evaluation. Existing closed counts and the policy-derived app version remain unchanged.
 Story 38 schedules the owner's 2026-10-26 request to move library access into Settings
 and replace the basic Meals list with a unified Recipes, Meals & Products library.
 Story 39 adds the owner's diary-slot bulk menu actions. Status: Complete (2026-10-26; 213 unit tests, 26 executed emulator checks, schema 43 migration, both layouts, snapshot/rollback and process-restart acceptance passed).
 The milestone is not yet closable:
-the unified-library acceptance is outstanding, and its Definition of Done's
+the new OCR and unified-library acceptance is outstanding, and its Definition of Done's
 "adopted upstream bugs are fixed" clause is unmet — the Story 12 bug stories are still staged in
 `../backlog/backlog-1.md` and were never pulled into this milestone's story list. Closing requires
 the owner to either schedule those fixes or revise that DoD clause. The original 19-story run
@@ -139,6 +149,14 @@ Definition of Done. Story 16 can resume only after its licence gate is released.
 | 27 | Complete | [Recipe composition, yield, and diary portions](#story-27) | Feature | — | — | — | [plan](../implementation-plans/milestone-2/story-27-recipe-composition-portions/plan.md) |
 | 28 | Complete | [Structured personal-library import](#story-28) | Feature | — | — | — | [plan](../implementation-plans/milestone-2/story-28-structured-personal-import/plan.md) |
 | 29 | Complete | [Developer UI name bar for agent collaboration](#story-29) | Feature | — | — | — | [plan](../implementation-plans/milestone-2/story-29-developer-ui-name-bar/plan.md) |
+| 30 | Not Started | [Shared OCR routing, nutrition-basis and trace contracts](#story-30) | Feature | — | — | — | — |
+| 31 | Not Started | [OCR.space provider adapter](#story-31) | Feature | — | — | — | — |
+| 32 | Not Started | [OCR settings and safe configuration testing](#story-32) | Feature | — | — | — | — |
+| 33 | Not Started | [Single-call vision classification and food estimation](#story-33) | Feature | — | — | — | — |
+| 34 | Not Started | [Strict OCR-text nutrition parser](#story-34) | Feature | — | — | — | — |
+| 35 | Not Started | [OCR-assisted capture, review and recovery](#story-35) | Feature | — | — | — | — |
+| 36 | Not Started | [Controlled AI/OCR corpus and evaluation runner](#story-36) | Tooling | — | — | — | — |
+| 37 | Not Started | [Nutrition grading, stability and offline comparisons](#story-37) | Tooling | — | — | — | — |
 | 38 | Not Started | [Recipes, Meals & Products library in Settings](#story-38) | Feature | — | — | — | — |
 | 39 | Complete | [Diary-slot bulk delete, move and copy actions](#story-39) | Feature | — | — | — | [plan](../implementation-plans/milestone-2/story-39-diary-slot-bulk-actions/plan.md) |
 
@@ -1219,6 +1237,330 @@ the whole requested capability; the discussion's possible work slices are not se
 
 ---
 
+<a id="story-30"></a>
+
+### Story 30: Shared OCR routing, nutrition-basis and trace contracts
+
+**Type:** Feature
+
+**Status:** Not Started
+
+**Outcome:** Establish the common contracts used by both image routes, the OCR adapter, review
+and evaluation, without introducing an OCR-specific nutrient model.
+
+**Acceptance:**
+
+- Map the intake's conceptual `NutritionResult` onto actual `AiFoodEstimate`,
+  `AiScanResult.Success(estimates)` and shared `NutritionFacts`; preserve multi-food results,
+  nullable nutrients and explicit zero values. Define the discriminated label/food response
+  and reject unknown modes, contradictory payloads and malformed required fields.
+- Resolve the source-model seam before dependent code: `AiFoodEstimate` contains absolute
+  pictured-portion totals, while labels provide per-serving, per-100 g, per-100 mL or another
+  explicit reference. Reuse Story 28's `ReportedNutrition`, `PortionDescription`, `MetricUnit`
+  and reference-serving contracts. Specify additive basis/source context and review mapping
+  where necessary; never silently reinterpret per-100 facts as totals or create a parallel
+  nutrient vocabulary. Missing basis/quantity/name has an explicit review/presentation rule.
+- Define provider-neutral recognised text, processing metadata and safe error categories for
+  transport, provider/API, parse, unusable text, AI parsing and invalid nutrition output.
+  Define meaningful usable-text criteria beyond merely nonblank OCR.
+- Define per-submission configuration consistency, cancellation and content-free call traces:
+  step/provider/model, start/duration/status, available usage, separate AI/OCR costs with currency
+  and price/plan provenance, provider processing time and image bytes. Unknown metrics stay
+  unavailable; OCR has no AI token count.
+- Keep the existing AI-only contract available when OCR is disabled/unconfigured. Specify
+  prompt/schema versioning and shared execution parity for later harness lanes.
+
+**Verification:** Deterministic contract/mapping tests for null versus zero, missing names,
+ambiguous/mixed columns, g versus mL, serving-only references, invalid routes and incompatible
+quantities; confirm no invented density/serving and no historical snapshot change. Record
+the selected mapping and any additive metadata/storage implications in the implementation plan.
+
+**Dependencies / seams:** Delivered Stories 6, 21, 22, 28 and Milestone B's multi-food/scan
+preservation work; `ai/domain`, shared food/measurement models and scan review boundary.
+This is the first implementation prerequisite, not an additional research milestone.
+
+---
+
+<a id="story-31"></a>
+
+### Story 31: OCR.space provider adapter
+
+**Type:** Feature
+
+**Status:** Not Started
+
+**Outcome:** Convert a submitted label image into bounded provider-neutral text and metadata,
+with reliable error handling and no OCR.space DTO leakage into the feature.
+
+**Acceptance:**
+
+- Implement the Story 30 boundary using HTTPS POST multipart image upload and an `apikey`
+  header to the configured endpoint; default `https://api.ocr.space/parse/image`. Recheck
+  current official API/privacy documentation before implementation. Keep language/engine
+  choices as justified internal defaults, overlays/searchable PDF off, and provider limits
+  and compression inside the adapter.
+- Reuse existing image preparation where readable; evaluate label detail before changing
+  generic preparation. Validate/bound image input, response and text. Do not fetch arbitrary
+  image URLs or expose credentials through redirects, raw exceptions or response bodies.
+- Check provider-level and per-file outcomes before extracting `ParsedResults[].ParsedText`.
+  Handle malformed responses, partial failure, API errors, timeouts and empty/brand-only/
+  otherwise unusable text distinctly. Only usable text reaches a parser.
+- Preserve provider processing time, supplied image bytes and measured call timing/status;
+  unsupported metrics remain unavailable. Cancellation propagates; no hidden paid retries.
+
+**Verification:** HTTP fake/fixture tests for multipart/auth, valid and partial responses,
+error combinations, size limits, useless text, cancellation, malicious echoed keys and
+sanitised errors. Controlled live provider acceptance requires a separately supplied key and
+non-sensitive fixture; no credential is committed. Do not mark live behavior passed from mocks.
+
+**Dependencies / seams:** Story 30; existing Ktor/DI patterns and image preparation. Adapter
+tests can proceed independently of the vision/parser implementations after the common contract.
+
+---
+
+<a id="story-32"></a>
+
+### Story 32: OCR settings and safe configuration testing
+
+**Type:** Feature
+
+**Status:** Not Started
+
+**Outcome:** Let the user explicitly configure and test OCR in its own Settings sub-page,
+without introducing another AI endpoint/model configuration.
+
+**Acceptance:**
+
+- Add Settings → OCR with default-off enablement, provider (initially OCR.space), editable
+  default endpoint, API key and explicit Test action. Persist through existing preferences
+  conventions; blank/clear, restart and reactive readiness behavior are defined and tested.
+  Do not present unsupported providers or internal tuning controls as available features.
+- Follow the existing AI-key DataStore/protection pattern without claiming unsupported
+  encryption. Mask by default, reveal only by explicit eye action, and reset reveal state
+  consistently with AI settings. Keep values out of logs, UI-name dumps and error text.
+- Validate provider/HTTPS endpoint/key readiness locally. Where practical, Test performs a
+  disclosed tiny synthetic provider request via Story 31, never uploads the current photo,
+  and distinguishes what was validated from OCR accuracy. No requests on page opening.
+- Explain the second image recipient, subsequent recognised-text AI request and provider
+  privacy terms. Show disabled/unconfigured status while keeping AI-only scanning usable.
+  Keys are user-entered on-device; no OCR build-time/public credential fallback.
+
+**Verification:** Preferences defaults/persistence/clear and validator tests; device/emulator
+navigation, test/success/error, masking/reveal/lifecycle and no-key-leak checks in both UI-name
+bar modes. Name new controls and run the installed UI-name coverage gate. Use synthetic keys
+and provider responses for automated checks; report any unrun live reachability check.
+
+**Dependencies / seams:** Stories 30–31; AI settings reveal/validation patterns, Settings
+navigation, DataStore and source naming. The configuration-test action must not depend on
+the later end-to-end scan orchestrator, avoiding a cycle.
+
+---
+
+<a id="story-33"></a>
+
+### Story 33: Single-call vision classification and food estimation
+
+**Type:** Feature
+
+**Status:** Not Started
+
+**Outcome:** One configured vision request classifies an image and, for ordinary food,
+returns the complete existing multi-food estimate in that same response.
+
+**Acceptance:**
+
+- Implement Story 30's route response and prompt: a real readable nutrition panel routes
+  to `nutrition_label` without nutrition; otherwise return `food_estimate` with the existing
+  collection. Branding, incidental text and logos alone must not trigger OCR.
+- Preserve current image preparation and configured AI endpoint/model; no dedicated router
+  request/model setting and no second analysis call for normal food. Keep the legacy AI-only
+  mode available for disabled/unconfigured OCR.
+- Preserve machine/user-context/per-scan-hint separation, partial valid food handling and
+  safe failure/cancellation behavior. Capture available per-call usage/timing/cost metadata;
+  the current chat response DTO has only choices, so usage support needs explicit mapping.
+- Initial AI failure/invalid route cannot invoke OCR. Do not activate a production label
+  route that discards the image or stops at a null result before Story 35 is ready.
+
+**Verification:** Request-body and response fixtures for food, label, mixed image, incidental
+text, invalid/missing/contradictory modes, malformed nutrition and multiple foods. Assert one
+image request on success and zero OCR calls for food/failure. Grade real routing through the
+later controlled corpus; mocks alone cannot establish classification accuracy.
+
+**Dependencies / seams:** Story 30; `AiScanPrompt`, OpenRouter-compatible scanner/transport,
+chat response DTO and existing multi-food parser. Independent of Story 31 implementation.
+
+---
+
+<a id="story-34"></a>
+
+### Story 34: Strict OCR-text nutrition parser
+
+**Type:** Feature
+
+**Status:** Not Started
+
+**Outcome:** Map recognised label text into the same FoodUs nutrient/reference and review
+contract, preserving printed facts without estimation.
+
+**Acceptance:**
+
+- Send text only to the existing configured AI endpoint/model, with the authoritative
+  schema and strict parsing rules. No image, separate parser-model settings or second
+  nutrient schema. Respect one submission's configuration snapshot.
+- Enforce source-only mapping: missing/unreadable values remain unknown, printed zero stays
+  zero, serving sizes are not invented, units/references and column associations survive.
+  Reuse deterministic conversions for explicit compatible units rather than model arithmetic.
+- Treat OCR as untrusted data, not instructions; personal prompt/hint context cannot supply
+  missing label facts or override the no-estimation/basis contract. Validate structured output
+  and the shared basis mapping before review/ingestion; ambiguous basis is visibly unresolved.
+- Distinguish parser/network/schema failure from successful OCR extraction. Preserve safe
+  timing/usage/cost data; never persist/log production OCR text or provider bodies.
+
+**Verification:** Text fixtures for missing values/serving, exact zero, kJ/kcal and mg/g,
+per-serving versus per-100 g/mL columns, corrupted text, ambiguous reference, unsupported
+values and prompt injection. Assert text-only requests and correct model/config, and exercise
+failure/malformed output. Evaluate factual correctness against manually checked label truth.
+
+**Dependencies / seams:** Story 30; shared nutrition/reference validation and AI transport.
+Can be implemented with recognised-text fixtures independently of the OCR adapter.
+
+---
+
+<a id="story-35"></a>
+
+### Story 35: OCR-assisted capture, review and recovery
+
+**Type:** Feature
+
+**Status:** Not Started
+
+**Outcome:** Wire both image paths into existing capture/gallery, multi-food review, editing
+and diary ingestion without changing historical nutrition semantics.
+
+**Acceptance:**
+
+- Enabled/configured food path executes one AI classify/estimate call and no OCR; label
+  path executes AI classify → OCR → text-only AI parse with the same AI endpoint/model.
+  Disabled/unconfigured OCR uses the existing AI-only path upfront and displays availability.
+- Preserve printed source/basis context through review. Never pass per-reference numbers as
+  absolute totals without the explicit shared mapping/quantity resolution. Keep missing facts
+  unknown and require review where basis cannot be resolved; no fabricated density or serving.
+- Initial AI failure calls no OCR; OCR failure/useless text calls no parser; parser/invalid
+  structured output calls no ingestion. Provide stage-specific recoverable errors, retry and
+  retake with retained image/draft. No silent AI-only fallback after a label-stage failure.
+- Retain multi-food selection/partial rejection, Quick Add prefill/editing, Save/Cancel,
+  successful navigation and duplicate-save protection from delivered scan work. Cancellation,
+  stale responses or changed settings cannot produce mixed-config or duplicate results.
+- Join content-free stage traces without telemetry. New UI explains estimated versus
+  label-derived results and the external boundary, follows source naming, and masks secrets.
+  Barcode lookup and AI text/search behavior remain unchanged.
+
+**Verification:** Deterministic call-order/count, stage-error, cancellation and stale-result
+tests plus device/emulator capture/gallery → food/label review → edit/save/cancel/retry flows.
+Assert actual saved values, unknowns, basis and historical snapshot preservation; repeat
+multi-food queue/navigation and AI-key/secure-screen regressions. Run UI-name coverage and
+representative minified runtime. Record any live-provider or device gap explicitly.
+
+**Dependencies / seams:** Stories 30–34; existing `AiScanViewModel`, scan/review session,
+camera/gallery preparation, Quick Add and diary snapshot boundaries. This is the production
+activation gate; component stories must not independently ship an incomplete label path.
+
+---
+
+<a id="story-36"></a>
+
+### Story 36: Controlled AI/OCR corpus and evaluation runner
+
+**Type:** Tooling
+
+**Status:** Not Started
+
+**Outcome:** Run reproducible vision, OCR and combined evaluations against controlled images,
+with shared production behavior, explicit credentials and immutable raw evidence.
+
+**Acceptance:**
+
+- Create approximately five label and five ordinary-food cases at
+  `harness/eval-data/<case>/{image.jpg,expected.json}`. Collect lawfully reusable non-sensitive
+  images with provenance/hashes and manually checked facts/bases. Food photos have route/
+  semantic truth or justified broad tolerances, not invented exact nutrient truth.
+- Implement one `harness/nutrition-eval/` module with config/README/PowerShell entry point.
+  Config-file mode is noninteractive; no-config mode opens a small WinForms launcher for
+  lane, endpoint/model, provider/endpoint, cases and repeat count. Both use one execution core.
+- Support A vision route/direct estimate, B OCR only, C OCR + text parser and D direct-vision
+  label baseline. Reuse or prove parity with production schema/prompts/adapters. Report
+  which steps/timing boundaries each lane includes; D is evaluation-only.
+- Resolve keys from named environment variables; validate setup before live requests.
+  Save redacted effective config plus per-case `actual.json`, call-level `trace.json` and
+  applicable raw `ocr.txt` at `harness/eval-results/{models,ocr,pipelines}/<safe-subject>/<unique-timestamp>/`.
+  Keep raw outputs immutable, results ignored and secrets absent; no accidental overwrite or
+  traversal through model/case slugs. Support repeats with explicit bounded call counts.
+- Trace actual steps separately with start/duration/status, provider/model, available tokens,
+  separate AI/OCR estimated costs with currency and price/plan provenance, OCR processing time
+  and image sizes. Missing metrics stay null/unavailable. Record versions/hashes; no provider
+  calls or truth edits during grading.
+- Meet the harness contract: stable exit codes, compact machine-readable output, offline
+  self-test/mock execution, config seam, module index and AGENTS standing trigger. Retain the
+  owner's data/result roots as the documented layout exception; keep machinery in the module.
+
+**Verification:** Offline parser/config, secret-redaction, path safety, repeat/run isolation and
+all-lane request/trace fixtures; run config and WinForms modes against the same controlled cases.
+Confirm fixture hashes/expected truth unchanged and that missing credentials fail before calls.
+Controlled live runs need external credentials and images; their availability is not assumed.
+
+**Dependencies / seams:** Story 30 contracts and Stories 31, 33, 34 for complete real lanes.
+Corpus/manual truth and offline runner setup can be prepared earlier without claiming live
+acceptance. No corpus or evaluation module is installed by this planning-only change.
+
+---
+
+<a id="story-37"></a>
+
+### Story 37: Nutrition grading, stability and offline comparisons
+
+**Type:** Tooling
+
+**Status:** Not Started
+
+**Outcome:** Compare raw model/OCR/pipeline results by accuracy, critical basis mistakes,
+latency and cost without paying to rerun APIs when grading changes.
+
+**Acceptance:**
+
+- Separate grade from run; write per-case `grade.json` and machine-readable `summary.json`
+  from saved evidence and immutable expected truth. Neither grade nor compare calls providers.
+- Score routes exactly; label fields distinguish correct, missing, wrong value, wrong unit
+  and wrong basis. Wrong-basis errors carry substantially greater penalties than optional
+  omissions and remain visible as critical errors independent of the aggregate score.
+- Grade OCR by printed numeric/unit/reference facts with harmless whitespace/punctuation/
+  ordering normalisation, retaining raw text for diagnosis. Grade food images by their stated
+  schema/semantic/tolerance expectations, not false exact nutrition. Preserve per-field reasons.
+- Produce 0–100 case scores, configurable threshold, mean/minimum and pass rate; group failures
+  by stage. Include case/pass counts, total/mean latency, available AI token totals, separate
+  AI/OCR cost components, combined cost completeness and currency/price/plan provenance,
+  OCR counts/latency and critical errors. A documented free component may be zero; unknown
+  cost stays unavailable and cannot disappear into a purported complete pipeline total.
+  Conventional OCR has no token metric.
+- Use repeat N evidence to report text identity, fact recovery each time, score variance and
+  latency variance. Compare saved models, providers and vision-only versus OCR+parser results
+  offline, with per-case detail and explicit incompatible inputs/prompts/config/price sources.
+  Do not hide failed routes/calls, unknown measurements or critical errors behind a mean.
+- Run the controlled corpus and record the comparison/selection rationale and regression
+  baseline, with thresholds fixed before evaluating candidates. Accuracy advantage is a
+  measured result, not assumed OCR superiority. Keep production success and evaluation-only
+  baseline behavior separate, and record any unrun live acceptance as outstanding.
+
+**Verification:** Golden offline grades/summaries for wrong basis versus missing optional
+facts, unit conversions, route failures, noisy OCR, food tolerances, repeats and unavailable
+usage. Regrade/compare with network disabled and prove raw outputs/truth unchanged. Complete
+representative live comparisons only with supplied fixture/credential prerequisites.
+
+**Dependencies / seams:** Story 36 raw artifacts plus Story 35 accepted production orchestration
+for the final pipeline comparison. Core offline scorer work can use raw fixtures earlier;
+final live acceptance cannot be inferred from mock grades. Extends the same evaluation module.
+
+---
+
 <a id="story-38"></a>
 
 ### Story 38: Recipes, Meals & Products library in Settings
@@ -1399,14 +1741,43 @@ selection. This schedules work; no existing Story is reopened or implementation 
     capacity estimates from the four-Story count; implementation plans must size actual work.
 14. Story 29 is independent of the existing feature batches. Its gesture/metadata investigation
     precedes the app-wide naming pass and final release-build acceptance within its own plan.
-
 15. Story 38 follows completed Stories 24–28 and preserves Story 29's naming contract.
     It can proceed independently of the OCR batch and changes the library's navigation
     and presentation without reopening the delivered domain Stories.
-
 16. Story 39 uses the delivered diary and snapshot contracts from Stories 25–28 and
     Story 29's naming contract. It does not depend on Story 38; coordinate edits to
     shared Home/menu code if those Stories are later executed together.
+
+### OCR delivery order
+
+The [owner's addendum](../dictations-tier-0/2026-10-25_milestone-2_ocr-assisted-nutrition-capture.md)
+is incorporated in [Design's OCR pipeline](../design.md#ocr-assisted-nutrition-capture) and
+[evaluation contract](../design.md#aiocr-evaluation-harness). Its provisional OCR-1 through
+OCR-8 map to Stories **30, 32, 31, 33, 34, 35, 36, 37** respectively: the provider precedes
+settings validation, while stable new Story IDs follow this milestone's existing sequence.
+
+| Story | Prerequisites for completion | Readiness / execution boundary |
+| --- | --- | --- |
+| 30 | Existing AI/multi-food behavior and Story 28 | First: settle absolute totals versus label reference bases, common schema, errors and traces |
+| 31 | 30 | OCR adapter and mock fixtures; external key/controlled image for live acceptance |
+| 32 | 30, 31 | Preferences/UI may be developed after 30; complete Test action uses adapter, not orchestrator |
+| 33 | 30 | Vision classification/direct estimation; production label route stays inactive until 35 |
+| 34 | 30 | Text parser can use fixture text independently of OCR implementation |
+| 35 | 30–34 | Activate complete runtime and verify review/ingestion/recovery |
+| 36 | 30, 31, 33, 34 | Corpus/offline work may start earlier; complete real-lane execution needs all adapters |
+| 37 | 35, 36 | Offline grading can use fixtures; final comparison uses accepted pipeline and real evidence |
+
+Critical runtime path: **30 → 31 → 32 → 35**, with **33 and 34** also required before 35.
+Evaluation completion joins **35 + 36 → 37**. There is no dependency on FoodSwitch licensing
+or relay deployment, and no selected cycle. Shared AI/scan code means interface readiness does
+not automatically make concurrent editing safe; any later delegation needs explicit file ownership.
+Create one implementation plan when each substantial Story is taken up, not placeholder plans now.
+
+The highest uncertainty is safe reference-basis convergence, then real-world routing/OCR quality
+and live provider behavior. There is no credible elapsed estimate before Story 30's mapping and
+controlled fixture/provider checks. Corpus collection, user-supplied keys, network/quota and live
+evaluation are external waits; they must not be disguised as implementation completion. All eight
+Stories remain Not Started. This refinement creates no implementation, commit or publication run.
 
 ---
 
@@ -1435,6 +1806,11 @@ selection. This schedules work; no existing Story is reopened or implementation 
   discussion: a release-available developer UI name bar, deep-press selection, and detailed
   source-oriented copying for agent communication. Scheduling initially changed neither
   the closed-Story count nor app version; subsequent completion is recorded above.
+- Stories 30–37 were selected on 2026-10-26 from the owner's attached 2026-10-25 OCR nutrition
+  addendum. Its [exact intake copy](../dictations-tier-0/2026-10-25_milestone-2_ocr-assisted-nutrition-capture.md)
+  is retained; maintained Design resolves actual source contracts and the harness path exception.
+  No existing Story is reopened or renumbered. No unrelated backlog item is selected, no Story
+  closes, and the app version is unchanged by this planning work.
 - Story 38 was requested directly by the owner on 2026-10-26: relocate Home's Meals
   entry below Daily goals in Settings and expand it into a Recipes, Meals & Products
   library. This schedules new work without reopening delivered Stories or changing
