@@ -26,6 +26,7 @@ import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Tune
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
@@ -81,6 +82,8 @@ fun AiScanScreen(
     savedScanItemId: String? = null,
     onSavedScanItemConsumed: () -> Unit = {},
     onScanCompleted: () -> Unit = {},
+    embedded: Boolean = false,
+    onQueueStarted: () -> Unit = {},
 ) {
     val viewModel: AiScanViewModel = koinViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -102,7 +105,7 @@ fun AiScanScreen(
     Scaffold(
         modifier = (modifier).uiName("AiScanScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "AiScanScreen"),
         topBar = {
-            TopAppBar(
+            if (!embedded) TopAppBar(
                 title = { Text(stringResource(Res.string.headline_ai_scanning), modifier = Modifier.uiName("AiScanScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "AiScanScreen")) },
                 navigationIcon = { ArrowBackIconButton(onBack, modifier = Modifier.uiName("AiScanScreen.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "AiScanScreen")) }, modifier = Modifier.uiName("AiScanScreen.TopAppBar.1", "androidx.compose.material3.TopAppBar", uiInspectionSource, "AiScanScreen")
             )
@@ -149,6 +152,9 @@ fun AiScanScreen(
                     if (current.rejectedCount > 0) {
                         Text(stringResource(Res.string.neutral_ai_omitted_count, current.rejectedCount), modifier = Modifier.uiName("AiScanScreen.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "AiScanScreen"))
                     }
+                    TextButton(onClick = viewModel::editInput, modifier = Modifier.uiName("AiScanScreen.TextButton.phoneNew1", "androidx.compose.material3.TextButton", uiInspectionSource, "AiScanScreen")) {
+                        Text(stringResource(Res.string.action_ai_edit_input), modifier = Modifier.uiName("AiScanScreen.Text.phoneNew5", "androidx.compose.material3.Text", uiInspectionSource, "AiScanScreen"))
+                    }
                     current.review.items.forEach { item ->
                         key(item.id) {
                             AiResultCard(
@@ -164,7 +170,7 @@ fun AiScanScreen(
                     Button(
                         enabled = current.review.selectedCount > 0,
                         onClick = {
-                            viewModel.startSelected()?.let { onSaveToQuickAdd(it.estimate, it.id) }
+                            viewModel.startSelected()?.let { onQueueStarted(); onSaveToQuickAdd(it.estimate, it.id) }
                         },
                         modifier = (Modifier.fillMaxWidth()).uiName("AiScanScreen.Button.1", "androidx.compose.material3.Button", uiInspectionSource, "AiScanScreen"),
                     ) {
@@ -229,7 +235,7 @@ private fun SubmitSection(
         )
         Button(
             onClick = onSubmit,
-            enabled = photoCaptured && configured,
+            enabled = configured && (photoCaptured || hint.text.isNotBlank()),
             modifier = (Modifier.fillMaxWidth()).uiName("SubmitSection.Button.1", "androidx.compose.material3.Button", uiInspectionSource, "SubmitSection"),
         ) {
             Text(stringResource(Res.string.action_submit), modifier = Modifier.uiName("SubmitSection.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "SubmitSection"))

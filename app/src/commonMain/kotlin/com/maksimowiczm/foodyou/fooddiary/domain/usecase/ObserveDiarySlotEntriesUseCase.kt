@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
+import com.maksimowiczm.foodyou.fooddiary.domain.entity.containsTime
 import com.maksimowiczm.foodyou.fooddiary.domain.entity.orderedDiaryEntries
 
 class ObserveDiarySlotEntriesUseCase(
@@ -65,14 +66,4 @@ class ObserveDiarySlotEntriesUseCase(
 }
 
 private fun shouldShowDiarySlot(diarySlot: DiarySlot, time: LocalTime, ignoreAllDayDiarySlots: Boolean): Boolean =
-    with(diarySlot) {
-        if (from == to) {
-            !ignoreAllDayDiarySlots
-        } else if (to < from) {
-            val minuteBeforeMidnight = LocalTime(23, 59, 59)
-            val midnight = LocalTime(0, 0, 0)
-            from <= time && time <= minuteBeforeMidnight || midnight <= time && time <= to
-        } else {
-            from <= time && time <= to
-        }
-    }
+    !(ignoreAllDayDiarySlots && diarySlot.from == diarySlot.to) && diarySlot.containsTime(time)

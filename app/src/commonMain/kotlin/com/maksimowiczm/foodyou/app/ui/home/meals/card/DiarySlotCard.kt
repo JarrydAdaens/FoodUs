@@ -145,9 +145,7 @@ internal fun DiarySlotCard(
                 MealMenu(
                     onBulk = onBulk,
                     canSave = diarySlot.foods.isNotEmpty(),
-                    canApply = meals.isNotEmpty(),
                     onSaveClick = { showSaveMealDialog = true },
-                    onApplyClick = { showApplyMealSheet = true },
                 )
             }
 
@@ -177,56 +175,20 @@ internal fun DiarySlotCard(
                 Spacer(Modifier.height(16.dp))
             }
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.uiName("app.ui.home.meals.card.DiarySlotCard.Row.2", "androidx.compose.foundation.layout.Row", uiInspectionSource, "DiarySlotCard")
-            ) {
-                ValueColumn(
-                    label = energyFormatter.suffix(),
-                    value = energyFormatter.formatEnergy(diarySlot.energy, withSuffix = false),
-                    suffix = null,
-                    color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.uiName("DiarySlotCard.ValueColumn.1", "com.maksimowiczm.foodyou.app.ui.home.meals.card.ValueColumn", uiInspectionSource, "DiarySlotCard")
-                )
-
-                nutrientsOrder.forEach { field ->
-                    when (field) {
-                        NutrientsOrder.Proteins ->
-                            ValueColumn(
-                                label = stringResource(Res.string.nutriment_proteins_short),
-                                value = diarySlot.proteins.formatClipZeros("%.1f"),
-                                suffix = stringResource(Res.string.unit_gram_short),
-                                color = nutrientsPalette.proteinsOnSurfaceContainer, modifier = Modifier.uiName("DiarySlotCard.ValueColumn.2", "com.maksimowiczm.foodyou.app.ui.home.meals.card.ValueColumn", uiInspectionSource, "DiarySlotCard")
-                            )
-
-                        NutrientsOrder.Carbohydrates ->
-                            ValueColumn(
-                                label = stringResource(Res.string.nutriment_carbohydrates_short),
-                                value = diarySlot.carbohydrates.formatClipZeros("%.1f"),
-                                suffix = stringResource(Res.string.unit_gram_short),
-                                color = nutrientsPalette.carbohydratesOnSurfaceContainer, modifier = Modifier.uiName("DiarySlotCard.ValueColumn.3", "com.maksimowiczm.foodyou.app.ui.home.meals.card.ValueColumn", uiInspectionSource, "DiarySlotCard")
-                            )
-
-                        NutrientsOrder.Fats ->
-                            ValueColumn(
-                                label = stringResource(Res.string.nutriment_fats_short),
-                                value = diarySlot.fats.formatClipZeros("%.1f"),
-                                suffix = stringResource(Res.string.unit_gram_short),
-                                color = nutrientsPalette.fatsOnSurfaceContainer, modifier = Modifier.uiName("DiarySlotCard.ValueColumn.4", "com.maksimowiczm.foodyou.app.ui.home.meals.card.ValueColumn", uiInspectionSource, "DiarySlotCard")
-                            )
-
-                        NutrientsOrder.Other,
-                        NutrientsOrder.Vitamins,
-                        NutrientsOrder.Minerals -> Unit
-                    }
-                }
-            }
+            com.maksimowiczm.foodyou.app.ui.common.component.NutritionColumns(
+                modifier = (Modifier.fillMaxWidth().padding(horizontal = 16.dp)).uiName("DiarySlotCard.NutritionColumns.phone1", "com.maksimowiczm.foodyou.app.ui.common.component.NutritionColumns", uiInspectionSource, "DiarySlotCard"),
+                calories = { ValueColumn(energyFormatter.suffix(), energyFormatter.formatEnergy(diarySlot.energy, withSuffix = false), null, MaterialTheme.colorScheme.onSurface, modifier = Modifier.uiName("DiarySlotCard.ValueColumn.phone1", "com.maksimowiczm.foodyou.app.ui.home.meals.card.ValueColumn", uiInspectionSource, "DiarySlotCard")) },
+                proteins = { ValueColumn(stringResource(Res.string.nutriment_proteins_short), diarySlot.proteins.formatClipZeros("%.1f"), stringResource(Res.string.unit_gram_short), nutrientsPalette.proteinsOnSurfaceContainer, modifier = Modifier.uiName("DiarySlotCard.ValueColumn.phone2", "com.maksimowiczm.foodyou.app.ui.home.meals.card.ValueColumn", uiInspectionSource, "DiarySlotCard")) },
+                carbohydrates = { ValueColumn(stringResource(Res.string.nutriment_carbohydrates_short), diarySlot.carbohydrates.formatClipZeros("%.1f"), stringResource(Res.string.unit_gram_short), nutrientsPalette.carbohydratesOnSurfaceContainer, modifier = Modifier.uiName("DiarySlotCard.ValueColumn.phone3", "com.maksimowiczm.foodyou.app.ui.home.meals.card.ValueColumn", uiInspectionSource, "DiarySlotCard")) },
+                fats = { ValueColumn(stringResource(Res.string.nutriment_fats_short), diarySlot.fats.formatClipZeros("%.1f"), stringResource(Res.string.unit_gram_short), nutrientsPalette.fatsOnSurfaceContainer, modifier = Modifier.uiName("DiarySlotCard.ValueColumn.phone4", "com.maksimowiczm.foodyou.app.ui.home.meals.card.ValueColumn", uiInspectionSource, "DiarySlotCard")) },
+            )
 
             Spacer(Modifier.height(16.dp))
 
-            // Four self-describing add paths for this diarySlot: search, quick add, AI scan, fast text.
+            // Five direct actions for this slot; loading a saved Meal uses the existing apply flow.
             Row(
                 modifier = (Modifier.fillMaxWidth()).uiName("app.ui.home.meals.card.DiarySlotCard.Row.3", "androidx.compose.foundation.layout.Row", uiInspectionSource, "DiarySlotCard"),
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 FilledIconButton(
@@ -278,6 +240,10 @@ internal fun DiarySlotCard(
                         contentDescription = stringResource(Res.string.headline_fast_text), modifier = Modifier.uiName("DiarySlotCard.Icon.4", "androidx.compose.material3.Icon", uiInspectionSource, "DiarySlotCard")
                     )
                 }
+                FilledTonalIconButton(onClick = { showApplyMealSheet = true }, enabled = meals.isNotEmpty(), modifier = Modifier.uiName("DiarySlotCard.FilledTonalIconButton.phone4", "androidx.compose.material3.FilledTonalIconButton", uiInspectionSource, "DiarySlotCard")) {
+                    Icon(Icons.Outlined.ContentCopy, stringResource(Res.string.action_load_meal), modifier = Modifier.uiName("DiarySlotCard.Icon.phone5", "androidx.compose.material3.Icon", uiInspectionSource, "DiarySlotCard"))
+                }
+
             }
         }
     }
@@ -398,7 +364,7 @@ private fun ValueColumn(
 ) {
     Column(
         modifier = (modifier).uiName("ValueColumn.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "ValueColumn"),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = Alignment.End,
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         CompositionLocalProvider(
@@ -498,9 +464,7 @@ private fun DeleteDialog(onDismissRequest: () -> Unit, onDeleteEntry: () -> Unit
 @Composable
 private fun MealMenu(
     canSave: Boolean,
-    canApply: Boolean,
     onSaveClick: () -> Unit,
-    onApplyClick: () -> Unit,
     onBulk: (DiaryBulkIntent) -> Unit,
 ) {
 
@@ -533,17 +497,7 @@ private fun MealMenu(
                     Icon(imageVector = Icons.Outlined.BookmarkAdd, contentDescription = null, modifier = Modifier.uiName("MealMenu.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "MealMenu"))
                 }, modifier = Modifier.uiName("MealMenu.DropdownMenuItem.1", "androidx.compose.material3.DropdownMenuItem", uiInspectionSource, "MealMenu")
             )
-            DropdownMenuItem(
-                text = { Text(stringResource(Res.string.action_load_meal), modifier = Modifier.uiName("MealMenu.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "MealMenu")) },
-                onClick = {
-                    expanded = false
-                    onApplyClick()
-                },
-                enabled = canApply,
-                leadingIcon = {
-                    Icon(imageVector = Icons.Outlined.ContentCopy, contentDescription = null, modifier = Modifier.uiName("MealMenu.Icon.3", "androidx.compose.material3.Icon", uiInspectionSource, "MealMenu"))
-                }, modifier = Modifier.uiName("MealMenu.DropdownMenuItem.2", "androidx.compose.material3.DropdownMenuItem", uiInspectionSource, "MealMenu")
-            )
+
         } }
     }
 }

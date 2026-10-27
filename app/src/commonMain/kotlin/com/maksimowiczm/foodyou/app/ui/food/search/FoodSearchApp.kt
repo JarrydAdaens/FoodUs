@@ -62,6 +62,7 @@ fun FoodSearchApp(
     modifier: Modifier = Modifier,
     excludedRecipe: NutritionalItemId.Recipe? = null,
     initialQuery: String? = null,
+    appState: FoodSearchAppState = rememberFoodSearchAppState(),
 ) {
     val viewModel: FoodSearchViewModel = koinViewModel { parametersOf(excludedRecipe) }
 
@@ -73,6 +74,7 @@ fun FoodSearchApp(
         onUpdateUsdaApiKey = onUpdateUsdaApiKey,
         onUpdateOpenFoodFactsCredentials = onUpdateOpenFoodFactsCredentials,
         initialQuery = initialQuery,
+        appState = appState,
         modifier = (modifier).uiName("FoodSearchApp.FoodSearchApp.1", "com.maksimowiczm.foodyou.app.ui.food.search.FoodSearchApp", uiInspectionSource, "FoodSearchApp"),
     )
 }
@@ -101,8 +103,10 @@ private fun FoodSearchApp(
 
     // Pre-execute a query handed in by the placeholder AI route (Milestone 2, Story 9) so the user
     // lands on populated results with the search box already filled.
+    var initialQueryApplied by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf(false) }
     LaunchedEffect(initialQuery) {
-        if (!initialQuery.isNullOrBlank()) {
+        if (!initialQueryApplied && !initialQuery.isNullOrBlank()) {
+            initialQueryApplied = true
             onSearch(initialQuery)
         }
     }

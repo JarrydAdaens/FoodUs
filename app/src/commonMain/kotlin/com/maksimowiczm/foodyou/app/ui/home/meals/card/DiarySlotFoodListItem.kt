@@ -130,7 +130,7 @@ internal fun DiarySlotFoodListItem(
             measurement = {
                 Text(text = measurementString, style = MaterialTheme.typography.bodySmall, modifier = Modifier.uiName("DiarySlotFoodListItem.Text.8", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotFoodListItem"))
             },
-            isRecipe = entry.isRecipe,
+            isRecipe = entry.isRecipe, alignNutritionColumns = true,
             modifier = (modifier).uiName("DiarySlotFoodListItem.FoodListItem.1", "com.maksimowiczm.foodyou.app.ui.common.component.FoodListItem", uiInspectionSource, "DiarySlotFoodListItem"),
             containerColor = color,
             contentColor = contentColor,
@@ -205,7 +205,7 @@ internal fun DiarySlotFoodListItem(
             fats = { Text(text = fatsString, style = MaterialTheme.typography.bodySmall, modifier = Modifier.uiName("DiarySlotFoodListItem.Text.13", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotFoodListItem")) },
             calories = { Text(text = caloriesString, style = MaterialTheme.typography.bodySmall, modifier = Modifier.uiName("DiarySlotFoodListItem.Text.14", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotFoodListItem")) },
             measurement = { entry.capturedPortion?.let { Text(it.stringResource(), style = MaterialTheme.typography.bodySmall, modifier = Modifier.uiName("DiarySlotFoodListItem.Text.15", "androidx.compose.material3.Text", uiInspectionSource, "DiarySlotFoodListItem")) } },
-            isRecipe = false,
+            isRecipe = false, alignNutritionColumns = true,
             modifier = (modifier).uiName("DiarySlotFoodListItem.FoodListItem.2", "com.maksimowiczm.foodyou.app.ui.common.component.FoodListItem", uiInspectionSource, "DiarySlotFoodListItem"),
             containerColor = color,
             contentColor = contentColor,
@@ -229,7 +229,7 @@ private fun CapturedDiaryRow(name:String,facts:NutritionFacts,isRecipe:Boolean,c
         if(it>Int.MAX_VALUE)it.toString()+" kcal" else LocalEnergyFormatter.current.formatEnergy(it)
     } ?: unknown
     FoodListItem(name={Text(name, modifier = Modifier.uiName("CapturedDiaryRow.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "CapturedDiaryRow"))},proteins={Text(macro(facts.proteins), modifier = Modifier.uiName("CapturedDiaryRow.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "CapturedDiaryRow"))},carbohydrates={Text(macro(facts.carbohydrates), modifier = Modifier.uiName("CapturedDiaryRow.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "CapturedDiaryRow"))},
-        fats={Text(macro(facts.fats), modifier = Modifier.uiName("CapturedDiaryRow.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "CapturedDiaryRow"))},calories={Text(calories, modifier = Modifier.uiName("CapturedDiaryRow.Text.5", "androidx.compose.material3.Text", uiInspectionSource, "CapturedDiaryRow"))},measurement={Column (modifier = Modifier.uiName("CapturedDiaryRow.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "CapturedDiaryRow")) { context() }},isRecipe=isRecipe,
+        fats={Text(macro(facts.fats), modifier = Modifier.uiName("CapturedDiaryRow.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "CapturedDiaryRow"))},calories={Text(calories, modifier = Modifier.uiName("CapturedDiaryRow.Text.5", "androidx.compose.material3.Text", uiInspectionSource, "CapturedDiaryRow"))},measurement={Column (modifier = Modifier.uiName("CapturedDiaryRow.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "CapturedDiaryRow")) { context() }},isRecipe=isRecipe,alignNutritionColumns=true,
         modifier=(modifier).uiName("CapturedDiaryRow.FoodListItem.1", "com.maksimowiczm.foodyou.app.ui.common.component.FoodListItem", uiInspectionSource, "CapturedDiaryRow"),containerColor=color,contentColor=contentColor,shape=shape,
         contentPadding=PaddingValues(vertical=8.dp,horizontal=16.dp))
 }

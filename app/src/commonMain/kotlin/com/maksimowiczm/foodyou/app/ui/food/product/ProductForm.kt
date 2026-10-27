@@ -23,7 +23,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.outlined.Calculate
 import androidx.compose.material.icons.outlined.Keyboard
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilledTonalIconButton
@@ -209,32 +208,8 @@ private fun General(state: ProductFormState, horizontalPadding: PaddingValues) {
         modifier = (Modifier.padding(horizontalPadding).fillMaxWidth()).uiName("General.SourcePicker.1", "com.maksimowiczm.foodyou.app.ui.food.product.SourcePicker", uiInspectionSource, "General"),
     )
 
-    Row(
-        modifier =
-            (Modifier.fillMaxWidth()
-                .clickable { state.isLiquid = !state.isLiquid }
-                .padding(vertical = 8.dp)
-                .padding(horizontalPadding)).uiName("General.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "General"),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Box(
-            modifier = (Modifier.size(48.dp)).uiName("General.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "General"),
-            contentAlignment = Alignment.Center,
-            content = { Checkbox(checked = state.isLiquid, onCheckedChange = null, modifier = Modifier.uiName("General.Checkbox.1", "androidx.compose.material3.Checkbox", uiInspectionSource, "General")) },
-        )
-        Column (modifier = Modifier.uiName("General.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "General")) {
-            Text(
-                text = stringResource(Res.string.action_treat_as_liquid),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.uiName("General.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "General")
-            )
-            Text(
-                text = stringResource(Res.string.description_treat_as_liquid),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.uiName("General.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "General")
-            )
-        }
-    }
+    com.maksimowiczm.foodyou.app.ui.food.component.MetricUnitSelector(
+        isLiquid = state.isLiquid, onSelect = { state.isLiquid = it }, modifier = (Modifier.padding(horizontalPadding)).uiName("General.MetricUnitSelector.phone1", "com.maksimowiczm.foodyou.app.ui.food.component.MetricUnitSelector", uiInspectionSource, "General"))
 
     Text(
         text = stringResource(Res.string.product_nutrition_basis),

@@ -38,6 +38,7 @@ fun FoodListItem(
     calories: @Composable () -> Unit,
     measurement: @Composable () -> Unit,
     isRecipe: Boolean,
+    alignNutritionColumns: Boolean = false,
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
     trailingContent: (@Composable () -> Unit)? = null,
@@ -74,7 +75,12 @@ fun FoodListItem(
         @Composable {
             CompositionLocalProvider(LocalTextStyle provides MaterialTheme.typography.bodyMedium) {
                 Column(modifier = (Modifier.fillMaxWidth()).uiName("FoodListItem.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "FoodListItem")) {
-                    Row(
+                    if (alignNutritionColumns) {
+                        NutritionColumns(calories = calories,
+                            proteins = { CompositionLocalProvider(LocalContentColor provides nutrientsPalette.proteinsOnSurfaceContainer) { proteins() } },
+                            carbohydrates = { CompositionLocalProvider(LocalContentColor provides nutrientsPalette.carbohydratesOnSurfaceContainer) { carbohydrates() } },
+                            fats = { CompositionLocalProvider(LocalContentColor provides nutrientsPalette.fatsOnSurfaceContainer) { fats() } }, modifier = Modifier.uiName("FoodListItem.NutritionColumns.phone1", "com.maksimowiczm.foodyou.app.ui.common.component.NutritionColumns", uiInspectionSource, "FoodListItem"))
+                    } else Row(
                         modifier = (Modifier.fillMaxWidth()).uiName("FoodListItem.Row.2", "androidx.compose.foundation.layout.Row", uiInspectionSource, "FoodListItem"),
                         horizontalArrangement = Arrangement.spacedBy(16.dp),
                     ) {

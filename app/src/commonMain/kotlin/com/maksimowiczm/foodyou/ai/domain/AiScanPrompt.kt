@@ -2,6 +2,10 @@ package com.maksimowiczm.foodyou.ai.domain
 
 /** Layer-1 machinery only. Personal context belongs in the optional user system prompt or hint. */
 object AiScanPrompt {
+    fun forInput(hasImage: Boolean): String = if (hasImage) PROMPT else PROMPT
+        .replace("This photo shows food. Identify distinct foods in the photo.", "Identify the distinct foods in the user description.")
+        .replace("pictured portion", "described portion")
+
     const val PROMPT =
         "This photo shows food. Identify distinct foods in the photo. " +
             "Respond with ONLY a JSON object (no Markdown, no commentary). " +

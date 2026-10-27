@@ -24,7 +24,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -142,32 +141,9 @@ internal fun RecipeForm(
                 supportingText = stringResource(Res.string.description_add_note),
             )
 
-            Row(
-                modifier =
-                    (Modifier.fillMaxWidth()
-                        .clickable { state.isLiquid = !state.isLiquid }
-                        .padding(vertical = 8.dp)
-                        .padding(horizontalPadding)).uiName("RecipeForm.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "RecipeForm"),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Box(
-                    modifier = (Modifier.size(48.dp)).uiName("RecipeForm.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "RecipeForm"),
-                    contentAlignment = Alignment.Center,
-                    content = { Checkbox(checked = state.isLiquid, onCheckedChange = null, modifier = Modifier.uiName("RecipeForm.Checkbox.1", "androidx.compose.material3.Checkbox", uiInspectionSource, "RecipeForm")) },
-                )
-                Column (modifier = Modifier.uiName("RecipeForm.Column.3", "androidx.compose.foundation.layout.Column", uiInspectionSource, "RecipeForm")) {
-                    Text(
-                        text = stringResource(Res.string.action_treat_as_liquid),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.uiName("RecipeForm.Text.6", "androidx.compose.material3.Text", uiInspectionSource, "RecipeForm")
-                    )
-                    Text(
-                        text = stringResource(Res.string.description_treat_as_liquid),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.uiName("RecipeForm.Text.7", "androidx.compose.material3.Text", uiInspectionSource, "RecipeForm")
-                    )
-                }
-            }
+                    com.maksimowiczm.foodyou.app.ui.food.component.MetricUnitSelector(
+                isLiquid = state.isLiquid, onSelect = { state.isLiquid = it }, modifier = (Modifier.padding(horizontalPadding)).uiName("RecipeForm.MetricUnitSelector.phone1", "com.maksimowiczm.foodyou.app.ui.food.component.MetricUnitSelector", uiInspectionSource, "RecipeForm"))
+
         }
 
         HorizontalDivider(modifier = (Modifier.padding(bottom = 8.dp)).uiName("RecipeForm.HorizontalDivider.1", "androidx.compose.material3.HorizontalDivider", uiInspectionSource, "RecipeForm"))

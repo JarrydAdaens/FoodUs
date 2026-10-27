@@ -11,7 +11,12 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 abstract class ProductDao {
-    @Query("SELECT id, name FROM Product WHERE sourceType = :source")
+    @Query("""
+        SELECT d.id, d.name, d.note,
+            (SELECT MIN(e.epochSeconds) FROM FoodEvent e
+             WHERE e.productId = d.id AND e.type IN (0, 1, 2)) AS createdEpochSeconds
+        FROM Product d WHERE d.sourceType = :source
+    """)
     internal abstract fun observeLibraryNames(source: ProductSourceType): Flow<List<DefinitionName>>
 
     @Query(

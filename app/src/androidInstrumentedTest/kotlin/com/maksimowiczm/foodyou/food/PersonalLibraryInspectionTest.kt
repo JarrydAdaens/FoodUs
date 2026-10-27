@@ -32,7 +32,12 @@ class PersonalLibraryInspectionTest {
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
     private var decor: View? = null
     private val driver = ScanTestDriver(instrumentation, { decor }, { instrumentation.targetContext.packageName }, { null })
-    @Before fun prepare() = prepareSyntheticLibraryHost()
+    @Before fun prepare() {
+        prepareSyntheticLibraryHost()
+        val settings: com.maksimowiczm.foodyou.common.domain.userpreferences.UserPreferencesRepository<com.maksimowiczm.foodyou.settings.domain.entity.Settings> =
+            GlobalContext.get().get(org.koin.core.qualifier.named(com.maksimowiczm.foodyou.settings.domain.entity.Settings::class.qualifiedName!!))
+        runBlocking { settings.update { copy(librarySortOrder = com.maksimowiczm.foodyou.settings.domain.entity.LibrarySortOrder.Alphabetical) } }
+    }
 
     @Test fun titleTabsQueryRowAndCreationExportTheirActualSourceWithoutActivatingActions() {
         val products = GlobalContext.get().get<ProductRepository>()

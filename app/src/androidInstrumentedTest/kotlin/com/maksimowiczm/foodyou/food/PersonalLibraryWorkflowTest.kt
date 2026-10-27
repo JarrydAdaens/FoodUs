@@ -110,6 +110,9 @@ class PersonalLibraryWorkflowTest {
         instrumentation.uiAutomation.serviceInfo = info.apply { this.flags = flags or AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS }
         try {
             for ((night, scale) in listOf("no" to 1f, "yes" to 1.5f)) {
+                val preferences: com.maksimowiczm.foodyou.common.domain.userpreferences.UserPreferencesRepository<com.maksimowiczm.foodyou.settings.domain.entity.Settings> =
+                    koin.get(org.koin.core.qualifier.named(com.maksimowiczm.foodyou.settings.domain.entity.Settings::class.qualifiedName!!))
+                runBlocking { preferences.update { copy(librarySortOrder = com.maksimowiczm.foodyou.settings.domain.entity.LibrarySortOrder.Alphabetical) } }
                 shell("cmd uimode night $night")
                 shell("settings put system font_scale $scale")
                 if(scale > 1f) shell("wm size 900x2000")
@@ -122,7 +125,14 @@ class PersonalLibraryWorkflowTest {
                     }
                     click(Res.string.action_go_to_settings)
                     click(Res.string.library_title)
+                    val sortLabel = runBlocking { getString(Res.string.library_sort_label, getString(Res.string.library_sort_az)) }
+                    driver.clickText(sortLabel)
+                    click(Res.string.library_sort_lowest)
                     driver.setField(Res.string.library_search, prefix)
+                    val tabHeights = listOf(Res.string.library_recipes, Res.string.library_meals, Res.string.library_products).map {
+                        Rect().also(driver.findText(label(it))::getBoundsInScreen).height()
+                    }
+                    assertTrue("Tab labels stay on one line at enlarged text", tabHeights.max() - tabHeights.min() <= 2)
                     val directory = java.io.File(instrumentation.targetContext.getExternalFilesDir(null), "story38-appearance").apply { mkdirs() }
                     java.io.FileOutputStream(java.io.File(directory, "library-start-$night-$scale.png")).use {
                         assertTrue(requireNotNull(instrumentation.uiAutomation.takeScreenshot()).compress(Bitmap.CompressFormat.PNG, 100, it))
@@ -159,8 +169,10 @@ class PersonalLibraryWorkflowTest {
                     instrumentation.runOnMainSync { decor?.windowInsetsController?.hide(android.view.WindowInsets.Type.ime()) }
                     driver.clickText(last)
                     driver.findText(label(Res.string.recipe_name))
+                    driver.setField(Res.string.headline_note, "Synthetic edited note $night")
                     Thread.sleep(5600)
-                    click(Res.string.action_go_back)
+                    click(Res.string.action_save)
+                    driver.findText(label(Res.string.library_title))
                     driver.assertField(Res.string.library_search, prefix)
                     val header = driver.findText(label(Res.string.library_title))
                     var root = header

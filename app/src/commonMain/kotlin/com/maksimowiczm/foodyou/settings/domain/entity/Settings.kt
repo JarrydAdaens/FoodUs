@@ -15,6 +15,7 @@ data class Settings(
     val graphStyle: GraphStyle,
     val weekLayout: WeekLayout,
     val appLaunchInfo: AppLaunchInfo,
+    val librarySortOrder: LibrarySortOrder = LibrarySortOrder.Alphabetical,
     val uiNameBarEnabled: Boolean = false,
     val uiNameBarIncludeHierarchy: Boolean = false,
 ) : UserPreferences

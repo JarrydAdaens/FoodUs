@@ -18,6 +18,17 @@ class ScanQuickAddHandoffTest {
         assertEquals("2:1", handle.get<String>(ScanQuickAddHandoff.SAVED_ITEM_KEY))
     }
 
+    @Test fun cancelledQueueRestartCapturesNewSlotWhileContinuationKeepsOriginal() {
+        val state = SavedStateHandle()
+        ScanQuickAddHandoff.beginQueue(state, 7)
+        assertEquals(7L, ScanQuickAddHandoff.targetSlot(state, 9))
+        // Cancel, change the header, then explicitly start another review queue.
+        ScanQuickAddHandoff.beginQueue(state, 9)
+        assertEquals(9L, ScanQuickAddHandoff.targetSlot(state, 7))
+        ScanQuickAddHandoff.finishQueue(state)
+        assertEquals(11L, ScanQuickAddHandoff.targetSlot(state, 11))
+    }
+
     @Test fun manualQuickAddNeverAcknowledgesAScanItem() {
         val handle = SavedStateHandle()
         ScanQuickAddHandoff.acknowledge(FoodDiaryCreateQuickAdd(1, 2), handle)

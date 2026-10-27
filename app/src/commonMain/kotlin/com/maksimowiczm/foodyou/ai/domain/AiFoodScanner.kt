@@ -13,6 +13,11 @@ sealed interface AiScanResult {
     data class Failure(val message: String) : AiScanResult
 }
 
+/** Validated at the scanner boundary; description is ephemeral per-request user input. */
+data class AiFoodScanRequest(val jpeg: ByteArray? = null, val description: String? = null) {
+    val isValid: Boolean get() = (jpeg != null && jpeg.isNotEmpty()) || !description.isNullOrBlank()
+}
+
 /**
  * Sends a downscaled food photo to the AI endpoint and returns a structured estimate
  * (Milestone 2, Story 6).
@@ -27,4 +32,7 @@ interface AiFoodScanner {
      *   restaurant"; applied to this call alone and never persisted. Ignored when blank.
      */
     suspend fun scan(jpeg: ByteArray, hint: String? = null): AiScanResult
+
+    suspend fun scan(request: AiFoodScanRequest): AiScanResult = request.jpeg?.takeIf { it.isNotEmpty() }
+        ?.let { scan(it, request.description) } ?: AiScanResult.Failure("Text input is unavailable.")
 }
