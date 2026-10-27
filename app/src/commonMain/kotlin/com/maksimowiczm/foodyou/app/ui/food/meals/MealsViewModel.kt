@@ -14,10 +14,15 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
 
-internal data class MealEditorDraft(val meal: Meal, val itemKeys: List<Long>,val originalItems:List<MealItem> = meal.items,
-    val originalPanelNeedsReview:Boolean=meal.reportedNutrition?.needsReview==true)
+internal data class MealDefinitionDraft(
+    val name: String = "", val items: List<MealItem> = emptyList(),
+    val reportedNutrition: com.maksimowiczm.foodyou.common.domain.food.ReportedNutrition? = null,
+)
 
-private fun MealEditorDraft.withItems(items:List<MealItem>):Meal {
+internal data class MealEditorDraft(val meal: MealDefinitionDraft, val itemKeys: List<Long>,val originalItems:List<MealItem> = meal.items,
+    val originalPanelNeedsReview:Boolean=meal.reportedNutrition?.needsReview==true, val original: Meal? = null)
+
+private fun MealEditorDraft.withItems(items:List<MealItem>):MealDefinitionDraft {
     fun composition(values:List<MealItem>)=values.groupingBy { it.copy(name="",id=null,metadata=null) }.eachCount()
     return meal.copy(items=items,reportedNutrition=meal.reportedNutrition?.copy(needsReview=originalPanelNeedsReview || composition(originalItems)!=composition(items)))
 }
@@ -31,7 +36,9 @@ internal class MealsViewModel(
     private val applyMeal: ApplyMealUseCase,
     slots: DiarySlotRepository,
     private val observeItem: ObserveNutritionalItemUseCase,
+    private val createMeal: CreateMealDefinitionUseCase = CreateMealDefinitionUseCase(repository),
 ) : ViewModel() {
+    val savedCount = MutableStateFlow(0)
     val message = MutableStateFlow<MealMessage?>(null)
     val busy = MutableStateFlow(false)
     private var nextDraftKey = -1L
@@ -49,10 +56,12 @@ internal class MealsViewModel(
     fun retryRead() { readFailed.value = false; message.value = null; refresh.value++ }
     fun edit(meal: Meal) {
         if (!busy.value) {
-            editor.value = MealEditorDraft(meal.copy(items = meal.items.toList()), meal.items.map { it.id?.value ?: nextDraftKey-- })
+            editor.value = MealEditorDraft(MealDefinitionDraft(meal.name, meal.items.toList(), meal.reportedNutrition),
+                meal.items.map { it.id?.value ?: nextDraftKey-- }, original = meal)
             message.value = null
         }
     }
+    fun create() { if (!busy.value) { editor.value = MealEditorDraft(MealDefinitionDraft(), emptyList()); message.value = null } }
     fun cancel() { if (!busy.value) { editor.value = null; message.value = null } }
     fun rename(name: String) { editor.value = editor.value?.let { it.copy(meal = it.meal.copy(name = name)) } }
     fun remove(index: Int) {
@@ -92,14 +101,17 @@ internal class MealsViewModel(
     }
 
     fun save() {
-        val current = editor.value?.meal ?: return
+        val draft = editor.value ?: return
+        val current = draft.meal
         if (busy.value) return
         if (validateMeal(current.name, current.items) != null) { message.value = MealMessage.Invalid; return }
         busy.value = true
         viewModelScope.launch {
             try {
-                if (updateMeal.update(current.id, current.name, current.items).isSuccess()) {
-                    editor.value = null; message.value = null
+                val saved = if (draft.original == null) createMeal.create(current.name, current.items).isSuccess()
+                    else updateMeal.update(draft.original.id, current.name, current.items).isSuccess()
+                if (saved) {
+                    editor.value = null; message.value = null; savedCount.value++
                 } else message.value = MealMessage.SaveFailed
             } finally { busy.value = false }
         }

@@ -20,10 +20,12 @@ internal class CreateProductViewModel(
     private val createProductUseCase: CreateProductUseCase,
     private val dateProvider: DateProvider,
 ) : ViewModel() {
+    private var saving = false
     private val eventBus = Channel<CreateProductEvent>()
     val events = eventBus.receiveAsFlow()
 
     fun createProduct(form: ProductFormState) {
+        if (saving) return
         form.saveFailed = false
         if (!form.isValid) {
             return
@@ -39,20 +41,33 @@ internal class CreateProductViewModel(
             return
         }
 
+        // Freeze one submission before suspension; later form changes cannot alter the write.
+        val name = form.name.value
+        val brand = form.brand.value
+        val barcode = form.barcode.value
+        val note = form.note.value
+        val isLiquid = form.isLiquid
+        val packageWeight = form.packageWeight.value?.toDouble()
+        val servingWeight = form.servingWeight.value?.toDouble()
+        val source = ProductSource(type = if(form.sourceTypeLocked) ProductSource.Type.User else form.sourceType, url = form.sourceUrl.value)
+        val nutritionFacts = form.nutritionFacts(multiplier)
+        val history = NutritionalItemHistory.Created(dateProvider.nowInstant())
+        saving = true
+        form.saving = true
         viewModelScope.launch {
             try {
                 createProductUseCase
                     .create(
-                        name = form.name.value,
-                        brand = form.brand.value,
-                        barcode = form.barcode.value,
-                        note = form.note.value,
-                        isLiquid = form.isLiquid,
-                        packageWeight = form.packageWeight.value?.toDouble(),
-                        servingWeight = form.servingWeight.value?.toDouble(),
-                        source = ProductSource(type = form.sourceType, url = form.sourceUrl.value),
-                        nutritionFacts = form.nutritionFacts(multiplier),
-                        history = NutritionalItemHistory.Created(dateProvider.nowInstant()),
+                        name = name,
+                        brand = brand,
+                        barcode = barcode,
+                        note = note,
+                        isLiquid = isLiquid,
+                        packageWeight = packageWeight,
+                        servingWeight = servingWeight,
+                        source = source,
+                        nutritionFacts = nutritionFacts,
+                        history = history,
                     )
                     .onSuccess { eventBus.send(CreateProductEvent.Created(it)) }
                     .onError {
@@ -62,6 +77,9 @@ internal class CreateProductViewModel(
                 throw cancelled
             } catch (_: Exception) {
                 form.saveFailed = true
+            } finally {
+                saving = false
+                form.saving = false
             }
         }
     }

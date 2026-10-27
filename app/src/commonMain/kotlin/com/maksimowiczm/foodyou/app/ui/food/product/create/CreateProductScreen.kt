@@ -45,7 +45,8 @@ internal fun CreateProductScreen(
 ) {
     var showDiscardDialog by rememberSaveable { mutableStateOf(false) }
     val handleBack = {
-        if (!state.isModified) {
+        if (state.saving) Unit
+        else if (!state.isModified) {
             onBack()
         } else {
             showDiscardDialog = true
@@ -53,8 +54,8 @@ internal fun CreateProductScreen(
     }
     NavigationEventHandler(
         state = rememberNavigationEventState(NavigationEventInfo.None),
-        isBackEnabled = state.isModified,
-        onBackCompleted = { showDiscardDialog = true },
+        isBackEnabled = state.isModified || state.saving,
+        onBackCompleted = { if (!state.saving) showDiscardDialog = true },
     )
     if (showDiscardDialog) {
         DiscardDialog(
@@ -77,7 +78,7 @@ internal fun CreateProductScreen(
                 title = { Text(stringResource(Res.string.headline_create_product), modifier = Modifier.uiName("CreateProductScreen.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "CreateProductScreen")) },
                 navigationIcon = { ArrowBackIconButton(handleBack, modifier = Modifier.uiName("CreateProductScreen.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "CreateProductScreen")) },
                 actions = {
-                    FilledIconButton(onClick = { onCreate(state) }, enabled = state.isValid, modifier = Modifier.uiName("CreateProductScreen.FilledIconButton.1", "androidx.compose.material3.FilledIconButton", uiInspectionSource, "CreateProductScreen")) {
+                    FilledIconButton(onClick = { onCreate(state) }, enabled = state.isValid && !state.saving, modifier = Modifier.uiName("CreateProductScreen.FilledIconButton.1", "androidx.compose.material3.FilledIconButton", uiInspectionSource, "CreateProductScreen")) {
                         Icon(
                             imageVector = Icons.Outlined.Save,
                             contentDescription = stringResource(Res.string.action_save), modifier = Modifier.uiName("CreateProductScreen.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "CreateProductScreen")
@@ -97,7 +98,7 @@ internal fun CreateProductScreen(
         ) {
             item {
                 AssistChip(
-                    onClick = onDownload,
+                    onClick = onDownload, enabled = !state.saving,
                     label = { Text(stringResource(Res.string.action_download_product), modifier = Modifier.uiName("CreateProductScreen.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "CreateProductScreen")) },
                     modifier = (Modifier.padding(horizontal = 16.dp)).uiName("CreateProductScreen.AssistChip.1", "androidx.compose.material3.AssistChip", uiInspectionSource, "CreateProductScreen"),
                     leadingIcon = {

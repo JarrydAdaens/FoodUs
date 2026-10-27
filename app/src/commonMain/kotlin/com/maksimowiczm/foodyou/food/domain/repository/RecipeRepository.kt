@@ -7,6 +7,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 
 interface RecipeRepository {
+    /** Personal definitions only. Lightweight listing does not resolve nutritional graphs. */
+    fun observeLibraryNames(): Flow<List<com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemName>> =
+        kotlinx.coroutines.flow.flow { error("Library listing unavailable") }
+
     fun observeRecipe(recipeId: NutritionalItemId.Recipe): Flow<Recipe?>
 
     /** Direct recipe edges, before recursive hydration, for candidate graph validation. */

@@ -96,7 +96,7 @@ class MealsWorkflowTest {
         driver.setField(Res.string.label_meal_name, originalName)
         clickButton(label(Res.string.action_save))
         driver.await("saved Meal committed") { saved().size == 1 }
-        click(Res.string.meals_library)
+        click(Res.string.action_go_to_settings)
         driver.findText(originalName)
         driver.findText(recipeName)
         clickButton(label(Res.string.meals_edit))
@@ -156,14 +156,14 @@ class MealsWorkflowTest {
 
     @Test fun emptyDiaryStillReachesMealsAndUnavailableCollectionCanRetry() = withFixture(populated = false) {
         assertTrue(entries().isEmpty())
-        click(Res.string.meals_library)
+        click(Res.string.action_go_to_settings)
         driver.findText(label(Res.string.meals_empty))
         clickButton(label(Res.string.meals_go_diary))
         driver.findText(slotName)
         val id = runBlocking { meals.save("Synthetic malformed Meal", listOf(MealItem("Known amount", NutritionFacts(), capturedPortion = Measurement.Milliliter(125.0)))) }
         val good = runBlocking { db.mealDao.getById(id.value)!!.items.single() }
         runBlocking { db.mealDao.updateItems(listOf(good.copy(capturedPortionValue = null))) }
-        click(Res.string.meals_library)
+        click(Res.string.action_go_to_settings)
         driver.findText(label(Res.string.meals_unavailable))
         clickButton(label(Res.string.positive_ok))
         driver.findText(label(Res.string.meals_retry))
@@ -468,7 +468,7 @@ class MealsWorkflowTest {
             composable("home") {
                 HomeScreen(
                     modifier = Modifier.semantics { contentDescription = homeContext },
-                    onSettings = {}, onTitle = {}, onMeals = { nav.navigate("meals") },
+                    onSettings = { nav.navigate("meals") }, onTitle = {},
                     onDiarySlotCardLongClick = {}, onDiarySlotCardAddClick = { _, _ -> },
                     onDiarySlotCardQuickAddClick = { _, _ -> }, onDiarySlotCardAiScanClick = { _, _ -> },
                     onDiarySlotCardFastTextClick = { _, _ -> }, onGoalsCardLongClick = {}, onGoalsCardClick = {},

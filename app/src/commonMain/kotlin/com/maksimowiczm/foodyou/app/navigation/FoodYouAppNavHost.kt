@@ -40,6 +40,7 @@ import com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.recipeServings
 import com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.toProductPrefill
 import com.maksimowiczm.foodyou.app.ui.food.diary.search.DiaryFoodSearchScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.update.UpdateEntryScreen
+import com.maksimowiczm.foodyou.app.ui.food.library.PersonalLibraryScreen
 import com.maksimowiczm.foodyou.app.ui.food.product.CreateProductScreen
 import com.maksimowiczm.foodyou.app.ui.food.product.UpdateProductScreen
 import com.maksimowiczm.foodyou.app.ui.food.recipe.CreateRecipeScreen
@@ -78,7 +79,6 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
     NavHost(modifier = modifier, navController = navController, startDestination = Home) {
         forwardBackwardComposable<Home> {
             UiSourceScope(uiInspectionSource.element("FoodYouAppNavHost.HomeScreen.1", "com.maksimowiczm.foodyou.app.ui.home.master.HomeScreen", "FoodYouAppNavHost")) { HomeScreen(
-                onMeals = { navController.navigateSingleTop(Meals(it)) },
                 onSettings = { navController.navigateSingleTop(Settings) },
                 onTitle = { navController.navigateSingleTop(About) },
                 onDiarySlotCardLongClick = { navController.navigateSingleTop(DiarySlotsPersonalization) },
@@ -120,14 +120,56 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 },
             ) }
         }
-        forwardBackwardComposable<Meals> {
-            val route = it.toRoute<Meals>()
-            UiSourceScope(uiInspectionSource.element("FoodYouAppNavHost.MealsScreen.1", "com.maksimowiczm.foodyou.app.ui.food.meals.MealsScreen", "FoodYouAppNavHost")) { com.maksimowiczm.foodyou.app.ui.food.meals.MealsScreen(
-                onBack = { navController.popBackStackInclusive<Meals>() },
-                epochDay = route.epochDay,
-                onUpdateUsdaApiKey = { navController.navigateSingleTop(UsdaApiKey) },
-                onUpdateOpenFoodFactsCredentials = { navController.navigateSingleTop(OpenFoodFactsLogin) },
-            ) }
+        forwardBackwardComposable<PersonalLibrary> { entry ->
+            val saved by entry.savedStateHandle.getStateFlow("library-saved", false).collectAsStateWithLifecycle()
+            UiSourceScope(uiInspectionSource.element("FoodYouAppNavHost.PersonalLibraryScreen", "com.maksimowiczm.foodyou.app.ui.food.library.PersonalLibraryScreen", "FoodYouAppNavHost")) {
+                PersonalLibraryScreen(
+                    onBack = { navController.popBackStackInclusive<PersonalLibrary>() },
+                    onCreateProduct = { navController.navigateSingleTop(LibraryCreateProduct) },
+                    onCreateRecipe = { navController.navigateSingleTop(LibraryCreateRecipe) },
+                    onEdit = { id -> when(id) {
+                        is NutritionalItemId.Product -> navController.navigateSingleTop(LibraryUpdateProduct(id.id))
+                        is NutritionalItemId.Recipe -> navController.navigateSingleTop(UpdateRecipe(id.id))
+                    } },
+                    onUpdateUsdaApiKey = { navController.navigateSingleTop(UsdaApiKey) },
+                    onUpdateOpenFoodFactsCredentials = { navController.navigateSingleTop(OpenFoodFactsLogin) },
+                    saved = saved, onSavedAcknowledged = { entry.savedStateHandle["library-saved"] = false },
+                )
+            }
+        }
+        forwardBackwardComposable<LibraryCreateProduct> {
+            UiSourceScope(uiInspectionSource.element("FoodYouAppNavHost.LibraryCreateProduct", "com.maksimowiczm.foodyou.app.ui.food.product.CreateProductScreen", "FoodYouAppNavHost")) {
+                CreateProductScreen(personalCollection = true, onBack = { navController.popBackStackInclusive<LibraryCreateProduct>() },
+                    onCreate = {
+                        navController.previousBackStackEntry?.savedStateHandle?.set("library-saved", true)
+                        navController.popBackStackInclusive<LibraryCreateProduct>()
+                    },
+                    onUpdateUsdaApiKey = { navController.navigateSingleTop(UsdaApiKey) },
+                    onUpdateOpenFoodFactsCredentials = { navController.navigateSingleTop(OpenFoodFactsLogin) })
+            }
+        }
+        forwardBackwardComposable<LibraryCreateRecipe> {
+            UiSourceScope(uiInspectionSource.element("FoodYouAppNavHost.LibraryCreateRecipe", "com.maksimowiczm.foodyou.app.ui.food.recipe.CreateRecipeScreen", "FoodYouAppNavHost")) {
+                CreateRecipeScreen(onBack = { navController.popBackStackInclusive<LibraryCreateRecipe>() },
+                    onCreate = {
+                        navController.previousBackStackEntry?.savedStateHandle?.set("library-saved", true)
+                        navController.popBackStackInclusive<LibraryCreateRecipe>()
+                    },
+                    onEditFood = { id -> when(id) {
+                        is NutritionalItemId.Product -> navController.navigateSingleTop(UpdateProduct(id.id))
+                        is NutritionalItemId.Recipe -> navController.navigateSingleTop(UpdateRecipe(id.id))
+                    } },
+                    onUpdateUsdaApiKey = { navController.navigateSingleTop(UsdaApiKey) },
+                    onUpdateOpenFoodFactsCredentials = { navController.navigateSingleTop(OpenFoodFactsLogin) })
+            }
+        }
+        forwardBackwardComposable<LibraryUpdateProduct> { entry ->
+            val route = entry.toRoute<LibraryUpdateProduct>()
+            UiSourceScope(uiInspectionSource.element("FoodYouAppNavHost.LibraryUpdateProduct", "com.maksimowiczm.foodyou.app.ui.food.product.UpdateProductScreen", "FoodYouAppNavHost")) {
+                UpdateProductScreen(onBack = { navController.popBackStackInclusive<LibraryUpdateProduct>() },
+                    onUpdate = { navController.popBackStackInclusive<LibraryUpdateProduct>() },
+                    productId = NutritionalItemId.Product(route.productId), personalCollection = true)
+            }
         }
         forwardBackwardComposable<Settings> {
             UiSourceScope(uiInspectionSource.element("FoodYouAppNavHost.SettingsScreen.1", "com.maksimowiczm.foodyou.app.ui.settings.SettingsScreen", "FoodYouAppNavHost")) { SettingsScreen(
@@ -136,6 +178,7 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 onDiarySlots = { navController.navigateSingleTop(DiarySlotSetup) },
                 onLanguage = { navController.navigateSingleTop(Language) },
                 onGoals = { navController.navigateSingleTop(GoalsSetup) },
+                onLibrary = { navController.navigateSingleTop(PersonalLibrary) },
                 onPersonalization = { navController.navigateSingleTop(Personalization) },
                 onDatabase = { navController.navigateSingleTop(DatabaseSettings) },
                 onExternalDatabases = { navController.navigateSingleTop(ExternalDatabases) },
@@ -597,7 +640,10 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
 
 @Serializable internal object Home
 
-@Serializable private data class Meals(val epochDay: Long)
+@Serializable private object PersonalLibrary
+@Serializable private data class LibraryUpdateProduct(val productId: Long)
+@Serializable private object LibraryCreateProduct
+@Serializable private object LibraryCreateRecipe
 
 @Serializable private object Settings
 

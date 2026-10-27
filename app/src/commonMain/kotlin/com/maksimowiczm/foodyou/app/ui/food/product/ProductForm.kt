@@ -205,7 +205,7 @@ private fun General(state: ProductFormState, horizontalPadding: PaddingValues) {
     SourcePicker(
         url = state.sourceUrl,
         type = state.sourceType,
-        onTypeChange = { state.sourceType = it },
+        onTypeChange = { state.sourceType = it }, personalCollection = state.sourceTypeLocked,
         modifier = (Modifier.padding(horizontalPadding).fillMaxWidth()).uiName("General.SourcePicker.1", "com.maksimowiczm.foodyou.app.ui.food.product.SourcePicker", uiInspectionSource, "General"),
     )
 
@@ -804,6 +804,7 @@ private fun SourcePicker(
     url: FormField<String?, Nothing>,
     type: ProductSource.Type,
     onTypeChange: (ProductSource.Type) -> Unit,
+    personalCollection: Boolean = false,
     modifier: Modifier = Modifier,
     imeAction: ImeAction = ImeAction.Next,
 ) {
@@ -811,7 +812,7 @@ private fun SourcePicker(
 
     val dropdownMenu =
         @Composable {
-            UiSourceScope(uiInspectionSource.element("SourcePicker.DropdownMenu.1", "androidx.compose.material3.DropdownMenu", "SourcePicker")) { DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, modifier = Modifier.uiName("SourcePicker.DropdownMenu.1.root", "androidx.compose.material3.DropdownMenu", uiInspectionSource, "SourcePicker")) {
+            UiSourceScope(uiInspectionSource.element("SourcePicker.DropdownMenu.1", "androidx.compose.material3.DropdownMenu", "SourcePicker")) { DropdownMenu(expanded = expanded && !personalCollection, onDismissRequest = { expanded = false }, modifier = Modifier.uiName("SourcePicker.DropdownMenu.1.root", "androidx.compose.material3.DropdownMenu", uiInspectionSource, "SourcePicker")) {
                 ProductSource.Type.entries.forEach {
                     DropdownMenuItem(
                         leadingIcon = { it.Icon( modifier = Modifier.uiName("SourcePicker.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "SourcePicker")) },
@@ -833,7 +834,7 @@ private fun SourcePicker(
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = imeAction),
         trailingIcon = {
             dropdownMenu()
-            FilledTonalIconButton(onClick = { expanded = true }, modifier = Modifier.uiName("SourcePicker.FilledTonalIconButton.1", "androidx.compose.material3.FilledTonalIconButton", uiInspectionSource, "SourcePicker")) { type.Icon( modifier = Modifier.uiName("SourcePicker.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "SourcePicker")) }
+            FilledTonalIconButton(enabled = !personalCollection, onClick = { expanded = true }, modifier = Modifier.uiName("SourcePicker.FilledTonalIconButton.1", "androidx.compose.material3.FilledTonalIconButton", uiInspectionSource, "SourcePicker")) { type.Icon( modifier = Modifier.uiName("SourcePicker.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "SourcePicker")) }
         },
     )
 }

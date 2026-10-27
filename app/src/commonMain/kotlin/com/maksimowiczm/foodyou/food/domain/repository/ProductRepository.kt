@@ -7,6 +7,10 @@ import com.maksimowiczm.foodyou.food.domain.entity.Product
 import kotlinx.coroutines.flow.Flow
 
 interface ProductRepository {
+    /** Personal definitions only. Lightweight listing does not resolve nutritional graphs. */
+    fun observeLibraryNames(): Flow<List<com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemName>> =
+        kotlinx.coroutines.flow.flow { error("Library listing unavailable") }
+
     fun observeProduct(id: NutritionalItemId.Product): Flow<Product?>
 
     fun observeProducts(limit: Int, offset: Int): Flow<List<Product>>

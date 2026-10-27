@@ -73,7 +73,7 @@ and offline comparisons must make accuracy, cost and latency measurable without 
 
 In Progress — reopened 2026-07-26 by the
 [owner's addendum](../dictations-tier-0/2026-07-26_addendum_ai-settings-branding-foodus.md) after
-daily use. **29 of 39 Stories Complete, 1 Blocked, and 9 Not Started.** All addendum
+daily use. **30 of 39 Stories Complete, 1 Blocked, and 8 Not Started.** All addendum
 Stories 21–23 landed 2026-07-27. Story 16 (FoodSwitch) remains blocked on an external
 data licence. Stories 25 (domain separation), 26 (Product terminology/portions), and 27 (Recipe
 composition/portions) passed acceptance under the [serial run](../_boss-runs/milestone-2-domain-meals-sequential/briefing.md). Story 24 (Meals library/editor) also passed acceptance.
@@ -157,7 +157,7 @@ Definition of Done. Story 16 can resume only after its licence gate is released.
 | 35 | Not Started | [OCR-assisted capture, review and recovery](#story-35) | Feature | — | — | — | — |
 | 36 | Not Started | [Controlled AI/OCR corpus and evaluation runner](#story-36) | Tooling | — | — | — | — |
 | 37 | Not Started | [Nutrition grading, stability and offline comparisons](#story-37) | Tooling | — | — | — | — |
-| 38 | Not Started | [Recipes, Meals & Products library in Settings](#story-38) | Feature | — | — | — | [plan](../implementation-plans/milestone-2/story-38-recipes-meals-products-library/plan.md) |
+| 38 | Complete | [Recipes, Meals & Products library in Settings](#story-38) | Feature | — | — | — | [plan](../implementation-plans/milestone-2/story-38-recipes-meals-products-library/plan.md) |
 | 39 | Complete | [Diary-slot bulk delete, move and copy actions](#story-39) | Feature | — | — | — | [plan](../implementation-plans/milestone-2/story-39-diary-slot-bulk-actions/plan.md) |
 
 ---
@@ -1567,7 +1567,7 @@ final live acceptance cannot be inferred from mock grades. Extends the same eval
 
 **Type:** Feature
 
-**Status:** Not Started
+**Status:** Complete (2026-10-27)
 
 **Outcome:** Replace the basic Meals-only management page with a polished, searchable
 personal library for Recipes, Meals and Products. Move its entry from the Home top bar
@@ -1632,7 +1632,18 @@ reopen Story 24, and planning does not begin application implementation.
 prepared 2026-10-27 after the owner-authorized private reference review and repository
 inspection. It covers destination-free creation, personal collection separation,
 truthful nutrition projections, retained navigation state and synthetic runtime acceptance.
-Story status remains Not Started; application implementation is not begun by this plan.
+The owner authorized implementation on 2026-10-27. Delivered and accepted that day:
+Settings access, personal typed collections, literal local search, truthful serving/bundle
+summaries, destination-free creation/editing, isolated Meal drafts and explicit Meal loading.
+The Home shortcut is removed; diary Save/Load and both bulk-action layouts remain available.
+
+**Acceptance evidence:** 219 unit tests, 26 distinct targeted Android checks on disposable
+emulator-5584, both debug APK builds, the UI-name gate and independent evaluation pass.
+Checks include all three creation flows, retry/cancel/repeated Save, source ownership,
+reported/unknown nutrition, exact day/slot loading, historical snapshots, process restart,
+light/dark/enlarged/narrow layouts, real IME clearance and runtime source selection.
+Schema 43 is unchanged. The owner phone was not modified. Commands, source identities,
+original fixture failures and final receipts are recorded in the implementation plan.
 
 **Source:** Owner's direct 2026-10-26 request and supplied UI selections. Requirements
 are expressed in FoodUs terms; third-party screenshots, studies and extracted material

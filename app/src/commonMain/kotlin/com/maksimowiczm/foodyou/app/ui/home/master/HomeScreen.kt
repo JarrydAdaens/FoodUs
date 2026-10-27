@@ -15,7 +15,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
@@ -45,7 +44,6 @@ fun HomeScreen(
     onGoalsCardLongClick: () -> Unit,
     onGoalsCardClick: (epochDay: Long) -> Unit,
     onEditDiaryEntryClick: (foodEntryId: Long?, manualEntryId: Long?, isPlaceholder: Boolean) -> Unit,
-    onMeals: (epochDay: Long) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     val viewModel: HomeViewModel = koinViewModel()
@@ -69,9 +67,6 @@ fun HomeScreen(
                     )
                 },
                 actions = {
-                    TextButton(onClick = { onMeals(homeState.selectedDate.toEpochDays()) }, modifier = Modifier.uiName("HomeScreen.TextButton.1", "androidx.compose.material3.TextButton", uiInspectionSource, "HomeScreen")) {
-                        Text(stringResource(Res.string.meals_library), modifier = Modifier.uiName("HomeScreen.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "HomeScreen"))
-                    }
                     IconButton(onClick = onSettings, modifier = Modifier.uiName("HomeScreen.IconButton.1", "androidx.compose.material3.IconButton", uiInspectionSource, "HomeScreen")) {
                         Icon(
                             imageVector = Icons.Filled.Settings,

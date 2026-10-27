@@ -18,10 +18,11 @@ fun UpdateProductScreen(
     onUpdate: () -> Unit,
     productId: NutritionalItemId.Product,
     modifier: Modifier = Modifier,
+    personalCollection: Boolean = false,
 ) {
     UiSourceScope(uiInspectionSource.element("app.ui.food.product.UpdateProductScreen.UpdateProductScreen.1", "com.maksimowiczm.foodyou.app.ui.food.product.update.UpdateProductScreen", "UpdateProductScreen")) { UiSourceScope(uiInspectionSource.element("app.ui.food.product.UpdateProductScreen.UpdateProductScreen.1.declaration2", "com.maksimowiczm.foodyou.app.ui.food.product.UpdateProductScreen", "UpdateProductScreen")) { UpdateProductScreen(
         onBack = onBack,
-        onUpdate = onUpdate,
+        onUpdate = onUpdate, personalCollection = personalCollection,
         viewModel = koinViewModel(parameters = { parametersOf(productId) }),
         modifier = modifier,
     ) } }

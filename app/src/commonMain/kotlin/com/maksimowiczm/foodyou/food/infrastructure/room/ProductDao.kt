@@ -11,6 +11,9 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 abstract class ProductDao {
+    @Query("SELECT id, name FROM Product WHERE sourceType = :source")
+    internal abstract fun observeLibraryNames(source: ProductSourceType): Flow<List<DefinitionName>>
+
     @Query(
         """
         SELECT *

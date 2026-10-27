@@ -16,6 +16,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 internal class RoomProductRepository(private val productDao: ProductDao) : ProductRepository {
+    override fun observeLibraryNames(): Flow<List<com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemName>> =
+        productDao.observeLibraryNames(com.maksimowiczm.foodyou.common.infrastructure.room.ProductSourceType.User).map { rows ->
+            rows.map { com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemName(NutritionalItemId.Product(it.id), it.name) }
+        }
+
     override fun observeProducts(limit: Int, offset: Int): Flow<List<Product>> =
         productDao.observeProducts(limit, offset).map { list -> list.map { it.toModel() } }
 

@@ -17,6 +17,7 @@ import com.maksimowiczm.foodyou.app.ui.settings.relay.relaySettingsModule
 import com.maksimowiczm.foodyou.app.ui.sponsor.sponsor
 import com.maksimowiczm.foodyou.app.ui.theme.theme
 import com.maksimowiczm.foodyou.common.infrastructure.koin.userPreferencesRepository
+import com.maksimowiczm.foodyou.app.ui.food.library.LibraryViewModel
 import com.maksimowiczm.foodyou.app.ui.food.meals.MealsViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.core.module.dsl.viewModel
@@ -31,6 +32,7 @@ val uiModule = module {
     food()
     foodDiary()
     viewModelOf(::MealsViewModel)
+    viewModelOf(::LibraryViewModel)
     goals()
     home()
     language()

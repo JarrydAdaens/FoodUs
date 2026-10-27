@@ -39,6 +39,7 @@ fun SettingsScreen(
     onExternalDatabases: () -> Unit,
     onAiSettings: () -> Unit,
     onRelaySettings: () -> Unit,
+    onLibrary: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
@@ -86,6 +87,11 @@ fun SettingsScreen(
                     color = color,
                     contentColor = contentColor, modifier = Modifier.uiName("SettingsScreen.GoalsSettingsListItem.1", "com.maksimowiczm.foodyou.app.ui.settings.GoalsSettingsListItem", uiInspectionSource, "SettingsScreen")
                 )
+            }
+
+            item {
+                LibrarySettingsListItem(onClick = onLibrary, shape = shape, color = color, contentColor = contentColor,
+                    modifier = Modifier.uiName("SettingsScreen.LibrarySettingsListItem", "com.maksimowiczm.foodyou.app.ui.settings.LibrarySettingsListItem", uiInspectionSource, "SettingsScreen"))
             }
 
             item {

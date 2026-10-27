@@ -312,8 +312,8 @@ invented. New captures normalize incomplete nutrient fields to unknown before pr
 and flat persistence, across all 43 fields; existing saved numeric values and Recipe
 historical contracts remain unchanged. Schema 39 and accepted 40 exports are immutable.
 
-The owner's 2026-10-26 decision selects a combined **Recipes, Meals & Products** library
-in [Milestone 2 Story 38](milestones/milestone-2.md#story-38), currently Not Started.
+The combined **Recipes, Meals & Products** library selected by the owner on 2026-10-26
+is delivered in [Milestone 2 Story 38](milestones/milestone-2.md#story-38), Complete on 2026-10-27.
 It replaces the Home Meals shortcut with a Settings row immediately below Daily goals.
 The destination has search, Recipes / Meals / Products tabs, compact rows with nutrition
 summaries and explicit reference quantities, and a bottom creation action for the active

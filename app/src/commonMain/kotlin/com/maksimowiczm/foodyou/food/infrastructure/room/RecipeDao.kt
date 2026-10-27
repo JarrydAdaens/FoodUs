@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 abstract class RecipeDao {
+    @Query("SELECT id, name FROM Recipe")
+    internal abstract fun observeLibraryNames(): Flow<List<DefinitionName>>
+
 
     @Query("SELECT * FROM Recipe WHERE id = :recipeId")
     abstract fun observeRecipe(recipeId: Long): Flow<RecipeEntity?>

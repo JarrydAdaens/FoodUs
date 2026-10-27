@@ -21,6 +21,7 @@ fun CreateProductScreen(
     onUpdateOpenFoodFactsCredentials: () -> Unit,
     modifier: Modifier = Modifier,
     url: String? = null,
+    personalCollection: Boolean = false,
     // Story 19 promotion prefill. When set, the editor opens seeded from a Quick Add estimate. The
     // product is committed only when the editor is saved (spec §6.2).
     prefillProduct: Product? = null,
@@ -41,7 +42,7 @@ fun CreateProductScreen(
         onUpdateOpenFoodFactsCredentials = onUpdateOpenFoodFactsCredentials,
         modifier = (modifier).uiName("CreateProductScreen.CreateProductApp.1", "com.maksimowiczm.foodyou.app.ui.food.product.create.CreateProductApp", uiInspectionSource, "CreateProductScreen"),
         url = url,
-        prefillProduct = prefillProduct,
+        prefillProduct = prefillProduct, personalCollection = personalCollection,
     )
 }
 

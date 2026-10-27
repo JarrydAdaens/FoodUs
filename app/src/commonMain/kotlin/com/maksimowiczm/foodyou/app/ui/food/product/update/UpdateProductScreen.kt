@@ -15,6 +15,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import com.maksimowiczm.foodyou.app.ui.food.component.DefinitionReadFeedback
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
@@ -38,6 +39,7 @@ internal fun UpdateProductScreen(
     onUpdate: () -> Unit,
     viewModel: UpdateProductViewModel,
     modifier: Modifier = Modifier,
+    personalCollection: Boolean = false,
 ) {
     val latestOnUpdate by rememberUpdatedState(onUpdate)
     LaunchedCollectWithLifecycle(viewModel.events) { event ->
@@ -49,7 +51,8 @@ internal fun UpdateProductScreen(
     val product = viewModel.product.collectAsStateWithLifecycle().value
 
     if (product == null) {
-        // TODO loading state
+        val loading by viewModel.loading.collectAsStateWithLifecycle()
+        DefinitionReadFeedback(loading, viewModel::retryRead, onBack, modifier = Modifier.uiName("UpdateProductScreen.DefinitionReadFeedback.library1", "com.maksimowiczm.foodyou.app.ui.food.component.DefinitionReadFeedback", uiInspectionSource, "UpdateProductScreen"))
         return
     } else {
         if(product.factBasis==com.maksimowiczm.foodyou.common.domain.food.ProductFactBasis.REFERENCE_SERVING || product.nutritionMetadata?.reference!=null) {
@@ -57,6 +60,10 @@ internal fun UpdateProductScreen(
             return
         }
         val productForm = rememberProductFormState(product)
+        SideEffect {
+            productForm.sourceTypeLocked = personalCollection
+            if(personalCollection) productForm.sourceType = com.maksimowiczm.foodyou.common.domain.food.ProductSource.Type.User
+        }
         val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
         var showDiscardDialog by rememberSaveable { mutableStateOf(false) }
