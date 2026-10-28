@@ -61,13 +61,16 @@ class FoodUsChangelogTest {
             driver.clickText(driver.label(Res.string.action_original_creator_on_github))
             assertEquals(listOf("https://github.com/maksimowiczm"), fixture.openedUris)
             openHistory()
+            driver.findText("3.2.41.5")
+            assertNoInstalledBadge()
+            driver.findText("3.2.39.4")
             driver.findText("2.23.0")
             assertNoInstalledBadge()
             driver.findText("2.19.1")
             driver.findText("1.0 announcement")
             dismissWithBack()
             driver.clickText(driver.label(Res.string.headline_changelog))
-            driver.findText("2.23.0")
+            driver.findText("3.2.41.5")
             dismissWithBack()
             driver.clickText(driver.label(Res.string.action_go_back))
             driver.findText("Synthetic About back destination")
@@ -76,20 +79,28 @@ class FoodUsChangelogTest {
     }
 
     @Test
-    fun publishedForkBuildGetsInstalledBadgeAndDismissalRemembersForkInsteadOfUpstream() {
-        val fixture = Fixture("2.23.0", automatic = true)
-        withHost(fixture) {
-            driver.findText(driver.label(Res.string.headline_whats_new))
-            driver.findText("2.23.0")
-            driver.findText(driver.label(Res.string.headline_installed))
-            dismissWithBack()
-            driver.await("synthetic published fork version remembered") {
-                fixture.preferences.value.lastRememberedVersion == "2.23.0"
+    fun fourPartReleasesGetInstalledBadgeAndDismissalRemembersForkInsteadOfUpstream() {
+        listOf("3.2.41.5", "3.2.39.4").forEach { forkVersion ->
+            val fixture = Fixture(forkVersion, automatic = true)
+            withHost(fixture) {
+                driver.findText(driver.label(Res.string.headline_whats_new))
+                driver.findText(forkVersion)
+                driver.findText(driver.label(Res.string.headline_installed))
+                val capture = requireNotNull(instrumentation.uiAutomation.takeScreenshot())
+                val output = java.io.File(
+                    instrumentation.targetContext.getExternalFilesDir("changelog-review"),
+                    "$forkVersion.png",
+                )
+                output.outputStream().use { capture.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it) }
+                dismissWithBack()
+                driver.await("synthetic exact fork version remembered") {
+                    fixture.preferences.value.lastRememberedVersion == forkVersion
+                }
+                assertEquals(fixture.initialSettings.copy(lastRememberedVersion = forkVersion),
+                    fixture.preferences.value)
+                reenterAutomaticSheet(fixture)
+                assertFalse(visibleText(driver.label(Res.string.headline_whats_new)))
             }
-            assertEquals(fixture.initialSettings.copy(lastRememberedVersion = "2.23.0"),
-                fixture.preferences.value)
-            reenterAutomaticSheet(fixture)
-            assertFalse(visibleText(driver.label(Res.string.headline_whats_new)))
         }
     }
 
@@ -99,7 +110,7 @@ class FoodUsChangelogTest {
             val fixture = Fixture(forkVersion, automatic = true)
             withHost(fixture) {
                 driver.findText(driver.label(Res.string.headline_whats_new))
-                driver.findText("2.23.0")
+                driver.findText("3.2.41.5")
                 assertNoInstalledBadge()
                 assertFalse(visibleText(forkVersion))
                 dismissWithBack()

@@ -138,6 +138,7 @@ Keep this table current; it is the harness's index.
 | Module | Kind | Engine | Purpose |
 | --- | --- | --- | --- |
 | [ui-name-coverage](ui-name-coverage/README.md) | Verifier | Local Python / PowerShell | Source inventory and missing UI-name/surface-scope checks; runtime selection remains required |
+| [release-changelog](release-changelog/README.md) | Gate | Local Python | Requires current in-app highlights before creating or moving a release tag; also runs in tag CI |
 
 ## Selected, not yet installed
 

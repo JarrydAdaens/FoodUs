@@ -104,6 +104,12 @@ notes as the release ledger. Never rewrite an existing tag or release to migrate
 
 ### Source branch and release tag
 
+Before every release tag creation or authorized move, update the app's What's New
+highlights under the [changelog rules](changelog.md), even when the owner did not
+ask separately. Include missing published releases and the candidate entry, run
+`python harness/release-changelog/check.py`, and commit the notes before tagging.
+Use short user-facing highlights in simple English; do not paste a Git log.
+
 Develop on `jarryd/develop`. Once the candidate is checked, merge it into the default
 `jarryd/main` branch with a merge commit and put an **annotated** `v<fork-version-name>`
 tag on that merge, following the legacy release history. Include completed follow-up

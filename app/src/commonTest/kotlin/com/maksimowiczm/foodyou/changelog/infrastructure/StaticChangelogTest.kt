@@ -12,23 +12,36 @@ import kotlinx.datetime.LocalDate
 
 class StaticChangelogTest {
     @Test
-    fun historyContainsExactlyTheVerifiedReleasesAndFoundingAnnouncementNewestFirst() {
+    fun historyContainsThePreparedReleasePublishedHistoryAndFoundingAnnouncementNewestFirst() {
         val versions = StaticChangelog(config()).versions
-        assertEquals(listOf("2.23.0", "2.19.1", "1.0 announcement"), versions.map { it.version })
         assertEquals(
-            listOf(LocalDate(2026, 7, 27), LocalDate(2026, 7, 26), LocalDate(2026, 7, 24)),
+            listOf("3.2.41.5", "3.2.39.4", "2.23.0", "2.19.1", "1.0 announcement"),
+            versions.map { it.version },
+        )
+        assertEquals(
+            listOf(
+                LocalDate(2026, 10, 28), LocalDate(2026, 10, 26), LocalDate(2026, 7, 27),
+                LocalDate(2026, 7, 26), LocalDate(2026, 7, 24),
+            ),
             versions.map { it.date },
         )
         assertTrue(versions.zipWithNext().all { (newer, older) -> newer.date > older.date })
         val latest = versions[0]
-        assertTrue(latest.newFeatures.any { "AI API key, endpoint and model on-device" in it })
-        assertTrue(latest.newFeatures.any { "system prompt" in it && "one-off hint" in it })
-        assertTrue(latest.changes.any { "provider's website" in it })
+        assertTrue(latest.newFeatures.any { "one library" in it })
+        assertTrue(latest.newFeatures.any { "text only" in it })
+        assertTrue(latest.newFeatures.any { "date, time or meal slot" in it })
         val previous = versions[1]
-        assertTrue(previous.changes.any { "FoodUs launcher icon" in it })
-        assertTrue(previous.bugFixes.any { "installed Android version" in it })
-        assertTrue(previous.bugFixes.any { "privacy policy" in it })
-        val announcement = versions[2].changes.joinToString(" ")
+        assertTrue(previous.newFeatures.any { "Choose which foods" in it })
+        assertTrue(previous.changes.any { "Copy, move or delete" in it })
+        assertTrue(previous.bugFixes.any { "nutrition details" in it })
+        listOf(latest, previous).forEach {
+            assertTrue((it.newFeatures + it.changes + it.bugFixes).size in 1..5)
+        }
+        assertTrue(versions[2].newFeatures.any { "system prompt" in it && "one-off hint" in it })
+        assertTrue(versions[2].changes.any { "provider's website" in it })
+        assertTrue(versions[3].changes.any { "FoodUs launcher icon" in it })
+        assertTrue(versions[3].bugFixes.any { "privacy policy" in it })
+        val announcement = versions[4].changes.joinToString(" ")
         assertTrue("ACME Food App" in announcement && "later renamed FoodUs" in announcement)
         assertTrue("not a published 1.0 release" in announcement)
         versions.forEach { version ->
@@ -41,8 +54,8 @@ class StaticChangelogTest {
     }
 
     @Test
-    fun repositorySelectsPublishedForkVersionEvenWhenUpstreamIdentityDisagrees() = runBlocking {
-        listOf("2.23.0", "2.19.1").forEach { fork ->
+    fun repositorySelectsExactForkVersionEvenWhenUpstreamIdentityDisagrees() = runBlocking {
+        listOf("3.2.41.5", "3.2.39.4", "2.23.0", "2.19.1").forEach { fork ->
             val changelog = ChangelogRepositoryImpl(config(fork = fork, upstream = "3.4.9"))
                 .observe().first()
             assertEquals(fork, changelog.currentVersion?.version)
@@ -60,7 +73,7 @@ class StaticChangelogTest {
             .forEach { fork ->
                 val changelog = StaticChangelog(config(fork = fork))
                 assertNull(changelog.currentVersion, "Unexpected current entry for $fork")
-                assertEquals(3, changelog.versions.size)
+                assertEquals(5, changelog.versions.size)
             }
     }
 
