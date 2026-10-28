@@ -26,6 +26,10 @@ import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Tune
+import androidx.compose.material.icons.outlined.ExpandLess
+import androidx.compose.material.icons.outlined.ExpandMore
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
@@ -81,6 +85,9 @@ fun AiScanScreen(
     savedScanItemId: String? = null,
     onSavedScanItemConsumed: () -> Unit = {},
     onScanCompleted: () -> Unit = {},
+    embedded: Boolean = false,
+    onQueueStarted: () -> Unit = {},
+    onQueueProgress: (Int, Int) -> Unit = { _, _ -> },
 ) {
     val viewModel: AiScanViewModel = koinViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -93,7 +100,10 @@ fun AiScanScreen(
             onSavedScanItemConsumed()
             if (accepted != null) {
                 val next = accepted.next
-                if (next != null) onSaveToQuickAdd(next.estimate, next.id)
+                if (next != null) {
+                    onQueueProgress(accepted.pageIndex, accepted.queueSize)
+                    onSaveToQuickAdd(next.estimate, next.id)
+                }
                 else onScanCompleted()
             }
         }
@@ -102,7 +112,7 @@ fun AiScanScreen(
     Scaffold(
         modifier = (modifier).uiName("AiScanScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "AiScanScreen"),
         topBar = {
-            TopAppBar(
+            if (!embedded) TopAppBar(
                 title = { Text(stringResource(Res.string.headline_ai_scanning), modifier = Modifier.uiName("AiScanScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "AiScanScreen")) },
                 navigationIcon = { ArrowBackIconButton(onBack, modifier = Modifier.uiName("AiScanScreen.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "AiScanScreen")) }, modifier = Modifier.uiName("AiScanScreen.TopAppBar.1", "androidx.compose.material3.TopAppBar", uiInspectionSource, "AiScanScreen")
             )
@@ -149,6 +159,9 @@ fun AiScanScreen(
                     if (current.rejectedCount > 0) {
                         Text(stringResource(Res.string.neutral_ai_omitted_count, current.rejectedCount), modifier = Modifier.uiName("AiScanScreen.Text.4", "androidx.compose.material3.Text", uiInspectionSource, "AiScanScreen"))
                     }
+                    TextButton(onClick = viewModel::editInput, modifier = Modifier.uiName("AiScanScreen.TextButton.phoneNew1", "androidx.compose.material3.TextButton", uiInspectionSource, "AiScanScreen")) {
+                        Text(stringResource(Res.string.action_ai_edit_input), modifier = Modifier.uiName("AiScanScreen.Text.phoneNew5", "androidx.compose.material3.Text", uiInspectionSource, "AiScanScreen"))
+                    }
                     current.review.items.forEach { item ->
                         key(item.id) {
                             AiResultCard(
@@ -164,12 +177,16 @@ fun AiScanScreen(
                     Button(
                         enabled = current.review.selectedCount > 0,
                         onClick = {
-                            viewModel.startSelected()?.let { onSaveToQuickAdd(it.estimate, it.id) }
+                            viewModel.startSelected()?.let {
+                                onQueueStarted()
+                                val review = (viewModel.state.value as AiScanUiState.Result).review
+                                onQueueProgress(review.pageIndex, review.queueSize)
+                                onSaveToQuickAdd(it.estimate, it.id)
+                            }
                         },
                         modifier = (Modifier.fillMaxWidth()).uiName("AiScanScreen.Button.1", "androidx.compose.material3.Button", uiInspectionSource, "AiScanScreen"),
                     ) {
-                        Text(if (current.review.items.size == 1) stringResource(Res.string.action_save)
-                            else stringResource(Res.string.action_ai_edit_selected, current.review.selectedCount), modifier = Modifier.uiName("AiScanScreen.Text.5", "androidx.compose.material3.Text", uiInspectionSource, "AiScanScreen"))
+                        Text(stringResource(Res.string.action_save_selected_foods), modifier = Modifier.uiName("AiScanScreen.Text.5", "androidx.compose.material3.Text", uiInspectionSource, "AiScanScreen"))
                     }
                 }
             }
@@ -229,7 +246,7 @@ private fun SubmitSection(
         )
         Button(
             onClick = onSubmit,
-            enabled = photoCaptured && configured,
+            enabled = configured && (photoCaptured || hint.text.isNotBlank()),
             modifier = (Modifier.fillMaxWidth()).uiName("SubmitSection.Button.1", "androidx.compose.material3.Button", uiInspectionSource, "SubmitSection"),
         ) {
             Text(stringResource(Res.string.action_submit), modifier = Modifier.uiName("SubmitSection.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "SubmitSection"))
@@ -277,8 +294,10 @@ private fun AiResultCard(
                 Text(text = estimate.name, style = MaterialTheme.typography.titleLarge, modifier = (Modifier.weight(1f)).uiName("AiResultCard.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "AiResultCard"))
             }
             if (saved) Text(stringResource(Res.string.neutral_ai_item_saved), modifier = Modifier.uiName("AiResultCard.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "AiResultCard"))
-            OutlinedButton(onClick = { expanded = !expanded }, modifier = Modifier.uiName("AiResultCard.OutlinedButton.1", "androidx.compose.material3.OutlinedButton", uiInspectionSource, "AiResultCard")) {
-                Text(stringResource(if (expanded) Res.string.action_ai_hide_details else Res.string.action_ai_show_details), modifier = Modifier.uiName("AiResultCard.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "AiResultCard"))
+            IconButton(onClick = { expanded = !expanded }, modifier = Modifier.uiName("AiResultCard.IconButton.details", "androidx.compose.material3.IconButton", uiInspectionSource, "AiResultCard")) {
+                Icon(if (expanded) Icons.Outlined.ExpandLess else Icons.Outlined.ExpandMore,
+                    contentDescription = stringResource(if (expanded) Res.string.action_ai_hide_details else Res.string.action_ai_show_details),
+                    modifier = Modifier.uiName("AiResultCard.Icon.details", "androidx.compose.material3.Icon", uiInspectionSource, "AiResultCard"))
             }
             if (expanded) {
                 estimate.certainty?.let {

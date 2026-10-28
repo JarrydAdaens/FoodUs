@@ -117,7 +117,12 @@ class DiaryBulkWorkflowTest {
         assertEquals(5, entries(3901).size)
         menu(Res.string.diary_bulk_delete)
         click(Res.string.diary_bulk_confirm)
-        driver.await("Delete All only empties selected day-slot") { entries(3901).isEmpty() }
+        try {
+            driver.await("Delete All only empties selected day-slot") { entries(3901).isEmpty() }
+        } catch (failure: Throwable) {
+            throw AssertionError("Synthetic Delete All counts: source=" + entries(3901).size +
+                ", target=" + entries(3902).size, failure)
+        }
         assertEquals(5, entries(3902).size)
         assertEquals(2, runBlocking { db.manualDiaryEntryDao.entries(3901, LocalDate.now().toEpochDays()).size })
     }
@@ -148,29 +153,88 @@ class DiaryBulkWorkflowTest {
         driver.clickText(label(resource))
     }
     private fun menu(resource: StringResource) {
-        click(Res.string.action_saved_meal_menu)
-        if (resource == Res.string.diary_bulk_copy_to)
+        // Both vertical cards expose the same action; resolve it within the captured source card.
+        var source = driver.findText(sourceName)
+        var menu: AccessibilityNodeInfo? = null
+        repeat(12) {
+            if (menu == null) {
+                val nodes = driver.descendants(source).toList()
+                check(nodes.none { it.text?.toString()?.lines()?.contains(targetName) == true }) {
+                    "Source menu must resolve before reaching the sibling card"
+                }
+                menu = nodes.firstOrNull { it.isVisibleToUser &&
+                    (it.contentDescription?.toString() == label(Res.string.action_saved_meal_menu) ||
+                        it.text?.toString()?.lines()?.contains(label(Res.string.action_saved_meal_menu)) == true) }
+                if (menu == null) source.parent?.let { source = it }
+            }
+        }
+        var control = requireNotNull(menu) { "Source card exposes its own Meal menu" }
+        repeat(12) { if (!control.isClickable) control.parent?.let { control = it } }
+        assertTrue(control.isEnabled)
+        assertTrue(control.performAction(AccessibilityNodeInfo.ACTION_CLICK))
+        instrumentation.waitForIdleSync()
+        if (resource == Res.string.diary_bulk_copy_to) {
+            driver.findText(label(resource))
+            val folder = java.io.File(instrumentation.targetContext.getExternalFilesDir(null), "story40").apply { mkdirs() }
+            java.io.FileOutputStream(java.io.File(folder, "slot-menu.png")).use {
+                requireNotNull(instrumentation.uiAutomation.takeScreenshot()).compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it)
+            }
             inspect(resource, "MealMenu.BulkText.1", "MealMenu.DropdownMenu.1")
+        }
         click(resource)
     }
     private fun entries(slot: Long) = runBlocking { db.manualDiaryEntryDao.entries(slot, sourceDate.toEpochDays()) }
 
     private fun inspect(resource: StringResource, expectedName: String, expectedSurface: String) {
-        val bounds = Rect()
-        driver.findText(label(resource)).getBoundsInScreen(bounds)
+        if (resource == Res.string.diary_bulk_stale) {
+            // The multiline error can be partially visible behind the fixed dialog action row.
+            var ancestor: AccessibilityNodeInfo? = driver.findText(label(resource)).parent
+            while (ancestor != null && !ancestor.isScrollable) ancestor = ancestor.parent
+            ancestor?.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD)
+            instrumentation.waitForIdleSync()
+        }
+        var bounds = Rect()
+        var stableFrames = 0
+        driver.await("Held modal label geometry settles") {
+            val current = Rect().also(driver.findText(label(resource))::getBoundsInScreen)
+            stableFrames = if (current == bounds) stableFrames + 1 else 0
+            bounds = current
+            stableFrames >= 2
+        }
+        var before: UiSelectionSnapshot? = null
+        instrumentation.runOnMainSync { before = inspector?.snapshot }
         val down = SystemClock.uptimeMillis()
         val x = bounds.exactCenterX(); val y = bounds.exactCenterY()
         fun event(action: Int) { MotionEvent.obtain(down, SystemClock.uptimeMillis(), action, x, y, 0).also {
             try { assertTrue(instrumentation.uiAutomation.injectInputEvent(it, true)) } finally { it.recycle() }
         } }
         event(MotionEvent.ACTION_DOWN)
-        SystemClock.sleep(3_200)
-        event(MotionEvent.ACTION_UP)
+        try {
+            driver.await("Held element creates a fresh developer selection") {
+                var changed = false
+                instrumentation.runOnMainSync { changed = inspector?.snapshot != null && inspector?.snapshot !== before }
+                changed
+            }
+        } finally { event(MotionEvent.ACTION_UP) }
         instrumentation.waitForIdleSync()
         var selection: UiSelectionSnapshot? = null
         instrumentation.runOnMainSync { selection = inspector?.snapshot }
         assertNotNull("Real held element produces a developer selection", selection)
-        assertEquals(expectedName, selection!!.selected.descriptor.name)
+        val selectedName = selection!!.selected.descriptor.name
+        // The label and its owning button identify the same held Confirm action.
+        val expectedNames = if (expectedName == "DiaryBulkDialog.ConfirmText.1")
+            setOf(expectedName, "DiaryBulkDialog.Confirm.1") else setOf(expectedName)
+        if (selectedName !in expectedNames) {
+            java.io.File(instrumentation.targetContext.getExternalFilesDir(null), "story38-bulk-inspection.txt")
+                .writeText("Expected " + expectedNames + "; native bounds=" + bounds + "\n" + selection!!.copyText(true))
+            instrumentation.uiAutomation.takeScreenshot()?.let { bitmap ->
+                java.io.FileOutputStream(java.io.File(instrumentation.targetContext.getExternalFilesDir(null), "story38-bulk-inspection.png")).use {
+                    bitmap.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it)
+                }
+                bitmap.recycle()
+            }
+        }
+        assertTrue("Expected held action $expectedNames; actual $selectedName", selectedName in expectedNames)
         assertEquals(expectedSurface, selection!!.surface.name)
         assertTrue(selection!!.selected.descriptor.source.contains(if (expectedName.startsWith("MealMenu")) "DiarySlotCard.kt" else if (expectedName.startsWith("Chips")) "ChipsDatePicker.kt" else "DiaryBulkDialog.kt"))
     }

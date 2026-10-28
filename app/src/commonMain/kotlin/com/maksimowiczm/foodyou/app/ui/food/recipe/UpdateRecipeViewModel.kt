@@ -7,6 +7,7 @@ import com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemId
 import com.maksimowiczm.foodyou.food.domain.entity.Recipe
 import com.maksimowiczm.foodyou.food.domain.usecase.ObserveNutritionalItemUseCase
 import com.maksimowiczm.foodyou.food.domain.usecase.UpdateRecipeUseCase
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.mapNotNull
@@ -20,15 +21,16 @@ internal class UpdateRecipeViewModel(
     private val updateRecipeUseCase: UpdateRecipeUseCase,
 ) : RecipeViewModel(observeFoodUseCase) {
 
-    val recipe =
-        observeFoodUseCase
-            .observe(foodId)
-            .mapNotNull { it as? Recipe }
-            .stateIn(
-                scope = viewModelScope,
-                initialValue = null,
-                started = SharingStarted.WhileSubscribed(2_000),
-            )
+    val loading = kotlinx.coroutines.flow.MutableStateFlow(true)
+    private val refresh = kotlinx.coroutines.flow.MutableStateFlow(0)
+    fun retryRead() { refresh.value++ }
+    val recipe = refresh.flatMapLatest {
+        kotlinx.coroutines.flow.flow { emitAll(observeFoodUseCase.observe(foodId)) }
+            .map { it as? Recipe }
+            .onEach { loading.value = false }
+            .onStart { loading.value = true }
+            .catch { loading.value = false; emit(null) }
+    }.stateIn(scope = viewModelScope, initialValue = null, started = kotlinx.coroutines.flow.SharingStarted.WhileSubscribed(2_000))
 
     val saving = kotlinx.coroutines.flow.MutableStateFlow(false)
 

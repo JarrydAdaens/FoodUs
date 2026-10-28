@@ -37,6 +37,7 @@ internal fun CreateProductApp(
     modifier: Modifier = Modifier,
     url: String? = null,
     prefillProduct: Product? = null,
+    personalCollection: Boolean = false,
 ) =
     key(url) {
         val navController = rememberNavController()
@@ -57,6 +58,10 @@ internal fun CreateProductApp(
                         else -> rememberProductFormState()
                     }
 
+                SideEffect {
+                    state.sourceTypeLocked = personalCollection
+                    if (personalCollection) state.sourceType = com.maksimowiczm.foodyou.common.domain.food.ProductSource.Type.User
+                }
                 UiSourceScope(uiInspectionSource.element("CreateProductApp.CreateProductScreen.1", "com.maksimowiczm.foodyou.app.ui.food.product.create.CreateProductScreen", "CreateProductApp")) { CreateProductScreen(
                     state = state,
                     onBack = onBack,

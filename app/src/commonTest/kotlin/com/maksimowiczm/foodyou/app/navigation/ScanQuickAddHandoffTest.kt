@@ -18,9 +18,37 @@ class ScanQuickAddHandoffTest {
         assertEquals("2:1", handle.get<String>(ScanQuickAddHandoff.SAVED_ITEM_KEY))
     }
 
+    @Test fun cancelledQueueRestartCapturesNewSlotWhileContinuationKeepsOriginal() {
+        val state = SavedStateHandle()
+        ScanQuickAddHandoff.beginQueue(state, 7)
+        assertEquals(7L, ScanQuickAddHandoff.targetSlot(state, 9))
+        // Cancel, change the header, then explicitly start another review queue.
+        ScanQuickAddHandoff.beginQueue(state, 9)
+        assertEquals(9L, ScanQuickAddHandoff.targetSlot(state, 7))
+        ScanQuickAddHandoff.finishQueue(state)
+        assertEquals(11L, ScanQuickAddHandoff.targetSlot(state, 11))
+    }
+
     @Test fun manualQuickAddNeverAcknowledgesAScanItem() {
         val handle = SavedStateHandle()
         ScanQuickAddHandoff.acknowledge(FoodDiaryCreateQuickAdd(1, 2), handle)
         assertNull(handle.get<String>(ScanQuickAddHandoff.SAVED_ITEM_KEY))
     }
+    @Test fun queueFreezesChosenDateAndRouteRetainsProgressAcrossSerialization() {
+        val state = SavedStateHandle()
+        ScanQuickAddHandoff.beginQueue(state, 7, 123)
+        assertEquals(123L, ScanQuickAddHandoff.targetDate(state, 999))
+        val estimate = assertNotNull(AiFoodEstimateParser.parse("""{"name":"Synthetic","calories":100}"""))
+        val route = ScanQuickAddHandoff.route(123, 7, estimate, "progress:2", 1, 3)
+        val restored = Json.decodeFromString<FoodDiaryCreateQuickAdd>(Json.encodeToString(route))
+        assertEquals(123L, restored.epochDay)
+        assertEquals(1, restored.scanPageIndex)
+        assertEquals(3, restored.scanPageCount)
+        ScanQuickAddHandoff.beginQueue(state, 9, 456)
+        assertEquals(456L, ScanQuickAddHandoff.targetDate(state, 123))
+        ScanQuickAddHandoff.finishQueue(state)
+        assertEquals(999L, ScanQuickAddHandoff.targetDate(state, 999))
+        assertNull(FoodDiaryCreateQuickAdd(1, 2).scanPageCount)
+    }
+
 }

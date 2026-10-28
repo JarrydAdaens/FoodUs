@@ -2,6 +2,7 @@ package com.maksimowiczm.foodyou.ai.infrastructure
 
 import com.maksimowiczm.foodyou.ai.domain.AiFoodEstimateCollectionParser
 import com.maksimowiczm.foodyou.ai.domain.AiFoodScanner
+import com.maksimowiczm.foodyou.ai.domain.AiFoodScanRequest
 import com.maksimowiczm.foodyou.ai.domain.AiRuntimeConfig
 import com.maksimowiczm.foodyou.ai.domain.AiScanPrompt
 import com.maksimowiczm.foodyou.ai.domain.AiScanResult
@@ -44,26 +45,17 @@ internal class OpenRouterAiFoodScanner(
     private val aiSettingsRepository: UserPreferencesRepository<AiSettings>,
 ) : AiFoodScanner {
 
-    @OptIn(ExperimentalEncodingApi::class)
-    override suspend fun scan(jpeg: ByteArray, hint: String?): AiScanResult {
+    override suspend fun scan(jpeg: ByteArray, hint: String?): AiScanResult = scan(AiFoodScanRequest(jpeg, hint))
+
+    override suspend fun scan(request: AiFoodScanRequest): AiScanResult {
+        if (!request.isValid) return AiScanResult.Failure("Enter a food description or add a photo.")
         val settings = aiSettingsRepository.observe().first()
         val config = AiRuntimeConfig.resolve(settings, appConfig)
         if (!config.isConfigured) return AiScanResult.NotConfigured
 
         return try {
-            val dataUrl = "data:image/jpeg;base64," + Base64.encode(jpeg)
-            val cleanedHint = hint?.trim()?.takeIf { it.isNotBlank() }
-            val userMessage =
-                ChatMessage(
-                    role = "user",
-                    content =
-                        buildList {
-                            add(TextContent(AiScanPrompt.PROMPT))
-                            cleanedHint?.let { add(TextContent(it)) }
-                            add(ImageContent(ImageUrl(dataUrl)))
-                        },
-                )
-            val request =
+            val userMessage = scanUserMessage(request)
+            val completionRequest =
                 ChatCompletionRequest(
                     model = config.model,
                     messages = listOfNotNull(userSystemMessage(settings.userSystemPrompt), userMessage),
@@ -73,7 +65,7 @@ internal class OpenRouterAiFoodScanner(
                 client.post(config.endpoint) {
                     bearerAuth(config.apiKey)
                     contentType(ContentType.Application.Json)
-                    setBody(request)
+                    setBody(completionRequest)
                 }
 
             if (!response.status.isSuccess()) {
@@ -89,7 +81,19 @@ internal class OpenRouterAiFoodScanner(
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            AiScanResult.Failure(e.message ?: "AI request failed.")
+            AiScanResult.Failure("AI request failed. Please try again.")
         }
     }
+}
+
+/** Text-only requests contain no image block, empty image or fabricated data URL. */
+@OptIn(ExperimentalEncodingApi::class)
+internal fun scanUserMessage(input: AiFoodScanRequest): ChatMessage {
+    require(input.isValid)
+    val jpeg = input.jpeg?.takeIf { it.isNotEmpty() }
+    return ChatMessage(role = "user", content = buildList {
+        add(TextContent(AiScanPrompt.forInput(jpeg != null)))
+        input.description?.trim()?.takeIf { it.isNotEmpty() }?.let { add(TextContent(it)) }
+        jpeg?.let { add(ImageContent(ImageUrl("data:image/jpeg;base64," + Base64.encode(it)))) }
+    })
 }

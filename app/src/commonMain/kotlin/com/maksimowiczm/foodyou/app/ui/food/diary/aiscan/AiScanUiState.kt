@@ -16,15 +16,15 @@ internal sealed interface AiScanUiState {
     data class Captured(override val jpeg: ByteArray) : AiScanUiState
 
     /** The photo is being analysed. */
-    data class Scanning(override val jpeg: ByteArray) : AiScanUiState
+    data class Scanning(override val jpeg: ByteArray?) : AiScanUiState
 
     /** The AI returned an estimate: show the result and the save/align actions. */
     data class Result(
-        override val jpeg: ByteArray,
+        override val jpeg: ByteArray?,
         val review: AiScanReviewSession,
         val rejectedCount: Int = 0,
     ) : AiScanUiState
 
     /** The request failed; [message] is safe to display. */
-    data class Failed(override val jpeg: ByteArray, val message: String) : AiScanUiState
+    data class Failed(override val jpeg: ByteArray?, val message: String) : AiScanUiState
 }

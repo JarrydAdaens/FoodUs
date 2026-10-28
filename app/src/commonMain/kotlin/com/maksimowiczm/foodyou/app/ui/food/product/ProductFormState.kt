@@ -1139,6 +1139,9 @@ internal class ProductFormState(
     isModifiedState: State<Boolean>,
     autoCalculateEnergyState: MutableState<Boolean>,
 ) {
+    // Navigation context, not a persisted preference. Library definitions remain personal.
+    var sourceTypeLocked by mutableStateOf(false)
+    var saving by mutableStateOf(false)
     var saveFailed by mutableStateOf(false)
     var basisUnavailable by mutableStateOf(false)
 

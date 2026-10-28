@@ -34,6 +34,7 @@ internal class DataStoreSettingsRepository(dataStore: DataStore<Preferences>) :
             graphStyle = this.getGraphStyle(SettingsPreferencesKeys.graphStyle),
             weekLayout = this.getWeekLayout(SettingsPreferencesKeys.weekLayout),
             appLaunchInfo = this.getAppLaunchInfo(),
+            librarySortOrder = com.maksimowiczm.foodyou.settings.domain.entity.LibrarySortOrder.fromStored(this[SettingsPreferencesKeys.librarySortOrder]),
             uiNameBarEnabled = this[SettingsPreferencesKeys.uiNameBarEnabled] ?: false,
             uiNameBarIncludeHierarchy = this[SettingsPreferencesKeys.uiNameBarIncludeHierarchy] ?: false,
         )
@@ -51,6 +52,7 @@ internal class DataStoreSettingsRepository(dataStore: DataStore<Preferences>) :
         setGraphStyle(SettingsPreferencesKeys.graphStyle, updated.graphStyle)
         setWeekLayout(SettingsPreferencesKeys.weekLayout, updated.weekLayout)
         setAppLaunchInfo(updated.appLaunchInfo)
+        this[SettingsPreferencesKeys.librarySortOrder] = updated.librarySortOrder.name
         this[SettingsPreferencesKeys.uiNameBarEnabled] = updated.uiNameBarEnabled
         this[SettingsPreferencesKeys.uiNameBarIncludeHierarchy] = updated.uiNameBarIncludeHierarchy
     }
@@ -148,6 +150,7 @@ private fun MutablePreferences.setInstantAsEpochSeconds(
     }
 
 private object SettingsPreferencesKeys {
+    val librarySortOrder = stringPreferencesKey("settings:librarySortOrder")
     val uiNameBarEnabled = booleanPreferencesKey("settings:uiNameBarEnabled")
     val uiNameBarIncludeHierarchy = booleanPreferencesKey("settings:uiNameBarIncludeHierarchy")
     val lastRememberedVersion = stringPreferencesKey("settings:lastRememberedVersion")

@@ -45,14 +45,14 @@
     <string name="action_pick_from_gallery">Pick from gallery</string>
     <string name="action_ask_ai">Ask AI</string>
     <string name="action_submit">Submit</string>
-    <string name="label_ai_scan_hint">Hint for this scan (optional)</string>
-    <string name="description_ai_scan_hint">One-off context for this photo, such as a brand or portion size. Not saved.</string>
+    <string name="label_ai_scan_hint">Describe your food</string>
+    <string name="description_ai_scan_hint">Describe the food and portion size. A photo is optional. Not saved.</string>
     <string name="action_align">Align</string>
     <string name="action_create_custom_food">Create custom food</string>
     <string name="headline_ai_result">AI result</string>
     <string name="headline_align_saved_food">Align with a saved food</string>
     <string name="neutral_ai_not_configured">AI is not configured. Add a key in AI settings.</string>
-    <string name="neutral_ai_analysing">Analysing photo…</string>
+    <string name="neutral_ai_analysing">Analysing food…</string>
     <string name="neutral_tap_photo_to_retake">Tap the photo to retake it</string>
     <string name="question_discard_photo">Discard photo?</string>
     <!-- %1$s is a percentage such as "85%". -->
@@ -90,7 +90,7 @@
     <string name="headline_changelog">Changelog</string>
     <string name="headline_installed" description="Installed version of the app">Installed</string>
     <string name="headline_home" description="Home screen">Home</string>
-    <string name="headline_home_settings" description="Home screen settings">Home settings</string>
+    <string name="headline_home_settings" description="Home screen settings">Log settings</string>
     <string name="headline_calendar">Calendar</string>
     <string name="headline_diary_slots_settings">Diary slot settings</string>
     <string name="headline_horizontal">Horizontal</string>
@@ -291,7 +291,7 @@
     <string name="description_action_ignore_all_day_diary_slots">All-day diary slots will be displayed at the end of the list</string>
     <string name="description_incomplete_nutrition_data">Some of the used products lack this value; therefore, the displayed value might not be accurate</string>
     <string name="description_translation_warning">Translations are created by volunteers. They may not be perfect and some translations may be missing. If you notice any mistakes don't hesitate to help improving them.</string>
-    <string name="description_home_settings">Customize your home page</string>
+    <string name="description_home_settings">Customize your log page</string>
     <string name="description_download_product">Paste a link to a food product, and automatically fetch nutrition facts and product details.</string>
     <string name="description_download_product_hint">You can paste any text. First URL will be used.</string>
     <string name="description_show_macronutrients_goals">Show macronutrients goals</string>
@@ -817,4 +817,56 @@
     <string name="diary_bulk_loading">Reading source items…</string>
     <string name="diary_bulk_confirm">Confirm</string>
     <string name="diary_bulk_refresh">Refresh</string>
+    <string name="library_title">Recipes, Meals &amp; Products</string>
+    <string name="library_description">Manage your saved recipes, meals and products</string>
+    <string name="library_recipes">Recipes</string>
+    <string name="library_meals">Meals</string>
+    <string name="library_products">Products</string>
+    <string name="library_search">Search saved items</string>
+    <string name="library_create_recipe">Create Recipe</string>
+    <string name="library_create_meal">Create Meal</string>
+    <string name="library_create_product">Create Product</string>
+    <string name="library_empty">No saved items yet</string>
+    <string name="library_empty_help">Create your first item using the button below.</string>
+    <string name="library_no_results">No matching saved items</string>
+    <string name="library_clear_search">Clear search</string>
+    <string name="library_unavailable">This item is unavailable. Try again or go back.</string>
+    <string name="library_per_100g">Per 100 g</string>
+    <string name="library_per_100ml">Per 100 mL</string>
+    <string name="library_per_reference">Per reference serving</string>
+    <string name="library_per_serving">Per serving</string>
+    <string name="library_whole_meal">Whole saved Meal</string>
+    <string name="library_serving_unavailable">Serving nutrition unavailable; open the item to review its basis.</string>
+    <string name="library_reported_panel">Reported nutrition retained separately in details</string>
+    <string name="library_needs_review">Reported nutrition needs review</string>
+    <string name="library_carbs">Carbs: %1$s</string>
+    <string name="library_fat">Fat: %1$s</string>
+    <string name="library_protein">Protein: %1$s</string>
+    <string name="library_saved">Saved to your library</string>
+    <string name="library_choose_day">Choose destination day</string>
+    <string name="library_no_slots">Set up a DiarySlot in Settings before loading a Meal.</string>
+    <string name="library_choose_slot">Choose destination DiarySlot</string>
+    <string name="library_reference_unknown">Reference quantity unknown</string>
+    <string name="library_loading">Loading saved items…</string>
+
+    <string name="library_sort_label">Sort: %1$s</string>
+    <string name="library_sort_az">A–Z</string>
+    <string name="library_sort_za">Z–A</string>
+    <string name="library_sort_oldest">Oldest created first</string>
+    <string name="library_sort_newest">Newest created first</string>
+    <string name="library_sort_lowest">Calories: low–high</string>
+    <string name="library_sort_highest">Calories: high–low</string>
+    <string name="unit_choice_grams">Grams (g)</string>
+    <string name="unit_choice_millilitres">Millilitres (ml)</string>
+    <string name="food_entry_search">Search</string>
+    <string name="food_entry_ai">AI scanner</string>
+    <string name="food_entry_choose_slot">Choose meal slot</string>
+    <string name="food_entry_no_slots">Set up a meal slot to add food.</string>
+    <string name="food_entry_setup_slots">Set up meal slots</string>
+    <string name="food_entry_meals">Edit Meals</string>
+    <string name="food_entry_add">Add food</string>
+    <string name="action_ai_edit_input">Edit description or photo</string>
+    <string name="action_save_selected_foods">Save Selected Foods</string>
+    <string name="food_entry_date_time">Logging date and time</string>
+    <string name="quick_add_page">Food %1$d of %2$d</string>
 </resources>

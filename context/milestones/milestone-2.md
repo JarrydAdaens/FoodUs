@@ -73,7 +73,7 @@ and offline comparisons must make accuracy, cost and latency measurable without 
 
 In Progress — reopened 2026-07-26 by the
 [owner's addendum](../dictations-tier-0/2026-07-26_addendum_ai-settings-branding-foodus.md) after
-daily use. **29 of 39 Stories Complete, 1 Blocked, and 9 Not Started.** All addendum
+daily use. **31 of 40 Stories Complete, 1 Blocked, and 8 Not Started.** All addendum
 Stories 21–23 landed 2026-07-27. Story 16 (FoodSwitch) remains blocked on an external
 data licence. Stories 25 (domain separation), 26 (Product terminology/portions), and 27 (Recipe
 composition/portions) passed acceptance under the [serial run](../_boss-runs/milestone-2-domain-meals-sequential/briefing.md). Story 24 (Meals library/editor) also passed acceptance.
@@ -84,11 +84,11 @@ minified runtime, source lookup, and coverage acceptance on 2026-10-26.
 Stories 30–37 schedule the owner's OCR nutrition-label and evaluation addendum on 2026-10-26.
 They are Not Started; this context work authorizes neither their implementation nor paid/live
 evaluation. Existing closed counts and the policy-derived app version remain unchanged.
-Story 38 schedules the owner's 2026-10-26 request to move library access into Settings
-and replace the basic Meals list with a unified Recipes, Meals & Products library.
+Story 38 delivered the unified Recipes, Meals & Products library in Settings (Complete, 2026-10-27).
 Story 39 adds the owner's diary-slot bulk menu actions. Status: Complete (2026-10-26; 213 unit tests, 26 executed emulator checks, schema 43 migration, both layouts, snapshot/rollback and process-restart acceptance passed).
+Story 40 delivered the latest seven phone-review refinements (Complete, 2026-10-28); its linked plan owns acceptance and local testing delivery evidence.
 The milestone is not yet closable:
-the new OCR and unified-library acceptance is outstanding, and its Definition of Done's
+OCR acceptance is outstanding, and its Definition of Done's
 "adopted upstream bugs are fixed" clause is unmet — the Story 12 bug stories are still staged in
 `../backlog/backlog-1.md` and were never pulled into this milestone's story list. Closing requires
 the owner to either schedule those fixes or revise that DoD clause. The original 19-story run
@@ -157,8 +157,9 @@ Definition of Done. Story 16 can resume only after its licence gate is released.
 | 35 | Not Started | [OCR-assisted capture, review and recovery](#story-35) | Feature | — | — | — | — |
 | 36 | Not Started | [Controlled AI/OCR corpus and evaluation runner](#story-36) | Tooling | — | — | — | — |
 | 37 | Not Started | [Nutrition grading, stability and offline comparisons](#story-37) | Tooling | — | — | — | — |
-| 38 | Not Started | [Recipes, Meals & Products library in Settings](#story-38) | Feature | — | — | — | — |
+| 38 | Complete | [Recipes, Meals & Products library in Settings](#story-38) | Feature | — | — | — | [plan](../implementation-plans/milestone-2/story-38-recipes-meals-products-library/plan.md) |
 | 39 | Complete | [Diary-slot bulk delete, move and copy actions](#story-39) | Feature | — | — | — | [plan](../implementation-plans/milestone-2/story-39-diary-slot-bulk-actions/plan.md) |
+| 40 | Complete | [Phone review refinements for food entry and Log](#story-40) | Feature | — | — | — | [plan](../implementation-plans/milestone-2/story-40-phone-review-refinements/plan.md) |
 
 ---
 
@@ -1567,7 +1568,7 @@ final live acceptance cannot be inferred from mock grades. Extends the same eval
 
 **Type:** Feature
 
-**Status:** Not Started
+**Status:** Complete (2026-10-27)
 
 **Outcome:** Replace the basic Meals-only management page with a polished, searchable
 personal library for Recipes, Meals and Products. Move its entry from the Home top bar
@@ -1625,8 +1626,25 @@ the implementation plan rather than claiming visual acceptance from source alone
 inspection contract. Likely seams are `HomeScreen.kt`, `SettingsScreen.kt`,
 `FoodYouAppNavHost.kt`, `food/meals/MealsScreen.kt`, the Product/Recipe editor entry
 points, library state/projections, and localized resources. No OCR, FoodSwitch licence,
-or relay prerequisite. Create one implementation plan when this Story is taken up;
-this scheduling change does not reopen Story 24 or begin implementation.
+or relay prerequisite. The implementation plan is linked below; this Story does not
+reopen Story 24, and planning does not begin application implementation.
+
+**Planning:** [Implementation plan](../implementation-plans/milestone-2/story-38-recipes-meals-products-library/plan.md)
+prepared 2026-10-27 after the owner-authorized private reference review and repository
+inspection. It covers destination-free creation, personal collection separation,
+truthful nutrition projections, retained navigation state and synthetic runtime acceptance.
+The owner authorized implementation on 2026-10-27. Delivered and accepted that day:
+Settings access, personal typed collections, literal local search, truthful serving/bundle
+summaries, destination-free creation/editing, isolated Meal drafts and explicit Meal loading.
+The Home shortcut is removed; diary Save/Load and both bulk-action layouts remain available.
+
+**Acceptance evidence:** 219 unit tests, 26 distinct targeted Android checks on disposable
+emulator-5584, both debug APK builds, the UI-name gate and independent evaluation pass.
+Checks include all three creation flows, retry/cancel/repeated Save, source ownership,
+reported/unknown nutrition, exact day/slot loading, historical snapshots, process restart,
+light/dark/enlarged/narrow layouts, real IME clearance and runtime source selection.
+Schema 43 is unchanged. The owner phone was not modified. Commands, source identities,
+original fixture failures and final receipts are recorded in the implementation plan.
 
 **Source:** Owner's direct 2026-10-26 request and supplied UI selections. Requirements
 are expressed in FoodUs terms; third-party screenshots, studies and extracted material
@@ -1704,6 +1722,28 @@ plan when taken up, including transaction and recovery checks for these data mut
 
 **Source:** Owner's direct 2026-10-26 request and supplied `MealMenu.DropdownMenu.1`
 selection. This schedules work; no existing Story is reopened or implementation begun.
+
+---
+
+<a id="story-40"></a>
+
+### Story 40: Phone review refinements for food entry and Log
+
+**Type:** Feature
+**Status:** Complete (2026-10-28; 230 unit tests and 11 distinct native methods accepted, including normal/enlarged-text workflows and modal source selection).
+**Plan:** [Implementation and acceptance](../implementation-plans/milestone-2/story-40-phone-review-refinements/plan.md)
+
+Owner's latest phone-review batch; each requested tweak is recorded once:
+
+- Rename the AI result action to **Save Selected Foods**.
+- Replace the food-entry date label with a date/time picker that updates the logging destination without leaving or losing the session.
+- Replace the AI result details button with an expand/collapse chevron reflecting its state.
+- Show horizontal dim pagination dots beneath the Quick Add title for the selected AI review queue, highlighting the current item.
+- Move Quick Add energy directly below description and above weight, macros and other nutrients.
+- Give every diary-slot context-menu entry an appropriate icon.
+- Remove the app-name title from the Log top bar.
+
+Acceptance includes real navigation/date destination checks, queue progress and snapshot regressions, field order, menu and header appearance, source naming coverage, and a fresh owner-testing APK. Existing data, selection, cancellation and insertion guards remain binding. Close only after evidence, then derive the version from authoritative milestone statuses. No publication or owner-phone installation is requested.
 
 ---
 

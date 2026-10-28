@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.Job
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -42,20 +43,36 @@ internal class AiScanViewModel(
     private val _state = MutableStateFlow<AiScanUiState>(AiScanUiState.NoPhoto)
     val state: StateFlow<AiScanUiState> = _state.asStateFlow()
 
+    private var scanJob: Job? = null
+    private var requestGeneration = 0L
+
     fun onPhotoCaptured(jpeg: ByteArray) {
+        requestGeneration++
+        scanJob?.cancel()
         _state.value = AiScanUiState.Captured(jpeg)
+    }
+
+    fun editInput() {
+        if (_state.value is AiScanUiState.Scanning) return
+        requestGeneration++
+        _state.value = _state.value.jpeg?.let { AiScanUiState.Captured(it) } ?: AiScanUiState.NoPhoto
     }
 
     @OptIn(ExperimentalUuidApi::class)
     fun submit() {
-        val jpeg = _state.value.jpeg ?: return
+        if (_state.value is AiScanUiState.Scanning || _state.value is AiScanUiState.Result) return
+        val jpeg = _state.value.jpeg
+        val input = com.maksimowiczm.foodyou.ai.domain.AiFoodScanRequest(jpeg, hint.text.toString())
+        if (!input.isValid || !aiConfigured.value) return
         _state.value = AiScanUiState.Scanning(jpeg)
-        val hintText = hint.text.toString().trim().takeIf { it.isNotBlank() }
-        viewModelScope.launch {
+        val generation = ++requestGeneration
+        scanJob = viewModelScope.launch {
+            val response = aiFoodScanner.scan(input)
+            if (generation != requestGeneration) return@launch
             _state.value =
-                when (val result = aiFoodScanner.scan(jpeg, hintText)) {
+                when (val result = response) {
                     is AiScanResult.Success -> if (result.estimates.isEmpty()) {
-                        AiScanUiState.Failed(jpeg, "No usable foods were identified. Try another photo.")
+                        AiScanUiState.Failed(jpeg, "No usable foods were identified. Try another description or photo.")
                     } else AiScanUiState.Result(
                         jpeg, AiScanReviewSession.create(Uuid.random().toString(), result.estimates), result.rejectedCount,
                     )

@@ -4,6 +4,7 @@ import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
 import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
 
 import androidx.compose.material3.Text
+import com.maksimowiczm.foodyou.app.ui.food.component.DefinitionReadFeedback
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
@@ -44,7 +45,8 @@ fun UpdateRecipeScreen(
     val recipe = viewModel.recipe.collectAsStateWithLifecycle().value
 
     if (recipe == null) {
-        // TODO loading state
+        val loading by viewModel.loading.collectAsStateWithLifecycle()
+        DefinitionReadFeedback(loading, viewModel::retryRead, onBack, modifier = Modifier.uiName("UpdateRecipeScreen.DefinitionReadFeedback.library1", "com.maksimowiczm.foodyou.app.ui.food.component.DefinitionReadFeedback", uiInspectionSource, "UpdateRecipeScreen"))
         return
     }
 

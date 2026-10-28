@@ -106,7 +106,7 @@ fun PersonalizationScreen(
 @Composable
 private fun HomeSettingsListItem(onClick: () -> Unit, modifier: Modifier = Modifier) {
     SettingsListItem(
-        label = { Text(stringResource(Res.string.headline_home), modifier = Modifier.uiName("HomeSettingsListItem.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "HomeSettingsListItem")) },
+        label = { Text(stringResource(Res.string.headline_home_settings), modifier = Modifier.uiName("HomeSettingsListItem.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "HomeSettingsListItem")) },
         onClick = onClick,
         modifier = (modifier).uiName("HomeSettingsListItem.SettingsListItem.1", "com.maksimowiczm.foodyou.app.ui.common.component.SettingsListItem", uiInspectionSource, "HomeSettingsListItem"),
         supportingContent = { Text(stringResource(Res.string.description_home_settings), modifier = Modifier.uiName("HomeSettingsListItem.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "HomeSettingsListItem")) },

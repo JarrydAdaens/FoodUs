@@ -36,6 +36,8 @@ fun CreateQuickAddScreen(
     prefillCarbohydrates: Double? = null,
     prefillFats: Double? = null,
     scanEstimate: AiFoodEstimate? = null,
+    scanPageIndex: Int? = null,
+    scanPageCount: Int? = null,
 ) {
     val viewModel: CreateQuickAddViewModel = koinViewModel { parametersOf(date, diarySlotId) }
     val energyFormatter = LocalEnergyFormatter.current
@@ -84,6 +86,7 @@ fun CreateQuickAddScreen(
         modifier = modifier,
         state = formState,
         busy = saveState.busy,
+        scanPageIndex = scanPageIndex, scanPageCount = scanPageCount,
         saveFailed = saveState.failed,
         nutritionDetails = scanEstimate?.let {
             formState.toNutritionFacts(energyFormatter, originalNutrition)

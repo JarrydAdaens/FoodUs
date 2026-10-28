@@ -28,6 +28,11 @@ internal class RoomRecipeRepository(
         recipeDao.getRecipeIngredients(id.id).mapNotNull { it.ingredientRecipeId?.let(NutritionalItemId::Recipe) } +
             recipeDao.getReportedComponents(id.id).mapNotNull { it.component.reference?.takeIf { it.kind == DefinitionKind.RECIPE }?.localId?.let(NutritionalItemId::Recipe) }
 
+    override fun observeLibraryNames(): Flow<List<com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemName>> =
+        combine(recipeDao.observeLibraryNames(), recipeDao.observeLibraryContentChanges()) { rows, _ ->
+            rows.map { com.maksimowiczm.foodyou.food.domain.entity.NutritionalItemName(NutritionalItemId.Recipe(it.id), it.name, it.note, it.createdEpochSeconds) }
+        }
+
     override fun observeRecipe(recipeId: NutritionalItemId.Recipe): Flow<Recipe?> = observeRecipe(recipeId, emptySet())
 
     private fun observeRecipe(recipeId: NutritionalItemId.Recipe, ancestors: Set<NutritionalItemId.Recipe>): Flow<Recipe?> {

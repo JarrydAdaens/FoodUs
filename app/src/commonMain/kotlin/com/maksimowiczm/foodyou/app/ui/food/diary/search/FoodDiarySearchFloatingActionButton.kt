@@ -6,7 +6,8 @@ import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.LunchDining
+import androidx.compose.material.icons.outlined.Inventory2
+import androidx.compose.material.icons.outlined.Restaurant
 import androidx.compose.material3.FloatingActionButtonMenu
 import androidx.compose.material3.FloatingActionButtonMenuItem
 import androidx.compose.material3.Icon
@@ -27,6 +28,7 @@ internal fun FoodDiarySearchFloatingActionButton(
     onFabExpandedChange: (Boolean) -> Unit,
     onCreateRecipe: () -> Unit,
     onCreateProduct: () -> Unit,
+    onMeals: () -> Unit = {},
     modifier: Modifier = Modifier.Companion,
 ) {
     val colorScheme = MaterialTheme.colorScheme
@@ -84,9 +86,12 @@ internal fun FoodDiarySearchFloatingActionButton(
                 onCreateProduct()
                 onFabExpandedChange(false)
             },
-            icon = { Icon(Icons.Filled.LunchDining, null, modifier = Modifier.uiName("FoodDiarySearchFloatingActionButton.Icon.3", "androidx.compose.material3.Icon", uiInspectionSource, "FoodDiarySearchFloatingActionButton")) },
+            icon = { Icon(Icons.Outlined.Inventory2, null, modifier = Modifier.uiName("FoodDiarySearchFloatingActionButton.Icon.3", "androidx.compose.material3.Icon", uiInspectionSource, "FoodDiarySearchFloatingActionButton")) },
             text = { Text(stringResource(Res.string.headline_product), modifier = Modifier.uiName("FoodDiarySearchFloatingActionButton.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "FoodDiarySearchFloatingActionButton")) },
         )
+        FloatingActionButtonMenuItem(onClick = { onMeals(); onFabExpandedChange(false) },
+            icon = { Icon(Icons.Outlined.Restaurant, null, modifier = Modifier.uiName("FoodDiarySearchFloatingActionButton.Icon.phone4", "androidx.compose.material3.Icon", uiInspectionSource, "FoodDiarySearchFloatingActionButton")) }, text = { Text(stringResource(Res.string.food_entry_meals), modifier = Modifier.uiName("FoodDiarySearchFloatingActionButton.Text.phone3", "androidx.compose.material3.Text", uiInspectionSource, "FoodDiarySearchFloatingActionButton")) }, modifier = Modifier.uiName("FoodDiarySearchFloatingActionButton.FloatingActionButtonMenuItem.phone3", "androidx.compose.material3.FloatingActionButtonMenuItem", uiInspectionSource, "FoodDiarySearchFloatingActionButton"))
+
     }
 }
 

@@ -23,7 +23,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.outlined.Calculate
 import androidx.compose.material.icons.outlined.Keyboard
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilledTonalIconButton
@@ -205,36 +204,12 @@ private fun General(state: ProductFormState, horizontalPadding: PaddingValues) {
     SourcePicker(
         url = state.sourceUrl,
         type = state.sourceType,
-        onTypeChange = { state.sourceType = it },
+        onTypeChange = { state.sourceType = it }, personalCollection = state.sourceTypeLocked,
         modifier = (Modifier.padding(horizontalPadding).fillMaxWidth()).uiName("General.SourcePicker.1", "com.maksimowiczm.foodyou.app.ui.food.product.SourcePicker", uiInspectionSource, "General"),
     )
 
-    Row(
-        modifier =
-            (Modifier.fillMaxWidth()
-                .clickable { state.isLiquid = !state.isLiquid }
-                .padding(vertical = 8.dp)
-                .padding(horizontalPadding)).uiName("General.Row.1", "androidx.compose.foundation.layout.Row", uiInspectionSource, "General"),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Box(
-            modifier = (Modifier.size(48.dp)).uiName("General.Box.1", "androidx.compose.foundation.layout.Box", uiInspectionSource, "General"),
-            contentAlignment = Alignment.Center,
-            content = { Checkbox(checked = state.isLiquid, onCheckedChange = null, modifier = Modifier.uiName("General.Checkbox.1", "androidx.compose.material3.Checkbox", uiInspectionSource, "General")) },
-        )
-        Column (modifier = Modifier.uiName("General.Column.1", "androidx.compose.foundation.layout.Column", uiInspectionSource, "General")) {
-            Text(
-                text = stringResource(Res.string.action_treat_as_liquid),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.uiName("General.Text.2", "androidx.compose.material3.Text", uiInspectionSource, "General")
-            )
-            Text(
-                text = stringResource(Res.string.description_treat_as_liquid),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.uiName("General.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "General")
-            )
-        }
-    }
+    com.maksimowiczm.foodyou.app.ui.food.component.MetricUnitSelector(
+        isLiquid = state.isLiquid, onSelect = { state.isLiquid = it }, modifier = (Modifier.padding(horizontalPadding)).uiName("General.MetricUnitSelector.phone1", "com.maksimowiczm.foodyou.app.ui.food.component.MetricUnitSelector", uiInspectionSource, "General"))
 
     Text(
         text = stringResource(Res.string.product_nutrition_basis),
@@ -804,6 +779,7 @@ private fun SourcePicker(
     url: FormField<String?, Nothing>,
     type: ProductSource.Type,
     onTypeChange: (ProductSource.Type) -> Unit,
+    personalCollection: Boolean = false,
     modifier: Modifier = Modifier,
     imeAction: ImeAction = ImeAction.Next,
 ) {
@@ -811,7 +787,7 @@ private fun SourcePicker(
 
     val dropdownMenu =
         @Composable {
-            UiSourceScope(uiInspectionSource.element("SourcePicker.DropdownMenu.1", "androidx.compose.material3.DropdownMenu", "SourcePicker")) { DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, modifier = Modifier.uiName("SourcePicker.DropdownMenu.1.root", "androidx.compose.material3.DropdownMenu", uiInspectionSource, "SourcePicker")) {
+            UiSourceScope(uiInspectionSource.element("SourcePicker.DropdownMenu.1", "androidx.compose.material3.DropdownMenu", "SourcePicker")) { DropdownMenu(expanded = expanded && !personalCollection, onDismissRequest = { expanded = false }, modifier = Modifier.uiName("SourcePicker.DropdownMenu.1.root", "androidx.compose.material3.DropdownMenu", uiInspectionSource, "SourcePicker")) {
                 ProductSource.Type.entries.forEach {
                     DropdownMenuItem(
                         leadingIcon = { it.Icon( modifier = Modifier.uiName("SourcePicker.Icon.1", "androidx.compose.material3.Icon", uiInspectionSource, "SourcePicker")) },
@@ -833,7 +809,7 @@ private fun SourcePicker(
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = imeAction),
         trailingIcon = {
             dropdownMenu()
-            FilledTonalIconButton(onClick = { expanded = true }, modifier = Modifier.uiName("SourcePicker.FilledTonalIconButton.1", "androidx.compose.material3.FilledTonalIconButton", uiInspectionSource, "SourcePicker")) { type.Icon( modifier = Modifier.uiName("SourcePicker.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "SourcePicker")) }
+            FilledTonalIconButton(enabled = !personalCollection, onClick = { expanded = true }, modifier = Modifier.uiName("SourcePicker.FilledTonalIconButton.1", "androidx.compose.material3.FilledTonalIconButton", uiInspectionSource, "SourcePicker")) { type.Icon( modifier = Modifier.uiName("SourcePicker.Icon.2", "androidx.compose.material3.Icon", uiInspectionSource, "SourcePicker")) }
         },
     )
 }

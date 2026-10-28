@@ -92,7 +92,7 @@ The backlog (`backlog/`) is not a numbered tier. It is a staging pool — inform
 | Milestone | Document | Status | Why it matters | What it unlocks |
 | --- | --- | --- | --- | --- |
 | Milestone 1: Initialization | [milestones/milestone-1.md](milestones/milestone-1.md) | Complete | Gets the fork built, deployed, populated with the owner's recovered historical data, and in daily use, with a repeatable two-device update mechanism | A live, data-complete daily driver that Milestone 2 can safely customize |
-| Milestone 2: Customisation | [milestones/milestone-2.md](milestones/milestone-2.md) | In Progress (reopened 2026-07-26) | FoodUs identity, AI-assisted logging, OCR-assisted nutrition labels and evaluation, a unified personal library in Settings, diary-slot bulk actions, ergonomics, adopted fixes, and a developer UI name bar | Faster logging with faithful label capture, reusable food management, measurable AI/OCR quality, and source-oriented UI identification |
+| Milestone 2: Customisation | [milestones/milestone-2.md](milestones/milestone-2.md) | In Progress (reopened 2026-07-26) | FoodUs identity, AI-assisted logging, OCR-assisted nutrition labels and evaluation, a unified personal library in Settings, diary-slot bulk actions, phone-review refinements, ergonomics, adopted fixes, and a developer UI name bar | Faster logging with faithful label capture, reusable food management, measurable AI/OCR quality, and source-oriented UI identification |
 | Milestone 3: Multiplayer | [milestones/milestone-3.md](milestones/milestone-3.md) | In Progress (started 2026-07-28) | Cross-diary logging for the household pair — log a shared meal once and it lands in both diaries — via profiles, friends, two-person trusted groups, and a dumb encrypted relay | A multi-user FoodUs that stays local-first: the island broken in exactly one controlled place |
 | Milestone B: Bugs (supplementary) | [milestones/milestone-b.md](milestones/milestone-b.md) | Complete (2026-10-25) | Ten reported bugs and UX improvements covering onboarding, AI scanning, Quick Add, release history, and API-key masking | A dependable scan-to-diary workflow and clearer daily-use controls; closed B Stories add to the current numbered milestone's version count |
 
@@ -312,8 +312,8 @@ invented. New captures normalize incomplete nutrient fields to unknown before pr
 and flat persistence, across all 43 fields; existing saved numeric values and Recipe
 historical contracts remain unchanged. Schema 39 and accepted 40 exports are immutable.
 
-The owner's 2026-10-26 decision selects a combined **Recipes, Meals & Products** library
-in [Milestone 2 Story 38](milestones/milestone-2.md#story-38), currently Not Started.
+The combined **Recipes, Meals & Products** library selected by the owner on 2026-10-26
+is delivered in [Milestone 2 Story 38](milestones/milestone-2.md#story-38), Complete on 2026-10-27.
 It replaces the Home Meals shortcut with a Settings row immediately below Daily goals.
 The destination has search, Recipes / Meals / Products tabs, compact rows with nutrition
 summaries and explicit reference quantities, and a bottom creation action for the active
@@ -324,6 +324,12 @@ repositories, captured nutrition, Save/Cancel behavior and diary snapshot isolat
 binding. This extends Story 24 without reopening it. The shared abstraction and diary-group
 projection are selected above; the editor's unknown-portion contract is selected in its plan.
 No third-party studies or extracted reference material belong in this context.
+
+The second phone-review batch is delivered in [Milestone 2 Story 40](milestones/milestone-2.md#story-40), Complete on 2026-10-28.
+Its food-entry date/time picker retains the session and changes the real logging day and
+configured slot when time changes; date-only edits preserve a manual slot selection. Diary storage remains day/slot based. Selected AI review queues retain
+their destination and expose their position beneath the Quick Add title. Existing snapshot,
+selection, cancellation and save-success contracts continue to apply.
 
 The owner also selected diary-slot bulk actions in
 [Milestone 2 Story 39](milestones/milestone-2.md#story-39), Complete on 2026-10-26.

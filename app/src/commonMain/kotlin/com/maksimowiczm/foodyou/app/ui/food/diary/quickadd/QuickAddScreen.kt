@@ -3,6 +3,18 @@ package com.maksimowiczm.foodyou.app.ui.food.diary.quickadd
 import com.maksimowiczm.foodyou.app.ui.developer.inspection.UiSourceFile
 import com.maksimowiczm.foodyou.app.ui.developer.inspection.uiName
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -55,6 +67,8 @@ internal fun QuickAddScreen(
     nutritionDetails: NutritionFacts? = null,
     busy: Boolean = false,
     saveFailed: Boolean = false,
+    scanPageIndex: Int? = null,
+    scanPageCount: Int? = null,
     capturedPortion: com.maksimowiczm.foodyou.common.domain.measurement.Measurement? = null,
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -104,6 +118,7 @@ internal fun QuickAddScreen(
             }
         },
         topBar = {
+            Column(modifier = Modifier.uiName("QuickAddScreen.Column.header", "androidx.compose.foundation.layout.Column", uiInspectionSource, "QuickAddScreen")) {
             TopAppBar(
                 title = { Text(stringResource(Res.string.headline_quick_add), modifier = Modifier.uiName("QuickAddScreen.Text.3", "androidx.compose.material3.Text", uiInspectionSource, "QuickAddScreen")) },
                 navigationIcon = { ArrowBackIconButton(handleBack, enabled = !busy, modifier = Modifier.uiName("QuickAddScreen.ArrowBackIconButton.1", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "QuickAddScreen")) },
@@ -124,6 +139,11 @@ internal fun QuickAddScreen(
                 },
                 scrollBehavior = scrollBehavior, modifier = Modifier.uiName("QuickAddScreen.TopAppBar.1", "androidx.compose.material3.TopAppBar", uiInspectionSource, "QuickAddScreen")
             )
+            if (scanPageIndex != null && scanPageCount != null && scanPageCount > 0 && scanPageIndex in 0 until scanPageCount) {
+                ScanQueueIndicator(scanPageIndex, scanPageCount,
+                    modifier = Modifier.uiName("QuickAddScreen.ScanQueueIndicator.1", "com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.ScanQueueIndicator", uiInspectionSource, "QuickAddScreen"))
+            }
+            }
         },
     ) { paddingValues ->
         LazyColumn(
@@ -170,6 +190,24 @@ internal fun QuickAddScreen(
                     ), modifier = Modifier.uiName("QuickAddScreen.KnownNutrientList.1", "com.maksimowiczm.foodyou.app.ui.food.shared.component.KnownNutrientList", uiInspectionSource, "QuickAddScreen"))
                 }
             }
+        }
+    }
+}
+
+
+@Composable
+private fun ScanQueueIndicator(index: Int, count: Int, modifier: Modifier = Modifier) {
+    val position = stringResource(Res.string.quick_add_page, index + 1, count)
+    val rowState = rememberLazyListState()
+    LaunchedEffect(index) { rowState.animateScrollToItem((index - 4).coerceAtLeast(0)) }
+    LazyRow(state = rowState, horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterHorizontally),
+        modifier = modifier.fillMaxWidth().background(MaterialTheme.colorScheme.surface).padding(horizontal = 16.dp, vertical = 8.dp)
+            .clearAndSetSemantics { contentDescription = position }
+            .uiName("ScanQueueIndicator.LazyRow.1", "androidx.compose.foundation.lazy.LazyRow", uiInspectionSource, "ScanQueueIndicator")) {
+        items(count) { page ->
+            Box(modifier = Modifier.size(8.dp).background(
+                if (page == index) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.22f), CircleShape)
+                .uiName("ScanQueueIndicator.Box.dot", "androidx.compose.foundation.layout.Box", uiInspectionSource, "ScanQueueIndicator"))
         }
     }
 }

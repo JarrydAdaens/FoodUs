@@ -10,6 +10,19 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 abstract class RecipeDao {
+    @Query("""
+        SELECT d.id, d.name, d.note,
+            (SELECT MIN(e.epochSeconds) FROM FoodEvent e
+             WHERE e.recipeId = d.id AND e.type IN (0, 1, 2)) AS createdEpochSeconds
+        FROM Recipe d
+    """)
+    internal abstract fun observeLibraryNames(): Flow<List<DefinitionName>>
+
+
+    /** Only a change signal: Room re-emits when any nutrition dependency table changes. */
+    @Query("""SELECT EXISTS(SELECT 1 FROM Product) + EXISTS(SELECT 1 FROM RecipeIngredient)
+        + EXISTS(SELECT 1 FROM ReportedRecipeComponent)""")
+    internal abstract fun observeLibraryContentChanges(): Flow<Int>
 
     @Query("SELECT * FROM Recipe WHERE id = :recipeId")
     abstract fun observeRecipe(recipeId: Long): Flow<RecipeEntity?>

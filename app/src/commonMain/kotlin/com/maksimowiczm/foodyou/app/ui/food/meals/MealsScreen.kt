@@ -50,6 +50,7 @@ internal fun MealsApp(
     viewModel: MealsViewModel, onBack: () -> Unit, initialDate: LocalDate,
     onUpdateUsdaApiKey: () -> Unit = {}, onUpdateOpenFoodFactsCredentials: () -> Unit = {},
     modifier: Modifier = Modifier,
+    library: (@Composable ((Meal) -> Unit, (Meal) -> Unit, (Meal) -> Unit) -> Unit)? = null,
 ) {
     val meals by viewModel.meals.collectAsStateWithLifecycle()
     val editorSnapshot = viewModel.editor.collectAsStateWithLifecycle().value
@@ -102,7 +103,12 @@ internal fun MealsApp(
             onConfirm = { viewModel.delete(target.id) { deleteTarget = null } }, busy = busy,
         )
     }
-    loadTarget?.let { target ->
+    loadTarget?.takeIf { library != null }?.let { target ->
+        LibraryMealDestination(target, slots, busy, { loadTarget = null }) { date, slot ->
+            viewModel.load(target.id, slot, date) { loadTarget = null }
+        }
+    }
+    loadTarget?.takeIf { library == null }?.let { target ->
         val dateState = rememberChipsDatePickerState(LocalDate.now(), listOf(initialDate), initialDate)
         var slotId by remember(target.id) { mutableStateOf<Long?>(null) }
         UiSourceScope(uiInspectionSource.element("MealsApp.AlertDialog.2", "androidx.compose.material3.AlertDialog", "MealsApp")) { AlertDialog(
@@ -131,6 +137,7 @@ internal fun MealsApp(
     val selected = selection
     val current = draft
     when {
+        current == null && library != null -> library(viewModel::edit, { loadTarget = it }, { deleteTarget = it })
         current != null && selected != null -> UiSourceScope(uiInspectionSource.element("MealsApp.MeasureIngredientScreen.1", "com.maksimowiczm.foodyou.app.ui.food.recipe.MeasureIngredientScreen", "MealsApp")) { MeasureIngredientScreen(
             onBack = { if (!busy) selection = null }, measurement = selected.second,
             viewModel = koinViewModel(key = "meal-portion-" + selected.first.toString()) { parametersOf(selected.first) },
@@ -161,7 +168,7 @@ internal fun MealsApp(
             modifier = (modifier).uiName("MealsApp.Scaffold.2", "androidx.compose.material3.Scaffold", uiInspectionSource, "MealsApp"),
             topBar = {
                 TopAppBar(
-                    title = { Text(stringResource(if (current == null) Res.string.meals_library else Res.string.meals_edit), modifier = Modifier.uiName("MealsApp.Text.11", "androidx.compose.material3.Text", uiInspectionSource, "MealsApp")) },
+                    title = { Text(stringResource(if (current == null) Res.string.meals_library else if(editorSnapshot.original == null) Res.string.library_create_meal else Res.string.meals_edit), modifier = Modifier.uiName("MealsApp.Text.11", "androidx.compose.material3.Text", uiInspectionSource, "MealsApp")) },
                     navigationIcon = { ArrowBackIconButton(onClick = { if (current == null) onBack() else if (!busy) discard = true }, modifier = Modifier.uiName("MealsApp.ArrowBackIconButton.2", "com.maksimowiczm.foodyou.app.ui.common.component.ArrowBackIconButton", uiInspectionSource, "MealsApp")) },
                     actions = {
                         if (current != null) {
@@ -177,14 +184,16 @@ internal fun MealsApp(
                 contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = padding.calculateTopPadding() + 8.dp, bottom = padding.calculateBottomPadding() + 16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                if (current != null && editorSnapshot != null) {
+                if (current != null) {
                     item {
                         OutlinedTextField(value = current.name, onValueChange = viewModel::rename,
                             label = { Text(stringResource(Res.string.label_meal_name), modifier = Modifier.uiName("MealsApp.Text.14", "androidx.compose.material3.Text", uiInspectionSource, "MealsApp")) },
                             modifier = (Modifier.fillMaxWidth().testTag("meal-name")).uiName("MealsApp.OutlinedTextField.1", "androidx.compose.material3.OutlinedTextField", uiInspectionSource, "MealsApp"), singleLine = true)
                     }
                     item { Button(onClick = { search = true }, enabled = !busy, modifier = Modifier.uiName("MealsApp.Button.1", "androidx.compose.material3.Button", uiInspectionSource, "MealsApp")) { Text(stringResource(Res.string.meals_add_item), modifier = Modifier.uiName("MealsApp.Text.15", "androidx.compose.material3.Text", uiInspectionSource, "MealsApp")) } }
-                    if(current.reportedNutrition!=null)item{CapturedMealPanel(current)}
+                    if(current.reportedNutrition!=null && editorSnapshot.original!=null)item{
+                        CapturedMealPanel(editorSnapshot.original.copy(name=current.name,items=current.items,reportedNutrition=current.reportedNutrition))
+                    }
                     itemsIndexed(current.items, key = { index, _ -> editorSnapshot.itemKeys[index] }) { index, item ->
                         OutlinedCard((Modifier.fillMaxWidth().testTag("meal-item-$index")).uiName("MealsApp.OutlinedCard.1", "androidx.compose.material3.OutlinedCard", uiInspectionSource, "MealsApp")) {
                             Column((Modifier.padding(12.dp)).uiName("MealsApp.Column.2", "androidx.compose.foundation.layout.Column", uiInspectionSource, "MealsApp")) {

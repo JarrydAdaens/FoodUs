@@ -17,6 +17,8 @@ internal class DiaryFoodSearchViewModel(
     eventBus: EventBus,
     diarySlotRepository: DiarySlotRepository,
 ) : ViewModel() {
+    val diarySlots = diarySlotRepository.observeDiarySlots().map { it.sortedWith(compareBy({ slot -> slot.rank }, { slot -> slot.id })) }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(2_000), null)
     val diarySlot =
         diarySlotRepository
             .observeDiarySlot(diarySlotId)

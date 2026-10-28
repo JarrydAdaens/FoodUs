@@ -12,6 +12,7 @@ import com.maksimowiczm.foodyou.food.domain.entity.Product
 import com.maksimowiczm.foodyou.food.domain.entity.ProductNutritionBasis
 import com.maksimowiczm.foodyou.food.domain.usecase.ObserveNutritionalItemUseCase
 import com.maksimowiczm.foodyou.food.domain.usecase.UpdateProductUseCase
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.mapNotNull
@@ -26,11 +27,16 @@ internal class UpdateProductViewModel(
     private val productId: NutritionalItemId.Product,
 ) : ViewModel() {
 
-    val product =
-        observeFoodUseCase
-            .observe(productId)
-            .mapNotNull { it as Product }
-            .stateIn(scope = viewModelScope, initialValue = null, started = WhileSubscribed(2_000))
+    val loading = kotlinx.coroutines.flow.MutableStateFlow(true)
+    private val refresh = kotlinx.coroutines.flow.MutableStateFlow(0)
+    fun retryRead() { refresh.value++ }
+    val product = refresh.flatMapLatest {
+        kotlinx.coroutines.flow.flow { emitAll(observeFoodUseCase.observe(productId)) }
+            .map { it as? Product }
+            .onEach { loading.value = false }
+            .onStart { loading.value = true }
+            .catch { loading.value = false; emit(null) }
+    }.stateIn(scope = viewModelScope, initialValue = null, started = kotlinx.coroutines.flow.SharingStarted.WhileSubscribed(2_000))
 
     private val eventBus = Channel<UpdateProductEvent>()
     val events = eventBus.receiveAsFlow()
@@ -63,7 +69,7 @@ internal class UpdateProductViewModel(
                         packageWeight = form.packageWeight.value?.toDouble(),
                         servingWeight = form.servingWeight.value?.toDouble(),
                         note = form.note.value,
-                        source = ProductSource(type = form.sourceType, url = form.sourceUrl.value),
+                        source = ProductSource(type = if(form.sourceTypeLocked) ProductSource.Type.User else form.sourceType, url = form.sourceUrl.value),
                         isLiquid = form.isLiquid,
                     )
                     .onSuccess { eventBus.send(UpdateProductEvent.Updated) }

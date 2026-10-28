@@ -13,6 +13,7 @@ import kotlinx.serialization.json.Json
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
@@ -40,6 +41,7 @@ import com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.recipeServings
 import com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.toProductPrefill
 import com.maksimowiczm.foodyou.app.ui.food.diary.search.DiaryFoodSearchScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.update.UpdateEntryScreen
+import com.maksimowiczm.foodyou.app.ui.food.library.PersonalLibraryScreen
 import com.maksimowiczm.foodyou.app.ui.food.product.CreateProductScreen
 import com.maksimowiczm.foodyou.app.ui.food.product.UpdateProductScreen
 import com.maksimowiczm.foodyou.app.ui.food.recipe.CreateRecipeScreen
@@ -72,13 +74,14 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
 @Composable
-fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifier) {
-    val navController = rememberNavController()
+fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifier,
+    navController: androidx.navigation.NavHostController = rememberNavController(),
+    quickAddRequest: String? = null, onQuickAddHandled: () -> Unit = {},
+) {
 
     NavHost(modifier = modifier, navController = navController, startDestination = Home) {
         forwardBackwardComposable<Home> {
             UiSourceScope(uiInspectionSource.element("FoodYouAppNavHost.HomeScreen.1", "com.maksimowiczm.foodyou.app.ui.home.master.HomeScreen", "FoodYouAppNavHost")) { HomeScreen(
-                onMeals = { navController.navigateSingleTop(Meals(it)) },
                 onSettings = { navController.navigateSingleTop(Settings) },
                 onTitle = { navController.navigateSingleTop(About) },
                 onDiarySlotCardLongClick = { navController.navigateSingleTop(DiarySlotsPersonalization) },
@@ -89,7 +92,7 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                     navController.navigateSingleTop(FoodDiaryCreateQuickAdd(epochDay, diarySlotId))
                 },
                 onDiarySlotCardAiScanClick = { epochDay, diarySlotId ->
-                    navController.navigateSingleTop(FoodDiaryAiScan(epochDay, diarySlotId))
+                    navController.navigateSingleTop(FoodDiarySearch(epochDay, diarySlotId, initialAi = true))
                 },
                 onDiarySlotCardFastTextClick = { epochDay, diarySlotId ->
                     navController.navigateSingleTop(FoodDiaryFastText(epochDay, diarySlotId))
@@ -120,14 +123,57 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 },
             ) }
         }
-        forwardBackwardComposable<Meals> {
-            val route = it.toRoute<Meals>()
-            UiSourceScope(uiInspectionSource.element("FoodYouAppNavHost.MealsScreen.1", "com.maksimowiczm.foodyou.app.ui.food.meals.MealsScreen", "FoodYouAppNavHost")) { com.maksimowiczm.foodyou.app.ui.food.meals.MealsScreen(
-                onBack = { navController.popBackStackInclusive<Meals>() },
-                epochDay = route.epochDay,
-                onUpdateUsdaApiKey = { navController.navigateSingleTop(UsdaApiKey) },
-                onUpdateOpenFoodFactsCredentials = { navController.navigateSingleTop(OpenFoodFactsLogin) },
-            ) }
+        forwardBackwardComposable<PersonalLibrary> { entry ->
+            val saved by entry.savedStateHandle.getStateFlow("library-saved", false).collectAsStateWithLifecycle()
+            UiSourceScope(uiInspectionSource.element("FoodYouAppNavHost.PersonalLibraryScreen", "com.maksimowiczm.foodyou.app.ui.food.library.PersonalLibraryScreen", "FoodYouAppNavHost")) {
+                PersonalLibraryScreen(
+                    initialMeals = entry.toRoute<PersonalLibrary>().initialMeals,
+                    onBack = { navController.popBackStackInclusive<PersonalLibrary>() },
+                    onCreateProduct = { navController.navigateSingleTop(LibraryCreateProduct) },
+                    onCreateRecipe = { navController.navigateSingleTop(LibraryCreateRecipe) },
+                    onEdit = { id -> when(id) {
+                        is NutritionalItemId.Product -> navController.navigateSingleTop(LibraryUpdateProduct(id.id))
+                        is NutritionalItemId.Recipe -> navController.navigateSingleTop(UpdateRecipe(id.id))
+                    } },
+                    onUpdateUsdaApiKey = { navController.navigateSingleTop(UsdaApiKey) },
+                    onUpdateOpenFoodFactsCredentials = { navController.navigateSingleTop(OpenFoodFactsLogin) },
+                    saved = saved, onSavedAcknowledged = { entry.savedStateHandle["library-saved"] = false },
+                )
+            }
+        }
+        forwardBackwardComposable<LibraryCreateProduct> {
+            UiSourceScope(uiInspectionSource.element("FoodYouAppNavHost.LibraryCreateProduct", "com.maksimowiczm.foodyou.app.ui.food.product.CreateProductScreen", "FoodYouAppNavHost")) {
+                CreateProductScreen(personalCollection = true, onBack = { navController.popBackStackInclusive<LibraryCreateProduct>() },
+                    onCreate = {
+                        navController.previousBackStackEntry?.savedStateHandle?.set("library-saved", true)
+                        navController.popBackStackInclusive<LibraryCreateProduct>()
+                    },
+                    onUpdateUsdaApiKey = { navController.navigateSingleTop(UsdaApiKey) },
+                    onUpdateOpenFoodFactsCredentials = { navController.navigateSingleTop(OpenFoodFactsLogin) })
+            }
+        }
+        forwardBackwardComposable<LibraryCreateRecipe> {
+            UiSourceScope(uiInspectionSource.element("FoodYouAppNavHost.LibraryCreateRecipe", "com.maksimowiczm.foodyou.app.ui.food.recipe.CreateRecipeScreen", "FoodYouAppNavHost")) {
+                CreateRecipeScreen(onBack = { navController.popBackStackInclusive<LibraryCreateRecipe>() },
+                    onCreate = {
+                        navController.previousBackStackEntry?.savedStateHandle?.set("library-saved", true)
+                        navController.popBackStackInclusive<LibraryCreateRecipe>()
+                    },
+                    onEditFood = { id -> when(id) {
+                        is NutritionalItemId.Product -> navController.navigateSingleTop(UpdateProduct(id.id))
+                        is NutritionalItemId.Recipe -> navController.navigateSingleTop(UpdateRecipe(id.id))
+                    } },
+                    onUpdateUsdaApiKey = { navController.navigateSingleTop(UsdaApiKey) },
+                    onUpdateOpenFoodFactsCredentials = { navController.navigateSingleTop(OpenFoodFactsLogin) })
+            }
+        }
+        forwardBackwardComposable<LibraryUpdateProduct> { entry ->
+            val route = entry.toRoute<LibraryUpdateProduct>()
+            UiSourceScope(uiInspectionSource.element("FoodYouAppNavHost.LibraryUpdateProduct", "com.maksimowiczm.foodyou.app.ui.food.product.UpdateProductScreen", "FoodYouAppNavHost")) {
+                UpdateProductScreen(onBack = { navController.popBackStackInclusive<LibraryUpdateProduct>() },
+                    onUpdate = { navController.popBackStackInclusive<LibraryUpdateProduct>() },
+                    productId = NutritionalItemId.Product(route.productId), personalCollection = true)
+            }
         }
         forwardBackwardComposable<Settings> {
             UiSourceScope(uiInspectionSource.element("FoodYouAppNavHost.SettingsScreen.1", "com.maksimowiczm.foodyou.app.ui.settings.SettingsScreen", "FoodYouAppNavHost")) { SettingsScreen(
@@ -136,6 +182,7 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 onDiarySlots = { navController.navigateSingleTop(DiarySlotSetup) },
                 onLanguage = { navController.navigateSingleTop(Language) },
                 onGoals = { navController.navigateSingleTop(GoalsSetup) },
+                onLibrary = { navController.navigateSingleTop(PersonalLibrary()) },
                 onPersonalization = { navController.navigateSingleTop(Personalization) },
                 onDatabase = { navController.navigateSingleTop(DatabaseSettings) },
                 onExternalDatabases = { navController.navigateSingleTop(ExternalDatabases) },
@@ -256,43 +303,17 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 prefillCarbohydrates = route.prefillCarbohydrates,
                 prefillFats = route.prefillFats,
                 scanEstimate = route.scanEstimateJson?.let(AiFoodEstimateParser::parse),
+                scanPageIndex = route.scanPageIndex, scanPageCount = route.scanPageCount,
             ) }
         }
-        forwardBackwardComposable<FoodDiaryAiScan> {
-            val (epochDay, diarySlotId) = it.toRoute<FoodDiaryAiScan>()
-            val scannerState = it.savedStateHandle
-            val savedItemId by scannerState.getStateFlow<String?>(ScanQuickAddHandoff.SAVED_ITEM_KEY, null)
-                .collectAsStateWithLifecycle()
-
-            UiSourceScope(uiInspectionSource.element("FoodYouAppNavHost.AiScanScreen.1", "com.maksimowiczm.foodyou.app.ui.food.diary.aiscan.AiScanScreen", "FoodYouAppNavHost")) { AiScanScreen(
-                onBack = { navController.popBackStackInclusive<FoodDiaryAiScan>() },
-                savedScanItemId = savedItemId,
-                onSavedScanItemConsumed = { scannerState[ScanQuickAddHandoff.SAVED_ITEM_KEY] = null },
-                onScanCompleted = { ScanQuickAddHandoff.complete(navController) },
-                onSaveToQuickAdd = { estimate, itemId ->
-                    ScanQuickAddHandoff.open(navController,
-                        ScanQuickAddHandoff.route(
-                            epochDay = epochDay,
-                            diarySlotId = diarySlotId,
-                            estimate = estimate,
-                            itemId = itemId,
-                        )
-                    )
-                },
-                onAlignPickFood = { foodId ->
-                    navController.navigate(
-                        FoodDiaryCreateEntry(
-                            date = epochDay,
-                            diarySlotId = diarySlotId,
-                            foodId = foodId,
-                            measurement = null,
-                        )
-                    )
-                },
-                onCreateCustomFood = {
-                    navController.navigateSingleTop(FoodDiaryCreateProduct(epochDay, diarySlotId))
-                },
-            ) }
+        forwardBackwardComposable<FoodDiaryAiScan> { entry ->
+            val route = entry.toRoute<FoodDiaryAiScan>()
+            androidx.compose.runtime.LaunchedEffect(entry.id) {
+                navController.navigate(FoodDiarySearch(route.epochDay, route.diarySlotId, initialAi = true)) {
+                    popUpTo<FoodDiaryAiScan> { inclusive = true }
+                    launchSingleTop = true
+                }
+            }
         }
         forwardBackwardComposable<FoodDiaryFastText> {
             val (epochDay, diarySlotId) = it.toRoute<FoodDiaryFastText>()
@@ -343,34 +364,43 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
         }
         forwardBackwardComposable<FoodDiarySearch> {
             val route = it.toRoute<FoodDiarySearch>()
-            val date = route.date
-            val diarySlotId = route.diarySlotId
-
+            val scannerState = it.savedStateHandle
+            val date by scannerState.getStateFlow(ScanQuickAddHandoff.ENTRY_DATE_KEY, route.date).collectAsStateWithLifecycle()
+            fun destinationDate(): Long = scannerState[ScanQuickAddHandoff.ENTRY_DATE_KEY] ?: route.date
+            val savedItemId by scannerState.getStateFlow<String?>(ScanQuickAddHandoff.SAVED_ITEM_KEY, null).collectAsStateWithLifecycle()
             UiSourceScope(uiInspectionSource.element("FoodYouAppNavHost.DiaryFoodSearchScreen.1", "com.maksimowiczm.foodyou.app.ui.food.diary.search.DiaryFoodSearchScreen", "FoodYouAppNavHost")) { DiaryFoodSearchScreen(
-                initialQuery = route.initialQuery,
+                initialQuery = route.initialQuery, initialAi = route.initialAi, initialSlotTime = route.initialSlotTime,
                 onBack = { navController.popBackStackInclusive<FoodDiarySearch>() },
-                onCreateRecipe = {
-                    navController.navigateSingleTop(FoodDiaryCreateRecipe(date, diarySlotId))
+                onCreateRecipe = { slotId -> navController.navigateSingleTop(FoodDiaryCreateRecipe(destinationDate(), slotId)) },
+                onCreateProduct = { slotId -> navController.navigateSingleTop(FoodDiaryCreateProduct(destinationDate(), slotId)) },
+                onMeasure = { slotId, foodId, measurement ->
+                    navController.navigate(FoodDiaryCreateEntry(date = destinationDate(), diarySlotId = slotId, foodId = foodId, measurement = measurement))
                 },
-                onCreateProduct = {
-                    navController.navigateSingleTop(FoodDiaryCreateProduct(date, diarySlotId))
+                onMeals = { navController.navigateSingleTop(PersonalLibrary(initialMeals = true)) },
+                onSetupSlots = { navController.navigateSingleTop(DiarySlotSetup) },
+                savedScanItemId = savedItemId,
+                onSavedScanItemConsumed = { scannerState[ScanQuickAddHandoff.SAVED_ITEM_KEY] = null },
+                onScanCompleted = {
+                    ScanQuickAddHandoff.finishQueue(scannerState)
+                    ScanQuickAddHandoff.complete(navController)
                 },
-                onMeasure = { foodId, measurement ->
-                    navController.navigate(
-                        FoodDiaryCreateEntry(
-                            date = date,
-                            diarySlotId = diarySlotId,
-                            foodId = foodId,
-                            measurement = measurement,
-                        )
-                    )
+                onDateTimeChanged = { chosenDate, _ -> scannerState[ScanQuickAddHandoff.ENTRY_DATE_KEY] = chosenDate.toEpochDays().toLong() },
+                onScanQueueStarted = { ScanQuickAddHandoff.beginQueue(scannerState, it, destinationDate()) },
+                onScanQueueProgress = { index, count ->
+                    scannerState[ScanQuickAddHandoff.PAGE_INDEX_KEY] = index
+                    scannerState[ScanQuickAddHandoff.PAGE_COUNT_KEY] = count
+                },
+                onSaveToQuickAdd = { selectedSlot, estimate, itemId ->
+                    val targetSlot = ScanQuickAddHandoff.targetSlot(scannerState, selectedSlot)
+                    ScanQuickAddHandoff.open(navController, ScanQuickAddHandoff.route(ScanQuickAddHandoff.targetDate(scannerState, destinationDate()), targetSlot, estimate, itemId,
+                        scannerState[ScanQuickAddHandoff.PAGE_INDEX_KEY], scannerState[ScanQuickAddHandoff.PAGE_COUNT_KEY]))
+                },
+                onAlignPickFood = { slotId, foodId ->
+                    navController.navigate(FoodDiaryCreateEntry(date = destinationDate(), diarySlotId = slotId, foodId = foodId, measurement = null))
                 },
                 onUpdateUsdaApiKey = { navController.navigateSingleTop(UsdaApiKey) },
-                onUpdateOpenFoodFactsCredentials = {
-                    navController.navigateSingleTop(OpenFoodFactsLogin)
-                },
-                date = LocalDate.fromEpochDays(date),
-                diarySlotId = diarySlotId,
+                onUpdateOpenFoodFactsCredentials = { navController.navigateSingleTop(OpenFoodFactsLogin) },
+                date = LocalDate.fromEpochDays(date), diarySlotId = route.diarySlotId,
                 animatedVisibilityScope = this,
             ) }
         }
@@ -593,11 +623,23 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
             )
         }
     }
+    androidx.compose.runtime.LaunchedEffect(quickAddRequest) {
+        quickAddRequest?.let { request ->
+            val now = kotlinx.datetime.LocalDateTime.parse(request)
+            // A shortcut always starts a fresh session, even over a retained Search destination.
+            navController.navigate(FoodDiarySearch(now.date.toEpochDays(), -1L, initialSlotTime = now.time.toString()))
+            onQuickAddHandled()
+        }
+    }
+
 }
 
 @Serializable internal object Home
 
-@Serializable private data class Meals(val epochDay: Long)
+@Serializable private data class PersonalLibrary(val initialMeals: Boolean = false)
+@Serializable private data class LibraryUpdateProduct(val productId: Long)
+@Serializable private object LibraryCreateProduct
+@Serializable private object LibraryCreateRecipe
 
 @Serializable private object Settings
 
@@ -651,6 +693,8 @@ internal data class FoodDiaryCreateQuickAdd(
     val prefillFats: Double? = null,
     val scanEstimateJson: String? = null,
     val scanItemId: String? = null,
+    val scanPageIndex: Int? = null,
+    val scanPageCount: Int? = null,
 ) {
     constructor(epochDay: Long, diarySlotId: Long, estimate: AiFoodEstimate) : this(
         epochDay = epochDay,
@@ -673,6 +717,8 @@ private data class FoodDiarySearch(
     @SerialName("mealId") val diarySlotId: Long,
     // Optional pre-executed query, used by the placeholder AI route (Milestone 2, Story 9).
     val initialQuery: String? = null,
+    val initialAi: Boolean = false,
+    val initialSlotTime: String? = null,
 )
 
 @Serializable private data class FoodDiaryCreateProduct(val date: Long, @SerialName("mealId") val diarySlotId: Long)
@@ -832,3 +878,7 @@ private val uiInspectionSource = UiSourceFile(
     "com.maksimowiczm.foodyou.app.navigation",
     "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/app/navigation/FoodYouAppNavHost.kt",
 )
+
+/** Settings owns its descendant flow even while an editor is the visible destination. */
+internal fun androidx.navigation.NavHostController.isInSettingsFlow(): Boolean =
+    currentBackStack.value.any { it.destination.hasRoute<Settings>() }

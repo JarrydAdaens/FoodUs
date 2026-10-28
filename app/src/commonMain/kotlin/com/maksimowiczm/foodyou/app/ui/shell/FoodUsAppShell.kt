@@ -12,6 +12,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.Group
+import androidx.compose.material.icons.filled.Add
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import com.maksimowiczm.foodyou.app.navigation.isInSettingsFlow
+import com.maksimowiczm.foodyou.common.domain.date.DateProvider
+import org.koin.compose.koinInject
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -42,6 +48,11 @@ fun FoodUsAppShell(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifier) 
     var selectedTabOrdinal by rememberSaveable { mutableIntStateOf(ShellTab.Log.ordinal) }
     val selectedTab = ShellTab.entries[selectedTabOrdinal]
     val stateHolder = rememberSaveableStateHolder()
+    val navController = rememberNavController()
+    val entry by navController.currentBackStackEntryAsState()
+    val settingsOpen = remember(entry) { navController.isInSettingsFlow() }
+    val clock: DateProvider = koinInject()
+    var quickAddRequest by rememberSaveable { mutableStateOf<String?>(null) }
 
     // Android bottom-navigation convention: back from a secondary tab returns to the primary tab
     // instead of leaving the app. On Log, back belongs to the upstream navigation graph.
@@ -58,7 +69,7 @@ fun FoodUsAppShell(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifier) 
         // for the bottom bar and lets the inner Scaffolds handle the rest.
         contentWindowInsets = WindowInsets(0),
         bottomBar = {
-            NavigationBar (modifier = Modifier.uiName("FoodUsAppShell.NavigationBar.1", "androidx.compose.material3.NavigationBar", uiInspectionSource, "FoodUsAppShell")) {
+            if (!settingsOpen || selectedTab != ShellTab.Log) NavigationBar (modifier = Modifier.uiName("FoodUsAppShell.NavigationBar.1", "androidx.compose.material3.NavigationBar", uiInspectionSource, "FoodUsAppShell")) {
                 ShellTab.entries.forEach { tab ->
                     val label = tab.label()
 
@@ -69,6 +80,12 @@ fun FoodUsAppShell(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifier) 
                         label = { Text(text = label, modifier = Modifier.uiName("FoodUsAppShell.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "FoodUsAppShell")) }, modifier = Modifier.uiName("FoodUsAppShell.NavigationBarItem.1", "androidx.compose.material3.NavigationBarItem", uiInspectionSource, "FoodUsAppShell")
                     )
                 }
+                NavigationBarItem(selected = false, onClick = {
+                    quickAddRequest = clock.now().toString()
+                    selectedTabOrdinal = ShellTab.Log.ordinal
+                }, icon = { Icon(Icons.Filled.Add, stringResource(Res.string.food_entry_add), modifier = Modifier.uiName("FoodUsAppShell.Icon.phone2", "androidx.compose.material3.Icon", uiInspectionSource, "FoodUsAppShell")) },
+                    label = { Text(stringResource(Res.string.food_entry_add), modifier = Modifier.uiName("FoodUsAppShell.Text.phone2", "androidx.compose.material3.Text", uiInspectionSource, "FoodUsAppShell")) }, modifier = Modifier.uiName("FoodUsAppShell.NavigationBarItem.phone2", "androidx.compose.material3.NavigationBarItem", uiInspectionSource, "FoodUsAppShell"))
+
             }
         },
     ) { paddingValues ->
@@ -81,7 +98,7 @@ fun FoodUsAppShell(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifier) 
             stateHolder.SaveableStateProvider(selectedTab.name) {
                 when (selectedTab) {
                     ShellTab.Groups -> UiSourceScope(uiInspectionSource.element("FoodUsAppShell.GroupsScreen.1", "com.maksimowiczm.foodyou.app.ui.groups.GroupsScreen", "FoodUsAppShell")) { GroupsScreen() }
-                    ShellTab.Log -> FoodYouAppNavHost(onDatabaseBackup, modifier = Modifier.uiName("FoodUsAppShell.FoodYouAppNavHost.1", "com.maksimowiczm.foodyou.app.navigation.FoodYouAppNavHost", uiInspectionSource, "FoodUsAppShell"))
+                    ShellTab.Log -> FoodYouAppNavHost(onDatabaseBackup, navController = navController, quickAddRequest = quickAddRequest, onQuickAddHandled = { quickAddRequest = null }, modifier = Modifier.uiName("FoodUsAppShell.FoodYouAppNavHost.1", "com.maksimowiczm.foodyou.app.navigation.FoodYouAppNavHost", uiInspectionSource, "FoodUsAppShell"))
                     ShellTab.Notifications -> UiSourceScope(uiInspectionSource.element("FoodUsAppShell.NotificationsScreen.1", "com.maksimowiczm.foodyou.app.ui.notifications.NotificationsScreen", "FoodUsAppShell")) { NotificationsScreen() }
                 }
             }
