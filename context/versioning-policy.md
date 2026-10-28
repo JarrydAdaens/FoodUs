@@ -46,6 +46,12 @@ milestone does not change the version unless it is the selected delivery milesto
 
 ## Shared source and consumers
 
+Every release preparation, tag creation or authorized tag move must include an
+updated in-app What's New entry in the tagged source. Follow the owner's
+[changelog rules](wiki/changelog.md): short, plain-English highlights for users,
+not engineering history. Run the release-changelog gate before tagging. A candidate
+entry is not publication evidence and does not itself increment ReleaseCount.
+
 [`gradle/libs.versions.toml`](../gradle/libs.versions.toml) is the single shared version
 source. After the transition below, `fork-version-name` holds the canonical four-part
 value, using nonnegative decimal integers without leading zeros. Do not maintain a

@@ -1,0 +1,5 @@
+{
+  "catalog": "gradle/libs.versions.toml",
+  "source": "app/src/commonMain/kotlin/com/maksimowiczm/foodyou/changelog/infrastructure/StaticChangelog.kt",
+  "entry_pattern": "(?m)^\\s*Version\\(\\s*\\n\\s*version\\s*=\\s*\"([^\"\\n]+)\""
+}

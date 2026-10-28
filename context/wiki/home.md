@@ -46,6 +46,7 @@ Wielding context thoughtfully has a direct effect on the quality of outcomes. Cl
 
 ## Knowledge Docs
 
+- [changelog.md](changelog.md) - user-facing What's New writing rules, source location and automatic release-tag maintenance
 - [master-data-format.md](master-data-format.md) - canonical specification of the master data format v1.0.0 (spec of record for `jarryd/working-data/master-data.json` and its JSON Schema); the app-independent store from which app-specific exports are generated (Milestone 1 Story 5)
 - [foodyou-products-csv-schema.md](foodyou-products-csv-schema.md) - Food You's product CSV import/export schema (51 columns, units, formatting, import rules) and the repo's meal-validation CI; reference for Milestone 1 Story 9 and input to Story 10
 - [foodyou-update-procedure.md](foodyou-update-procedure.md) - owner runbook for shipping fork updates to both phones: release keystore generation/custody, versionCode bumps, local build+sign (zipalign/apksigner + `jarryd/scripts/sign-apk.ps1`), Obtainium distribution, the one-time debug→release signature migration, and data-preservation verification (Milestone 1 Story 11)

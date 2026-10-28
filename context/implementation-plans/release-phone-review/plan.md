@@ -92,3 +92,77 @@ is ignored app/build/release-phone-review-git.json. No pull, push, remote write,
 publication, signing or owner-phone installation is performed. CI signing and
 publication remain pending the owner's tag push; published ReleaseCount remains
 four until that succeeds.
+
+## Changelog follow-up — 2026-10-28
+
+The owner found the in-app history stopped at 2.23.0 and explicitly requested
+highlights for 3.2.39.4 and the current candidate, durable plain-English writing
+rules, automatic maintenance when agents prepare release tags, and moving the
+unpublished local tag so the next CI build includes the notes. This authorizes
+the required local commits and tag replacement; no push is authorized.
+
+Fresh read-only GitHub release/tag audit confirms 3.2.41.5 is still absent remotely.
+Keep the published 3.2.39.4 tag and older releases unchanged. Keep candidate version
+3.2.41.5/code 143: its release APK remains undistributed and this correction closes
+no new Story. The earlier artifact hash above is historical and must not be used
+as evidence for the corrected candidate.
+
+Added five user-facing highlights for each missing entry, with published UTC date
+2026-10-26 for the prior release and planned 2026-10-28 for this candidate. Older
+entries remain intact. The source and provenance rules live in the new changelog
+wiki guide; version policy and release runbook require updating the notes before
+every release tag. A small release-changelog gate catches a missing/stale entry
+before tag CI builds it; self-test covers missing, stale, duplicate, empty and
+invalid-date candidates. Common and native history checks are updated for both
+four-part entries and Installed badges. Build/runtime verification and final local
+tag movement are pending. No owner device is used for these checks.
+
+
+### Changelog correction acceptance (authoritative for the corrected candidate)
+
+- JDK 21 unit/debug/test/release build passed in **3m58s**, 241 tasks. Unit
+  XML: **230 tests, zero failures/errors/skips**. Native history acceptance on
+  disposable emulator-5584: **all three methods PASS**, 23.9s. Covered history
+  scrolling, preserved upstream credit, Back/re-entry, exact four-part Installed
+  badges and exact-version dismissal/seen tracking. No owner phone was modified.
+- Synthetic screenshots for both four-part badges are under ignored
+  `app/build/changelog-followup-visuals/`; current highlights are readable and the
+  prior entry remains below. No application UI layout or naming API changed.
+- Release-changelog gate and **eight self-test fixtures PASS**. The gate rejects
+  the original tagged source lacking these releases. YAML parsing confirms the
+  tag-only CI gate runs before APK compilation. Configuration owns project paths
+  and the static-entry pattern. Existing mandatory release-policy/runbook routing
+  supplies the standing trigger. Root AGENTS.md remains untouched.
+- UI naming inventory PASS, zero missing/duplicate names:
+  `harness/ui-name-coverage/runs/20261028T030645189662Z/report.json`.
+  Independent content/source/runtime/artifact evaluation: **PASS**, no blocker.
+- Corrected unsigned app APK: **foodus-3_2_41_5-unsigned.apk**, **18,015,574 bytes**,
+  SHA-256 **07acc18a40156fe663a78be56f67f337a44bca1aefcd6ac40936b3cdae2dbd0c**.
+  Current AGP metadata and SDK aapt agree on release package, version **3.2.41.5**
+  and Android code **143**. DEX inspection confirms highlights from **both** new
+  entries are present. Generated AI developer fallbacks are blank. This hash
+  supersedes the previous local candidate's hash for the corrected app content.
+- The debug APK was used only for synthetic emulator verification. No new owner
+  testing delivery was requested. AGP refreshed its debug output directory; the
+  historical accepted testing APK was restored from its verified, unchanged archive.
+  No personal delivery location or owner data is part of repository history.
+- Sanitized receipt: ignored `app/build/changelog-followup-acceptance.json`.
+  No source changes followed the successful app build; only gate configuration
+  and release documentation were finalized. `git diff --check` passed.
+
+### Corrected local release completion
+
+The changelog correction is committed in b05dd1c22beb8c028ae54ab524d3b01f57f9829f. This follow-up release merge
+preserves the accepted implementation and the original local preparation at
+3748e328. Annotated v3.2.41.5 is moved from that unpublished merge to this corrected
+merge, with the new source revision in its annotation. Fresh remote tag inspection
+immediately before finalization confirmed the candidate tag remained absent.
+Published v3.2.39.4 and all older tags are unchanged. Main and develop share the
+corrected merge; main is selected and the working tree is clean.
+
+Final checks cover the two merge parents, tag/catalog equality, annotated tag type,
+matching branch/tag tips, preserved earlier history, unchanged stash and remote refs,
+and a passing release-changelog gate on the tagged source. Final local receipt:
+ignored app/build/changelog-followup-git.json. No pull, push, signing, publication
+or owner-phone installation occurred. Version 3.2.41.5/code 143 remains the reserved
+candidate for the owner to publish; no additional release or Story closure is claimed.

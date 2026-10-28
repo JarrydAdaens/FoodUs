@@ -11,10 +11,41 @@ internal class StaticChangelog(private val appConfig: AppConfig) : Changelog {
     override val currentVersion: Version?
         get() = versions.firstOrNull { it.version == appConfig.forkVersionName }
 
-    // Publication dates are UTC; evidence and the founding announcement distinction live in
-    // context/implementation-plans/milestone-b/foodus-009/plan.md.
+    // User highlights and release maintenance rules: context/wiki/changelog.md.
+    // Published dates are UTC. The current candidate uses its planned release date;
+    // including it here does not establish publication. Keep older release entries intact.
     override val versions: List<Version> =
         listOf(
+            Version(
+                version = "3.2.41.5",
+                date = LocalDate(2026, 10, 28),
+                newFeatures =
+                    listOf(
+                        "Find your products, recipes and meals in one library.",
+                        "Use food search or AI in one screen. AI also works with text only.",
+                        "Change the date, time or meal slot while you add food.",
+                    ),
+                changes =
+                    listOf(
+                        "See calories, carbs, fat and protein in a consistent layout.",
+                        "Follow your progress as you save foods found by AI.",
+                    ),
+            ),
+            Version(
+                version = "3.2.39.4",
+                date = LocalDate(2026, 10, 26),
+                newFeatures =
+                    listOf(
+                        "Choose which foods to save from an AI scan.",
+                        "Save recipes and meals to use again.",
+                    ),
+                changes =
+                    listOf(
+                        "Copy, move or delete all foods in a meal slot.",
+                        "Import your saved food library.",
+                    ),
+                bugFixes = listOf("Keep nutrition details when you edit AI results."),
+            ),
             Version(
                 version = "2.23.0",
                 date = LocalDate(2026, 7, 27),
