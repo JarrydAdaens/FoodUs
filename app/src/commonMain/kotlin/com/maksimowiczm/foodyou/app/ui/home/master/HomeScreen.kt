@@ -55,17 +55,7 @@ fun HomeScreen(
         modifier = (modifier).uiName("HomeScreen.Scaffold.1", "androidx.compose.material3.Scaffold", uiInspectionSource, "HomeScreen"),
         topBar = {
             TopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(Res.string.app_name),
-                        modifier =
-                            (Modifier.clickable(
-                                interactionSource = null,
-                                indication = null,
-                                onClick = onTitle,
-                            )).uiName("HomeScreen.Text.1", "androidx.compose.material3.Text", uiInspectionSource, "HomeScreen"),
-                    )
-                },
+                title = {},
                 actions = {
                     IconButton(onClick = onSettings, modifier = Modifier.uiName("HomeScreen.IconButton.1", "androidx.compose.material3.IconButton", uiInspectionSource, "HomeScreen")) {
                         Icon(

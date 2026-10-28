@@ -173,8 +173,14 @@ class DiaryBulkWorkflowTest {
         assertTrue(control.isEnabled)
         assertTrue(control.performAction(AccessibilityNodeInfo.ACTION_CLICK))
         instrumentation.waitForIdleSync()
-        if (resource == Res.string.diary_bulk_copy_to)
+        if (resource == Res.string.diary_bulk_copy_to) {
+            driver.findText(label(resource))
+            val folder = java.io.File(instrumentation.targetContext.getExternalFilesDir(null), "story40").apply { mkdirs() }
+            java.io.FileOutputStream(java.io.File(folder, "slot-menu.png")).use {
+                requireNotNull(instrumentation.uiAutomation.takeScreenshot()).compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it)
+            }
             inspect(resource, "MealMenu.BulkText.1", "MealMenu.DropdownMenu.1")
+        }
         click(resource)
     }
     private fun entries(slot: Long) = runBlocking { db.manualDiaryEntryDao.entries(slot, sourceDate.toEpochDays()) }

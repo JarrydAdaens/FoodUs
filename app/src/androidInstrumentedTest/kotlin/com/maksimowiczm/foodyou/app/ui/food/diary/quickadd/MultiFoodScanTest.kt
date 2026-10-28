@@ -135,14 +135,23 @@ class MultiFoodScanTest {
 
     @Test fun inspectDeselectAndSaveDistinctFoodsWithoutMergingOrLosingValues() = withFlow(MULTIPLE) {
         findText(text(Res.string.neutral_ai_omitted_count, 1))
-        cardClick("Synthetic bread", label(Res.string.action_ai_show_details))
+        // Bread is the first response item; scroll its details action into view before clicking.
+        // The 100 kcal assertion below verifies the correct card expanded.
+        clickText(label(Res.string.action_ai_show_details))
         findText("100 kcal")
         assertTrue(checkbox("Synthetic pasta").performAction(AccessibilityNodeInfo.ACTION_CLICK))
+        findText(label(Res.string.action_save_selected_foods))
+        captureQueue("ai-results")
         acceptSelected(count = 2)
+        findText(runBlocking { getString(Res.string.quick_add_page, 1, 2) })
+        assertField(Res.string.unit_energy, "100")
+        captureQueue("queue-first")
         assertField(Res.string.product_name, "Synthetic bread")
         assertField(Res.string.nutriment_sugars, "0")
         clickSave()
         assertField(Res.string.product_name, "Synthetic chicken")
+        findText(runBlocking { getString(Res.string.quick_add_page, 2, 2) })
+        captureQueue("queue-second")
         assertQuickAddRoute()
         assertEquals(1, entries().size)
         assertEquals(0, completionCount)
@@ -349,10 +358,11 @@ class MultiFoodScanTest {
                     }
                     if (!direct) {
                         model.onPhotoCaptured(syntheticJpeg)
-                        model.submit()
                     }
                 }
                 if (!direct) {
+                    await("synthetic scanner configured") { model.aiConfigured.value }
+                    onMain { model.submit() }
                     await("synthetic scan result") {
                         if (expectResult) model.state.value is AiScanUiState.Result
                         else model.state.value is AiScanUiState.Failed
@@ -408,7 +418,7 @@ class MultiFoodScanTest {
                         ScanQuickAddHandoff.complete(nav)
                     },
                     onSaveToQuickAdd = { estimate, itemId ->
-                        val route = ScanQuickAddHandoff.route(date.toEpochDays().toLong(), 1, estimate, itemId)
+                        val route = ScanQuickAddHandoff.route(date.toEpochDays().toLong(), 1, estimate, itemId, review().pageIndex, review().queueSize)
                         acceptedRoute = route
                         ScanQuickAddHandoff.open(nav, route)
                         // Reproduce two review callbacks before navigation renders, using production helper.
@@ -427,13 +437,21 @@ class MultiFoodScanTest {
                 CreateQuickAddScreen(onBack = { nav.popBackStack() },
                     onSave = { ScanQuickAddHandoff.saved(nav, route) },
                     diarySlotId = route.diarySlotId, date = LocalDate.fromEpochDays(route.epochDay), scanEstimate = estimate,
-                    prefillName = route.prefillName, prefillEnergyKcal = route.prefillEnergyKcal)
+                    prefillName = route.prefillName, prefillEnergyKcal = route.prefillEnergyKcal,
+                    scanPageIndex = route.scanPageIndex, scanPageCount = route.scanPageCount)
             }
         }
     }
 
+    private fun captureQueue(name: String) {
+        val folder = java.io.File(instrumentation.targetContext.getExternalFilesDir(null), "story40").apply { mkdirs() }
+        java.io.FileOutputStream(java.io.File(folder, "$name.png")).use {
+            assertTrue(requireNotNull(instrumentation.uiAutomation.takeScreenshot()).compress(Bitmap.CompressFormat.PNG, 100, it))
+        }
+    }
+
     private fun acceptSelected(single: Boolean = false, count: Int = 1) {
-        clickText(if (single) label(Res.string.action_save) else text(Res.string.action_ai_edit_selected, count))
+        clickText(label(Res.string.action_save_selected_foods))
         findText(label(Res.string.headline_quick_add))
         assertNotNull(requireNotNull(acceptedRoute).scanEstimateJson)
         assertNotNull(requireNotNull(acceptedRoute).scanItemId)
@@ -489,24 +507,6 @@ class MultiFoodScanTest {
             node = node.parent
         }
         error("Missing synthetic item checkbox")
-    }
-
-    private fun cardClick(name: String, action: String) {
-        var node: AccessibilityNodeInfo? = findText(name)
-        while (node != null) {
-            val actionNode = descendants(node).firstOrNull {
-                it.text?.toString() == action || it.contentDescription?.toString() == action
-            }
-            if (actionNode != null) {
-                var clickable: AccessibilityNodeInfo? = actionNode
-                while (clickable != null && !clickable.isClickable) clickable = clickable.parent
-                assertTrue(requireNotNull(clickable).performAction(AccessibilityNodeInfo.ACTION_CLICK))
-                instrumentation.waitForIdleSync()
-                return
-            }
-            node = node.parent
-        }
-        error("Missing synthetic card action")
     }
 
     private fun saveControl(): AccessibilityNodeInfo = driver.control(label(Res.string.action_save))

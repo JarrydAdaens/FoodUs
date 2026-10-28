@@ -6,8 +6,8 @@ version-name = "3.4.9"
 # Local builds do not increment it; the next publication uses the next unused count.
 # This supplies Android versionName and must match its v* release tag on publication; the
 # upstream version-name above is retained as derived-from metadata only.
-fork-version-name = "3.2.40.4"
-android-versionCode = "140"
+fork-version-name = "3.2.41.4"
+android-versionCode = "142"
 android-compileSdk = "36"
 android-minSdk = "28"
 android-targetSdk = "36"

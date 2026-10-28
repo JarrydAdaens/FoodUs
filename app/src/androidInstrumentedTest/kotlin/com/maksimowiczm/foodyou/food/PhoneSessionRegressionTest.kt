@@ -4,6 +4,10 @@ import android.accessibilityservice.AccessibilityServiceInfo
 import android.graphics.Bitmap
 import android.graphics.Rect
 import android.os.Build
+import android.view.MotionEvent
+import android.os.SystemClock
+import com.maksimowiczm.foodyou.app.ui.developer.inspection.*
+import com.maksimowiczm.foodyou.app.ui.food.diary.search.FoodEntryDateTimePicker
 import android.view.View
 import android.view.WindowManager
 import androidx.test.core.app.launchActivity
@@ -11,6 +15,13 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.filters.SdkSuppress
 import androidx.room.Room
 import androidx.lifecycle.viewModelScope
+import androidx.compose.runtime.*
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.maksimowiczm.foodyou.app.navigation.FoodYouAppNavHost
+import com.maksimowiczm.foodyou.app.navigation.ScanQuickAddHandoff
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalTime
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.unit.dp
@@ -78,6 +89,182 @@ class PhoneSessionRegressionTest {
         val old = info.flags
         instrumentation.uiAutomation.serviceInfo = info.apply { flags = old or AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS }
         try { block() } finally { decor = null; instrumentation.uiAutomation.serviceInfo = info.apply { flags = old } }
+    }
+
+
+    @Test fun dateAndTimePickerActionsExportActualSourceScopes() {
+        emulatorOnly()
+        var inspector: UiInspectorState? = null
+        fun inspectAction(part: String, surface: String) {
+            var bounds = Rect()
+            var stable = 0
+            driver.await("Picker action geometry stable") {
+                val current = Rect().also(driver.findText(label(Res.string.action_confirm))::getBoundsInScreen)
+                stable = if (current == bounds) stable + 1 else 0
+                bounds = current
+                stable >= 2
+            }
+            var before: UiSelectionSnapshot? = null
+            instrumentation.runOnMainSync { before = inspector?.snapshot }
+            val down = SystemClock.uptimeMillis()
+            fun event(action: Int) {
+                MotionEvent.obtain(down, SystemClock.uptimeMillis(), action, bounds.exactCenterX(), bounds.exactCenterY(), 0).also {
+                    try { assertTrue(instrumentation.uiAutomation.injectInputEvent(it, true)) } finally { it.recycle() }
+                }
+            }
+            event(MotionEvent.ACTION_DOWN)
+            try {
+                driver.await("Picker exports a fresh held-element selection") {
+                    driver.onMain { inspector?.snapshot != null && inspector?.snapshot !== before }
+                }
+            } finally { event(MotionEvent.ACTION_UP) }
+            var heldSelection: UiSelectionSnapshot? = null
+            instrumentation.runOnMainSync { heldSelection = inspector?.snapshot }
+            val snapshot = requireNotNull(heldSelection)
+            assertTrue(snapshot.selected.descriptor.name in setOf("FoodEntryDateTimePicker.Text.$part", "FoodEntryDateTimePicker.TextButton.$part"))
+            assertEquals("FoodEntryDateTimePicker.$surface", snapshot.surface.name)
+            assertTrue(snapshot.selected.descriptor.source.endsWith("FoodEntryDateTimePicker.kt"))
+        }
+        withWindows {
+            launchActivity<DeveloperActivity>().use { scenario ->
+                scenario.onActivity { activity ->
+                    decor = activity.window.decorView
+                    activity.setContent { MaterialTheme {
+                        UiInspectionContent(true, true, {}) {
+                            val currentInspector = LocalUiInspector.current
+                            SideEffect { inspector = currentInspector }
+                            FoodEntryDateTimePicker(LocalDate(2026, 10, 28), LocalTime(13, 25), {}, { _, _ -> })
+                        }
+                    } }
+                }
+                inspectAction("dateConfirm", "DateDialog")
+                click(Res.string.action_confirm)
+                inspectAction("timeConfirm", "TimeDialog")
+            }
+        }
+    }
+
+    @Test fun dateTimePickerCancellationAndConfirmationPreserveInputAndSaveToChosenDay() {
+        emulatorOnly(); prepareSyntheticLibraryHost()
+        val koin = GlobalContext.get()
+        val now = koin.get<DateProvider>().now()
+        val chosenDay = if (now.day == 15) 14 else 15
+        val chosenDate = LocalDate(now.year, now.month, chosenDay)
+        val slots = runBlocking { koin.get<DiarySlotRepository>().observeDiarySlots().first() }
+        assertTrue("Synthetic emulator has meal slots", slots.isNotEmpty())
+        val initialSlot = selectDiarySlot(slots, now.time) ?: slots.first()
+        val targetTime = if (LocalTime(now.hour, now.minute) == LocalTime(13, 25)) LocalTime(13, 26) else LocalTime(13, 25)
+        val expectedSlot = selectDiarySlot(slots, targetTime) ?: slots.first()
+        val diary = koin.get<NutritionalItemDiaryEntryRepository>()
+        val newName = "Synthetic S40 " + java.util.UUID.randomUUID().toString().take(6)
+        lateinit var navigation: NavHostController
+        val request = mutableStateOf<String?>(null)
+        fun activeDay(): Long = driver.onMain {
+            navigation.currentBackStackEntry!!.savedStateHandle.get<Long>(ScanQuickAddHandoff.ENTRY_DATE_KEY)
+                ?: now.date.toEpochDays().toLong()
+        }
+        fun openAndPickDay() {
+            click(Res.string.food_entry_date_time)
+            var calendarRoot = driver.findText(label(Res.string.action_confirm))
+            while (calendarRoot.parent != null) calendarRoot = requireNotNull(calendarRoot.parent)
+            val dayPattern = Regex("(^|[^0-9])$chosenDay([^0-9]|$)")
+            val calendarNodes = driver.descendants(calendarRoot).toList()
+            var dayNode = calendarNodes.firstOrNull { node ->
+                node.isClickable && listOfNotNull(node.text, node.contentDescription).any { dayPattern.containsMatchIn(it.toString()) }
+            } ?: error("Synthetic calendar day missing: " + calendarNodes.mapNotNull {
+                it.contentDescription?.toString() ?: it.text?.toString()
+            }.joinToString(" | "))
+            while (!dayNode.isClickable) dayNode = requireNotNull(dayNode.parent)
+            assertTrue(dayNode.performAction(android.view.accessibility.AccessibilityNodeInfo.ACTION_CLICK))
+        }
+        withWindows {
+            launchActivity<DeveloperActivity>().use { scenario ->
+                scenario.onActivity { activity ->
+                    decor = activity.window.decorView
+                    activity.setContent { FoodYouTheme {
+                        navigation = rememberNavController()
+                        FoodYouAppNavHost({}, navController = navigation, quickAddRequest = request.value,
+                            onQuickAddHandled = { request.value = null })
+                    } }
+                }
+                driver.findText(label(Res.string.action_go_to_settings))
+                assertFalse("Log has no redundant app-name heading", visible(label(Res.string.app_name)))
+                capture("story40-log")
+                driver.onMain { request.value = now.toString() }
+                if (selectDiarySlot(slots, now.time) == null) driver.clickText(initialSlot.name)
+                click(Res.string.food_entry_ai)
+                driver.setField(Res.string.label_ai_scan_hint, "Synthetic retained description")
+                openAndPickDay()
+                click(Res.string.action_cancel)
+                assertEquals(now.date.toEpochDays().toLong(), activeDay())
+                driver.assertField(Res.string.label_ai_scan_hint, "Synthetic retained description")
+                openAndPickDay()
+                click(Res.string.action_confirm)
+                click(Res.string.action_cancel)
+                assertEquals(now.date.toEpochDays().toLong(), activeDay())
+                if (slots.size > 1) {
+                    val clockSlot = initialSlot
+                    val manualSlot = slots.firstOrNull { it.id != clockSlot.id && it.id != expectedSlot.id }
+                        ?: slots.first { it.id != clockSlot.id }
+                    driver.clickText(clockSlot.name)
+                    driver.clickText(manualSlot.name)
+                    openAndPickDay()
+                    click(Res.string.action_confirm)
+                    driver.findText(label(Res.string.food_entry_date_time))
+                    click(Res.string.action_confirm)
+                    driver.await("Date-only change preserves manual meal selection") {
+                        activeDay() == chosenDate.toEpochDays().toLong() && visible(manualSlot.name)
+                    }
+                    driver.assertField(Res.string.label_ai_scan_hint, "Synthetic retained description")
+                }
+                openAndPickDay()
+                click(Res.string.action_confirm)
+                fun timeNodes(): List<android.view.accessibility.AccessibilityNodeInfo> {
+                    instrumentation.uiAutomation.clearCache()
+                    return instrumentation.uiAutomation.windowsOnAllDisplays.get(driver.onMain { decor!!.display.displayId })
+                        .orEmpty().mapNotNull { it.root }.filter { it.packageName?.toString() == instrumentation.targetContext.packageName }
+                        .flatMap { dialog -> driver.descendants(dialog).toList() }
+                }
+                fun setTimePart(part: String, value: String) {
+                    timeNodes().firstOrNull { it.contentDescription?.toString() == "Select $part" }?.let { selector ->
+                        var control = selector
+                        while (!control.isClickable) control = requireNotNull(control.parent)
+                        assertTrue(control.performAction(android.view.accessibility.AccessibilityNodeInfo.ACTION_CLICK))
+                    }
+                    fun activeInput() = timeNodes().firstOrNull { input -> input.isEditable &&
+                        driver.descendants(input).any { it.contentDescription?.toString()?.contains(part.removeSuffix("s"), ignoreCase = true) == true } }
+                    driver.await("Time $part editor active") { activeInput() != null }
+                    assertTrue(requireNotNull(activeInput()).performAction(android.view.accessibility.AccessibilityNodeInfo.ACTION_SET_TEXT,
+                        android.os.Bundle().apply { putCharSequence(android.view.accessibility.AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, value) }))
+                }
+                // Material exposes only the selected time part as an editable field.
+                driver.findText(label(Res.string.food_entry_date_time))
+                setTimePart("hours", targetTime.hour.toString().padStart(2, '0'))
+                setTimePart("minutes", targetTime.minute.toString().padStart(2, '0'))
+                click(Res.string.action_confirm)
+                driver.await("Changed date committed to retained entry session") { activeDay() == chosenDate.toEpochDays().toLong() }
+                if (selectDiarySlot(slots, targetTime) == null) driver.clickText(expectedSlot.name)
+                driver.assertField(Res.string.label_ai_scan_hint, "Synthetic retained description")
+                driver.findText(expectedSlot.name)
+                capture("story40-date-time")
+                click(Res.string.food_entry_search)
+                click(Res.string.action_create)
+                click(Res.string.headline_product)
+                driver.findText(label(Res.string.product_name))
+                assertEquals(chosenDate.toEpochDays().toLong(), driver.onMain { navigation.currentBackStackEntry!!.arguments!!.getLong("date") })
+                driver.setField(Res.string.product_name, newName)
+                driver.setField(Res.string.nutriment_proteins, "8")
+                driver.setField(Res.string.nutriment_carbohydrates, "15")
+                driver.setField(Res.string.nutriment_fats, "2")
+                click(Res.string.action_save)
+                driver.findText(label(Res.string.portion_amount_to_log))
+                click(Res.string.action_save)
+                driver.await("Saved Product uses chosen day and meal slot") {
+                    runBlocking { diary.observeAll(expectedSlot.id, chosenDate).first().any { it.name == newName } }
+                }
+                assertFalse(runBlocking { diary.observeAll(expectedSlot.id, now.date).first().any { it.name == newName } })
+            }
+        }
     }
 
     @Test fun roomHistorySortAndTransitiveRecipeCalorieRefresh() = runBlocking {

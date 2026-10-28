@@ -10,7 +10,9 @@ internal data class AiScanReviewSession(
     val selectedIds: Set<String> = items.map { it.id }.toSet(),
     val savedIds: Set<String> = emptySet(),
     val queue: List<String> = emptyList(),
+    val queueSize: Int = 0,
 ) {
+    val pageIndex: Int get() = queueSize - queue.size
     val selectedCount: Int get() = selectedIds.count { it !in savedIds }
     val next: ScanReviewItem? get() = queue.firstOrNull()?.let { id -> items.firstOrNull { it.id == id } }
 
@@ -20,9 +22,10 @@ internal data class AiScanReviewSession(
     }
 
     /** Restart after cancellation from still-selected, unsaved snapshots in response order. */
-    fun start(): AiScanReviewSession = copy(queue = items.map { it.id }.filter {
-        it in selectedIds && it !in savedIds
-    })
+    fun start(): AiScanReviewSession {
+        val selected = items.map { it.id }.filter { it in selectedIds && it !in savedIds }
+        return copy(queue = selected, queueSize = selected.size)
+    }
 
     fun acknowledgeSaved(id: String): AiScanReviewSession {
         if (queue.firstOrNull() != id || id in savedIds) return this

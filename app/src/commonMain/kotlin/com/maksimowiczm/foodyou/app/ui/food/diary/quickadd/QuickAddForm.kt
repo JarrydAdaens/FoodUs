@@ -56,48 +56,6 @@ internal fun QuickAddForm(state: QuickAddFormState, modifier: Modifier = Modifie
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
         )
 
-        state.servingCount.TextField(
-            label = stringResource(Res.string.label_number_of_servings),
-            modifier = (Modifier.fillMaxWidth()).uiName("QuickAddForm.TextField.1", "com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.TextField", uiInspectionSource, "QuickAddForm"),
-            suffix = null,
-        )
-
-        state.weightGrams.TextField(
-            label = stringResource(Res.string.weight),
-            modifier = (Modifier.fillMaxWidth()).uiName("QuickAddForm.TextField.2", "com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.TextField", uiInspectionSource, "QuickAddForm"),
-        )
-
-        LocalNutrientsOrder.current.forEach {
-            when (it) {
-                NutrientsOrder.Proteins ->
-                    state.proteins.TextField(
-                        label = stringResource(Res.string.nutriment_proteins),
-                        modifier = (Modifier.fillMaxWidth()).uiName("QuickAddForm.TextField.3", "com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.TextField", uiInspectionSource, "QuickAddForm"),
-                    )
-                NutrientsOrder.Fats ->
-                    state.fats.TextField(
-                        label = stringResource(Res.string.nutriment_fats),
-                        modifier = (Modifier.fillMaxWidth()).uiName("QuickAddForm.TextField.4", "com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.TextField", uiInspectionSource, "QuickAddForm"),
-                    )
-                NutrientsOrder.Carbohydrates ->
-                    state.carbohydrates.TextField(
-                        label = stringResource(Res.string.nutriment_carbohydrates),
-                        modifier = (Modifier.fillMaxWidth()).uiName("QuickAddForm.TextField.5", "com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.TextField", uiInspectionSource, "QuickAddForm"),
-                    )
-                else -> Unit
-            }
-        }
-
-        state.fibre.TextField(
-            label = stringResource(Res.string.nutriment_fiber),
-            modifier = (Modifier.fillMaxWidth()).uiName("QuickAddForm.TextField.6", "com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.TextField", uiInspectionSource, "QuickAddForm"),
-        )
-
-        state.sugar.TextField(
-            label = stringResource(Res.string.nutriment_sugars),
-            modifier = (Modifier.fillMaxWidth()).uiName("QuickAddForm.TextField.7", "com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.TextField", uiInspectionSource, "QuickAddForm"),
-        )
-
         OutlinedTextField(
             state = state.energy.textFieldState,
             modifier = (Modifier.fillMaxWidth()).uiName("QuickAddForm.OutlinedTextField.3", "androidx.compose.material3.OutlinedTextField", uiInspectionSource, "QuickAddForm"),
@@ -143,8 +101,52 @@ internal fun QuickAddForm(state: QuickAddFormState, modifier: Modifier = Modifie
             },
             isError = state.energy.error != null,
             keyboardOptions =
-                KeyboardOptions(keyboardType = KeyboardType.Decimal, imeAction = ImeAction.Done),
+                KeyboardOptions(keyboardType = KeyboardType.Decimal, imeAction = ImeAction.Next),
         )
+
+
+        state.weightGrams.TextField(
+            label = stringResource(Res.string.weight),
+            modifier = (Modifier.fillMaxWidth()).uiName("QuickAddForm.TextField.2", "com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.TextField", uiInspectionSource, "QuickAddForm"),
+        )
+
+        state.servingCount.TextField(
+            label = stringResource(Res.string.label_number_of_servings),
+            modifier = (Modifier.fillMaxWidth()).uiName("QuickAddForm.TextField.1", "com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.TextField", uiInspectionSource, "QuickAddForm"),
+            suffix = null,
+        )
+
+        LocalNutrientsOrder.current.forEach {
+            when (it) {
+                NutrientsOrder.Proteins ->
+                    state.proteins.TextField(
+                        label = stringResource(Res.string.nutriment_proteins),
+                        modifier = (Modifier.fillMaxWidth()).uiName("QuickAddForm.TextField.3", "com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.TextField", uiInspectionSource, "QuickAddForm"),
+                    )
+                NutrientsOrder.Fats ->
+                    state.fats.TextField(
+                        label = stringResource(Res.string.nutriment_fats),
+                        modifier = (Modifier.fillMaxWidth()).uiName("QuickAddForm.TextField.4", "com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.TextField", uiInspectionSource, "QuickAddForm"),
+                    )
+                NutrientsOrder.Carbohydrates ->
+                    state.carbohydrates.TextField(
+                        label = stringResource(Res.string.nutriment_carbohydrates),
+                        modifier = (Modifier.fillMaxWidth()).uiName("QuickAddForm.TextField.5", "com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.TextField", uiInspectionSource, "QuickAddForm"),
+                    )
+                else -> Unit
+            }
+        }
+
+        state.fibre.TextField(
+            label = stringResource(Res.string.nutriment_fiber),
+            modifier = (Modifier.fillMaxWidth()).uiName("QuickAddForm.TextField.6", "com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.TextField", uiInspectionSource, "QuickAddForm"),
+        )
+
+        state.sugar.TextField(
+            label = stringResource(Res.string.nutriment_sugars),
+            modifier = (Modifier.fillMaxWidth()).uiName("QuickAddForm.TextField.7", "com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.TextField", uiInspectionSource, "QuickAddForm"),
+        )
+
 
         Text(
             text = stringResource(Res.string.description_calories_are_calculated),

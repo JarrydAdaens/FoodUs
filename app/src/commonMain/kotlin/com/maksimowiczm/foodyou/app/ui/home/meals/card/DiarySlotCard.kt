@@ -19,6 +19,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.outlined.ContentCopy
+import androidx.compose.material.icons.outlined.MoveToInbox
+import androidx.compose.material.icons.outlined.FileCopy
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
@@ -483,6 +486,15 @@ private fun MealMenu(
                     text = { Text(stringResource(intent.labelResource()), modifier = Modifier.uiName("MealMenu.BulkText.1", "androidx.compose.material3.Text", uiInspectionSource, "MealMenu")) },
                     onClick = { expanded = false; onBulk(intent) },
                     enabled = canSave || intent == DiaryBulkIntent.CopyFrom,
+                    leadingIcon = {
+                        Icon(when (intent) {
+                            DiaryBulkIntent.DeleteAll -> Icons.Default.Delete
+                            DiaryBulkIntent.MoveTo -> Icons.Outlined.MoveToInbox
+                            DiaryBulkIntent.CopyTo -> Icons.Outlined.ContentCopy
+                            DiaryBulkIntent.CopyFrom -> Icons.Outlined.FileCopy
+                        }, contentDescription = null,
+                            modifier = Modifier.uiName("MealMenu.Icon.bulk", "androidx.compose.material3.Icon", uiInspectionSource, "MealMenu"))
+                    },
                     modifier = Modifier.uiName("MealMenu.BulkItem.1", "androidx.compose.material3.DropdownMenuItem", uiInspectionSource, "MealMenu"),
                 )
             }

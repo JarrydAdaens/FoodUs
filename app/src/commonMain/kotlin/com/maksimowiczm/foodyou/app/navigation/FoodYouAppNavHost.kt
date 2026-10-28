@@ -303,6 +303,7 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 prefillCarbohydrates = route.prefillCarbohydrates,
                 prefillFats = route.prefillFats,
                 scanEstimate = route.scanEstimateJson?.let(AiFoodEstimateParser::parse),
+                scanPageIndex = route.scanPageIndex, scanPageCount = route.scanPageCount,
             ) }
         }
         forwardBackwardComposable<FoodDiaryAiScan> { entry ->
@@ -363,16 +364,17 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
         }
         forwardBackwardComposable<FoodDiarySearch> {
             val route = it.toRoute<FoodDiarySearch>()
-            val date = route.date
             val scannerState = it.savedStateHandle
+            val date by scannerState.getStateFlow(ScanQuickAddHandoff.ENTRY_DATE_KEY, route.date).collectAsStateWithLifecycle()
+            fun destinationDate(): Long = scannerState[ScanQuickAddHandoff.ENTRY_DATE_KEY] ?: route.date
             val savedItemId by scannerState.getStateFlow<String?>(ScanQuickAddHandoff.SAVED_ITEM_KEY, null).collectAsStateWithLifecycle()
             UiSourceScope(uiInspectionSource.element("FoodYouAppNavHost.DiaryFoodSearchScreen.1", "com.maksimowiczm.foodyou.app.ui.food.diary.search.DiaryFoodSearchScreen", "FoodYouAppNavHost")) { DiaryFoodSearchScreen(
                 initialQuery = route.initialQuery, initialAi = route.initialAi, initialSlotTime = route.initialSlotTime,
                 onBack = { navController.popBackStackInclusive<FoodDiarySearch>() },
-                onCreateRecipe = { slotId -> navController.navigateSingleTop(FoodDiaryCreateRecipe(date, slotId)) },
-                onCreateProduct = { slotId -> navController.navigateSingleTop(FoodDiaryCreateProduct(date, slotId)) },
+                onCreateRecipe = { slotId -> navController.navigateSingleTop(FoodDiaryCreateRecipe(destinationDate(), slotId)) },
+                onCreateProduct = { slotId -> navController.navigateSingleTop(FoodDiaryCreateProduct(destinationDate(), slotId)) },
                 onMeasure = { slotId, foodId, measurement ->
-                    navController.navigate(FoodDiaryCreateEntry(date = date, diarySlotId = slotId, foodId = foodId, measurement = measurement))
+                    navController.navigate(FoodDiaryCreateEntry(date = destinationDate(), diarySlotId = slotId, foodId = foodId, measurement = measurement))
                 },
                 onMeals = { navController.navigateSingleTop(PersonalLibrary(initialMeals = true)) },
                 onSetupSlots = { navController.navigateSingleTop(DiarySlotSetup) },
@@ -382,13 +384,19 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                     ScanQuickAddHandoff.finishQueue(scannerState)
                     ScanQuickAddHandoff.complete(navController)
                 },
-                onScanQueueStarted = { ScanQuickAddHandoff.beginQueue(scannerState, it) },
+                onDateTimeChanged = { chosenDate, _ -> scannerState[ScanQuickAddHandoff.ENTRY_DATE_KEY] = chosenDate.toEpochDays().toLong() },
+                onScanQueueStarted = { ScanQuickAddHandoff.beginQueue(scannerState, it, destinationDate()) },
+                onScanQueueProgress = { index, count ->
+                    scannerState[ScanQuickAddHandoff.PAGE_INDEX_KEY] = index
+                    scannerState[ScanQuickAddHandoff.PAGE_COUNT_KEY] = count
+                },
                 onSaveToQuickAdd = { selectedSlot, estimate, itemId ->
                     val targetSlot = ScanQuickAddHandoff.targetSlot(scannerState, selectedSlot)
-                    ScanQuickAddHandoff.open(navController, ScanQuickAddHandoff.route(date, targetSlot, estimate, itemId))
+                    ScanQuickAddHandoff.open(navController, ScanQuickAddHandoff.route(ScanQuickAddHandoff.targetDate(scannerState, destinationDate()), targetSlot, estimate, itemId,
+                        scannerState[ScanQuickAddHandoff.PAGE_INDEX_KEY], scannerState[ScanQuickAddHandoff.PAGE_COUNT_KEY]))
                 },
                 onAlignPickFood = { slotId, foodId ->
-                    navController.navigate(FoodDiaryCreateEntry(date = date, diarySlotId = slotId, foodId = foodId, measurement = null))
+                    navController.navigate(FoodDiaryCreateEntry(date = destinationDate(), diarySlotId = slotId, foodId = foodId, measurement = null))
                 },
                 onUpdateUsdaApiKey = { navController.navigateSingleTop(UsdaApiKey) },
                 onUpdateOpenFoodFactsCredentials = { navController.navigateSingleTop(OpenFoodFactsLogin) },
@@ -685,6 +693,8 @@ internal data class FoodDiaryCreateQuickAdd(
     val prefillFats: Double? = null,
     val scanEstimateJson: String? = null,
     val scanItemId: String? = null,
+    val scanPageIndex: Int? = null,
+    val scanPageCount: Int? = null,
 ) {
     constructor(epochDay: Long, diarySlotId: Long, estimate: AiFoodEstimate) : this(
         epochDay = epochDay,

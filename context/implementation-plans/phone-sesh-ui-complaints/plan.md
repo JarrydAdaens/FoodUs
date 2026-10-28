@@ -224,3 +224,12 @@ Final build and artifact:
 - Final source review and visual recheck completed with no unresolved source blocker. Earlier enlarged-word wrapping failure was corrected and recaptured; it is not a pending limitation.
 
 Boundaries: all runtime mutations used synthetic emulator data; the owner's phone was not installed to or modified. Historical dates missing from legacy records remain unknown under the documented sort fallback. Nutrition calculations and saved diary snapshots remain under existing domain contracts; no schema migration, relay change, new dependency or publication was introduced. Fork version/release count and Story statuses remain unchanged; only Android installation order advanced for the successive testing artifacts. Implementation was accepted before committing; the owner subsequently authorized a local commit through `commit-log --commit`. No pull or push was run.
+
+## Fresh owner testing build — 2026-10-28
+
+- Owner requested a fresh installable APK after local implementation commit `b0bc1063`.
+- Advanced Android installation sequence from 140 to **141** under the version policy; fork version remains `3.2.40.4` and no Story or release status changed.
+- JDK 21, `:app:assembleDebug`: **BUILD SUCCESSFUL** in 23s. Log: ignored `app/build/phone-sesh-fresh141-build.log`. This packaging-only change does not alter the previously accepted application behavior; no additional runtime test or owner-phone installation was performed.
+- AGP output metadata and SDK `aapt` agree: `io.github.jarrydadaens.foodus.dev`, `3.2.40.4-dev`, versionCode **141**, `foodus-dev-3_2_40_4.apk` (97,679,005 bytes).
+- SHA-256: `49494993885f9a51189961d846c98234cc233e611676f4aae13600d60bef8e29`. Fresh app APK copied to both authorized local delivery folders, with matching destination hashes. Existing older versioned filenames retained; personal destination paths remain outside repository history.
+- Sanitized receipt: ignored `app/build/fresh141-delivery.json`. Build-number and delivery-record edits remain uncommitted; no pull, push or publication performed.

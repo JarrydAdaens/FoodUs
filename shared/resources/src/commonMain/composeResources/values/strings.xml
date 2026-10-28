@@ -866,4 +866,7 @@
     <string name="food_entry_meals">Edit Meals</string>
     <string name="food_entry_add">Add food</string>
     <string name="action_ai_edit_input">Edit description or photo</string>
+    <string name="action_save_selected_foods">Save Selected Foods</string>
+    <string name="food_entry_date_time">Logging date and time</string>
+    <string name="quick_add_page">Food %1$d of %2$d</string>
 </resources>

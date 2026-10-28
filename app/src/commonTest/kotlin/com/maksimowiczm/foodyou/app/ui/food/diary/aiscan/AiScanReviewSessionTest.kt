@@ -57,4 +57,18 @@ class AiScanReviewSessionTest {
         assertEquals(completed, completed.acknowledgeSaved("stale:2"))
         assertFalse("1:1" in completed.savedIds, "Unselected sibling must not be counted as persisted")
     }
+    @Test fun progressCountsOnlySelectedQueueAndAdvancesOnlyAfterSuccess() {
+        val first = AiScanReviewSession.create("progress", estimates).select("progress:1", false).start()
+        assertEquals(2, first.queueSize)
+        assertEquals(0, first.pageIndex)
+        assertEquals(first, first.acknowledgeSaved("progress:2"))
+        val next = first.acknowledgeSaved("progress:0")
+        assertEquals(2, next.queueSize)
+        assertEquals(1, next.pageIndex)
+        assertEquals(next, next.acknowledgeSaved("progress:0"))
+        val restarted = next.start()
+        assertEquals(1, restarted.queueSize)
+        assertEquals(0, restarted.pageIndex)
+    }
+
 }
